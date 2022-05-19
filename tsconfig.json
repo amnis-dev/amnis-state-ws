@@ -1,0 +1,11 @@
+{
+  "extends": "@amnis/tsconfig-node",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@amnis/core/*": ["./packages/amnis-core/src/*"],
+      "@amnis/state/*": ["./packages/amnis-state/src/*"],
+    }
+  },
+  "include": ["./packages/**/*.ts*"]
+}
