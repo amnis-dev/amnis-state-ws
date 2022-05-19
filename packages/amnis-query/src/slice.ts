@@ -5,12 +5,12 @@ import type {
   ApiReadRequest,
 } from './api.types';
 
-export const baseUrl = process.env.AMNIS_STATE_API_URL || 'http://localhost:4000/api/';
+export const baseUrlDefault: string = process.env.AMNIS_STATE_API_URL || 'http://localhost:4000/api/';
 
 /**
  * Generates query reducers and functionality.
  */
-export function apiSlice<E extends Entity>(name: string) {
+export function apiSlice<E extends Entity>(name: string, baseUrl = baseUrlDefault) {
   return createApi({
     reducerPath: `${name}Api`,
     baseQuery: fetchBaseQuery({ baseUrl }),

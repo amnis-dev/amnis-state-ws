@@ -23,10 +23,37 @@ export type QueryFilter<E extends Entity> = {
   }
 };
 
+/**
+ * READ Response
+ * Server -> Client
+ */
+export interface ApiCreateResponse<E extends Entity> {
+  entities?: E[];
+}
+
+/**
+ * READ Request
+ * Client -> Server
+ */
+export interface ApiCreateRequest<E extends Entity> {
+  nest?: QueryNest<E>;
+  filter?: QueryFilter<E>;
+  start?: number;
+  limit?: number;
+}
+
+/**
+ * READ Response
+ * Server -> Client
+ */
 export interface ApiReadResponse<E extends Entity> {
   entities?: E[];
 }
 
+/**
+ * READ Request
+ * Client -> Server
+ */
 export interface ApiReadRequest<E extends Entity> {
   nest?: QueryNest<E>;
   filter?: QueryFilter<E>;
