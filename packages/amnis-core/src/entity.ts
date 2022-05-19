@@ -1,32 +1,27 @@
-/**
- * A common entity object.
- */
-export interface Entity {
-  /**
-   * Identifier for this entity.
-   * @default ""
-   */
-  readonly id: string;
+import { nanoid } from 'nanoid';
+import type {
+  Entity,
+  EntityCreate,
+  EntityUpdate,
+} from './entity.types';
 
-  /**
-   * Type of entity.
-   */
-  readonly type: unique symbol;
-
-  /**
-   * Creation date string.
-   * @default ""
-   */
-  readonly dateCreated: string;
-
-  /**
-   * Updated date string.
-   * @default ""
-   */
-  dateUpdated: string;
+export function entityCreate<E extends Entity>(entity?: EntityCreate<E>): E {
+  const now = new Date().toJSON();
+  return {
+    id: nanoid(),
+    dateCreated: now,
+    dateUpdated: now,
+    ...entity,
+  } as E;
 }
 
-/**
- * A Reference to an Entity.
- */
-export type EntityReference<T extends Entity> = T['type'];
+export function entityUpdate<E extends Entity>(entity: E, update: EntityUpdate<E>): E {
+  const now = new Date().toJSON();
+  return {
+    ...entity,
+    ...update,
+    dateUpdated: now,
+  } as E;
+}
+
+export default { entityCreate };

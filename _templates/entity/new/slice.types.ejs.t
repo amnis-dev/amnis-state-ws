@@ -1,30 +1,55 @@
 ---
-to: <%= `packages/amnis-state/src/${category}/${name}/${name}.types.ts` %>
+to: <%= `packages/amnis-state/src/${name}/${name}.types.ts` %>
 ---
-import type { Entity } from '@amnis/coretypes/entity';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type {
+  Entity,
+  EntityReference,
+  EntityCreate,
+} from '@amnis/core/entity.types';
 
 /**
- * Entity type
+ * <%= Name %> Entity
  */
-export interface <%= Name %> extends Entity<'<%= Name %>'> {
+export interface <%= Name %> extends Entity {
   /**
-   * Entity type.
-   * @default "<%= Name %>"
+   * Entity properties.
    */
-  type: '<%= Name %>';
+  myProperty?: string;
 }
 
 /**
- * Meta data for a set of the 
+ * Meta interface for <%= Name %> entities.
  */
 export interface <%= Name %>Set {
   /**
-   * The entity id this user is focused on.
+   * The entity id this <%= name %> is focused on.
    */
-  focused: string | null;
+  focused: EntityReference<<%= Name %>> | null;
 
   /**
-   * The entity ids this user has selected.
+   * The entity ids this <%= name %> has selected.
    */
-  selected: string[];
+  selected: EntityReference<<%= Name %>>[];
 }
+
+/**
+ * ================================================================================
+ * Action Types
+ * ----------------------------------------
+ */
+
+/**
+ * Creates a new <%= Name %>.
+ */
+export type <%= Name %>ActionCreate = PayloadAction<EntityCreate<<%= Name %>>>;
+
+/**
+ * Sets focus on a specific <%= name %> in the set.
+ */
+export type <%= Name %>SetActionSetFocused = PayloadAction<EntityReference<<%= Name %>>>;
+
+/**
+ * Sets selected <%= name %> entities in the set.
+ */
+export type <%= Name %>SetActionSetSelected = PayloadAction<EntityReference<<%= Name %>>[]>;

@@ -10,18 +10,20 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@amnis/eslint-config-node": "^1.3.2",
-    "@amnis/tsconfig-node": "^1.3.2",
+    "@amnis/eslint-config-node": "^1.3.3",
+    "@amnis/tsconfig-node": "^1.3.3",
     "@reduxjs/toolkit": "^1.8.1",
     "eslint": "^8.15.0",
     "fs-extra": "^10.1.0",
     "hygen": "^6.2.0",
     "json-schema": "^0.4.0",
+    "nanoid": "^3.3.4",
     "react-redux": "^8.0.1",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   },
   "scripts": {
-    "gen:entity": "hygen entity new"
+    "gen:entity": "hygen entity new",
+    "delete-node-modules": "npx rimraf ./**/node_modules"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@amnis/core",
+  "name": "@amnis/query",
   "version": "0.1.0-alpha.1",
   "main": "index.ts",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "url": "https://github.com/amnis-dev/amnis-state"
   },
   "homepage": "https://github.com/amnis-dev/amnis-state",
-  "dependencies": {
-    "nanoid": "^3.3.4"
+  "peerDependencies": {
+    "@reduxjs/toolkit": "^1.8.1"
   }
 }

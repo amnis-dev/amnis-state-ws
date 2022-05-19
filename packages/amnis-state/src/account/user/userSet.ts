@@ -1,43 +1,40 @@
----
-to: <%= `packages/amnis-state/src/${name}/${name}Set.ts` %>
----
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { EntityCreate } from '@amnis/core/entity.types';
 import { entityCreate } from '@amnis/core/entity';
 import type {
-  <%= Name %>,
-  <%= Name %>Set,
-  <%= Name %>SetActionSetFocused,
-  <%= Name %>SetActionSetSelected,
-} from './<%= name %>.types';
+  User,
+  UserSet,
+  UserSetActionSetFocused,
+  UserSetActionSetSelected,
+} from './user.types';
 
-const initialState: <%= Name %>Set = {
+const initialState: UserSet = {
   focused: null,
   selected: [],
 };
 
-const adapter = createEntityAdapter<<%= Name %>>({
+const adapter = createEntityAdapter<User>({
   // Selects the entity by a specific field on the object. Typically `id`.
   selectId: (entity) => entity.id,
   // Defines how the entities should be sorted. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
   // sortComparer: (a, b) => 0,
 });
 
-export const <%= name %>SetSlice = createSlice({
-  name: '<%= name %>',
+export const userSetSlice = createSlice({
+  name: 'user',
   initialState: adapter.getInitialState(initialState),
   reducers: {
     /**
-     * Creates a new <%= Name %> entity.
+     * Creates a new User entity.
      */
-    create: (state, action: PayloadAction<EntityCreate<<%= Name %>>>) => {
+    create: (state, action: PayloadAction<EntityCreate<User>>) => {
       adapter.addOne(state, entityCreate(action.payload));
     },
 
     /**
      * Sets the focus on a specific entity in the set.
      */
-    setFocus: (state, action: <%= Name %>SetActionSetFocused) => {
+    setFocus: (state, action: UserSetActionSetFocused) => {
       const id = action.payload;
       if (state.entities[id]) {
         state.focused = id;
@@ -54,7 +51,7 @@ export const <%= name %>SetSlice = createSlice({
     /**
      * Sets the focus on a specific entity in the set.
      */
-    setSelected: (state, action: <%= Name %>SetActionSetSelected) => {
+    setSelected: (state, action: UserSetActionSetSelected) => {
       const selections = action.payload;
       state.selected = selections;
     },
@@ -69,4 +66,4 @@ export const <%= name %>SetSlice = createSlice({
   },
 });
 
-export const <%= name %>SetActions = <%= name %>SetSlice.actions;
+export const userSetActions = userSetSlice.actions;

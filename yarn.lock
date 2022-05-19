@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@amnis/eslint-config-node@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@amnis/eslint-config-node/-/eslint-config-node-1.3.2.tgz#50010943830890620e4fb5757d6e184a5a036793"
-  integrity sha512-niZ/ITzkCE5QIYNlSzXDVnfGFqIOYnqLDEyw/J5QSMlRRiIENlgedy+RUZJ+oIOldMXnjfKWkPXZo3Q4jrY+Ug==
+"@amnis/eslint-config-node@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@amnis/eslint-config-node/-/eslint-config-node-1.3.3.tgz#c828202928832fdcd6eb3a957f035145d87bbf29"
+  integrity sha512-eLl7Umg9+840ZFQP2IZDr8FO4eP3h6AKZdqLJoSSWgxQk+hxzQISx3pmFmH7WxUGInDrZSadtGW/IsOUCXMVng==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.18.0"
     "@typescript-eslint/parser" "^5.18.0"
@@ -13,10 +13,10 @@
     eslint-import-resolver-typescript "^2.7.1"
     eslint-plugin-import "^2.26.0"
 
-"@amnis/tsconfig-node@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@amnis/tsconfig-node/-/tsconfig-node-1.3.2.tgz#9e1ed10769ac3f3ece7bfb611fe85836be5895d9"
-  integrity sha512-rax3rPVg11cCpnLSGElXE2x4TQQaPCbd8MdrcY88LXE/z7D3rFKPaWSQvSuiNRp4zTWngbLpVTGUu856ViI6YA==
+"@amnis/tsconfig-node@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@amnis/tsconfig-node/-/tsconfig-node-1.3.3.tgz#639506f2cd0f94b5cc2e72543305a2bdd0f2e3fa"
+  integrity sha512-S+BucMMTqlhb6s6DTJB/roFPrYhNCauvaFufIKpxDSsCwRhGgddpWbPoVCgG/Xxpo40hf3yD2wQV9PXMBggsVw==
   dependencies:
     "@types/node" latest
 
@@ -1406,6 +1406,11 @@ ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
+
+nanoid@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
+  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 natural-compare@^1.4.0:
   version "1.4.0"

@@ -1,19 +1,24 @@
 ---
-to: <%= `packages/amnis-state/src/${category}/${name}/${name}.ts` %>
+to: <%= `packages/amnis-state/src/${name}/${name}.ts` %>
 ---
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { <%= Name %> } from './<%= name.toLowerCase() %>.types';
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  entityCreate,
+} from '@amnis/core/entity';
+import type {
+  <%= Name %>,
+  <%= Name %>ActionCreate,
+} from './<%= name %>.types';
 
-const initialState: <%= Name %> = {};
+const initialState: <%= Name %> = entityCreate();
 
-export const <%= name.toLowerCase() %>Slice = createSlice({
-  name: '<%= name.toLowerCase() %>',
+export const <%= name %>Slice = createSlice({
+  name: '<%= name %>',
   initialState,
   reducers: {
-    set: (state, action: PayloadAction<<%= Name %>>) => {
-      state = { ...action.payload };
-    },
+    set: (state, action: <%= Name %>ActionCreate) => (entityCreate(action.payload)),
   },
 });
 
-export const <%= name.toLowerCase() %>Actions = <%= name.toLowerCase() %>Slice.actions;
+export const <%= name %>Actions = <%= name %>Slice.actions;
+

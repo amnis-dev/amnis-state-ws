@@ -1,6 +1,7 @@
 ---
-to: <%= `packages/amnis-state/src/${category}/${name}/index.ts` %>
+to: <%= `packages/amnis-state/src/${name}/index.ts` %>
 ---
 export * from './<%= name %>';
 export * from './<%= name %>Set';
+export * from './<%= name %>Api';
 export * from './<%= name %>.types';
