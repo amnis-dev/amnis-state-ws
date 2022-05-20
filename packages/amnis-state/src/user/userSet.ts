@@ -1,17 +1,13 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { EntityCreate } from '@amnis/core/entity.types';
+import type { EntityCreate, EntityReference } from '@amnis/core/entity.types';
 import { entityCreate } from '@amnis/core/entity';
 import type {
   User,
   UserSet,
-  UserSetActionSetFocused,
-  UserSetActionSetSelected,
+  UserSetPayloadSetFocused,
+  UserSetPayloadSetSelected,
 } from './user.types';
-
-const initialState: UserSet = {
-  focused: null,
-  selected: [],
-};
+import { userInitialState } from './user';
 
 const adapter = createEntityAdapter<User>({
   // Selects the entity by a specific field on the object. Typically `id`.
@@ -20,9 +16,15 @@ const adapter = createEntityAdapter<User>({
   // sortComparer: (a, b) => 0,
 });
 
+export const userSetInitialState = adapter.getInitialState({
+  active: userInitialState.id as EntityReference<User>,
+  focused: null,
+  selected: [],
+} as UserSet);
+
 export const userSetSlice = createSlice({
-  name: 'user',
-  initialState: adapter.getInitialState(initialState),
+  name: 'userSet',
+  initialState: userSetInitialState,
   reducers: {
     /**
      * Creates a new User entity.
@@ -34,7 +36,7 @@ export const userSetSlice = createSlice({
     /**
      * Sets the focus on a specific entity in the set.
      */
-    setFocus: (state, action: UserSetActionSetFocused) => {
+    setFocus: (state, action: PayloadAction<UserSetPayloadSetFocused>) => {
       const id = action.payload;
       if (state.entities[id]) {
         state.focused = id;
@@ -51,7 +53,7 @@ export const userSetSlice = createSlice({
     /**
      * Sets the focus on a specific entity in the set.
      */
-    setSelected: (state, action: UserSetActionSetSelected) => {
+    setSelected: (state, action: PayloadAction<UserSetPayloadSetSelected>) => {
       const selections = action.payload;
       state.selected = selections;
     },
@@ -66,4 +68,8 @@ export const userSetSlice = createSlice({
   },
 });
 
+export const userSetReducer = userSetSlice.reducer;
+
 export const userSetActions = userSetSlice.actions;
+
+export default userSetSlice;

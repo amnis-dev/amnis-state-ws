@@ -35,21 +35,26 @@ export interface <%= Name %>Set {
 
 /**
  * ================================================================================
- * Action Types
+ * Payload Types
  * ----------------------------------------
  */
 
 /**
  * Creates a new <%= Name %>.
  */
-export type <%= Name %>ActionCreate = PayloadAction<EntityCreate<<%= Name %>>>;
+export type <%= Name %>PayloadCreate = EntityCreate<<%= Name %>>;
+
+/**
+ * Updates a new <%= Name %>.
+ */
+export type <%= Name %>PayloadUpdate = EntityUpdate<<%= Name %>>;
 
 /**
  * Sets focus on a specific <%= name %> in the set.
  */
-export type <%= Name %>SetActionSetFocused = PayloadAction<EntityReference<<%= Name %>>>;
+export type <%= Name %>SetPayloadSetFocused = EntityReference<<%= Name %>>;
 
 /**
  * Sets selected <%= name %> entities in the set.
  */
-export type <%= Name %>SetActionSetSelected = PayloadAction<EntityReference<<%= Name %>>[]>;
+export type <%= Name %>SetPayloadSetSelected = EntityReference<<%= Name %>>[];

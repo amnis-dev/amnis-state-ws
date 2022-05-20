@@ -7,14 +7,10 @@ import { entityCreate } from '@amnis/core/entity';
 import type {
   <%= Name %>,
   <%= Name %>Set,
-  <%= Name %>SetActionSetFocused,
-  <%= Name %>SetActionSetSelected,
+  <%= Name %>SetPayloadSetFocused,
+  <%= Name %>SetPayloadSetSelected,
 } from './<%= name %>.types';
-
-const initialState: <%= Name %>Set = {
-  focused: null,
-  selected: [],
-};
+import { <%= name %>InitialState } from './<%= name %>';
 
 const adapter = createEntityAdapter<<%= Name %>>({
   // Selects the entity by a specific field on the object. Typically `id`.
@@ -23,9 +19,15 @@ const adapter = createEntityAdapter<<%= Name %>>({
   // sortComparer: (a, b) => 0,
 });
 
+export const <%= name %>SetInitialState = adapter.getInitialState({
+  active: <%= name %>InitialState.id as EntityReference<<%= Name %>>,
+  focused: null,
+  selected: [],
+} as <%= Name %>Set);
+
 export const <%= name %>SetSlice = createSlice({
   name: '<%= name %>',
-  initialState: adapter.getInitialState(initialState),
+  initialState: <%= name %>SetInitialState,
   reducers: {
     /**
      * Creates a new <%= Name %> entity.
@@ -37,7 +39,7 @@ export const <%= name %>SetSlice = createSlice({
     /**
      * Sets the focus on a specific entity in the set.
      */
-    setFocus: (state, action: <%= Name %>SetActionSetFocused) => {
+    setFocus: (state, action: PayloadAction<<%= Name %>SetPayloadSetFocused>) => {
       const id = action.payload;
       if (state.entities[id]) {
         state.focused = id;
@@ -54,7 +56,7 @@ export const <%= name %>SetSlice = createSlice({
     /**
      * Sets the focus on a specific entity in the set.
      */
-    setSelected: (state, action: <%= Name %>SetActionSetSelected) => {
+    setSelected: (state, action: PayloadAction<<%= Name %>SetPayloadSetSelected>) => {
       const selections = action.payload;
       state.selected = selections;
     },
@@ -69,4 +71,8 @@ export const <%= name %>SetSlice = createSlice({
   },
 });
 
+export const <%= name %>SetReducer = <%= name %>SetSlice.reducer;
+
 export const <%= name %>SetActions = <%= name %>SetSlice.actions;
+
+export default <%= name %>Set;

@@ -1,20 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   entityCreate,
+  entityUpdate,
 } from '@amnis/core/entity';
 import type {
   User,
-  UserActionCreate,
+  UserPayloadUpdate,
 } from './user.types';
 
-const initialState: User = entityCreate();
+export const userInitialState: User = entityCreate({
+  displayName: 'Unknown',
+});
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: userInitialState,
   reducers: {
-    set: (state, action: UserActionCreate) => (entityCreate(action.payload)),
+    set: (state, action: PayloadAction<UserPayloadUpdate>) => (
+      { ...state, ...entityUpdate(state, action.payload) }
+    ),
   },
 });
 
+export const userReducer = userSlice.reducer;
+
 export const userActions = userSlice.actions;
+
+export default userSlice;

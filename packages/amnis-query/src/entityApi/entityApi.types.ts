@@ -1,6 +1,6 @@
 import type { Entity, EntityReference } from '@amnis/core/entity.types';
 
-export type QueryNestInclude<E extends Entity> = {
+type QueryNestInclude<E extends Entity> = {
   [Key in keyof E]?:
   E[Key] extends EntityReference<infer R> ? QueryNestInclude<R> : undefined
 };
@@ -24,18 +24,18 @@ export type QueryFilter<E extends Entity> = {
 };
 
 /**
- * READ Response
+ * Create Response
  * Server -> Client
  */
-export interface ApiCreateResponse<E extends Entity> {
-  entities?: E[];
+export interface EntityApiCreateResponse<E extends Entity> {
+  entityMap?: Record<string, E[]>;
 }
 
 /**
- * READ Request
+ * Create Request
  * Client -> Server
  */
-export interface ApiCreateRequest<E extends Entity> {
+export interface EntityApiCreateRequest<E extends Entity> {
   nest?: QueryNest<E>;
   filter?: QueryFilter<E>;
   start?: number;
@@ -46,15 +46,15 @@ export interface ApiCreateRequest<E extends Entity> {
  * READ Response
  * Server -> Client
  */
-export interface ApiReadResponse<E extends Entity> {
-  entities?: E[];
+export interface EntityApiReadResponse<E extends Entity> {
+  entityMap?: Record<string, E[]>;
 }
 
 /**
  * READ Request
  * Client -> Server
  */
-export interface ApiReadRequest<E extends Entity> {
+export interface EntityApiReadRequest<E extends Entity> {
   nest?: QueryNest<E>;
   filter?: QueryFilter<E>;
   start?: number;

@@ -1,0 +1,24 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env", {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@amnis/core": "./packages/amnis-core/src",
+          "@amnis/query": "./packages/amnis-query/src",
+          "@amnis/state": "./packages/amnis-state/src"
+        }
+      }
+    ]
+  ]
+}

@@ -2,6 +2,7 @@
   "extends": "@amnis/tsconfig-node",
   "compilerOptions": {
     "baseUrl": "./",
+    "types": ["node", "jest"],
     "paths": {
       "@amnis/core/*": ["./packages/amnis-core/src/*"],
       "@amnis/query/*": ["./packages/amnis-query/src/*"],

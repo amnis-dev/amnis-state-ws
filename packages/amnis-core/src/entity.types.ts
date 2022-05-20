@@ -21,6 +21,16 @@ export interface Entity {
    * @default ""
    */
   dateUpdated: DateJSON;
+
+  /**
+   * Possible creator of the entity.
+   */
+  readonly entityCreator: string | null;
+
+  /**
+   * Possible updater of the entity.
+   */
+  entityUpdater: string | null;
 }
 
 /**
@@ -40,7 +50,7 @@ export type EntityReference<E extends Entity> = string & {[entitySymbol]: never}
 export type EntityOmit<E> = Omit<E, keyof Entity>
 
 /**
- * Type for an Entity Creation
+ * Type for Entity Creation
  */
 export type EntityCreate<E extends Entity> = EntityOmit<E>;
 
