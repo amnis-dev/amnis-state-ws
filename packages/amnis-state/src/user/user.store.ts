@@ -1,14 +1,14 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { entityApi } from '@amnis/query/entityApi/entityApi.node';
-import { userSlice } from '../user';
-import { userSetSlice } from '../userSet';
+import { userSlice } from './user';
+
+export const reducerMap = {
+  [entityApi.reducerPath]: entityApi.reducer,
+  [userSlice.name]: userSlice.reducer,
+};
 
 export function setupStore() {
-  const rootReducer = combineReducers({
-    [entityApi.reducerPath]: entityApi.reducer,
-    [userSlice.name]: userSlice.reducer,
-    [userSetSlice.name]: userSetSlice.reducer,
-  });
+  const rootReducer = combineReducers(reducerMap);
 
   const userStore = configureStore({
     reducer: rootReducer,

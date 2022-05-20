@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
-import type { Entity } from '@amnis/core/entity.types';
+import type { Entity } from '@amnis/core/entity';
 import fetch, { Headers, Request } from 'cross-fetch';
 import { baseUrlDefault } from '../common';
 import type {
@@ -14,7 +14,7 @@ global.Headers = Headers;
 global.Request = Request;
 
 export const entityApi = createApi({
-  reducerPath: 'entityApi',
+  reducerPath: 'api:entity',
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrlDefault,
     fetchFn: fetch,

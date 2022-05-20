@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Entity } from '@amnis/core/entity.types';
+import type { Entity } from '@amnis/core/entity';
 import { baseUrlDefault } from '../common';
 import type {
+  EntityApiCreateResponse,
+  EntityApiCreateRequest,
   EntityApiReadResponse,
   EntityApiReadRequest,
 } from './entityApi.types';
@@ -15,6 +17,9 @@ export const entityApi = createApi({
     baseUrl: baseUrlDefault,
   }),
   endpoints: (builder) => ({
+    create: builder.query<EntityApiCreateResponse<Entity>, EntityApiCreateRequest<Entity>>({
+      query: entryQueryRead,
+    }),
     read: builder.query<EntityApiReadResponse<Entity>, EntityApiReadRequest<Entity>>({
       query: entryQueryRead,
     }),

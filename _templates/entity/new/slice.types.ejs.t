@@ -6,7 +6,7 @@ import type {
   Entity,
   EntityReference,
   EntityCreate,
-} from '@amnis/core/entity.types';
+} from '@amnis/core/entity';
 
 /**
  * <%= Name %> Entity

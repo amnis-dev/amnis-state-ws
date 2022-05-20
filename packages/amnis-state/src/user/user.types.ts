@@ -1,12 +1,11 @@
+import type { EntityState } from '@reduxjs/toolkit';
 import type {
   Entity,
-  EntityReference,
-  EntityCreate,
-  EntityUpdate,
-} from '@amnis/core/entity.types';
+  EntityMeta,
+} from '@amnis/core/entity';
 
 /**
- * User Entity
+ * User entity
  */
 export interface User extends Entity {
   /**
@@ -16,47 +15,18 @@ export interface User extends Entity {
 }
 
 /**
- * Meta interface for User entities.
+ * User collection meta data.
  */
-export interface UserSet {
-  /**
-   * The id that is currently active on the single entity state.
-   */
-  active: EntityReference<User>;
+export type UserMeta = EntityMeta<User>;
 
-  /**
-   * The entity id this user is focused on.
-   */
-  focused: EntityReference<User> | null;
+/**
+ * User state.
+ */
+export type UserState = EntityState<User> & UserMeta;
 
-  /**
-   * The entity ids this user has selected.
-   */
-  selected: EntityReference<User>[];
+/**
+ * User root state.
+ */
+export interface UserRootState {
+  user: UserState;
 }
-
-/**
- * ================================================================================
- * Payload Types
- * ----------------------------------------
- */
-
-/**
- * Creates a new User.
- */
-export type UserPayloadCreate = EntityCreate<User>;
-
-/**
- * Updates a new User.
- */
-export type UserPayloadUpdate = EntityUpdate<User>;
-
-/**
- * Sets focus on a specific user in the set.
- */
-export type UserSetPayloadSetFocused = EntityReference<User>;
-
-/**
- * Sets selected user entities in the set.
- */
-export type UserSetPayloadSetSelected = EntityReference<User>[];

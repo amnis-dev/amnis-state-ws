@@ -1,8 +1,9 @@
-import { userSlice, userSetSlice } from './user';
+import { entityApi } from '@amnis/query/entityApi';
+import { userSlice } from './user';
 
-export const reducer = {
-  [userSetSlice.name]: userSlice.reducer,
-  [userSetSlice.name]: userSetSlice.reducer,
+export const reducerMap = {
+  [entityApi.reducerPath]: entityApi.reducer,
+  [userSlice.name]: userSlice.reducer,
 };
 
-export default reducer;
+export default { reducerMap };

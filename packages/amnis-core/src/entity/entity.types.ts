@@ -1,4 +1,4 @@
-import type { DateJSON } from './common.types';
+import type { DateJSON } from '../common.types';
 
 /**
  * A common entity object.
@@ -29,8 +29,15 @@ export interface Entity {
 
   /**
    * Possible updater of the entity.
+   * @default null
    */
   entityUpdater: string | null;
+
+  /**
+   * Flag to determine if the entity has been committed to storage.
+   * @deafult false
+   */
+  committed: boolean;
 }
 
 /**
@@ -43,6 +50,26 @@ declare const entitySymbol: unique symbol;
   */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type EntityReference<E extends Entity> = string & {[entitySymbol]: never};
+
+/**
+ * Meta information for a collection of enities.
+ */
+export interface EntityMeta<E extends Entity> {
+  /**
+   * The entity id referencing the active entity.
+   */
+  active: EntityReference<E> | null;
+
+  /**
+    * The id representing a focused entity.
+    */
+  focused: EntityReference<E> | null;
+
+  /**
+    * List of ids considered to be selected.
+    */
+  selection: EntityReference<E>[];
+}
 
 /**
  * Omitted types of the core Entity interface.

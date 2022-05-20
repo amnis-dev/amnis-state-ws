@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import type { Entity } from '@amnis/core/entity.types';
+import type { Entity } from '@amnis/core/entity';
 import { baseUrlDefault } from './common';
 import type { EntityApiReadRequest, EntityApiReadResponse } from './entityApi';
 
