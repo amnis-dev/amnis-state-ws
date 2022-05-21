@@ -8,6 +8,10 @@
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "files.eol": "\n",
+  "files.associations": {
+    "*.ejs": "html",
+    "*.ejs.t": "html"
+  },
   "eslint.enable": true,
   "eslint.validate": [
     "javascript",
