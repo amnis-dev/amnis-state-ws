@@ -19,7 +19,7 @@ export const entityApiHandlers: EntityApiHandlers = {
   },
 };
 
-export function apiMockHandlers(
+export function entityApiMockHandlers(
   name: string,
   database: Record<string, Entity[]>,
   baseUrl = entityApiBaseUrl,
@@ -57,12 +57,12 @@ export function apiMockHandlers(
   ];
 }
 
-export function mockServer(
+export function entityApiMockServer(
   name: string,
   database: Record<string, Entity[]>,
   baseUrl = entityApiBaseUrl,
 ) {
-  return setupServer(...apiMockHandlers(name, database, baseUrl));
+  return setupServer(...entityApiMockHandlers(name, database, baseUrl));
 }
 
-export default mockServer;
+export default entityApiMockServer;

@@ -1,8 +1,8 @@
 import { entityCreate } from '@amnis/core/entity';
-import { mockServer } from '@amnis/query/entityApi/entityApi.mock';
+import { entityApiMockServer } from '@amnis/query/entityApi/entityApi.mock';
 import { User } from './user.types';
 
-export const userMockServer = mockServer('user', {
+export const userMockServer = entityApiMockServer('user', {
   user: [
     entityCreate<User>({
       displayName: 'eCrow',
