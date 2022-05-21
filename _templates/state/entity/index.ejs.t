@@ -1,5 +1,5 @@
 ---
-to: <%= `${cwd}/${name}/index.ts` %>
+to: "<%= path ? `${path}/${name}/index.ts` : null %>"
 ---
 export * from './<%= name %>';
 export * from './<%= name %>.types';

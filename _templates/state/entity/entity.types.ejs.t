@@ -1,5 +1,5 @@
 ---
-to: <%= `${cwd}/${name}/${name}.types.ts` %>
+to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
 import type { EntityState } from '@reduxjs/toolkit';
 import type {
@@ -14,22 +14,22 @@ export interface <%= Name %> extends Entity {
   /**
    * Display name for the <%= name %>.
    */
-  displayName: string;
+  myProperty?: string;
 }
 
 /**
  * <%= Name %> collection meta data.
  */
-export type UserMeta = EntityMeta<<%= Name %>>;
+export type <%= Name %>Meta = EntityMeta<<%= Name %>>;
 
 /**
  * <%= Name %> state.
  */
-export type UserState = EntityState<<%= Name %>> & UserMeta;
+export type <%= Name %>State = EntityState<<%= Name %>> & <%= Name %>Meta;
 
 /**
  * <%= Name %> root state.
  */
-export interface UserRootState {
-  ['@amnis/<%= name %>']: UserState;
+export interface <%= Name %>RootState {
+  ['@amnis/<%= name %>']: <%= Name %>State;
 }

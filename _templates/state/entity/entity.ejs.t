@@ -1,11 +1,11 @@
 ---
-to: <%= `${cwd}/${name}/${name}.ts` %>
+to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 ---
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import type {
   <%= Name %>,
-  UserMeta,
-  UserRootState,
+  <%= Name %>Meta,
+  <%= Name %>RootState,
 } from './<%= name %>.types';
 import { sliceEntityReducers } from '../slice';
 
@@ -19,18 +19,18 @@ const adapter = createEntityAdapter<<%= Name %>>({
 /**
  * Initial <%= name %> map state.
  */
-export const userInitialState = adapter.getInitialState({
+export const <%= name %>InitialState = adapter.getInitialState({
   active: null,
   focused: null,
   selection: [],
-} as UserMeta);
+} as <%= Name %>Meta);
 
 /**
  * RTK <%= Name %> Slice
  */
-export const userSlice = createSlice({
+export const <%= name %>Slice = createSlice({
   name: '@amnis/<%= name %>',
-  initialState: userInitialState,
+  initialState: <%= name %>InitialState,
   reducers: {
     ...sliceEntityReducers<<%= Name %>>(adapter),
   },
@@ -39,16 +39,16 @@ export const userSlice = createSlice({
 /**
  * <%= Name %> redux reducer.
  */
-export const userReducer = userSlice.reducer;
+export const <%= name %>Reducer = <%= name %>Slice.reducer;
 
 /**
  * <%= Name %> redux actions.
  */
-export const userActions = userSlice.actions;
+export const <%= name %>Actions = <%= name %>Slice.actions;
 
 /**
  * <%= Name %> redux selectors.
  */
-export const userSelectors = adapter.getSelectors<UserRootState>((state) => state['@amnis/<%= name %>']);
+export const <%= name %>Selectors = adapter.getSelectors<<%= Name %>RootState>((state) => state['@amnis/<%= name %>']);
 
-export default userSlice;
+export default <%= name %>Slice;

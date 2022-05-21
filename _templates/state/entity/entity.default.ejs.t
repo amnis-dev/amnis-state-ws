@@ -1,11 +1,11 @@
 ---
-to: <%= `${cwd}/${name}/${name}.default.ts` %>
+to: "<%= path ? `${path}/${name}/${name}.default.ts` : null %>"
 ---
 import { entityCreate } from '@amnis/core/entity';
 import type { <%= Name %> } from './<%= name %>.types';
 
-export const userDefault: <%= Name %> = entityCreate({
+export const <%= name %>Default: <%= Name %> = entityCreate({
   displayName: 'Unnamed',
 });
 
-export default userDefault;
+export default <%= name %>Default;

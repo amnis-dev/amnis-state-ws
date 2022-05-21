@@ -1,11 +1,11 @@
 ---
-to: <%= `${cwd}/${name}/${name}.mock.ts` %>
+to: "<%= path ? `${path}/${name}/${name}.mock.ts` : null %>"
 ---
 import { entityCreate } from '@amnis/core/entity';
 import { entityApiMockServer } from '@amnis/query/entityApi/entityApi.mock';
 import { <%= Name %> } from './<%= name %>.types';
 
-export const userMockServer = entityApiMockServer('<%= name %>', {
+export const <%= name %>MockServer = entityApiMockServer('<%= name %>', {
   <%= name %>: [
     entityCreate<<%= Name %>>({
       displayName: 'eCrow',
@@ -25,4 +25,4 @@ export const userMockServer = entityApiMockServer('<%= name %>', {
   ],
 });
 
-export default userMockServer;
+export default <%= name %>MockServer;

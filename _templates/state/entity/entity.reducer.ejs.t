@@ -1,12 +1,12 @@
 ---
-to: <%= `${cwd}/${name}/${name}.reducer.ts` %>
+to: "<%= path ? `${path}/${name}/${name}.reducer.ts` : null %>"
 ---
 import { entityApi } from '@amnis/query/entityApi/entityApi.node';
-import { userSlice } from './<%= name %>';
+import { <%= name %>Slice } from './<%= name %>';
 
 export const reducerMap = {
   [entityApi.reducerPath]: entityApi.reducer,
-  [userSlice.name]: userSlice.reducer,
+  [<%= name %>Slice.name]: <%= name %>Slice.reducer,
 };
 
 export const reducerMiddleware = [

@@ -1,5 +1,5 @@
 ---
-to: <%= `${cwd}/${name}/${name}.test.ts` %>
+to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
 ---
 import type {
   EntityCreate,
@@ -8,20 +8,20 @@ import {
   entityApi,
 } from '@amnis/query/entityApi/entityApi.node';
 import {
-  userInitialState,
-  userActions,
-  userSelectors,
+  <%= name %>InitialState,
+  <%= name %>Actions,
+  <%= name %>Selectors,
 } from './<%= name %>';
 import type {
   <%= Name %>,
 } from './<%= name %>.types';
 
 import { storeSetup } from './<%= name %>.store';
-import { userMockServer } from './<%= name %>.mock';
+import { <%= name %>MockServer } from './<%= name %>.mock';
 
-beforeAll(() => userMockServer.listen());
-afterEach(() => userMockServer.resetHandlers());
-afterAll(() => userMockServer.close());
+beforeAll(() => <%= name %>MockServer.listen());
+afterEach(() => <%= name %>MockServer.resetHandlers());
+afterAll(() => <%= name %>MockServer.close());
 
 /**
  * ============================================================
@@ -31,7 +31,7 @@ test('<%= name %> should return the initial state', () => {
 
   expect(
     store.getState()['@amnis/<%= name %>'],
-  ).toEqual(userInitialState);
+  ).toEqual(<%= name %>InitialState);
 });
 
 /**
@@ -44,9 +44,9 @@ test('should handle the creation of a new <%= name %>', () => {
     displayName: 'eCrow',
   };
 
-  store.dispatch(userActions.create(payload));
+  store.dispatch(<%= name %>Actions.create(payload));
 
-  const entities = userSelectors.selectAll(store.getState());
+  const entities = <%= name %>Selectors.selectAll(store.getState());
 
   expect(entities).toHaveLength(1);
 
@@ -66,9 +66,9 @@ test('should handle setting active entity', () => {
     displayName: 'eCrow',
   };
 
-  store.dispatch(userActions.create(payload));
+  store.dispatch(<%= name %>Actions.create(payload));
 
-  const entities = userSelectors.selectAll(store.getState());
+  const entities = <%= name %>Selectors.selectAll(store.getState());
 
   expect(entities).toHaveLength(1);
 

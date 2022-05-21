@@ -39,7 +39,7 @@
     "test": "jest",
     "test:init": "yarn test config:init",
     "test:watch": "yarn test --watch",
-    "gen:entity": "hygen entity new",
+    "gen:entity": "hygen state entity --path packages/amnis-state/src",
     "delete-node-modules": "npx rimraf ./**/node_modules"
   }
 }
