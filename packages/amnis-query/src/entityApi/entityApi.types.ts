@@ -10,7 +10,9 @@ export type QueryNest<E extends Entity> = Pick<
 QueryNestInclude<E>,
 {
   [K in keyof QueryNestInclude<E>]:
-  QueryNestInclude<E>[K] extends undefined ? never : K}[keyof QueryNestInclude<E>
+  QueryNestInclude<E>[K] extends undefined ? never : K
+}[
+  keyof QueryNestInclude<E>
 ]
 >;
 

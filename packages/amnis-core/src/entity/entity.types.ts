@@ -35,7 +35,7 @@ export interface Entity {
 
   /**
    * Flag to determine if the entity has been committed to storage.
-   * @deafult false
+   * @default false
    */
   committed: boolean;
 }
