@@ -1,22 +1,22 @@
 import { entityCreate } from '@amnis/core/entity';
-import { mockServer } from '@amnis/query/mock';
+import { mockServer } from '@amnis/query/entityApi/entityApi.mock';
 import { User } from './user.types';
 
-export const userMockServer = mockServer<User>('user', {
+export const userMockServer = mockServer('user', {
   user: [
-    entityCreate({
+    entityCreate<User>({
       displayName: 'eCrow',
     }),
-    entityCreate({
+    entityCreate<User>({
       displayName: 'Feemagie',
     }),
-    entityCreate({
+    entityCreate<User>({
       displayName: 'Koi',
     }),
-    entityCreate({
+    entityCreate<User>({
       displayName: 'Soapy',
     }),
-    entityCreate({
+    entityCreate<User>({
       displayName: 'LiquidFerret',
     }),
   ],

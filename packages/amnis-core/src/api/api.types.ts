@@ -32,3 +32,13 @@ export interface ApiResponse {
    */
   expire?: DateJSON;
 }
+
+/**
+ * API Redux Payload.
+ */
+export interface ApiPayload<B extends ApiRequest> {
+  /**
+   * Ask to renew the session.
+   */
+  body: B;
+}

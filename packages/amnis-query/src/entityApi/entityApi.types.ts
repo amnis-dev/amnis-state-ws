@@ -25,20 +25,26 @@ export type QueryFilter<E extends Entity> = {
 };
 
 /**
+ * ================================================================================
+ * Requests/Responses
+ * ------------------------------------------------------------
+ */
+
+/**
  * Create Response
  * Server -> Client
  */
-export interface EntityApiCreateResponse<E extends Entity> extends ApiResponse {
-  entity?: Record<string, E[]>;
+export interface EntityApiCreateResponse extends ApiResponse {
+  entity?: Record<string, Entity[]>;
 }
 
 /**
  * Create Request
  * Client -> Server
  */
-export interface EntityApiCreateRequest<E extends Entity> extends ApiRequest {
-  nest?: QueryNest<E>;
-  filter?: QueryFilter<E>;
+export interface EntityApiCreateRequest extends ApiRequest {
+  nest?: QueryNest<Entity>;
+  filter?: QueryFilter<Entity>;
   start?: number;
   limit?: number;
 }
@@ -47,17 +53,49 @@ export interface EntityApiCreateRequest<E extends Entity> extends ApiRequest {
  * READ Response
  * Server -> Client
  */
-export interface EntityApiReadResponse<E extends Entity> extends ApiResponse {
-  entityMap?: Record<string, E[]>;
+export interface EntityApiReadResponse extends ApiResponse {
+  entityMap?: Record<string, Entity[]>;
 }
 
 /**
  * READ Request
  * Client -> Server
  */
-export interface EntityApiReadRequest<E extends Entity> extends ApiRequest {
-  nest?: QueryNest<E>;
-  filter?: QueryFilter<E>;
+export interface EntityApiReadRequest extends ApiRequest {
+  nest?: QueryNest<Entity>;
+  filter?: QueryFilter<Entity>;
   start?: number;
   limit?: number;
+}
+
+/**
+ * ================================================================================
+ * Redux Payloads
+ * ------------------------------------------------------------
+ */
+
+// export interface EntityApiReadPayload {
+
+// }
+
+/**
+ * ================================================================================
+ * Queries/Handlers
+ * ------------------------------------------------------------
+ */
+
+/**
+ * Entity API Queries
+ */
+export interface EntityApiQueries {
+  create: (body: EntityApiCreateRequest) => EntityApiCreateResponse;
+  read: (body: EntityApiReadRequest) => EntityApiReadResponse;
+}
+
+/**
+ * Entity API Handlers
+ */
+export interface EntityApiHandlers {
+  create: (body: EntityApiCreateRequest) => EntityApiCreateResponse;
+  read: (body: EntityApiReadRequest) => EntityApiCreateResponse;
 }

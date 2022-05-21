@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
-import type { Entity } from '@amnis/core/entity';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { baseUrlDefault } from '../common';
+import { entityApiBaseUrl } from './entityApi.const';
 import type {
   EntityApiCreateResponse,
   EntityApiCreateRequest,
@@ -18,14 +17,14 @@ global.Request = Request;
 export const entityApi = createApi({
   reducerPath: '@amnis/api:entity',
   baseQuery: fetchBaseQuery({
-    baseUrl: baseUrlDefault,
+    baseUrl: entityApiBaseUrl,
     fetchFn: fetch,
   }),
   endpoints: (builder) => ({
-    create: builder.query<EntityApiCreateResponse<Entity>, EntityApiCreateRequest<Entity>>({
+    create: builder.query<EntityApiCreateResponse, EntityApiCreateRequest>({
       query: entryQueryRead,
     }),
-    read: builder.query<EntityApiReadResponse<Entity>, EntityApiReadRequest<Entity>>({
+    read: builder.query<EntityApiReadResponse, EntityApiReadRequest>({
       query: entryQueryRead,
     }),
   }),
