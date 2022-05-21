@@ -8,26 +8,26 @@ import type {
   EntityApiReadResponse,
 } from './entityApi.types';
 
-export const entityApiHandlers: EntityApiHandlers = {
-  create: (body) => {
-    const response = {};
-    return response;
-  },
-  read: (body) => {
-    const response = {};
-    return response;
-  },
-};
-
 export function entityApiMockHandlers(
   name: string,
   database: Record<string, Entity[]>,
   baseUrl = entityApiBaseUrl,
 ) {
+  const entityApiHandlers: EntityApiHandlers = {
+    create: (body) => {
+      const response = {};
+      return response;
+    },
+    read: (body) => {
+      const response = {};
+      return response;
+    },
+  };
+
+  /**
+   * Entity Create Handler.
+   */
   return [
-    /**
-     * Entity Create Handler.
-     */
     rest.post<EntityApiReadRequest, never, EntityApiReadResponse>(
       `${baseUrl}create`,
       (req, res, ctx) => {

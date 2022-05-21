@@ -1,4 +1,4 @@
-import { DateJSON } from '../common.types';
+import type { DateJSON } from '../common.types';
 
 /**
  * An API error repsonse.
