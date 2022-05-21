@@ -1,22 +1,16 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { entityApi } from '@amnis/query/entityApi/entityApi.node';
-import { userSlice } from './user';
+import { reducerMap, reducerMiddleware } from './user.reducer';
 
-export const reducerMap = {
-  [entityApi.reducerPath]: entityApi.reducer,
-  [userSlice.name]: userSlice.reducer,
-};
-
-export function setupStore() {
+export function storeSetup() {
   const rootReducer = combineReducers(reducerMap);
 
   const userStore = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
-      getDefaultMiddleware().concat(entityApi.middleware)
+      getDefaultMiddleware().concat(reducerMiddleware)
     ),
   });
   return userStore;
 }
 
-export default setupStore;
+export default storeSetup;

@@ -28,5 +28,5 @@ export type UserState = EntityState<User> & UserMeta;
  * User root state.
  */
 export interface UserRootState {
-  user: UserState;
+  ['@amnis/user']: UserState;
 }

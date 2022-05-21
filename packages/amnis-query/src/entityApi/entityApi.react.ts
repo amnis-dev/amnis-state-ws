@@ -12,7 +12,7 @@ import {
 } from './entityApi.queries';
 
 export const entityApi = createApi({
-  reducerPath: 'entityApi',
+  reducerPath: '@amnis/api:entity',
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrlDefault,
   }),

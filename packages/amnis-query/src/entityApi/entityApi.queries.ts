@@ -6,13 +6,13 @@ import type {
 } from './entityApi.types';
 
 export const entryQueryCreate = (request: EntityApiCreateRequest<Entity>): string | FetchArgs => ({
-  url: 'entity/read',
+  url: 'create',
   method: 'post',
   body: request,
 });
 
 export const entryQueryRead = (request: EntityApiReadRequest<Entity>): string | FetchArgs => ({
-  url: 'entity/read',
+  url: 'read',
   method: 'post',
   body: request,
 });

@@ -16,7 +16,7 @@ global.Headers = Headers;
 global.Request = Request;
 
 export const entityApi = createApi({
-  reducerPath: 'api:entity',
+  reducerPath: '@amnis/api:entity',
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrlDefault,
     fetchFn: fetch,

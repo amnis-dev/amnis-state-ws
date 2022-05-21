@@ -26,7 +26,7 @@ export const userInitialState = adapter.getInitialState({
  * RTK User Slice
  */
 export const userSlice = createSlice({
-  name: 'user',
+  name: '@amnis/user',
   initialState: userInitialState,
   reducers: {
     ...sliceEntityReducers<User>(adapter),
@@ -46,6 +46,6 @@ export const userActions = userSlice.actions;
 /**
  * User redux selectors.
  */
-export const userSelectors = adapter.getSelectors<UserRootState>((state) => state.user);
+export const userSelectors = adapter.getSelectors<UserRootState>((state) => state['@amnis/user']);
 
 export default userSlice;

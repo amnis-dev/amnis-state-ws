@@ -1,4 +1,4 @@
-import { entityApi } from '@amnis/query/entityApi';
+import { entityApi } from '@amnis/query/entityApi/entityApi.node';
 import { userSlice } from './user';
 
 export const reducerMap = {
@@ -10,4 +10,4 @@ export const reducerMiddleware = [
   entityApi.middleware,
 ];
 
-export default { reducerMap };
+export default reducerMap;
