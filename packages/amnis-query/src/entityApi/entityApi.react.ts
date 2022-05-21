@@ -9,7 +9,7 @@ import type {
 } from './entityApi.types';
 import {
   entryQueryRead,
-} from './entityApiQueries';
+} from './entityApi.queries';
 
 export const entityApi = createApi({
   reducerPath: 'entityApi',

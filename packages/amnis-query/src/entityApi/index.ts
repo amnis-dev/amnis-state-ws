@@ -1,3 +1,3 @@
 export * from './entityApi.types';
-export * from './entityApiQueries';
+export * from './entityApi.queries';
 export * from './entityApi.react';

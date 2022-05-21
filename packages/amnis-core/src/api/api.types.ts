@@ -13,7 +13,7 @@ export interface ApiError {
  */
 export interface ApiRequest {
   /**
-   * Ask to renew session.
+   * Ask to renew the session.
    */
   renew?: boolean;
 }
