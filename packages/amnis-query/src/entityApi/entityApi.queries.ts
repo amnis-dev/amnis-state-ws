@@ -1,4 +1,3 @@
-import type { Entity } from '@amnis/core/entity';
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
   EntityApiCreateRequest,

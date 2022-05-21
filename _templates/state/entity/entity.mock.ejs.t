@@ -7,21 +7,9 @@ import { <%= Name %> } from './<%= name %>.types';
 
 export const <%= name %>MockServer = entityApiMockServer('<%= name %>', {
   <%= name %>: [
-    entityCreate<<%= Name %>>({
-      displayName: 'eCrow',
-    }),
-    entityCreate<<%= Name %>>({
-      displayName: 'Feemagie',
-    }),
-    entityCreate<<%= Name %>>({
-      displayName: 'Koi',
-    }),
-    entityCreate<<%= Name %>>({
-      displayName: 'Soapy',
-    }),
-    entityCreate<<%= Name %>>({
-      displayName: 'LiquidFerret',
-    }),
+    entityCreate<<%= Name %>>({}),
+    entityCreate<<%= Name %>>({}),
+    entityCreate<<%= Name %>>({}),
   ],
 });
 

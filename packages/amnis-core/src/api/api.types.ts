@@ -11,7 +11,7 @@ export interface ApiError {
 /**
  * API Request.
  */
-export interface ApiRequest {
+export interface ApiRequestBody {
   /**
    * Ask to renew the session.
    */
@@ -21,7 +21,7 @@ export interface ApiRequest {
 /**
  * API Response.
  */
-export interface ApiResponse {
+export interface ApiResponseBody {
   /**
    * Possible error details.
    */
@@ -36,7 +36,7 @@ export interface ApiResponse {
 /**
  * API Redux Payload.
  */
-export interface ApiPayload<B extends ApiRequest> {
+export interface ApiPayload<B extends ApiRequestBody> {
   /**
    * Ask to renew the session.
    */

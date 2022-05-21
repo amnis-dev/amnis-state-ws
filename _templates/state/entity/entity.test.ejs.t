@@ -40,9 +40,7 @@ test('<%= name %> should return the initial state', () => {
 test('should handle the creation of a new <%= name %>', () => {
   const store = storeSetup();
 
-  const payload: EntityCreate<<%= Name %>> = {
-    displayName: 'eCrow',
-  };
+  const payload: EntityCreate<<%= Name %>> = {};
 
   store.dispatch(<%= name %>Actions.create(payload));
 
@@ -52,7 +50,6 @@ test('should handle the creation of a new <%= name %>', () => {
 
   expect(entities[0]).toEqual(expect.objectContaining({
     id: expect.any(String),
-    displayName: expect.any(String),
   }));
 });
 
@@ -62,9 +59,7 @@ test('should handle the creation of a new <%= name %>', () => {
 test('should handle setting active entity', () => {
   const store = storeSetup();
 
-  const payload: EntityCreate<<%= Name %>> = {
-    displayName: 'eCrow',
-  };
+  const payload: EntityCreate<<%= Name %>> = {};
 
   store.dispatch(<%= name %>Actions.create(payload));
 
@@ -74,7 +69,6 @@ test('should handle setting active entity', () => {
 
   expect(entities[0]).toEqual(expect.objectContaining({
     id: expect.any(String),
-    displayName: expect.any(String),
   }));
 });
 
