@@ -4,7 +4,7 @@
 declare const dateSymbol: unique symbol;
 
 /**
- * A id reference for specific entity.
+ * A string that represents a JSON Date.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type DateJSON = string & {[dateSymbol]: never};

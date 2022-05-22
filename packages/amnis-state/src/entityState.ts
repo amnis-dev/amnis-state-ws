@@ -10,9 +10,9 @@ import {
   EntityStatePayloadFocusSet,
   EntityStatePayloadSelectionSet,
   EntityState,
-} from './slice.types';
+} from './entityState.types';
 
-export function sliceEntityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
+export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
   return {
     /**
      * Creates a new entity.
@@ -90,4 +90,4 @@ export function sliceEntityReducers<E extends Entity>(adapter: EntityAdapter<E>)
   };
 }
 
-export default { sliceEntityReducers };
+export default { entityReducers };

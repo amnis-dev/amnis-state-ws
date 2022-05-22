@@ -41,6 +41,16 @@ export interface Entity {
 }
 
 /**
+ * An ambiguous entity that could have additional properties.
+ */
+export interface EntityAmbiguous extends Entity {
+  /**
+   * Any number of additional entity properties.
+   */
+  [key: string]: unknown;
+}
+
+/**
  * Unique reference symbol to define a reference of a specific type.
  */
 declare const entitySymbol: unique symbol;
@@ -85,3 +95,37 @@ export type EntityCreate<E extends Entity> = EntityOmit<E>;
  * Type for an Entity Updating
  */
 export type EntityUpdate<E extends Entity> = Partial<EntityOmit<E>>;
+
+/**
+ * An interface for filtering entities.
+ */
+export type EntityFilter<E extends Entity = Entity> = {
+  [Key in keyof E]?: {
+    defined?: boolean;
+    lessThan?: number;
+    greaterThan?: number;
+    equals?: string | number | boolean | null;
+    includes?: string | number;
+  }
+};
+
+/**
+ * Sets types on an objects to undefined if they're not a subtype of Entity.
+ */
+type EntityQueryNestInclude<E extends Entity> = {
+  [Key in keyof E]?:
+  E[Key] extends EntityReference<infer R> ? EntityQueryNestInclude<R> : undefined
+};
+
+/**
+ * Removes all properties from an object that are not subtypes of Entity.
+ */
+export type EntityQueryNest<E extends Entity> = Pick<
+EntityQueryNestInclude<E>,
+{
+  [K in keyof EntityQueryNestInclude<E>]:
+  EntityQueryNestInclude<E>[K] extends undefined ? never : K
+}[
+  keyof EntityQueryNestInclude<E>
+]
+>;

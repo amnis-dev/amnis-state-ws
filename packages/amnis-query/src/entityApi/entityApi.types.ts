@@ -1,52 +1,32 @@
-import type { ApiRequestBody, ApiResponseBody } from '@amnis/core/api';
-import type { Entity, EntityReference } from '@amnis/core/entity';
-
-type QueryNestInclude<E extends Entity> = {
-  [Key in keyof E]?:
-  E[Key] extends EntityReference<infer R> ? QueryNestInclude<R> : undefined
-};
-
-export type QueryNest<E extends Entity> = Pick<
-QueryNestInclude<E>,
-{
-  [K in keyof QueryNestInclude<E>]:
-  QueryNestInclude<E>[K] extends undefined ? never : K
-}[
-  keyof QueryNestInclude<E>
-]
->;
-
-export type QueryFilter<E extends Entity> = {
-  [Key in keyof E]?: {
-    defined?: boolean;
-    lessThan?: number;
-    greaterThan?: number;
-    equals?: string | number | boolean | null;
-    includes?: string | number;
-  }
-};
-
-/**
- * ================================================================================
- * Requests/Responses
- * ------------------------------------------------------------
- */
-
-/**
- * Create Response
- * Server -> Client
- */
-export interface EntityApiCreateResponse extends ApiResponseBody {
-  entity?: Record<string, Entity[]>;
-}
+import type { ApiPayload, ApiRequestBody, ApiResponseBody } from '@amnis/core/api';
+import type { Entity, EntityFilter } from '@amnis/core/entity';
 
 /**
  * Create Request
  * Client -> Server
  */
-export interface EntityApiCreateRequest extends ApiRequestBody {
-  nest?: QueryNest<Entity>;
-  filter?: QueryFilter<Entity>;
+export interface EntityApiRequestBodyCreate extends ApiRequestBody {
+  depth?: number;
+  filter?: EntityFilter<Entity>;
+  start?: number;
+  limit?: number;
+}
+
+/**
+ * Create Response
+ * Server -> Client
+ */
+export interface EntityApiResponseBodyCreate extends ApiResponseBody {
+  entity?: Record<string, Entity[]>;
+}
+
+/**
+ * READ Request
+ * Client -> Server
+ */
+export interface EntityApiRequestBodyRead extends ApiRequestBody {
+  depth?: number;
+  filter?: EntityFilter;
   start?: number;
   limit?: number;
 }
@@ -55,19 +35,8 @@ export interface EntityApiCreateRequest extends ApiRequestBody {
  * READ Response
  * Server -> Client
  */
-export interface EntityApiReadResponse extends ApiResponseBody {
+export interface EntityApiResponseBodyRead extends ApiResponseBody {
   entityMap?: Record<string, Entity[]>;
-}
-
-/**
- * READ Request
- * Client -> Server
- */
-export interface EntityApiReadRequest extends ApiRequestBody {
-  nest?: QueryNest<Entity>;
-  filter?: QueryFilter<Entity>;
-  start?: number;
-  limit?: number;
 }
 
 /**
@@ -76,28 +45,12 @@ export interface EntityApiReadRequest extends ApiRequestBody {
  * ------------------------------------------------------------
  */
 
-// export interface EntityApiReadPayload {
-
-// }
+/**
+ * Redux Payload for a create request.
+ */
+export type EntityApiPayloadCreate = ApiPayload<EntityApiRequestBodyCreate>;
 
 /**
- * ================================================================================
- * Queries/Handlers
- * ------------------------------------------------------------
+ * Redux Payload for a read request.
  */
-
-/**
- * Entity API Queries
- */
-export interface EntityApiQueries {
-  create: (body: EntityApiCreateRequest) => EntityApiCreateResponse;
-  read: (body: EntityApiReadRequest) => EntityApiReadResponse;
-}
-
-/**
- * Entity API Handlers
- */
-export interface EntityApiHandlers {
-  create: (body: EntityApiCreateRequest) => EntityApiCreateResponse;
-  read: (body: EntityApiReadRequest) => EntityApiCreateResponse;
-}
+export type EntityApiPayloadRead = ApiPayload<EntityApiRequestBodyRead>;

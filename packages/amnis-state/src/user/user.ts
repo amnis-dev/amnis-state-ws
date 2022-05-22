@@ -4,7 +4,7 @@ import type {
   UserMeta,
   UserRootState,
 } from './user.types';
-import { sliceEntityReducers } from '../slice';
+import { entityReducers } from '../entityState';
 
 /**
  * RTK user adapter.
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
   name: '@amnis/user',
   initialState: userInitialState,
   reducers: {
-    ...sliceEntityReducers<User>(adapter),
+    ...entityReducers<User>(adapter),
   },
 });
 

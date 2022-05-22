@@ -7,7 +7,7 @@ import type {
   <%= Name %>Meta,
   <%= Name %>RootState,
 } from './<%= name %>.types';
-import { sliceEntityReducers } from '../slice';
+import { entityReducers } from '../entityState';
 
 /**
  * RTK <%= name %> adapter.
@@ -32,7 +32,7 @@ export const <%= name %>Slice = createSlice({
   name: '@amnis/<%= name %>',
   initialState: <%= name %>InitialState,
   reducers: {
-    ...sliceEntityReducers<<%= Name %>>(adapter),
+    ...entityReducers<<%= Name %>>(adapter),
   },
 });
 

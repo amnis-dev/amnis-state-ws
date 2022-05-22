@@ -1,68 +1,38 @@
-import { rest } from 'msw';
+import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
-import type { Entity } from '@amnis/core/entity';
+import type { EntityAmbiguous } from '@amnis/core/entity';
+import { ApiRequestBody, ApiResponseBody } from '@amnis/core/api';
 import { entityApiBaseUrl } from './entityApi.const';
-import type {
-  EntityApiHandlers,
-  EntityApiReadRequest,
-  EntityApiReadResponse,
-} from './entityApi.types';
+import { entityApiGenerateHandlers } from './entityApi.handlers';
 
 export function entityApiMockHandlers(
   name: string,
-  database: Record<string, Entity[]>,
+  database: Record<string, EntityAmbiguous[]>,
   baseUrl = entityApiBaseUrl,
 ) {
-  const entityApiHandlers: EntityApiHandlers = {
-    create: (body) => {
-      const response = {};
-      return response;
-    },
-    read: (body) => {
-      const response = {};
-      return response;
-    },
-  };
+  const handlers = entityApiGenerateHandlers();
 
-  /**
-   * Entity Create Handler.
-   */
-  return [
-    rest.post<EntityApiReadRequest, never, EntityApiReadResponse>(
-      `${baseUrl}create`,
+  const mockHandlers: RestHandler[] = Object.keys(handlers).map((key) => (
+    rest.post<ApiRequestBody, never, ApiResponseBody>(
+      `${baseUrl}${key}`,
       (req, res, ctx) => {
-        const response = entityApiHandlers.read(req.body);
+        const response = handlers[key](req.body);
 
         return res(
           ctx.status(200),
           ctx.json(response),
         );
       },
-    ),
+    )
+  ));
 
-    /**
-     * Entity Read Handler.
-     */
-    rest.post<EntityApiReadRequest, never, EntityApiReadResponse>(
-      `${baseUrl}read`,
-      (req, res, ctx) => {
-        const response = entityApiHandlers.read(req.body);
-
-        return res(
-          ctx.status(200),
-          ctx.json(response),
-        );
-      },
-    ),
-  ];
+  return mockHandlers;
 }
 
 export function entityApiMockServer(
   name: string,
-  database: Record<string, Entity[]>,
+  database: Record<string, EntityAmbiguous[]>,
   baseUrl = entityApiBaseUrl,
 ) {
   return setupServer(...entityApiMockHandlers(name, database, baseUrl));
 }
-
-export default entityApiMockServer;
