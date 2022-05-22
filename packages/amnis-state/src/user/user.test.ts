@@ -13,7 +13,7 @@ import type {
   User,
 } from './user.types';
 
-import { storeSetup } from './user.store';
+import { userStoreSetup } from './user.store';
 import { userMockServer } from './user.mock';
 
 beforeAll(() => userMockServer.listen());
@@ -24,7 +24,7 @@ afterAll(() => userMockServer.close());
  * ============================================================
  */
 test('user should return the initial state', () => {
-  const store = storeSetup();
+  const store = userStoreSetup();
 
   expect(
     store.getState()['@amnis/user'],
@@ -35,7 +35,7 @@ test('user should return the initial state', () => {
  * ============================================================
  */
 test('should handle the creation of a new user', () => {
-  const store = storeSetup();
+  const store = userStoreSetup();
 
   const payload: EntityCreate<User> = {
     displayName: 'eCrow',
@@ -57,7 +57,7 @@ test('should handle the creation of a new user', () => {
  * ============================================================
  */
 test('should handle setting active entity', () => {
-  const store = storeSetup();
+  const store = userStoreSetup();
 
   const payload: EntityCreate<User> = {
     displayName: 'eCrow',
@@ -79,9 +79,11 @@ test('should handle setting active entity', () => {
  * ============================================================
  */
 test('should fetch user data', async () => {
-  const store = storeSetup();
+  const store = userStoreSetup();
 
-  const action = await store.dispatch(entityApi.endpoints.read.initiate({}));
+  const action = await store.dispatch(
+    entityApi.endpoints.read.initiate({ body: {} }),
+  );
   const { status } = action;
 
   expect(status).toBe('fulfilled');

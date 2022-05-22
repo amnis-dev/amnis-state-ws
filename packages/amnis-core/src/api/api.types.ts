@@ -1,5 +1,5 @@
-import { FetchArgs } from '@reduxjs/toolkit/dist/query';
-import type { DateJSON } from '../common.types';
+import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
+import type { DateJSON } from '../core.types';
 
 /**
  * An API error repsonse.

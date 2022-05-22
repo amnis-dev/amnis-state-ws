@@ -1,14 +1,14 @@
 import { nanoid } from 'nanoid';
-import { dateJSON } from '../common';
+import { dateJSON } from '../core';
+import type { Reference } from '../core.types';
 import type {
   Entity,
   EntityCreate,
-  EntityReference,
   EntityUpdate,
 } from './entity.types';
 
-export function entityRef<E extends Entity>(id: string): EntityReference<E> {
-  return id as EntityReference<E>;
+export function entityRef<E extends Entity>(id: string): Reference<E> {
+  return id as Reference<E>;
 }
 
 export function entityCreate<E extends Entity>(

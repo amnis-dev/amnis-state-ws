@@ -1,4 +1,5 @@
-import type { DateJSON } from '../common.types';
+import type { EntityState as RTKEntityState } from '@reduxjs/toolkit';
+import type { Reference, DateJSON } from '../core.types';
 
 /**
  * A common entity object.
@@ -38,6 +39,11 @@ export interface Entity {
    * @default false
    */
   committed: boolean;
+
+  /**
+   * Anything that beings with a '$' must be a document reference.
+   */
+  [key: `$${string}`]: Reference;
 }
 
 /**
@@ -51,34 +57,23 @@ export interface EntityAmbiguous extends Entity {
 }
 
 /**
- * Unique reference symbol to define a reference of a specific type.
- */
-declare const entitySymbol: unique symbol;
-
-/**
-  * A id reference for specific entity.
-  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type EntityReference<E extends Entity> = string & {[entitySymbol]: never};
-
-/**
  * Meta information for a collection of enities.
  */
 export interface EntityMeta<E extends Entity> {
   /**
    * The entity id referencing the active entity.
    */
-  active: EntityReference<E> | null;
+  active: Reference<E> | null;
 
   /**
     * The id representing a focused entity.
     */
-  focused: EntityReference<E> | null;
+  focused: Reference<E> | null;
 
   /**
     * List of ids considered to be selected.
     */
-  selection: EntityReference<E>[];
+  selection: Reference<E>[];
 }
 
 /**
@@ -112,9 +107,9 @@ export type EntityFilter<E extends Entity = Entity> = {
 /**
  * Sets types on an objects to undefined if they're not a subtype of Entity.
  */
-type EntityQueryNestInclude<E extends Entity> = {
+type EntityQueryNestInclude<E> = {
   [Key in keyof E]?:
-  E[Key] extends EntityReference<infer R> ? EntityQueryNestInclude<R> : undefined
+  E[Key] extends Reference<infer R> ? EntityQueryNestInclude<R> : undefined
 };
 
 /**
@@ -129,3 +124,35 @@ EntityQueryNestInclude<E>,
   keyof EntityQueryNestInclude<E>
 ]
 >;
+
+/**
+ * An entity state.
+ */
+export type EntityState<E extends Entity> = RTKEntityState<E> & EntityMeta<E>;
+
+/**
+ * ================================================================================
+ * Payloads
+ * ------------------------------------------------------------
+ */
+
+export type EntityPayloadActiveSet<E extends Entity> = Reference<E>;
+
+export type EntityPayloadFocusSet<E extends Entity> = Reference<E>;
+
+export type EntityPayloadSelectionSet<E extends Entity> = Reference<E>[];
+
+/**
+ * Create a new ambiguous entity.
+ */
+export interface EntityPayloadCreate {
+  /**
+   * Should match the key of the entity on the root state.
+   */
+  key: string;
+
+  /**
+   * The entity object.
+   */
+  entity: Entity;
+}

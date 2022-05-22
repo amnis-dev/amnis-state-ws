@@ -1,10 +1,10 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { entityCreate, entityReducers } from '@amnis/core/entity';
 import type {
   User,
   UserMeta,
   UserRootState,
 } from './user.types';
-import { entityReducers } from '../entityState';
 
 /**
  * RTK user adapter.
@@ -29,7 +29,12 @@ export const userSlice = createSlice({
   name: '@amnis/user',
   initialState: userInitialState,
   reducers: {
-    ...entityReducers<User>(adapter),
+    test: (state) => {
+      adapter.addOne(state, entityCreate({ displayName: '' }));
+    },
+  },
+  extraReducers: (builder) => {
+    entityReducers<User>(adapter, builder);
   },
 });
 

@@ -1,25 +1,11 @@
-import { entityCreate } from '@amnis/core/entity';
-import { entityApiMockServer } from '@amnis/query/entityApi/entityApi.mock';
-import { User } from './user.types';
+import { apiMockGenerateHandlers, apiMockServer } from '@amnis/core/api/api.mock';
+import { entityApiHandlersGenerate } from '@amnis/query/entityApi';
+import { userStoreSetup } from './user.store';
 
-export const userMockServer = entityApiMockServer('user', {
-  user: [
-    entityCreate<User>({
-      displayName: 'eCrow',
-    }),
-    entityCreate<User>({
-      displayName: 'Feemagie',
-    }),
-    entityCreate<User>({
-      displayName: 'Koi',
-    }),
-    entityCreate<User>({
-      displayName: 'Soapy',
-    }),
-    entityCreate<User>({
-      displayName: 'LiquidFerret',
-    }),
-  ],
-});
+const mockStore = userStoreSetup();
+
+const mockHandlers = apiMockGenerateHandlers('user', entityApiHandlersGenerate());
+
+export const userMockServer = apiMockServer(mockHandlers);
 
 export default userMockServer;

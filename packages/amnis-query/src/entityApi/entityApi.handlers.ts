@@ -1,10 +1,11 @@
+// import type { EnhancedStore } from '@reduxjs/toolkit';
 import { ApiHandlers } from '@amnis/core/api';
 import type {
   EntityApiResponseBodyCreate,
   EntityApiResponseBodyRead,
 } from './entityApi.types';
 
-export function entityApiGenerateHandlers(): ApiHandlers {
+export function entityApiHandlersGenerate(/** store: EnhancedStore */): ApiHandlers {
   return {
     create: (): EntityApiResponseBodyCreate => {
       const response = {};
@@ -17,4 +18,4 @@ export function entityApiGenerateHandlers(): ApiHandlers {
   };
 }
 
-export default entityApiGenerateHandlers;
+export default entityApiHandlersGenerate;

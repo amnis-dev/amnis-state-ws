@@ -1,4 +1,4 @@
-import { DateJSON } from './common.types';
+import { DateJSON } from './core.types';
 
 export const noop = () => { /** No operation. */ };
 

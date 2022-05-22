@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { reducerMap, reducerMiddleware } from './user.reducer';
 
-export function storeSetup() {
+export function userStoreSetup() {
   const rootReducer = combineReducers(reducerMap);
 
   const userStore = configureStore({
@@ -13,4 +13,4 @@ export function storeSetup() {
   return userStore;
 }
 
-export default storeSetup;
+export default userStoreSetup;

@@ -8,13 +8,13 @@ import type {
   EntityApiPayloadRead,
 } from './entityApi.types';
 import {
-  entryApiGenerateQueries,
+  entryApiQueriesGenerate,
 } from './entityApi.queries';
 
 global.Headers = Headers;
 global.Request = Request;
 
-const queries = entryApiGenerateQueries();
+const queries = entryApiQueriesGenerate();
 
 export const entityApi = createApi({
   reducerPath: '@amnis/api:entity',

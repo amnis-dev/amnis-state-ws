@@ -4,7 +4,7 @@ import type {
   EntityApiPayloadRead,
 } from './entityApi.types';
 
-export function entryApiGenerateQueries(): ApiQueries {
+export function entryApiQueriesGenerate(): ApiQueries {
   return {
     create: (payload: EntityApiPayloadCreate) => ({
       url: 'create',
@@ -19,4 +19,4 @@ export function entryApiGenerateQueries(): ApiQueries {
   };
 }
 
-export default entryApiGenerateQueries;
+export default entryApiQueriesGenerate;
