@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { DateJSON } from '../core.types';
 
@@ -59,8 +60,8 @@ export interface ApiQueries {
  * API handler for a request.
  */
 export type ApiHandler<
-  ReqB extends ApiRequestBody = ApiRequestBody,
-  ResB extends ApiResponseBody = ApiResponseBody
+  ReqB = any,
+  ResB = any
 > = (body: ReqB) => ResB;
 
 /**

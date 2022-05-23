@@ -1,24 +1,23 @@
-import type {
-  EntityCreate,
-} from '@amnis/core/entity';
+import { apiMockGenerateHandlers, apiMockServer } from '@amnis/core/api/api.mock';
+import { stateApiBaseUrl, stateApiHandlersGenerate } from '@amnis/query/stateApi';
 import {
-  entityApi,
-} from '@amnis/query/entityApi/entityApi.node';
+  stateApi,
+} from '@amnis/query/stateApi/stateApi.node';
+import { AnyAction } from '@reduxjs/toolkit';
 import {
   userInitialState,
   userActions,
   userSelectors,
 } from './user';
-import type {
-  User,
-} from './user.types';
 
 import { userStoreSetup } from './user.store';
-import { userMockServer } from './user.mock';
 
-beforeAll(() => userMockServer.listen());
-afterEach(() => userMockServer.resetHandlers());
-afterAll(() => userMockServer.close());
+const mockHandlers = apiMockGenerateHandlers(stateApiBaseUrl, stateApiHandlersGenerate());
+const mockServer = apiMockServer(mockHandlers);
+
+beforeAll(() => mockServer.listen());
+afterEach(() => mockServer.resetHandlers());
+afterAll(() => mockServer.close());
 
 /**
  * ============================================================
@@ -27,24 +26,22 @@ test('user should return the initial state', () => {
   const store = userStoreSetup();
 
   expect(
-    store.getState()['@amnis/user'],
+    store.getState()['entity:user'],
   ).toEqual(userInitialState);
 });
 
 /**
  * ============================================================
  */
-test('should handle the creation of a new user', () => {
+test('should handle the creation of a new user with a valid matched key', () => {
   const store = userStoreSetup();
 
-  const payload: EntityCreate<User> = {
+  const action = userActions.create({
     displayName: 'eCrow',
-  };
+  });
 
-  store.dispatch(userActions.create(payload));
-
+  store.dispatch(action);
   const entities = userSelectors.selectAll(store.getState());
-
   expect(entities).toHaveLength(1);
 
   expect(entities[0]).toEqual(expect.objectContaining({
@@ -56,35 +53,23 @@ test('should handle the creation of a new user', () => {
 /**
  * ============================================================
  */
-test('should handle setting active entity', () => {
-  const store = userStoreSetup();
-
-  const payload: EntityCreate<User> = {
-    displayName: 'eCrow',
-  };
-
-  store.dispatch(userActions.create(payload));
-
-  const entities = userSelectors.selectAll(store.getState());
-
-  expect(entities).toHaveLength(1);
-
-  expect(entities[0]).toEqual(expect.objectContaining({
-    id: expect.any(String),
-    displayName: expect.any(String),
-  }));
-});
-
-/**
- * ============================================================
- */
-test('should fetch user data', async () => {
+test('should create user data through API', async () => {
   const store = userStoreSetup();
 
   const action = await store.dispatch(
-    entityApi.endpoints.read.initiate({ body: {} }),
+    stateApi.endpoints.dispatch.initiate({
+      body: userActions.create({
+        displayName: 'eCrow',
+      }),
+    }),
   );
-  const { status } = action;
 
-  expect(status).toBe('fulfilled');
+  expect(action.status).toBe('fulfilled');
+
+  const data = action.data as AnyAction;
+
+  store.dispatch(data);
+
+  const entities = userSelectors.selectAll(store.getState());
+  expect(entities).toHaveLength(1);
 });

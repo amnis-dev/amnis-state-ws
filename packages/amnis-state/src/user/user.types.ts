@@ -1,4 +1,3 @@
-import type { EntityState } from '@reduxjs/toolkit';
 import type {
   Entity,
   EntityMeta,
@@ -18,15 +17,3 @@ export interface User extends Entity {
  * User collection meta data.
  */
 export type UserMeta = EntityMeta<User>;
-
-/**
- * User state.
- */
-export type UserState = EntityState<User> & UserMeta;
-
-/**
- * User root state.
- */
-export interface UserRootState {
-  ['@amnis/user']: UserState;
-}

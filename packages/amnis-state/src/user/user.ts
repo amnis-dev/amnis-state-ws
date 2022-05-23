@@ -1,40 +1,56 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { entityCreate, entityReducers } from '@amnis/core/entity';
+import {
+  AnyAction, createEntityAdapter, createSlice, isAllOf, PayloadAction,
+} from '@reduxjs/toolkit';
+import { entityReducers } from '@amnis/core/entity';
+import { stateApi } from '@amnis/query/stateApi/stateApi.node';
+import { StateApiResponseBodyDispatch } from '@amnis/query/stateApi';
 import type {
   User,
   UserMeta,
-  UserRootState,
 } from './user.types';
 
 /**
- * RTK user adapter.
+ * User meta key.
  */
-const adapter = createEntityAdapter<User>({
+export const userKey = 'entity:user';
+
+/**
+ * RTK user adapter.
+ * Manages the normalized entities.
+ */
+export const userAdapter = createEntityAdapter<User>({
   selectId: (entity) => entity.id,
 });
 
 /**
- * Initial user map state.
+ * Initialized user state with meta information.
  */
-export const userInitialState = adapter.getInitialState({
+export const userInitialState = userAdapter.getInitialState<UserMeta>({
   active: null,
   focused: null,
   selection: [],
-} as UserMeta);
+});
+
+/**
+ * Matcher to determine if a fulfilled payload contains the same key type.
+ */
+// function isResponseMatchingType(
+//   action: PayloadAction<StateApiResponseBodyDispatch>,
+// ): action is PayloadAction<StateApiResponseBodyDispatch> {
+//   return action.payload.type.startsWith(userKey);
+// }
 
 /**
  * RTK User Slice
  */
 export const userSlice = createSlice({
-  name: '@amnis/user',
+  name: userKey,
   initialState: userInitialState,
   reducers: {
-    test: (state) => {
-      adapter.addOne(state, entityCreate({ displayName: '' }));
-    },
-  },
-  extraReducers: (builder) => {
-    entityReducers<User>(adapter, builder);
+    /**
+     * Required: Enables mutations from entity actions.
+     */
+    ...entityReducers<User>(userAdapter),
   },
 });
 
@@ -51,6 +67,11 @@ export const userActions = userSlice.actions;
 /**
  * User redux selectors.
  */
-export const userSelectors = adapter.getSelectors<UserRootState>((state) => state['@amnis/user']);
+export const userSelectors = userAdapter.getSelectors<{
+  [userKey]: typeof userInitialState;
+}>((state) => state[userKey]);
 
+/**
+ * Export the slice as default.
+ */
 export default userSlice;

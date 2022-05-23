@@ -3,6 +3,7 @@ import type { Reference, DateJSON } from '../core.types';
 
 /**
  * A common entity object.
+ * Entity's are serializable (JSON) objects that can be committed to NoSQL Databases.
  */
 export interface Entity {
   /**
@@ -55,6 +56,11 @@ export interface EntityAmbiguous extends Entity {
    */
   [key: string]: unknown;
 }
+
+/**
+ * Key to an entity meta object.
+ */
+export type EntityMetaKey<N extends string = string> = `entity:${N}`;
 
 /**
  * Meta information for a collection of enities.
@@ -135,24 +141,10 @@ export type EntityState<E extends Entity> = RTKEntityState<E> & EntityMeta<E>;
  * Payloads
  * ------------------------------------------------------------
  */
+export type EntityPayloadCreate<E extends Entity> = EntityCreate<E>;
 
 export type EntityPayloadActiveSet<E extends Entity> = Reference<E>;
 
 export type EntityPayloadFocusSet<E extends Entity> = Reference<E>;
 
 export type EntityPayloadSelectionSet<E extends Entity> = Reference<E>[];
-
-/**
- * Create a new ambiguous entity.
- */
-export interface EntityPayloadCreate {
-  /**
-   * Should match the key of the entity on the root state.
-   */
-  key: string;
-
-  /**
-   * The entity object.
-   */
-  entity: Entity;
-}

@@ -10,6 +10,7 @@ export function userStoreSetup() {
       getDefaultMiddleware().concat(reducerMiddleware)
     ),
   });
+
   return userStore;
 }
 
