@@ -46,7 +46,7 @@ export interface ApiPayload<B extends ApiRequestBody = ApiRequestBody> {
  * API request query.
  */
 export type ApiQuery<
-  P extends ApiPayload = ApiPayload
+  P = any
 > = (payload: P) => FetchArgs
 
 /**

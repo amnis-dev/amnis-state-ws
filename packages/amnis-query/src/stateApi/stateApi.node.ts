@@ -5,6 +5,8 @@ import { stateApiBaseUrl } from './stateApi.const';
 import type {
   StateApiResponseBodyDispatch,
   StateApiRequestBodyDispatch,
+  StateApiResponseBodySelect,
+  StateApiRequestBodySelect,
 } from './stateApi.types';
 import {
   stateApiQueriesGenerate,
@@ -27,6 +29,12 @@ export const stateApi = createApi({
     ApiPayload<StateApiRequestBodyDispatch>
     >({
       query: queries.dispatch,
+    }),
+    select: builder.query<
+    StateApiResponseBodySelect,
+    ApiPayload<StateApiRequestBodySelect>
+    >({
+      query: queries.select,
     }),
   }),
 });

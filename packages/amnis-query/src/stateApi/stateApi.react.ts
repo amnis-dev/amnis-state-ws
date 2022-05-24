@@ -3,7 +3,9 @@ import { ApiPayload } from '@amnis/core/api';
 import { stateApiBaseUrl } from './stateApi.const';
 import type {
   StateApiRequestBodyDispatch,
+  StateApiRequestBodySelect,
   StateApiResponseBodyDispatch,
+  StateApiResponseBodySelect,
 } from './stateApi.types';
 import {
   stateApiQueriesGenerate,
@@ -22,6 +24,12 @@ export const stateApi = createApi({
     ApiPayload<StateApiRequestBodyDispatch>
     >({
       query: queries.dispatch,
+    }),
+    select: builder.query<
+    StateApiResponseBodySelect,
+    ApiPayload<StateApiRequestBodySelect>
+    >({
+      query: queries.select,
     }),
   }),
 });

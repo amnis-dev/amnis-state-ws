@@ -1,18 +1,16 @@
 import {
-  AnyAction, createEntityAdapter, createSlice, isAllOf, PayloadAction,
+  createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
 import { entityReducers } from '@amnis/core/entity';
-import { stateApi } from '@amnis/query/stateApi/stateApi.node';
-import { StateApiResponseBodyDispatch } from '@amnis/query/stateApi';
 import type {
   User,
   UserMeta,
 } from './user.types';
 
 /**
- * User meta key.
+ * User slice key.
  */
-export const userKey = 'entity:user';
+export const userKey = 'user';
 
 /**
  * RTK user adapter.
@@ -30,15 +28,6 @@ export const userInitialState = userAdapter.getInitialState<UserMeta>({
   focused: null,
   selection: [],
 });
-
-/**
- * Matcher to determine if a fulfilled payload contains the same key type.
- */
-// function isResponseMatchingType(
-//   action: PayloadAction<StateApiResponseBodyDispatch>,
-// ): action is PayloadAction<StateApiResponseBodyDispatch> {
-//   return action.payload.type.startsWith(userKey);
-// }
 
 /**
  * RTK User Slice
@@ -67,9 +56,19 @@ export const userActions = userSlice.actions;
 /**
  * User redux selectors.
  */
-export const userSelectors = userAdapter.getSelectors<{
-  [userKey]: typeof userInitialState;
-}>((state) => state[userKey]);
+export const userSelectors = {
+  /**
+   * Gets entity selectors.
+   */
+  ...userAdapter.getSelectors<{
+    [userKey]: typeof userInitialState;
+  }>((state) => state[userKey]),
+};
+
+/**
+ * User redux selector keys.
+ */
+export type UserSelector = Extract<keyof typeof userSelectors, string>;
 
 /**
  * Export the slice as default.

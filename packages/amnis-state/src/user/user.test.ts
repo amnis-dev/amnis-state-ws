@@ -8,11 +8,17 @@ import {
   userInitialState,
   userActions,
   userSelectors,
+  userKey,
 } from './user';
 
 import { userStoreSetup } from './user.store';
 
-const mockHandlers = apiMockGenerateHandlers(stateApiBaseUrl, stateApiHandlersGenerate());
+const serverStore = userStoreSetup();
+
+const mockHandlers = apiMockGenerateHandlers(
+  stateApiBaseUrl,
+  stateApiHandlersGenerate(serverStore, { [userKey]: userSelectors }),
+);
 const mockServer = apiMockServer(mockHandlers);
 
 beforeAll(() => mockServer.listen());
@@ -26,14 +32,14 @@ test('user should return the initial state', () => {
   const store = userStoreSetup();
 
   expect(
-    store.getState()['entity:user'],
+    store.getState().user,
   ).toEqual(userInitialState);
 });
 
 /**
  * ============================================================
  */
-test('should handle the creation of a new user with a valid matched key', () => {
+test('should handle creating a new user', () => {
   const store = userStoreSetup();
 
   const action = userActions.create({
@@ -72,4 +78,26 @@ test('should create user data through API', async () => {
 
   const entities = userSelectors.selectAll(store.getState());
   expect(entities).toHaveLength(1);
+});
+
+/**
+ * ============================================================
+ */
+test('should select user data through API', async () => {
+  const store = userStoreSetup();
+
+  const action = await store.dispatch(
+    stateApi.endpoints.select.initiate({
+      body: {
+        slice: userKey,
+        selector: 'selectAll',
+      },
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { result } = action.data || {};
+
+  expect(result.user).toHaveLength(1);
 });

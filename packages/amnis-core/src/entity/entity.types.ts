@@ -42,19 +42,14 @@ export interface Entity {
   committed: boolean;
 
   /**
-   * Anything that beings with a '$' must be a document reference.
+   * Anything that begins with a '$' must be a document reference.
    */
-  [key: `$${string}`]: Reference;
-}
+  [key: `$${string}`]: Reference | Reference[];
 
-/**
- * An ambiguous entity that could have additional properties.
- */
-export interface EntityAmbiguous extends Entity {
   /**
-   * Any number of additional entity properties.
+   * Properties can only be serializable, normalized, values.
    */
-  [key: string]: unknown;
+  [key: string]: boolean | number | string | null | undefined | string[];
 }
 
 /**

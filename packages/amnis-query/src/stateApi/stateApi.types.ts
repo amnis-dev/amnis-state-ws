@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApiRequestBody, ApiResponseBody } from '@amnis/core/api';
 
 /**
@@ -17,4 +18,21 @@ export interface StateApiRequestBodyDispatch extends ApiRequestBody {
 export interface StateApiResponseBodyDispatch extends ApiResponseBody {
   type: string;
   payload: unknown;
+}
+
+/**
+ * Select Request
+ * Client -> Server
+ */
+export interface StateApiRequestBodySelect extends ApiRequestBody {
+  slice: string;
+  selector: string;
+}
+
+/**
+ * Select Response
+ * Server -> Client
+ */
+export interface StateApiResponseBodySelect extends ApiResponseBody {
+  result: any;
 }
