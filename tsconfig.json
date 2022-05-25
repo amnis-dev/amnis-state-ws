@@ -5,6 +5,7 @@
     "types": ["node", "jest"],
     "paths": {
       "@amnis/core/*": ["./packages/amnis-core/src/*"],
+      "@amnis/db/*": ["./packages/amnis-db/src/*"],
       "@amnis/query/*": ["./packages/amnis-query/src/*"],
       "@amnis/state/*": ["./packages/amnis-state/src/*"],
     }

@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { entityCreate } from './entity';
+import { entityCreate } from './entity.util';
 import { EntityPayloadCreate, EntityPayloadUpdate } from './entity.types';
 
 export const entityActions = {

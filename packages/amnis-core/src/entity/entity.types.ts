@@ -16,24 +16,24 @@ export interface Entity {
    * Creation date string.
    * @default ""
    */
-  readonly dateCreated: DateJSON;
+  readonly created: DateJSON;
 
   /**
    * Updated date string.
    * @default ""
    */
-  dateUpdated: DateJSON;
+  updated: DateJSON;
 
   /**
-   * Possible creator of the entity.
+   * Possible user id creator of the entity.
    */
-  readonly entityCreator: string | null;
+  readonly $creator: Reference;
 
   /**
-   * Possible updater of the entity.
+   * Users that have updated the entity.
    * @default null
    */
-  entityUpdater: string | null;
+  $updaters: Reference[];
 
   /**
    * Flag to determine if the entity has been committed to storage.

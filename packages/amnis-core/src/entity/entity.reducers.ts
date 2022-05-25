@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   ActionReducerMapBuilder,
-  AnyAction,
-  EntityAdapter, isAllOf, PayloadAction,
+  EntityAdapter,
+  PayloadAction,
 } from '@reduxjs/toolkit';
 import {
   entityCreate,
-} from './entity';
+} from './entity.util';
 import { entityActions } from './entity.actions';
 import type {
   Entity,
   EntityCreate,
-  EntityPayload,
   EntityPayloadActiveSet,
   EntityPayloadFocusSet,
   EntityPayloadSelectionSet,

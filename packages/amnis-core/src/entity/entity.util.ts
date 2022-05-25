@@ -20,10 +20,10 @@ export function entityCreate<E extends Entity>(
   const now = dateJSON();
   const base: Entity = {
     id: nanoid(),
-    dateCreated: now,
-    dateUpdated: now,
-    entityCreator: creator || null,
-    entityUpdater: null,
+    created: now,
+    updated: now,
+    $creator: entityRef(creator || ''),
+    $updaters: [],
     committed: false,
   };
 
