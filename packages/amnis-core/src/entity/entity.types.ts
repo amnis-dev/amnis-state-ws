@@ -132,11 +132,59 @@ EntityQueryNestInclude<E>,
 export type EntityState<E extends Entity> = RTKEntityState<E> & EntityMeta<E>;
 
 /**
+ * Filter object for a query.
+ */
+export interface EntitySelectorFilter {
+  /**
+   * Matches values that are equal to a specified value.
+   */
+  $eq?: unknown;
+
+  /**
+   * Matches values that are greater than a specified value.
+   */
+  $gt?: number;
+
+  /**
+   * Matches values that are greater than or equal to a specified value.
+   */
+  $gte?: number;
+
+  /**
+   * Matches values that are less than a specified value.
+   */
+  $lt?: number;
+
+  /**
+   * Matches values that are less than or equal to a specified value.
+   */
+  $lte?: number;
+
+  /**
+   * Matches any of the values specified in an array.
+   */
+  $in?: unknown[];
+}
+
+/**
+ * Selector query object for entity states.
+ */
+export interface EntitySelectorQuery {
+  [key: string]: EntitySelectorFilter;
+}
+
+/**
  * ================================================================================
  * Payloads
  * ------------------------------------------------------------
  */
-export type EntityPayloadCreate<E extends Entity> = EntityCreate<E>;
+
+export interface EntityPayload<T = Record<string, unknown>> {
+  [slice: string]: T[];
+}
+export type EntityPayloadCreate = EntityPayload<EntityCreate<Entity>>;
+
+export type EntityPayloadUpdate = EntityPayload<EntityUpdate<Entity>>;
 
 export type EntityPayloadActiveSet<E extends Entity> = Reference<E>;
 

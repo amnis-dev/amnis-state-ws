@@ -1,4 +1,5 @@
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/core/api/api.mock';
+import { entityActions } from '@amnis/core/entity';
 import { stateApiBaseUrl, stateApiHandlersGenerate } from '@amnis/query/stateApi';
 import {
   stateApi,
@@ -6,7 +7,6 @@ import {
 import { AnyAction } from '@reduxjs/toolkit';
 import {
   userInitialState,
-  userActions,
   userSelectors,
   userKey,
 } from './user';
@@ -17,7 +17,7 @@ const serverStore = userStoreSetup();
 
 const mockHandlers = apiMockGenerateHandlers(
   stateApiBaseUrl,
-  stateApiHandlersGenerate(serverStore, { [userKey]: userSelectors }),
+  stateApiHandlersGenerate(serverStore),
 );
 const mockServer = apiMockServer(mockHandlers);
 
@@ -39,11 +39,34 @@ test('user should return the initial state', () => {
 /**
  * ============================================================
  */
-test('should handle creating a new user', () => {
+test('should not generically create a new user with mismatched keys', () => {
   const store = userStoreSetup();
 
-  const action = userActions.create({
-    displayName: 'eCrow',
+  const action = entityActions.create({
+    [`not_${userKey}`]: [
+      {
+        displayName: 'eCrow',
+      },
+    ],
+  });
+
+  store.dispatch(action);
+  const entities = userSelectors.selectAll(store.getState());
+  expect(entities).toHaveLength(0);
+});
+
+/**
+ * ============================================================
+ */
+test('should handle generically creating a new user', () => {
+  const store = userStoreSetup();
+
+  const action = entityActions.create({
+    [userKey]: [
+      {
+        displayName: 'eCrow',
+      },
+    ],
   });
 
   store.dispatch(action);
@@ -64,8 +87,12 @@ test('should create user data through API', async () => {
 
   const action = await store.dispatch(
     stateApi.endpoints.dispatch.initiate({
-      body: userActions.create({
-        displayName: 'eCrow',
+      body: entityActions.create({
+        [userKey]: [
+          {
+            displayName: 'eCrow',
+          },
+        ],
       }),
     }),
   );
@@ -90,7 +117,11 @@ test('should select user data through API', async () => {
     stateApi.endpoints.select.initiate({
       body: {
         slice: userKey,
-        selector: 'selectAll',
+        query: {
+          displayName: {
+            $eq: 'eCrow',
+          },
+        },
       },
     }),
   );
@@ -99,5 +130,5 @@ test('should select user data through API', async () => {
 
   const { result } = action.data || {};
 
-  expect(result.user).toHaveLength(1);
+  expect(result).toHaveLength(1);
 });

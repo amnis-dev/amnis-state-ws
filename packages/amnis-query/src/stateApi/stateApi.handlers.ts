@@ -1,6 +1,7 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
 import { ApiHandlers } from '@amnis/core/api';
-import { Selector, Store } from '@reduxjs/toolkit';
+import { entityQuerySelect } from '@amnis/core/entity';
+import { Store } from '@reduxjs/toolkit';
 import type {
   StateApiRequestBodyDispatch,
   StateApiRequestBodySelect,
@@ -10,34 +11,31 @@ import type {
 
 export function stateApiHandlersGenerate(
   store: Store,
-  selectors: Record<string, Record<string, Selector>>,
+  dbs: ((s: Store) => void)[] = [],
 ): ApiHandlers {
   return {
     dispatch: (body: StateApiRequestBodyDispatch): StateApiResponseBodyDispatch => {
+      /**
+       * Dispatch action to the API store.
+       */
       store.dispatch(body);
       const response: StateApiResponseBodyDispatch = {
         type: body.type,
         payload: body.payload,
       };
+
+      /**
+       * Push store data to the database.
+       */
+      dbs.forEach((db) => db(store));
       return response;
     },
     select: (body: StateApiRequestBodySelect): StateApiResponseBodySelect => {
-      let result = null;
+      const { slice, query } = body;
 
-      const slice = selectors[body.slice];
-      if (slice) {
-        const selector = slice[body.selector];
-        if (selector) {
-          result = selector(store.getState());
-        }
-      }
+      const result = entityQuerySelect(store.getState(), slice, query);
 
-      const response: StateApiResponseBodySelect = {
-        result: {
-          [body.slice]: result,
-        },
-      };
-      return response;
+      return { result };
     },
   };
 }

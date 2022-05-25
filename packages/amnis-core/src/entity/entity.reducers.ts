@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type {
-  EntityAdapter, PayloadAction,
+import {
+  ActionReducerMapBuilder,
+  AnyAction,
+  EntityAdapter, isAllOf, PayloadAction,
 } from '@reduxjs/toolkit';
 import {
   entityCreate,
 } from './entity';
+import { entityActions } from './entity.actions';
 import type {
   Entity,
   EntityCreate,
+  EntityPayload,
   EntityPayloadActiveSet,
   EntityPayloadFocusSet,
   EntityPayloadSelectionSet,
@@ -95,4 +99,18 @@ export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
   };
 }
 
-export default entityReducers;
+export function entityExtraReducers<E extends Entity>(
+  key: string,
+  adapter: EntityAdapter<E>,
+  builder: ActionReducerMapBuilder<EntityState<E>>,
+) {
+  builder.addCase(entityActions.create, (state, action) => {
+    const { payload } = action;
+    if (Array.isArray(payload[key])) {
+      /** @ts-ignore */
+      adapter.addMany<EntityState<E>>(state, payload[key]);
+    }
+  });
+}
+
+export default { entityReducers, entityExtraReducers };

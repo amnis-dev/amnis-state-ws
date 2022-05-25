@@ -1,9 +1,11 @@
+import { EntityState, Selector } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { dateJSON } from '../core';
 import type { Reference } from '../core.types';
 import type {
   Entity,
   EntityCreate,
+  EntitySelectorQuery,
   EntityUpdate,
 } from './entity.types';
 
@@ -45,4 +47,20 @@ export function entityUpdate<E extends Entity>(
   };
 }
 
-export default { entityCreate };
+export const entityQuerySelect: Selector<
+Record<string, EntityState<Entity>>,
+Entity[],
+[string, EntitySelectorQuery]
+> = (state, slice, query) => {
+  const { entities } = state[slice];
+  const result = Object.keys(entities).map((id) => entities[id]).filter((entity) => {
+    if (entity === undefined) {
+      return false;
+    }
+    return true;
+  }) as Entity[];
+
+  return result;
+};
+
+export default { entityRef, entityCreate, entityUpdate };
