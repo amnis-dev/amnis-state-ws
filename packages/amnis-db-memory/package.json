@@ -1,5 +1,5 @@
 {
-  "name": "@amnis/db",
+  "name": "@amnis/db-memory",
   "version": "0.1.0-alpha.1",
   "main": "index.ts",
   "license": "MIT",

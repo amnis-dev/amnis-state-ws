@@ -93,19 +93,6 @@ export type EntityCreate<E extends Entity> = EntityOmit<E>;
 export type EntityUpdate<E extends Entity> = Partial<EntityOmit<E>>;
 
 /**
- * An interface for filtering entities.
- */
-export type EntityFilter<E extends Entity = Entity> = {
-  [Key in keyof E]?: {
-    defined?: boolean;
-    lessThan?: number;
-    greaterThan?: number;
-    equals?: string | number | boolean | null;
-    includes?: string | number;
-  }
-};
-
-/**
  * Sets types on an objects to undefined if they're not a subtype of Entity.
  */
 type EntityQueryNestInclude<E> = {
@@ -134,7 +121,7 @@ export type EntityState<E extends Entity> = RTKEntityState<E> & EntityMeta<E>;
 /**
  * Filter object for a query.
  */
-export interface EntitySelectorFilter {
+export interface EntityFilter {
   /**
    * Matches values that are equal to a specified value.
    */
@@ -169,8 +156,20 @@ export interface EntitySelectorFilter {
 /**
  * Selector query object for entity states.
  */
-export interface EntitySelectorQuery {
-  [key: string]: EntitySelectorFilter;
+export type EntityQuery = {
+  /**
+   * Slice keys.
+   */
+  [key: string]: EntityFilter;
+} & {
+  /**
+   * Start query at record value.
+   */
+  $start?: string;
+  /**
+    * Limit results of the query.
+    */
+  $limit?: string;
 }
 
 /**

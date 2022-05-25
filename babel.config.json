@@ -15,7 +15,7 @@
       {
         "alias": {
           "@amnis/core": "./packages/amnis-core/src",
-          "@amnis/db": "./packages/amnis-db/src",
+          "@amnis/db-memory": "./packages/amnis-db-memory/src",
           "@amnis/query": "./packages/amnis-query/src",
           "@amnis/state": "./packages/amnis-state/src"
         }
