@@ -29,7 +29,6 @@ export const memoryDb: Database = {
         storage[sliceKey] = entities;
       }
     });
-    console.log('Next Storage:', storage);
     return true;
   },
   update(store) {
@@ -39,7 +38,7 @@ export const memoryDb: Database = {
     throw new Error('Function not implemented.');
   },
   select(query) {
-    throw new Error('Function not implemented.');
+    return storage;
   },
 };
 

@@ -1,3 +1,4 @@
+import { Store } from '@reduxjs/toolkit';
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import { Database } from '../db/db.types';
@@ -5,6 +6,7 @@ import type { ApiHandlers, ApiRequestBody, ApiResponseBody } from './api.types';
 
 export function apiMockGenerateHandlers(
   baseUrl: string,
+  storeBuilder: () => Store,
   handlers: ApiHandlers,
   database: Database,
 ) {
@@ -12,7 +14,8 @@ export function apiMockGenerateHandlers(
     rest.post<ApiRequestBody, never, ApiResponseBody>(
       `${baseUrl}${key}`,
       (req, res, ctx) => {
-        const response = handlers[key](req.body, database);
+        const store = storeBuilder();
+        const response = handlers[key](req.body, store, database);
 
         return res(
           ctx.status(200),

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Store } from '@reduxjs/toolkit';
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { DateJSON } from '../core.types';
+import type { Database } from '../db';
 
 /**
  * An API error repsonse.
@@ -61,8 +63,8 @@ export interface ApiQueries {
  */
 export type ApiHandler<
   ReqB = any,
-  ResB = any
-> = (body: ReqB) => ResB;
+  ResB = any,
+> = (body: ReqB, store: Store, db: Database) => ResB;
 
 /**
  * API object containing response handlers.

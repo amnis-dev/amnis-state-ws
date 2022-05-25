@@ -7,5 +7,5 @@ export interface Database {
   create: (store: Store) => boolean;
   update: (store: Store) => boolean;
   delete: (references: Record<string, Reference>) => boolean;
-  select: (query: EntityQuery) => Entity[];
+  select: (query: EntityQuery) => Record<string, Entity[]>;
 }

@@ -5,6 +5,7 @@ import {
   stateApi,
 } from '@amnis/query/stateApi/stateApi.node';
 import { AnyAction } from '@reduxjs/toolkit';
+import { memoryDb } from '@amnis/db-memory/index';
 import {
   userInitialState,
   userSelectors,
@@ -13,11 +14,11 @@ import {
 
 import { userStoreSetup } from './user.store';
 
-const serverStore = userStoreSetup();
-
 const mockHandlers = apiMockGenerateHandlers(
   stateApiBaseUrl,
-  stateApiHandlersGenerate(serverStore),
+  userStoreSetup,
+  stateApiHandlersGenerate(),
+  memoryDb,
 );
 const mockServer = apiMockServer(mockHandlers);
 
