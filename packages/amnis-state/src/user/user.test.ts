@@ -47,6 +47,7 @@ test('should not generically create a new user with mismatched keys', () => {
     [`not_${userKey}`]: [
       {
         displayName: 'eCrow',
+        $licenses: [],
       },
     ],
   });
@@ -66,6 +67,7 @@ test('should handle generically creating a new user', () => {
     [userKey]: [
       {
         displayName: 'eCrow',
+        $licenses: [],
       },
     ],
   });

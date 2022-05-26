@@ -17,7 +17,7 @@ export const userKey = 'user';
  * Manages the normalized entities.
  */
 export const userAdapter = createEntityAdapter<User>({
-  selectId: (entity) => entity.id,
+  selectId: (entity) => entity.$id,
 });
 
 /**

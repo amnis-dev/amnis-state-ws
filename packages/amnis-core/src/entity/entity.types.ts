@@ -5,12 +5,12 @@ import type { Reference, DateJSON } from '../core.types';
  * A common entity object.
  * Entity's are serializable (JSON) objects that can be committed to NoSQL Databases.
  */
-export interface Entity {
+export type Entity = {
   /**
    * Identifier for this entity.
    * @default ""
    */
-  readonly id: string;
+  readonly $id: Reference;
 
   /**
    * Creation date string.
@@ -25,17 +25,6 @@ export interface Entity {
   updated: DateJSON;
 
   /**
-   * Possible user id creator of the entity.
-   */
-  readonly $creator: Reference;
-
-  /**
-   * Users that have updated the entity.
-   * @default null
-   */
-  $updaters: Reference[];
-
-  /**
    * Flag to determine if the entity has been committed to storage.
    * @default false
    */
@@ -45,6 +34,16 @@ export interface Entity {
    * Anything that begins with a '$' must be a document reference.
    */
   [key: `$${string}`]: Reference | Reference[];
+
+  /**
+    * Possible user id creator of the entity.
+    */
+  readonly $creator: Reference;
+
+  /**
+    * Users that have updated the entity.
+    */
+  readonly $updaters: Reference[];
 
   /**
    * Properties can only be serializable, normalized, values.

@@ -5,7 +5,7 @@ import type { Reference } from '../core.types';
 import type {
   Entity,
   EntityCreate,
-  EntitySelectorQuery,
+  EntityQuery,
   EntityUpdate,
 } from './entity.types';
 
@@ -19,11 +19,12 @@ export function entityCreate<E extends Entity>(
 ): E {
   const now = dateJSON();
   const base: Entity = {
-    id: nanoid(),
+    $id: nanoid() as Reference,
     created: now,
     updated: now,
     $creator: entityRef(creator || ''),
     $updaters: [],
+    $licenses: [],
     committed: false,
   };
 
@@ -50,7 +51,7 @@ export function entityUpdate<E extends Entity>(
 export const entityQuerySelect: Selector<
 Record<string, EntityState<Entity>>,
 Entity[],
-[string, EntitySelectorQuery]
+[string, EntityQuery]
 > = (state, slice, query) => {
   const { entities } = state[slice];
   const result = Object.keys(entities).map((id) => entities[id]).filter((entity) => {
