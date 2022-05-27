@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApiRequestBody, ApiResponseBody } from '@amnis/core/api';
-import type { Select } from '@amnis/core/index';
+import type { Select, Result } from '@amnis/core/index';
 
 /**
  * Dispatch Request
@@ -16,10 +16,7 @@ export interface StateApiRequestBodyDispatch extends ApiRequestBody {
  * Returns the action when fulfilled.
  * Server -> Client
  */
-export interface StateApiResponseBodyDispatch extends ApiResponseBody {
-  type: string;
-  payload: unknown;
-}
+export type StateApiResponseBodyDispatch = Result;
 
 /**
  * Select Request
@@ -36,6 +33,4 @@ export interface StateApiRequestBodySelect extends ApiRequestBody {
  * Select Response
  * Server -> Client
  */
-export interface StateApiResponseBodySelect extends ApiResponseBody {
-  result: any;
-}
+export type StateApiResponseBodySelect = Result;

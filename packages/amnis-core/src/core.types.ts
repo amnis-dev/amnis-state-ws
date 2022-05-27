@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 /**
  * Unique reference symbol to another document type.
  */
@@ -20,6 +21,56 @@ declare const dateSymbol: unique symbol;
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type DateJSON = string & {[dateSymbol]: never};
+
+/**
+ * A common entity object.
+ * Entity's are serializable (JSON) objects that can be committed to NoSQL Databases.
+ */
+export interface Entity {
+  /**
+   * Identifier for this entity.
+   * @default ""
+   */
+  readonly $id: Reference;
+
+  /**
+   * Creation date string.
+   * @default ""
+   */
+  readonly created: DateJSON;
+
+  /**
+   * Updated date string.
+   * @default ""
+   */
+  updated: DateJSON;
+
+  /**
+   * Flag to determine if the entity has been committed to storage.
+   * @default false
+   */
+  committed: boolean;
+
+  /**
+    * Possible user id creator of the entity.
+    */
+  readonly $creator: Reference;
+
+  /**
+    * Users that have updated the entity.
+    */
+  readonly $updaters: Reference[];
+
+  /**
+   * Anything that begins with a '$' must be a document reference.
+   */
+  [key: `$${string}`]: Reference | Reference[];
+
+  /**
+    * Properties can only be serializable, normalized, values.
+    */
+  [key: string]: boolean | number | string | null | undefined | string[];
+}
 
 /**
  * Types of tasks that can be applied to the state.
@@ -97,4 +148,91 @@ export type Query = {
   $limit?: number;
 }
 
+/**
+ * A selector definition object.
+ */
 export type Select = Record<string, Query>;
+
+/**
+ * A common stateful result from API.
+ */
+export type Result = Record<string, Entity[]>;
+
+/**
+ * Grant
+ *
+ * Type: 'action' or 'select'
+ *   'action' types perform some mutation to the data state.
+ *   'select' types fetch information from the data state.
+ *
+ * Path: The path off of the Root data state that this is granted to.
+ *
+ * Scope: The range of data that the task can be performed on.
+ * Example: All, Owned
+ *
+ * Task: Name of the task to perform.
+ *
+ */
+export type Grant = {
+  type: '@action',
+  path: `${string}.${string}`,
+  scope: GrantScope,
+  task: ActionTask
+} | {
+  type: '@select',
+  path: `${string}.${string}`,
+  scope: GrantScope,
+  task: SelectTask
+}
+
+/**
+ * License grant string.
+ * Format: @<Type>:<Path>:<Scope>:<Task>
+ *
+ * @example
+ * `@action:user.displayName:global:update`
+ */
+export type GrantString = (
+  `@action:${string}.${string}:${GrantScope}:${ActionTask}` |
+  `@select:${string}.${string}:${GrantScope}:${SelectTask}`
+);
+
+/**
+ * A license is a defined object for granting multiple permissions to perform actions or selections.
+ */
+export interface License {
+  /**
+   * Name of the license.
+   */
+  $name: Reference;
+
+  /**
+   * A brief description of the license.
+   */
+  description: string;
+
+  /**
+   * Permissions this license grants.
+   */
+  grants: Grant[];
+}
+
+/**
+ * A permit is a list of grants for a specific reference ID.
+ */
+export type Permit = {
+  /**
+   * Owner of the permit that can perform the actions.
+   */
+  $owner: Reference;
+
+  /**
+   * Reference to the object that this permit allows grants on.
+   */
+  $for: Reference;
+
+  /**
+   * Grants this permit provides.
+   */
+  grants: Grant[];
+}

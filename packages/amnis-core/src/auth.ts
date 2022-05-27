@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { State } from './core.types';
-import type { LicenseGrant } from './license';
-import { licenseGrantToString } from './license/license';
+import type { State, Grant } from './core.types';
+import { grantToString } from './core';
 
 export type authFilterResult = [
   state: State,
@@ -11,7 +10,7 @@ export type authFilterResult = [
 /**
  * Method filters a state object based on license grants.
  */
-function authStateFilter(state: State, grants: LicenseGrant[]): authFilterResult {
+function authStateFilter(state: State, grants: Grant[]): authFilterResult {
   const newState: State = {};
   const errors: string[] = [];
 
@@ -32,7 +31,7 @@ function authStateFilter(state: State, grants: LicenseGrant[]): authFilterResult
     const [sliceKey, propKey] = path.split('.');
 
     if (!sliceKey || !propKey) {
-      errors.push(`The grant state path was invalid. Grant: ${licenseGrantToString(grant)}`);
+      errors.push(`The grant '${grantToString(grant)}' state path was invalid.`);
       return true;
     }
 
@@ -40,7 +39,7 @@ function authStateFilter(state: State, grants: LicenseGrant[]): authFilterResult
      * Only copy granted properties on the state.
      */
     if (!state[sliceKey]?.[propKey]) {
-      errors.push(`The grant was skipped because it doesn't exist on state. Grant: ${licenseGrantToString(grant)}`);
+      errors.push(`The grant '${grantToString(grant)}' was skipped because it doesn't exist on state.`);
       return true;
     }
 

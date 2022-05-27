@@ -1,60 +1,5 @@
 import type { EntityState as RTKEntityState } from '@reduxjs/toolkit';
-import type { Reference, DateJSON } from '../core.types';
-
-/**
- * A common entity object.
- * Entity's are serializable (JSON) objects that can be committed to NoSQL Databases.
- */
-export type Entity = {
-  /**
-   * Identifier for this entity.
-   * @default ""
-   */
-  readonly $id: Reference;
-
-  /**
-   * Creation date string.
-   * @default ""
-   */
-  readonly created: DateJSON;
-
-  /**
-   * Updated date string.
-   * @default ""
-   */
-  updated: DateJSON;
-
-  /**
-   * Flag to determine if the entity has been committed to storage.
-   * @default false
-   */
-  committed: boolean;
-
-  /**
-   * Anything that begins with a '$' must be a document reference.
-   */
-  [key: `$${string}`]: Reference | Reference[];
-
-  /**
-    * Possible user id creator of the entity.
-    */
-  readonly $creator: Reference;
-
-  /**
-    * Users that have updated the entity.
-    */
-  readonly $updaters: Reference[];
-
-  /**
-   * Properties can only be serializable, normalized, values.
-   */
-  [key: string]: boolean | number | string | null | undefined | string[];
-}
-
-/**
- * Key to an entity meta object.
- */
-export type EntityMetaKey<N extends string = string> = `entity:${N}`;
+import type { Reference, Entity } from '../core.types';
 
 /**
  * Meta information for a collection of enities.
@@ -92,84 +37,9 @@ export type EntityCreate<E extends Entity> = EntityOmit<E>;
 export type EntityUpdate<E extends Entity> = Partial<EntityOmit<E>>;
 
 /**
- * Sets types on an objects to undefined if they're not a subtype of Entity.
- */
-type EntityQueryNestInclude<E> = {
-  [Key in keyof E]?:
-  E[Key] extends Reference<infer R> ? EntityQueryNestInclude<R> : undefined
-};
-
-/**
- * Removes all properties from an object that are not subtypes of Entity.
- */
-export type EntityQueryNest<E extends Entity> = Pick<
-EntityQueryNestInclude<E>,
-{
-  [K in keyof EntityQueryNestInclude<E>]:
-  EntityQueryNestInclude<E>[K] extends undefined ? never : K
-}[
-  keyof EntityQueryNestInclude<E>
-]
->;
-
-/**
  * An entity state.
  */
 export type EntityState<E extends Entity> = RTKEntityState<E> & EntityMeta<E>;
-
-/**
- * Filter object for a query.
- */
-export interface EntityFilter {
-  /**
-   * Matches values that are equal to a specified value.
-   */
-  $eq?: unknown;
-
-  /**
-   * Matches values that are greater than a specified value.
-   */
-  $gt?: number;
-
-  /**
-   * Matches values that are greater than or equal to a specified value.
-   */
-  $gte?: number;
-
-  /**
-   * Matches values that are less than a specified value.
-   */
-  $lt?: number;
-
-  /**
-   * Matches values that are less than or equal to a specified value.
-   */
-  $lte?: number;
-
-  /**
-   * Matches any of the values specified in an array.
-   */
-  $in?: unknown[];
-}
-
-/**
- * Selector query object for entity states.
- */
-export type EntityQuery = {
-  /**
-   * Slice keys.
-   */
-  [key: string]: EntityFilter;
-} & {
-  /**
-   * Start query at record value.
-   */
-  $start?: string;
-  /**
-    * Limit results of the query.
-    */
-  $limit?: string;
-}
 
 /**
  * ================================================================================

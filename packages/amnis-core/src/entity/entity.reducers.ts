@@ -9,13 +9,13 @@ import {
 } from './entity.util';
 import { entityActions } from './entity.actions';
 import type {
-  Entity,
   EntityCreate,
   EntityPayloadActiveSet,
   EntityPayloadFocusSet,
   EntityPayloadSelectionSet,
   EntityState,
 } from './entity.types';
+import { Entity } from '../core.types';
 
 export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
   return {

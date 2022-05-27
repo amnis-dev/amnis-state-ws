@@ -1,7 +1,6 @@
-import type { Reference } from '@amnis/core/core.types';
-import type { License } from '@amnis/core/license/license.types';
+import type { Entity, Reference } from '@amnis/core/core.types';
+import type { License } from '@amnis/core/index';
 import type {
-  Entity,
   EntityMeta,
 } from '@amnis/core/entity';
 

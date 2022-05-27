@@ -1,6 +1,7 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
 import { ApiHandlers } from '@amnis/core/api';
-import { entityActions, entityQuerySelect } from '@amnis/core/entity';
+import { Result } from '@amnis/core/index';
+import { entityActions } from '@amnis/core/entity';
 import type {
   StateApiRequestBodyDispatch,
   StateApiRequestBodySelect,
@@ -15,27 +16,25 @@ export function stateApiHandlersGenerate(): ApiHandlers {
        * Dispatch action to the API store.
        */
       store.dispatch(body);
-      const response: StateApiResponseBodyDispatch = {
-        type: body.type,
-        payload: body.payload,
-      };
+
+      let result: Result = {};
 
       /**
        * Perform database actions.
        */
       switch (body.type) {
-        case entityActions.create.type: db.create(store.getState()); break;
+        case entityActions.create.type: result = db.create(store.getState()); break;
         default:
       }
 
-      return response;
+      return result;
     },
     select: (body: StateApiRequestBodySelect, store, db): StateApiResponseBodySelect => {
       const { select } = body;
 
       const result = db.select(select);
 
-      return { result };
+      return result;
     },
   };
 }

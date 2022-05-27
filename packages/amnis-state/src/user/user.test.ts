@@ -4,7 +4,6 @@ import { stateApiBaseUrl, stateApiHandlersGenerate } from '@amnis/query/stateApi
 import {
   stateApi,
 } from '@amnis/query/stateApi/stateApi.node';
-import { AnyAction } from '@reduxjs/toolkit';
 import { memoryDb } from '@amnis/db-memory/index';
 import {
   userInitialState,
@@ -103,10 +102,6 @@ test('should create user data through API', async () => {
 
   expect(action.status).toBe('fulfilled');
 
-  const data = action.data as AnyAction;
-
-  store.dispatch(data);
-
   const entities = userSelectors.selectAll(store.getState());
   expect(entities).toHaveLength(1);
 });
@@ -133,7 +128,7 @@ test('should select not user data through API with unmatching query', async () =
 
   expect(action.status).toBe('fulfilled');
 
-  const { result } = action.data || {};
+  const result = action.data || {};
 
   expect(result.user).toHaveLength(0);
 });
@@ -160,7 +155,7 @@ test('should select user data through API', async () => {
 
   expect(action.status).toBe('fulfilled');
 
-  const { result } = action.data || {};
+  const result = action.data || {};
 
   expect(result.user).toHaveLength(1);
 });

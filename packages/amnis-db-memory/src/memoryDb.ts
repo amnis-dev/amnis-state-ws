@@ -1,4 +1,4 @@
-import type { Entity, Database } from '@amnis/core/index';
+import type { Entity, Database, Result } from '@amnis/core/index';
 import {
   EntityState,
 } from '@reduxjs/toolkit';
@@ -16,8 +16,8 @@ export const memoryDb: Database = {
   initialize: (initialStorage: Record<string, Entity[]> = {}) => {
     storage = initialStorage;
   },
-  create(store) {
-    const state = store.getState();
+  create(state) {
+    const created: Result = {};
     Object.keys(state).forEach((sliceKey) => {
       const slice: EntityState<Entity> = state[sliceKey];
       if (slice.entities) {
@@ -25,11 +25,12 @@ export const memoryDb: Database = {
           (entityKey) => slice.entities[entityKey],
         ).filter((entity) => !!entity) as Entity[];
         storage[sliceKey] = entities;
+        created[sliceKey] = entities;
       }
     });
-    return true;
+    return created;
   },
-  update(store) {
+  update(state) {
     throw new Error('Function not implemented.');
   },
   delete(references) {
