@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
   Entity, Reference, Select, State, Result,
-} from '../core.types';
+} from '../types';
 
 export interface Database {
   initialize: (...params: any[]) => void;

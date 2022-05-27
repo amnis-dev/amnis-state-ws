@@ -15,7 +15,7 @@ import type {
   EntityPayloadSelectionSet,
   EntityState,
 } from './entity.types';
-import { Entity } from '../core.types';
+import { Entity } from '../types';
 
 export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
   return {

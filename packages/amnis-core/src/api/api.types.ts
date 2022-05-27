@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Store } from '@reduxjs/toolkit';
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
-import type { DateJSON } from '../core.types';
+import type { DateJSON } from '../types';
 import type { Database } from '../db';
 
 /**

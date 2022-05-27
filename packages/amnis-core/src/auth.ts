@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { State, Grant } from './core.types';
+import type { State, Grant } from './types';
 import { grantToString } from './core';
 
 export type authFilterResult = [

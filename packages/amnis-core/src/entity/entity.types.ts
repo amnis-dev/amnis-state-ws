@@ -1,5 +1,5 @@
 import type { EntityState as RTKEntityState } from '@reduxjs/toolkit';
-import type { Reference, Entity } from '../core.types';
+import type { Reference, Entity } from '../types';
 
 /**
  * Meta information for a collection of enities.

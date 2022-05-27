@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import type { Reference, Entity } from '../core.types';
+import type { Reference, Entity } from '../types';
 import { dateJSON } from '../core';
 import type {
   EntityCreate,

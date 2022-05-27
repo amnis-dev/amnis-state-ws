@@ -1,4 +1,6 @@
-import { DateJSON, Grant, GrantString } from './core.types';
+import {
+  DateJSON, Grant, GrantString, Reference,
+} from './types';
 
 /**
  * Function for no operation.
@@ -9,6 +11,11 @@ export const noop = () => { /** No operation. */ };
  * Create a Date JSON string type.
  */
 export const dateJSON = () => (new Date().toJSON() as DateJSON);
+
+/**
+ * Create a reference to another type.
+ */
+export const reference = <T>(ref: string) => ref as Reference<T>;
 
 /**
  * Converts a grant to string format.
