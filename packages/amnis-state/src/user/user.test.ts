@@ -77,8 +77,9 @@ test('should handle generically creating a new user', () => {
   expect(entities).toHaveLength(1);
 
   expect(entities[0]).toEqual(expect.objectContaining({
-    id: expect.any(String),
+    $id: expect.any(String),
     displayName: expect.any(String),
+    $licenses: expect.any(Array),
   }));
 });
 
@@ -113,16 +114,17 @@ test('should create user data through API', async () => {
 /**
  * ============================================================
  */
-test('should select user data through API', async () => {
+test('should select not user data through API with unmatching query', async () => {
   const store = userStoreSetup();
 
   const action = await store.dispatch(
     stateApi.endpoints.select.initiate({
       body: {
-        slice: userKey,
-        query: {
-          displayName: {
-            $eq: 'eCrow',
+        select: {
+          user: {
+            displayName: {
+              $eq: 'not_eCrow',
+            },
           },
         },
       },
@@ -133,5 +135,32 @@ test('should select user data through API', async () => {
 
   const { result } = action.data || {};
 
-  expect(result).toHaveLength(1);
+  expect(result.user).toHaveLength(0);
+});
+
+/**
+ * ============================================================
+ */
+test('should select user data through API', async () => {
+  const store = userStoreSetup();
+
+  const action = await store.dispatch(
+    stateApi.endpoints.select.initiate({
+      body: {
+        select: {
+          user: {
+            displayName: {
+              $eq: 'eCrow',
+            },
+          },
+        },
+      },
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { result } = action.data || {};
+
+  expect(result.user).toHaveLength(1);
 });

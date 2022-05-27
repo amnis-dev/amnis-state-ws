@@ -6,17 +6,15 @@ import {
 /**
  * Storage object for entities.
  */
-const storage: Record<string, Entity[]> = {};
+let storage: Record<string, Entity[]> = {};
 
 /**
- * This database is simply a JavaScript object.
- * Use this database interface for testing and mocking.
+ * This database is simply an interface for a JSON object.
+ * Use this database interface for testing and mocking APIs.
  */
 export const memoryDb: Database = {
-  initialize: () => {
-    /**
-     * No initialization needed for the memory database.
-     */
+  initialize: (initialStorage: Record<string, Entity[]> = {}) => {
+    storage = initialStorage;
   },
   create(store) {
     const state = store.getState();
@@ -37,8 +35,45 @@ export const memoryDb: Database = {
   delete(references) {
     throw new Error('Function not implemented.');
   },
-  select(query) {
-    return storage;
+  select(select) {
+    const result: Record<string, any[]> = {};
+
+    Object.keys(select).every((selectKey) => {
+      const query = select[selectKey];
+
+      /**
+       * Skip if the query is undefined or key doesn't exist on storage.
+       */
+      if (!query || !storage[selectKey]) {
+        return true;
+      }
+      result[selectKey] = [];
+
+      /**
+       * Loop through the query properties.
+       */
+      Object.keys(query).every((queryKey) => {
+        const filter = query[queryKey];
+        const limit = (query.$limit || 20) <= 20 ? query.$limit : 20;
+        let resultSlice = storage[selectKey].slice(0, limit);
+
+        if (!filter) {
+          result[selectKey] = resultSlice;
+          return true;
+        }
+
+        if (filter.$eq) {
+          resultSlice = resultSlice.filter((entity) => entity[queryKey] === filter.$eq);
+        }
+
+        result[selectKey] = resultSlice;
+        return true;
+      });
+
+      return true;
+    });
+
+    return result;
   },
 };
 

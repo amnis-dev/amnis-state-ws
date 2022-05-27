@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApiRequestBody, ApiResponseBody } from '@amnis/core/api';
-import type { EntityQuery } from '@amnis/core/entity';
+import type { Select } from '@amnis/core/index';
 
 /**
  * Dispatch Request
@@ -27,14 +27,9 @@ export interface StateApiResponseBodyDispatch extends ApiResponseBody {
  */
 export interface StateApiRequestBodySelect extends ApiRequestBody {
   /**
-   * Key value of the slice to perform the query against.
-   */
-  slice: string;
-
-  /**
    * The query object.
    */
-  query: EntityQuery;
+  select: Select;
 }
 
 /**

@@ -24,18 +24,16 @@ export function stateApiHandlersGenerate(): ApiHandlers {
        * Perform database actions.
        */
       switch (body.type) {
-        case entityActions.create.type: db.create(store); break;
+        case entityActions.create.type: db.create(store.getState()); break;
         default:
       }
 
       return response;
     },
     select: (body: StateApiRequestBodySelect, store, db): StateApiResponseBodySelect => {
-      const { slice, query } = body;
+      const { select } = body;
 
-      const result = entityQuerySelect(store.getState(), slice, query);
-
-      console.log(db.select(query));
+      const result = db.select(select);
 
       return { result };
     },

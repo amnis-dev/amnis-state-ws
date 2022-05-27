@@ -1,18 +1,45 @@
-import type { Reference } from '../core.types';
+import type {
+  ActionTask, SelectTask, Reference, GrantScope, TaskType,
+} from '../core.types';
 
 /**
- * License grants
- * Format: @<Type>:<Slice>:<Permit>
+ * License grant
  *
  * Type: 'action' or 'select'
  *   'action' types perform some mutation to the data state.
  *   'select' types fetch information from the data state.
  *
- * Slice: The slice off of the Root data state that this is granted to.
+ * Path: The path off of the Root data state that this is granted to.
  *
- * Permit: Name of the action or selection permitted.
+ * Scope: The range of data that the task can be performed on.
+ * Example: All, Owned
+ *
+ * Task: Name of the task to perform.
+ *
  */
-export type LicenseGrants = (`@action:${string}:${string}` | `@select:${string}:${string}`)[];
+export type LicenseGrant = {
+  type: '@action',
+  path: `${string}.${string}`,
+  scope: GrantScope,
+  task: ActionTask
+} | {
+  type: '@select',
+  path: `${string}.${string}`,
+  scope: GrantScope,
+  task: SelectTask
+}
+
+/**
+ * License grant string.
+ * Format: @<Type>:<Path>:<Scope>:<Task>
+ *
+ * @example
+ * `@action:user.displayName:global:update`
+ */
+export type LicenseGrantString = (
+  `@action:${string}.${string}:${GrantScope}:${ActionTask}` |
+  `@select:${string}.${string}:${GrantScope}:${SelectTask}`
+);
 
 /**
  * A license for granting permission to perform actions or selections.
@@ -31,5 +58,5 @@ export type License = {
   /**
    * Permissions this license grants.
    */
-  grants: LicenseGrants;
+  grants: LicenseGrant[];
 }
