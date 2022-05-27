@@ -1,9 +1,9 @@
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
+import { User } from '@amnis/core/index';
 import { entityReducers, entityExtraReducers } from '@amnis/core/entity';
 import type {
-  User,
   UserMeta,
 } from './user.types';
 

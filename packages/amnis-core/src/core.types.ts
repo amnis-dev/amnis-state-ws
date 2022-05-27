@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { EntityState } from '@reduxjs/toolkit';
 
 /**
  * Unique reference symbol to another document type.
@@ -71,6 +72,46 @@ export interface Entity {
     */
   [key: string]: boolean | number | string | null | undefined | string[];
 }
+
+/**
+ * Meta information for an entity collection.
+ */
+export interface Meta<E extends Entity> {
+  /**
+   * The entity id referencing the active entity.
+   */
+  active: Reference<E> | null;
+
+  /**
+    * The id representing a focused entity.
+    */
+  focused: Reference<E> | null;
+
+  /**
+    * List of ids considered to be selected.
+    */
+  selection: Reference<E>[];
+}
+
+/**
+ * Omitted types of the core Entity interface.
+ */
+export type Omitter<E> = Omit<E, keyof Entity>
+
+/**
+ * Type for creation method
+ */
+export type Create<E extends Entity> = Omitter<E>;
+
+/**
+ * Type for an update method.
+ */
+export type Update<E extends Entity> = Partial<Omitter<E>>;
+
+/**
+ * An entity state.
+ */
+export type MetaState<E extends Entity> = EntityState<E> & Meta<E>;
 
 /**
  * Types of tasks that can be applied to the state.
@@ -235,4 +276,24 @@ export type Permit = {
    * Grants this permit provides.
    */
   grants: Grant[];
+}
+
+/**
+ * Data associated to a User.
+ */
+export interface User extends Entity {
+  /**
+   * Display name for the user.
+   */
+  displayName: string;
+
+  /**
+   * Licences this user has been given.
+   */
+  readonly $licenses: Reference<License>[];
+
+  /**
+   * Speical-case permits this user has been bestowed.
+   */
+  readonly $permits: Reference<Permit>[];
 }
