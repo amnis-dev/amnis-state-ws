@@ -6,38 +6,36 @@ import {
 } from '@reduxjs/toolkit';
 import {
   entityCreate,
-} from './entity.util';
-import { entityActions } from './entity.actions';
+} from './core';
+import { coreActions } from './actions';
 import type {
-  EntityCreate,
-  EntityPayloadActiveSet,
-  EntityPayloadFocusSet,
-  EntityPayloadSelectionSet,
-  EntityState,
-} from './entity.types';
-import { Entity } from '../types';
+  Entity,
+  EntityExtension,
+  MetaState,
+  Reference,
+} from './types';
 
-export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
+export function coreReducers<E extends Entity>(adapter: EntityAdapter<E>) {
   return {
     /**
      * Creates a new entity.
      */
     create: {
       reducer: (
-        state: EntityState<E>,
+        state: MetaState<E>,
         action: PayloadAction<E>,
       ) => {
         adapter.addOne(state, action.payload);
       },
-      prepare: (entityNew: EntityCreate<E>) => ({ payload: entityCreate(entityNew) }),
+      prepare: (entityNew: EntityExtension<E>) => ({ payload: entityCreate(entityNew) }),
     },
 
     /**
      * Sets active entity.
      */
     activeSet: (
-      state: EntityState<E>,
-      action: PayloadAction<EntityPayloadActiveSet<E>>,
+      state: MetaState<E>,
+      action: PayloadAction<Reference<E>>,
     ) => {
       const id = action.payload;
       if (state.entities[id]) {
@@ -49,7 +47,7 @@ export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
      * Clears active entity.
      */
     activeClear: (
-      state: EntityState<E>,
+      state: MetaState<E>,
     ) => {
       state.active = null;
     },
@@ -58,8 +56,8 @@ export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
      * Sets focused entity.
      */
     focusSet: (
-      state: EntityState<E>,
-      action: PayloadAction<EntityPayloadFocusSet<E>>,
+      state: MetaState<E>,
+      action: PayloadAction<Reference<E>>,
     ) => {
       const id = action.payload;
       if (state.entities[id]) {
@@ -71,7 +69,7 @@ export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
      * Clears the focus on any entity.
      */
     focusClear: (
-      state: EntityState<E>,
+      state: MetaState<E>,
     ) => {
       state.focused = null;
     },
@@ -80,8 +78,8 @@ export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
      * Sets the focus on a specific entity in the set.
      */
     selectionSet: (
-      state: EntityState<E>,
-      action: PayloadAction<EntityPayloadSelectionSet<E>>,
+      state: MetaState<E>,
+      action: PayloadAction<Reference<E>[]>,
     ) => {
       const selection = action.payload;
       state.selection = [...selection];
@@ -91,25 +89,25 @@ export function entityReducers<E extends Entity>(adapter: EntityAdapter<E>) {
      * Clears entity selection.
      */
     selectionClear: (
-      state: EntityState<E>,
+      state: MetaState<E>,
     ) => {
       state.selection = [];
     },
   };
 }
 
-export function entityExtraReducers<E extends Entity>(
+export function coreExtraReducers<E extends Entity>(
   key: string,
   adapter: EntityAdapter<E>,
-  builder: ActionReducerMapBuilder<EntityState<E>>,
+  builder: ActionReducerMapBuilder<MetaState<E>>,
 ) {
-  builder.addCase(entityActions.create, (state, action) => {
+  builder.addCase(coreActions.create, (state, action) => {
     const { payload } = action;
     if (Array.isArray(payload[key])) {
       /** @ts-ignore */
-      adapter.addMany<EntityState<E>>(state, payload[key]);
+      adapter.addMany<MetaState<E>>(state, payload[key]);
     }
   });
 }
 
-export default { entityReducers, entityExtraReducers };
+export default { coreReducers, coreExtraReducers };

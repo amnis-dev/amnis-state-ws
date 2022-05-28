@@ -53,24 +53,24 @@ export interface Entity {
   committed: boolean;
 
   /**
-    * Possible user id creator of the entity.
-    */
+   * Possible user id creator of the entity.
+   */
   readonly $creator: Reference;
 
   /**
-    * Users that have updated the entity.
-    */
+   * Users that have updated the entity.
+   */
   readonly $updaters: Reference[];
 
-  /**
-   * Anything that begins with a '$' must be a document reference.
-   */
-  [key: `$${string}`]: Reference | Reference[];
+  // /**
+  //  * Anything that begins with a '$' must be a document reference.
+  //  */
+  // [key: `$${string}`]: Reference | Reference[];
 
-  /**
-    * Properties can only be serializable, normalized, values.
-    */
-  [key: string]: boolean | number | string | null | undefined | string[];
+  // /**
+  //  * Properties can only be serializable, normalized, values.
+  //  */
+  // [key: string]: boolean | number | string | null | undefined | string[];
 }
 
 /**
@@ -96,17 +96,17 @@ export interface Meta<E extends Entity> {
 /**
  * Omitted types of the core Entity interface.
  */
-export type Omitter<E> = Omit<E, keyof Entity>
+export type EntityOmit<E extends Entity> = Omit<E, keyof Entity>
 
 /**
  * Type for creation method
  */
-export type Create<E extends Entity> = Omitter<E>;
+export type EntityExtension<E extends Entity> = EntityOmit<E>;
 
 /**
  * Type for an update method.
  */
-export type Update<E extends Entity> = Partial<Omitter<E>>;
+export type EntityPartial<E extends Entity> = Partial<EntityExtension<E>>;
 
 /**
  * An entity state.
@@ -263,14 +263,14 @@ export interface License {
  */
 export type Permit = {
   /**
-   * Owner of the permit that can perform the actions.
+   * Owner of the permit that can perform the granted actions.
    */
   $owner: Reference;
 
   /**
-   * Reference to the object that this permit allows grants on.
+   * Reference to the entity that the owner has been granted actions on.
    */
-  $for: Reference;
+  $entity: Reference;
 
   /**
    * Grants this permit provides.

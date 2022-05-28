@@ -1,5 +1,5 @@
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/core/api/api.mock';
-import { entityActions } from '@amnis/core/entity';
+import { coreActions } from '@amnis/core/actions';
 import { stateApiBaseUrl, stateApiHandlersGenerate } from '@amnis/query/stateApi';
 import {
   stateApi,
@@ -42,7 +42,7 @@ test('user should return the initial state', () => {
 test('should not generically create a new user with mismatched keys', () => {
   const store = userStoreSetup();
 
-  const action = entityActions.create({
+  const action = coreActions.create({
     [`not_${userKey}`]: [
       {
         displayName: 'eCrow',
@@ -62,7 +62,7 @@ test('should not generically create a new user with mismatched keys', () => {
 test('should handle generically creating a new user', () => {
   const store = userStoreSetup();
 
-  const action = entityActions.create({
+  const action = coreActions.create({
     [userKey]: [
       {
         displayName: 'eCrow',
@@ -90,7 +90,7 @@ test('should create user data through API', async () => {
 
   const action = await store.dispatch(
     stateApi.endpoints.dispatch.initiate({
-      body: entityActions.create({
+      body: coreActions.create({
         [userKey]: [
           {
             displayName: 'eCrow',

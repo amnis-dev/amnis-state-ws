@@ -2,7 +2,7 @@ import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
 import { User } from '@amnis/core/index';
-import { entityReducers, entityExtraReducers } from '@amnis/core/entity';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import type {
   UserMeta,
 } from './user.types';
@@ -37,12 +37,15 @@ export const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {
     /**
-     * Required: Enables mutations from entity actions.
+     * Common reducers and actions.
      */
-    ...entityReducers<User>(userAdapter),
+    ...coreReducers<User>(userAdapter),
   },
   extraReducers: (builder) => {
-    entityExtraReducers(userKey, userAdapter, builder);
+    /**
+     * Required: Enables mutations from core actions.
+     */
+    coreExtraReducers(userKey, userAdapter, builder);
   },
 });
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { State, Grant } from './types';
-import { grantToString } from './core';
+import { grantString } from './core';
 
 export type authFilterResult = [
   state: State,
@@ -8,9 +8,9 @@ export type authFilterResult = [
 ];
 
 /**
- * Method filters a state object based on license grants.
+ * Method filters a state object based on grants.
  */
-function authStateFilter(state: State, grants: Grant[]): authFilterResult {
+function grantFilter(state: State, grants: Grant[]): authFilterResult {
   const newState: State = {};
   const errors: string[] = [];
 
@@ -31,7 +31,7 @@ function authStateFilter(state: State, grants: Grant[]): authFilterResult {
     const [sliceKey, propKey] = path.split('.');
 
     if (!sliceKey || !propKey) {
-      errors.push(`The grant '${grantToString(grant)}' state path was invalid.`);
+      errors.push(`The grant '${grantString(grant)}' state path was invalid.`);
       return true;
     }
 
@@ -39,7 +39,7 @@ function authStateFilter(state: State, grants: Grant[]): authFilterResult {
      * Only copy granted properties on the state.
      */
     if (!state[sliceKey]?.[propKey]) {
-      errors.push(`The grant '${grantToString(grant)}' was skipped because it doesn't exist on state.`);
+      errors.push(`The grant '${grantString(grant)}' was skipped because it doesn't exist on state.`);
       return true;
     }
 
@@ -52,4 +52,4 @@ function authStateFilter(state: State, grants: Grant[]): authFilterResult {
   return [newState, errors];
 }
 
-export default authStateFilter;
+export default grantFilter;
