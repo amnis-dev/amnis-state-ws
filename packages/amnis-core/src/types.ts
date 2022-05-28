@@ -293,7 +293,7 @@ export interface User extends Entity {
   readonly $licenses: Reference<License>[];
 
   /**
-   * Speical-case permits this user has been bestowed.
+   * Special-case permits this user has been bestowed.
    */
   readonly $permits: Reference<Permit>[];
 }

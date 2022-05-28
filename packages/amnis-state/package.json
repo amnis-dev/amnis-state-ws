@@ -14,6 +14,6 @@
   },
   "dependencies": {
     "@amnis/core": "0.1.0-alpha.1",
-    "@amnis/query": "0.1.0-alpha.1"
+    "@amnis/api": "0.1.0-alpha.1"
   }
 }

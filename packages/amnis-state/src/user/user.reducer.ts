@@ -1,4 +1,4 @@
-import { stateApi } from '@amnis/query/stateApi/stateApi.node';
+import { stateApi } from '@amnis/api/stateApi/stateApi.node';
 import { userSlice } from './user';
 
 export const reducerMap = {

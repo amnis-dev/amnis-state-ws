@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.reducer.ts` : null %>"
 ---
-import { entityApi } from '@amnis/query/entityApi/entityApi.node';
+import { entityApi } from '@amnis/api/entityApi/entityApi.node';
 import { <%= name %>Slice } from './<%= name %>';
 
 export const reducerMap = {

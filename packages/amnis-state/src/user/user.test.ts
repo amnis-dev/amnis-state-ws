@@ -1,9 +1,10 @@
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/core/api/api.mock';
 import { coreActions } from '@amnis/core/actions';
-import { stateApiBaseUrl, stateApiHandlersGenerate } from '@amnis/query/stateApi';
 import {
-  stateApi,
-} from '@amnis/query/stateApi/stateApi.node';
+  apiRedux,
+  apiBaseUrl,
+  apiHandlersGenerate,
+} from '@amnis/api/index';
 import { memoryDb } from '@amnis/db-memory/index';
 import {
   userInitialState,
@@ -14,9 +15,9 @@ import {
 import { userStoreSetup } from './user.store';
 
 const mockHandlers = apiMockGenerateHandlers(
-  stateApiBaseUrl,
+  apiBaseUrl,
   userStoreSetup,
-  stateApiHandlersGenerate(),
+  apiHandlersGenerate(),
   memoryDb,
 );
 const mockServer = apiMockServer(mockHandlers);
@@ -89,7 +90,7 @@ test('should create user data through API', async () => {
   const store = userStoreSetup();
 
   const action = await store.dispatch(
-    stateApi.endpoints.dispatch.initiate({
+    apiRedux.endpoints.dispatch.initiate({
       body: coreActions.create({
         [userKey]: [
           {
@@ -113,7 +114,7 @@ test('should select not user data through API with unmatching query', async () =
   const store = userStoreSetup();
 
   const action = await store.dispatch(
-    stateApi.endpoints.select.initiate({
+    apiRedux.endpoints.select.initiate({
       body: {
         select: {
           user: {
@@ -140,7 +141,7 @@ test('should select user data through API', async () => {
   const store = userStoreSetup();
 
   const action = await store.dispatch(
-    stateApi.endpoints.select.initiate({
+    apiRedux.endpoints.select.initiate({
       body: {
         select: {
           user: {

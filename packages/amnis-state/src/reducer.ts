@@ -1,4 +1,4 @@
-import { entityApi } from '@amnis/query/entityApi';
+import { entityApi } from '@amnis/api/entityApi';
 import { userSlice } from './user';
 
 export const reducerMap = {

@@ -3,15 +3,15 @@ import { ApiHandlers } from '@amnis/core/api';
 import { Result } from '@amnis/core/index';
 import { coreActions } from '@amnis/core/actions';
 import type {
-  StateApiRequestBodyDispatch,
-  StateApiRequestBodySelect,
-  StateApiResponseBodyDispatch,
-  StateApiResponseBodySelect,
-} from './stateApi.types';
+  ApiRequestBodyDispatch,
+  ApiRequestBodySelect,
+  ApiResponseBodyDispatch,
+  ApiResponseBodySelect,
+} from './types';
 
-export function stateApiHandlersGenerate(): ApiHandlers {
+export function apiHandlersGenerate(): ApiHandlers {
   return {
-    dispatch: (body: StateApiRequestBodyDispatch, store, db): StateApiResponseBodyDispatch => {
+    dispatch: (body: ApiRequestBodyDispatch, store, db): ApiResponseBodyDispatch => {
       /**
        * Dispatch action to the API store.
        */
@@ -29,7 +29,7 @@ export function stateApiHandlersGenerate(): ApiHandlers {
 
       return result;
     },
-    select: (body: StateApiRequestBodySelect, store, db): StateApiResponseBodySelect => {
+    select: (body: ApiRequestBodySelect, store, db): ApiResponseBodySelect => {
       const { select } = body;
 
       const result = db.select(select);
@@ -39,4 +39,4 @@ export function stateApiHandlersGenerate(): ApiHandlers {
   };
 }
 
-export default stateApiHandlersGenerate;
+export default apiHandlersGenerate;

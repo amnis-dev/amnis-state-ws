@@ -6,7 +6,7 @@ import type {
 } from '@amnis/core/entity';
 import {
   entityApi,
-} from '@amnis/query/entityApi/entityApi.node';
+} from '@amnis/api/entityApi/entityApi.node';
 import {
   <%= name %>InitialState,
   <%= name %>Actions,
