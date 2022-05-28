@@ -1,8 +1,8 @@
-import { Store } from '@reduxjs/toolkit';
+import type { Store } from '@reduxjs/toolkit';
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
-import { Database } from '../db/db.types';
-import type { ApiHandlers, ApiRequestBody, ApiResponseBody } from './api.types';
+import type { Database } from '@amnis/core/index';
+import type { ApiHandlers, ApiRequestBody, ApiResponseBody } from './types';
 
 export function apiMockGenerateHandlers(
   baseUrl: string,

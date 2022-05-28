@@ -1,5 +1,9 @@
-import { ApiPayload, ApiQueries } from '@amnis/core/api';
-import { ApiRequestBodyDispatch, ApiRequestBodySelect } from './types';
+import {
+  ApiPayload,
+  ApiQueries,
+  ApiRequestBodyDispatch,
+  ApiRequestBodySelect,
+} from './types';
 
 export function apiQueriesGenerate(): ApiQueries {
   return {

@@ -1,10 +1,10 @@
-import { apiMockGenerateHandlers, apiMockServer } from '@amnis/core/api/api.mock';
 import { coreActions } from '@amnis/core/actions';
 import {
   apiRedux,
   apiBaseUrl,
   apiHandlersGenerate,
 } from '@amnis/api/index';
+import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { memoryDb } from '@amnis/db-memory/index';
 import {
   userInitialState,

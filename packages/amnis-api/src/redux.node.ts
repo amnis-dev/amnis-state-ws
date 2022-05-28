@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { ApiPayload } from '@amnis/core/api';
 import { apiBaseUrl } from './const';
 import type {
+  ApiPayload,
   ApiResponseBodyDispatch,
   ApiRequestBodyDispatch,
   ApiResponseBodySelect,

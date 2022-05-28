@@ -1,8 +1,8 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
-import { ApiHandlers } from '@amnis/core/api';
 import { Result } from '@amnis/core/index';
 import { coreActions } from '@amnis/core/actions';
 import type {
+  ApiHandlers,
   ApiRequestBodyDispatch,
   ApiRequestBodySelect,
   ApiResponseBodyDispatch,

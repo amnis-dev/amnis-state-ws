@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ApiPayload } from '@amnis/core/api';
 import { apiBaseUrl } from './const';
 import type {
+  ApiPayload,
   ApiRequestBodyDispatch,
   ApiRequestBodySelect,
   ApiResponseBodyDispatch,
