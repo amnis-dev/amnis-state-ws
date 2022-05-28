@@ -3,6 +3,7 @@ import {
 } from '@reduxjs/toolkit';
 import { User } from '@amnis/core/index';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
+import { apiExtraReducers } from '@amnis/api/reducers';
 import type {
   UserMeta,
 } from './user.types';
@@ -46,6 +47,10 @@ export const userSlice = createSlice({
      * Required: Enables mutations from core actions.
      */
     coreExtraReducers(userKey, userAdapter, builder);
+    /**
+     * Required: Enables mutations from api requests.
+     */
+    apiExtraReducers(userKey, userAdapter, builder);
   },
 });
 

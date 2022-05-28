@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Store } from '@reduxjs/toolkit';
+import type { Action, Store } from '@reduxjs/toolkit';
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
   Select, Result, DateJSON, Database,
@@ -60,12 +60,20 @@ export interface ApiQueries {
 }
 
 /**
+ * Api Handler configurations
+ */
+export interface ApiHandlerParams{
+  body: any;
+  store: Store;
+  database: Database;
+}
+
+/**
  * API handler for a request.
  */
 export type ApiHandler<
-  ReqB = any,
   ResB = any,
-> = (body: ReqB, store: Store, db: Database) => ResB;
+> = (params: ApiHandlerParams) => ResB;
 
 /**
  * API object containing response handlers.
@@ -78,10 +86,7 @@ export interface ApiHandlers {
  * Dispatch Request
  * Client -> Server
  */
-export interface ApiRequestBodyDispatch extends ApiRequestBody {
-  type: string;
-  payload: unknown;
-}
+export type ApiRequestBodyDispatch = ApiRequestBody & Action;
 
 /**
  * Dispatch Response

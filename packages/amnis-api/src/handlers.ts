@@ -3,15 +3,13 @@ import { Result } from '@amnis/core/index';
 import { coreActions } from '@amnis/core/actions';
 import type {
   ApiHandlers,
-  ApiRequestBodyDispatch,
-  ApiRequestBodySelect,
   ApiResponseBodyDispatch,
   ApiResponseBodySelect,
 } from './types';
 
 export function apiHandlersGenerate(): ApiHandlers {
   return {
-    dispatch: (body: ApiRequestBodyDispatch, store, db): ApiResponseBodyDispatch => {
+    dispatch: ({ body, store, database }): ApiResponseBodyDispatch => {
       /**
        * Dispatch action to the API store.
        */
@@ -23,16 +21,16 @@ export function apiHandlersGenerate(): ApiHandlers {
        * Perform database actions.
        */
       switch (body.type) {
-        case coreActions.create.type: result = db.create(store.getState()); break;
+        case coreActions.create.type: result = database.create(store.getState()); break;
         default:
       }
 
       return result;
     },
-    select: (body: ApiRequestBodySelect, store, db): ApiResponseBodySelect => {
+    select: ({ body, database }): ApiResponseBodySelect => {
       const { select } = body;
 
-      const result = db.select(select);
+      const result = database.select(select);
 
       return result;
     },

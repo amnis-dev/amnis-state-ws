@@ -1,4 +1,4 @@
-import type { Store } from '@reduxjs/toolkit';
+import type { Action, Store } from '@reduxjs/toolkit';
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import type { Database } from '@amnis/core/index';
@@ -14,8 +14,9 @@ export function apiMockGenerateHandlers(
     rest.post<ApiRequestBody, never, ApiResponseBody>(
       `${baseUrl}${key}`,
       (req, res, ctx) => {
+        const body = req.body as Action;
         const store = storeBuilder();
-        const response = handlers[key](req.body, store, database);
+        const response = handlers[key]({ body, store, database });
 
         return res(
           ctx.status(200),
