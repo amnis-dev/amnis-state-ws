@@ -19,6 +19,7 @@ export const booksSlice = createSlice({
   reducers: {
     create: booksAdapter.addOne,
     createMany: booksAdapter.addMany,
+    update: booksAdapter.updateOne,
   },
 });
 

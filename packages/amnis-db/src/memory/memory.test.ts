@@ -31,6 +31,43 @@ test('memory db should create and store new book entity.', () => {
 /**
  * ============================================================
  */
+test('memory db should update existing book entity.', () => {
+  const store = storeSetup();
+
+  const bookItem: Book = {
+    $id: '1',
+    title: 'Lord of the Rings',
+  };
+
+  store.dispatch(booksSlice.actions.create(bookItem));
+
+  const createResult = memory.create(store.getState());
+
+  expect(
+    createResult,
+  ).toEqual({
+    books: [bookItem],
+  });
+
+  const bookUpdateItem: Book = {
+    $id: '1',
+    title: 'Harry Potter',
+  };
+
+  store.dispatch(booksSlice.actions.update({ id: '1', changes: bookUpdateItem }));
+
+  const updateResult = memory.update(store.getState());
+
+  expect(
+    updateResult,
+  ).not.toEqual({
+    books: [bookItem],
+  });
+});
+
+/**
+ * ============================================================
+ */
 test('memory db should NOT select book with mismatching title.', () => {
   const store = storeSetup();
 

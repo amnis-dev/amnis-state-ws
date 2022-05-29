@@ -2,7 +2,7 @@
 import type { State, Grant } from './types';
 import { grantString } from './core';
 
-export type authFilterResult = [
+export type grantActionFilterResult = [
   state: State,
   errors: string[]
 ];
@@ -10,7 +10,7 @@ export type authFilterResult = [
 /**
  * Method filters a state object based on grants.
  */
-function grantFilter(state: State, grants: Grant[]): authFilterResult {
+function grantActionFilter(state: State, grants: Grant[]): grantActionFilterResult {
   const newState: State = {};
   const errors: string[] = [];
 
@@ -52,4 +52,4 @@ function grantFilter(state: State, grants: Grant[]): authFilterResult {
   return [newState, errors];
 }
 
-export default grantFilter;
+export default grantActionFilter;

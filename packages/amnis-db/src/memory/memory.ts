@@ -14,6 +14,13 @@ export type MemoryStorage = Record<string, Record<string, Entity>>;
 let storage: MemoryStorage = {};
 
 /**
+ * Function to get memory storage.
+ */
+export function memoryStorage() {
+  return storage;
+}
+
+/**
  * Function to clear memory storage.
  */
 export function memoryClear() {
@@ -64,8 +71,41 @@ export const memory: Database = {
     return result;
   },
   update(state) {
-    const updated: Result = {};
-    return updated;
+    Object.keys(state).every((sliceKey) => {
+      const slice: EntityState<Entity> = state[sliceKey];
+      if (!slice?.entities) {
+        return true;
+      }
+
+      Object.keys(slice.entities).every(
+        (entityKey) => {
+          const entity = slice?.entities[entityKey];
+          if (!entity) {
+            return true;
+          }
+          if (!storage[sliceKey]) {
+            return true;
+          }
+          if (!storage[sliceKey][entityKey]) {
+            return true;
+          }
+          storage[sliceKey][entityKey] = {
+            ...storage[sliceKey][entityKey],
+            ...entity,
+          };
+          return true;
+        },
+      );
+
+      return true;
+    });
+
+    const result = Object.keys(storage).reduce<Result>((value, storageKey) => {
+      value[storageKey] = Object.values(storage[storageKey]);
+      return value;
+    }, {});
+
+    return result;
   },
   delete(references) {
     throw new Error('Function not implemented.');
