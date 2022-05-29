@@ -1,13 +1,13 @@
-import { entityApi } from '@amnis/api/entityApi';
+import { apiRedux } from '@amnis/api/index';
 import { userSlice } from './user';
 
 export const reducerMap = {
-  [entityApi.reducerPath]: entityApi.reducer,
+  [apiRedux.reducerPath]: apiRedux.reducer,
   [userSlice.name]: userSlice.reducer,
 };
 
 export const reducerMiddleware = [
-  entityApi.middleware,
+  apiRedux.middleware,
 ];
 
 export default { reducerMap };

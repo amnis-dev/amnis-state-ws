@@ -1,7 +1,7 @@
-import { entityApi } from '@amnis/api/entityApi';
+import { apiRedux } from '@amnis/api/index';
 
 export const middleware = [
-  entityApi.middleware,
+  apiRedux.middleware,
 ];
 
 export default middleware;
