@@ -18,7 +18,7 @@ global.Request = Request;
 const queries = apiQueriesGenerate();
 
 export const apiRedux = createApi({
-  reducerPath: 'api:state',
+  reducerPath: 'apiRedux',
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
     fetchFn: fetch,

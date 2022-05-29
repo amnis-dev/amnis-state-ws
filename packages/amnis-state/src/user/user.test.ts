@@ -5,7 +5,7 @@ import {
   apiHandlersGenerate,
 } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
-import { memoryDb } from '@amnis/db-memory/index';
+import { memory } from '@amnis/db/index';
 import {
   userInitialState,
   userSelectors,
@@ -18,7 +18,7 @@ const mockHandlers = apiMockGenerateHandlers(
   apiBaseUrl,
   userStoreSetup,
   apiHandlersGenerate(),
-  memoryDb,
+  memory,
 );
 const mockServer = apiMockServer(mockHandlers);
 
@@ -110,7 +110,7 @@ test('should create user data through API', async () => {
 /**
  * ============================================================
  */
-test('should select not user data through API with unmatching query', async () => {
+test('should not select user data with unmatching query through API', async () => {
   const store = userStoreSetup();
 
   const action = await store.dispatch(

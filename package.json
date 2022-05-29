@@ -38,6 +38,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test:db": "jest packages/amnis-db/**/*",
     "test:init": "yarn test config:init",
     "test:watch": "yarn test --watch",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
