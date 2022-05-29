@@ -108,6 +108,14 @@ export function coreExtraReducers<E extends Entity>(
       adapter.addMany<MetaState<E>>(state, payload[key]);
     }
   });
+
+  builder.addCase(coreActions.update, (state, action) => {
+    const { payload } = action;
+    if (Array.isArray(payload[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, payload[key]);
+    }
+  });
 }
 
 export default { coreReducers, coreExtraReducers };

@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "outDir": "./.dist",
+    "declarationDir": "./.dist",
+    "composite": true,
+    "declaration": true,
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "src/**/*.test.*"
+  ],
+  "references": [
+    { "path": "../amnis-core/tsconfig.json" }
+  ]
+}

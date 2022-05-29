@@ -1,7 +1,7 @@
-import { apiRedux } from '@amnis/api/index';
+import { apiCrud } from '@amnis/api/index';
 
 export const middleware = [
-  apiRedux.middleware,
+  apiCrud.middleware,
 ];
 
 export default middleware;

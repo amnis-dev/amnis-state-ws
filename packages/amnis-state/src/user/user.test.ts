@@ -1,8 +1,8 @@
 import { coreActions } from '@amnis/core/actions';
 import {
-  apiRedux,
+  apiCrud,
   apiBaseUrl,
-  apiHandlersGenerate,
+  apiCrudHandlersGenerate,
 } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { memory } from '@amnis/db/index';
@@ -17,7 +17,7 @@ import { userStoreSetup } from './user.store';
 const mockHandlers = apiMockGenerateHandlers(
   apiBaseUrl,
   userStoreSetup,
-  apiHandlersGenerate(),
+  apiCrudHandlersGenerate(),
   memory,
 );
 const mockServer = apiMockServer(mockHandlers);
@@ -90,14 +90,12 @@ test('should create user data through API', async () => {
   const store = userStoreSetup();
 
   const action = await store.dispatch(
-    apiRedux.endpoints.dispatch.initiate({
-      body: coreActions.create({
-        [userKey]: [
-          {
-            displayName: 'eCrow',
-          },
-        ],
-      }),
+    apiCrud.endpoints.create.initiate({
+      [userKey]: [
+        {
+          displayName: 'eCrow',
+        },
+      ],
     }),
   );
 
@@ -114,14 +112,10 @@ test('should not select user data with unmatching query through API', async () =
   const store = userStoreSetup();
 
   const action = await store.dispatch(
-    apiRedux.endpoints.select.initiate({
-      body: {
-        select: {
-          user: {
-            displayName: {
-              $eq: 'not_eCrow',
-            },
-          },
+    apiCrud.endpoints.read.initiate({
+      user: {
+        displayName: {
+          $eq: 'not_eCrow',
         },
       },
     }),
@@ -141,14 +135,10 @@ test('should select user data through API', async () => {
   const store = userStoreSetup();
 
   const action = await store.dispatch(
-    apiRedux.endpoints.select.initiate({
-      body: {
-        select: {
-          user: {
-            displayName: {
-              $eq: 'eCrow',
-            },
-          },
+    apiCrud.endpoints.read.initiate({
+      user: {
+        displayName: {
+          $eq: 'eCrow',
         },
       },
     }),

@@ -10,6 +10,10 @@ export type PayloadEntityUpdate = {
   [slice: string]: EntityPartial<Entity>[]
 };
 
+export type PayloadEntityDelete = {
+  [slice: string]: string[]
+};
+
 export const coreActions = {
   create: createAction('@core/entityCreate', (entitySliceMap: PayloadEntityCreate) => {
     const entitySliceMapNew = Object.keys(entitySliceMap).reduce<PayloadEntityCreate>(
@@ -25,7 +29,7 @@ export const coreActions = {
     };
   }),
 
-  update: createAction('@core/entityModify', (entitySliceMap: PayloadEntityUpdate) => {
+  update: createAction('@core/entityUpdate', (entitySliceMap: PayloadEntityUpdate) => {
     const entitySliceMapNew = Object.keys(entitySliceMap).reduce<PayloadEntityUpdate>(
       (sliceMap, key) => {
         sliceMap[key] = entitySliceMap[key].map((entity) => entityCreate(entity));
@@ -38,6 +42,10 @@ export const coreActions = {
       payload: entitySliceMapNew,
     };
   }),
+
+  delete: createAction('@core/entityDelete', (entitySliceMap: PayloadEntityDelete) => ({
+    payload: entitySliceMap,
+  })),
 };
 
 export default coreActions;

@@ -44,7 +44,7 @@ export const entityCreate = <E extends Entity>(
 /**
  * Modifies an entity.
  */
-export const modifyEntity = <E extends Entity>(
+export const entityUpdate = <E extends Entity>(
   target: E,
   modification: EntityPartial<E>,
   updater?: Reference,
@@ -77,5 +77,5 @@ export default {
   dateJSON,
   grantString,
   entityCreate,
-  modifyEntity,
+  entityUpdate,
 };

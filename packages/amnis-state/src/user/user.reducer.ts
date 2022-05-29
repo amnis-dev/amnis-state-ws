@@ -1,13 +1,13 @@
-import { apiRedux } from '@amnis/api/redux.node';
+import { apiCrud } from '@amnis/api/crud';
 import { userSlice } from './user';
 
 export const reducerMap = {
-  [apiRedux.reducerPath]: apiRedux.reducer,
+  [apiCrud.reducerPath]: apiCrud.reducer,
   [userSlice.name]: userSlice.reducer,
 };
 
 export const reducerMiddleware = [
-  apiRedux.middleware,
+  apiCrud.middleware,
 ];
 
 export default reducerMap;

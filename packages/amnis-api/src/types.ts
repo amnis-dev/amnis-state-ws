@@ -78,36 +78,4 @@ export type ApiHandler<
 /**
  * API object containing response handlers.
  */
-export interface ApiHandlers {
-  [key: string]: ApiHandler;
-}
-
-/**
- * Dispatch Request
- * Client -> Server
- */
-export type ApiRequestBodyDispatch = ApiRequestBody & Action;
-
-/**
- * Dispatch Response
- * Returns the action when fulfilled.
- * Server -> Client
- */
-export type ApiResponseBodyDispatch = Result;
-
-/**
- * Select Request
- * Client -> Server
- */
-export interface ApiRequestBodySelect extends ApiRequestBody {
-  /**
-   * The query object.
-   */
-  select: Select;
-}
-
-/**
- * Select Response
- * Server -> Client
- */
-export type ApiResponseBodySelect = Result;
+export type ApiHandlers = Record<string, ApiHandler>;
