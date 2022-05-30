@@ -51,6 +51,7 @@
     "test": "jest",
     "test:db": "jest packages/amnis-db/**/*",
     "test:api": "jest packages/amnis-api/**/*",
+    "test:state": "jest packages/amnis-state/**/*",
     "test:watch": "yarn test --watch",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
     "set:version": "ts-node -P scripts/tsconfig.json scripts/version",
