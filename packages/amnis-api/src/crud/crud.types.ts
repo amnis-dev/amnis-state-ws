@@ -1,5 +1,11 @@
-import type { PayloadEntityCreate, PayloadEntityDelete, PayloadEntityUpdate } from '@amnis/core/actions';
-import type { Result, Select } from '@amnis/core/types';
+import type {
+  PayloadEntityCreate,
+  PayloadEntityDelete,
+  PayloadEntityUpdate,
+} from '@amnis/core/actions';
+import type {
+  ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select,
+} from '@amnis/core/types';
 import type { ApiHandler, ApiHandlers, ApiQuery } from '../types';
 
 /**
@@ -16,10 +22,10 @@ export interface ApiCrudQueries {
  * API object containing response handlers.
  */
 export interface ApiCrudHandlers extends ApiHandlers {
-  create: ApiHandler;
-  read: ApiHandler;
-  update: ApiHandler;
-  delete: ApiHandler;
+  create: ApiHandler<PayloadEntityCreate, ResultCreate>;
+  read: ApiHandler<Select, ResultRead>;
+  update: ApiHandler<PayloadEntityUpdate, ResultUpdate>;
+  delete: ApiHandler<PayloadEntityDelete, ResultDelete>;
 }
 
 /**
@@ -35,7 +41,7 @@ export type ApiCrudRequestCreate = PayloadEntityCreate;
 /**
  * Create response.
  */
-export type ApiCrudResponseCreate = Result;
+export type ApiCrudResponseCreate = ResultCreate;
 
 /**
  * ================================================================================
@@ -50,7 +56,7 @@ export type ApiCrudRequestRead = Select;
 /**
   * Read response.
   */
-export type ApiCrudResponseRead = Result;
+export type ApiCrudResponseRead = ResultRead;
 
 /**
  * ================================================================================
@@ -65,7 +71,7 @@ export type ApiCrudRequestUpdate = PayloadEntityUpdate;
 /**
  * Update response.
  */
-export type ApiCrudResponseUpdate = Result;
+export type ApiCrudResponseUpdate = ResultUpdate;
 
 /**
  * ================================================================================
@@ -80,4 +86,4 @@ export type ApiCrudRequestDelete = PayloadEntityDelete;
 /**
   * Delete response.
   */
-export type ApiCrudResponseDelete = Result;
+export type ApiCrudResponseDelete = ResultDelete;

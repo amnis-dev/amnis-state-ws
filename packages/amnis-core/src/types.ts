@@ -136,7 +136,7 @@ export type SelectTask = 'all';
 /**
  * An ambiguous state.
  */
-export type State = Record<string, any>;
+export type State<ReducerState = any> = Record<string, ReducerState>;
 
 /**
  * Filter object for a query.
@@ -197,7 +197,31 @@ export type Select = Record<string, Query>;
 /**
  * A common stateful result from API.
  */
-export type Result = Record<string, Entity[]>;
+export type Result = State;
+
+/**
+ * A common stateful result from creations.
+ * A state object with entities that were created.
+ */
+export type ResultCreate = State<Entity[]>;
+
+/**
+ * A common stateful result from readings.
+ * A state object with entities read from a source.
+ */
+export type ResultRead = State<Entity[]>;
+
+/**
+ * A common stateful result from updates.
+ * A state object with parial entities to update.
+ */
+export type ResultUpdate = State<{ $id: string } & Partial<Entity>[]>;
+
+/**
+ * A common stateful result from deletions.
+ * A state object with delete ids.
+ */
+export type ResultDelete = State<string[]>;
 
 /**
  * Grant
@@ -310,21 +334,21 @@ export interface Database {
   /**
    * Method for creating new records in the database.
    */
-  create: (state: State) => Result;
+  create: (state: State) => ResultCreate;
 
   /**
    * Method for updating records in the database.
    */
-  update: (state: State) => Result;
+  update: (state: State) => ResultUpdate;
 
   /**
    * Method to delete records in the database.
    * Shouldn't actually delete records, but mark them as deleted instead
    */
-  delete: (references: Record<string, Reference[]>) => Result;
+  delete: (references: State<string[]>) => ResultDelete;
 
   /**
    * Selects data from the database determined by the select query.
    */
-  select: (select: Select) => Result;
+  read: (select: Select) => ResultRead;
 }

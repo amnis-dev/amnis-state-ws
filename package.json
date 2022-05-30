@@ -49,7 +49,7 @@
     "lint": "eslint --ext .ts --ext .tsx \"./\"",
     "test": "jest",
     "test:db": "jest packages/amnis-db/**/*",
-    "test:init": "yarn test config:init",
+    "test:api": "jest packages/amnis-api/**/*",
     "test:watch": "yarn test --watch",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
     "set:version": "ts-node -P scripts/tsconfig.json scripts/version",

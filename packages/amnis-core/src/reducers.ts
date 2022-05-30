@@ -11,6 +11,7 @@ import { coreActions } from './actions';
 import type {
   Entity,
   EntityExtension,
+  EntityPartial,
   MetaState,
   Reference,
 } from './types';
@@ -28,6 +29,38 @@ export function coreReducers<E extends Entity>(adapter: EntityAdapter<E>) {
         adapter.addOne(state, action.payload);
       },
       prepare: (entityNew: EntityExtension<E>) => ({ payload: entityCreate(entityNew) }),
+    },
+
+    /**
+     * Creates several new entities.
+     */
+    createMany: {
+      reducer: (
+        state: MetaState<E>,
+        action: PayloadAction<E[]>,
+      ) => {
+        adapter.addMany(state, action.payload);
+      },
+      prepare: (entitiesNew: EntityExtension<E>[]) => ({
+        payload: entitiesNew.map((entityNew) => entityCreate(entityNew)),
+      }),
+    },
+
+    /**
+     * Updates an existing entity.
+     */
+    update: {
+      reducer: (
+        state: MetaState<E>,
+        action: PayloadAction<{ $id: string } & EntityPartial<E>>,
+      ) => {
+        const { $id, ...changes } = action.payload;
+        adapter.updateOne(state, {
+          id: $id,
+          changes: changes as Partial<E>,
+        });
+      },
+      prepare: (entityUpdate: { $id: string } & EntityPartial<E>) => ({ payload: entityUpdate }),
     },
 
     /**

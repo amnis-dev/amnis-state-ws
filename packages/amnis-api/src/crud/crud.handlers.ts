@@ -1,71 +1,56 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
-import { Result } from '@amnis/core/index';
 import { coreActions } from '@amnis/core/actions';
+import {
+  ResultCreate, ResultRead, ResultUpdate, ResultDelete,
+} from '@amnis/core/types';
 import type {
   ApiCrudHandlers,
-  ApiCrudResponseCreate,
 } from './crud.types';
 
 export function apiCrudHandlersGenerate(): ApiCrudHandlers {
   return {
-    create: ({ body, store, database }): ApiCrudResponseCreate => {
+    /**
+     * API handler for creating new data in storage.
+     */
+    create: ({ body, store, database }): ResultCreate => {
       /**
        * Dispatch action to the API store.
        */
-      store.dispatch(body);
+      store.dispatch(coreActions.create(body));
 
-      let result: Result = {};
-
-      /**
-       * Perform database actions.
-       */
-      switch (body.type) {
-        case coreActions.create.type: result = database.create(store.getState()); break;
-        default:
-      }
+      const result = database.create(store.getState());
 
       return result;
     },
-    read: ({ body, database }) => {
-      const { select } = body;
 
-      const result = database.select(select);
+    /**
+     * API handler for reading data from storage.
+     */
+    read: ({ body, database }): ResultRead => {
+      const result = database.read(body);
 
       return result;
     },
-    update: ({ body, store, database }) => {
+
+    /**
+     * API handler for updating data in storage.
+     */
+    update: ({ body, store, database }): ResultUpdate => {
       /**
        * Dispatch action to the API store.
        */
-      store.dispatch(body);
+      store.dispatch(coreActions.update(body));
 
-      let result: Result = {};
-
-      /**
-       * Perform database actions.
-       */
-      switch (body.type) {
-        case coreActions.create.type: result = database.create(store.getState()); break;
-        default:
-      }
+      const result = database.update(store.getState());
 
       return result;
     },
-    delete: ({ body, store, database }) => {
-      /**
-       * Dispatch action to the API store.
-       */
-      store.dispatch(body);
 
-      let result: Result = {};
-
-      /**
-       * Perform database actions.
-       */
-      switch (body.type) {
-        case coreActions.create.type: result = database.create(store.getState()); break;
-        default:
-      }
+    /**
+     * API handler for deleting data in storage. (Actually: only marks data as deleted)
+     */
+    delete: ({ body, database }): ResultDelete => {
+      const result = database.delete(body);
 
       return result;
     },

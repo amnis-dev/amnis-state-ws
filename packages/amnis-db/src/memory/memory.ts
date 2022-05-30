@@ -1,4 +1,6 @@
-import type { Entity, Database, Result } from '@amnis/core/index';
+import type {
+  Entity, State, Database, Result, ResultCreate,
+} from '@amnis/core/index';
 import type {
   EntityState,
 } from '@reduxjs/toolkit';
@@ -6,7 +8,7 @@ import type {
 /**
  * Storage type.
  */
-export type MemoryStorage = Record<string, Record<string, Entity>>;
+export type MemoryStorage = State<Record<string, Entity>>;
 
 /**
  * Storage object for entities.
@@ -36,6 +38,8 @@ export const memory: Database = {
     storage = initialStorage;
   },
   create(state) {
+    const created: ResultCreate = {};
+
     Object.keys(state).every((sliceKey) => {
       const slice: EntityState<Entity> = state[sliceKey];
       if (!slice?.entities) {
@@ -56,19 +60,18 @@ export const memory: Database = {
           if (!storage[sliceKey]) {
             storage[sliceKey] = {};
           }
+          if (!created[sliceKey]) {
+            created[sliceKey] = [];
+          }
           storage[sliceKey][entityKey] = entity;
+          created[sliceKey].push(entity);
           return true;
         },
       );
       return true;
     });
 
-    const result = Object.keys(storage).reduce<Result>((value, storageKey) => {
-      value[storageKey] = Object.values(storage[storageKey]);
-      return value;
-    }, {});
-
-    return result;
+    return created;
   },
   update(state) {
     Object.keys(state).every((sliceKey) => {
@@ -110,7 +113,7 @@ export const memory: Database = {
   delete(references) {
     throw new Error('Function not implemented.');
   },
-  select(select) {
+  read(select) {
     const result: Result = {};
 
     Object.keys(select).every((selectKey) => {

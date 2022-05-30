@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Action, Store } from '@reduxjs/toolkit';
+import type { Store } from '@reduxjs/toolkit';
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
-  Select, Result, DateJSON, Database,
+  Result, DateJSON, Database,
 } from '@amnis/core/index';
 
 /**
@@ -62,8 +62,8 @@ export interface ApiQueries {
 /**
  * Api Handler configurations
  */
-export interface ApiHandlerParams{
-  body: any;
+export interface ApiHandlerParams<B = any>{
+  body: B;
   store: Store;
   database: Database;
 }
@@ -71,9 +71,7 @@ export interface ApiHandlerParams{
 /**
  * API handler for a request.
  */
-export type ApiHandler<
-  ResB = any,
-> = (params: ApiHandlerParams) => ResB;
+export type ApiHandler<B = any, R = Result> = (params: ApiHandlerParams<B>) => R;
 
 /**
  * API object containing response handlers.
