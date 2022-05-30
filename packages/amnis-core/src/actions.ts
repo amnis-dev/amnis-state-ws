@@ -18,7 +18,7 @@ export const coreActions = {
   create: createAction('@core/entityCreate', (entitySliceMap: PayloadEntityCreate) => {
     const entitySliceMapNew = Object.keys(entitySliceMap).reduce<PayloadEntityCreate>(
       (sliceMap, key) => {
-        sliceMap[key] = entitySliceMap[key].map((entity) => entityCreate(entity));
+        sliceMap[key] = entitySliceMap[key].map((entity) => entityCreate(key, entity));
         return sliceMap;
       },
       {},
@@ -32,7 +32,7 @@ export const coreActions = {
   update: createAction('@core/entityUpdate', (entitySliceMap: PayloadEntityUpdate) => {
     const entitySliceMapNew = Object.keys(entitySliceMap).reduce<PayloadEntityUpdate>(
       (sliceMap, key) => {
-        sliceMap[key] = entitySliceMap[key].map((entity) => entityCreate(entity));
+        sliceMap[key] = entitySliceMap[key].map((entity) => entityCreate(key, entity));
         return sliceMap;
       },
       {},

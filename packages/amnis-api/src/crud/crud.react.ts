@@ -1,15 +1,9 @@
+import type { PayloadEntityCreate, PayloadEntityDelete, PayloadEntityUpdate } from '@amnis/core/actions';
+import type {
+  ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select,
+} from '@amnis/core/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiBaseUrl } from '../const';
-import type {
-  ApiCrudRequestCreate,
-  ApiCrudRequestDelete,
-  ApiCrudRequestRead,
-  ApiCrudRequestUpdate,
-  ApiCrudResponseCreate,
-  ApiCrudResponseDelete,
-  ApiCrudResponseRead,
-  ApiCrudResponseUpdate,
-} from './crud.types';
 import {
   apiQueriesGenerate,
 } from './crud.queries';
@@ -23,29 +17,29 @@ export const apiCrud = createApi({
   }),
   endpoints: (builder) => ({
     create: builder.query<
-    ApiCrudResponseCreate,
-    ApiCrudRequestCreate
+    ResultCreate,
+    PayloadEntityCreate
     >({
       query: queries.create,
     }),
 
     read: builder.query<
-    ApiCrudResponseRead,
-    ApiCrudRequestRead
+    ResultRead,
+    Select
     >({
       query: queries.read,
     }),
 
     update: builder.query<
-    ApiCrudResponseUpdate,
-    ApiCrudRequestUpdate
+    ResultUpdate,
+    PayloadEntityUpdate
     >({
       query: queries.create,
     }),
 
     delete: builder.query<
-    ApiCrudResponseDelete,
-    ApiCrudRequestDelete
+    ResultDelete,
+    PayloadEntityDelete
     >({
       query: queries.create,
     }),

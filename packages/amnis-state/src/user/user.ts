@@ -40,7 +40,7 @@ export const userSlice = createSlice({
     /**
      * Common reducers and actions.
      */
-    ...coreReducers<User>(userAdapter),
+    ...coreReducers<User>(userKey, userAdapter),
   },
   extraReducers: (builder) => {
     /**

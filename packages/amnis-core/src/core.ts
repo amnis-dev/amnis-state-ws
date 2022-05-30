@@ -17,21 +17,39 @@ export const dateJSON = () => (new Date().toJSON() as DateJSON);
 /**
  * Create a reference to another type.
  */
-export const reference = <T>(ref: string) => ref as Reference<T>;
+export const reference = <T>(key: string, id: string) => `${key}:${id}` as Reference<T>;
+
+/**
+ * Validates a reference type.
+ */
+export const referenceValidate = (ref: string): boolean => {
+  const [key, id] = ref.split(':');
+
+  if (!key || typeof key !== 'string') {
+    return false;
+  }
+
+  if (!id || typeof id !== 'string' || id.length !== 21) {
+    return false;
+  }
+
+  return true;
+};
 
 /**
  * Creates an entity.
  */
 export const entityCreate = <E extends Entity>(
+  key: string,
   entity: EntityExtension<E>,
   creator?: Reference,
 ): E => {
   const now = dateJSON();
   const base: Entity = {
-    $id: nanoid() as Reference,
+    $id: `${key}:${nanoid()}` as Reference,
     created: now,
     updated: now,
-    $creator: creator || reference(''),
+    $creator: creator || reference('user', ''),
     $updaters: [],
     committed: false,
   };

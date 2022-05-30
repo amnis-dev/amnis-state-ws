@@ -31,7 +31,7 @@ export const booksSlice = createSlice({
     selection: [],
   }),
   reducers: {
-    ...coreReducers(booksAdapter),
+    ...coreReducers(bookKey, booksAdapter),
   },
   extraReducers: (builder) => {
     coreExtraReducers<Book>(bookKey, booksAdapter, builder);
@@ -45,11 +45,11 @@ export const storeSetup = () => configureStore({
 });
 
 export const books: Book[] = [
-  entityCreate<Book>({
+  entityCreate<Book>(bookKey, {
     title: 'Lord of the Rings',
     price: 12.85,
   }),
-  entityCreate<Book>({
+  entityCreate<Book>(bookKey, {
     title: 'Harry Potter',
     price: 9.98,
   }),

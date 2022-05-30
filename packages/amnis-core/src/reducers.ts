@@ -16,7 +16,7 @@ import type {
   Reference,
 } from './types';
 
-export function coreReducers<E extends Entity>(adapter: EntityAdapter<E>) {
+export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapter<E>) {
   return {
     /**
      * Creates a new entity.
@@ -28,7 +28,7 @@ export function coreReducers<E extends Entity>(adapter: EntityAdapter<E>) {
       ) => {
         adapter.addOne(state, action.payload);
       },
-      prepare: (entityNew: EntityExtension<E>) => ({ payload: entityCreate(entityNew) }),
+      prepare: (entityNew: EntityExtension<E>) => ({ payload: entityCreate(key, entityNew) }),
     },
 
     /**
@@ -42,7 +42,7 @@ export function coreReducers<E extends Entity>(adapter: EntityAdapter<E>) {
         adapter.addMany(state, action.payload);
       },
       prepare: (entitiesNew: EntityExtension<E>[]) => ({
-        payload: entitiesNew.map((entityNew) => entityCreate(entityNew)),
+        payload: entitiesNew.map((entityNew) => entityCreate(key, entityNew)),
       }),
     },
 

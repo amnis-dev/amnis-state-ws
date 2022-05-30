@@ -1,29 +1,31 @@
 import type {
+  PayloadEntityCreate,
+  PayloadEntityDelete,
+  PayloadEntityUpdate,
+} from '@amnis/core/actions';
+import type { Select } from '@amnis/core/types';
+import type {
   ApiCrudQueries,
-  ApiCrudRequestCreate,
-  ApiCrudRequestDelete,
-  ApiCrudRequestRead,
-  ApiCrudRequestUpdate,
 } from './crud.types';
 
 export function apiQueriesGenerate(): ApiCrudQueries {
   return {
-    create: (payload: ApiCrudRequestCreate) => ({
+    create: (payload: PayloadEntityCreate) => ({
       url: 'create',
       method: 'post',
       body: payload,
     }),
-    read: (payload: ApiCrudRequestDelete) => ({
+    read: (payload: Select) => ({
       url: 'read',
       method: 'post',
       body: payload,
     }),
-    update: (payload: ApiCrudRequestRead) => ({
+    update: (payload: PayloadEntityUpdate) => ({
       url: 'update',
       method: 'post',
       body: payload,
     }),
-    delete: (payload: ApiCrudRequestUpdate) => ({
+    delete: (payload: PayloadEntityDelete) => ({
       url: 'delete',
       method: 'delete',
       body: payload,

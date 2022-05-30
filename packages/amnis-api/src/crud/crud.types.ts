@@ -9,6 +9,11 @@ import type {
 import type { ApiHandler, ApiHandlers, ApiQuery } from '../types';
 
 /**
+ * CRUD API relative routes
+ */
+export type ApiCrudRoutes = 'create' | 'read' | 'update' | 'delete';
+
+/**
  * API object containing request queries.
  */
 export interface ApiCrudQueries {
@@ -27,63 +32,3 @@ export interface ApiCrudHandlers extends ApiHandlers {
   update: ApiHandler<PayloadEntityUpdate, ResultUpdate>;
   delete: ApiHandler<PayloadEntityDelete, ResultDelete>;
 }
-
-/**
- * ================================================================================
- * CREATE
- */
-
-/**
- * Create request.
- */
-export type ApiCrudRequestCreate = PayloadEntityCreate;
-
-/**
- * Create response.
- */
-export type ApiCrudResponseCreate = ResultCreate;
-
-/**
- * ================================================================================
- * READ
- */
-
-/**
- * Read request.
- */
-export type ApiCrudRequestRead = Select;
-
-/**
-  * Read response.
-  */
-export type ApiCrudResponseRead = ResultRead;
-
-/**
- * ================================================================================
- * UPDATE
- */
-
-/**
- * Update request.
- */
-export type ApiCrudRequestUpdate = PayloadEntityUpdate;
-
-/**
- * Update response.
- */
-export type ApiCrudResponseUpdate = ResultUpdate;
-
-/**
- * ================================================================================
- * DELETE
- */
-
-/**
- * Delete request.
- */
-export type ApiCrudRequestDelete = PayloadEntityDelete;
-
-/**
-  * Delete response.
-  */
-export type ApiCrudResponseDelete = ResultDelete;

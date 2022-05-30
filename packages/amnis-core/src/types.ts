@@ -10,7 +10,7 @@ declare const referenceSymbol: unique symbol;
   * A id reference to another document.
   */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type Reference<T = Record<string, unknown>> = string & {[referenceSymbol]: never};
+export type Reference<T = Record<string, unknown>> = `${string}:${string}` & {[referenceSymbol]: never};
 
 /**
  * Unique reference symbol to define a reference of a specific type.
@@ -238,13 +238,47 @@ export type GrantFlag = '0' | '1';
 export type GrantString = `${string}:${DataScope}:${GrantFlag},${GrantFlag},${GrantFlag},${GrantFlag}`;
 
 /**
+ * Sanction interface determines media upload permissions.
+ */
+export interface Sanction extends Entity {
+  /**
+   * Name of this saction type.
+   */
+  name: string;
+
+  /**
+   * Image upload size permissions.
+   * 0 = no allowance.
+   */
+  image: number;
+
+  /**
+   * Video upload size permissions.
+   * 0 = no allowance.
+   */
+  video: number;
+
+  /**
+   * PDF upload size permissions.
+   * 0 = no allowance.
+   */
+  pdf: number;
+
+  /**
+   * Any other type of data upload size permissions.
+   * 0 = no allowance.
+   */
+  blob: number;
+}
+
+/**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
  */
-export interface License {
+export interface License extends Entity {
   /**
    * Name of the license.
    */
-  $name: Reference;
+  name: string;
 
   /**
    * A brief description of the license.
@@ -260,19 +294,44 @@ export interface License {
 /**
  * A permit is a list of grants for a specific reference ID.
  */
-export type Permit = {
+export interface Permit extends Entity {
   /**
    * Owner of the permit that can perform the granted actions.
    */
-  $owner: Reference;
+  $holder: Reference;
 
   /**
    * Reference to the entity that the owner has been granted actions on.
    */
-  $entity: Reference;
+  $target: Reference;
 
   /**
    * Grants this permit provides.
+   */
+  grants: GrantString[];
+}
+
+/**
+ * An interface for user sessions.
+ */
+export interface Session extends Entity {
+  /**
+   * Name of the session user.
+   */
+  name: string;
+
+  /**
+   * Expiration date-time of the session.
+   */
+  expires: DateJSON;
+
+  /**
+   * Highest-level license name this session posesses.
+   */
+  license: string;
+
+  /**
+   * Grants this session posesses.
    */
   grants: GrantString[];
 }
@@ -295,6 +354,11 @@ export interface User extends Entity {
    * Special-case permits this user has been bestowed.
    */
   readonly $permits: Reference<Permit>[];
+
+  /**
+   * Data upload allowance for this user.
+   */
+  readonly $sanction: Reference<Sanction> | null;
 }
 
 /**
