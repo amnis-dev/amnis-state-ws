@@ -31,8 +31,11 @@ jobs:
     - name: Lint for Code-Style Errors
       run: yarn lint
 
-    - name: Run Unit Tests
-      run: yarn test
+    - name: Run Database Unit Tests
+      run: yarn test:db
+
+    - name: Run API Unit Tests
+      run: yarn test:api
 
     - name: Run Build
       run: yarn build

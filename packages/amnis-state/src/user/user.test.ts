@@ -1,4 +1,7 @@
+import { apiCrud, apiCrudHandlersGenerate } from '@amnis/api/index';
+import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { coreActions } from '@amnis/core/actions';
+import { memory } from '@amnis/db/index';
 import {
   userInitialState,
   userSelectors,
@@ -6,6 +9,17 @@ import {
 } from './user';
 
 import { userStoreSetup } from './user.store';
+
+const mockHandlers = apiMockGenerateHandlers(
+  userStoreSetup,
+  apiCrudHandlersGenerate(),
+  memory,
+);
+const mockServer = apiMockServer(mockHandlers);
+
+beforeAll(() => mockServer.listen());
+afterEach(() => mockServer.resetHandlers());
+afterAll(() => mockServer.close());
 
 /**
  * ============================================================
@@ -62,4 +76,72 @@ test('should handle generically creating a new user', () => {
     displayName: expect.any(String),
     $licenses: expect.any(Array),
   }));
+});
+
+/**
+ * ============================================================
+ */
+test('should create user data through API', async () => {
+  const store = userStoreSetup();
+
+  const action = await store.dispatch(
+    apiCrud.endpoints.create.initiate({
+      [userKey]: [
+        {
+          displayName: 'eCrow',
+        },
+      ],
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const entities = userSelectors.selectAll(store.getState());
+  expect(entities).toHaveLength(1);
+});
+
+/**
+ * ============================================================
+ */
+test('should not select user data with unmatching query through API', async () => {
+  const store = userStoreSetup();
+
+  const action = await store.dispatch(
+    apiCrud.endpoints.read.initiate({
+      user: {
+        displayName: {
+          $eq: 'not_eCrow',
+        },
+      },
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const result = action.data || {};
+
+  expect(result.user).toHaveLength(0);
+});
+
+/**
+ * ============================================================
+ */
+test('should select user data through API', async () => {
+  const store = userStoreSetup();
+
+  const action = await store.dispatch(
+    apiCrud.endpoints.read.initiate({
+      user: {
+        displayName: {
+          $eq: 'eCrow',
+        },
+      },
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const result = action.data || {};
+
+  expect(result.user).toHaveLength(1);
 });
