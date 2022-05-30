@@ -3,12 +3,13 @@ import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import type { Database } from '@amnis/core/index';
 import type { ApiHandlers, ApiRequestBody, ApiResponseBody } from './types';
+import { apiBaseUrl } from './const';
 
 export function apiMockGenerateHandlers(
-  baseUrl: string,
   storeBuilder: () => Store,
   handlers: ApiHandlers,
   database: Database,
+  baseUrl = apiBaseUrl,
 ) {
   const mockHandlers: RestHandler[] = Object.keys(handlers).map((key) => (
     rest.post<ApiRequestBody, never, ApiResponseBody>(

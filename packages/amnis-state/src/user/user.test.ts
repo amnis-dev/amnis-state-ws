@@ -1,7 +1,6 @@
 import { coreActions } from '@amnis/core/actions';
 import {
   apiCrud,
-  apiBaseUrl,
   apiCrudHandlersGenerate,
 } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
@@ -15,7 +14,6 @@ import {
 import { userStoreSetup } from './user.store';
 
 const mockHandlers = apiMockGenerateHandlers(
-  apiBaseUrl,
   userStoreSetup,
   apiCrudHandlersGenerate(),
   memory,

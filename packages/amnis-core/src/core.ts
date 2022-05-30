@@ -1,6 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit';
 import {
-  DateJSON, Entity, EntityExtension, EntityPartial, Grant, GrantString, Reference,
+  DataScope,
+  DateJSON, Entity, EntityExtension, EntityPartial, Grant, GrantFlag, GrantString, Reference,
 } from './types';
 
 /**
@@ -64,18 +65,57 @@ export const entityUpdate = <E extends Entity>(
 /**
  * Converts a grant to string format.
  */
-export function grantString(grant: Grant): GrantString {
-  if (grant.type === '@action') {
-    return `@action:${grant.path}:${grant.scope}:${grant.task}`;
+export function grantStringify(grant: Grant): GrantString {
+  const create: GrantFlag = grant.task.create ? '1' : '0';
+  const read: GrantFlag = grant.task.read ? '1' : '0';
+  const update: GrantFlag = grant.task.update ? '1' : '0';
+  const del: GrantFlag = grant.task.delete ? '1' : '0';
+
+  return `${grant.key}:${grant.scope}:${create},${read},${update},${del}`;
+}
+
+/**
+ * Converts a grant string to a grant object.
+ */
+export function grantParse(grant: GrantString): Grant | undefined {
+  const [key, scope, task] = grant.split(':');
+
+  if (typeof task !== 'string') {
+    return undefined;
   }
-  return `@select:${grant.path}:${grant.scope}:${grant.task}`;
+
+  const [create, read, update, del] = task.split(',');
+
+  if (typeof key !== 'string') {
+    return undefined;
+  }
+
+  if (typeof scope !== 'string') {
+    return undefined;
+  }
+
+  if (!['global', 'owned'].includes(scope)) {
+    return undefined;
+  }
+
+  return {
+    key,
+    scope: scope as DataScope,
+    task: {
+      create: create === '1',
+      read: read === '1',
+      update: update === '1',
+      delete: del === '1',
+    },
+  };
 }
 
 export default {
   noop,
   reference,
   dateJSON,
-  grantString,
+  grantStringify,
+  grantParse,
   entityCreate,
   entityUpdate,
 };

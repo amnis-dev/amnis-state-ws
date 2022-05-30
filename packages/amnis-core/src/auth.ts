@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { State, Grant } from './types';
-import { grantString } from './core';
+import type {
+  State, Grant, DataTask,
+} from './types';
 
 export type grantActionFilterResult = [
   state: State,
@@ -10,7 +11,11 @@ export type grantActionFilterResult = [
 /**
  * Method filters a state object based on grants.
  */
-function grantActionFilter(state: State, grants: Grant[]): grantActionFilterResult {
+function grantFilter(
+  state: State,
+  grants: Grant[],
+  attempt: DataTask,
+): grantActionFilterResult {
   const newState: State = {};
   const errors: string[] = [];
 
@@ -18,33 +23,19 @@ function grantActionFilter(state: State, grants: Grant[]): grantActionFilterResu
    * Loop through grant strings.
    */
   grants.every((grant) => {
-    const { type, path } = grant;
-
-    /**
-     * The filters only applies to action grants.
-     * Continue to the next loop if it's not an action grant.
-     */
-    if (type !== '@action') {
+    if (!grant) {
       return true;
     }
 
-    const [sliceKey, propKey] = path.split('.');
-
-    if (!sliceKey || !propKey) {
-      errors.push(`The grant '${grantString(grant)}' state path was invalid.`);
+    if (!grant.task[attempt]) {
       return true;
     }
 
-    /**
-     * Only copy granted properties on the state.
-     */
-    if (!state[sliceKey]?.[propKey]) {
-      errors.push(`The grant '${grantString(grant)}' was skipped because it doesn't exist on state.`);
+    if (!state[grant.key]) {
       return true;
     }
 
-    newState[sliceKey] = newState[sliceKey] ?? {};
-    newState[sliceKey][propKey] = state[sliceKey][propKey];
+    newState[grant.key] = state[grant.key];
 
     return true;
   });
@@ -52,4 +43,4 @@ function grantActionFilter(state: State, grants: Grant[]): grantActionFilterResu
   return [newState, errors];
 }
 
-export default grantActionFilter;
+export default grantFilter;

@@ -58,3 +58,69 @@ test('Handler should NOT create existing entities.', () => {
     result,
   ).toEqual({});
 });
+
+/**
+ * ============================================================
+ */
+test('Handler should read entities.', () => {
+  const bookStore = storeSetup();
+
+  handlers.create({
+    body: {
+      book: books,
+    },
+    store: bookStore,
+    database: memory,
+  });
+
+  const result = handlers.read({
+    body: {
+      book: {
+        title: {
+          $eq: 'Lord of the Rings',
+        },
+      },
+    },
+    store: bookStore,
+    database: memory,
+  });
+
+  expect(
+    result,
+  ).toEqual({
+    [bookKey]: [books[0]],
+  });
+});
+
+/**
+ * ============================================================
+ */
+test('Handler should NOT read entities that do not exist.', () => {
+  const bookStore = storeSetup();
+
+  handlers.create({
+    body: {
+      book: books,
+    },
+    store: bookStore,
+    database: memory,
+  });
+
+  const result = handlers.read({
+    body: {
+      book: {
+        title: {
+          $eq: 'Not the Rings',
+        },
+      },
+    },
+    store: bookStore,
+    database: memory,
+  });
+
+  expect(
+    result,
+  ).toEqual({
+    [bookKey]: [],
+  });
+});

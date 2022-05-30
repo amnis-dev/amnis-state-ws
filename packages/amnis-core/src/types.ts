@@ -114,26 +114,6 @@ export type EntityPartial<E extends Entity> = Partial<EntityExtension<E>>;
 export type MetaState<E extends Entity> = EntityState<E> & Meta<E>;
 
 /**
- * Types of tasks that can be applied to the state.
- */
-export type TaskType = '@action' | '@select';
-
-/**
- * Grant scopes.
- */
-export type GrantScope = 'global' | 'owned';
-
-/**
- * Common action types.
- */
-export type ActionTask = 'create' | 'update' | 'delete';
-
-/**
- * Common select types.
- */
-export type SelectTask = 'all';
-
-/**
  * An ambiguous state.
  */
 export type State<ReducerState = any> = Record<string, ReducerState>;
@@ -224,43 +204,38 @@ export type ResultUpdate = State<{ $id: string } & Partial<Entity>[]>;
 export type ResultDelete = State<string[]>;
 
 /**
- * Grant
- *
- * Type: 'action' or 'select'
- *   'action' types perform some mutation to the data state.
- *   'select' types fetch information from the data state.
- *
- * Path: The path off of the Root data state that this is granted to.
- *
- * Scope: The range of data that the task can be performed on.
- * Example: All, Owned
- *
- * Task: Name of the task to perform.
- *
+ * Data scopes.
+ */
+export type DataScope = 'global' | 'owned';
+
+/**
+  * Data tasks.
+  */
+export type DataTask = 'create' | 'read' | 'update' | 'delete';
+
+/**
+ * Grant object.
  */
 export type Grant = {
-  type: '@action',
-  path: `${string}.${string}`,
-  scope: GrantScope,
-  task: ActionTask
-} | {
-  type: '@select',
-  path: `${string}.${string}`,
-  scope: GrantScope,
-  task: SelectTask
-}
+  key: string,
+  scope: DataScope,
+  task: {
+    create: boolean,
+    read: boolean,
+    update: boolean,
+    delete: boolean,
+  },
+};
+
+/**
+ * Boolean flag for gant strings.
+ */
+export type GrantFlag = '0' | '1';
 
 /**
  * License grant string.
- * Format: @<Type>:<Path>:<Scope>:<Task>
- *
- * @example
- * `@action:user.displayName:global:update`
  */
-export type GrantString = (
-  `@action:${string}.${string}:${GrantScope}:${ActionTask}` |
-  `@select:${string}.${string}:${GrantScope}:${SelectTask}`
-);
+export type GrantString = `${string}:${DataScope}:${GrantFlag},${GrantFlag},${GrantFlag},${GrantFlag}`;
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
@@ -279,7 +254,7 @@ export interface License {
   /**
    * Permissions this license grants.
    */
-  grants: Grant[];
+  grants: GrantString[];
 }
 
 /**
@@ -299,7 +274,7 @@ export type Permit = {
   /**
    * Grants this permit provides.
    */
-  grants: Grant[];
+  grants: GrantString[];
 }
 
 /**

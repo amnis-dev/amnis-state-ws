@@ -9,22 +9,22 @@ import type {
 export function apiQueriesGenerate(): ApiCrudQueries {
   return {
     create: (payload: ApiCrudRequestCreate) => ({
-      url: 'crud/create',
+      url: 'create',
       method: 'post',
       body: payload,
     }),
     read: (payload: ApiCrudRequestDelete) => ({
-      url: 'crud/read',
+      url: 'read',
       method: 'post',
       body: payload,
     }),
     update: (payload: ApiCrudRequestRead) => ({
-      url: 'crud/update',
+      url: 'update',
       method: 'post',
       body: payload,
     }),
     delete: (payload: ApiCrudRequestUpdate) => ({
-      url: 'crud/delete',
+      url: 'delete',
       method: 'delete',
       body: payload,
     }),
