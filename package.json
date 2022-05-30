@@ -1,5 +1,5 @@
 {
-  "name": "@amnis/state",
+  "name": "@amnis/state-workspace",
   "version": "0.1.0-alpha.1",
   "main": "index.ts",
   "repository": "https://github.com/amnis-dev/amnis-state",
