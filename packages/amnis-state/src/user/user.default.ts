@@ -5,7 +5,6 @@ export const userDefault: User = entityCreate<User>(userKey, {
   displayName: '',
   $licenses: [],
   $permits: [],
-  $sanction: null,
 });
 
 export default userDefault;

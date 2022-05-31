@@ -65,17 +65,6 @@
             "$ref": "#/definitions/Reference%3CPermit%3E"
           },
           "description": "Special-case permits this user has been bestowed."
-        },
-        "$sanction": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Reference%3CSanction%3E"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Data upload allowance for this user."
         }
       },
       "required": [
@@ -83,7 +72,6 @@
         "$id",
         "$licenses",
         "$permits",
-        "$sanction",
         "$updaters",
         "committed",
         "created",
@@ -106,10 +94,6 @@
       "description": "A id reference to another document."
     },
     "Reference<Permit>": {
-      "type": "string",
-      "description": "A id reference to another document."
-    },
-    "Reference<Sanction>": {
       "type": "string",
       "description": "A id reference to another document."
     }

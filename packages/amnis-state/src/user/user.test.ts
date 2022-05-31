@@ -97,7 +97,6 @@ test('should create user data through API', async () => {
           displayName: 'eCrow',
           $licenses: [],
           $permits: [],
-          $sanction: null,
         }),
       ],
     }),

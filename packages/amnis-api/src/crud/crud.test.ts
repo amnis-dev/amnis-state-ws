@@ -1,15 +1,16 @@
 import {
   storeSetup, books, bookKey,
 } from '@amnis/core/test/book.store';
-import bookStateSchema from '@amnis/core/test/book.schema.json';
+import bookStateCompleteSchema from '@amnis/core/test/book.schema.complete.json';
+import bookStatePartialSchema from '@amnis/core/test/book.schema.partial.json';
 import { memory, memoryClear } from '@amnis/db/memory';
 import { apiCrudHandlersGenerate } from './crud.handlers';
 
 const handlers = apiCrudHandlersGenerate({
   storeGenerator: storeSetup,
   databaseInterface: memory,
-  schemaComplete: bookStateSchema,
-  schemaPartial: bookStateSchema,
+  schemaComplete: bookStateCompleteSchema,
+  schemaPartial: bookStatePartialSchema,
 });
 
 /**

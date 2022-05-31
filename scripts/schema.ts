@@ -13,6 +13,18 @@ const configPartialTest: Config = {
   type: 'BookStatePartial',
 };
 
+const configSelect: Config = {
+  path: 'packages/amnis-core/src/types.ts',
+  tsconfig: 'tsconfig.json',
+  type: 'Select',
+};
+
+const configRemove: Config = {
+  path: 'packages/amnis-core/src/types.ts',
+  tsconfig: 'tsconfig.json',
+  type: 'Remove',
+};
+
 const configCompleteState: Config = {
   path: 'packages/amnis-state/src/types.ts',
   tsconfig: 'tsconfig.json',
@@ -32,5 +44,9 @@ function gen(config: Config, output: string) {
 
 gen(configCompleteState, 'packages/amnis-state/src/schema.complete.json');
 gen(configPartialState, 'packages/amnis-state/src/schema.partial.json');
+
+gen(configSelect, 'packages/amnis-core/src/schema.select.json');
+gen(configRemove, 'packages/amnis-core/src/schema.remove.json');
+
 gen(configCompleteTest, 'packages/amnis-core/src/test/book.schema.complete.json');
 gen(configPartialTest, 'packages/amnis-core/src/test/book.schema.partial.json');

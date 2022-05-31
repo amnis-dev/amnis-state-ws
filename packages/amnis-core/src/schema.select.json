@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Select",
+  "definitions": {
+    "Select": {
+      "$ref": "#/definitions/State%3CQuery%3E",
+      "description": "A selector definition object."
+    },
+    "State<Query>": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Query"
+      },
+      "description": "An ambiguous state."
+    },
+    "Query": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Filter",
+        "description": "Slice keys."
+      },
+      "properties": {
+        "$start": {
+          "type": "number",
+          "description": "Start query at record value."
+        },
+        "$limit": {
+          "type": "number",
+          "description": "Limit results of the query."
+        }
+      }
+    },
+    "Filter": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "description": "Matches values that are equal to a specified value."
+        },
+        "$gt": {
+          "type": "number",
+          "description": "Matches values that are greater than a specified value."
+        },
+        "$gte": {
+          "type": "number",
+          "description": "Matches values that are greater than or equal to a specified value."
+        },
+        "$lt": {
+          "type": "number",
+          "description": "Matches values that are less than a specified value."
+        },
+        "$lte": {
+          "type": "number",
+          "description": "Matches values that are less than or equal to a specified value."
+        },
+        "$in": {
+          "type": "array",
+          "items": {},
+          "description": "Matches any of the values specified in an array."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Filter object for a query."
+    }
+  }
+}

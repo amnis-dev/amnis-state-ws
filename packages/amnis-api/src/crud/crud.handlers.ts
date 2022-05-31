@@ -4,6 +4,7 @@ import type {
   ResultCreate, ResultRead, ResultUpdate, ResultDelete,
 } from '@amnis/core/types';
 import Ajv from 'ajv';
+import { schemaSelect, schemaRemove } from '@amnis/core/schema';
 import type { ApiError, ApiHandlerGeneratorParams, ApiResponse } from '../types';
 import type {
   ApiCrudHandlers,
@@ -16,6 +17,8 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
   const database = params.databaseInterface;
   const validatorComplete = ajv.compile(params.schemaComplete);
   const validatorPartial = ajv.compile(params.schemaPartial);
+  const validatorSelect = ajv.compile(schemaSelect);
+  const validatorRemove = ajv.compile(schemaRemove);
 
   return {
     /**
@@ -26,7 +29,7 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
       const errors: ApiError[] = [];
 
       /**
-       * Validate the body as an array of entities.
+       * Validate the body.
        */
       validatorComplete(body);
 
@@ -57,8 +60,22 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
      * API handler for reading data from storage.
      */
     read: ({ body }): ApiResponse<ResultRead> => {
-      const store = storeGenerate();
       const errors: ApiError[] = [];
+
+      /**
+       * Validate the body.
+       */
+      validatorSelect(body);
+
+      if (validatorSelect.errors !== undefined && validatorSelect.errors !== null) {
+        return {
+          errors: validatorSelect.errors.map<ApiError>((verror) => ({
+            title: 'Validation Error',
+            message: verror.message || '',
+          })),
+          result: {},
+        };
+      }
 
       const result = database.read(body);
 
@@ -74,6 +91,21 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
     update: ({ body }): ApiResponse<ResultUpdate> => {
       const store = storeGenerate();
       const errors: ApiError[] = [];
+
+      /**
+       * Validate the body.
+       */
+      validatorPartial(body);
+
+      if (validatorPartial.errors !== undefined && validatorPartial.errors !== null) {
+        return {
+          errors: validatorPartial.errors.map<ApiError>((verror) => ({
+            title: 'Validation Error',
+            message: verror.message || '',
+          })),
+          result: {},
+        };
+      }
 
       /**
        * Dispatch action to the API store.
@@ -92,8 +124,22 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
      * API handler for deleting data in storage. (Actually: only marks data as deleted)
      */
     delete: ({ body }): ApiResponse<ResultDelete> => {
-      const store = storeGenerate();
       const errors: ApiError[] = [];
+
+      /**
+       * Validate the body.
+       */
+      validatorRemove(body);
+
+      if (validatorRemove.errors !== undefined && validatorRemove.errors !== null) {
+        return {
+          errors: validatorRemove.errors.map<ApiError>((verror) => ({
+            title: 'Validation Error',
+            message: verror.message || '',
+          })),
+          result: {},
+        };
+      }
 
       const result = database.delete(body);
 

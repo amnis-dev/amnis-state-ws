@@ -172,7 +172,12 @@ export type Query = {
 /**
  * A selector definition object.
  */
-export type Select = Record<string, Query>;
+export type Select = State<Query>;
+
+/**
+ * A removal definition object.
+ */
+export type Remove = State<Reference[]>;
 
 /**
  * A common stateful result from API.
@@ -236,40 +241,6 @@ export type GrantFlag = '0' | '1';
  * License grant string.
  */
 export type GrantString = string;
-
-/**
- * Sanction interface determines media upload permissions.
- */
-export interface Sanction extends Entity {
-  /**
-   * Name of this saction type.
-   */
-  name: string;
-
-  /**
-   * Image upload size permissions.
-   * 0 = no allowance.
-   */
-  image: number;
-
-  /**
-   * Video upload size permissions.
-   * 0 = no allowance.
-   */
-  video: number;
-
-  /**
-   * PDF upload size permissions.
-   * 0 = no allowance.
-   */
-  pdf: number;
-
-  /**
-   * Any other type of data upload size permissions.
-   * 0 = no allowance.
-   */
-  blob: number;
-}
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
@@ -354,11 +325,6 @@ export interface User extends Entity {
    * Special-case permits this user has been bestowed.
    */
   readonly $permits: Reference<Permit>[];
-
-  /**
-   * Data upload allowance for this user.
-   */
-  readonly $sanction: Reference<Sanction> | null;
 }
 
 /**
