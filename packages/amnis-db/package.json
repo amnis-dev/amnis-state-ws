@@ -11,5 +11,8 @@
   "homepage": "https://github.com/amnis-dev/amnis-state",
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"
+  },
+  "dependencies": {
+    "@amnis/core": "0.1.0-alpha.2"
   }
 }

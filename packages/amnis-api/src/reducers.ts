@@ -13,9 +13,10 @@ export function apiExtraReducers<E extends Entity>(
    */
   builder.addMatcher(apiCrud.endpoints.create.matchFulfilled, (state, action) => {
     const { payload } = action;
-    if (Array.isArray(payload[key])) {
+    const { result } = payload;
+    if (result && Array.isArray(result[key])) {
       /** @ts-ignore */
-      adapter.upsertMany<MetaState<E>>(state, payload[key]);
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
     }
   });
 }

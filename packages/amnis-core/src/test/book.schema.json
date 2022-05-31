@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/BookState",
+  "definitions": {
+    "BookState": {
+      "type": "object",
+      "properties": {
+        "book": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Book"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Book": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Users that have updated the entity."
+        },
+        "title": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "$creator",
+        "$id",
+        "$updaters",
+        "committed",
+        "created",
+        "price",
+        "title",
+        "updated"
+      ],
+      "additionalProperties": false
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    }
+  }
+}

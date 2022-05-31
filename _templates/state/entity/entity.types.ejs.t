@@ -1,11 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import type { EntityState } from '@reduxjs/toolkit';
-import type {
-  Entity,
-  EntityMeta,
-} from '@amnis/core/entity';
+import type { Entity, Meta } from '@amnis/core/types';
 
 /**
  * <%= Name %> entity
@@ -20,16 +16,4 @@ export interface <%= Name %> extends Entity {
 /**
  * <%= Name %> collection meta data.
  */
-export type <%= Name %>Meta = EntityMeta<<%= Name %>>;
-
-/**
- * <%= Name %> state.
- */
-export type <%= Name %>State = EntityState<<%= Name %>> & <%= Name %>Meta;
-
-/**
- * <%= Name %> root state.
- */
-export interface <%= Name %>RootState {
-  ['@amnis/<%= name %>']: <%= Name %>State;
-}
+export type <%= Name %>Meta = Meta<<%= Name %>>;

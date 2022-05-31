@@ -4,19 +4,20 @@ import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
   Result, DateJSON, Database,
 } from '@amnis/core/index';
+import type { JSONSchemaType, ValidateFunction } from 'ajv';
 
 /**
  * An API error repsonse.
  */
 export interface ApiError {
-  code: number;
+  title: string;
   message: string | null;
 }
 
 /**
  * API Request.
  */
-export interface ApiRequestBody {
+export interface ApiRequest {
   /**
    * Ask to renew the session.
    */
@@ -26,23 +27,21 @@ export interface ApiRequestBody {
 /**
  * API Response.
  */
-export interface ApiResponseBody {
+export interface ApiResponse<T = any> {
   /**
    * Possible error details.
    */
-  error?: ApiError;
+  errors: ApiError[];
 
   /**
    * Session expiration date-time.
    */
   expire?: DateJSON;
-}
 
-/**
- * API Redux Payload
- */
-export interface ApiPayload<B extends ApiRequestBody = ApiRequestBody> {
-  body: B;
+  /**
+   * Result data.
+   */
+  result?: T;
 }
 
 /**
@@ -62,10 +61,18 @@ export interface ApiQueries {
 /**
  * Api Handler configurations
  */
+export interface ApiHandlerGeneratorParams {
+  storeGenerator: () => Store;
+  databaseInterface: Database;
+  schemaComplete: any;
+  schemaPartial: any;
+}
+
+/**
+ * Api Handler configurations
+ */
 export interface ApiHandlerParams<B = any>{
   body: B;
-  store: Store;
-  database: Database;
 }
 
 /**

@@ -1,12 +1,6 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
 ---
-import type {
-  EntityCreate,
-} from '@amnis/core/entity';
-import {
-  entityApi,
-} from '@amnis/api/entityApi/entityApi.node';
 import {
   <%= name %>InitialState,
   <%= name %>Actions,
@@ -17,11 +11,6 @@ import type {
 } from './<%= name %>.types';
 
 import { storeSetup } from './<%= name %>.store';
-import { <%= name %>MockServer } from './<%= name %>.mock';
-
-beforeAll(() => <%= name %>MockServer.listen());
-afterEach(() => <%= name %>MockServer.resetHandlers());
-afterAll(() => <%= name %>MockServer.close());
 
 /**
  * ============================================================
@@ -70,16 +59,4 @@ test('should handle setting active entity', () => {
   expect(entities[0]).toEqual(expect.objectContaining({
     id: expect.any(String),
   }));
-});
-
-/**
- * ============================================================
- */
-test('should fetch <%= name %> data', async () => {
-  const store = storeSetup();
-
-  const action = await store.dispatch(entityApi.endpoints.read.initiate({}));
-  const { status } = action;
-
-  expect(status).toBe('fulfilled');
 });

@@ -8,6 +8,7 @@ import { apiBaseUrl } from '../const';
 import {
   apiQueriesGenerate,
 } from './crud.queries';
+import { ApiResponse } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
@@ -22,28 +23,28 @@ export const apiCrud = createApi({
   }),
   endpoints: (builder) => ({
     create: builder.query<
-    ResultCreate,
+    ApiResponse<ResultCreate>,
     PayloadEntityCreate
     >({
       query: queries.create,
     }),
 
     read: builder.query<
-    ResultRead,
+    ApiResponse<ResultRead>,
     Select
     >({
       query: queries.read,
     }),
 
     update: builder.query<
-    ResultUpdate,
+    ApiResponse<ResultUpdate>,
     PayloadEntityUpdate
     >({
       query: queries.create,
     }),
 
     delete: builder.query<
-    ResultDelete,
+    ApiResponse<ResultDelete>,
     PayloadEntityDelete
     >({
       query: queries.create,

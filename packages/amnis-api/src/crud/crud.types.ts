@@ -6,7 +6,9 @@ import type {
 import type {
   ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select,
 } from '@amnis/core/types';
-import type { ApiHandler, ApiHandlers, ApiQuery } from '../types';
+import type {
+  ApiHandler, ApiHandlers, ApiQuery, ApiResponse,
+} from '../types';
 
 /**
  * CRUD API relative routes
@@ -27,8 +29,8 @@ export interface ApiCrudQueries {
  * API object containing response handlers.
  */
 export interface ApiCrudHandlers extends ApiHandlers {
-  create: ApiHandler<PayloadEntityCreate, ResultCreate>;
-  read: ApiHandler<Select, ResultRead>;
-  update: ApiHandler<PayloadEntityUpdate, ResultUpdate>;
-  delete: ApiHandler<PayloadEntityDelete, ResultDelete>;
+  create: ApiHandler<PayloadEntityCreate, ApiResponse<ResultCreate>>;
+  read: ApiHandler<Select, ApiResponse<ResultRead>>;
+  update: ApiHandler<PayloadEntityUpdate, ApiResponse<ResultUpdate>>;
+  delete: ApiHandler<PayloadEntityDelete, ApiResponse<ResultDelete>>;
 }

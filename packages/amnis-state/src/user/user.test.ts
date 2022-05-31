@@ -1,4 +1,4 @@
-import { apiCrud, apiCrudHandlersGenerate } from '@amnis/api/index';
+import { apiCrud, apiCrudHandlersGenerate, ApiResponse } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { coreActions } from '@amnis/core/actions';
 import { memory } from '@amnis/db/index';
@@ -7,13 +7,19 @@ import {
   userSelectors,
   userKey,
 } from './user';
+import schemaComplete from '../schema.complete.json';
+import schemaPartial from '../schema.partial.json';
 
 import { userStoreSetup } from './user.store';
+import { entityCreate, User } from '../core';
 
 const mockHandlers = apiMockGenerateHandlers(
-  userStoreSetup,
-  apiCrudHandlersGenerate(),
-  memory,
+  apiCrudHandlersGenerate({
+    storeGenerator: userStoreSetup,
+    databaseInterface: memory,
+    schemaComplete,
+    schemaPartial,
+  }),
 );
 const mockServer = apiMockServer(mockHandlers);
 
@@ -87,14 +93,19 @@ test('should create user data through API', async () => {
   const action = await store.dispatch(
     apiCrud.endpoints.create.initiate({
       [userKey]: [
-        {
+        entityCreate<User>(userKey, {
           displayName: 'eCrow',
-        },
+          $licenses: [],
+          $permits: [],
+          $sanction: null,
+        }),
       ],
     }),
   );
 
   expect(action.status).toBe('fulfilled');
+
+  console.log(action.data);
 
   const entities = userSelectors.selectAll(store.getState());
   expect(entities).toHaveLength(1);
@@ -118,9 +129,9 @@ test('should not select user data with unmatching query through API', async () =
 
   expect(action.status).toBe('fulfilled');
 
-  const result = action.data || {};
+  const data = action.data || {} as ApiResponse;
 
-  expect(result.user).toHaveLength(0);
+  expect(data?.result?.user).toHaveLength(0);
 });
 
 /**
@@ -141,7 +152,7 @@ test('should select user data through API', async () => {
 
   expect(action.status).toBe('fulfilled');
 
-  const result = action.data || {};
+  const data = action.data || {} as ApiResponse;
 
-  expect(result.user).toHaveLength(1);
+  expect(data?.result?.user).toHaveLength(1);
 });

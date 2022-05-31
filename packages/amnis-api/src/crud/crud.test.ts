@@ -1,10 +1,16 @@
 import {
   storeSetup, books, bookKey,
 } from '@amnis/core/test/book.store';
+import bookStateSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
 import { apiCrudHandlersGenerate } from './crud.handlers';
 
-const handlers = apiCrudHandlersGenerate();
+const handlers = apiCrudHandlersGenerate({
+  storeGenerator: storeSetup,
+  databaseInterface: memory,
+  schemaComplete: bookStateSchema,
+  schemaPartial: bookStateSchema,
+});
 
 /**
  * Clear memory storage after each run.
@@ -15,62 +21,72 @@ afterEach(() => memoryClear());
  * ============================================================
  */
 test('Handler should create new entities.', () => {
-  const bookStore = storeSetup();
-
   const result = handlers.create({
     body: {
       book: books,
     },
-    store: bookStore,
-    database: memory,
   });
 
   expect(
     result,
   ).toEqual({
-    [bookKey]: books,
+    errors: [],
+    result: { [bookKey]: books },
   });
+});
+
+/**
+ * ============================================================
+ */
+test('Handler should create entities that do not validate against the schema.', () => {
+  const result = handlers.create({
+    body: {
+      book: [
+        {
+          this: 'is not',
+          a: 'book',
+        },
+      ],
+    },
+  });
+
+  expect(result.errors).toHaveLength(1);
+  expect(result.errors[0].title).toEqual('Validation Error');
+  expect(result.result).toEqual({});
 });
 
 /**
  * ============================================================
  */
 test('Handler should NOT create existing entities.', () => {
-  const bookStore = storeSetup();
-
   handlers.create({
     body: {
       book: books,
     },
-    store: bookStore,
-    database: memory,
   });
 
   const result = handlers.create({
     body: {
       book: books,
     },
-    store: bookStore,
-    database: memory,
   });
 
   expect(
     result,
-  ).toEqual({});
+  ).toEqual({
+    errors: [],
+    result: {},
+  });
 });
 
 /**
  * ============================================================
  */
 test('Handler should read entities.', () => {
-  const bookStore = storeSetup();
-
   handlers.create({
     body: {
       book: books,
     },
-    store: bookStore,
-    database: memory,
   });
 
   const result = handlers.read({
@@ -81,14 +97,13 @@ test('Handler should read entities.', () => {
         },
       },
     },
-    store: bookStore,
-    database: memory,
   });
 
   expect(
     result,
   ).toEqual({
-    [bookKey]: [books[0]],
+    errors: [],
+    result: { [bookKey]: [books[0]] },
   });
 });
 
@@ -96,14 +111,10 @@ test('Handler should read entities.', () => {
  * ============================================================
  */
 test('Handler should NOT read entities that do not exist.', () => {
-  const bookStore = storeSetup();
-
   handlers.create({
     body: {
       book: books,
     },
-    store: bookStore,
-    database: memory,
   });
 
   const result = handlers.read({
@@ -114,13 +125,12 @@ test('Handler should NOT read entities that do not exist.', () => {
         },
       },
     },
-    store: bookStore,
-    database: memory,
   });
 
   expect(
     result,
   ).toEqual({
-    [bookKey]: [],
+    errors: [],
+    result: { [bookKey]: [] },
   });
 });

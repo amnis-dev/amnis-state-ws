@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EntityState } from '@reduxjs/toolkit';
+import type { EntityState } from '@reduxjs/toolkit';
 
 /**
  * Unique reference symbol to another document type.
@@ -10,7 +10,7 @@ declare const referenceSymbol: unique symbol;
   * A id reference to another document.
   */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type Reference<T = Record<string, unknown>> = `${string}:${string}` & {[referenceSymbol]: never};
+export type Reference<T = Record<string, unknown>> = string & {[referenceSymbol]: never};
 
 /**
  * Unique reference symbol to define a reference of a specific type.
@@ -235,7 +235,7 @@ export type GrantFlag = '0' | '1';
 /**
  * License grant string.
  */
-export type GrantString = `${string}:${DataScope}:${GrantFlag},${GrantFlag},${GrantFlag},${GrantFlag}`;
+export type GrantString = string;
 
 /**
  * Sanction interface determines media upload permissions.

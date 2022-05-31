@@ -1,38 +1,59 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 ---
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import {
+  createEntityAdapter, createSlice,
+} from '@reduxjs/toolkit';
+import { <%= Name %> } from '@amnis/core/index';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
+import { apiExtraReducers } from '@amnis/api/reducers';
 import type {
-  <%= Name %>,
   <%= Name %>Meta,
-  <%= Name %>RootState,
 } from './<%= name %>.types';
-import { entityReducers } from '../entityState';
+
+/**
+ * <%= Name %> slice key.
+ */
+export const <%= name %>Key = '<%= name %>';
 
 /**
  * RTK <%= name %> adapter.
+ * Manages the normalized entities.
  */
-const adapter = createEntityAdapter<<%= Name %>>({
-  selectId: (entity) => entity.id,
+export const <%= name %>Adapter = createEntityAdapter<<%= Name %>>({
+  selectId: (entity) => entity.$id,
 });
 
 /**
- * Initial <%= name %> map state.
+ * Initialized <%= name %> state with meta information.
  */
-export const <%= name %>InitialState = adapter.getInitialState({
+export const <%= name %>InitialState = <%= name %>Adapter.getInitialState<<%= Name %>Meta>({
   active: null,
   focused: null,
   selection: [],
-} as <%= Name %>Meta);
+});
 
 /**
  * RTK <%= Name %> Slice
  */
 export const <%= name %>Slice = createSlice({
-  name: '@amnis/<%= name %>',
+  name: <%= name %>Key,
   initialState: <%= name %>InitialState,
   reducers: {
-    ...entityReducers<<%= Name %>>(adapter),
+    /**
+     * Common reducers and actions.
+     */
+    ...coreReducers<<%= Name %>>(<%= name %>Key, <%= name %>Adapter),
+  },
+  extraReducers: (builder) => {
+    /**
+     * Required: Enables mutations from core actions.
+     */
+    coreExtraReducers(<%= name %>Key, <%= name %>Adapter, builder);
+    /**
+     * Required: Enables mutations from api requests.
+     */
+    apiExtraReducers(<%= name %>Key, <%= name %>Adapter, builder);
   },
 });
 
@@ -49,6 +70,21 @@ export const <%= name %>Actions = <%= name %>Slice.actions;
 /**
  * <%= Name %> redux selectors.
  */
-export const <%= name %>Selectors = adapter.getSelectors<<%= Name %>RootState>((state) => state['@amnis/<%= name %>']);
+export const <%= name %>Selectors = {
+  /**
+   * Gets entity selectors.
+   */
+  ...<%= name %>Adapter.getSelectors<{
+    [<%= name %>Key]: typeof <%= name %>InitialState;
+  }>((state) => state[<%= name %>Key]),
+};
 
+/**
+ * <%= Name %> redux selector keys.
+ */
+export type <%= Name %>Selector = Extract<keyof typeof <%= name %>Selectors, string>;
+
+/**
+ * Export the slice as default.
+ */
 export default <%= name %>Slice;
