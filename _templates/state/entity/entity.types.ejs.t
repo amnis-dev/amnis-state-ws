@@ -8,9 +8,9 @@ import type { Entity, Meta } from '@amnis/core/types';
  */
 export interface <%= Name %> extends Entity {
   /**
-   * Display name for the <%= name %>.
+   * Properties for <%= name %>.
    */
-  myProperty?: string;
+  myProperty: string;
 }
 
 /**

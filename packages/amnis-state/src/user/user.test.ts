@@ -12,6 +12,7 @@ import schemaPartial from '../schema.partial.json';
 
 import { userStoreSetup } from './user.store';
 import { entityCreate, User } from '../core';
+import { userDefault } from './user.default';
 
 const mockHandlers = apiMockGenerateHandlers(
   apiCrudHandlersGenerate({
@@ -48,7 +49,7 @@ test('should not generically create a new user with mismatched keys', () => {
     [`not_${userKey}`]: [
       {
         displayName: 'eCrow',
-        $licenses: [],
+        $roles: [],
       },
     ],
   });
@@ -68,7 +69,7 @@ test('should handle generically creating a new user', () => {
     [userKey]: [
       {
         displayName: 'eCrow',
-        $licenses: [],
+        $roles: [],
       },
     ],
   });
@@ -80,7 +81,7 @@ test('should handle generically creating a new user', () => {
   expect(entities[0]).toEqual(expect.objectContaining({
     $id: expect.any(String),
     displayName: expect.any(String),
-    $licenses: expect.any(Array),
+    $roles: expect.any(Array),
   }));
 });
 
@@ -94,17 +95,13 @@ test('should create user data through API', async () => {
     apiCrud.endpoints.create.initiate({
       [userKey]: [
         entityCreate<User>(userKey, {
-          displayName: 'eCrow',
-          $licenses: [],
-          $permits: [],
+          ...userDefault,
         }),
       ],
     }),
   );
 
   expect(action.status).toBe('fulfilled');
-
-  console.log(action.data);
 
   const entities = userSelectors.selectAll(store.getState());
   expect(entities).toHaveLength(1);
@@ -142,7 +139,7 @@ test('should select user data through API', async () => {
   const action = await store.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
-        displayName: {
+        name: {
           $eq: 'eCrow',
         },
       },

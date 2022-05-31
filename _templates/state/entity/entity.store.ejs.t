@@ -4,7 +4,7 @@ to: "<%= path ? `${path}/${name}/${name}.store.ts` : null %>"
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { reducerMap, reducerMiddleware } from './<%= name %>.reducer';
 
-export function storeSetup() {
+export function <%= name %>StoreSetup() {
   const rootReducer = combineReducers(reducerMap);
 
   const <%= name %>Store = configureStore({
@@ -16,4 +16,4 @@ export function storeSetup() {
   return <%= name %>Store;
 }
 
-export default storeSetup;
+export default <%= name %>StoreSetup;

@@ -55,7 +55,6 @@
     "test:state": "jest packages/amnis-state/**/*",
     "test:watch": "yarn test --watch",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
-    "gen:schema-bck": "ts-json-schema-generator -f 'tsconfig.json' -p 'packages/amnis-state/types.ts' -t 'State'",
     "gen:schema": "ts-node -P scripts/tsconfig.json scripts/schema",
     "set:version": "ts-node -P scripts/tsconfig.json scripts/version",
     "delete-node-modules": "npx rimraf ./**/node_modules"

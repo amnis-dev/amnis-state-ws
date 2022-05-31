@@ -4,7 +4,6 @@ import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
   Result, DateJSON, Database,
 } from '@amnis/core/index';
-import type { JSONSchemaType, ValidateFunction } from 'ajv';
 
 /**
  * An API error repsonse.

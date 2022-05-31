@@ -4,10 +4,10 @@ to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
-import { <%= Name %> } from '@amnis/core/index';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
 import type {
+  <%= Name %>,
   <%= Name %>Meta,
 } from './<%= name %>.types';
 

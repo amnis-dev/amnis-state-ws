@@ -238,14 +238,14 @@ export type Grant = {
 export type GrantFlag = '0' | '1';
 
 /**
- * License grant string.
+ * Role grant string.
  */
 export type GrantString = string;
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
  */
-export interface License extends Entity {
+export interface Role extends Entity {
   /**
    * Name of the license.
    */
@@ -283,7 +283,33 @@ export interface Permit extends Entity {
 }
 
 /**
- * An interface for user sessions.
+ * Data associated to a User.
+ */
+export interface User extends Entity {
+  /**
+   * Name for the user.
+   */
+  name: string;
+
+  /**
+   * Email address
+   * @default ""
+   */
+  email: string;
+
+  /**
+   * Roles this user has been given.
+   */
+  readonly $roles: Reference<Role>[];
+
+  /**
+   * Special-case permits this user has been bestowed.
+   */
+  readonly $permits: Reference<Permit>[];
+}
+
+/**
+ * An interface for sessions.
  */
 export interface Session extends Entity {
   /**
@@ -292,39 +318,19 @@ export interface Session extends Entity {
   name: string;
 
   /**
+   * Reference to the User ID
+   */
+  readonly $user: Reference<User>;
+
+  /**
    * Expiration date-time of the session.
    */
   expires: DateJSON;
 
   /**
-   * Highest-level license name this session posesses.
-   */
-  license: string;
-
-  /**
    * Grants this session posesses.
    */
   grants: GrantString[];
-}
-
-/**
- * Data associated to a User.
- */
-export interface User extends Entity {
-  /**
-   * Display name for the user.
-   */
-  displayName: string;
-
-  /**
-   * Licences this user has been given.
-   */
-  readonly $licenses: Reference<License>[];
-
-  /**
-   * Special-case permits this user has been bestowed.
-   */
-  readonly $permits: Reference<Permit>[];
 }
 
 /**

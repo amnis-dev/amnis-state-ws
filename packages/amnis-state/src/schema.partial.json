@@ -10,16 +10,21 @@
           "items": {
             "type": "object",
             "properties": {
-              "displayName": {
+              "name": {
                 "type": "string",
-                "description": "Display name for the user."
+                "description": "Name for the user."
               },
-              "$licenses": {
+              "email": {
+                "type": "string",
+                "description": "Email address",
+                "default": ""
+              },
+              "$roles": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/Reference%3CLicense%3E"
+                  "$ref": "#/definitions/Reference%3CRole%3E"
                 },
-                "description": "Licences this user has been given."
+                "description": "Roles this user has been given."
               },
               "$permits": {
                 "type": "array",
@@ -66,7 +71,7 @@
       },
       "additionalProperties": false
     },
-    "Reference<License>": {
+    "Reference<Role>": {
       "type": "string",
       "description": "A id reference to another document."
     },
