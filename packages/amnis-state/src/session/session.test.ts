@@ -31,6 +31,9 @@ test('should handle creating a new session', () => {
   expect(entities).toHaveLength(1);
 
   expect(entities[0]).toEqual(expect.objectContaining({
-    myProperty: expect.any(String),
+    name: expect.any(String),
+    $user: expect.any(String),
+    grants: expect.any(Array),
+    expires: expect.any(String),
   }));
 });

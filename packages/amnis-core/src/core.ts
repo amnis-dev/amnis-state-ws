@@ -1,6 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit';
 import {
   DataScope,
+  DataTask,
   DateJSON, Entity, EntityExtension, EntityPartial, Grant, GrantFlag, GrantString, Reference,
 } from './types';
 
@@ -42,14 +43,15 @@ export const referenceValidate = (ref: string): boolean => {
 export const entityCreate = <E extends Entity>(
   key: string,
   entity: EntityExtension<E>,
-  creator?: Reference,
+  set?: Partial<Entity>,
 ): E => {
   const now = dateJSON();
   const base: Entity = {
     $id: `${key}:${nanoid()}` as Reference,
     created: now,
     updated: now,
-    $creator: creator || reference('user', ''),
+    $owner: reference('user', ''),
+    $creator: reference('user', ''),
     $updaters: [],
     committed: false,
   };
@@ -57,6 +59,7 @@ export const entityCreate = <E extends Entity>(
   return {
     ...base,
     ...entity,
+    ...set,
   } as E;
 };
 
@@ -84,12 +87,7 @@ export const entityUpdate = <E extends Entity>(
  * Converts a grant to string format.
  */
 export function grantStringify(grant: Grant): GrantString {
-  const create: GrantFlag = grant.task.create ? '1' : '0';
-  const read: GrantFlag = grant.task.read ? '1' : '0';
-  const update: GrantFlag = grant.task.update ? '1' : '0';
-  const del: GrantFlag = grant.task.delete ? '1' : '0';
-
-  return `${grant.key}:${grant.scope}:${create},${read},${update},${del}`;
+  return `${grant.key}:${grant.scope}:${grant.task}`;
 }
 
 /**
@@ -97,12 +95,6 @@ export function grantStringify(grant: Grant): GrantString {
  */
 export function grantParse(grant: GrantString): Grant | undefined {
   const [key, scope, task] = grant.split(':');
-
-  if (typeof task !== 'string') {
-    return undefined;
-  }
-
-  const [create, read, update, del] = task.split(',');
 
   if (typeof key !== 'string') {
     return undefined;
@@ -116,15 +108,20 @@ export function grantParse(grant: GrantString): Grant | undefined {
     return undefined;
   }
 
+  const taskValue: DataTask = parseInt(task, 10);
+
+  if (typeof taskValue !== 'number') {
+    return undefined;
+  }
+
+  if (taskValue < 0 || taskValue > 15) {
+    return undefined;
+  }
+
   return {
     key,
     scope: scope as DataScope,
-    task: {
-      create: create === '1',
-      read: read === '1',
-      update: update === '1',
-      delete: del === '1',
-    },
+    task: taskValue,
   };
 }
 

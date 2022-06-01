@@ -37,6 +37,10 @@
           "description": "Flag to determine if the entity has been committed to storage.",
           "default": false
         },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
         "$creator": {
           "$ref": "#/definitions/Reference",
           "description": "Possible user id creator of the entity."
@@ -46,7 +50,7 @@
           "items": {
             "$ref": "#/definitions/Reference"
           },
-          "description": "Users that have updated the entity."
+          "description": "Entities that have updated this."
         },
         "title": {
           "type": "string"
@@ -58,6 +62,7 @@
       "required": [
         "$creator",
         "$id",
+        "$owner",
         "$updaters",
         "committed",
         "created",

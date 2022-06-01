@@ -3,10 +3,8 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import type {
-  Session,
-  SessionMeta,
-} from './session.types';
+import type { Session } from '@amnis/core/index';
+import type { SessionMeta } from './session.types';
 
 /**
  * Session slice key.

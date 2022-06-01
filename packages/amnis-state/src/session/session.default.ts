@@ -1,9 +1,13 @@
-import { entityCreate } from '@amnis/core/index';
+import { dateJSON, entityCreate, reference } from '@amnis/core/index';
+import type { Session } from '@amnis/core/types';
+import { userKey } from '../user';
 import { sessionKey } from './session';
-import type { Session } from './session.types';
 
 export const sessionDefault: Session = entityCreate<Session>(sessionKey, {
-  myProperty: '',
+  name: 'eCrow',
+  $user: reference(userKey, ''),
+  grants: [],
+  expires: dateJSON(),
 });
 
 export default sessionDefault;

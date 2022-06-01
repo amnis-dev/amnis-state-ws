@@ -53,12 +53,17 @@ export interface Entity {
   committed: boolean;
 
   /**
+   * Entity that owns this data.
+   */
+  readonly $owner: Reference;
+
+  /**
    * Possible user id creator of the entity.
    */
   readonly $creator: Reference;
 
   /**
-   * Users that have updated the entity.
+   * Entities that have updated this.
    */
   readonly $updaters: Reference[];
 
@@ -216,20 +221,22 @@ export type DataScope = 'global' | 'owned';
 /**
   * Data tasks.
   */
-export type DataTask = 'create' | 'read' | 'update' | 'delete';
+// eslint-disable-next-line no-shadow
+export enum DataTask {
+  None = 0,
+  Create = 1,
+  Read = 2,
+  Update = 4,
+  Delete = 8,
+}
 
 /**
  * Grant object.
  */
 export type Grant = {
-  key: string,
-  scope: DataScope,
-  task: {
-    create: boolean,
-    read: boolean,
-    update: boolean,
-    delete: boolean,
-  },
+  key: string;
+  scope: DataScope;
+  task: DataTask;
 };
 
 /**

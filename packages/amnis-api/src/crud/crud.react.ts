@@ -1,6 +1,11 @@
-import type { PayloadEntityCreate, PayloadEntityDelete, PayloadEntityUpdate } from '@amnis/core/actions';
+import type { PayloadEntityCreate, PayloadEntityUpdate } from '@amnis/core/actions';
 import type {
-  ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select,
+  Remove,
+  ResultCreate,
+  ResultDelete,
+  ResultRead,
+  ResultUpdate,
+  Select,
 } from '@amnis/core/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiBaseUrl } from '../const';
@@ -40,7 +45,7 @@ export const apiCrud = createApi({
 
     delete: builder.query<
     ApiResponse<ResultDelete>,
-    PayloadEntityDelete
+    Remove
     >({
       query: queries.create,
     }),

@@ -2,7 +2,7 @@
 import type { Store } from '@reduxjs/toolkit';
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
-  Result, DateJSON, Database,
+  Result, DateJSON, Database, Session,
 } from '@amnis/core/index';
 
 /**
@@ -72,6 +72,7 @@ export interface ApiHandlerGeneratorParams {
  */
 export interface ApiHandlerParams<B = any>{
   body: B;
+  session: Session;
 }
 
 /**

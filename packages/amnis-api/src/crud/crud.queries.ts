@@ -1,9 +1,8 @@
 import type {
   PayloadEntityCreate,
-  PayloadEntityDelete,
   PayloadEntityUpdate,
 } from '@amnis/core/actions';
-import type { Select } from '@amnis/core/types';
+import type { Remove, Select } from '@amnis/core/types';
 import type {
   ApiCrudQueries,
 } from './crud.types';
@@ -25,7 +24,7 @@ export function apiQueriesGenerate(): ApiCrudQueries {
       method: 'post',
       body: payload,
     }),
-    delete: (payload: PayloadEntityDelete) => ({
+    delete: (payload: Remove) => ({
       url: 'delete',
       method: 'delete',
       body: payload,

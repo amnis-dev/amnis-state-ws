@@ -1,13 +1,20 @@
 import type {
   PayloadEntityCreate,
-  PayloadEntityDelete,
   PayloadEntityUpdate,
 } from '@amnis/core/actions';
 import type {
-  ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select,
+  Remove,
+  ResultCreate,
+  ResultDelete,
+  ResultRead,
+  ResultUpdate,
+  Select,
 } from '@amnis/core/types';
 import type {
-  ApiHandler, ApiHandlers, ApiQuery, ApiResponse,
+  ApiHandler,
+  ApiHandlers,
+  ApiQuery,
+  ApiResponse,
 } from '../types';
 
 /**
@@ -32,5 +39,5 @@ export interface ApiCrudHandlers extends ApiHandlers {
   create: ApiHandler<PayloadEntityCreate, ApiResponse<ResultCreate>>;
   read: ApiHandler<Select, ApiResponse<ResultRead>>;
   update: ApiHandler<PayloadEntityUpdate, ApiResponse<ResultUpdate>>;
-  delete: ApiHandler<PayloadEntityDelete, ApiResponse<ResultDelete>>;
+  delete: ApiHandler<Remove, ApiResponse<ResultDelete>>;
 }

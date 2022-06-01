@@ -1,24 +1,24 @@
 import { createAction } from '@reduxjs/toolkit';
 import { entityCreate } from './core';
-import { Entity, EntityExtension, EntityPartial } from './types';
+import {
+  Entity, EntityExtension, EntityPartial, Remove,
+} from './types';
 
 export type PayloadEntityCreate = {
-  [slice: string]: EntityExtension<Entity>[]
+  [slice: string]: EntityExtension<Entity>[];
 };
 
 export type PayloadEntityUpdate = {
-  [slice: string]: EntityPartial<Entity>[]
-};
-
-export type PayloadEntityDelete = {
-  [slice: string]: string[]
+  [slice: string]: EntityPartial<Entity>[];
 };
 
 export const coreActions = {
   create: createAction('@core/entityCreate', (entitySliceMap: PayloadEntityCreate) => {
     const entitySliceMapNew = Object.keys(entitySliceMap).reduce<PayloadEntityCreate>(
       (sliceMap, key) => {
-        sliceMap[key] = entitySliceMap[key].map((entity) => entityCreate(key, entity));
+        sliceMap[key] = entitySliceMap[key].map((entity) => (
+          entityCreate(key, entity)
+        ));
         return sliceMap;
       },
       {},
@@ -43,7 +43,7 @@ export const coreActions = {
     };
   }),
 
-  delete: createAction('@core/entityDelete', (entitySliceMap: PayloadEntityDelete) => ({
+  delete: createAction('@core/entityDelete', (entitySliceMap: Remove) => ({
     payload: entitySliceMap,
   })),
 };

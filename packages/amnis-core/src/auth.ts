@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type {
+import {
   State, Grant, DataTask,
 } from './types';
 
@@ -27,7 +27,8 @@ function grantFilter(
       return true;
     }
 
-    if (!grant.task[attempt]) {
+    // eslint-disable-next-line no-bitwise
+    if ((grant.task & attempt) !== attempt) {
       return true;
     }
 

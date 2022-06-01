@@ -4,7 +4,18 @@ import {
 import bookStateCompleteSchema from '@amnis/core/test/book.schema.complete.json';
 import bookStatePartialSchema from '@amnis/core/test/book.schema.partial.json';
 import { memory, memoryClear } from '@amnis/db/memory';
+import { Session } from '@amnis/core/types';
+import { dateJSON, entityCreate, reference } from '@amnis/core/core';
 import { apiCrudHandlersGenerate } from './crud.handlers';
+
+const session: Session = entityCreate<Session>('session', {
+  name: 'SomeUser',
+  $user: reference('user', ''),
+  expires: dateJSON(),
+  grants: [
+    'book:global:15',
+  ],
+});
 
 const handlers = apiCrudHandlersGenerate({
   storeGenerator: storeSetup,
@@ -26,6 +37,7 @@ test('Handler should create new entities.', () => {
     body: {
       book: books,
     },
+    session,
   });
 
   expect(
@@ -49,6 +61,7 @@ test('Handler should create entities that do not validate against the schema.', 
         },
       ],
     },
+    session,
   });
 
   expect(result.errors).toHaveLength(1);
@@ -64,12 +77,14 @@ test('Handler should NOT create existing entities.', () => {
     body: {
       book: books,
     },
+    session,
   });
 
   const result = handlers.create({
     body: {
       book: books,
     },
+    session,
   });
 
   expect(
@@ -88,6 +103,7 @@ test('Handler should read entities.', () => {
     body: {
       book: books,
     },
+    session,
   });
 
   const result = handlers.read({
@@ -98,6 +114,7 @@ test('Handler should read entities.', () => {
         },
       },
     },
+    session,
   });
 
   expect(
@@ -116,6 +133,7 @@ test('Handler should NOT read entities that do not exist.', () => {
     body: {
       book: books,
     },
+    session,
   });
 
   const result = handlers.read({
@@ -126,6 +144,7 @@ test('Handler should NOT read entities that do not exist.', () => {
         },
       },
     },
+    session,
   });
 
   expect(
