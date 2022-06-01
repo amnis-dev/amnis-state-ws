@@ -2,7 +2,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import {
   DataScope,
   DataTask,
-  DateJSON, Entity, EntityExtension, EntityPartial, Grant, GrantFlag, GrantString, Reference,
+  DateJSON, Entity, EntityExtension, EntityPartial, Grant, GrantString, Reference,
 } from './types';
 
 /**
