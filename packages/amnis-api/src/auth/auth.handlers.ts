@@ -1,7 +1,6 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
 import { coreActions } from '@amnis/core/actions';
 import Ajv from 'ajv';
-import { schemaSelect, schemaRemove } from '@amnis/core/schema';
 import type { ApiError, ApiHandlerSetupParams, ApiResponse } from '../types';
 import type {
   ApiAuthHandlers,
@@ -18,37 +17,11 @@ export function apiAuthHandlersSetup(params: ApiHandlerSetupParams): ApiAuthHand
     /**
      * API handler for creating new data in storage.
      */
-    authorize: ({ body }): ApiResponse => {
-      const localStore = storeSetup();
-      const errors: ApiError[] = [];
-
-      /**
-       * Validate the body.
-       */
-      validatorComplete(body);
-
-      if (validatorComplete.errors !== undefined && validatorComplete.errors !== null) {
-        return {
-          errors: validatorComplete.errors.map<ApiError>((verror) => ({
-            title: 'Validation Error',
-            message: verror.message || '',
-          })),
-          result: {},
-        };
-      }
-
-      /**
-       * Dispatch action to the API store.
-       */
-      localStore.dispatch(coreActions.create(body));
-
-      const result = database.create(localStore.getState());
-
-      return {
-        errors,
-        result,
-      };
-    },
+    authorize: ({ body }): ApiResponse => ({
+      errors: [],
+      result: {},
+    }),
+  };
 }
 
 export default apiAuthHandlersSetup;

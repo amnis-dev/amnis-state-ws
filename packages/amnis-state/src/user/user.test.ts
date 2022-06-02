@@ -18,7 +18,7 @@ import { userDefault } from './user.default';
 
 const mockHandlers = apiMockGenerateHandlers(
   apiCrudHandlersSetup({
-    storeGenerator: userStoreSetup,
+    storeSetup: userStoreSetup,
     databaseInterface: memory,
     schemaComplete,
     schemaPartial,

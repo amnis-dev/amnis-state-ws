@@ -54,6 +54,7 @@
     "lint": "eslint --ext .ts --ext .tsx \"./\"",
     "test": "jest",
     "test:db": "jest packages/amnis-db/**/*",
+    "test:auth": "jest packages/amnis-auth/**/*",
     "test:api": "jest packages/amnis-api/**/*",
     "test:state": "jest packages/amnis-state/**/*",
     "test:watch": "yarn test --watch",

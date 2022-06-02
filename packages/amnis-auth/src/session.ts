@@ -24,7 +24,7 @@ export function sessionCookieCreate(session: Session, secret: string) {
     maxAge: MAX_AGE,
     expires: new Date(expires),
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     path: '/',
     sameSite: 'lax',
   });
