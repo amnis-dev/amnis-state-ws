@@ -7,8 +7,10 @@ import type {
   ResultRead,
   ResultUpdate,
   Select,
+  State,
 } from '@amnis/core/types';
 import fetch, { Headers, Request } from 'cross-fetch';
+import { selectToken } from '@amnis/core/selects';
 import { apiBaseUrl } from '../const';
 import {
   apiQueriesGenerate,
@@ -25,6 +27,14 @@ export const apiCrud = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
     fetchFn: fetch,
+    prepareHeaders: (headers, { getState, endpoint }) => {
+      const token = selectToken(getState() as State, 'Core', 'access');
+
+      if (token && endpoint !== 'refresh') {
+        headers.set('Authorization', `Bearer ${token.encoding}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     create: builder.query<

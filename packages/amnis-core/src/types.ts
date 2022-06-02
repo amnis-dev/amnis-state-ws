@@ -10,7 +10,7 @@ declare const referenceSymbol: unique symbol;
   * A id reference to another document.
   */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type Reference<T = Record<string, unknown>> = string & {[referenceSymbol]: never};
+export type Reference<T = unknown> = string & {[referenceSymbol]: never};
 
 /**
  * Unique reference symbol to define a reference of a specific type.
@@ -22,6 +22,23 @@ declare const dateSymbol: unique symbol;
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type DateJSON = string & {[dateSymbol]: never};
+
+/**
+ * A string that represents a JSON Date.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type DateNumeric = number & {[dateSymbol]: never};
+
+/**
+ * Unique reference symbol to define a reference of a url.
+ */
+declare const urlSymbol: unique symbol;
+
+/**
+ * A string that represents a URL
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type URL = string & {[urlSymbol]: never};
 
 /**
  * A common entity object.
@@ -240,14 +257,124 @@ export type Grant = {
 };
 
 /**
- * Boolean flag for gant strings.
- */
-export type GrantFlag = '0' | '1';
-
-/**
  * Role grant string.
  */
 export type GrantString = string;
+
+/**
+ * Token issuers
+ * Core is used to identify self-owned tokens.
+ */
+export type TokenIssuer = 'Core' | 'MSGraph' | 'Twitter';
+
+/**
+ * Token types.
+ */
+export type TokenType = 'access' | 'refresh';
+
+/**
+ * An interface for a token.
+ */
+export interface Token {
+  /**
+   * Identifier.
+   */
+  $id: Reference;
+
+  /**
+   * The token issuer.
+   * E.g. Twitter, MSGraph, Amnis, etc...
+   */
+  issuer: TokenIssuer;
+
+  /**
+   * Encoded value of the token.
+   */
+  encoding: string;
+
+  /**
+   * Type of token.
+   */
+  type: TokenType;
+}
+
+/**
+ * A decoded access token for core apps.
+ */
+export interface TokenAccess {
+  /**
+   * Issuer of the token.
+   */
+  iss: TokenIssuer;
+
+  /**
+   * Subject identifier.
+   * (typically a user id)
+   */
+  sub: Reference;
+
+  /**
+   * Expiration numeric date.
+   */
+  exp: DateNumeric;
+
+  /**
+   * Issued-at numeric date.
+   */
+  iat: DateNumeric;
+
+  /**
+   * Scope of permissions (role references).
+   */
+  scope: Reference[];
+}
+
+/**
+ * Unique reference symbol for a token string.
+ */
+declare const tokenSymbol: unique symbol;
+
+/**
+ * String representation of a token.
+ */
+export type TokenString = string & {[tokenSymbol]: never};
+
+/**
+ * A session object.
+ * For stateless servers, it is recommended to store session data in secure HTTP cookies only.
+ */
+export interface Session {
+  /**
+   * Identifier
+   */
+  $id: Reference;
+
+  /**
+   * Subject of the session.
+   * Typically a user id.
+   */
+  $subject: Reference;
+
+  /**
+   * Tokens this session possesses
+   */
+  tokens: TokenString[];
+
+  /**
+   * Display name.
+   */
+  displayName: string;
+
+  /**
+   * Organization.
+   */
+  orginization: string;
+
+  /**
+   * Avatar image url.
+   */
+  avatar: URL;
+}
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
@@ -264,6 +391,11 @@ export interface Role extends Entity {
   description: string;
 
   /**
+   * Color that represents this role.
+   */
+  color: string;
+
+  /**
    * Permissions this license grants.
    */
   grants: GrantString[];
@@ -273,6 +405,11 @@ export interface Role extends Entity {
  * A permit is a list of grants for a specific reference ID.
  */
 export interface Permit extends Entity {
+  /**
+   * Reference to the entity that issued this permit.
+   */
+  $issuer: Reference;
+
   /**
    * Owner of the permit that can perform the granted actions.
    */
@@ -313,31 +450,6 @@ export interface User extends Entity {
    * Special-case permits this user has been bestowed.
    */
   readonly $permits: Reference<Permit>[];
-}
-
-/**
- * An interface for sessions.
- */
-export interface Session extends Entity {
-  /**
-   * Name of the session user.
-   */
-  name: string;
-
-  /**
-   * Reference to the User ID
-   */
-  readonly $user: Reference<User>;
-
-  /**
-   * Expiration date-time of the session.
-   */
-  expires: DateJSON;
-
-  /**
-   * Grants this session posesses.
-   */
-  grants: GrantString[];
 }
 
 /**

@@ -1,12 +1,10 @@
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
-import { Session } from '@amnis/core/types';
 import type { ApiHandlers, ApiRequest, ApiResponse } from './types';
 import { apiBaseUrl } from './const';
 
 export function apiMockGenerateHandlers(
   handlers: ApiHandlers,
-  session: Session,
   baseUrl = apiBaseUrl,
 ) {
   const mockHandlers: RestHandler[] = Object.keys(handlers).map((key) => (
@@ -14,7 +12,7 @@ export function apiMockGenerateHandlers(
       `${baseUrl}${key}`,
       (req, res, ctx) => {
         const { body } = req;
-        const response = handlers[key]({ body, session });
+        const response = handlers[key]({ body });
 
         const finalResponse = {
           errors: [],

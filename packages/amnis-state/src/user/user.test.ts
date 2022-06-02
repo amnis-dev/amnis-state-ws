@@ -3,7 +3,7 @@ import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { coreActions } from '@amnis/core/actions';
 import { memory } from '@amnis/db/index';
 import {
-  dateJSON, entityCreate, reference, Session, User,
+  entityCreate, User,
 } from '@amnis/core/index';
 import {
   userInitialState,
@@ -16,15 +16,6 @@ import schemaPartial from '../schema.partial.json';
 import { userStoreSetup } from './user.store';
 import { userDefault } from './user.default';
 
-const session: Session = entityCreate<Session>('session', {
-  name: 'SomeUser',
-  $user: reference('user', ''),
-  expires: dateJSON(),
-  grants: [
-    'user:global:15',
-  ],
-});
-
 const mockHandlers = apiMockGenerateHandlers(
   apiCrudHandlersGenerate({
     storeGenerator: userStoreSetup,
@@ -32,7 +23,6 @@ const mockHandlers = apiMockGenerateHandlers(
     schemaComplete,
     schemaPartial,
   }),
-  session,
 );
 const mockServer = apiMockServer(mockHandlers);
 

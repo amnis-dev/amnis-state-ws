@@ -10,12 +10,6 @@
           "items": {
             "$ref": "#/definitions/User"
           }
-        },
-        "session": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Session"
-          }
         }
       },
       "additionalProperties": false
@@ -113,88 +107,6 @@
     "Reference<Permit>": {
       "type": "string",
       "description": "A id reference to another document."
-    },
-    "Session": {
-      "type": "object",
-      "properties": {
-        "$id": {
-          "$ref": "#/definitions/Reference",
-          "description": "Identifier for this entity.",
-          "default": ""
-        },
-        "created": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Creation date string.",
-          "default": ""
-        },
-        "updated": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Updated date string.",
-          "default": ""
-        },
-        "committed": {
-          "type": "boolean",
-          "description": "Flag to determine if the entity has been committed to storage.",
-          "default": false
-        },
-        "$owner": {
-          "$ref": "#/definitions/Reference",
-          "description": "Entity that owns this data."
-        },
-        "$creator": {
-          "$ref": "#/definitions/Reference",
-          "description": "Possible user id creator of the entity."
-        },
-        "$updaters": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Reference"
-          },
-          "description": "Entities that have updated this."
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the session user."
-        },
-        "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "Reference to the User ID"
-        },
-        "expires": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Expiration date-time of the session."
-        },
-        "grants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GrantString"
-          },
-          "description": "Grants this session posesses."
-        }
-      },
-      "required": [
-        "$creator",
-        "$id",
-        "$owner",
-        "$updaters",
-        "$user",
-        "committed",
-        "created",
-        "expires",
-        "grants",
-        "name",
-        "updated"
-      ],
-      "additionalProperties": false,
-      "description": "An interface for sessions."
-    },
-    "Reference<User>": {
-      "type": "string",
-      "description": "A id reference to another document."
-    },
-    "GrantString": {
-      "type": "string",
-      "description": "Role grant string."
     }
   }
 }

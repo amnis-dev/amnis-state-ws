@@ -2,7 +2,19 @@ import { nanoid } from '@reduxjs/toolkit';
 import {
   DataScope,
   DataTask,
-  DateJSON, Entity, EntityExtension, EntityPartial, Grant, GrantString, Reference,
+  DateJSON,
+  DateNumeric,
+  URL,
+  Entity,
+  EntityExtension,
+  EntityPartial,
+  Grant,
+  GrantString,
+  Reference,
+  TokenString,
+  Token,
+  TokenIssuer,
+  TokenType,
 } from './types';
 
 /**
@@ -11,9 +23,23 @@ import {
 export const noop = () => { /** No operation. */ };
 
 /**
- * Create a Date JSON string type.
+ * Creates a Date JSON string type.
  */
-export const dateJSON = () => (new Date().toJSON() as DateJSON);
+export const dateJSON = (date?: Date) => (
+  (date?.toJSON() ?? new Date().toJSON()) as DateJSON
+);
+
+/**
+ * Create a numeric date value. Needed typically for tokens.
+ */
+export const dateNumeric = (date?: Date) => (
+  (date?.getTime() ?? new Date().getTime()) as DateNumeric
+);
+
+/**
+ * Create a numeric date value. Needed typically for tokens.
+ */
+export const url = (path: string) => (path as URL);
 
 /**
  * Create a reference to another type.
@@ -125,12 +151,52 @@ export function grantParse(grant: GrantString): Grant | undefined {
   };
 }
 
+/**
+ * Converts a token to string format.
+ */
+export function tokenStringify(token: Token): TokenString {
+  return `${token.issuer}:${token.type}:${token.encoding}` as TokenString;
+}
+
+/**
+ * Converts a token string to a token object.
+ */
+export function tokenParse(tokenString: TokenString): Token | undefined {
+  const [issuer, type, encoding] = tokenString.split(':');
+
+  if (typeof issuer !== 'string') {
+    return undefined;
+  }
+
+  if (typeof type !== 'string') {
+    return undefined;
+  }
+
+  if (!['access', 'refresh'].includes(type)) {
+    return undefined;
+  }
+
+  if (typeof encoding !== 'string') {
+    return undefined;
+  }
+
+  return {
+    $id: reference('token', nanoid()),
+    issuer: issuer as TokenIssuer,
+    type: type as TokenType,
+    encoding,
+  };
+}
+
 export default {
   noop,
   reference,
   dateJSON,
-  grantStringify,
-  grantParse,
+  dateNumeric,
   entityCreate,
   entityUpdate,
+  grantStringify,
+  grantParse,
+  tokenStringify,
+  tokenParse,
 };

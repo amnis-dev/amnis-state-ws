@@ -1,4 +1,5 @@
 import type { PayloadEntityCreate, PayloadEntityUpdate } from '@amnis/core/actions';
+import { selectToken } from '@amnis/core/selects';
 import type {
   Remove,
   ResultCreate,
@@ -6,6 +7,7 @@ import type {
   ResultRead,
   ResultUpdate,
   Select,
+  State,
 } from '@amnis/core/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiBaseUrl } from '../const';
@@ -20,6 +22,14 @@ export const apiCrud = createApi({
   reducerPath: 'apiCrud',
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
+    prepareHeaders: (headers, { getState, endpoint }) => {
+      const token = selectToken(getState() as State, 'Core', 'access');
+
+      if (token && endpoint !== 'refresh') {
+        headers.set('Authorization', `Bearer ${token.encoding}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     create: builder.query<
