@@ -60,8 +60,8 @@ export interface ApiQueries {
 /**
  * Api Handler configurations
  */
-export interface ApiHandlerGeneratorParams {
-  storeGenerator: () => Store;
+export interface ApiHandlerSetupParams {
+  storeSetup: () => Store;
   databaseInterface: Database;
   schemaComplete: any;
   schemaPartial: any;

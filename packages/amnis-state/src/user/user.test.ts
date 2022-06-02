@@ -1,4 +1,4 @@
-import { apiCrud, apiCrudHandlersGenerate, ApiResponse } from '@amnis/api/index';
+import { apiCrud, apiCrudHandlersSetup, ApiResponse } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { coreActions } from '@amnis/core/actions';
 import { memory } from '@amnis/db/index';
@@ -17,7 +17,7 @@ import { userStoreSetup } from './user.store';
 import { userDefault } from './user.default';
 
 const mockHandlers = apiMockGenerateHandlers(
-  apiCrudHandlersGenerate({
+  apiCrudHandlersSetup({
     storeGenerator: userStoreSetup,
     databaseInterface: memory,
     schemaComplete,

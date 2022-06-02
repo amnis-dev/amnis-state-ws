@@ -7,8 +7,9 @@ import { execSync } from 'child_process';
 // Order of build.
 const packagePaths = [
   'packages/amnis-core',
-  'packages/amnis-api',
   'packages/amnis-db',
+  'packages/amnis-auth',
+  'packages/amnis-api',
   'packages/amnis-state',
 ];
 

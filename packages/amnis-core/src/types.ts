@@ -356,6 +356,16 @@ export interface Session {
   $subject: Reference;
 
   /**
+   * Expiration date (numeric).
+   */
+  expires: DateNumeric;
+
+  /**
+   * Flag that determines if this is an administrative session.
+   */
+  admin: boolean;
+
+  /**
    * Tokens this session possesses
    */
   tokens: TokenString[];

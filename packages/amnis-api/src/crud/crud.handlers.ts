@@ -5,15 +5,15 @@ import type {
 } from '@amnis/core/types';
 import Ajv from 'ajv';
 import { schemaSelect, schemaRemove } from '@amnis/core/schema';
-import type { ApiError, ApiHandlerGeneratorParams, ApiResponse } from '../types';
+import type { ApiError, ApiHandlerSetupParams, ApiResponse } from '../types';
 import type {
   ApiCrudHandlers,
 } from './crud.types';
 
 const ajv = new Ajv();
 
-export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiCrudHandlers {
-  const storeGenerate = params.storeGenerator;
+export function apiCrudHandlersSetup(params: ApiHandlerSetupParams): ApiCrudHandlers {
+  const { storeSetup } = params;
   const database = params.databaseInterface;
   const validatorComplete = ajv.compile(params.schemaComplete);
   const validatorPartial = ajv.compile(params.schemaPartial);
@@ -25,7 +25,7 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
      * API handler for creating new data in storage.
      */
     create: ({ body }): ApiResponse<ResultCreate> => {
-      const store = storeGenerate();
+      const localStore = storeSetup();
       const errors: ApiError[] = [];
 
       /**
@@ -46,9 +46,9 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
       /**
        * Dispatch action to the API store.
        */
-      store.dispatch(coreActions.create(body));
+      localStore.dispatch(coreActions.create(body));
 
-      const result = database.create(store.getState());
+      const result = database.create(localStore.getState());
 
       return {
         errors,
@@ -89,7 +89,7 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
      * API handler for updating data in storage.
      */
     update: ({ body }): ApiResponse<ResultUpdate> => {
-      const store = storeGenerate();
+      const localStore = storeSetup();
       const errors: ApiError[] = [];
 
       /**
@@ -110,9 +110,9 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
       /**
        * Dispatch action to the API store.
        */
-      store.dispatch(coreActions.update(body));
+      localStore.dispatch(coreActions.update(body));
 
-      const result = database.update(store.getState());
+      const result = database.update(localStore.getState());
 
       return {
         errors,
@@ -152,4 +152,4 @@ export function apiCrudHandlersGenerate(params: ApiHandlerGeneratorParams): ApiC
   };
 }
 
-export default apiCrudHandlersGenerate;
+export default apiCrudHandlersSetup;

@@ -4,7 +4,7 @@ import {
 import bookStateCompleteSchema from '@amnis/core/test/book.schema.complete.json';
 import bookStatePartialSchema from '@amnis/core/test/book.schema.partial.json';
 import { memory, memoryClear } from '@amnis/db/memory';
-import { apiCrudHandlersSetup } from './crud.handlers';
+import { apiCrudHandlersSetup } from './auth.handlers';
 
 const handlers = apiCrudHandlersSetup({
   storeSetup,

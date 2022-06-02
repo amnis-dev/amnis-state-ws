@@ -7,7 +7,7 @@ test('should return state', async () => {
 });
 
 // import {
-//   apiCrudHandlersGenerate,
+//   apiCrudHandlersSetup,
 // } from '@amnis/api/index';
 // import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 // import { memory } from '@amnis/db/index';
@@ -15,7 +15,7 @@ test('should return state', async () => {
 
 // const mockHandlers = apiMockGenerateHandlers(
 //   storeSetup,
-//   apiCrudHandlersGenerate(),
+//   apiCrudHandlersSetup(),
 //   memory,
 // );
 // const mockServer = apiMockServer(mockHandlers);

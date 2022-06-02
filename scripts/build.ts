@@ -9,8 +9,9 @@ import fse from 'fs-extra';
 // Order of build.
 const packagePaths = [
   'packages/amnis-core',
-  'packages/amnis-api',
   'packages/amnis-db',
+  'packages/amnis-auth',
+  'packages/amnis-api',
   'packages/amnis-state',
 ];
 
