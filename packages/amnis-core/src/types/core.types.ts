@@ -3,7 +3,7 @@
  */
 declare const referenceSymbol: unique symbol;
 declare const dateSymbol: unique symbol;
-declare const urlSymbol: unique symbol;
+declare const surlSymbol: unique symbol;
 
 /**
    * A id reference to another document.
@@ -24,7 +24,8 @@ export type DateJSON = string & {[dateSymbol]: never};
 export type DateNumeric = number & {[dateSymbol]: never};
 
 /**
-  * A string that represents a URL
+  * A string that represents a URL.
+  * Named SURL (String URL) so it's not confused with the URL object type.
   */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type URL = string & {[urlSymbol]: never};
+export type SURL = string & {[surlSymbol]: never};

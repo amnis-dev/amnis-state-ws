@@ -15,6 +15,10 @@ const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
  * ```
  */
 export function sessionCookieCreate(session: Session, secret: string) {
+  if (secret.length < 21) {
+    throw new Error('Secret not set or strong enough.');
+  }
+
   const { expires } = session;
 
   // Create session token.

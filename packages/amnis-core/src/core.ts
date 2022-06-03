@@ -4,7 +4,7 @@ import {
   DataTask,
   DateJSON,
   DateNumeric,
-  URL,
+  SURL,
   Entity,
   EntityExtension,
   EntityPartial,
@@ -13,8 +13,9 @@ import {
   Reference,
   TokenString,
   Token,
-  TokenIssuer,
+  TokenApi,
   TokenType,
+  JWTEncoded,
 } from './types';
 
 /**
@@ -37,9 +38,9 @@ export const dateNumeric = (date?: Date) => (
 );
 
 /**
- * Create a numeric date value. Needed typically for tokens.
+ * Creates a string URL (aka SURL).
  */
-export const url = (path: string) => (path as URL);
+export const surl = (path: string) => (path as SURL);
 
 /**
  * Create a reference to another type.
@@ -155,16 +156,16 @@ export function grantParse(grant: GrantString): Grant | undefined {
  * Converts a token to string format.
  */
 export function tokenStringify(token: Token): TokenString {
-  return `${token.issuer}:${token.type}:${token.encoding}` as TokenString;
+  return `${token.api}:${token.type}:${token.expires}:${token.jwt}` as TokenString;
 }
 
 /**
  * Converts a token string to a token object.
  */
 export function tokenParse(tokenString: TokenString): Token | undefined {
-  const [issuer, type, encoding] = tokenString.split(':');
+  const [api, type, expires, encoding] = tokenString.split(':');
 
-  if (typeof issuer !== 'string') {
+  if (typeof api !== 'string') {
     return undefined;
   }
 
@@ -182,9 +183,10 @@ export function tokenParse(tokenString: TokenString): Token | undefined {
 
   return {
     $id: reference('token', nanoid()),
-    issuer: issuer as TokenIssuer,
+    api: api as TokenApi,
     type: type as TokenType,
-    encoding,
+    jwt: encoding as JWTEncoded,
+    expires: parseInt(expires, 10) as DateNumeric,
   };
 }
 

@@ -1,4 +1,4 @@
-import type { Reference, DateNumeric } from './core.types';
+import type { Reference, DateNumeric, SURL } from './core.types';
 import type { TokenString } from './token.types';
 
 /**
@@ -16,6 +16,11 @@ export interface Session {
    * Typically a user id.
    */
   $subject: Reference;
+
+  /**
+   * Possible Issued At property when decoding.
+   */
+  iat?: DateNumeric;
 
   /**
    * Expiration date (numeric).
@@ -40,10 +45,10 @@ export interface Session {
   /**
    * Organization.
    */
-  orginization: string;
+  organization: string;
 
   /**
    * Avatar image url.
    */
-  avatar: URL;
+  avatar: SURL;
 }

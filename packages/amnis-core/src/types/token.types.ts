@@ -5,17 +5,17 @@ import type { Reference, DateNumeric } from './core.types';
  * Unique reference symbol for a token string.
  */
 declare const tokenSymbol: unique symbol;
-declare const tokenEncodedSymbol: unique symbol;
+declare const jwtEncodedSymbol: unique symbol;
 
 /**
- * String representation of a token.
+ * String representation of a token that contains an encoded jwt.
  */
 export type TokenString = string & {[tokenSymbol]: never};
 
 /**
- * String representation of a token.
+ * String representation of a jwt encoded token.
  */
-export type TokenEncoded = string & {[tokenEncodedSymbol]: never};
+export type JWTEncoded = string & {[jwtEncodedSymbol]: never};
 
 /**
  * Token issuers
@@ -49,9 +49,9 @@ export interface Token {
   expires: DateNumeric;
 
   /**
-   * Encoded value of the token.
+   * Encoded value of the encoded jwt token.
    */
-  encoding: TokenEncoded;
+  jwt: JWTEncoded;
 
   /**
    * Type of token.
@@ -62,7 +62,7 @@ export interface Token {
 /**
   * A decoded access token for core apps.
   */
-export interface TokenDecoded {
+export interface JWTDecoded {
   /**
     * Issuer of the token.
     */
