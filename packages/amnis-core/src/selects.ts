@@ -1,12 +1,12 @@
 import { EntityState } from '@reduxjs/toolkit';
 import {
-  State, Token, TokenIssuer, TokenType,
+  State, Token, TokenApi, TokenType,
 } from './types';
 
 /**
  * Selects a type of token.
  */
-export function selectToken(state: State, issuer: TokenIssuer, type: TokenType): Token | undefined {
+export function selectToken(state: State, api: TokenApi, type: TokenType): Token | undefined {
   if (!state?.token) {
     return undefined;
   }
@@ -15,7 +15,7 @@ export function selectToken(state: State, issuer: TokenIssuer, type: TokenType):
 
   const tokenId = tokenSlice.ids.find((id) => {
     const entity = tokenSlice.entities[id];
-    if (entity?.issuer === issuer && entity?.type === type) {
+    if (entity?.api === api && entity?.type === type) {
       return true;
     }
     return false;
