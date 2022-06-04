@@ -4,7 +4,7 @@ module.exports = {
       {
         type: 'input',
         name: 'name',
-        message: 'Name of the new API Reducer?',
+        message: 'Name of the new API?',
       },
     ];
 

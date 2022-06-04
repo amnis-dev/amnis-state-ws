@@ -1,9 +1,12 @@
+---
+to: "<%= path ? `${path}/${name}/${name}.handlers.ts` : null %>"
+---
 import type { ApiResponse } from '../types';
 import type {
-  ApiMSGraphHandlers,
-} from './msgraph.types';
+  Api<%= Name %>Handlers,
+} from './<%= name %>.types';
 
-export function apiMSGraphHandlersSetup(): ApiMSGraphHandlers {
+export function api<%= Name %>HandlersSetup(): Api<%= Name %>Handlers {
   return {
     /**
      * API handler for creating new data in storage.
@@ -20,4 +23,4 @@ export function apiMSGraphHandlersSetup(): ApiMSGraphHandlers {
   };
 }
 
-export default apiMSGraphHandlersSetup;
+export default api<%= Name %>HandlersSetup;

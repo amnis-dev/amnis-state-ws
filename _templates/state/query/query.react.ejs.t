@@ -1,21 +1,19 @@
-import fetch, { Headers, Request } from 'cross-fetch';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
+---
+to: "<%= path ? `${path}/${name}/${name}.react.ts` : null %>"
+---
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiBaseUrl } from '../const';
-import {
-  apiMSGraphQueriesSetup,
-} from './msgraph.queries';
 import { ApiResponse } from '../types';
+import {
+  api<%= Name %>QueriesSetup,
+} from './<%= name %>.queries';
 
-global.Headers = Headers;
-global.Request = Request;
-
-const queries = apiMSGraphQueriesSetup();
+const queries = api<%= Name %>QueriesSetup();
 
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
-    fetchFn: fetch,
   }),
   endpoints: (builder) => ({
     myendpoint: builder.query<

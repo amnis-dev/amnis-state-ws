@@ -1,6 +1,9 @@
-import { apiMSGraphHandlersSetup } from './msgraph.handlers';
+---
+to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
+---
+import { api<%= Name %>HandlersSetup } from './<%= name %>.handlers';
 
-const handlers = apiMSGraphHandlersSetup();
+const handlers = api<%= Name %>HandlersSetup();
 
 /**
  * ============================================================

@@ -1,15 +1,18 @@
+---
+to: "<%= path ? `${path}/${name}/${name}.node.ts` : null %>"
+---
 import fetch, { Headers, Request } from 'cross-fetch';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { apiBaseUrl } from '../const';
 import {
-  apiMSGraphQueriesSetup,
-} from './msgraph.queries';
+  api<%= Name %>QueriesSetup,
+} from './<%= name %>.queries';
 import { ApiResponse } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
 
-const queries = apiMSGraphQueriesSetup();
+const queries = api<%= Name %>QueriesSetup();
 
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',

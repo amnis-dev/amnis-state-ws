@@ -1,43 +1,22 @@
-import type {
-  PayloadEntityCreate,
-  PayloadEntityUpdate,
-} from '@amnis/core/actions';
-import type {
-  Remove,
-  ResultCreate,
-  ResultDelete,
-  ResultRead,
-  ResultUpdate,
-  Select,
-} from '@amnis/core/types';
+import { Result } from '@amnis/core/types';
 import type {
   ApiHandler,
   ApiHandlers,
   ApiQuery,
   ApiResponse,
 } from '../types';
-
-/**
- * CRUD API relative routes
- */
-export type ApiCrudRoutes = 'create' | 'read' | 'update' | 'delete';
+import { ApiMSGraphMyEndpoint } from './msgraph.endpoint.types';
 
 /**
  * API object containing request queries.
  */
-export interface ApiCrudQueries {
-  create: ApiQuery;
-  read: ApiQuery;
-  update: ApiQuery;
-  delete: ApiQuery;
+export interface ApiMSGraphQueries {
+  myendpoint: ApiQuery;
 }
 
 /**
  * API object containing response handlers.
  */
-export interface ApiCrudHandlers extends ApiHandlers {
-  create: ApiHandler<PayloadEntityCreate, ApiResponse<ResultCreate>>;
-  read: ApiHandler<Select, ApiResponse<ResultRead>>;
-  update: ApiHandler<PayloadEntityUpdate, ApiResponse<ResultUpdate>>;
-  delete: ApiHandler<Remove, ApiResponse<ResultDelete>>;
+export interface ApiMSGraphHandlers extends ApiHandlers {
+  myendpoint: ApiHandler<ApiMSGraphMyEndpoint, ApiResponse<Result>>;
 }
