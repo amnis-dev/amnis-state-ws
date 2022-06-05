@@ -1,9 +1,8 @@
 import type { JWTEncoded, ResultCreate } from '@amnis/core/types';
 import type {
-  ApiHandler,
-  ApiHandlers,
+  ApiProcess,
+  ApiProcesses,
   ApiQuery,
-  ApiResponse,
 } from '../types';
 
 /**
@@ -24,6 +23,6 @@ export interface ApiAuthQueries {
 /**
  * API object containing response handlers.
  */
-export interface ApiAuthHandlers extends ApiHandlers {
-  authorize: ApiHandler<ApiAuthBody, ApiResponse<ResultCreate>>;
+export interface ApiAuthHandlers extends ApiProcesses {
+  authorize: ApiProcess<ApiAuthBody, ResultCreate>;
 }

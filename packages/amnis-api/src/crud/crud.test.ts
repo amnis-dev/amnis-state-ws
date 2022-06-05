@@ -4,13 +4,18 @@ import {
 import bookStateCompleteSchema from '@amnis/core/test/book.schema.complete.json';
 import bookStatePartialSchema from '@amnis/core/test/book.schema.partial.json';
 import { memory, memoryClear } from '@amnis/db/memory';
-import { apiCrudHandlersSetup } from './crud.handlers';
+import { apiCrudProcesses } from './crud.process';
+import { ApiInput } from '../types';
 
-const handlers = apiCrudHandlersSetup({
+const appStore = storeSetup();
+
+const processes = apiCrudProcesses({
   storeSetup,
-  databaseInterface: memory,
-  schemaComplete: bookStateCompleteSchema,
-  schemaPartial: bookStatePartialSchema,
+  database: memory,
+  schemas: {
+    create: bookStateCompleteSchema,
+    update: bookStatePartialSchema,
+  },
 });
 
 /**
@@ -22,59 +27,56 @@ afterEach(() => memoryClear());
  * ============================================================
  */
 test('Handler should create new entities.', () => {
-  const result = handlers.create({
+  const input: ApiInput = {
+    store: appStore,
     body: {
-      book: books,
+      [bookKey]: books,
     },
-  });
+  };
 
-  expect(
-    result,
-  ).toEqual({
-    errors: [],
-    result: { [bookKey]: books },
-  });
+  const output = processes.create(input);
+
+  expect(output.json.result).toEqual({ [bookKey]: books });
 });
 
 /**
  * ============================================================
  */
 test('Handler should create entities that do not validate against the schema.', () => {
-  const result = handlers.create({
+  const input: ApiInput = {
+    store: appStore,
     body: {
-      book: [
+      [bookKey]: [
         {
           this: 'is not',
           a: 'book',
         },
       ],
     },
-  });
+  };
 
-  expect(result.errors).toHaveLength(1);
-  expect(result.errors[0].title).toEqual('Validation Error');
-  expect(result.result).toEqual({});
+  const output = processes.create(input);
+
+  expect(output.json.errors).toHaveLength(1);
+  expect(output.json.errors[0].title).toEqual('Validation Error');
+  expect(output.json.result).toEqual(undefined);
 });
 
 /**
  * ============================================================
  */
 test('Handler should NOT create existing entities.', () => {
-  handlers.create({
+  const input: ApiInput = {
+    store: appStore,
     body: {
-      book: books,
+      [bookKey]: books,
     },
-  });
+  };
 
-  const result = handlers.create({
-    body: {
-      book: books,
-    },
-  });
+  processes.create(input);
+  const output = processes.create(input);
 
-  expect(
-    result,
-  ).toEqual({
+  expect(output.json).toEqual({
     errors: [],
     result: {},
   });
@@ -84,15 +86,17 @@ test('Handler should NOT create existing entities.', () => {
  * ============================================================
  */
 test('Handler should read entities.', () => {
-  handlers.create({
+  processes.create({
+    store: appStore,
     body: {
-      book: books,
+      [bookKey]: books,
     },
   });
 
-  const result = handlers.read({
+  const result = processes.read({
+    store: appStore,
     body: {
-      book: {
+      [bookKey]: {
         title: {
           $eq: 'Lord of the Rings',
         },
@@ -101,7 +105,7 @@ test('Handler should read entities.', () => {
   });
 
   expect(
-    result,
+    result.json,
   ).toEqual({
     errors: [],
     result: { [bookKey]: [books[0]] },
@@ -112,15 +116,17 @@ test('Handler should read entities.', () => {
  * ============================================================
  */
 test('Handler should NOT read entities that do not exist.', () => {
-  handlers.create({
+  processes.create({
+    store: appStore,
     body: {
-      book: books,
+      [bookKey]: books,
     },
   });
 
-  const result = handlers.read({
+  const result = processes.read({
+    store: appStore,
     body: {
-      book: {
+      [bookKey]: {
         title: {
           $eq: 'Not the Rings',
         },
@@ -129,7 +135,7 @@ test('Handler should NOT read entities that do not exist.', () => {
   });
 
   expect(
-    result,
+    result.json,
   ).toEqual({
     errors: [],
     result: { [bookKey]: [] },

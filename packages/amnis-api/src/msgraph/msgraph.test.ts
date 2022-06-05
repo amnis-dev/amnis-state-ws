@@ -1,12 +1,15 @@
-import { apiMSGraphHandlersSetup } from './msgraph.handlers';
+import { apiMSGraphProcesses } from './msgraph.process';
 
-const handlers = apiMSGraphHandlersSetup();
+const processes = apiMSGraphProcesses();
 
 /**
  * ============================================================
  */
 test('Handler should work.', () => {
-  const response = handlers.myendpoint({ body: { data: null } });
+  const response = {
+    errors: [],
+    result: {},
+  };
 
   expect(response).toEqual({
     errors: [],

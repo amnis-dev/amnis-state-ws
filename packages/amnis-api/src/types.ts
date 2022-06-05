@@ -2,7 +2,7 @@
 import type { Store } from '@reduxjs/toolkit';
 import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
-  Result, DateJSON, Database,
+  DateJSON, JWTDecoded,
 } from '@amnis/core/index';
 
 /**
@@ -14,33 +14,63 @@ export interface ApiError {
 }
 
 /**
- * API Request.
+ * API input interface.
  */
-export interface ApiRequest {
+export interface ApiInput<T = any> {
   /**
-   * Ask to renew the session.
+   * Application store.
    */
-  renew?: boolean;
+  store: Store;
+
+  /**
+   * The input body.
+   */
+  body: T;
+
+  /**
+   * Verified token data.
+   */
+  jwt?: JWTDecoded;
 }
 
 /**
- * API Response.
+ * Api JSON data.
  */
-export interface ApiResponse<T = any> {
+export interface ApiJSON<T = any> {
   /**
    * Possible error details.
    */
   errors: ApiError[];
 
   /**
-   * Session expiration date-time.
-   */
-  expire?: DateJSON;
-
-  /**
    * Result data.
    */
   result?: T;
+
+  /**
+   * Session expiration date-time.
+   */
+  expire?: DateJSON;
+}
+
+/**
+ * API output interface.
+ */
+export interface ApiOutput<T = any> {
+  /**
+   * Status
+   */
+  status: number;
+
+  /**
+   * Repsonse cookies.
+   */
+  cookies: Record<string, string>;
+
+  /**
+   * JSON data on the response object.
+   */
+  json: ApiJSON<T>;
 }
 
 /**
@@ -58,28 +88,13 @@ export interface ApiQueries {
 }
 
 /**
- * Api Handler configurations
- */
-export interface ApiHandlerSetupParams {
-  storeSetup: () => Store;
-  databaseInterface: Database;
-  schemaComplete: any;
-  schemaPartial: any;
-}
-
-/**
- * Api Handler configurations
- */
-export interface ApiHandlerParams<B = any>{
-  body: B;
-}
-
-/**
  * API handler for a request.
  */
-export type ApiHandler<B = any, R = Result> = (params: ApiHandlerParams<B>) => R;
+export type ApiProcess<Body = any, Result = any> = (
+  input: ApiInput<Body>
+) => ApiOutput<Result>
 
 /**
  * API object containing response handlers.
  */
-export type ApiHandlers = Record<string, ApiHandler>;
+export type ApiProcesses = Record<string, ApiProcess>;

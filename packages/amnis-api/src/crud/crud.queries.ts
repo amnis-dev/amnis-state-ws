@@ -7,7 +7,7 @@ import type {
   ApiCrudQueries,
 } from './crud.types';
 
-export function apiQueriesGenerate(): ApiCrudQueries {
+export function apiCrudQueries(): ApiCrudQueries {
   return {
     create: (payload: PayloadEntityCreate) => ({
       url: 'create',
@@ -32,4 +32,4 @@ export function apiQueriesGenerate(): ApiCrudQueries {
   };
 }
 
-export default apiQueriesGenerate;
+export default apiCrudQueries;

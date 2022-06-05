@@ -11,12 +11,12 @@ import type {
 } from '@amnis/core/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiBaseUrl } from '../const';
-import { ApiResponse } from '../types';
+import { ApiJSON } from '../types';
 import {
-  apiQueriesGenerate,
+  apiCrudQueries,
 } from './crud.queries';
 
-const queries = apiQueriesGenerate();
+const queries = apiCrudQueries();
 
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',
@@ -33,28 +33,28 @@ export const apiCrud = createApi({
   }),
   endpoints: (builder) => ({
     create: builder.query<
-    ApiResponse<ResultCreate>,
+    ApiJSON<ResultCreate>,
     PayloadEntityCreate
     >({
       query: queries.create,
     }),
 
     read: builder.query<
-    ApiResponse<ResultRead>,
+    ApiJSON<ResultRead>,
     Select
     >({
       query: queries.read,
     }),
 
     update: builder.query<
-    ApiResponse<ResultUpdate>,
+    ApiJSON<ResultUpdate>,
     PayloadEntityUpdate
     >({
       query: queries.create,
     }),
 
     delete: builder.query<
-    ApiResponse<ResultDelete>,
+    ApiJSON<ResultDelete>,
     Remove
     >({
       query: queries.create,

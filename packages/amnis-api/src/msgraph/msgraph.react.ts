@@ -1,20 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiBaseUrl } from '../const';
-import { ApiResponse } from '../types';
+import { ApiOutput } from '../types';
 import {
   apiMSGraphQueriesSetup,
 } from './msgraph.queries';
 
 const queries = apiMSGraphQueriesSetup();
 
-export const apiCrud = createApi({
-  reducerPath: 'apiCrud',
+export const apiMSGraph = createApi({
+  reducerPath: 'apiMSGraph',
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
   }),
   endpoints: (builder) => ({
     myendpoint: builder.query<
-    ApiResponse,
+    ApiOutput,
     unknown
     >({
       query: queries.myendpoint,
@@ -22,4 +22,4 @@ export const apiCrud = createApi({
   }),
 });
 
-export default apiCrud;
+export default apiMSGraph;

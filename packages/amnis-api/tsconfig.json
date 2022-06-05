@@ -9,7 +9,8 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": [
-    "src/**/*.test.*"
+    "src/**/*.test.*",
+    "src/**/*.dev.*"
   ],
   "references": [
       { "path": "../amnis-core/tsconfig.json" }

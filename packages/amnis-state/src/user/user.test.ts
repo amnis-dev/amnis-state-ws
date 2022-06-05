@@ -1,4 +1,4 @@
-import { apiCrud, apiCrudHandlersSetup, ApiResponse } from '@amnis/api/index';
+import { apiCrud, apiCrudProcesses } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { coreActions } from '@amnis/core/actions';
 import { memory } from '@amnis/db/index';
@@ -17,11 +17,13 @@ import { userStoreSetup } from './user.store';
 import { userDefault } from './user.default';
 
 const mockHandlers = apiMockGenerateHandlers(
-  apiCrudHandlersSetup({
+  apiCrudProcesses({
     storeSetup: userStoreSetup,
-    databaseInterface: memory,
-    schemaComplete,
-    schemaPartial,
+    database: memory,
+    schemas: {
+      create: schemaComplete,
+      update: schemaPartial,
+    },
   }),
 );
 const mockServer = apiMockServer(mockHandlers);
@@ -127,7 +129,7 @@ test('should not select user data with unmatching query through API', async () =
 
   expect(action.status).toBe('fulfilled');
 
-  const data = action.data || {} as ApiResponse;
+  const { data } = action;
 
   expect(data?.result?.user).toHaveLength(0);
 });
@@ -150,7 +152,7 @@ test('should select user data through API', async () => {
 
   expect(action.status).toBe('fulfilled');
 
-  const data = action.data || {} as ApiResponse;
+  const { data } = action;
 
   expect(data?.result?.user).toHaveLength(1);
 });

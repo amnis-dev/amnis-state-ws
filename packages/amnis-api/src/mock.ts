@@ -1,27 +1,35 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
-import type { ApiHandlers, ApiRequest, ApiResponse } from './types';
+import { Store } from '@reduxjs/toolkit';
+import type { ApiProcesses, ApiInput, ApiOutput } from './types';
 import { apiBaseUrl } from './const';
 
 export function apiMockGenerateHandlers(
-  handlers: ApiHandlers,
+  processes: ApiProcesses,
   baseUrl = apiBaseUrl,
 ) {
-  const mockHandlers: RestHandler[] = Object.keys(handlers).map((key) => (
-    rest.post<ApiRequest, never, ApiResponse>(
+  const mockHandlers: RestHandler[] = Object.keys(processes).map((key) => (
+    rest.post<ApiInput['body'], never, ApiOutput['json']>(
       `${baseUrl}${key}`,
       (req, res, ctx) => {
         const { body } = req;
-        const response = handlers[key]({ body });
 
-        const finalResponse = {
-          errors: [],
-          ...response,
+        const input: ApiInput = {
+          store: {} as Store,
+          body,
         };
+        /** @ts-ignore */
+        const output = processes[key](input, res);
+
+        const ctxCookies = Object.keys(output.cookies).map(
+          (cookieName) => ctx.cookie(cookieName, output.cookies[cookieName]),
+        );
 
         return res(
-          ctx.status(200),
-          ctx.json(finalResponse),
+          ctx.status(output.status),
+          ctx.json(output.json),
+          ...ctxCookies,
         );
       },
     )

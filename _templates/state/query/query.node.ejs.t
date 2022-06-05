@@ -7,22 +7,22 @@ import { apiBaseUrl } from '../const';
 import {
   api<%= Name %>QueriesSetup,
 } from './<%= name %>.queries';
-import { ApiResponse } from '../types';
+import { ApiOutput } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
 
 const queries = api<%= Name %>QueriesSetup();
 
-export const apiCrud = createApi({
-  reducerPath: 'apiCrud',
+export const api<%= Name %> = createApi({
+  reducerPath: 'api<%= Name %>',
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
     fetchFn: fetch,
   }),
   endpoints: (builder) => ({
     myendpoint: builder.query<
-    ApiResponse,
+    ApiOutput,
     unknown
     >({
       query: queries.myendpoint,
@@ -30,4 +30,4 @@ export const apiCrud = createApi({
   }),
 });
 
-export default apiCrud;
+export default api<%= Name %>;

@@ -6,7 +6,7 @@ import type {
   ApiHandler,
   ApiHandlers,
   ApiQuery,
-  ApiResponse,
+  ApiOutput,
 } from '../types';
 import { Api<%= Name %>MyEndpoint } from './<%= name %>.endpoint.types';
 
@@ -21,5 +21,5 @@ export interface Api<%= Name %>Queries {
  * API object containing response handlers.
  */
 export interface Api<%= Name %>Handlers extends ApiHandlers {
-  myendpoint: ApiHandler<Api<%= Name %>MyEndpoint, ApiResponse<Result>>;
+  myendpoint: ApiHandler<Api<%= Name %>MyEndpoint, ApiOutput<Result>>;
 }

@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
   PayloadEntityCreate,
   PayloadEntityUpdate,
 } from '@amnis/core/actions';
 import type {
+  Database,
   Remove,
   ResultCreate,
   ResultDelete,
@@ -10,17 +12,24 @@ import type {
   ResultUpdate,
   Select,
 } from '@amnis/core/types';
+import { Store } from '@reduxjs/toolkit';
 import type {
-  ApiHandler,
-  ApiHandlers,
+  ApiProcess,
+  ApiProcesses,
   ApiQuery,
-  ApiResponse,
 } from '../types';
 
 /**
- * CRUD API relative routes
+ * Api Handler configurations
  */
-export type ApiCrudRoutes = 'create' | 'read' | 'update' | 'delete';
+export interface ApiCrudProcessesParams {
+  storeSetup: () => Store;
+  database: Database;
+  schemas: {
+    create: any,
+    update: any,
+  }
+}
 
 /**
  * API object containing request queries.
@@ -35,9 +44,9 @@ export interface ApiCrudQueries {
 /**
  * API object containing response handlers.
  */
-export interface ApiCrudHandlers extends ApiHandlers {
-  create: ApiHandler<PayloadEntityCreate, ApiResponse<ResultCreate>>;
-  read: ApiHandler<Select, ApiResponse<ResultRead>>;
-  update: ApiHandler<PayloadEntityUpdate, ApiResponse<ResultUpdate>>;
-  delete: ApiHandler<Remove, ApiResponse<ResultDelete>>;
+export interface ApiCrudProcesses extends ApiProcesses {
+  create: ApiProcess<PayloadEntityCreate, ResultCreate>;
+  read: ApiProcess<Select, ResultRead>;
+  update: ApiProcess<PayloadEntityUpdate, ResultUpdate>;
+  delete: ApiProcess<Remove, ResultDelete>;
 }

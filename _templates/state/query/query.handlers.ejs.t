@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.handlers.ts` : null %>"
 ---
-import type { ApiResponse } from '../types';
+import type { ApiOutput } from '../types';
 import type {
   Api<%= Name %>Handlers,
 } from './<%= name %>.types';
@@ -11,7 +11,7 @@ export function api<%= Name %>HandlersSetup(): Api<%= Name %>Handlers {
     /**
      * API handler for creating new data in storage.
      */
-    myendpoint: ({ body }): ApiResponse => {
+    myendpoint: ({ body }): ApiOutput => {
       const { data } = body;
 
       return {

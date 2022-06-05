@@ -1,9 +1,8 @@
 import { Result } from '@amnis/core/types';
 import type {
-  ApiHandler,
-  ApiHandlers,
+  ApiProcess,
+  ApiProcesses,
   ApiQuery,
-  ApiResponse,
 } from '../types';
 import { ApiMSGraphMyEndpoint } from './msgraph.endpoint.types';
 
@@ -17,6 +16,6 @@ export interface ApiMSGraphQueries {
 /**
  * API object containing response handlers.
  */
-export interface ApiMSGraphHandlers extends ApiHandlers {
-  myendpoint: ApiHandler<ApiMSGraphMyEndpoint, ApiResponse<Result>>;
+export interface ApiMSGraphProcesses extends ApiProcesses {
+  myendpoint: ApiProcess<ApiMSGraphMyEndpoint, Result>;
 }

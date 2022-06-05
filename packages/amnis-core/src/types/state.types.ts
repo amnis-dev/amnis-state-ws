@@ -71,7 +71,7 @@ export type Remove = State<Reference[]>;
 /**
  * A common stateful result from API.
  */
-export type Result = State;
+export type Result = any;
 
 /**
  * A common stateful result from creations.

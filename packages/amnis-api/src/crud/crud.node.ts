@@ -13,14 +13,14 @@ import fetch, { Headers, Request } from 'cross-fetch';
 import { selectToken } from '@amnis/core/selects';
 import { apiBaseUrl } from '../const';
 import {
-  apiQueriesGenerate,
+  apiCrudQueries,
 } from './crud.queries';
-import { ApiResponse } from '../types';
+import { ApiJSON } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
 
-const queries = apiQueriesGenerate();
+const queries = apiCrudQueries();
 
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',
@@ -38,28 +38,28 @@ export const apiCrud = createApi({
   }),
   endpoints: (builder) => ({
     create: builder.query<
-    ApiResponse<ResultCreate>,
+    ApiJSON<ResultCreate>,
     PayloadEntityCreate
     >({
       query: queries.create,
     }),
 
     read: builder.query<
-    ApiResponse<ResultRead>,
+    ApiJSON<ResultRead>,
     Select
     >({
       query: queries.read,
     }),
 
     update: builder.query<
-    ApiResponse<ResultUpdate>,
+    ApiJSON<ResultUpdate>,
     PayloadEntityUpdate
     >({
       query: queries.create,
     }),
 
     delete: builder.query<
-    ApiResponse<ResultDelete>,
+    ApiJSON<ResultDelete>,
     Remove
     >({
       query: queries.create,

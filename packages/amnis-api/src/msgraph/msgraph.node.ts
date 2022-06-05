@@ -4,22 +4,22 @@ import { apiBaseUrl } from '../const';
 import {
   apiMSGraphQueriesSetup,
 } from './msgraph.queries';
-import { ApiResponse } from '../types';
+import { ApiOutput } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
 
 const queries = apiMSGraphQueriesSetup();
 
-export const apiCrud = createApi({
-  reducerPath: 'apiCrud',
+export const apiMSGraph = createApi({
+  reducerPath: 'apiMSGraph',
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
     fetchFn: fetch,
   }),
   endpoints: (builder) => ({
     myendpoint: builder.query<
-    ApiResponse,
+    ApiOutput,
     unknown
     >({
       query: queries.myendpoint,
@@ -27,4 +27,4 @@ export const apiCrud = createApi({
   }),
 });
 
-export default apiCrud;
+export default apiMSGraph;
