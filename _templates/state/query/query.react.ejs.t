@@ -3,12 +3,12 @@ to: "<%= path ? `${path}/${name}/${name}.react.ts` : null %>"
 ---
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiBaseUrl } from '../const';
-import { ApiOutput } from '../types';
+import { ApiJSON } from '../types';
 import {
-  api<%= Name %>QueriesSetup,
+  api<%= Name %>Queries,
 } from './<%= name %>.queries';
 
-const queries = api<%= Name %>QueriesSetup();
+const queries = api<%= Name %>Queries();
 
 export const api<%= Name %> = createApi({
   reducerPath: 'api<%= Name %>',
@@ -17,7 +17,7 @@ export const api<%= Name %> = createApi({
   }),
   endpoints: (builder) => ({
     myendpoint: builder.query<
-    ApiOutput,
+    ApiJSON,
     unknown
     >({
       query: queries.myendpoint,

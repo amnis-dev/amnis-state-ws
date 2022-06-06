@@ -8,7 +8,7 @@ import type {
   Api<%= Name %>Queries,
 } from './<%= name %>.types';
 
-export function api<%= Name %>QueriesSetup(): Api<%= Name %>Queries {
+export function api<%= Name %>Queries(): Api<%= Name %>Queries {
   return {
     myendpoint: (payload: PayloadEntityCreate) => ({
       url: 'myendpoint',
@@ -18,4 +18,4 @@ export function api<%= Name %>QueriesSetup(): Api<%= Name %>Queries {
   };
 }
 
-export default api<%= Name %>QueriesSetup;
+export default api<%= Name %>Queries;

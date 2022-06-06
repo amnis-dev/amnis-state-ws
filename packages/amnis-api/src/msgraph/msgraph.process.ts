@@ -10,13 +10,12 @@ export function apiMSGraphProcesses(): ApiMSGraphProcesses {
      */
     myendpoint: (input) => {
       const { body } = input;
-      const { data } = body;
 
       const output = apiOutput();
 
       output.json = {
         ...output.json,
-        result: data || {},
+        result: body,
       };
 
       return output;

@@ -23,6 +23,6 @@ export interface ApiAuthQueries {
 /**
  * API object containing response handlers.
  */
-export interface ApiAuthHandlers extends ApiProcesses {
+export interface ApiAuthProcesses extends ApiProcesses {
   authorize: ApiProcess<ApiAuthBody, ResultCreate>;
 }

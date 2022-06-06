@@ -5,7 +5,7 @@ import type {
   ApiMSGraphQueries,
 } from './msgraph.types';
 
-export function apiMSGraphQueriesSetup(): ApiMSGraphQueries {
+export function apiMSGraphQueries(): ApiMSGraphQueries {
   return {
     myendpoint: (payload: PayloadEntityCreate) => ({
       url: 'myendpoint',
@@ -15,4 +15,4 @@ export function apiMSGraphQueriesSetup(): ApiMSGraphQueries {
   };
 }
 
-export default apiMSGraphQueriesSetup;
+export default apiMSGraphQueries;

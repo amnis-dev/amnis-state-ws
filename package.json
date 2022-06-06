@@ -60,6 +60,7 @@
     "test:api": "jest packages/amnis-api/**/*",
     "test:state": "jest packages/amnis-state/**/*",
     "test:watch": "yarn test --watch",
+    "start:api": "ts-node -P packages/amnis-api/tsconfig.json packages/amnis-api/server.dev",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
     "gen:schema": "ts-node -P scripts/tsconfig.json scripts/schema",
     "set:version": "ts-node -P scripts/tsconfig.json scripts/version",

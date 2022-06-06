@@ -1,9 +1,9 @@
 import { apiOutput } from '../api';
 import type {
-  ApiAuthHandlers,
+  ApiAuthProcesses,
 } from './auth.types';
 
-export function apiAuthHandlersSetup(): ApiAuthHandlers {
+export function apiAuthProcesses(): ApiAuthProcesses {
   return {
     /**
      * API handler for creating new data in storage.
@@ -24,4 +24,4 @@ export function apiAuthHandlersSetup(): ApiAuthHandlers {
   };
 }
 
-export default apiAuthHandlersSetup;
+export default apiAuthProcesses;

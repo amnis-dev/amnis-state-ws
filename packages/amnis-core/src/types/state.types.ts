@@ -59,9 +59,19 @@ export type Query = {
 }
 
 /**
+ * A definition to insert new data.
+ */
+export type Insert = State<Record<string, unknown>[]>;
+
+/**
  * A selector definition object.
  */
 export type Select = State<Query>;
+
+/**
+ * A definition to modify data.
+ */
+export type Modify = State<Record<string, unknown>[]>;
 
 /**
  * A removal definition object.

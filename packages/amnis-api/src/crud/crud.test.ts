@@ -1,8 +1,8 @@
 import {
   storeSetup, books, bookKey,
 } from '@amnis/core/test/book.store';
-import bookStateCompleteSchema from '@amnis/core/test/book.schema.complete.json';
-import bookStatePartialSchema from '@amnis/core/test/book.schema.partial.json';
+import coreSchema from '@amnis/core/core.schema.json';
+import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
 import { apiCrudProcesses } from './crud.process';
 import { ApiInput } from '../types';
@@ -12,9 +12,10 @@ const appStore = storeSetup();
 const processes = apiCrudProcesses({
   storeSetup,
   database: memory,
-  schemas: {
-    create: bookStateCompleteSchema,
-    update: bookStatePartialSchema,
+  schemas: [coreSchema, bookSchema],
+  definitions: {
+    create: 'book#/definitions/BookState',
+    update: 'book#/definitions/BookStatePartial',
   },
 });
 

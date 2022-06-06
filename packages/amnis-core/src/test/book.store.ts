@@ -14,14 +14,6 @@ export interface Book extends Entity {
 
 export type BookMeta = Meta<Book>;
 
-export interface BookStateComplete {
-  book?: Book[];
-}
-
-export interface BookStatePartial {
-  book?: Partial<Book>[];
-}
-
 export const bookKey = 'book';
 
 const booksAdapter = createEntityAdapter<Book>({

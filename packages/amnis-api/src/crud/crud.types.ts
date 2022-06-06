@@ -25,9 +25,12 @@ import type {
 export interface ApiCrudProcessesParams {
   storeSetup: () => Store;
   database: Database;
-  schemas: {
-    create: any,
-    update: any,
+  schemas?: any[],
+  definitions?: {
+    create?: string,
+    read?: string,
+    update?: string,
+    delete?: string,
   }
 }
 

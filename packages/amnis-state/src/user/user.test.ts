@@ -5,13 +5,13 @@ import { memory } from '@amnis/db/index';
 import {
   entityCreate, User,
 } from '@amnis/core/index';
+import coreSchema from '@amnis/core/core.schema.json';
+import stateSchema from '../state.schema.json';
 import {
   userInitialState,
   userSelectors,
   userKey,
 } from './user';
-import schemaComplete from '../schema.complete.json';
-import schemaPartial from '../schema.partial.json';
 
 import { userStoreSetup } from './user.store';
 import { userDefault } from './user.default';
@@ -20,9 +20,12 @@ const mockHandlers = apiMockGenerateHandlers(
   apiCrudProcesses({
     storeSetup: userStoreSetup,
     database: memory,
-    schemas: {
-      create: schemaComplete,
-      update: schemaPartial,
+    schemas: [coreSchema, stateSchema],
+    definitions: {
+      create: 'state#/definitions/State',
+      read: 'core#/definitions/Select',
+      update: 'state#/definitions/StatePartial',
+      delete: 'core#/definitions/Remove',
     },
   }),
 );

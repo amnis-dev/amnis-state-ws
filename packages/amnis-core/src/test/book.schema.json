@@ -1,0 +1,191 @@
+{
+  "$id": "book",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "BookState": {
+      "type": "object",
+      "properties": {
+        "book": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Book"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Book": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        },
+        "title": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "$creator",
+        "$id",
+        "$owner",
+        "$updaters",
+        "committed",
+        "created",
+        "price",
+        "title",
+        "updated"
+      ],
+      "additionalProperties": false
+    },
+    "Entity": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        }
+      },
+      "required": [
+        "$id",
+        "created",
+        "updated",
+        "committed",
+        "$owner",
+        "$creator",
+        "$updaters"
+      ],
+      "additionalProperties": false,
+      "description": "A common entity object. Entity's are serializable (JSON) objects that can be committed to NoSQL Databases."
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "BookStatePartial": {
+      "type": "object",
+      "properties": {
+        "book": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "$id": {
+                "$ref": "#/definitions/Reference",
+                "description": "Identifier for this entity.",
+                "default": ""
+              },
+              "created": {
+                "$ref": "#/definitions/DateJSON",
+                "description": "Creation date string.",
+                "default": ""
+              },
+              "updated": {
+                "$ref": "#/definitions/DateJSON",
+                "description": "Updated date string.",
+                "default": ""
+              },
+              "committed": {
+                "type": "boolean",
+                "description": "Flag to determine if the entity has been committed to storage.",
+                "default": false
+              },
+              "$owner": {
+                "$ref": "#/definitions/Reference",
+                "description": "Entity that owns this data."
+              },
+              "$creator": {
+                "$ref": "#/definitions/Reference",
+                "description": "Possible user id creator of the entity."
+              },
+              "$updaters": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Reference"
+                },
+                "description": "Entities that have updated this."
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

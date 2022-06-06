@@ -1,18 +1,23 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
 ---
-import { api<%= Name %>HandlersSetup } from './<%= name %>.handlers';
+import { storeSetup } from '@amnis/core/test/book.store';
+import { api<%= Name %>Processes } from './<%= name %>.process';
 
-const handlers = api<%= Name %>HandlersSetup();
+const appStore = storeSetup();
+const processes = api<%= Name %>Processes();
 
 /**
  * ============================================================
  */
 test('Handler should work.', () => {
-  const response = handlers.myendpoint({ body: { data: null } });
+  const output = processes.myendpoint({
+    store: appStore,
+    body: { data: null },
+  });
 
-  expect(response).toEqual({
+  expect(output.json).toEqual({
     errors: [],
-    result: {},
+    result: { data: null },
   });
 });

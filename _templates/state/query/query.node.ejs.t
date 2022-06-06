@@ -5,14 +5,14 @@ import fetch, { Headers, Request } from 'cross-fetch';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { apiBaseUrl } from '../const';
 import {
-  api<%= Name %>QueriesSetup,
+  api<%= Name %>Queries,
 } from './<%= name %>.queries';
-import { ApiOutput } from '../types';
+import { ApiJSON } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
 
-const queries = api<%= Name %>QueriesSetup();
+const queries = api<%= Name %>Queries();
 
 export const api<%= Name %> = createApi({
   reducerPath: 'api<%= Name %>',
@@ -22,7 +22,7 @@ export const api<%= Name %> = createApi({
   }),
   endpoints: (builder) => ({
     myendpoint: builder.query<
-    ApiOutput,
+    ApiJSON,
     unknown
     >({
       query: queries.myendpoint,

@@ -2,14 +2,14 @@ import fetch, { Headers, Request } from 'cross-fetch';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { apiBaseUrl } from '../const';
 import {
-  apiMSGraphQueriesSetup,
+  apiMSGraphQueries,
 } from './msgraph.queries';
-import { ApiOutput } from '../types';
+import { ApiJSON } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
 
-const queries = apiMSGraphQueriesSetup();
+const queries = apiMSGraphQueries();
 
 export const apiMSGraph = createApi({
   reducerPath: 'apiMSGraph',
@@ -19,7 +19,7 @@ export const apiMSGraph = createApi({
   }),
   endpoints: (builder) => ({
     myendpoint: builder.query<
-    ApiOutput,
+    ApiJSON,
     unknown
     >({
       query: queries.myendpoint,

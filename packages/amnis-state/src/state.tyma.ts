@@ -1,6 +1,6 @@
 import type { User } from '@amnis/core/index';
 
-export interface StateComplete {
+export interface State {
   user?: User[];
 }
 

@@ -3,10 +3,9 @@ to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
 import { Result } from '@amnis/core/types';
 import type {
-  ApiHandler,
-  ApiHandlers,
+  ApiProcess,
+  ApiProcesses,
   ApiQuery,
-  ApiOutput,
 } from '../types';
 import { Api<%= Name %>MyEndpoint } from './<%= name %>.endpoint.types';
 
@@ -20,6 +19,6 @@ export interface Api<%= Name %>Queries {
 /**
  * API object containing response handlers.
  */
-export interface Api<%= Name %>Handlers extends ApiHandlers {
-  myendpoint: ApiHandler<Api<%= Name %>MyEndpoint, ApiOutput<Result>>;
+export interface Api<%= Name %>Processes extends ApiProcesses {
+  myendpoint: ApiProcess<Api<%= Name %>MyEndpoint, Result>;
 }

@@ -1,18 +1,20 @@
+import { storeSetup } from '@amnis/core/test/book.store';
 import { apiMSGraphProcesses } from './msgraph.process';
 
+const appStore = storeSetup();
 const processes = apiMSGraphProcesses();
 
 /**
  * ============================================================
  */
 test('Handler should work.', () => {
-  const response = {
-    errors: [],
-    result: {},
-  };
+  const output = processes.myendpoint({
+    store: appStore,
+    body: { data: null },
+  });
 
-  expect(response).toEqual({
+  expect(output.json).toEqual({
     errors: [],
-    result: {},
+    result: { data: null },
   });
 });

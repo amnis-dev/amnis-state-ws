@@ -1,7 +1,8 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
 import { coreActions } from '@amnis/core/actions';
 import Ajv from 'ajv';
-import { schemaSelect, schemaRemove } from '@amnis/core/schema';
+import type { AnyValidateFunction } from 'ajv/dist/types';
+import coreSchema from '@amnis/core/core.schema.json';
 import type { ApiError } from '../types';
 import type {
   ApiCrudProcesses,
@@ -9,14 +10,37 @@ import type {
 } from './crud.types';
 import { apiOutput } from '../api';
 
-const ajv = new Ajv();
+const definitionsDefault = {
+  create: 'core#/definitions/Insert',
+  read: 'core#/definitions/Select',
+  update: 'core#/definitions/Modify',
+  delete: 'core#/definitions/Remove',
+};
 
 export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcesses {
-  const { storeSetup, database } = params;
-  const validatorCreate = ajv.compile(params.schemas.create);
-  const validatorUpdate = ajv.compile(params.schemas.update);
-  const validatorRead = ajv.compile(schemaSelect);
-  const validatorDelete = ajv.compile(schemaRemove);
+  const {
+    storeSetup, database, schemas, definitions,
+  } = params;
+  const ajv = new Ajv({ schemas: schemas ?? [coreSchema] });
+
+  const defs = {
+    ...definitionsDefault,
+    ...definitions,
+  };
+
+  const validator = {
+    create: ajv.getSchema(defs.create) as AnyValidateFunction<unknown>,
+    read: ajv.getSchema(defs.read) as AnyValidateFunction<unknown>,
+    update: ajv.getSchema(defs.update) as AnyValidateFunction<unknown>,
+    delete: ajv.getSchema(defs.delete) as AnyValidateFunction<unknown>,
+  };
+
+  Object.keys(validator).forEach((key) => {
+    const vkey = key as keyof typeof validator;
+    if (validator[vkey] === undefined) {
+      throw new Error(`Schema definition for '${key}' not found.`);
+    }
+  });
 
   return {
     /**
@@ -26,14 +50,13 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       const localStore = storeSetup();
       const output = apiOutput();
       const { body } = input;
-
       /**
        * Validate the body.
        */
-      validatorCreate(body);
+      validator.create(body);
 
-      if (validatorCreate.errors !== undefined && validatorCreate.errors !== null) {
-        output.json.errors = validatorCreate.errors.map<ApiError>((verror) => ({
+      if (validator.create.errors !== undefined && validator.create.errors !== null) {
+        output.json.errors = validator.create.errors.map<ApiError>((verror) => ({
           title: 'Validation Error',
           message: verror.message || '',
         }));
@@ -62,10 +85,10 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Validate the body.
        */
-      validatorRead(body);
+      validator.read(body);
 
-      if (validatorRead.errors !== undefined && validatorRead.errors !== null) {
-        output.json.errors = validatorRead.errors.map<ApiError>((verror) => ({
+      if (validator.read.errors !== undefined && validator.read.errors !== null) {
+        output.json.errors = validator.read.errors.map<ApiError>((verror) => ({
           title: 'Validation Error',
           message: verror.message || '',
         }));
@@ -90,10 +113,10 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Validate the body.
        */
-      validatorUpdate(body);
+      validator.update(body);
 
-      if (validatorUpdate.errors !== undefined && validatorUpdate.errors !== null) {
-        output.json.errors = validatorUpdate.errors.map<ApiError>((verror) => ({
+      if (validator.update.errors !== undefined && validator.update.errors !== null) {
+        output.json.errors = validator.update.errors.map<ApiError>((verror) => ({
           title: 'Validation Error',
           message: verror.message || '',
         }));
@@ -122,10 +145,10 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Validate the body.
        */
-      validatorDelete(body);
+      validator.delete(body);
 
-      if (validatorDelete.errors !== undefined && validatorDelete.errors !== null) {
-        output.json.errors = validatorDelete.errors.map<ApiError>((verror) => ({
+      if (validator.delete.errors !== undefined && validator.delete.errors !== null) {
+        output.json.errors = validator.delete.errors.map<ApiError>((verror) => ({
           title: 'Validation Error',
           message: verror.message || '',
         }));
