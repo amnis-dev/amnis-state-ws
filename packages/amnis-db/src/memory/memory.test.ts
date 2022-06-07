@@ -12,11 +12,7 @@ afterEach(() => memoryClear());
  * ============================================================
  */
 test('memory db should create and store new book entity.', () => {
-  const store = storeSetup();
-
-  store.dispatch(booksSlice.actions.create(books[0]));
-
-  const result = memory.create(store.getState());
+  const result = memory.create({ [bookKey]: [books[0]] });
 
   expect(
     result,
@@ -29,29 +25,27 @@ test('memory db should create and store new book entity.', () => {
  * ============================================================
  */
 test('memory db should update existing book entity.', () => {
-  const store = storeSetup();
-
-  store.dispatch(booksSlice.actions.create(books[0]));
-
-  const createResult = memory.create(store.getState());
+  const createResult = memory.create({ [bookKey]: books });
 
   expect(
     createResult,
   ).toEqual({
-    [bookKey]: [books[0]],
+    [bookKey]: books,
   });
 
-  store.dispatch(booksSlice.actions.update({
-    $id: books[0].$id,
-    price: 4.50,
-  }));
-
-  const updateResult = memory.update(store.getState());
+  const updateResult = memory.update({
+    [bookKey]: [
+      {
+        $id: books[0].$id,
+        price: 4.50,
+      },
+    ],
+  });
 
   expect(
     updateResult,
-  ).not.toEqual({
-    [bookKey]: [books[0]],
+  ).toEqual({
+    [bookKey]: [{ ...books[0], price: 4.50 }],
   });
 });
 
@@ -59,16 +53,12 @@ test('memory db should update existing book entity.', () => {
  * ============================================================
  */
 test('memory db should NOT select book with mismatching title.', () => {
-  const store = storeSetup();
-
-  store.dispatch(booksSlice.actions.create(books[0]));
-
-  memory.create(store.getState());
+  memory.create({ [bookKey]: books });
 
   const result = memory.read({
     [bookKey]: {
       title: {
-        $eq: 'Harry Potter',
+        $eq: 'Not Existing',
       },
     },
   });
@@ -84,11 +74,7 @@ test('memory db should NOT select book with mismatching title.', () => {
  * ============================================================
  */
 test('memory db should select book with matching title.', () => {
-  const store = storeSetup();
-
-  store.dispatch(booksSlice.actions.createMany(books));
-
-  memory.create(store.getState());
+  memory.create({ [bookKey]: books });
 
   const result = memory.read({
     [bookKey]: {
@@ -102,5 +88,50 @@ test('memory db should select book with matching title.', () => {
     result,
   ).toEqual({
     [bookKey]: [books[0]],
+  });
+});
+
+/**
+ * ============================================================
+ */
+test('memory db should delete a book entity by id.', () => {
+  memory.create({ [bookKey]: books });
+
+  const resultRead = memory.read({
+    [bookKey]: {
+      $id: {
+        $eq: books[0].$id,
+      },
+    },
+  });
+
+  expect(
+    resultRead,
+  ).toEqual({
+    [bookKey]: [books[0]],
+  });
+
+  const result = memory.delete({
+    [bookKey]: [books[0].$id],
+  });
+
+  expect(
+    result,
+  ).toEqual({
+    [bookKey]: [books[0].$id],
+  });
+
+  const resultRead2 = memory.read({
+    [bookKey]: {
+      $id: {
+        $eq: books[0].$id,
+      },
+    },
+  });
+
+  expect(
+    resultRead2,
+  ).toEqual({
+    [bookKey]: [],
   });
 });

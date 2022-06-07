@@ -61,7 +61,7 @@ export type Query = {
 /**
  * A definition to insert new data.
  */
-export type Insert = State<Record<string, unknown>[]>;
+export type Insert = State<any[]>;
 
 /**
  * A selector definition object.
@@ -71,7 +71,7 @@ export type Select = State<Query>;
 /**
  * A definition to modify data.
  */
-export type Modify = State<Record<string, unknown>[]>;
+export type Modify = State<any[]>;
 
 /**
  * A removal definition object.
@@ -99,7 +99,8 @@ export type ResultRead = State<Entity[]>;
  * A common stateful result from updates.
  * A state object with parial entities to update.
  */
-export type ResultUpdate = State<{ $id: string } & Partial<Entity>[]>;
+export type UpdateEntity = { $id: string } & Partial<Entity>;
+export type ResultUpdate = State<UpdateEntity[]>;
 
 /**
  * A common stateful result from deletions.

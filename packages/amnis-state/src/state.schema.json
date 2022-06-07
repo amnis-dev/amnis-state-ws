@@ -37,6 +37,11 @@
           "description": "Flag to determine if the entity has been committed to storage.",
           "default": false
         },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
         "$owner": {
           "$ref": "#/definitions/Reference",
           "description": "Entity that owns this data."
@@ -85,6 +90,7 @@
         "$updaters",
         "committed",
         "created",
+        "delete",
         "email",
         "name",
         "updated"
@@ -115,6 +121,11 @@
           "description": "Flag to determine if the entity has been committed to storage.",
           "default": false
         },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
         "$owner": {
           "$ref": "#/definitions/Reference",
           "description": "Entity that owns this data."
@@ -136,6 +147,7 @@
         "created",
         "updated",
         "committed",
+        "delete",
         "$owner",
         "$creator",
         "$updaters"
@@ -208,6 +220,11 @@
               "committed": {
                 "type": "boolean",
                 "description": "Flag to determine if the entity has been committed to storage.",
+                "default": false
+              },
+              "delete": {
+                "type": "boolean",
+                "description": "If this entity is marked to be deleted.",
                 "default": false
               },
               "$owner": {

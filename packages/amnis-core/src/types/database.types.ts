@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
-  ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select, State,
+  Insert,
+  Modify,
+  Remove,
+  ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select,
 } from './state.types';
 
 /**
@@ -15,18 +18,18 @@ export interface Database {
   /**
    * Method for creating new records in the database.
    */
-  create: (state: State) => ResultCreate;
+  create: (state: Insert) => ResultCreate;
 
   /**
    * Method for updating records in the database.
    */
-  update: (state: State) => ResultUpdate;
+  update: (state: Modify) => ResultUpdate;
 
   /**
    * Method to delete records in the database.
    * Shouldn't actually delete records, but mark them as deleted instead
    */
-  delete: (references: State<string[]>) => ResultDelete;
+  delete: (references: Remove) => ResultDelete;
 
   /**
    * Selects data from the database determined by the select query.

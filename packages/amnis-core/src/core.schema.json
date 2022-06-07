@@ -6,14 +6,35 @@
     "Core": {
       "type": "object",
       "properties": {
+        "insert": {
+          "$ref": "#/definitions/Insert"
+        },
         "select": {
           "$ref": "#/definitions/Select"
+        },
+        "modify": {
+          "$ref": "#/definitions/Modify"
         },
         "remove": {
           "$ref": "#/definitions/Remove"
         }
       },
       "additionalProperties": false
+    },
+    "Insert": {
+      "$ref": "#/definitions/State%3Calias-731470504-73335-73468-731470504-0-215566%3Cstring%2Cunknown%3E%5B%5D%3E",
+      "description": "A definition to insert new data."
+    },
+    "State<alias-731470504-73335-73468-731470504-0-215566<string,unknown>[]>": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "description": "An ambiguous state."
     },
     "Select": {
       "$ref": "#/definitions/State%3CQuery%3E",
@@ -73,6 +94,10 @@
       },
       "additionalProperties": false,
       "description": "Filter object for a query."
+    },
+    "Modify": {
+      "$ref": "#/definitions/State%3Calias-731470504-73335-73468-731470504-0-215566%3Cstring%2Cunknown%3E%5B%5D%3E",
+      "description": "A definition to modify data."
     },
     "Remove": {
       "$ref": "#/definitions/State%3Cdef-alias-1700012779-179-367-1700012779-0-943232013809%5B%5D%3E",

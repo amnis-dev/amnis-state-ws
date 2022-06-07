@@ -1,9 +1,13 @@
 import type {
-  Entity, State, Database, Result, ResultCreate,
+  Entity,
+  State,
+  Database,
+  ResultCreate,
+  ResultRead,
+  ResultUpdate,
+  ResultDelete,
+  UpdateEntity,
 } from '@amnis/core/index';
-import type {
-  EntityState,
-} from '@reduxjs/toolkit';
 
 /**
  * Storage type.
@@ -38,83 +42,98 @@ export const memory: Database = {
     storage = initialStorage;
   },
   create(state) {
-    const created: ResultCreate = {};
+    const result: ResultCreate = {};
 
     Object.keys(state).every((sliceKey) => {
-      const slice: EntityState<Entity> = state[sliceKey];
-      if (!slice?.entities) {
+      const col: Entity[] = state[sliceKey];
+      if (!Array.isArray(col)) {
         return true;
       }
-      Object.keys(slice.entities).every(
-        (entityKey) => {
-          const entity = slice?.entities[entityKey];
-          if (!entity) {
-            return true;
-          }
-          if (!storage[sliceKey]) {
-            storage[sliceKey] = {};
-          }
-          if (storage[sliceKey][entityKey]) {
-            return true;
-          }
-          if (!storage[sliceKey]) {
-            storage[sliceKey] = {};
-          }
-          if (!created[sliceKey]) {
-            created[sliceKey] = [];
-          }
-          storage[sliceKey][entityKey] = entity;
-          created[sliceKey].push(entity);
+      col.every((entity) => {
+        const entityId = entity.$id;
+        if (!entity || !entityId) {
           return true;
-        },
-      );
-      return true;
-    });
-
-    return created;
-  },
-  update(state) {
-    Object.keys(state).every((sliceKey) => {
-      const slice: EntityState<Entity> = state[sliceKey];
-      if (!slice?.entities) {
+        }
+        if (!storage[sliceKey]) {
+          storage[sliceKey] = {};
+        }
+        if (storage[sliceKey][entityId]) {
+          return true;
+        }
+        if (!result[sliceKey]) {
+          result[sliceKey] = [];
+        }
+        storage[sliceKey][entityId] = entity;
+        result[sliceKey].push(entity);
         return true;
-      }
-
-      Object.keys(slice.entities).every(
-        (entityKey) => {
-          const entity = slice?.entities[entityKey];
-          if (!entity) {
-            return true;
-          }
-          if (!storage[sliceKey]) {
-            return true;
-          }
-          if (!storage[sliceKey][entityKey]) {
-            return true;
-          }
-          storage[sliceKey][entityKey] = {
-            ...storage[sliceKey][entityKey],
-            ...entity,
-          };
-          return true;
-        },
-      );
-
+      });
       return true;
     });
-
-    const result = Object.keys(storage).reduce<Result>((value, storageKey) => {
-      value[storageKey] = Object.values(storage[storageKey]);
-      return value;
-    }, {});
 
     return result;
   },
-  delete(references) {
-    throw new Error('Function not implemented.');
+  update(state) {
+    const result: ResultUpdate = {};
+
+    Object.keys(state).every((sliceKey) => {
+      const col: Entity[] = state[sliceKey];
+      if (!Array.isArray(col)) {
+        return true;
+      }
+
+      col.every((entity) => {
+        const entityId = entity.$id;
+        if (!entity || !entityId) {
+          return true;
+        }
+        if (!storage[sliceKey]) {
+          return true;
+        }
+        if (!storage[sliceKey][entityId]) {
+          return true;
+        }
+        if (!result[sliceKey]) {
+          result[sliceKey] = [] as UpdateEntity[];
+        }
+        storage[sliceKey][entityId] = {
+          ...storage[sliceKey][entityId],
+          ...entity,
+        };
+        result[sliceKey].push(storage[sliceKey][entityId]);
+        return true;
+      });
+
+      return true;
+    });
+
+    return result;
+  },
+  delete(state) {
+    const result: ResultDelete = {};
+
+    Object.keys(state).every((sliceKey) => {
+      if (!storage[sliceKey]) {
+        return true;
+      }
+      const references = state[sliceKey];
+
+      references.forEach((ref) => {
+        if (storage[sliceKey][ref]) {
+          delete storage[sliceKey][ref];
+          if (!result[sliceKey]) {
+            result[sliceKey] = [];
+          }
+          result[sliceKey].push(ref);
+        }
+      });
+
+      return true;
+    });
+
+    return result;
   },
   read(select) {
-    const result: Result = {};
+    const result: ResultRead = {};
 
     Object.keys(select).every((selectKey) => {
       const query = select[selectKey];
@@ -127,6 +146,15 @@ export const memory: Database = {
       }
 
       /**
+       * Ensure delete-marked entities are not selected by default.
+       */
+      if (query.delete === undefined) {
+        query.delete = { $eq: false };
+      }
+
+      result[selectKey] = Object.values(storage[selectKey]);
+
+      /**
        * Loop through the query properties.
        */
       Object.keys(query).forEach((queryKey) => {
@@ -134,17 +162,17 @@ export const memory: Database = {
         const filter = query[queryKey];
         const limit = (query.$limit || 20) <= 20 ? query.$limit : 20;
 
-        result[selectKey] = Object.values(storage[selectKey]).slice(0, limit).filter((entity) => {
+        result[selectKey] = result[selectKey].filter((entity) => {
           if (!filter) {
             return true;
           }
 
-          if (filter.$eq && filter.$eq === entity[entityKey]) {
+          if (filter.$eq !== undefined && filter.$eq === entity[entityKey]) {
             return true;
           }
 
           return false;
-        });
+        }).slice(0, limit);
       });
 
       return true;

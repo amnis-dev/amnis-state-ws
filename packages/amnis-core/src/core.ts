@@ -77,6 +77,7 @@ export const entityCreate = <E extends Entity>(
     $id: `${key}:${nanoid()}` as Reference,
     created: now,
     updated: now,
+    delete: false,
     $owner: reference('user', ''),
     $creator: reference('user', ''),
     $updaters: [],

@@ -32,6 +32,12 @@ export interface Entity {
   committed: boolean;
 
   /**
+   * If this entity is marked to be deleted.
+   * @default false
+   */
+  delete: boolean;
+
+  /**
    * Entity that owns this data.
    */
   readonly $owner: Reference;

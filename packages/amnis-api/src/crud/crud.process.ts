@@ -1,5 +1,4 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
-import { coreActions } from '@amnis/core/actions';
 import Ajv from 'ajv';
 import type { AnyValidateFunction } from 'ajv/dist/types';
 import coreSchema from '@amnis/core/core.schema.json';
@@ -19,7 +18,9 @@ const definitionsDefault = {
 
 export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcesses {
   const {
-    storeSetup, database, schemas, definitions,
+    database,
+    schemas,
+    definitions,
   } = params;
   const ajv = new Ajv({ schemas: schemas ?? [coreSchema] });
 
@@ -47,7 +48,6 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      * API handler for creating new data in storage.
      */
     create: (input) => {
-      const localStore = storeSetup();
       const output = apiOutput();
       const { body } = input;
       /**
@@ -63,12 +63,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return output;
       }
 
-      /**
-       * Dispatch action to the API store.
-       */
-      localStore.dispatch(coreActions.create(body));
-
-      const result = database.create(localStore.getState());
+      const result = database.create(body);
 
       output.json.result = result;
 
@@ -107,7 +102,6 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      */
     update: (input) => {
       const output = apiOutput();
-      const localStore = storeSetup();
       const { body } = input;
 
       /**
@@ -123,12 +117,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return output;
       }
 
-      /**
-       * Dispatch action to the API store.
-       */
-      localStore.dispatch(coreActions.update(body));
-
-      const result = database.update(localStore.getState());
+      const result = database.update(body);
 
       output.json.result = result;
 

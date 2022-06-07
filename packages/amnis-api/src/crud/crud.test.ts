@@ -94,7 +94,7 @@ test('Handler should read entities.', () => {
     },
   });
 
-  const result = processes.read({
+  const output = processes.read({
     store: appStore,
     body: {
       [bookKey]: {
@@ -106,7 +106,7 @@ test('Handler should read entities.', () => {
   });
 
   expect(
-    result.json,
+    output.json,
   ).toEqual({
     errors: [],
     result: { [bookKey]: [books[0]] },
@@ -124,7 +124,7 @@ test('Handler should NOT read entities that do not exist.', () => {
     },
   });
 
-  const result = processes.read({
+  const output = processes.read({
     store: appStore,
     body: {
       [bookKey]: {
@@ -136,9 +136,40 @@ test('Handler should NOT read entities that do not exist.', () => {
   });
 
   expect(
-    result.json,
+    output.json,
   ).toEqual({
     errors: [],
     result: { [bookKey]: [] },
+  });
+});
+
+/**
+ * ============================================================
+ */
+test('Handler should be able to update existing entities.', () => {
+  processes.create({
+    store: appStore,
+    body: {
+      [bookKey]: books,
+    },
+  });
+
+  const result = processes.update({
+    store: appStore,
+    body: {
+      [bookKey]: [
+        {
+          $id: books[1].$id,
+          title: 'Magic Tree House',
+        },
+      ],
+    },
+  });
+
+  expect(
+    result.json,
+  ).toEqual({
+    errors: [],
+    result: { [bookKey]: [{ ...books[1], title: 'Magic Tree House' }] },
   });
 });
