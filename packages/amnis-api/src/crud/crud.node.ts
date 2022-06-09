@@ -11,7 +11,7 @@ import type {
 } from '@amnis/core/types';
 import fetch, { Headers, Request } from 'cross-fetch';
 import { selectToken } from '@amnis/core/selects';
-import { apiBaseUrl } from '../const';
+import { apiCrudUrl } from '../const';
 import {
   apiCrudQueries,
 } from './crud.queries';
@@ -25,7 +25,7 @@ const queries = apiCrudQueries();
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',
   baseQuery: fetchBaseQuery({
-    baseUrl: apiBaseUrl,
+    baseUrl: apiCrudUrl,
     fetchFn: fetch,
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = selectToken(getState() as State, 'Core', 'access');

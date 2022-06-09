@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { apiBaseUrl } from '../const';
+import { apiAuthUrl } from '../const';
 import {
   apiQueries,
 } from './auth.queries';
@@ -14,7 +14,7 @@ const queries = apiQueries();
 export const apiAuth = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
-    baseUrl: apiBaseUrl,
+    baseUrl: apiAuthUrl,
     fetchFn: fetch,
   }),
   endpoints: (builder) => ({

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { apiBaseUrl } from '../const';
+import { apiAuthUrl } from '../const';
 import { ApiOutput } from '../types';
 import {
   apiQueries,
@@ -10,7 +10,7 @@ const queries = apiQueries();
 export const apiCrud = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
-    baseUrl: apiBaseUrl,
+    baseUrl: apiAuthUrl,
   }),
   endpoints: (builder) => ({
     authorize: builder.query<

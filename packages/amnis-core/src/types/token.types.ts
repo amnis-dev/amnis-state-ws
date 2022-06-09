@@ -46,7 +46,7 @@ export interface Token {
   /**
    * Expiration date.
    */
-  expires: DateNumeric;
+  exp: DateNumeric;
 
   /**
    * Encoded value of the encoded jwt token.

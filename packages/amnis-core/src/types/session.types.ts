@@ -25,7 +25,7 @@ export interface Session {
   /**
    * Expiration date (numeric).
    */
-  expires: DateNumeric;
+  exp: DateNumeric;
 
   /**
    * Flag that determines if this is an administrative session.

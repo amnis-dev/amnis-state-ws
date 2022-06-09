@@ -3,12 +3,11 @@ import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import { Store } from '@reduxjs/toolkit';
 import type { ApiProcesses, ApiInput, ApiOutput } from './types';
-import { apiBaseUrl } from './const';
 
 export function apiMockGenerateHandlers(
   store: Store,
   processes: ApiProcesses,
-  baseUrl = apiBaseUrl,
+  baseUrl: string,
 ) {
   const mockHandlers: RestHandler[] = Object.keys(processes).map((key) => (
     rest.post<ApiInput['body'], never, ApiOutput['json']>(

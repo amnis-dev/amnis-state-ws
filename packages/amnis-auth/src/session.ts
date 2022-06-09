@@ -19,14 +19,14 @@ export function sessionCookieCreate(session: Session, secret: string) {
     throw new Error('Secret not set or strong enough.');
   }
 
-  const { expires } = session;
+  const { exp } = session;
 
   // Create session token.
   const sessionToken = jwt.sign(session, secret);
 
   const cookie = serialize(SESSION_COOKIE_NAME, sessionToken, {
     maxAge: MAX_AGE,
-    expires: new Date(expires),
+    expires: new Date(exp),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     path: '/',

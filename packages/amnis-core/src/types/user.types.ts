@@ -8,6 +8,7 @@ import type { Role, Permit } from './auth.types';
 export interface User extends Entity {
   /**
    * Name for the user.
+   * @default ""
    */
   name: string;
 
@@ -16,6 +17,13 @@ export interface User extends Entity {
    * @default ""
    */
   email: string;
+
+  /**
+   * User password.
+   * A null password means another form of auth must be used.
+   * @default null
+   */
+  password: string | null;
 
   /**
    * Roles this user has been given.

@@ -2,6 +2,7 @@ import {
   dateNumeric, reference, surl, tokenStringify,
 } from '@amnis/core/core';
 import { Session, JWTDecoded, Token } from '@amnis/core/types';
+import { passCompare, passCreate } from './pass';
 import { sessionCookieCreate, sessionCookieParse } from './session';
 import { jwtDecode, jwtEncode, jwtVerify } from './token';
 
@@ -22,7 +23,7 @@ const jwtDecoded: JWTDecoded = {
 const token: Token = {
   $id: reference('token', '1234'),
   api: 'Core',
-  expires: jwtDecoded.exp,
+  exp: jwtDecoded.exp,
   jwt: jwtEncode(jwtDecoded, SECRET_TEST),
   type: 'access',
 };
@@ -30,7 +31,7 @@ const token: Token = {
 const session: Session = {
   $id: reference('session', '1234'),
   $subject: reference('user', '1234'),
-  expires: jwtDecoded.exp,
+  exp: jwtDecoded.exp,
   admin: false,
   tokens: [
     tokenStringify(token),
@@ -89,6 +90,40 @@ test('token should be verified with matching secret.', () => {
 
   expect(decoded).toBeDefined();
   expect(decoded).toEqual(jwtDecoded);
+});
+
+/**
+ * ============================================================
+ */
+test('pass should become hashed.', async () => {
+  const plaintext = 'myPlainPassword';
+  const hashed = await passCreate(plaintext);
+
+  expect(hashed).not.toEqual(plaintext);
+});
+
+/**
+ * ============================================================
+ */
+test('pass should match with same hashed plaintext.', async () => {
+  const plaintext = 'myPlainPassword';
+  const hashed = await passCreate(plaintext);
+
+  const same = await passCompare(plaintext, hashed);
+
+  expect(same).toEqual(true);
+});
+
+/**
+ * ============================================================
+ */
+test('pass should NOT match with mismatched hashed plaintext.', async () => {
+  const plaintext = 'myPlainPassword';
+  const hashed = await passCreate(plaintext);
+
+  const same = await passCompare('notMyPlainPassword', hashed);
+
+  expect(same).toEqual(false);
 });
 
 /**
