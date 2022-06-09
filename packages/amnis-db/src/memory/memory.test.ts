@@ -1,5 +1,5 @@
 import {
-  storeSetup, booksSlice, books, bookKey,
+  books, bookKey,
 } from '@amnis/core/test/book.store';
 import { memory, memoryClear } from './memory';
 
