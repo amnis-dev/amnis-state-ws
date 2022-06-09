@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  State, Grant, DataTask,
+  State, Grant, Task,
 } from './types';
 
 export type grantActionFilterResult = [
@@ -14,7 +14,7 @@ export type grantActionFilterResult = [
 function grantFilter(
   state: State,
   grants: Grant[],
-  attempt: DataTask,
+  attempt: Task,
 ): grantActionFilterResult {
   const newState: State = {};
   const errors: string[] = [];

@@ -10,7 +10,7 @@ export type DataScope = 'global' | 'owned';
   * Data tasks.
   */
 // eslint-disable-next-line no-shadow
-export enum DataTask {
+export enum Task {
   None = 0,
   Create = 1,
   Read = 2,
@@ -24,7 +24,7 @@ export enum DataTask {
 export type Grant = {
   key: string;
   scope: DataScope;
-  task: DataTask;
+  task: Task;
 };
 
 /**

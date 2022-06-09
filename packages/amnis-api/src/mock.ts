@@ -6,6 +6,7 @@ import type { ApiProcesses, ApiInput, ApiOutput } from './types';
 import { apiBaseUrl } from './const';
 
 export function apiMockGenerateHandlers(
+  store: Store,
   processes: ApiProcesses,
   baseUrl = apiBaseUrl,
 ) {
@@ -16,7 +17,7 @@ export function apiMockGenerateHandlers(
         const { body } = req;
 
         const input: ApiInput = {
-          store: {} as Store,
+          store,
           body,
         };
         /** @ts-ignore */

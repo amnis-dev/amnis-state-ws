@@ -10,7 +10,6 @@ import { ApiInput } from '../types';
 const appStore = storeSetup();
 
 const processes = apiCrudProcesses({
-  storeSetup,
   database: memory,
   schemas: [coreSchema, bookSchema],
   definitions: {

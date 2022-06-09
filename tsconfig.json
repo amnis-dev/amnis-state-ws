@@ -11,5 +11,5 @@
       "@amnis/state/*": ["./packages/amnis-state/src/*"],
     }
   },
-  "include": ["./packages/**/*.ts*"]
+  "include": ["./packages/**/*.ts*", "./test/**/*.ts*"]
 }

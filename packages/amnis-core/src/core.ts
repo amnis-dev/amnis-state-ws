@@ -1,7 +1,8 @@
+/* eslint-disable no-bitwise */
+/* eslint-disable no-unused-expressions */
 import { nanoid } from '@reduxjs/toolkit';
 import {
   DataScope,
-  DataTask,
   DateJSON,
   DateNumeric,
   SURL,
@@ -16,6 +17,7 @@ import {
   TokenApi,
   TokenType,
   JWTEncoded,
+  Task,
 } from './types';
 
 /**
@@ -122,7 +124,7 @@ export function grantStringify(grant: Grant): GrantString {
  * Converts a grant string to a grant object.
  */
 export function grantParse(grant: GrantString): Grant | undefined {
-  const [key, scope, task] = grant.split(':');
+  const [key, scope, tasks] = grant.split(':');
 
   if (typeof key !== 'string') {
     return undefined;
@@ -136,7 +138,7 @@ export function grantParse(grant: GrantString): Grant | undefined {
     return undefined;
   }
 
-  const taskValue: DataTask = parseInt(task, 10);
+  const taskValue: Task = parseInt(tasks, 10);
 
   if (typeof taskValue !== 'number') {
     return undefined;
@@ -151,6 +153,25 @@ export function grantParse(grant: GrantString): Grant | undefined {
     scope: scope as DataScope,
     task: taskValue,
   };
+}
+
+/**
+ * Creates a task integer from an array.
+ */
+export function task(
+  create: number,
+  read: number,
+  update: number,
+  remove: number,
+): number {
+  let value = Task.None;
+
+  create && (value |= Task.Create);
+  read && (value |= Task.Read);
+  update && (value |= Task.Update);
+  remove && (value |= Task.Delete);
+
+  return value;
 }
 
 /**

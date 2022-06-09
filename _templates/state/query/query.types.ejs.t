@@ -7,7 +7,13 @@ import type {
   ApiProcesses,
   ApiQuery,
 } from '../types';
-import { Api<%= Name %>MyEndpoint } from './<%= name %>.endpoint.types';
+
+/**
+ * My Endpoint requestType
+ */
+export interface Api<%= Name %>MyEndpoint {
+  data: unknown;
+}
 
 /**
  * API object containing request queries.

@@ -8,21 +8,21 @@ import type {
 /**
  * Body of an authorization.
  */
-export interface ApiAuthBody {
+export interface ApiAuthAuthorizeBody {
   method: 'msgraph' | 'twitter';
-  token: JWTEncoded;
+  jwt: JWTEncoded;
 }
 
 /**
  * API object containing request queries.
  */
 export interface ApiAuthQueries {
-  authorize: ApiQuery<ApiAuthBody>;
+  authorize: ApiQuery<ApiAuthAuthorizeBody>;
 }
 
 /**
  * API object containing response handlers.
  */
 export interface ApiAuthProcesses extends ApiProcesses {
-  authorize: ApiProcess<ApiAuthBody, ResultCreate>;
+  authorize: ApiProcess<ApiAuthAuthorizeBody, ResultCreate>;
 }
