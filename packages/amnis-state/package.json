@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@amnis/core": "0.1.0-alpha.2",
+    "@amnis/auth": "0.1.0-alpha.2",
     "@amnis/api": "0.1.0-alpha.2"
   }
 }
