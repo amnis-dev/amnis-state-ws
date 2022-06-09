@@ -6,7 +6,15 @@ import type {
 } from '../types';
 
 /**
- * Body of an authorization.
+ * Payload for a login request.
+ */
+export interface ApiAuthLoginBody {
+  username: string,
+  password: string,
+}
+
+/**
+ * Payload for an alternative method of authorization.
  */
 export interface ApiAuthAuthorizeBody {
   method: 'msgraph' | 'twitter';
@@ -17,6 +25,7 @@ export interface ApiAuthAuthorizeBody {
  * API object containing request queries.
  */
 export interface ApiAuthQueries {
+  login: ApiQuery<ApiAuthLoginBody>;
   authorize: ApiQuery<ApiAuthAuthorizeBody>;
 }
 
@@ -24,5 +33,6 @@ export interface ApiAuthQueries {
  * API object containing response handlers.
  */
 export interface ApiAuthProcesses extends ApiProcesses {
+  login: ApiProcess<ApiAuthLoginBody, ResultCreate>;
   authorize: ApiProcess<ApiAuthAuthorizeBody, ResultCreate>;
 }

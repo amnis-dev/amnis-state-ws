@@ -59,12 +59,21 @@
         },
         "name": {
           "type": "string",
-          "description": "Name for the user."
+          "description": "Name for the user.",
+          "default": ""
         },
         "email": {
           "type": "string",
           "description": "Email address",
           "default": ""
+        },
+        "password": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "User password. A null password means another form of auth must be used.",
+          "default": "null"
         },
         "$roles": {
           "type": "array",
@@ -93,6 +102,7 @@
         "delete",
         "email",
         "name",
+        "password",
         "updated"
       ],
       "additionalProperties": false,
@@ -181,12 +191,21 @@
             "properties": {
               "name": {
                 "type": "string",
-                "description": "Name for the user."
+                "description": "Name for the user.",
+                "default": ""
               },
               "email": {
                 "type": "string",
                 "description": "Email address",
                 "default": ""
+              },
+              "password": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "User password. A null password means another form of auth must be used.",
+                "default": "null"
               },
               "$roles": {
                 "type": "array",

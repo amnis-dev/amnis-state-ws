@@ -45,7 +45,7 @@ export interface Session {
   /**
    * Organization.
    */
-  organization: string;
+  org: string;
 
   /**
    * Avatar image url.

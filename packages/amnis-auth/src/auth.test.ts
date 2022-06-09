@@ -37,7 +37,7 @@ const session: Session = {
     tokenStringify(token),
   ],
   displayName: '',
-  organization: '',
+  org: '',
   avatar: surl('https://amnis.dev/avatar.png'),
 };
 

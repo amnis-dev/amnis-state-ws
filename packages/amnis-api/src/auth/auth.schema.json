@@ -1,0 +1,61 @@
+{
+  "$id": "auth",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/ApiAuthBodies",
+  "definitions": {
+    "ApiAuthBodies": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "$ref": "#/definitions/ApiAuthLoginBody"
+        },
+        "authorize": {
+          "$ref": "#/definitions/ApiAuthAuthorizeBody"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApiAuthLoginBody": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ],
+      "additionalProperties": false,
+      "description": "Body of an authorization."
+    },
+    "ApiAuthAuthorizeBody": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "msgraph",
+            "twitter"
+          ]
+        },
+        "jwt": {
+          "$ref": "#/definitions/JWTEncoded"
+        }
+      },
+      "required": [
+        "method",
+        "jwt"
+      ],
+      "additionalProperties": false,
+      "description": "Body of an authorization."
+    },
+    "JWTEncoded": {
+      "type": "string",
+      "description": "String representation of a jwt encoded token."
+    }
+  }
+}

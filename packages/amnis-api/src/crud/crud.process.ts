@@ -1,13 +1,11 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
 import Ajv from 'ajv';
-import type { AnyValidateFunction } from 'ajv/dist/types';
 import coreSchema from '@amnis/core/core.schema.json';
-import type { ApiError } from '../types';
 import type {
   ApiCrudProcesses,
   ApiCrudProcessesParams,
 } from './crud.types';
-import { apiOutput } from '../api';
+import { apiOutput, apiValidate } from '../api';
 
 const definitionsDefault = {
   create: 'core#/definitions/Insert',
@@ -30,18 +28,11 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
   };
 
   const validator = {
-    create: ajv.getSchema(defs.create) as AnyValidateFunction<unknown>,
-    read: ajv.getSchema(defs.read) as AnyValidateFunction<unknown>,
-    update: ajv.getSchema(defs.update) as AnyValidateFunction<unknown>,
-    delete: ajv.getSchema(defs.delete) as AnyValidateFunction<unknown>,
+    create: ajv.getSchema(defs.create),
+    read: ajv.getSchema(defs.read),
+    update: ajv.getSchema(defs.update),
+    delete: ajv.getSchema(defs.delete),
   };
-
-  Object.keys(validator).forEach((key) => {
-    const vkey = key as keyof typeof validator;
-    if (validator[vkey] === undefined) {
-      throw new Error(`Schema definition for '${key}' not found.`);
-    }
-  });
 
   return {
     /**
@@ -50,17 +41,13 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
     create: (input) => {
       const output = apiOutput();
       const { body } = input;
+
       /**
        * Validate the body.
        */
-      validator.create(body);
-
-      if (validator.create.errors !== undefined && validator.create.errors !== null) {
-        output.json.errors = validator.create.errors.map<ApiError>((verror) => ({
-          title: 'Validation Error',
-          message: verror.message || '',
-        }));
-        return output;
+      const validateOutput = apiValidate(validator.create, body);
+      if (validateOutput) {
+        return validateOutput;
       }
 
       const result = database.create(body);
@@ -80,14 +67,9 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Validate the body.
        */
-      validator.read(body);
-
-      if (validator.read.errors !== undefined && validator.read.errors !== null) {
-        output.json.errors = validator.read.errors.map<ApiError>((verror) => ({
-          title: 'Validation Error',
-          message: verror.message || '',
-        }));
-        return output;
+      const validateOutput = apiValidate(validator.read, body);
+      if (validateOutput) {
+        return validateOutput;
       }
 
       const result = database.read(body);
@@ -107,14 +89,9 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Validate the body.
        */
-      validator.update(body);
-
-      if (validator.update.errors !== undefined && validator.update.errors !== null) {
-        output.json.errors = validator.update.errors.map<ApiError>((verror) => ({
-          title: 'Validation Error',
-          message: verror.message || '',
-        }));
-        return output;
+      const validateOutput = apiValidate(validator.update, body);
+      if (validateOutput) {
+        return validateOutput;
       }
 
       const result = database.update(body);
@@ -134,14 +111,9 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Validate the body.
        */
-      validator.delete(body);
-
-      if (validator.delete.errors !== undefined && validator.delete.errors !== null) {
-        output.json.errors = validator.delete.errors.map<ApiError>((verror) => ({
-          title: 'Validation Error',
-          message: verror.message || '',
-        }));
-        return output;
+      const validateOutput = apiValidate(validator.delete, body);
+      if (validateOutput) {
+        return validateOutput;
       }
 
       const result = database.delete(body);

@@ -22,17 +22,14 @@
       "additionalProperties": false
     },
     "Insert": {
-      "$ref": "#/definitions/State%3Calias-731470504-73335-73468-731470504-0-215566%3Cstring%2Cunknown%3E%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cany%5B%5D%3E",
       "description": "A definition to insert new data."
     },
-    "State<alias-731470504-73335-73468-731470504-0-215566<string,unknown>[]>": {
+    "State<any[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
-        "items": {
-          "type": "object",
-          "additionalProperties": {}
-        }
+        "items": {}
       },
       "description": "An ambiguous state."
     },
@@ -96,7 +93,7 @@
       "description": "Filter object for a query."
     },
     "Modify": {
-      "$ref": "#/definitions/State%3Calias-731470504-73335-73468-731470504-0-215566%3Cstring%2Cunknown%3E%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cany%5B%5D%3E",
       "description": "A definition to modify data."
     },
     "Remove": {

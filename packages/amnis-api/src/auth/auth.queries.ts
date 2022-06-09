@@ -4,7 +4,12 @@ import type {
 
 export function apiQueries(): ApiAuthQueries {
   return {
-    authorize: (payload: unknown) => ({
+    login: (payload) => ({
+      url: 'login',
+      method: 'post',
+      body: payload,
+    }),
+    authorize: (payload) => ({
       url: 'authorize',
       method: 'post',
       body: payload,
