@@ -30,7 +30,7 @@
         "password"
       ],
       "additionalProperties": false,
-      "description": "Body of an authorization."
+      "description": "Payload for a login request."
     },
     "ApiAuthAuthorizeBody": {
       "type": "object",
@@ -51,7 +51,7 @@
         "jwt"
       ],
       "additionalProperties": false,
-      "description": "Body of an authorization."
+      "description": "Payload for an alternative method of authorization."
     },
     "JWTEncoded": {
       "type": "string",

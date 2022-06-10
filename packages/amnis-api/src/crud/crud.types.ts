@@ -12,6 +12,7 @@ import type {
   ResultUpdate,
   Select,
 } from '@amnis/core/types';
+import { Store } from '@reduxjs/toolkit';
 import type {
   ApiProcess,
   ApiProcesses,
@@ -22,6 +23,7 @@ import type {
  * Api Handler configurations
  */
 export interface ApiCrudProcessesParams {
+  store: Store;
   database: Database;
   schemas?: any[],
   definitions?: {

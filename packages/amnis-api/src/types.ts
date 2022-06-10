@@ -18,11 +18,6 @@ export interface ApiError {
  */
 export interface ApiInput<T = any> {
   /**
-   * Application store.
-   */
-  store: Store;
-
-  /**
    * The input body.
    */
   body: T;

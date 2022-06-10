@@ -46,20 +46,20 @@
     },
     "Query": {
       "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/Filter",
-        "description": "Slice keys."
-      },
       "properties": {
-        "$start": {
-          "type": "number",
-          "description": "Start query at record value."
+        "$query": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Filter"
+          },
+          "description": "Query of keys."
         },
-        "$limit": {
-          "type": "number",
-          "description": "Limit results of the query."
+        "$range": {
+          "$ref": "#/definitions/Range",
+          "description": "Range of query."
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Filter": {
       "type": "object",
@@ -91,6 +91,21 @@
       },
       "additionalProperties": false,
       "description": "Filter object for a query."
+    },
+    "Range": {
+      "type": "object",
+      "properties": {
+        "_start": {
+          "type": "number",
+          "description": "Start query at record value."
+        },
+        "_limit": {
+          "type": "number",
+          "description": "Limit results of the query."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Select range"
     },
     "Modify": {
       "$ref": "#/definitions/State%3Cany%5B%5D%3E",

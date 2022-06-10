@@ -42,21 +42,32 @@ export interface Filter {
   $in?: unknown[];
 }
 
-export type Query = {
-  /**
-   * Slice keys.
-   */
-  [key: string]: Filter;
-} & {
+/**
+ * Select range
+ */
+export type Range = {
   /**
    * Start query at record value.
    */
-  $start?: number;
+  _start?: number;
+
   /**
-   * Limit results of the query.
-   */
-  $limit?: number;
+    * Limit results of the query.
+    */
+  _limit?: number;
 }
+
+export type Query = {
+  /**
+   * Query of keys.
+   */
+  $query?: { [key: string]: Filter };
+
+  /**
+   * Range of query.
+   */
+  $range?: Range;
+};
 
 /**
  * A definition to insert new data.

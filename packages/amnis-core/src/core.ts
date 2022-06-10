@@ -80,8 +80,8 @@ export const entityCreate = <E extends Entity>(
     created: now,
     updated: now,
     delete: false,
-    $owner: reference('user', ''),
-    $creator: reference('user', ''),
+    $owner: reference('user', 'system'),
+    $creator: reference('user', 'system'),
     $updaters: [],
     committed: false,
   };

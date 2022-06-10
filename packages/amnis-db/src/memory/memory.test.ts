@@ -57,8 +57,10 @@ test('memory db should NOT select book with mismatching title.', () => {
 
   const result = memory.read({
     [bookKey]: {
-      title: {
-        $eq: 'Not Existing',
+      $query: {
+        title: {
+          $eq: 'Not Existing',
+        },
       },
     },
   });
@@ -78,8 +80,10 @@ test('memory db should select book with matching title.', () => {
 
   const result = memory.read({
     [bookKey]: {
-      title: {
-        $eq: 'Lord of the Rings',
+      $query: {
+        title: {
+          $eq: 'Lord of the Rings',
+        },
       },
     },
   });
@@ -99,8 +103,10 @@ test('memory db should delete a book entity by id.', () => {
 
   const resultRead = memory.read({
     [bookKey]: {
-      $id: {
-        $eq: books[0].$id,
+      $query: {
+        $id: {
+          $eq: books[0].$id,
+        },
       },
     },
   });
@@ -123,8 +129,10 @@ test('memory db should delete a book entity by id.', () => {
 
   const resultRead2 = memory.read({
     [bookKey]: {
-      $id: {
-        $eq: books[0].$id,
+      $query: {
+        $id: {
+          $eq: books[0].$id,
+        },
       },
     },
   });

@@ -136,7 +136,7 @@ export const memory: Database = {
     const result: ResultRead = {};
 
     Object.keys(select).every((selectKey) => {
-      const query = select[selectKey];
+      const query = select[selectKey]?.$query || {};
 
       /**
        * Skip if the query is undefined or key doesn't exist on storage.
@@ -160,7 +160,7 @@ export const memory: Database = {
       Object.keys(query).forEach((queryKey) => {
         const entityKey = queryKey as keyof Entity;
         const filter = query[queryKey];
-        const limit = (query.$limit || 20) <= 20 ? query.$limit : 20;
+        const limit = 20;
 
         result[selectKey] = result[selectKey].filter((entity) => {
           if (!filter) {

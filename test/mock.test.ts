@@ -32,6 +32,7 @@ serverStore.dispatch(coreActions.create(database.read({
  * Setup the server processes for CRUD operations.
  */
 const crudHanders = apiCrudProcesses({
+  store: serverStore,
   database,
   schemas: [coreSchema, stateSchema],
   definitions: {
@@ -110,8 +111,10 @@ test('should select user data through API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
-        name: {
-          $eq: 'Admin_eCrow',
+        $query: {
+          name: {
+            $eq: 'Admin_eCrow',
+          },
         },
       },
     }),

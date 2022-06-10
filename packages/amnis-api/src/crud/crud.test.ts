@@ -10,6 +10,7 @@ import { ApiInput } from '../types';
 const appStore = storeSetup();
 
 const processes = apiCrudProcesses({
+  store: appStore,
   database: memory,
   schemas: [coreSchema, bookSchema],
   definitions: {
@@ -28,7 +29,6 @@ afterEach(() => memoryClear());
  */
 test('Handler should create new entities.', () => {
   const input: ApiInput = {
-    store: appStore,
     body: {
       [bookKey]: books,
     },
@@ -44,7 +44,6 @@ test('Handler should create new entities.', () => {
  */
 test('Handler should create entities that do not validate against the schema.', () => {
   const input: ApiInput = {
-    store: appStore,
     body: {
       [bookKey]: [
         {
@@ -67,7 +66,6 @@ test('Handler should create entities that do not validate against the schema.', 
  */
 test('Handler should NOT create existing entities.', () => {
   const input: ApiInput = {
-    store: appStore,
     body: {
       [bookKey]: books,
     },
@@ -87,18 +85,18 @@ test('Handler should NOT create existing entities.', () => {
  */
 test('Handler should read entities.', () => {
   processes.create({
-    store: appStore,
     body: {
       [bookKey]: books,
     },
   });
 
   const output = processes.read({
-    store: appStore,
     body: {
       [bookKey]: {
-        title: {
-          $eq: 'Lord of the Rings',
+        $query: {
+          title: {
+            $eq: 'Lord of the Rings',
+          },
         },
       },
     },
@@ -117,18 +115,18 @@ test('Handler should read entities.', () => {
  */
 test('Handler should NOT read entities that do not exist.', () => {
   processes.create({
-    store: appStore,
     body: {
       [bookKey]: books,
     },
   });
 
   const output = processes.read({
-    store: appStore,
     body: {
       [bookKey]: {
-        title: {
-          $eq: 'Not the Rings',
+        $query: {
+          title: {
+            $eq: 'Not the Rings',
+          },
         },
       },
     },
@@ -147,14 +145,12 @@ test('Handler should NOT read entities that do not exist.', () => {
  */
 test('Handler should be able to update existing entities.', () => {
   processes.create({
-    store: appStore,
     body: {
       [bookKey]: books,
     },
   });
 
   const result = processes.update({
-    store: appStore,
     body: {
       [bookKey]: [
         {

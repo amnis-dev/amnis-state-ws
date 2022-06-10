@@ -2,7 +2,7 @@
 import type { AnyValidateFunction } from 'ajv/dist/types';
 import type { ApiOutput, ApiError } from './types';
 
-export function apiOutput(): ApiOutput {
+export function apiOutput<T = any>(): ApiOutput<T> {
   return {
     status: 200, // 200 OK
     cookies: {},

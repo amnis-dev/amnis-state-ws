@@ -1,4 +1,5 @@
-import type { JWTEncoded, ResultCreate } from '@amnis/core/types';
+import type { Store } from '@reduxjs/toolkit';
+import type { Database, JWTEncoded, ResultCreate } from '@amnis/core/types';
 import type {
   ApiProcess,
   ApiProcesses,
@@ -35,4 +36,12 @@ export interface ApiAuthQueries {
 export interface ApiAuthProcesses extends ApiProcesses {
   login: ApiProcess<ApiAuthLoginBody, ResultCreate>;
   authorize: ApiProcess<ApiAuthAuthorizeBody, ResultCreate>;
+}
+
+/**
+ * Api Handler configurations
+ */
+export interface ApiAuthProcessesParams {
+  store: Store;
+  database: Database;
 }
