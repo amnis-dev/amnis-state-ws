@@ -47,7 +47,6 @@ const crudHanders = apiCrudProcesses({
  * Mock the API server for the tests.
  */
 const mockHandlers = apiMockGenerateHandlers(
-  serverStore,
   crudHanders,
   apiCrudUrl,
 );

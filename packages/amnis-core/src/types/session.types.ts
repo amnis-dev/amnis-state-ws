@@ -50,5 +50,5 @@ export interface Session {
   /**
    * Avatar image url.
    */
-  avatar: SURL;
+  avatar: SURL | null;
 }

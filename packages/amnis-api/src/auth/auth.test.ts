@@ -22,6 +22,8 @@ const users: User[] = [
   }),
 ];
 
+const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
+
 /**
  * Create test data in the memory database.
  */
@@ -58,6 +60,8 @@ test('auth should successfully login with valid credentials.', () => {
       password: '',
     }),
   );
+
+  expect(output.cookies?.session).toMatch(jwtTokenRegex);
 });
 
 /**

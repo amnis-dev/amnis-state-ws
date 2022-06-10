@@ -1,9 +1,34 @@
 import { Session } from '@amnis/core/types';
 import { serialize, parse } from 'cookie';
 import jwt from 'jsonwebtoken';
+import { authTokenSecret } from './const';
 
-const SESSION_COOKIE_NAME = 'coresession';
+const SESSION_COOKIE_NAME = 'session';
 const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
+
+/**
+ * Encode a session.
+ */
+export function sessionEncode(session: Session, secret = authTokenSecret) {
+  const sessionToken = jwt.sign(session, secret);
+  return sessionToken;
+}
+
+/**
+ * Decode a session.
+ */
+export function sessionVerify(
+  sessionEncoded: string,
+  secret = authTokenSecret,
+): Session | undefined {
+  try {
+    const decoded = jwt.verify(sessionEncoded, secret) as Session;
+
+    return decoded;
+  } catch (error) {
+    return undefined;
+  }
+}
 
 /**
  * Creates a secure session cookie from a session object.

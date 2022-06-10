@@ -1,6 +1,11 @@
 import Ajv from 'ajv';
-import { ResultCreate, User } from '@amnis/core/types';
-import { passCompareSync } from '@amnis/auth/index';
+import type {
+  JWTDecoded,
+  ResultCreate, Session, Token, User,
+} from '@amnis/core/types';
+import { jwtEncode, passCompareSync, sessionEncode } from '@amnis/auth/index';
+import { dateNumeric, reference, tokenStringify } from '@amnis/core/core';
+import { nanoid } from '@reduxjs/toolkit';
 import authSchema from './auth.schema.json';
 import { apiOutput, apiValidate } from '../api';
 import type {
@@ -75,10 +80,55 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         return badCredentials();
       }
 
+      const expires = dateNumeric(new Date(Date.now() + 30 * 60000));
+
+      /**
+       * Create the JWT access token.
+       */
+      const jwtDecoded: JWTDecoded = {
+        iss: '',
+        sub: user.$id,
+        exp: expires,
+        iat: expires,
+        typ: 'access',
+        roles: [],
+      };
+
+      /**
+       * Create token container for the jwt.
+       */
+      const token: Token = {
+        $id: reference('token', nanoid()),
+        api: 'Core',
+        exp: expires,
+        jwt: jwtEncode(jwtDecoded),
+        type: 'access',
+      };
+
+      /**
+       * Create the new user session.
+       */
+      const session: Session = {
+        $id: reference('session', nanoid()),
+        $subject: user.$id,
+        exp: expires,
+        admin: false,
+        tokens: [
+          tokenStringify(token),
+        ],
+        displayName: '',
+        org: '',
+        avatar: null,
+      };
+
       user.password = '';
 
       output.json.result = {
         user: [user],
+      };
+
+      output.cookies = {
+        session: sessionEncode(session),
       };
 
       return output;
