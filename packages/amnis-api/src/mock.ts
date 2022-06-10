@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
-import { Store } from '@reduxjs/toolkit';
 import type { ApiProcesses, ApiInput, ApiOutput } from './types';
 
 export function apiMockGenerateHandlers(
-  store: Store,
   processes: ApiProcesses,
   baseUrl: string,
 ) {
@@ -16,7 +14,6 @@ export function apiMockGenerateHandlers(
         const { body } = req;
 
         const input: ApiInput = {
-          store,
           body,
         };
         /** @ts-ignore */
