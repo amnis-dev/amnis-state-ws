@@ -204,7 +204,6 @@ export function tokenParse(tokenString: TokenString): Token | undefined {
   }
 
   return {
-    $id: reference('token', nanoid()),
     api: api as TokenApi,
     type: type as TokenType,
     jwt: encoding as JWTEncoded,
