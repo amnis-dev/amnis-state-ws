@@ -21,6 +21,7 @@ import {
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
+import { not } from 'ajv/dist/compile/codegen';
 import { databaseSetup } from './database';
 
 /**
@@ -101,10 +102,10 @@ afterAll(() => {
   mockServer.close();
 });
 
-test('should login as basic user', async () => {
+test('should login as basic user named Normie', async () => {
   const action = await clientStore.dispatch(
     apiAuth.endpoints.login.initiate({
-      username: 'Base_eCrow',
+      username: 'Normie',
       password: 'passwd1',
     }),
   );
@@ -122,7 +123,7 @@ test('client store should contain session.', async () => {
   expect(session).not.toBeUndefined();
 });
 
-test('client store should contain own user.', async () => {
+test('client store should contain own user data.', async () => {
   const users = userSelectors.selectAll(clientStore.getState());
 
   expect(users).toHaveLength(1);
@@ -135,13 +136,13 @@ test('client store should contain own user.', async () => {
 /**
  * ============================================================
  */
-test('should select user data through API', async () => {
+test('should select OWNED user data through API as Normie', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
         $query: {
           name: {
-            $eq: 'Admin_eCrow',
+            $eq: 'Normie',
           },
         },
       },
@@ -153,4 +154,27 @@ test('should select user data through API', async () => {
   const { data } = action;
 
   expect(data?.result?.user).toHaveLength(1);
+});
+
+/**
+ * ============================================================
+ */
+test('should select NOT other user data as Normie', async () => {
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.read.initiate({
+      user: {
+        $query: {
+          name: {
+            $eq: 'Admy',
+          },
+        },
+      },
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+
+  expect(data?.result?.user).toHaveLength(0);
 });

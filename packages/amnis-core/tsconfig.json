@@ -12,6 +12,7 @@
     "src/**/*.json"
   ],
   "exclude": [
-    "src/**/*.test.*"
+    "src/**/*.test.*",
+    "src/test/*"
   ]
 }
