@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { authTokenSecret } from '@amnis/auth/const';
+import { jwtVerify } from '@amnis/auth/token';
+import { JWTEncoded } from '@amnis/core/types';
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import type { ApiProcesses, ApiInput, ApiOutput } from './types';
@@ -13,14 +16,27 @@ export function apiMockGenerateHandlers(
       (req, res, ctx) => {
         const { body } = req;
 
-        const input: ApiInput = {
-          body,
-        };
-        /** @ts-ignore */
-        const output = processes[key](input, res);
+        const input: ApiInput = { body };
+
+        const authorization = req.headers.get('Authorization');
+
+        if (authorization) {
+          const [type, jwtEncoded] = authorization.split(' ');
+          if (type === 'Bearer') {
+            const jwt = jwtVerify(jwtEncoded as JWTEncoded, authTokenSecret);
+            input.jwt = jwt;
+          }
+        }
+
+        const output = processes[key](input);
 
         const ctxCookies = Object.keys(output.cookies).map(
-          (cookieName) => ctx.cookie(cookieName, output.cookies[cookieName]),
+          (cookieName) => ctx.cookie(cookieName, output.cookies[cookieName], {
+            path: '/',
+            sameSite: 'lax',
+            httpOnly: true,
+            secure: false, // Set to falst because this is a mock service.
+          }),
         );
 
         return res(

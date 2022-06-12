@@ -121,7 +121,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         avatar: null,
       });
 
-      user.password = '';
+      user.password = null;
 
       output.json.result = {
         user: [user],

@@ -16,6 +16,7 @@ const definitionsDefault = {
 
 export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcesses {
   const {
+    store,
     database,
     schemas,
     definitions,
@@ -62,7 +63,9 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      */
     read: (input) => {
       const output = apiOutput();
-      const { body } = input;
+      const { body, jwt } = input;
+
+      console.log('JWT:', jwt);
 
       /**
        * Validate the body.

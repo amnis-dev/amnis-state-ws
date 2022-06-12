@@ -1,5 +1,5 @@
 import type { PayloadEntityCreate, PayloadEntityUpdate } from '@amnis/core/actions';
-import { selectToken } from '@amnis/core/selects';
+import { selectors } from '@amnis/core/selectors';
 import type {
   Remove,
   ResultCreate,
@@ -23,7 +23,7 @@ export const apiCrud = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: apiCrudUrl,
     prepareHeaders: (headers, { getState, endpoint }) => {
-      const token = selectToken(getState() as State, 'Core', 'access');
+      const token = selectors.selectToken(getState() as State, 'Core', 'access');
 
       if (token && endpoint !== 'refresh') {
         headers.set('Authorization', `Bearer ${token.jwt}`);

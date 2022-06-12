@@ -1,5 +1,5 @@
 import {
-  dateNumeric, reference, surl, tokenStringify,
+  dateNumeric, entityCreate, reference, surl, tokenStringify,
 } from '@amnis/core/core';
 import { Session, JWTDecoded, Token } from '@amnis/core/types';
 import { passCompare, passCreate } from './pass';
@@ -21,15 +21,13 @@ const jwtDecoded: JWTDecoded = {
 };
 
 const token: Token = {
-  $id: reference('token', '1234'),
   api: 'Core',
   exp: jwtDecoded.exp,
   jwt: jwtEncode(jwtDecoded, SECRET_TEST),
   type: 'access',
 };
 
-const session: Session = {
-  $id: reference('session', '1234'),
+const session: Session = entityCreate('session', {
   $subject: reference('user', '1234'),
   exp: jwtDecoded.exp,
   admin: false,
@@ -39,7 +37,7 @@ const session: Session = {
   displayName: '',
   org: '',
   avatar: surl('https://amnis.dev/avatar.png'),
-};
+});
 
 const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
 

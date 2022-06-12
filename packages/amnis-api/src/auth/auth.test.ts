@@ -58,7 +58,7 @@ test('auth should successfully login with valid credentials.', () => {
       $id: expect.any(String),
       email: expect.any(String),
       name: 'ExampleUser',
-      password: '',
+      password: null,
     }),
   );
 

@@ -26,6 +26,16 @@ import {
 export const noop = () => { /** No operation. */ };
 
 /**
+ * Create a reference to another type.
+ */
+export const reference = <T>(key: string, id: string) => `${key}:${id}` as Reference<T>;
+
+/**
+ * Creates a string URL (aka SURL).
+ */
+export const surl = (path: string) => (path as SURL);
+
+/**
  * Creates a Date JSON string type.
  */
 export const dateJSON = (date?: Date) => (
@@ -38,16 +48,6 @@ export const dateJSON = (date?: Date) => (
 export const dateNumeric = (date?: Date) => (
   (date?.getTime() ?? new Date().getTime()) as DateNumeric
 );
-
-/**
- * Creates a string URL (aka SURL).
- */
-export const surl = (path: string) => (path as SURL);
-
-/**
- * Create a reference to another type.
- */
-export const reference = <T>(key: string, id: string) => `${key}:${id}` as Reference<T>;
 
 /**
  * Validates a reference type.
@@ -214,6 +214,7 @@ export function tokenParse(tokenString: TokenString): Token | undefined {
 export default {
   noop,
   reference,
+  surl,
   dateJSON,
   dateNumeric,
   entityCreate,

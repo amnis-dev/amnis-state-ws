@@ -1,13 +1,26 @@
 import coreSchema from '@amnis/core/core.schema.json';
-import { coreActions } from '@amnis/core/index';
+import { coreActions, Session } from '@amnis/core/index';
 
-import { apiCrud, apiCrudProcesses, apiCrudUrl } from '@amnis/api/index';
+import {
+  apiAuth,
+  apiAuthProcesses,
+  apiAuthUrl,
+  apiCrud,
+  apiCrudProcesses,
+  apiCrudUrl,
+} from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
-import { storeSetup } from '@amnis/state/index';
+import {
+  storeSetup,
+  selectors,
+  sessionKey,
+  sessionSelectors,
+  userKey,
+  userSelectors,
+} from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
-
 import { databaseSetup } from './database';
 
 /**
@@ -15,6 +28,12 @@ import { databaseSetup } from './database';
  * The server store contains a cache of roles and tokens needed by the server.
  */
 const serverStore = storeSetup();
+
+/**
+ * Create the client store.
+ * This is a simulation of data that will be stored into the client state.
+ */
+const clientStore = storeSetup();
 
 /**
  * Create the test database with pre-intantiated data.
@@ -27,6 +46,14 @@ const database = databaseSetup();
 serverStore.dispatch(coreActions.create(database.read({
   role: {},
 })));
+
+/**
+ * Setup the server processes for the Auth operations
+ */
+const authHandlers = apiAuthProcesses({
+  store: serverStore,
+  database,
+});
 
 /**
  * Setup the server processes for CRUD operations.
@@ -44,69 +71,71 @@ const crudHanders = apiCrudProcesses({
 });
 
 /**
- * Mock the API server for the tests.
+ * Mock the Auth API server for the tests.
  */
-const mockHandlers = apiMockGenerateHandlers(
+const mockAuthHandlers = apiMockGenerateHandlers(
+  authHandlers,
+  apiAuthUrl,
+);
+
+/**
+ * Mock the CRUD API server for the tests.
+ */
+const mockCrudHandlers = apiMockGenerateHandlers(
   crudHanders,
   apiCrudUrl,
 );
-const mockServer = apiMockServer(mockHandlers);
 
-beforeAll(() => mockServer.listen());
-afterEach(() => mockServer.resetHandlers());
-afterAll(() => mockServer.close());
+/**
+ * Create a single mock service with the combined handlers.
+ */
+const mockServer = apiMockServer([...mockAuthHandlers, ...mockCrudHandlers]);
 
-// /**
-//  * ============================================================
-//  */
-// test('should create user data through API', async () => {
-//   const clientStore = storeSetup();
+beforeAll(() => {
+  mockServer.listen();
+});
+afterEach(() => {
+  mockServer.resetHandlers();
+});
+afterAll(() => {
+  mockServer.close();
+});
 
-//   const action = await clientStore.dispatch(
-//     apiCrud.endpoints.create.initiate({
-//       [userKey]: [
-//         entityCreate<User>(userKey, {
-//           ...userDefault,
-//         }),
-//       ],
-//     }),
-//   );
+test('should login as basic user', async () => {
+  const action = await clientStore.dispatch(
+    apiAuth.endpoints.login.initiate({
+      username: 'Base_eCrow',
+      password: 'passwd1',
+    }),
+  );
 
-//   expect(action.status).toBe('fulfilled');
+  expect(action.status).toBe('fulfilled');
+});
 
-//   const entities = userSelectors.selectAll(clientStore.getState());
-//   expect(entities).toHaveLength(1);
-// });
+test('client store should contain session.', async () => {
+  const sessions = sessionSelectors.selectAll(clientStore.getState());
 
-// /**
-//  * ============================================================
-//  */
-// test('should not select user data with unmatching query through API', async () => {
-//   const clientStore = storeSetup();
+  expect(sessions).toHaveLength(1);
 
-//   const action = await clientStore.dispatch(
-//     apiCrud.endpoints.read.initiate({
-//       user: {
-//         displayName: {
-//           $eq: 'not_eCrow',
-//         },
-//       },
-//     }),
-//   );
+  const session = selectors.selectActive<Session>(clientStore.getState(), sessionKey);
 
-//   expect(action.status).toBe('fulfilled');
+  expect(session).not.toBeUndefined();
+});
 
-//   const { data } = action;
+test('client store should contain own user.', async () => {
+  const users = userSelectors.selectAll(clientStore.getState());
 
-//   expect(data?.result?.user).toHaveLength(0);
-// });
+  expect(users).toHaveLength(1);
+
+  const user = selectors.selectActive<Session>(clientStore.getState(), userKey);
+
+  expect(user).not.toBeUndefined();
+});
 
 /**
  * ============================================================
  */
 test('should select user data through API', async () => {
-  const clientStore = storeSetup();
-
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {

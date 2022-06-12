@@ -10,7 +10,7 @@ import type {
   State,
 } from '@amnis/core/types';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { selectToken } from '@amnis/core/selects';
+import { selectors } from '@amnis/core/selectors';
 import { apiCrudUrl } from '../const';
 import {
   apiCrudQueries,
@@ -28,7 +28,7 @@ export const apiCrud = createApi({
     baseUrl: apiCrudUrl,
     fetchFn: fetch,
     prepareHeaders: (headers, { getState, endpoint }) => {
-      const token = selectToken(getState() as State, 'Core', 'access');
+      const token = selectors.selectToken(getState() as State, 'Core', 'access');
 
       if (token && endpoint !== 'refresh') {
         headers.set('Authorization', `Bearer ${token.jwt}`);
