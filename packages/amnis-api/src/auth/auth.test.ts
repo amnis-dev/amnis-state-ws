@@ -1,4 +1,4 @@
-import { entityCreate, User } from '@amnis/core/index';
+import { entityCreate, Session, User } from '@amnis/core/index';
 import { passCreateSync } from '@amnis/auth/index';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
@@ -50,7 +50,8 @@ test('auth should successfully login with valid credentials.', () => {
     },
   });
 
-  const user = output.json.result?.user[0];
+  const user = output.json.result?.user[0] as User;
+  const session = output.json.result?.session[0] as Session;
 
   expect(user).toEqual(
     expect.objectContaining({
@@ -58,6 +59,13 @@ test('auth should successfully login with valid credentials.', () => {
       email: expect.any(String),
       name: 'ExampleUser',
       password: '',
+    }),
+  );
+
+  expect(session).toEqual(
+    expect.objectContaining({
+      $subject: user?.$id,
+      displayName: user?.name,
     }),
   );
 

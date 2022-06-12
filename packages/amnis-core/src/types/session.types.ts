@@ -1,16 +1,12 @@
+import { Entity } from './entity.types';
 import type { Reference, DateNumeric, SURL } from './core.types';
 import type { TokenString } from './token.types';
 
 /**
  * A session object.
- * For stateless servers, it is recommended to store session data in secure HTTP cookies only.
+ * For stateless servers, it is recommended to store session data in *SECURE* HTTP cookies only.
  */
-export interface Session {
-  /**
-   * Identifier
-   */
-  $id: Reference;
-
+export interface Session extends Entity {
   /**
    * Subject of the session.
    * Typically a user id.
@@ -18,7 +14,7 @@ export interface Session {
   $subject: Reference;
 
   /**
-   * Possible Issued At property when decoding.
+   * Possible "Issued At" property when decoding.
    */
   iat?: DateNumeric;
 

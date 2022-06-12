@@ -4,8 +4,9 @@ import type {
   ResultCreate, Session, Token, User,
 } from '@amnis/core/types';
 import { jwtEncode, passCompareSync, sessionEncode } from '@amnis/auth/index';
-import { dateNumeric, reference, tokenStringify } from '@amnis/core/core';
-import { nanoid } from '@reduxjs/toolkit';
+import {
+  dateNumeric, entityCreate, tokenStringify,
+} from '@amnis/core/core';
 import authSchema from './auth.schema.json';
 import { apiOutput, apiValidate } from '../api';
 import type {
@@ -83,7 +84,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       const expires = dateNumeric(new Date(Date.now() + 30 * 60000));
 
       /**
-       * Create the JWT access token.
+       * Create the JWT data.
        */
       const jwtDecoded: JWTDecoded = {
         iss: '',
@@ -91,14 +92,14 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         exp: expires,
         iat: expires,
         typ: 'access',
-        roles: [],
+        roles: user.$roles,
       };
 
       /**
-       * Create token container for the jwt.
+       * Create the token container.
+       * This is so we have ensured data about our JWT.
        */
       const token: Token = {
-        $id: reference('token', nanoid()),
         api: 'Core',
         exp: expires,
         jwt: jwtEncode(jwtDecoded),
@@ -108,23 +109,23 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       /**
        * Create the new user session.
        */
-      const session: Session = {
-        $id: reference('session', nanoid()),
+      const session = entityCreate<Session>('session', {
         $subject: user.$id,
         exp: expires,
         admin: false,
         tokens: [
           tokenStringify(token),
         ],
-        displayName: '',
-        org: '',
+        displayName: user.name,
+        org: user.organization || '',
         avatar: null,
-      };
+      });
 
       user.password = '';
 
       output.json.result = {
         user: [user],
+        session: [session],
       };
 
       output.cookies = {

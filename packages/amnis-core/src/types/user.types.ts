@@ -26,6 +26,11 @@ export interface User extends Entity {
   password: string | null;
 
   /**
+   * Organization this order belongs to.
+   */
+  organization?: string;
+
+  /**
    * Roles this user has been given.
    */
   readonly $roles: Reference<Role>[];
