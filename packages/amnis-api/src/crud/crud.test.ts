@@ -4,11 +4,16 @@ import {
 import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
+import { dateNumeric, reference } from '@amnis/core/core';
+import { JWTDecoded } from '@amnis/core/types';
 import { apiCrudProcesses } from './crud.process';
 import { ApiInput } from '../types';
 
 const appStore = storeSetup();
 
+/**
+ * Setup the crud processes.
+ */
 const processes = apiCrudProcesses({
   store: appStore,
   database: memory,
@@ -18,6 +23,19 @@ const processes = apiCrudProcesses({
     update: 'book#/definitions/BookStatePartial',
   },
 });
+
+const expires = dateNumeric(new Date(Date.now() + 60000));
+/**
+ * Create a JWT token in order to execute processes.
+ */
+const jwt: JWTDecoded = {
+  iss: 'core',
+  sub: reference('user', 'system'),
+  exp: expires,
+  iat: expires,
+  typ: 'access',
+  roles: [],
+};
 
 /**
  * Clear memory storage after each run.
@@ -32,6 +50,7 @@ test('Handler should create new entities.', () => {
     body: {
       [bookKey]: books,
     },
+    jwt,
   };
 
   const output = processes.create(input);
@@ -52,6 +71,7 @@ test('Handler should create entities that do not validate against the schema.', 
         },
       ],
     },
+    jwt,
   };
 
   const output = processes.create(input);
@@ -69,6 +89,7 @@ test('Handler should NOT create existing entities.', () => {
     body: {
       [bookKey]: books,
     },
+    jwt,
   };
 
   processes.create(input);
@@ -88,6 +109,7 @@ test('Handler should read entities.', () => {
     body: {
       [bookKey]: books,
     },
+    jwt,
   });
 
   const output = processes.read({
@@ -100,6 +122,7 @@ test('Handler should read entities.', () => {
         },
       },
     },
+    jwt,
   });
 
   expect(
@@ -118,6 +141,7 @@ test('Handler should NOT read entities that do not exist.', () => {
     body: {
       [bookKey]: books,
     },
+    jwt,
   });
 
   const output = processes.read({
@@ -130,6 +154,7 @@ test('Handler should NOT read entities that do not exist.', () => {
         },
       },
     },
+    jwt,
   });
 
   expect(
@@ -148,6 +173,7 @@ test('Handler should be able to update existing entities.', () => {
     body: {
       [bookKey]: books,
     },
+    jwt,
   });
 
   const result = processes.update({
@@ -159,6 +185,7 @@ test('Handler should be able to update existing entities.', () => {
         },
       ],
     },
+    jwt,
   });
 
   expect(

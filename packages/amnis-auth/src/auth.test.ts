@@ -21,7 +21,7 @@ const jwtDecoded: JWTDecoded = {
 };
 
 const token: Token = {
-  api: 'Core',
+  api: 'core',
   exp: jwtDecoded.exp,
   jwt: jwtEncode(jwtDecoded, SECRET_TEST),
   type: 'access',

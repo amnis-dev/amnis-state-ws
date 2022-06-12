@@ -1,6 +1,9 @@
 // import type { EnhancedStore } from '@reduxjs/toolkit';
 import Ajv from 'ajv';
 import coreSchema from '@amnis/core/core.schema.json';
+import { selectors } from '@amnis/core/selectors';
+import { authwall } from '@amnis/auth/authwall';
+import { Task } from '@amnis/core/types';
 import type {
   ApiCrudProcesses,
   ApiCrudProcessesParams,
@@ -65,17 +68,36 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       const output = apiOutput();
       const { body, jwt } = input;
 
-      console.log('JWT:', jwt);
+      if (!jwt) {
+        output.status = 401; // 401 Unauthorized
+        output.json.errors = [
+          {
+            title: 'Unauthorized',
+            message: 'Access token is invalid.',
+          },
+        ];
+        return output;
+      }
+
+      /**
+       * Get array of grants from roles in the service store.
+       */
+      const grants = selectors.selectRoleGrants(store.getState(), jwt.roles);
+
+      /**
+       * Filter non-granted slices on the body (which is a State type).
+       */
+      const stateAuthwalled = authwall(body, grants, Task.Read);
 
       /**
        * Validate the body.
        */
-      const validateOutput = apiValidate(validator.read, body);
+      const validateOutput = apiValidate(validator.read, stateAuthwalled);
       if (validateOutput) {
         return validateOutput;
       }
 
-      const result = database.read(body);
+      const result = database.read(stateAuthwalled);
 
       output.json.result = result;
 

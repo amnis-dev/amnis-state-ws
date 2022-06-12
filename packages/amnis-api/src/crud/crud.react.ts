@@ -23,7 +23,7 @@ export const apiCrud = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: apiCrudUrl,
     prepareHeaders: (headers, { getState, endpoint }) => {
-      const token = selectors.selectToken(getState() as State, 'Core', 'access');
+      const token = selectors.selectToken(getState() as State, 'core', 'access');
 
       if (token && endpoint !== 'refresh') {
         headers.set('Authorization', `Bearer ${token.jwt}`);

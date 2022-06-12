@@ -3,8 +3,13 @@ import type {
   Insert,
   Modify,
   Remove,
-  ResultCreate, ResultDelete, ResultRead, ResultUpdate, Select,
+  ResultCreate,
+  ResultDelete,
+  ResultRead,
+  ResultUpdate,
+  Select,
 } from './state.types';
+import type { Grant } from './auth.types';
 
 /**
  * Core interface for database methods.

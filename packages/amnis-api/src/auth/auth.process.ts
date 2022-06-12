@@ -90,7 +90,6 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         iss: '',
         sub: user.$id,
         exp: expires,
-        iat: expires,
         typ: 'access',
         roles: user.$roles,
       };
@@ -99,8 +98,8 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
        * Create the token container.
        * This is so we have ensured data about our JWT.
        */
-      const token: Token = {
-        api: 'Core',
+      const tokenAccess: Token = {
+        api: 'core',
         exp: expires,
         jwt: jwtEncode(jwtDecoded),
         type: 'access',
@@ -114,7 +113,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         exp: expires,
         admin: false,
         tokens: [
-          tokenStringify(token),
+          tokenStringify(tokenAccess),
         ],
         displayName: user.name,
         org: user.organization || '',
