@@ -34,6 +34,7 @@ const jwt: JWTDecoded = {
   exp: expires,
   iat: expires,
   typ: 'access',
+  adm: true,
   roles: [],
 };
 

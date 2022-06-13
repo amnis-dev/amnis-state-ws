@@ -132,10 +132,17 @@ export const memory: Database = {
 
     return result;
   },
-  read(select) {
+  read(select, scope, subject) {
     const result: ResultRead = {};
 
     Object.keys(select).every((selectKey) => {
+      /**
+       * Ensure this selection is within auth scope.
+       */
+      if (scope && !scope[selectKey]) {
+        return true;
+      }
+
       const query = select[selectKey]?.$query || {};
 
       /**
@@ -163,6 +170,14 @@ export const memory: Database = {
         const limit = 20;
 
         result[selectKey] = result[selectKey].filter((entity) => {
+          /**
+           * Check to ensure this entity is within the scope.
+           * If the scope is owner only, the entity must have the owner id match the subject.
+           */
+          if (scope && scope[selectKey] === 'owned' && entity.$owner !== subject) {
+            return false;
+          }
+
           if (!filter) {
             return true;
           }

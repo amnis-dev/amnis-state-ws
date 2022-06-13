@@ -63,7 +63,7 @@ test('memory db should NOT select book with mismatching title.', () => {
         },
       },
     },
-  });
+  }, { [bookKey]: 'global' });
 
   expect(
     result,
@@ -86,7 +86,7 @@ test('memory db should select book with matching title.', () => {
         },
       },
     },
-  });
+  }, { [bookKey]: 'global' });
 
   expect(
     result,
@@ -109,7 +109,7 @@ test('memory db should delete a book entity by id.', () => {
         },
       },
     },
-  });
+  }, { [bookKey]: 'global' });
 
   expect(
     resultRead,
@@ -135,7 +135,7 @@ test('memory db should delete a book entity by id.', () => {
         },
       },
     },
-  });
+  }, { [bookKey]: 'global' });
 
   expect(
     resultRead2,

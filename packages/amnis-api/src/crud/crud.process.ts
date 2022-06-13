@@ -2,7 +2,7 @@
 import Ajv from 'ajv';
 import coreSchema from '@amnis/core/core.schema.json';
 import { selectors } from '@amnis/core/selectors';
-import { authwall } from '@amnis/auth/authwall';
+import { authwall, authScopeCreate } from '@amnis/auth/index';
 import { Task } from '@amnis/core/types';
 import type {
   ApiCrudProcesses,
@@ -10,6 +10,9 @@ import type {
 } from './crud.types';
 import { apiOutput, apiValidate } from '../api';
 
+/**
+ * Default schema definitions for validating the input.
+ */
 const definitionsDefault = {
   create: 'core#/definitions/Insert',
   read: 'core#/definitions/Select',
@@ -17,6 +20,9 @@ const definitionsDefault = {
   delete: 'core#/definitions/Remove',
 };
 
+/**
+ * Sets up processes for CRUD operations. Processes require a JWT token for authorization.
+ */
 export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcesses {
   const {
     store,
@@ -90,14 +96,24 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       const stateAuthwalled = authwall(body, grants, Task.Read);
 
       /**
+       * finalized state to process
+       */
+      const stateFinal = jwt.adm === true ? body : stateAuthwalled;
+
+      /**
        * Validate the body.
        */
-      const validateOutput = apiValidate(validator.read, stateAuthwalled);
+      const validateOutput = apiValidate(validator.read, stateFinal);
       if (validateOutput) {
         return validateOutput;
       }
 
-      const result = database.read(stateAuthwalled);
+      /**
+       * Create an authentication scope object from the array of grant objects.
+       */
+      const authScope = jwt.adm === true ? undefined : authScopeCreate(grants);
+
+      const result = database.read(stateFinal, authScope, jwt.sub);
 
       output.json.result = result;
 

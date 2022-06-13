@@ -1,5 +1,6 @@
 import type { Reference } from './core.types';
 import type { Entity } from './entity.types';
+import { State } from './state.types';
 
 /**
  * Data scopes.
@@ -31,6 +32,11 @@ export type Grant = {
  * Role grant string.
  */
 export type GrantString = string;
+
+/**
+ * A stateful mapping of data access scopes.
+ */
+export type AuthScope = State<DataScope>;
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.

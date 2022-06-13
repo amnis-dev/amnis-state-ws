@@ -69,7 +69,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
             },
           },
         },
-      });
+      }, { user: 'global' });
 
       if (!results.user?.length) {
         return badCredentials();

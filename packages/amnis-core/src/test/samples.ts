@@ -50,21 +50,21 @@ const users: User[] = [
     password: passCreateSync('passwd1'),
     $roles: [roles[0].$id],
     $permits: [],
-  }),
+  }, true),
   entityCreate('user', {
     name: 'Moddie',
     email: 'moddie@ecrow.dev',
     password: passCreateSync('passwd2'),
     $roles: [roles[1].$id],
     $permits: [],
-  }),
+  }, true),
   entityCreate('user', {
     name: 'Admy',
     email: 'admy@ecrow.dev',
     password: passCreateSync('passwd3'),
     $roles: [roles[2].$id],
     $permits: [],
-  }),
+  }, true),
 ];
 
 export const samples = { roles, users };

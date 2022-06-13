@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AuthScope } from './auth.types';
+import { Reference } from './core.types';
 import type {
   Insert,
   Modify,
@@ -9,7 +11,6 @@ import type {
   ResultUpdate,
   Select,
 } from './state.types';
-import type { Grant } from './auth.types';
 
 /**
  * Core interface for database methods.
@@ -23,21 +24,21 @@ export interface Database {
   /**
    * Method for creating new records in the database.
    */
-  create: (state: Insert) => ResultCreate;
+  create: (state: Insert, scope?: AuthScope, subject?: Reference) => ResultCreate;
 
   /**
    * Method for updating records in the database.
    */
-  update: (state: Modify) => ResultUpdate;
+  update: (state: Modify, scope?: AuthScope, subject?: Reference) => ResultUpdate;
 
   /**
    * Method to delete records in the database.
-   * Shouldn't actually delete records, but mark them as deleted instead
+   * Shouldn't actually delete records, but mark them as deleted instead.
    */
-  delete: (references: Remove) => ResultDelete;
+  delete: (references: Remove, scope?: AuthScope, subject?: Reference) => ResultDelete;
 
   /**
    * Selects data from the database determined by the select query.
    */
-  read: (select: Select) => ResultRead;
+  read: (select: Select, scope?: AuthScope, subject?: Reference) => ResultRead;
 }

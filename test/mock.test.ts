@@ -45,7 +45,7 @@ const database = databaseSetup();
  */
 serverStore.dispatch(coreActions.create(database.read({
   role: {},
-})));
+}, { role: 'global' })));
 
 /**
  * Setup the server processes for the Auth operations

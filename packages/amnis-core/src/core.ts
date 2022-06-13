@@ -91,11 +91,12 @@ export const referenceValidate = (ref: string): boolean => {
 export const entityCreate = <E extends Entity>(
   key: string,
   entity: EntityExtension<E>,
-  set?: Partial<Entity>,
+  set?: Partial<Entity> | boolean,
 ): E => {
+  const id = `${key}:${nanoid()}` as Reference;
   const now = dateJSON();
   const base: Entity = {
-    $id: `${key}:${nanoid()}` as Reference,
+    $id: id,
     created: now,
     updated: now,
     delete: false,
@@ -105,10 +106,14 @@ export const entityCreate = <E extends Entity>(
     committed: false,
   };
 
+  const overwrite: Partial<Entity> = typeof set === 'boolean' ? {
+    $owner: id,
+  } : set || {};
+
   return {
     ...base,
     ...entity,
-    ...set,
+    ...overwrite,
   } as E;
 };
 

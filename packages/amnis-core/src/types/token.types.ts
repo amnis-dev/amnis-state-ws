@@ -85,6 +85,11 @@ export interface JWTDecoded {
   typ: TokenType;
 
   /**
+   * If this is considered an administrative token.
+   */
+  adm?: boolean;
+
+  /**
    * Scope of permissions (role references).
    */
   roles: Reference<Role>[];
