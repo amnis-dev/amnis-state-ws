@@ -1,7 +1,7 @@
 import { Session } from '@amnis/core/types';
 import { serialize, parse } from 'cookie';
 import jwt from 'jsonwebtoken';
-import { authTokenSecret } from './const';
+import { AUTH_TOKEN_SECRET } from './const';
 
 const SESSION_COOKIE_NAME = 'session';
 const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
@@ -9,7 +9,7 @@ const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
 /**
  * Encode a session.
  */
-export function sessionEncode(session: Session, secret = authTokenSecret) {
+export function sessionEncode(session: Session, secret = AUTH_TOKEN_SECRET) {
   const sessionToken = jwt.sign(session, secret);
   return sessionToken;
 }
@@ -19,7 +19,7 @@ export function sessionEncode(session: Session, secret = authTokenSecret) {
  */
 export function sessionVerify(
   sessionEncoded: string,
-  secret = authTokenSecret,
+  secret = AUTH_TOKEN_SECRET,
 ): Session | undefined {
   try {
     const decoded = jwt.verify(sessionEncoded, secret) as Session;

@@ -21,7 +21,6 @@ import {
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { not } from 'ajv/dist/compile/codegen';
 import { databaseSetup } from './database';
 
 /**

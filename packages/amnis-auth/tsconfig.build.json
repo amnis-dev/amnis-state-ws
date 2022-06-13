@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig",
+  "exclude": [
+    "src/**/*.test.*",
+    "src/test/*"
+  ],
+  "include": ["src/**/*.ts"],
+  "references": [
+    { "path": "../amnis-core/tsconfig.json" }
+  ]
+}

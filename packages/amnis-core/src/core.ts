@@ -45,9 +45,28 @@ export const dateJSON = (date?: Date) => (
 /**
  * Create a numeric date value. Needed typically for tokens.
  */
-export const dateNumeric = (date?: Date) => (
-  (date?.getTime() ?? new Date().getTime()) as DateNumeric
-);
+export const dateNumeric = (date?: Date | string): DateNumeric => {
+  if (typeof date === 'string') {
+    const unit = date.slice(-1);
+    const value = parseInt(date, 10);
+    if (Number.isNaN(value)) {
+      return new Date().getTime() as DateNumeric;
+    }
+    switch (unit) {
+      case 's':
+        return new Date(Date.now() + value * 1000).getTime() as DateNumeric;
+      case 'm':
+        return new Date(Date.now() + value * 60000).getTime() as DateNumeric;
+      case 'h':
+        return new Date(Date.now() + value * 3600000).getTime() as DateNumeric;
+      case 'd':
+        return new Date(Date.now() + value * 86400000).getTime() as DateNumeric;
+      default:
+        return new Date().getTime() as DateNumeric;
+    }
+  }
+  return (date?.getTime() ?? new Date().getTime()) as DateNumeric;
+};
 
 /**
  * Validates a reference type.

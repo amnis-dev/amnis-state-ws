@@ -1,5 +1,5 @@
 import { JWTEncoded, JWTDecoded } from '@amnis/core/types';
-import { authTokenSecret } from './const';
+import { AUTH_TOKEN_SECRET } from './const';
 import { jwtVerify } from './token';
 
 /**
@@ -16,7 +16,7 @@ function authorizationParse(authorization?: string | null): JWTDecoded | undefin
     return undefined;
   }
 
-  const jwt = jwtVerify(jwtEncoded as JWTEncoded, authTokenSecret);
+  const jwt = jwtVerify(jwtEncoded as JWTEncoded, AUTH_TOKEN_SECRET);
   return jwt;
 }
 

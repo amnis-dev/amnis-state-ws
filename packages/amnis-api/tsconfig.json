@@ -11,10 +11,6 @@
     "src/**/*.ts",
     "src/**/*.json"
   ],
-  "exclude": [
-    "src/**/*.test.*",
-    "src/**/*.dev.*"
-  ],
   "references": [
       { "path": "../amnis-core/tsconfig.json" },
       { "path": "../amnis-auth/tsconfig.json" }

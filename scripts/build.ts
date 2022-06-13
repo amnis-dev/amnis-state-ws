@@ -17,7 +17,7 @@ const packagePaths = [
 
 function tsCompile() {
   packagePaths.forEach((path) => {
-    const command = `yarn tsc --project ${path}/tsconfig.json`;
+    const command = `yarn tsc --project ${path}/tsconfig.build.json`;
     console.log(`Running '${command}...'`);
     try {
       execSync(command);

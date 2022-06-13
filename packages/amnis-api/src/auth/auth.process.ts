@@ -3,7 +3,13 @@ import type {
   JWTDecoded,
   ResultCreate, Session, Token, User,
 } from '@amnis/core/types';
-import { jwtEncode, passCompareSync, sessionEncode } from '@amnis/auth/index';
+import {
+  AUTH_SESSION_LIFE,
+  AUTH_TOKEN_LIFE,
+  jwtEncode,
+  passCompareSync,
+  sessionEncode,
+} from '@amnis/auth/index';
 import {
   dateNumeric, entityCreate, tokenStringify,
 } from '@amnis/core/core';
@@ -81,7 +87,8 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         return badCredentials();
       }
 
-      const expires = dateNumeric(new Date(Date.now() + 30 * 60000));
+      const tokenExpires = dateNumeric(AUTH_TOKEN_LIFE);
+      const sessionExpires = dateNumeric(AUTH_SESSION_LIFE);
 
       /**
        * Create the JWT data.
@@ -89,7 +96,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       const jwtDecoded: JWTDecoded = {
         iss: '',
         sub: user.$id,
-        exp: expires,
+        exp: tokenExpires,
         typ: 'access',
         roles: user.$roles,
       };
@@ -100,7 +107,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
        */
       const tokenAccess: Token = {
         api: 'core',
-        exp: expires,
+        exp: tokenExpires,
         jwt: jwtEncode(jwtDecoded),
         type: 'access',
       };
@@ -110,7 +117,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
        */
       const session = entityCreate<Session>('session', {
         $subject: user.$id,
-        exp: expires,
+        exp: sessionExpires,
         admin: false,
         tokens: [
           tokenStringify(tokenAccess),
