@@ -7,7 +7,7 @@ import { apiBaseUrl } from '../const';
 import {
   api<%= Name %>Queries,
 } from './<%= name %>.queries';
-import { ApiJSON } from '../types';
+import { ApiJSON, ApiBaseQueryFn } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
@@ -19,7 +19,7 @@ export const api<%= Name %> = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
     fetchFn: fetch,
-  }),
+  }) as as ApiBaseQueryFn,
   endpoints: (builder) => ({
     myendpoint: builder.query<
     ApiJSON,

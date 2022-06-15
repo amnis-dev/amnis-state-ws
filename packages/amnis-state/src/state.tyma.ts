@@ -1,9 +1,19 @@
-import type { User } from '@amnis/core/index';
+import type {
+  EntityCreate,
+  EntityUpdate,
+  User,
+  Role,
+  Session,
+} from '@amnis/core/index';
 
-export interface State {
-  user?: User[];
+export interface StateCreate {
+  user?: EntityCreate<User>[];
+  role?: EntityCreate<Role>[];
+  session?: EntityCreate<Session>[];
 }
 
-export interface StatePartial {
-  user?: Partial<User>[];
+export interface StateUpdate {
+  user?: EntityUpdate<User>[];
+  role?: EntityUpdate<Role>[];
+  session?: EntityUpdate<Session>[];
 }

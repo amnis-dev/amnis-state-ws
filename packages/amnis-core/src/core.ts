@@ -138,6 +138,24 @@ export const entityUpdate = <E extends Entity>(
 };
 
 /**
+ * Array of entity keys.
+ */
+const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((key) => key);
+
+/**
+ * Cleans any entity keys off for a create or update.
+ */
+export function entityClean(entity: Record<string, unknown>) {
+  const cleaned = Object.keys(entity).reduce<Record<string, unknown>>((value, key) => {
+    if (key === '$id' || !entityKeys.includes(key)) {
+      value[key] = entity[key];
+    }
+    return value;
+  }, {});
+  return cleaned;
+}
+
+/**
  * Converts a grant to string format.
  */
 export function grantStringify(grant: Grant): GrantString {

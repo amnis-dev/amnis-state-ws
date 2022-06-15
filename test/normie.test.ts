@@ -18,9 +18,11 @@ import {
   sessionSelectors,
   userKey,
   userSelectors,
+  User,
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
+import { passCreateSync } from '@amnis/auth/pass';
 import { databaseSetup } from './database';
 
 /**
@@ -63,9 +65,9 @@ const crudHanders = apiCrudProcesses({
   database,
   schemas: [coreSchema, stateSchema],
   definitions: {
-    create: 'state#/definitions/State',
+    create: 'state#/definitions/StateCreate',
     read: 'core#/definitions/Select',
-    update: 'state#/definitions/StatePartial',
+    update: 'state#/definitions/StateUpdate',
     delete: 'core#/definitions/Remove',
   },
 });
@@ -135,7 +137,32 @@ test('client store should contain own user data.', async () => {
 /**
  * ============================================================
  */
-test('should select OWNED user data through API as Normie', async () => {
+test('should NOT be able to create user data as Normie', async () => {
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.create.initiate({
+      user: [
+        {
+          name: 'Newbie',
+          email: 'newbie@ecrow.dev',
+          password: passCreateSync('passwd0'),
+          $roles: [],
+        },
+      ],
+    }),
+  );
+
+  console.log(action?.data);
+  if (action?.error && 'data' in action.error) {
+    console.log(action?.error?.data?.errors);
+  }
+
+  expect(action.status).toBe('fulfilled');
+});
+
+/**
+ * ============================================================
+ */
+test('should read OWNED user data through API as Normie', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
@@ -158,7 +185,7 @@ test('should select OWNED user data through API as Normie', async () => {
 /**
  * ============================================================
  */
-test('should select NOT other user data as Normie', async () => {
+test('should NOT read other user data as Normie', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
@@ -176,4 +203,33 @@ test('should select NOT other user data as Normie', async () => {
   const { data } = action;
 
   expect(data?.result?.user).toHaveLength(0);
+});
+
+/**
+ * ============================================================
+ */
+test('should NOT be able to update user data as Normie', async () => {
+  const userActive = selectors.selectActive(clientStore.getState(), userKey);
+
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.update.initiate({
+      user: [
+        {
+          $id: userActive?.$id,
+          $roles: [],
+          email: 'something.else@amnis.dev',
+        },
+      ],
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+  const users = data?.result?.user as User[];
+
+  expect(users).not.toBeDefined();
+
+  expect(data?.errors).toHaveLength(1);
+  expect(data?.errors[0].title).toEqual('Updates Disallowed');
 });

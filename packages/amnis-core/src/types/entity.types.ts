@@ -84,6 +84,13 @@ export interface Meta<E extends Entity> {
 }
 
 /**
+ * Ambiguous entity type.
+ */
+export interface EntityAmbiguous extends Entity {
+  [key: string]: any;
+}
+
+/**
  * Omitted types of the core Entity interface.
  */
 export type EntityOmit<E extends Entity> = Omit<E, keyof Entity>
@@ -94,9 +101,19 @@ export type EntityOmit<E extends Entity> = Omit<E, keyof Entity>
 export type EntityExtension<E extends Entity> = EntityOmit<E>;
 
 /**
- * Type for an update method.
+ * Type for an partial method.
  */
 export type EntityPartial<E extends Entity> = Partial<EntityExtension<E>>;
+
+/**
+ * Type for an entity create object.
+ */
+export type EntityCreate<E extends Entity> = EntityExtension<E> & E['$id'];
+
+/**
+ * Type for an entity update object.
+ */
+export type EntityUpdate<E extends Entity> = EntityPartial<E> & E['$id'];
 
 /**
  * An entity state.

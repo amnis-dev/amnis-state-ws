@@ -15,7 +15,7 @@ import { apiCrudUrl } from '../const';
 import {
   apiCrudQueries,
 } from './crud.queries';
-import { ApiJSON } from '../types';
+import { ApiBaseQueryFn, ApiJSON } from '../types';
 
 global.Headers = Headers;
 global.Request = Request;
@@ -35,7 +35,7 @@ export const apiCrud = createApi({
       }
       return headers;
     },
-  }),
+  }) as ApiBaseQueryFn,
   endpoints: (builder) => ({
     create: builder.query<
     ApiJSON<ResultCreate>,
@@ -55,14 +55,14 @@ export const apiCrud = createApi({
     ApiJSON<ResultUpdate>,
     PayloadEntityUpdate
     >({
-      query: queries.create,
+      query: queries.update,
     }),
 
     delete: builder.query<
     ApiJSON<ResultDelete>,
     Remove
     >({
-      query: queries.create,
+      query: queries.delete,
     }),
   }),
 });

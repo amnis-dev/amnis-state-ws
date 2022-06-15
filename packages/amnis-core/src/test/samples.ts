@@ -21,7 +21,7 @@ const roles: Role[] = [
     description: 'Most basic role assigned to all registered users.',
     color: '#000000',
     grants: [
-      grantStringify({ key: 'user', scope: 'owned', task: task(0, 1, 1, 0) }),
+      grantStringify({ key: 'user', scope: 'owned', task: task(0, 1, 0, 0) }),
     ],
   }),
   entityCreate<Role>('role', {

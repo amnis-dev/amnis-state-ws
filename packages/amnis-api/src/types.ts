@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { FetchArgs } from '@reduxjs/toolkit/dist/query';
+import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
   DateJSON, JWTDecoded,
 } from '@amnis/core/index';
@@ -92,3 +92,12 @@ export type ApiProcess<Body = any, Result = any> = (
  * API object containing response handlers.
  */
 export type ApiProcesses = Record<string, ApiProcess>;
+
+/**
+ * RTK Error type.
+ */
+export type ApiBaseQueryFn = BaseQueryFn<
+string | FetchArgs,
+unknown,
+{ data: ApiJSON, status: number }
+>
