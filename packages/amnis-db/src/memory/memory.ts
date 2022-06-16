@@ -41,6 +41,11 @@ export const memory: Database = {
   initialize: (initialStorage: MemoryStorage = {}) => {
     storage = initialStorage;
   },
+  /**
+   * ================================================================================
+   * CREATE
+   * ----------------------------------------
+   */
   create(state) {
     const result: ResultCreate = {};
 
@@ -72,66 +77,11 @@ export const memory: Database = {
 
     return result;
   },
-  update(state) {
-    const result: ResultUpdate = {};
-
-    Object.keys(state).every((sliceKey) => {
-      const col: Entity[] = state[sliceKey];
-      if (!Array.isArray(col)) {
-        return true;
-      }
-
-      col.every((entity) => {
-        const entityId = entity.$id;
-        if (!entity || !entityId) {
-          return true;
-        }
-        if (!storage[sliceKey]) {
-          return true;
-        }
-        if (!storage[sliceKey][entityId]) {
-          return true;
-        }
-        if (!result[sliceKey]) {
-          result[sliceKey] = [] as UpdateEntity[];
-        }
-        storage[sliceKey][entityId] = {
-          ...storage[sliceKey][entityId],
-          ...entity,
-        };
-        result[sliceKey].push(storage[sliceKey][entityId]);
-        return true;
-      });
-
-      return true;
-    });
-
-    return result;
-  },
-  delete(state) {
-    const result: ResultDelete = {};
-
-    Object.keys(state).every((sliceKey) => {
-      if (!storage[sliceKey]) {
-        return true;
-      }
-      const references = state[sliceKey];
-
-      references.forEach((ref) => {
-        if (storage[sliceKey][ref]) {
-          delete storage[sliceKey][ref];
-          if (!result[sliceKey]) {
-            result[sliceKey] = [];
-          }
-          result[sliceKey].push(ref);
-        }
-      });
-
-      return true;
-    });
-
-    return result;
-  },
+  /**
+   * ================================================================================
+   * READ
+   * ----------------------------------------
+   */
   read(select, scope, subject) {
     const result: ResultRead = {};
 
@@ -188,6 +138,90 @@ export const memory: Database = {
 
           return false;
         }).slice(0, limit);
+      });
+
+      return true;
+    });
+
+    return result;
+  },
+  /**
+   * ================================================================================
+   * UPDATE
+   * ----------------------------------------
+   */
+  update(state, scope, subject) {
+    const result: ResultUpdate = {};
+
+    Object.keys(state).every((sliceKey) => {
+      /**
+       * Ensure this selection is within auth scope.
+       */
+      if (scope && !scope[sliceKey]) {
+        return true;
+      }
+
+      const col: Entity[] = state[sliceKey];
+      if (!Array.isArray(col)) {
+        return true;
+      }
+
+      col.every((entity) => {
+        const entityId = entity.$id;
+        if (!entity || !entityId) {
+          return true;
+        }
+        if (!storage[sliceKey]) {
+          return true;
+        }
+        if (!storage[sliceKey][entityId]) {
+          return true;
+        }
+        /**
+         * Check to ensure this entity is within the scope.
+         * If the scope is owner only, the entity must have the owner id match the subject.
+         */
+        if (scope && scope[sliceKey] === 'owned' && storage[sliceKey][entityId].$owner !== subject) {
+          return false;
+        }
+        if (!result[sliceKey]) {
+          result[sliceKey] = [] as UpdateEntity[];
+        }
+        storage[sliceKey][entityId] = {
+          ...storage[sliceKey][entityId],
+          ...entity,
+        };
+        result[sliceKey].push(storage[sliceKey][entityId]);
+        return true;
+      });
+
+      return true;
+    });
+
+    return result;
+  },
+  /**
+   * ================================================================================
+   * DELETE
+   * ----------------------------------------
+   */
+  delete(state) {
+    const result: ResultDelete = {};
+
+    Object.keys(state).every((sliceKey) => {
+      if (!storage[sliceKey]) {
+        return true;
+      }
+      const references = state[sliceKey];
+
+      references.forEach((ref) => {
+        if (storage[sliceKey][ref]) {
+          delete storage[sliceKey][ref];
+          if (!result[sliceKey]) {
+            result[sliceKey] = [];
+          }
+          result[sliceKey].push(ref);
+        }
       });
 
       return true;

@@ -29,7 +29,8 @@ const roles: Role[] = [
     description: 'A role that allows limited administration.',
     color: '#00cccc',
     grants: [
-      grantStringify({ key: 'user', scope: 'global', task: task(0, 1, 1, 0) }),
+      grantStringify({ key: 'user', scope: 'owned', task: task(0, 1, 1, 0) }),
+      grantStringify({ key: 'user', scope: 'global', task: task(0, 1, 0, 0) }),
     ],
   }),
   entityCreate<Role>('role', {

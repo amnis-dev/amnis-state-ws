@@ -107,11 +107,11 @@ afterAll(() => {
 /**
  * ============================================================
  */
-test('should login as least-privileged user named Normie', async () => {
+test('should login as most-privileged user named Admy', async () => {
   const action = await clientStore.dispatch(
     apiAuth.endpoints.login.initiate({
-      username: 'Normie',
-      password: 'passwd1',
+      username: 'Admy',
+      password: 'passwd3',
     }),
   );
 
@@ -147,7 +147,7 @@ test('client store should contain own user data.', async () => {
 /**
  * ============================================================
  */
-test('user create global should be -DENIED- as Normie via API', async () => {
+test('user create global should be +ALLOWED+ as Admy via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       user: [
@@ -156,6 +156,7 @@ test('user create global should be -DENIED- as Normie via API', async () => {
           email: 'newbie@ecrow.dev',
           password: passCreateSync('passwd0'),
           $roles: [],
+          $permits: [],
         },
       ],
     }),
@@ -164,24 +165,21 @@ test('user create global should be -DENIED- as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as User[];
 
-  expect(users).not.toBeDefined();
-
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Creations Disallowed');
+  expect(data?.result?.user).toHaveLength(1);
+  expect(data?.errors).toHaveLength(0);
 });
 
 /**
  * ============================================================
  */
-test('user read owned should be +ALLOWED+ as Normie via API', async () => {
+test('user read owned should be +ALLOWED+ as Admy via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
         $query: {
           name: {
-            $eq: 'Normie',
+            $eq: 'Admy',
           },
         },
       },
@@ -199,7 +197,7 @@ test('user read owned should be +ALLOWED+ as Normie via API', async () => {
 /**
  * ============================================================
  */
-test('user read global should be -DENIED- as Normie via API', async () => {
+test('user read global should be +ALLOWED+ as Admy via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
@@ -216,13 +214,14 @@ test('user read global should be -DENIED- as Normie via API', async () => {
 
   const { data } = action;
 
-  expect(data?.result?.user).toHaveLength(0);
+  expect(data?.result?.user).toHaveLength(1);
+  expect(data?.errors).toHaveLength(0);
 });
 
 /**
  * ============================================================
  */
-test('user update owned should be -DENIED- as Normie via API', async () => {
+test('user update owned should be +ALLOWED+ as Admy via API', async () => {
   const userActive = selectors.selectActive(clientStore.getState(), userKey);
 
   const action = await clientStore.dispatch(
@@ -241,16 +240,16 @@ test('user update owned should be -DENIED- as Normie via API', async () => {
   const { data } = action;
   const users = data?.result?.user as User[];
 
-  expect(users).not.toBeDefined();
+  expect(users).toBeDefined();
 
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Updates Disallowed');
+  expect(data?.result?.user).toHaveLength(1);
+  expect(data?.errors).toHaveLength(0);
 });
 
 /**
  * ============================================================
  */
-test('user update global should be -DENIED- as Normie via API', async () => {
+test('user update global should be +ALLOWED+ as Admy via API', async () => {
   const userMod = samples.users[1];
   const action = await clientStore.dispatch(
     apiCrud.endpoints.update.initiate({
@@ -268,16 +267,16 @@ test('user update global should be -DENIED- as Normie via API', async () => {
   const { data } = action;
   const users = data?.result?.user as User[];
 
-  expect(users).not.toBeDefined();
+  expect(users).toBeDefined();
 
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Updates Disallowed');
+  expect(data?.result?.user).toHaveLength(1);
+  expect(data?.errors).toHaveLength(0);
 });
 
 /**
  * ============================================================
  */
-test('user delete owned should be -DENIED- as Normie via API', async () => {
+test('user delete owned should be +ALLOWED+ as Admy via API', async () => {
   const userMod = samples.users[1];
   const action = await clientStore.dispatch(
     apiCrud.endpoints.delete.initiate({
@@ -290,8 +289,8 @@ test('user delete owned should be -DENIED- as Normie via API', async () => {
   const { data } = action;
   const userIds = data?.result?.user as string[];
 
-  expect(userIds).not.toBeDefined();
+  expect(userIds).toBeDefined();
 
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Deletes Disallowed');
+  expect(userIds).toHaveLength(1);
+  expect(data?.errors).toHaveLength(0);
 });

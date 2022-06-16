@@ -79,16 +79,6 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Create);
 
       /**
-       * Add errors for denied keys.
-       */
-      if (deniedKeys.length > 0) {
-        output.json.errors.push({
-          title: 'Creations Disallowed',
-          message: `Missing permissions to create documents in the collections: ${deniedKeys.join(', ')}`,
-        });
-      }
-
-      /**
        * Clean entity properties that should not be updated.
        */
       const stateUpdateSanatizd = Object.keys(stateAuthwalled).reduce<State>((state, key) => {
@@ -111,7 +101,18 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return validateOutput;
       }
 
-      const result = database.create(body);
+      const result = database.create(stateFinal);
+
+      /**
+       * Add errors for denied keys.
+       */
+      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
+      if (deniedKeysActual.length > 0) {
+        output.json.errors.push({
+          title: 'Creations Disallowed',
+          message: `Missing permissions to create documents in the collections: ${deniedKeysActual.join(', ')}`,
+        });
+      }
 
       output.json.result = result;
 
@@ -150,16 +151,6 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Read);
 
       /**
-       * Add errors for denied keys.
-       */
-      if (deniedKeys.length > 0) {
-        output.json.errors.push({
-          title: 'Readings Disallowed',
-          message: `Missing permissions to read from the collections: ${deniedKeys.join(', ')}`,
-        });
-      }
-
-      /**
        * finalized state to process
        */
       const stateFinal = jwt.adm === true ? body : stateAuthwalled;
@@ -175,9 +166,20 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Create an authentication scope object from the array of grant objects.
        */
-      const authScope = jwt.adm === true ? undefined : authScopeCreate(grants);
+      const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Read);
 
       const result = database.read(stateFinal, authScope, jwt.sub);
+
+      /**
+       * Add errors for denied keys.
+       */
+      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
+      if (deniedKeysActual.length > 0) {
+        output.json.errors.push({
+          title: 'Readings Disallowed',
+          message: `Missing permissions to read from the collections: ${deniedKeysActual.join(', ')}`,
+        });
+      }
 
       output.json.result = result;
 
@@ -216,16 +218,6 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Update);
 
       /**
-       * Add errors for denied keys.
-       */
-      if (deniedKeys.length > 0) {
-        output.json.errors.push({
-          title: 'Updates Disallowed',
-          message: `Missing permissions to update the collections: ${deniedKeys.join(', ')}`,
-        });
-      }
-
-      /**
        * Clean entity properties that should not be updated.
        */
       const stateUpdateSanatizd = Object.keys(stateAuthwalled).reduce<State>((state, key) => {
@@ -246,7 +238,23 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return validateOutput;
       }
 
-      const result = database.update(stateFinal);
+      /**
+       * Create an authentication scope object from the array of grant objects.
+       */
+      const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Update);
+
+      const result = database.update(stateFinal, authScope, jwt.sub);
+
+      /**
+       * Add errors for denied keys.
+       */
+      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
+      if (deniedKeysActual.length > 0) {
+        output.json.errors.push({
+          title: 'Updates Disallowed',
+          message: `Missing permissions to update the collections: ${deniedKeysActual.join(', ')}`,
+        });
+      }
 
       output.json.result = result;
 
@@ -285,16 +293,6 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Delete);
 
       /**
-       * Add errors for denied keys.
-       */
-      if (deniedKeys.length > 0) {
-        output.json.errors.push({
-          title: 'Deletes Disallowed',
-          message: `Missing permissions to delete from the collections: ${deniedKeys.join(', ')}`,
-        });
-      }
-
-      /**
        * finalized state to process
        */
       const stateFinal = jwt.adm === true ? body : stateAuthwalled;
@@ -308,6 +306,17 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       }
 
       const result = database.delete(stateFinal);
+
+      /**
+       * Add errors for denied keys.
+       */
+      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
+      if (deniedKeysActual.length > 0) {
+        output.json.errors.push({
+          title: 'Deletes Disallowed',
+          message: `Missing permissions to delete from the collections: ${deniedKeysActual.join(', ')}`,
+        });
+      }
 
       output.json.result = result;
 
