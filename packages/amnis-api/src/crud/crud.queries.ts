@@ -26,7 +26,7 @@ export function apiCrudQueries(): ApiCrudQueries {
     }),
     delete: (payload: Remove) => ({
       url: 'delete',
-      method: 'delete',
+      method: 'post',
       body: payload,
     }),
   };

@@ -1,5 +1,6 @@
 import coreSchema from '@amnis/core/core.schema.json';
 import { coreActions, Session } from '@amnis/core/index';
+import { samples } from '@amnis/core/test/samples';
 
 import {
   apiAuth,
@@ -137,7 +138,7 @@ test('client store should contain own user data.', async () => {
 /**
  * ============================================================
  */
-test('should NOT be able to create user data as Normie', async () => {
+test('user create global should be -DENIED- as Normie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       user: [
@@ -151,18 +152,21 @@ test('should NOT be able to create user data as Normie', async () => {
     }),
   );
 
-  console.log(action?.data);
-  if (action?.error && 'data' in action.error) {
-    console.log(action?.error?.data?.errors);
-  }
-
   expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+  const users = data?.result?.user as User[];
+
+  expect(users).not.toBeDefined();
+
+  expect(data?.errors).toHaveLength(1);
+  expect(data?.errors[0].title).toEqual('Creations Disallowed');
 });
 
 /**
  * ============================================================
  */
-test('should read OWNED user data through API as Normie', async () => {
+test('user read owned should be +ALLOWED+ as Normie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
@@ -185,7 +189,7 @@ test('should read OWNED user data through API as Normie', async () => {
 /**
  * ============================================================
  */
-test('should NOT read other user data as Normie', async () => {
+test('user read global should be -DENIED- as Normie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.read.initiate({
       user: {
@@ -208,7 +212,7 @@ test('should NOT read other user data as Normie', async () => {
 /**
  * ============================================================
  */
-test('should NOT be able to update user data as Normie', async () => {
+test('user update owned should be -DENIED- as Normie via API', async () => {
   const userActive = selectors.selectActive(clientStore.getState(), userKey);
 
   const action = await clientStore.dispatch(
@@ -216,7 +220,6 @@ test('should NOT be able to update user data as Normie', async () => {
       user: [
         {
           $id: userActive?.$id,
-          $roles: [],
           email: 'something.else@amnis.dev',
         },
       ],
@@ -232,4 +235,53 @@ test('should NOT be able to update user data as Normie', async () => {
 
   expect(data?.errors).toHaveLength(1);
   expect(data?.errors[0].title).toEqual('Updates Disallowed');
+});
+
+/**
+ * ============================================================
+ */
+test('user update global should be -DENIED- as Normie via API', async () => {
+  const userMod = samples.users[1];
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.update.initiate({
+      user: [
+        {
+          $id: userMod.$id,
+          email: 'something.else@amnis.dev',
+        },
+      ],
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+  const users = data?.result?.user as User[];
+
+  expect(users).not.toBeDefined();
+
+  expect(data?.errors).toHaveLength(1);
+  expect(data?.errors[0].title).toEqual('Updates Disallowed');
+});
+
+/**
+ * ============================================================
+ */
+test('user delete owned should be -DENIED- as Normie via API', async () => {
+  const userMod = samples.users[1];
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.delete.initiate({
+      user: [userMod.$id],
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+  const userIds = data?.result?.user as string[];
+
+  expect(userIds).not.toBeDefined();
+
+  expect(data?.errors).toHaveLength(1);
+  expect(data?.errors[0].title).toEqual('Deletes Disallowed');
 });

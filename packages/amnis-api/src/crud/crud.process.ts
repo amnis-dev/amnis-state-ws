@@ -76,7 +76,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Update);
+      const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Create);
 
       /**
        * Add errors for denied keys.
@@ -84,7 +84,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       if (deniedKeys.length > 0) {
         output.json.errors.push({
           title: 'Creations Disallowed',
-          message: `Missing permissions to create the collections: ${deniedKeys.join(', ')}`,
+          message: `Missing permissions to create documents in the collections: ${deniedKeys.join(', ')}`,
         });
       }
 
@@ -155,7 +155,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       if (deniedKeys.length > 0) {
         output.json.errors.push({
           title: 'Readings Disallowed',
-          message: `Missing permissions to read the collections: ${deniedKeys.join(', ')}`,
+          message: `Missing permissions to read from the collections: ${deniedKeys.join(', ')}`,
         });
       }
 
@@ -261,17 +261,53 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      */
     delete: (input) => {
       const output = apiOutput();
-      const { body } = input;
+      const { body, jwt } = input;
+
+      if (!jwt) {
+        output.status = 401; // 401 Unauthorized
+        output.json.errors = [
+          {
+            title: 'Unauthorized',
+            message: 'Access token is invalid.',
+          },
+        ];
+        return output;
+      }
+
+      /**
+       * Get array of grants from roles in the service store.
+       */
+      const grants = selectors.selectRoleGrants(store.getState(), jwt.roles);
+
+      /**
+       * Filter non-granted slices on the body (which is a State type).
+       */
+      const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Delete);
+
+      /**
+       * Add errors for denied keys.
+       */
+      if (deniedKeys.length > 0) {
+        output.json.errors.push({
+          title: 'Deletes Disallowed',
+          message: `Missing permissions to delete from the collections: ${deniedKeys.join(', ')}`,
+        });
+      }
+
+      /**
+       * finalized state to process
+       */
+      const stateFinal = jwt.adm === true ? body : stateAuthwalled;
 
       /**
        * Validate the body.
        */
-      const validateOutput = apiValidate(validator.delete, body);
+      const validateOutput = apiValidate(validator.delete, stateFinal);
       if (validateOutput) {
         return validateOutput;
       }
 
-      const result = database.delete(body);
+      const result = database.delete(stateFinal);
 
       output.json.result = result;
 
