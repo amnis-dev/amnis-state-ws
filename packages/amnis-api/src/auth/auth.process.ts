@@ -1,7 +1,10 @@
 import Ajv from 'ajv';
 import type {
   JWTDecoded,
-  ResultCreate, CoreSession, Token, CoreUser,
+  ResultCreate,
+  CoreSession,
+  Token,
+  CoreUser,
 } from '@amnis/core/types';
 import {
   AUTH_SESSION_LIFE,
@@ -11,29 +14,23 @@ import {
   sessionEncode,
 } from '@amnis/auth/index';
 import {
-  dateNumeric, entityCreate, tokenStringify,
+  dateNumeric,
+  entityCreate,
+  tokenStringify,
 } from '@amnis/core/core';
 import authSchema from './auth.schema.json';
-import { apiOutput, apiValidate } from '../api';
+import {
+  apiOutput,
+  apiValidate,
+} from '../api';
 import type {
-  ApiAuthProcesses, ApiAuthProcessesParams,
+  ApiAuthProcesses,
+  ApiAuthProcessesParams,
 } from './auth.types';
-
-/**
- * Helper function to produce an invalid login error.
- */
-function badCredentials() {
-  const output = apiOutput();
-
-  output.status = 401; // 401 Unauthorized
-  output.json.errors = [
-    {
-      title: 'Bad Credentials',
-      message: 'Username or password is incorrect.',
-    },
-  ];
-  return output;
-}
+import {
+  outputBadCredentials,
+  profileFetch,
+} from './auth.protility';
 
 /**
  * Sets up authentication processes.
@@ -59,9 +56,12 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         return validateOutput;
       }
 
+      /**
+       * CHECK CREDENTIALS
+       */
       const { username, password } = body;
 
-      const results = database.read({
+      const resultsUser = database.read({
         user: {
           $query: {
             name: {
@@ -71,24 +71,30 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         },
       }, { user: 'global' });
 
-      if (!results.user?.length) {
-        return badCredentials();
+      if (!resultsUser.user?.length) {
+        return outputBadCredentials();
       }
 
-      const user = { ...results.user[0] } as CoreUser;
+      const user = { ...resultsUser.user[0] } as CoreUser;
 
       if (user.password === null) {
-        return badCredentials();
+        return outputBadCredentials();
       }
 
       const same = passCompareSync(password, user.password);
 
       if (same === false) {
-        return badCredentials();
+        return outputBadCredentials();
       }
 
       const tokenExpires = dateNumeric(AUTH_TOKEN_LIFE);
       const sessionExpires = dateNumeric(AUTH_SESSION_LIFE);
+
+      /**
+       * SUCCESSFUL LOGIN
+       */
+
+      const profile = profileFetch(database, user);
 
       /**
        * Create the JWT data.
@@ -124,13 +130,14 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         ],
         name: user.name,
         org: user.organization || '',
-        avatar: null,
+        avatar: profile.avatar || null,
       });
 
       user.password = null;
 
       output.json.result = {
         user: [user],
+        profile: [profile],
         session: [session],
       };
 

@@ -21,7 +21,7 @@ export function apiExtraReducers<E extends Entity>(
       /**
        * Set the active session/user.
        */
-      if (['user', 'session'].includes(key) && !!result[key].length) {
+      if (['user', 'session', 'profile'].includes(key) && !!result[key].length) {
         state.active = result[key][0].$id;
       }
     }

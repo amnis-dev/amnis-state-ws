@@ -1,5 +1,5 @@
 import coreSchema from '@amnis/core/core.schema.json';
-import { coreActions, CoreSession } from '@amnis/core/index';
+import { coreActions } from '@amnis/core/index';
 import { samples } from '@amnis/core/test/samples';
 
 import {
@@ -20,6 +20,10 @@ import {
   userKey,
   userSelectors,
   User,
+  profileSelectors,
+  Profile,
+  profileKey,
+  Session,
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
@@ -126,7 +130,7 @@ test('client store should contain session.', async () => {
 
   expect(sessions).toHaveLength(1);
 
-  const session = selectors.selectActive<CoreSession>(clientStore.getState(), sessionKey);
+  const session = selectors.selectActive<Session>(clientStore.getState(), sessionKey);
 
   expect(session).not.toBeUndefined();
 });
@@ -139,9 +143,29 @@ test('client store should contain own user data.', async () => {
 
   expect(users).toHaveLength(1);
 
-  const user = selectors.selectActive<CoreSession>(clientStore.getState(), userKey);
+  const user = selectors.selectActive<User>(clientStore.getState(), userKey);
 
   expect(user).not.toBeUndefined();
+});
+
+/**
+ * ============================================================
+ */
+test('client store should contain own profile data.', async () => {
+  const profiles = profileSelectors.selectAll(clientStore.getState());
+
+  expect(profiles).toHaveLength(1);
+
+  const profile = selectors.selectActive<Profile>(clientStore.getState(), profileKey);
+
+  expect(profile).not.toBeUndefined();
+
+  expect(profile).toEqual(
+    expect.objectContaining({
+      $user: expect.any(String),
+      nameDisplay: expect.any(String),
+    }),
+  );
 });
 
 /**
