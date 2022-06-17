@@ -19,7 +19,7 @@ import {
   sessionSelectors,
   userKey,
   userSelectors,
-  CoreUser,
+  User,
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
@@ -238,7 +238,7 @@ test('user update owned should be +ALLOWED+ as Admy via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as CoreUser[];
+  const users = data?.result?.user as User[];
 
   expect(users).toBeDefined();
 
@@ -265,7 +265,7 @@ test('user update global should be +ALLOWED+ as Admy via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as CoreUser[];
+  const users = data?.result?.user as User[];
 
   expect(users).toBeDefined();
 

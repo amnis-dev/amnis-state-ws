@@ -19,7 +19,7 @@ import {
   sessionSelectors,
   userKey,
   userSelectors,
-  CoreUser,
+  User,
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
@@ -164,7 +164,7 @@ test('user create global should be -DENIED- as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as CoreUser[];
+  const users = data?.result?.user as User[];
 
   expect(users).not.toBeDefined();
 
@@ -239,7 +239,7 @@ test('user update owned should be -DENIED- as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as CoreUser[];
+  const users = data?.result?.user as User[];
 
   expect(users).not.toBeDefined();
 
@@ -266,7 +266,7 @@ test('user update global should be -DENIED- as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as CoreUser[];
+  const users = data?.result?.user as User[];
 
   expect(users).not.toBeDefined();
 
