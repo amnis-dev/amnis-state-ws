@@ -27,7 +27,7 @@ test('should not generically create a new user with mismatched keys', () => {
   const action = coreActions.create({
     [`not_${userKey}`]: [
       {
-        displayName: 'eCrow',
+        name: 'eCrow',
         $roles: [],
       },
     ],
@@ -47,7 +47,7 @@ test('should handle generically creating a new user', () => {
   const action = coreActions.create({
     [userKey]: [
       {
-        displayName: 'eCrow',
+        name: 'eCrow',
         $roles: [],
       },
     ],
@@ -59,7 +59,7 @@ test('should handle generically creating a new user', () => {
 
   expect(entities[0]).toEqual(expect.objectContaining({
     $id: expect.any(String),
-    displayName: expect.any(String),
+    name: expect.any(String),
     $roles: expect.any(Array),
   }));
 });

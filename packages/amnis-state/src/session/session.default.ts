@@ -7,7 +7,7 @@ export const sessionDefault: Session = entityCreate<Session>(sessionKey, {
   exp: dateNumeric(),
   admin: false,
   tokens: [],
-  displayName: 'Unknown Session Holder',
+  name: 'Unknown Session Holder',
   org: '',
   avatar: null,
 });

@@ -36,7 +36,7 @@ export interface Session extends Entity {
   /**
    * Display name.
    */
-  displayName: string;
+  name: string;
 
   /**
    * Organization.

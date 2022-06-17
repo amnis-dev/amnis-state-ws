@@ -19,3 +19,20 @@ typeSchemaFiles.forEach((filePath) => {
   }).createSchema('*');
   fse.writeJSONSync(`${dir}/${prefix}.schema.json`, schema, { spaces: 2 });
 });
+
+const stateSchemaFiles = glob.sync('./packages/amnis-state/**/*.types.ts', {
+  nodir: true,
+  ignore: './**/node_modules/**',
+});
+
+stateSchemaFiles.forEach((filePath) => {
+  const dir = path.dirname(filePath);
+  const prefix = path.basename(filePath).split('.')[0];
+  const schema = createGenerator({
+    schemaId: prefix,
+    path: filePath,
+    tsconfig: 'tsconfig.json',
+    type: prefix.charAt(0).toUpperCase() + prefix.slice(1),
+  }).createSchema('*');
+  fse.writeJSONSync(`${dir}/${prefix}.schema.json`, schema, { spaces: 2 });
+});

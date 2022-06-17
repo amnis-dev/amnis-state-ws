@@ -22,6 +22,12 @@
           "items": {
             "$ref": "#/definitions/EntityCreate%3CSession%3E"
           }
+        },
+        "profile": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CProfile%3E"
+          }
         }
       },
       "additionalProperties": false
@@ -238,7 +244,7 @@
           },
           "description": "Tokens this session possesses"
         },
-        "displayName": {
+        "name": {
           "type": "string",
           "description": "Display name."
         },
@@ -262,8 +268,8 @@
         "$subject",
         "admin",
         "avatar",
-        "displayName",
         "exp",
+        "name",
         "org",
         "tokens"
       ],
@@ -299,7 +305,7 @@
           },
           "description": "Tokens this session possesses"
         },
-        "displayName": {
+        "name": {
           "type": "string",
           "description": "Display name."
         },
@@ -324,7 +330,7 @@
         "exp",
         "admin",
         "tokens",
-        "displayName",
+        "name",
         "org",
         "avatar"
       ],
@@ -342,6 +348,85 @@
     "SURL": {
       "type": "string",
       "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    },
+    "EntityCreate<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name",
+          "title": "name-family"
+        },
+        "birthDate": {
+          "type": "string",
+          "description": "Date of birth."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar image"
+        }
+      },
+      "required": [
+        "$user",
+        "nameDisplay"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Profile>": {
+      "$ref": "#/definitions/EntityOmit%3CProfile%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name",
+          "title": "name-family"
+        },
+        "birthDate": {
+          "type": "string",
+          "description": "Date of birth."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar image"
+        }
+      },
+      "required": [
+        "$user",
+        "nameDisplay"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "Reference<User>": {
+      "type": "string",
+      "description": "A id reference to another document."
     },
     "StateUpdate": {
       "type": "object",
@@ -362,6 +447,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityUpdate%3CSession%3E"
+          }
+        },
+        "profile": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CProfile%3E"
           }
         }
       },
@@ -529,7 +620,7 @@
           },
           "description": "Tokens this session possesses"
         },
-        "displayName": {
+        "name": {
           "type": "string",
           "description": "Display name."
         },
@@ -577,7 +668,7 @@
           },
           "description": "Tokens this session possesses"
         },
-        "displayName": {
+        "name": {
           "type": "string",
           "description": "Display name."
         },
@@ -595,6 +686,69 @@
             }
           ],
           "description": "Avatar image url."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name",
+          "title": "name-family"
+        },
+        "birthDate": {
+          "type": "string",
+          "description": "Date of birth."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar image"
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name",
+          "title": "name-family"
+        },
+        "birthDate": {
+          "type": "string",
+          "description": "Date of birth."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar image"
         }
       },
       "additionalProperties": false,

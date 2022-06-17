@@ -1,13 +1,42 @@
-import type { Entity, Meta } from '@amnis/core/types';
+import type {
+  Entity, Meta, Reference, SURL,
+} from '@amnis/core/types';
+import { User } from '../user';
 
 /**
  * Profile entity
  */
 export interface Profile extends Entity {
   /**
-   * Properties for profile.
+   * User this profile is associated with.
    */
-  myProperty: string;
+  $user: Reference<User>;
+
+  /**
+   * Display name for the profile.
+   */
+  nameDisplay: string;
+
+  /**
+   * Given/First name
+   */
+  nameGiven?: string;
+
+  /**
+   * Family/Last name
+   * @title name-family
+   */
+  nameFamily?: string;
+
+  /**
+   * Date of birth.
+   */
+  birthDate?: string;
+
+  /**
+   * Avatar image
+   */
+  avatar?: SURL;
 }
 
 /**

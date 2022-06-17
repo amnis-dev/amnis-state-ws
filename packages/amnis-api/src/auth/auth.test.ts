@@ -65,7 +65,7 @@ test('auth should successfully login with valid credentials.', () => {
   expect(session).toEqual(
     expect.objectContaining({
       $subject: user?.$id,
-      displayName: user?.name,
+      name: user?.name,
     }),
   );
 

@@ -34,7 +34,7 @@ const session: Session = entityCreate('session', {
   tokens: [
     tokenStringify(token),
   ],
-  displayName: '',
+  name: '',
   org: '',
   avatar: surl('https://amnis.dev/avatar.png'),
 });

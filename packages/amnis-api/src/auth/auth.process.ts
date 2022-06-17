@@ -122,7 +122,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         tokens: [
           tokenStringify(tokenAccess),
         ],
-        displayName: user.name,
+        name: user.name,
         org: user.organization || '',
         avatar: null,
       });
