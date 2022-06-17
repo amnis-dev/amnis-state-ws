@@ -4,6 +4,7 @@ import {
 import type {
   CoreRole,
   CoreUser,
+  CoreProfile,
 } from '../types';
 import {
   entityCreate,
@@ -22,6 +23,8 @@ const roles: CoreRole[] = [
     color: '#000000',
     grants: [
       grantStringify({ key: 'user', scope: 'owned', task: task(0, 1, 0, 0) }),
+      grantStringify({ key: 'profile', scope: 'owned', task: task(0, 1, 1, 0) }),
+      grantStringify({ key: 'profile', scope: 'global', task: task(0, 1, 0, 0) }),
     ],
   }),
   entityCreate<CoreRole>('role', {
@@ -31,6 +34,7 @@ const roles: CoreRole[] = [
     grants: [
       grantStringify({ key: 'user', scope: 'owned', task: task(0, 1, 1, 0) }),
       grantStringify({ key: 'user', scope: 'global', task: task(0, 1, 0, 0) }),
+      grantStringify({ key: 'profile', scope: 'global', task: task(0, 1, 1, 0) }),
     ],
   }),
   entityCreate<CoreRole>('role', {
@@ -40,6 +44,7 @@ const roles: CoreRole[] = [
     grants: [
       grantStringify({ key: 'user', scope: 'global', task: task(1, 1, 1, 1) }),
       grantStringify({ key: 'role', scope: 'global', task: task(1, 1, 1, 1) }),
+      grantStringify({ key: 'profile', scope: 'global', task: task(1, 1, 1, 1) }),
     ],
   }),
 ];
@@ -68,6 +73,27 @@ const users: CoreUser[] = [
   }, true),
 ];
 
-export const samples = { roles, users };
+const profiles: CoreProfile[] = [
+  entityCreate<CoreProfile>('profile', {
+    $user: users[0].$id,
+    nameDisplay: 'Normie',
+    nameGiven: 'Normal',
+    nameFamily: 'McProfile',
+  }, { $owner: users[0].$id }),
+  entityCreate<CoreProfile>('profile', {
+    $user: users[1].$id,
+    nameDisplay: 'Moddie',
+    nameGiven: 'Moderator',
+    nameFamily: 'McProfile',
+  }, { $owner: users[1].$id }),
+  entityCreate<CoreProfile>('profile', {
+    $user: users[2].$id,
+    nameDisplay: 'Admy',
+    nameGiven: 'Administrator',
+    nameFamily: 'McProfile',
+  }, { $owner: users[2].$id }),
+];
+
+export const samples = { roles, users, profiles };
 
 export default samples;

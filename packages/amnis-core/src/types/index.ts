@@ -5,4 +5,5 @@ export * from './auth.types';
 export * from './token.types';
 export * from './session.types';
 export * from './user.types';
+export * from './profile.types';
 export * from './database.types';

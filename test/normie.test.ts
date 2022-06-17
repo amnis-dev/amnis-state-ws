@@ -1,5 +1,5 @@
 import coreSchema from '@amnis/core/core.schema.json';
-import { coreActions, CoreSession } from '@amnis/core/index';
+import { coreActions, CoreSession, reference } from '@amnis/core/index';
 import { samples } from '@amnis/core/test/samples';
 
 import {
@@ -294,4 +294,60 @@ test('user delete owned should be -DENIED- as Normie via API', async () => {
 
   expect(data?.errors).toHaveLength(1);
   expect(data?.errors[0].title).toEqual('Deletes Disallowed');
+});
+
+/**
+ * ============================================================
+ */
+test('profile create global should be -DENIED- as Normie via API', async () => {
+  const userActive = selectors.selectActive(clientStore.getState(), userKey);
+
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.create.initiate({
+      profile: [
+        {
+          user: userActive?.$id,
+          nameDisplay: 'MyNormieProfile',
+        },
+      ],
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+  const users = data?.result?.user as User[];
+
+  expect(users).not.toBeDefined();
+
+  expect(data?.errors).toHaveLength(1);
+  expect(data?.errors[0].title).toEqual('Creations Disallowed');
+});
+
+/**
+ * ============================================================
+ */
+test('profile update owned should be +ALLOWED+ as Normie via API', async () => {
+  const userActive = selectors.selectActive(clientStore.getState(), userKey);
+
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.create.initiate({
+      profile: [
+        {
+          user: userActive?.$id,
+          nameDisplay: 'MyNormieProfile',
+        },
+      ],
+    }),
+  );
+
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+  const users = data?.result?.user as User[];
+
+  expect(users).not.toBeDefined();
+
+  expect(data?.errors).toHaveLength(1);
+  expect(data?.errors[0].title).toEqual('Creations Disallowed');
 });

@@ -6,6 +6,7 @@ import { selectors } from '@amnis/core/selectors';
 import { authwall, authScopeCreate } from '@amnis/auth/index';
 import { State, Task } from '@amnis/core/types';
 import { entityClean, entityCreate } from '@amnis/core/core';
+import { coreActions } from '@amnis/core/actions';
 import type {
   ApiCrudProcesses,
   ApiCrudProcessesParams,
@@ -115,6 +116,11 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       }
 
       output.json.result = result;
+
+      /**
+       * Update the server store with the creation of the entity.
+       */
+      store.dispatch(coreActions.create(result));
 
       return output;
     },
@@ -258,6 +264,11 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
 
       output.json.result = result;
 
+      /**
+       * Update the server store with possible changes.
+       */
+      store.dispatch(coreActions.update(result));
+
       return output;
     },
 
@@ -319,6 +330,11 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       }
 
       output.json.result = result;
+
+      /**
+       * Remove possible entities from the server store.
+       */
+      store.dispatch(coreActions.delete(result));
 
       return output;
     },

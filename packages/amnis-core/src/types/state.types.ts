@@ -117,4 +117,4 @@ export type ResultUpdate = State<UpdateEntity[]>;
  * A common stateful result from deletions.
  * A state object with delete ids.
  */
-export type ResultDelete = State<string[]>;
+export type ResultDelete = State<Reference[]>;

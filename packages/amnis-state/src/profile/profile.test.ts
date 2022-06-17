@@ -31,6 +31,7 @@ test('should handle creating a new profile', () => {
   expect(entities).toHaveLength(1);
 
   expect(entities[0]).toEqual(expect.objectContaining({
-    myProperty: expect.any(String),
+    $user: expect.any(String),
+    nameDisplay: expect.any(String),
   }));
 });

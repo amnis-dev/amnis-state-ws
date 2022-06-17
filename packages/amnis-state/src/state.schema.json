@@ -353,7 +353,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Reference%3CCoreUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -366,16 +366,31 @@
         },
         "nameFamily": {
           "type": "string",
-          "description": "Family/Last name",
-          "title": "name-family"
+          "description": "Family/Last name"
         },
         "birthDate": {
           "type": "string",
           "description": "Date of birth."
         },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "email": {
+          "type": "string",
+          "description": "Profile's email."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Profiles phone number."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
         "avatar": {
           "$ref": "#/definitions/SURL",
-          "description": "Avatar image"
+          "description": "Avatar string url to an image."
         }
       },
       "required": [
@@ -392,7 +407,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Reference%3CCoreUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -405,16 +420,31 @@
         },
         "nameFamily": {
           "type": "string",
-          "description": "Family/Last name",
-          "title": "name-family"
+          "description": "Family/Last name"
         },
         "birthDate": {
           "type": "string",
           "description": "Date of birth."
         },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "email": {
+          "type": "string",
+          "description": "Profile's email."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Profiles phone number."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
         "avatar": {
           "$ref": "#/definitions/SURL",
-          "description": "Avatar image"
+          "description": "Avatar string url to an image."
         }
       },
       "required": [
@@ -424,7 +454,7 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
-    "Reference<User>": {
+    "Reference<CoreUser>": {
       "type": "string",
       "description": "A id reference to another document."
     },
@@ -695,7 +725,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Reference%3CCoreUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -708,16 +738,31 @@
         },
         "nameFamily": {
           "type": "string",
-          "description": "Family/Last name",
-          "title": "name-family"
+          "description": "Family/Last name"
         },
         "birthDate": {
           "type": "string",
           "description": "Date of birth."
         },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "email": {
+          "type": "string",
+          "description": "Profile's email."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Profiles phone number."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
         "avatar": {
           "$ref": "#/definitions/SURL",
-          "description": "Avatar image"
+          "description": "Avatar string url to an image."
         }
       },
       "description": "Type for an entity update object."
@@ -726,7 +771,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Reference%3CCoreUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -739,16 +784,31 @@
         },
         "nameFamily": {
           "type": "string",
-          "description": "Family/Last name",
-          "title": "name-family"
+          "description": "Family/Last name"
         },
         "birthDate": {
           "type": "string",
           "description": "Date of birth."
         },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "email": {
+          "type": "string",
+          "description": "Profile's email."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Profiles phone number."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
         "avatar": {
           "$ref": "#/definitions/SURL",
-          "description": "Avatar image"
+          "description": "Avatar string url to an image."
         }
       },
       "additionalProperties": false,
