@@ -1,8 +1,8 @@
-import type {
-  User as CoreUser,
-  Meta,
-} from '@amnis/core/index';
+import type { CoreUser, Meta } from '@amnis/core/index';
 
+/**
+ * User information.
+ */
 export type User = CoreUser;
 
 /**

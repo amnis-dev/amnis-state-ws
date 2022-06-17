@@ -1,5 +1,5 @@
 import coreSchema from '@amnis/core/core.schema.json';
-import { coreActions, Session } from '@amnis/core/index';
+import { coreActions, CoreSession } from '@amnis/core/index';
 import { samples } from '@amnis/core/test/samples';
 
 import {
@@ -19,7 +19,7 @@ import {
   sessionSelectors,
   userKey,
   userSelectors,
-  User,
+  CoreUser,
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
@@ -126,7 +126,7 @@ test('client store should contain session.', async () => {
 
   expect(sessions).toHaveLength(1);
 
-  const session = selectors.selectActive<Session>(clientStore.getState(), sessionKey);
+  const session = selectors.selectActive<CoreSession>(clientStore.getState(), sessionKey);
 
   expect(session).not.toBeUndefined();
 });
@@ -139,7 +139,7 @@ test('client store should contain own user data.', async () => {
 
   expect(users).toHaveLength(1);
 
-  const user = selectors.selectActive<Session>(clientStore.getState(), userKey);
+  const user = selectors.selectActive<CoreSession>(clientStore.getState(), userKey);
 
   expect(user).not.toBeUndefined();
 });
@@ -164,7 +164,7 @@ test('user create global should be -DENIED- as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as User[];
+  const users = data?.result?.user as CoreUser[];
 
   expect(users).not.toBeDefined();
 
@@ -239,7 +239,7 @@ test('user update owned should be -DENIED- as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as User[];
+  const users = data?.result?.user as CoreUser[];
 
   expect(users).not.toBeDefined();
 
@@ -266,7 +266,7 @@ test('user update global should be -DENIED- as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as User[];
+  const users = data?.result?.user as CoreUser[];
 
   expect(users).not.toBeDefined();
 

@@ -42,7 +42,7 @@ export interface ApiJSON<T = any> {
   result?: T;
 
   /**
-   * Session expiration date-time.
+   * CoreSession expiration date-time.
    */
   expire?: DateJSON;
 }

@@ -1,0 +1,242 @@
+{
+  "$id": "state-session",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Session": {
+      "$ref": "#/definitions/CoreSession",
+      "description": "Session entity"
+    },
+    "CoreSession": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        },
+        "$subject": {
+          "$ref": "#/definitions/Reference",
+          "description": "Subject of the session. Typically a user id."
+        },
+        "iat": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Possible \"Issued At\" property when decoding."
+        },
+        "exp": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Expiration date (numeric)."
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "Flag that determines if this is an administrative session."
+        },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TokenString"
+          },
+          "description": "Tokens this session possesses"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name."
+        },
+        "org": {
+          "type": "string",
+          "description": "Organization."
+        },
+        "avatar": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SURL"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Avatar image url."
+        }
+      },
+      "required": [
+        "$creator",
+        "$id",
+        "$owner",
+        "$subject",
+        "$updaters",
+        "admin",
+        "avatar",
+        "committed",
+        "created",
+        "delete",
+        "exp",
+        "name",
+        "org",
+        "tokens",
+        "updated"
+      ],
+      "additionalProperties": false,
+      "description": "A session object. For stateless servers, it is recommended to store session data in *SECURE* HTTP cookies only."
+    },
+    "Entity": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        }
+      },
+      "required": [
+        "$id",
+        "created",
+        "updated",
+        "committed",
+        "delete",
+        "$owner",
+        "$creator",
+        "$updaters"
+      ],
+      "additionalProperties": false,
+      "description": "A common entity object. Entity's are serializable (JSON) objects that can be committed to NoSQL Databases."
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "DateNumeric": {
+      "type": "number",
+      "description": "A string that represents a JSON Date."
+    },
+    "TokenString": {
+      "type": "string",
+      "description": "String representation of a token that contains an encoded jwt."
+    },
+    "SURL": {
+      "type": "string",
+      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    },
+    "SessionMeta": {
+      "$ref": "#/definitions/Meta%3CSession%3E",
+      "description": "Session collection meta data."
+    },
+    "Meta<Session>": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Reference%3CSession%3E"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The entity id referencing the active entity."
+        },
+        "focused": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Reference%3CSession%3E"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The id representing a focused entity."
+        },
+        "selection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CSession%3E"
+          },
+          "description": "List of ids considered to be selected."
+        }
+      },
+      "required": [
+        "active",
+        "focused",
+        "selection"
+      ],
+      "additionalProperties": false,
+      "description": "Meta information for an entity collection."
+    },
+    "Reference<Session>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    }
+  }
+}

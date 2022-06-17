@@ -1,0 +1,208 @@
+{
+  "$id": "state-role",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Role": {
+      "$ref": "#/definitions/CoreRole",
+      "description": "Role entity"
+    },
+    "CoreRole": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the license."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the license."
+        },
+        "color": {
+          "type": "string",
+          "description": "Color that represents this role."
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GrantString"
+          },
+          "description": "Permissions this license grants."
+        }
+      },
+      "required": [
+        "$creator",
+        "$id",
+        "$owner",
+        "$updaters",
+        "color",
+        "committed",
+        "created",
+        "delete",
+        "description",
+        "grants",
+        "name",
+        "updated"
+      ],
+      "additionalProperties": false,
+      "description": "A license is a defined object for granting multiple permissions to perform actions or selections."
+    },
+    "Entity": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        }
+      },
+      "required": [
+        "$id",
+        "created",
+        "updated",
+        "committed",
+        "delete",
+        "$owner",
+        "$creator",
+        "$updaters"
+      ],
+      "additionalProperties": false,
+      "description": "A common entity object. Entity's are serializable (JSON) objects that can be committed to NoSQL Databases."
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "GrantString": {
+      "type": "string",
+      "description": "CoreRole grant string."
+    },
+    "RoleMeta": {
+      "$ref": "#/definitions/Meta%3CRole%3E",
+      "description": "Role collection meta data."
+    },
+    "Meta<Role>": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Reference%3CRole%3E"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The entity id referencing the active entity."
+        },
+        "focused": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Reference%3CRole%3E"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The id representing a focused entity."
+        },
+        "selection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CRole%3E"
+          },
+          "description": "List of ids considered to be selected."
+        }
+      },
+      "required": [
+        "active",
+        "focused",
+        "selection"
+      ],
+      "additionalProperties": false,
+      "description": "Meta information for an entity collection."
+    },
+    "Reference<Role>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    }
+  }
+}

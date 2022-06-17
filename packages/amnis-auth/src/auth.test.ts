@@ -1,7 +1,7 @@
 import {
   dateNumeric, entityCreate, reference, surl, tokenStringify,
 } from '@amnis/core/core';
-import { Session, JWTDecoded, Token } from '@amnis/core/types';
+import { CoreSession, JWTDecoded, Token } from '@amnis/core/types';
 import { passCompare, passCreate } from './pass';
 import { sessionCookieCreate, sessionCookieParse } from './session';
 import { jwtDecode, jwtEncode, jwtVerify } from './token';
@@ -27,7 +27,7 @@ const token: Token = {
   type: 'access',
 };
 
-const session: Session = entityCreate('session', {
+const session: CoreSession = entityCreate('session', {
   $subject: reference('user', '1234'),
   exp: jwtDecoded.exp,
   admin: false,

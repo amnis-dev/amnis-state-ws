@@ -29,7 +29,7 @@ stateSchemaFiles.forEach((filePath) => {
   const dir = path.dirname(filePath);
   const prefix = path.basename(filePath).split('.')[0];
   const schema = createGenerator({
-    schemaId: prefix,
+    schemaId: `state-${prefix}`,
     path: filePath,
     tsconfig: 'tsconfig.json',
     type: prefix.charAt(0).toUpperCase() + prefix.slice(1),

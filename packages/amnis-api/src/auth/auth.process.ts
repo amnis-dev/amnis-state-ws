@@ -1,7 +1,7 @@
 import Ajv from 'ajv';
 import type {
   JWTDecoded,
-  ResultCreate, Session, Token, User,
+  ResultCreate, CoreSession, Token, CoreUser,
 } from '@amnis/core/types';
 import {
   AUTH_SESSION_LIFE,
@@ -75,7 +75,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         return badCredentials();
       }
 
-      const user = { ...results.user[0] } as User;
+      const user = { ...results.user[0] } as CoreUser;
 
       if (user.password === null) {
         return badCredentials();
@@ -115,7 +115,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       /**
        * Create the new user session.
        */
-      const session = entityCreate<Session>('session', {
+      const session = entityCreate<CoreSession>('session', {
         $subject: user.$id,
         exp: sessionExpires,
         admin: false,

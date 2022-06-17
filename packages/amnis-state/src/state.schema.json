@@ -50,7 +50,7 @@
             "string",
             "null"
           ],
-          "description": "User password. A null password means another form of auth must be used.",
+          "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "organization": {
@@ -60,7 +60,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Reference%3CCoreRole%3E"
           },
           "description": "Roles this user has been given."
         },
@@ -103,7 +103,7 @@
             "string",
             "null"
           ],
-          "description": "User password. A null password means another form of auth must be used.",
+          "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "organization": {
@@ -113,7 +113,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Reference%3CCoreRole%3E"
           },
           "description": "Roles this user has been given."
         },
@@ -135,7 +135,7 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
-    "Reference<Role>": {
+    "Reference<CoreRole>": {
       "type": "string",
       "description": "A id reference to another document."
     },
@@ -216,7 +216,7 @@
     },
     "GrantString": {
       "type": "string",
-      "description": "Role grant string."
+      "description": "CoreRole grant string."
     },
     "EntityCreate<Session>": {
       "type": "object",
@@ -476,7 +476,7 @@
             "string",
             "null"
           ],
-          "description": "User password. A null password means another form of auth must be used.",
+          "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "organization": {
@@ -486,7 +486,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Reference%3CCoreRole%3E"
           },
           "description": "Roles this user has been given."
         },
@@ -518,7 +518,7 @@
             "string",
             "null"
           ],
-          "description": "User password. A null password means another form of auth must be used.",
+          "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "organization": {
@@ -528,7 +528,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Reference%3CCoreRole%3E"
           },
           "description": "Roles this user has been given."
         },

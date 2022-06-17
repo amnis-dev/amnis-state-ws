@@ -1,4 +1,4 @@
-import { Role } from './auth.types';
+import { CoreRole } from './auth.types';
 import type { Reference, DateNumeric } from './core.types';
 
 /**
@@ -92,5 +92,5 @@ export interface JWTDecoded {
   /**
    * Scope of permissions (role references).
    */
-  roles: Reference<Role>[];
+  roles: Reference<CoreRole>[];
 }

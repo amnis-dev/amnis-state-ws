@@ -2,8 +2,8 @@ import {
   hashSync,
 } from 'bcrypt';
 import type {
-  Role,
-  User,
+  CoreRole,
+  CoreUser,
 } from '../types';
 import {
   entityCreate,
@@ -15,8 +15,8 @@ function passCreateSync(plaintext: string): string {
   return hashSync(plaintext, 8);
 }
 
-const roles: Role[] = [
-  entityCreate<Role>('role', {
+const roles: CoreRole[] = [
+  entityCreate<CoreRole>('role', {
     name: 'Base',
     description: 'Most basic role assigned to all registered users.',
     color: '#000000',
@@ -24,7 +24,7 @@ const roles: Role[] = [
       grantStringify({ key: 'user', scope: 'owned', task: task(0, 1, 0, 0) }),
     ],
   }),
-  entityCreate<Role>('role', {
+  entityCreate<CoreRole>('role', {
     name: 'Moderator',
     description: 'A role that allows limited administration.',
     color: '#00cccc',
@@ -33,7 +33,7 @@ const roles: Role[] = [
       grantStringify({ key: 'user', scope: 'global', task: task(0, 1, 0, 0) }),
     ],
   }),
-  entityCreate<Role>('role', {
+  entityCreate<CoreRole>('role', {
     name: 'Administrator',
     description: 'Most permissive role for complete administration.',
     color: '#cc0000',
@@ -44,7 +44,7 @@ const roles: Role[] = [
   }),
 ];
 
-const users: User[] = [
+const users: CoreUser[] = [
   entityCreate('user', {
     name: 'Normie',
     email: 'normy@ecrow.dev',

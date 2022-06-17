@@ -1,4 +1,4 @@
-import { entityCreate, Session, User } from '@amnis/core/index';
+import { entityCreate, CoreSession, CoreUser } from '@amnis/core/index';
 import { passCreateSync } from '@amnis/auth/index';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
@@ -12,7 +12,7 @@ const appStore = storeSetup();
 /**
  * Add a test user to the database.
  */
-const users: User[] = [
+const users: CoreUser[] = [
   entityCreate('user', {
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
@@ -50,8 +50,8 @@ test('auth should successfully login with valid credentials.', () => {
     },
   });
 
-  const user = output.json.result?.user[0] as User;
-  const session = output.json.result?.session[0] as Session;
+  const user = output.json.result?.user[0] as CoreUser;
+  const session = output.json.result?.session[0] as CoreSession;
 
   expect(user).toEqual(
     expect.objectContaining({

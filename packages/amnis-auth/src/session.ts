@@ -1,4 +1,4 @@
-import { Session } from '@amnis/core/types';
+import { CoreSession } from '@amnis/core/types';
 import { serialize, parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import { AUTH_TOKEN_SECRET } from './const';
@@ -9,7 +9,7 @@ const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
 /**
  * Encode a session.
  */
-export function sessionEncode(session: Session, secret = AUTH_TOKEN_SECRET) {
+export function sessionEncode(session: CoreSession, secret = AUTH_TOKEN_SECRET) {
   const sessionToken = jwt.sign(session, secret);
   return sessionToken;
 }
@@ -20,9 +20,9 @@ export function sessionEncode(session: Session, secret = AUTH_TOKEN_SECRET) {
 export function sessionVerify(
   sessionEncoded: string,
   secret = AUTH_TOKEN_SECRET,
-): Session | undefined {
+): CoreSession | undefined {
   try {
-    const decoded = jwt.verify(sessionEncoded, secret) as Session;
+    const decoded = jwt.verify(sessionEncoded, secret) as CoreSession;
 
     return decoded;
   } catch (error) {
@@ -39,7 +39,7 @@ export function sessionVerify(
  * response.setHeader('Set-Cookie', sessionCookie);
  * ```
  */
-export function sessionCookieCreate(session: Session, secret: string) {
+export function sessionCookieCreate(session: CoreSession, secret: string) {
   if (secret.length < 21) {
     throw new Error('Secret not set or strong enough.');
   }
@@ -81,9 +81,9 @@ export function sessionCookieRemover() {
 /**
  * Returns the session object from a the 'Set-Cookie` header string.
  */
-export function sessionCookieParse(headerCookie: string, secret: string): Session {
+export function sessionCookieParse(headerCookie: string, secret: string): CoreSession {
   const cookies = parse(headerCookie || '');
-  const session = jwt.verify(cookies[SESSION_COOKIE_NAME], secret) as Session;
+  const session = jwt.verify(cookies[SESSION_COOKIE_NAME], secret) as CoreSession;
 
   return session;
 }
