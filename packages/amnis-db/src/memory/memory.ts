@@ -205,23 +205,41 @@ export const memory: Database = {
    * DELETE
    * ----------------------------------------
    */
-  delete: async (state) => {
+  delete: async (state, scope, subject) => {
     const result: ResultDelete = {};
 
     Object.keys(state).every((sliceKey) => {
+      /**
+       * Ensure this selection is within auth scope.
+       */
+      if (scope && !scope[sliceKey]) {
+        return true;
+      }
+
       if (!storage[sliceKey]) {
         return true;
       }
       const references = state[sliceKey];
 
-      references.forEach((ref) => {
-        if (storage[sliceKey][ref]) {
-          delete storage[sliceKey][ref];
-          if (!result[sliceKey]) {
-            result[sliceKey] = [];
-          }
-          result[sliceKey].push(ref);
+      references.every((ref) => {
+        if (!storage[sliceKey][ref]) {
+          return true;
         }
+        /**
+         * Check to ensure this entity is within the scope.
+         * If the scope is owner only, the entity must have the owner id match the subject.
+         */
+        if (scope && scope[sliceKey] === 'owned' && storage[sliceKey][ref].$owner !== subject) {
+          return false;
+        }
+
+        delete storage[sliceKey][ref];
+        if (!result[sliceKey]) {
+          result[sliceKey] = [];
+        }
+        result[sliceKey].push(ref);
+
+        return true;
       });
 
       return true;
