@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
 import { coreActions } from '@amnis/core/index';
 import { samples } from '@amnis/core/test/samples';
@@ -30,6 +31,23 @@ import stateSchema from '@amnis/state/state.schema.json';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { databaseSetup } from './database';
+
+/**
+ * Utility functions
+ */
+
+function expectDenied(action: any, key: string, errorTitle: string) {
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+
+  const entities = data?.result[key];
+
+  expect(entities).not.toBeDefined();
+
+  expect(data?.errors).toHaveLength(1);
+  expect(data?.errors[0].title).toEqual(errorTitle);
+}
 
 /**
  * Create the server store.
@@ -175,7 +193,7 @@ test('client store should contain own profile data.', async () => {
 test('user create global should be -DENIED- as Normie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
-      user: [
+      [userKey]: [
         {
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
@@ -186,15 +204,7 @@ test('user create global should be -DENIED- as Normie via API', async () => {
     }),
   );
 
-  expect(action.status).toBe('fulfilled');
-
-  const { data } = action;
-  const users = data?.result?.user as User[];
-
-  expect(users).not.toBeDefined();
-
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Creations Disallowed');
+  expectDenied(action, userKey, 'Creations Disallowed');
 });
 
 /**
@@ -252,7 +262,7 @@ test('user update owned should be -DENIED- as Normie via API', async () => {
 
   const action = await clientStore.dispatch(
     apiCrud.endpoints.update.initiate({
-      user: [
+      [userKey]: [
         {
           $id: userActive?.$id,
           email: 'something.else@amnis.dev',
@@ -261,15 +271,7 @@ test('user update owned should be -DENIED- as Normie via API', async () => {
     }),
   );
 
-  expect(action.status).toBe('fulfilled');
-
-  const { data } = action;
-  const users = data?.result?.user as User[];
-
-  expect(users).not.toBeDefined();
-
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Updates Disallowed');
+  expectDenied(action, userKey, 'Updates Disallowed');
 });
 
 /**
@@ -279,7 +281,7 @@ test('user update global should be -DENIED- as Normie via API', async () => {
   const userMod = samples.users[1];
   const action = await clientStore.dispatch(
     apiCrud.endpoints.update.initiate({
-      user: [
+      [userKey]: [
         {
           $id: userMod.$id,
           email: 'something.else@amnis.dev',
@@ -288,15 +290,7 @@ test('user update global should be -DENIED- as Normie via API', async () => {
     }),
   );
 
-  expect(action.status).toBe('fulfilled');
-
-  const { data } = action;
-  const users = data?.result?.user as User[];
-
-  expect(users).not.toBeDefined();
-
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Updates Disallowed');
+  expectDenied(action, userKey, 'Updates Disallowed');
 });
 
 /**
@@ -306,19 +300,11 @@ test('user delete owned should be -DENIED- as Normie via API', async () => {
   const userMod = samples.users[1];
   const action = await clientStore.dispatch(
     apiCrud.endpoints.delete.initiate({
-      user: [userMod.$id],
+      [userKey]: [userMod.$id],
     }),
   );
 
-  expect(action.status).toBe('fulfilled');
-
-  const { data } = action;
-  const userIds = data?.result?.user as string[];
-
-  expect(userIds).not.toBeDefined();
-
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Deletes Disallowed');
+  expectDenied(action, userKey, 'Deletes Disallowed');
 });
 
 /**
@@ -329,7 +315,7 @@ test('profile create global should be -DENIED- as Normie via API', async () => {
 
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
-      profile: [
+      [profileKey]: [
         {
           user: userActive?.$id,
           nameDisplay: 'MyNormieProfile',
@@ -338,29 +324,21 @@ test('profile create global should be -DENIED- as Normie via API', async () => {
     }),
   );
 
-  expect(action.status).toBe('fulfilled');
-
-  const { data } = action;
-  const users = data?.result?.user as User[];
-
-  expect(users).not.toBeDefined();
-
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Creations Disallowed');
+  expectDenied(action, profileKey, 'Creations Disallowed');
 });
 
 /**
  * ============================================================
  */
 test('profile update owned should be +ALLOWED+ as Normie via API', async () => {
-  const userActive = selectors.selectActive(clientStore.getState(), userKey);
+  const profileActive = selectors.selectActive(clientStore.getState(), profileKey);
 
   const action = await clientStore.dispatch(
-    apiCrud.endpoints.create.initiate({
-      profile: [
+    apiCrud.endpoints.update.initiate({
+      [profileKey]: [
         {
-          user: userActive?.$id,
-          nameDisplay: 'MyNormieProfile',
+          $id: profileActive?.$id,
+          nameDisplay: 'New Display Name',
         },
       ],
     }),
@@ -369,10 +347,11 @@ test('profile update owned should be +ALLOWED+ as Normie via API', async () => {
   expect(action.status).toBe('fulfilled');
 
   const { data } = action;
-  const users = data?.result?.user as User[];
+  const profiles = data?.result?.profile;
 
-  expect(users).not.toBeDefined();
+  expect(profiles).toHaveLength(1);
 
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual('Creations Disallowed');
+  const profile = profiles && profiles[0] as Profile;
+
+  expect(profile?.nameDisplay).toEqual('New Display Name');
 });
