@@ -46,7 +46,7 @@ export const memory: Database = {
    * CREATE
    * ----------------------------------------
    */
-  create(state) {
+  create: async (state) => {
     const result: ResultCreate = {};
 
     Object.keys(state).every((sliceKey) => {
@@ -82,7 +82,7 @@ export const memory: Database = {
    * READ
    * ----------------------------------------
    */
-  read(select, scope, subject) {
+  read: async (select, scope, subject) => {
     const result: ResultRead = {};
 
     Object.keys(select).every((selectKey) => {
@@ -150,7 +150,7 @@ export const memory: Database = {
    * UPDATE
    * ----------------------------------------
    */
-  update(state, scope, subject) {
+  update: async (state, scope, subject) => {
     const result: ResultUpdate = {};
 
     Object.keys(state).every((sliceKey) => {
@@ -205,7 +205,7 @@ export const memory: Database = {
    * DELETE
    * ----------------------------------------
    */
-  delete(state) {
+  delete: async (state) => {
     const result: ResultDelete = {};
 
     Object.keys(state).every((sliceKey) => {

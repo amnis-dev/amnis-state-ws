@@ -28,6 +28,7 @@ import {
 
 import stateSchema from '@amnis/state/state.schema.json';
 import { passCreateSync } from '@amnis/auth/pass';
+import { memory } from '@amnis/db/memory';
 import { databaseSetup } from './database';
 
 /**
@@ -37,37 +38,25 @@ import { databaseSetup } from './database';
 const serverStore = storeSetup();
 
 /**
- * Create the client store.
- * This is a simulation of data that will be stored into the client state.
- */
+  * Create the client store.
+  * This is a simulation of data that will be stored into the client state.
+  */
 const clientStore = storeSetup();
 
 /**
- * Create the test database with pre-intantiated data.
- */
-const database = databaseSetup();
-
-/**
- * Fetch roles from the database and populate the server store.
- */
-serverStore.dispatch(coreActions.create(database.read({
-  role: {},
-}, { role: 'global' })));
-
-/**
- * Setup the server processes for the Auth operations
- */
+  * Setup the server processes for the Auth operations
+  */
 const authHandlers = apiAuthProcesses({
   store: serverStore,
-  database,
+  database: memory,
 });
 
 /**
- * Setup the server processes for CRUD operations.
- */
+  * Setup the server processes for CRUD operations.
+  */
 const crudHanders = apiCrudProcesses({
   store: serverStore,
-  database,
+  database: memory,
   schemas: [coreSchema, stateSchema],
   definitions: {
     create: 'state#/definitions/StateCreate',
@@ -78,27 +67,39 @@ const crudHanders = apiCrudProcesses({
 });
 
 /**
- * Mock the Auth API server for the tests.
- */
+  * Mock the Auth API server for the tests.
+  */
 const mockAuthHandlers = apiMockGenerateHandlers(
   authHandlers,
   apiAuthUrl,
 );
 
 /**
- * Mock the CRUD API server for the tests.
- */
+  * Mock the CRUD API server for the tests.
+  */
 const mockCrudHandlers = apiMockGenerateHandlers(
   crudHanders,
   apiCrudUrl,
 );
 
 /**
- * Create a single mock service with the combined handlers.
- */
+  * Create a single mock service with the combined handlers.
+  */
 const mockServer = apiMockServer([...mockAuthHandlers, ...mockCrudHandlers]);
 
-beforeAll(() => {
+beforeAll(async () => {
+  /**
+    * Create the test database with pre-intantiated data.
+    */
+  await databaseSetup(memory);
+
+  /**
+    * Fetch roles from the database and populate the server store.
+    */
+  serverStore.dispatch(coreActions.create(await memory.read({
+    role: {},
+  }, { role: 'global' })));
+
   mockServer.listen();
 });
 afterEach(() => {

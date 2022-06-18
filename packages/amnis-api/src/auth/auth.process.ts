@@ -47,7 +47,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
     /**
      * API Handler for a typical username and password login attempt.
      */
-    login: (input) => {
+    login: async (input) => {
       const output = apiOutput<ResultCreate>();
       const { body } = input;
 
@@ -61,7 +61,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
        */
       const { username, password } = body;
 
-      const resultsUser = database.read({
+      const resultsUser = await database.read({
         user: {
           $query: {
             name: {
@@ -94,7 +94,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
        * SUCCESSFUL LOGIN
        */
 
-      const profile = profileFetch(database, user);
+      const profile = await profileFetch(database, user);
 
       /**
        * Create the JWT data.
@@ -150,7 +150,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
     /**
      * API handler for creating new data in storage.
      */
-    authorize: (input) => {
+    authorize: async (input) => {
       const output = apiOutput();
       const { body } = input;
 

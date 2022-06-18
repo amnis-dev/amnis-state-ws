@@ -1,18 +1,16 @@
 // import { reference, entityCreate } from '@amnis/core/core';
 import { samples } from '@amnis/core/test/samples';
-import { memory } from '@amnis/db/memory';
+import { Database } from '@amnis/core/types';
 import {
   profileKey, roleKey, userKey,
 } from '@amnis/state/index';
 
-export function databaseSetup() {
-  memory.create({
+export async function databaseSetup(database: Database) {
+  await database.create({
     [roleKey]: samples.roles,
     [userKey]: samples.users,
     [profileKey]: samples.profiles,
   });
-
-  return memory;
 }
 
 export default databaseSetup;

@@ -44,8 +44,8 @@ const processes = apiAuthProcesses({
 /**
  * ============================================================
  */
-test('auth should successfully login with valid credentials.', () => {
-  const output = processes.login({
+test('auth should successfully login with valid credentials.', async () => {
+  const output = await processes.login({
     body: {
       username: 'ExampleUser',
       password: 'passwd1',
@@ -85,8 +85,8 @@ test('auth should successfully login with valid credentials.', () => {
 /**
  * ============================================================
  */
-test('auth should fail login with invalid credentials.', () => {
-  const output = processes.login({
+test('auth should fail login with invalid credentials.', async () => {
+  const output = await processes.login({
     body: {
       username: 'ExampleUser',
       password: 'passwd2',

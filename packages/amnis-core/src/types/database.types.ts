@@ -24,21 +24,21 @@ export interface Database {
   /**
    * Method for creating new records in the database.
    */
-  create: (state: Insert, scope?: AuthScope, subject?: Reference) => ResultCreate;
+  create: (state: Insert, scope?: AuthScope, subject?: Reference) => Promise<ResultCreate>;
 
   /**
    * Method for updating records in the database.
    */
-  update: (state: Modify, scope?: AuthScope, subject?: Reference) => ResultUpdate;
+  update: (state: Modify, scope?: AuthScope, subject?: Reference) => Promise<ResultUpdate>;
 
   /**
    * Method to delete records in the database.
    * Shouldn't actually delete records, but mark them as deleted instead.
    */
-  delete: (references: Remove, scope?: AuthScope, subject?: Reference) => ResultDelete;
+  delete: (references: Remove, scope?: AuthScope, subject?: Reference) => Promise<ResultDelete>;
 
   /**
    * Selects data from the database determined by the select query.
    */
-  read: (select: Select, scope?: AuthScope, subject?: Reference) => ResultRead;
+  read: (select: Select, scope?: AuthScope, subject?: Reference) => Promise<ResultRead>;
 }

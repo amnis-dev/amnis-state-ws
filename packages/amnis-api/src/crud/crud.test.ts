@@ -46,7 +46,7 @@ afterEach(() => memoryClear());
 /**
  * ============================================================
  */
-test('Handler should create new entities.', () => {
+test('Handler should create new entities.', async () => {
   const input: ApiInput = {
     body: {
       [bookKey]: books,
@@ -54,7 +54,7 @@ test('Handler should create new entities.', () => {
     jwt,
   };
 
-  const output = processes.create(input);
+  const output = await processes.create(input);
 
   expect(output.json.result).toEqual({ [bookKey]: books });
 });
@@ -62,7 +62,7 @@ test('Handler should create new entities.', () => {
 /**
  * ============================================================
  */
-test('Handler should create entities that do not validate against the schema.', () => {
+test('Handler should create entities that do not validate against the schema.', async () => {
   const input: ApiInput = {
     body: {
       [bookKey]: [
@@ -75,7 +75,7 @@ test('Handler should create entities that do not validate against the schema.', 
     jwt,
   };
 
-  const output = processes.create(input);
+  const output = await processes.create(input);
 
   expect(output.json.errors).toHaveLength(1);
   expect(output.json.errors[0].title).toEqual('Validation Error');
@@ -85,7 +85,7 @@ test('Handler should create entities that do not validate against the schema.', 
 /**
  * ============================================================
  */
-test('Handler should NOT create existing entities.', () => {
+test('Handler should NOT create existing entities.', async () => {
   const input: ApiInput = {
     body: {
       [bookKey]: books,
@@ -93,8 +93,8 @@ test('Handler should NOT create existing entities.', () => {
     jwt,
   };
 
-  processes.create(input);
-  const output = processes.create(input);
+  await processes.create(input);
+  const output = await processes.create(input);
 
   expect(output.json).toEqual({
     errors: [],
@@ -105,15 +105,15 @@ test('Handler should NOT create existing entities.', () => {
 /**
  * ============================================================
  */
-test('Handler should read entities.', () => {
-  processes.create({
+test('Handler should read entities.', async () => {
+  await processes.create({
     body: {
       [bookKey]: books,
     },
     jwt,
   });
 
-  const output = processes.read({
+  const output = await processes.read({
     body: {
       [bookKey]: {
         $query: {
@@ -137,15 +137,15 @@ test('Handler should read entities.', () => {
 /**
  * ============================================================
  */
-test('Handler should NOT read entities that do not exist.', () => {
-  processes.create({
+test('Handler should NOT read entities that do not exist.', async () => {
+  await processes.create({
     body: {
       [bookKey]: books,
     },
     jwt,
   });
 
-  const output = processes.read({
+  const output = await processes.read({
     body: {
       [bookKey]: {
         $query: {
@@ -169,15 +169,15 @@ test('Handler should NOT read entities that do not exist.', () => {
 /**
  * ============================================================
  */
-test('Handler should be able to update existing entities.', () => {
-  processes.create({
+test('Handler should be able to update existing entities.', async () => {
+  await processes.create({
     body: {
       [bookKey]: books,
     },
     jwt,
   });
 
-  const result = processes.update({
+  const result = await processes.update({
     body: {
       [bookKey]: [
         {

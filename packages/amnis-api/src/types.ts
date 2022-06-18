@@ -86,7 +86,7 @@ export interface ApiQueries {
  */
 export type ApiProcess<Body = any, Result = any> = (
   input: ApiInput<Body>
-) => ApiOutput<Result>
+) => Promise<ApiOutput<Result>>
 
 /**
  * API object containing response handlers.

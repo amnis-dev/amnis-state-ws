@@ -54,7 +54,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      * API handler for creating new data in storage.
      * ----------------------------------------
      */
-    create: (input) => {
+    create: async (input) => {
       const output = apiOutput();
       const { body, jwt } = input;
 
@@ -102,7 +102,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return validateOutput;
       }
 
-      const result = database.create(stateFinal);
+      const result = await database.create(stateFinal);
 
       /**
        * Add errors for denied keys.
@@ -131,7 +131,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      * API handler for reading data from storage.
      * ----------------------------------------
      */
-    read: (input) => {
+    read: async (input) => {
       const output = apiOutput();
       const { body, jwt } = input;
 
@@ -174,7 +174,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        */
       const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Read);
 
-      const result = database.read(stateFinal, authScope, jwt.sub);
+      const result = await database.read(stateFinal, authScope, jwt.sub);
 
       /**
        * Add errors for denied keys.
@@ -198,7 +198,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      * API handler for updating data in storage.
      * ----------------------------------------
      */
-    update: (input) => {
+    update: async (input) => {
       const output = apiOutput();
       const { body, jwt } = input;
 
@@ -249,7 +249,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        */
       const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Update);
 
-      const result = database.update(stateFinal, authScope, jwt.sub);
+      const result = await database.update(stateFinal, authScope, jwt.sub);
 
       /**
        * Add errors for denied keys.
@@ -278,7 +278,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
      * API handler for deleting data in storage. (Actually: only marks data as deleted)
      * ----------------------------------------
      */
-    delete: (input) => {
+    delete: async (input) => {
       const output = apiOutput();
       const { body, jwt } = input;
 
@@ -316,7 +316,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return validateOutput;
       }
 
-      const result = database.delete(stateFinal);
+      const result = await database.delete(stateFinal);
 
       /**
        * Add errors for denied keys.

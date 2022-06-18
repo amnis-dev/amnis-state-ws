@@ -28,6 +28,7 @@ import {
 
 import stateSchema from '@amnis/state/state.schema.json';
 import { passCreateSync } from '@amnis/auth/pass';
+import { memory } from '@amnis/db/memory';
 import { databaseSetup } from './database';
 
 /**
@@ -43,23 +44,11 @@ const serverStore = storeSetup();
 const clientStore = storeSetup();
 
 /**
- * Create the test database with pre-intantiated data.
- */
-const database = databaseSetup();
-
-/**
- * Fetch roles from the database and populate the server store.
- */
-serverStore.dispatch(coreActions.create(database.read({
-  role: {},
-}, { role: 'global' })));
-
-/**
  * Setup the server processes for the Auth operations
  */
 const authHandlers = apiAuthProcesses({
   store: serverStore,
-  database,
+  database: memory,
 });
 
 /**
@@ -67,7 +56,7 @@ const authHandlers = apiAuthProcesses({
  */
 const crudHanders = apiCrudProcesses({
   store: serverStore,
-  database,
+  database: memory,
   schemas: [coreSchema, stateSchema],
   definitions: {
     create: 'state#/definitions/StateCreate',
@@ -98,7 +87,19 @@ const mockCrudHandlers = apiMockGenerateHandlers(
  */
 const mockServer = apiMockServer([...mockAuthHandlers, ...mockCrudHandlers]);
 
-beforeAll(() => {
+beforeAll(async () => {
+  /**
+   * Create the test database with pre-intantiated data.
+   */
+  await databaseSetup(memory);
+
+  /**
+   * Fetch roles from the database and populate the server store.
+   */
+  serverStore.dispatch(coreActions.create(await memory.read({
+    role: {},
+  }, { role: 'global' })));
+
   mockServer.listen();
 });
 afterEach(() => {

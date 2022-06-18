@@ -11,7 +11,7 @@ export function apiMockGenerateHandlers(
   const mockHandlers: RestHandler[] = Object.keys(processes).map((key) => (
     rest.post<ApiInput['body'], never, ApiOutput['json']>(
       `${baseUrl}${key}`,
-      (req, res, ctx) => {
+      async (req, res, ctx) => {
         const { body } = req;
 
         /**
@@ -28,7 +28,7 @@ export function apiMockGenerateHandlers(
         /**
          * Call the api process.
          */
-        const output = processes[key](input);
+        const output = await processes[key](input);
 
         /**
          * Set the response cookies based on the output cookies array.

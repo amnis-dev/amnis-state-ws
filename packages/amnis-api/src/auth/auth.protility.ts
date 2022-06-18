@@ -23,8 +23,8 @@ export function outputBadCredentials() {
 /**
  * Fetch a profile. Create a new one if it doesn't exist.
  */
-export function profileFetch(database: Database, user: CoreUser): CoreProfile {
-  const results = database.read({
+export async function profileFetch(database: Database, user: CoreUser): Promise<CoreProfile> {
+  const results = await database.read({
     profile: {
       $query: {
         $user: {
