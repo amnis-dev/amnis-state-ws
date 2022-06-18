@@ -26,9 +26,14 @@ export interface CoreUser extends Entity {
   password: string | null;
 
   /**
-   * Organization this order belongs to.
+   * The domain this uer belongs to.
    */
-  organization?: string;
+  domain?: string;
+
+  /**
+   * If this is an administrative account.
+   */
+  admin?: boolean;
 
   /**
    * Roles this user has been given.

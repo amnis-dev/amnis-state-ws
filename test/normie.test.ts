@@ -355,3 +355,21 @@ test('profile update owned should be +ALLOWED+ as Normie via API', async () => {
 
   expect(profile?.nameDisplay).toEqual('New Display Name');
 });
+
+/**
+ * ============================================================
+ */
+test('profile update global should be -DENIED- as Normie via API', async () => {
+  const action = await clientStore.dispatch(
+    apiCrud.endpoints.update.initiate({
+      [profileKey]: [
+        {
+          $id: samples.profiles[1].$id,
+          nameDisplay: 'Another Display Name',
+        },
+      ],
+    }),
+  );
+
+  expectDenied(action, profileKey, 'Updates Disallowed');
+});

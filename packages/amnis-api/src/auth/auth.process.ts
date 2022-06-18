@@ -1,23 +1,10 @@
 import Ajv from 'ajv';
 import type {
-  JWTDecoded,
-  ResultCreate,
-  CoreSession,
-  Token,
   CoreUser,
 } from '@amnis/core/types';
 import {
-  AUTH_SESSION_LIFE,
-  AUTH_TOKEN_LIFE,
-  jwtEncode,
-  passCompareSync,
-  sessionEncode,
+  passCompare,
 } from '@amnis/auth/index';
-import {
-  dateNumeric,
-  entityCreate,
-  tokenStringify,
-} from '@amnis/core/core';
 import authSchema from './auth.schema.json';
 import {
   apiOutput,
@@ -28,8 +15,8 @@ import type {
   ApiAuthProcessesParams,
 } from './auth.types';
 import {
+  loginSuccessProcess,
   outputBadCredentials,
-  profileFetch,
 } from './auth.protility';
 
 /**
@@ -48,7 +35,6 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
      * API Handler for a typical username and password login attempt.
      */
     login: async (input) => {
-      const output = apiOutput<ResultCreate>();
       const { body } = input;
 
       const validateOutput = apiValidate(validators.login, body);
@@ -81,71 +67,19 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         return outputBadCredentials();
       }
 
-      const same = passCompareSync(password, user.password);
+      const same = await passCompare(password, user.password);
 
       if (same === false) {
         return outputBadCredentials();
       }
 
-      const tokenExpires = dateNumeric(AUTH_TOKEN_LIFE);
-      const sessionExpires = dateNumeric(AUTH_SESSION_LIFE);
-
       /**
        * SUCCESSFUL LOGIN
        */
 
-      const profile = await profileFetch(database, user);
+      const successOutput = await loginSuccessProcess(database, user);
 
-      /**
-       * Create the JWT data.
-       */
-      const jwtDecoded: JWTDecoded = {
-        iss: '',
-        sub: user.$id,
-        exp: tokenExpires,
-        typ: 'access',
-        roles: user.$roles,
-      };
-
-      /**
-       * Create the token container.
-       * This is so we have ensured data about our JWT.
-       */
-      const tokenAccess: Token = {
-        api: 'core',
-        exp: tokenExpires,
-        jwt: jwtEncode(jwtDecoded),
-        type: 'access',
-      };
-
-      /**
-       * Create the new user session.
-       */
-      const session = entityCreate<CoreSession>('session', {
-        $subject: user.$id,
-        exp: sessionExpires,
-        admin: false,
-        tokens: [
-          tokenStringify(tokenAccess),
-        ],
-        name: user.name,
-        org: user.organization || '',
-        avatar: profile.avatar || null,
-      });
-
-      user.password = null;
-
-      output.json.result = {
-        user: [user],
-        profile: [profile],
-        session: [session],
-      };
-
-      output.cookies = {
-        session: sessionEncode(session),
-      };
-
-      return output;
+      return successOutput;
     },
     /**
      * API handler for creating new data in storage.

@@ -18,7 +18,10 @@ import {
   TokenType,
   JWTEncoded,
   Task,
+  SliceKey,
 } from './types';
+
+const idDefault = nanoid();
 
 /**
  * Function for no operation.
@@ -29,6 +32,11 @@ export const noop = () => { /** No operation. */ };
  * Create a reference to another type.
  */
 export const reference = <T>(key: string, id: string) => `${key}:${id}` as Reference<T>;
+
+/**
+ * Create a slice key.
+ */
+export const sliceKey = (key: string) => key as SliceKey;
 
 /**
  * Creates a string URL (aka SURL).
@@ -93,6 +101,7 @@ export const entityCreate = <E extends Entity>(
   entity: EntityExtension<E>,
   set?: Partial<Entity> | boolean,
 ): E => {
+  const systemKey = 'system';
   const id = `${key}:${nanoid()}` as Reference;
   const now = dateJSON();
   const base: Entity = {
@@ -100,8 +109,8 @@ export const entityCreate = <E extends Entity>(
     created: now,
     updated: now,
     delete: false,
-    $owner: reference('user', 'system'),
-    $creator: reference('user', 'system'),
+    $owner: reference(systemKey, idDefault),
+    $creator: reference(systemKey, idDefault),
     $updaters: [],
     committed: false,
   };
@@ -145,14 +154,25 @@ const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((key) => 
 /**
  * Cleans any entity keys off for a create or update.
  */
-export function entityClean(entity: Record<string, unknown>) {
-  const cleaned = Object.keys(entity).reduce<Record<string, unknown>>((value, key) => {
-    if (key === '$id' || !entityKeys.includes(key)) {
-      value[key] = entity[key];
+export function entityClean(key: string, entity: Record<string, unknown>) {
+  let errored = false;
+  const cleaned = Object.keys(entity).reduce<Record<string, unknown>>((value, prop) => {
+    if (prop === '$id' || !entityKeys.includes(prop)) {
+      if (prop === '$id') {
+        const [sKey, id] = (entity[prop] as string).split(':');
+        if (sKey === key && id?.length === 21 && /^[A-Za-z0-9_-]*/.test(id)) {
+          value[prop] = entity[prop];
+        } else {
+          errored = true;
+        }
+      } else {
+        value[prop] = entity[prop];
+      }
     }
     return value;
   }, {});
-  return cleaned;
+
+  return errored ? undefined : cleaned;
 }
 
 /**

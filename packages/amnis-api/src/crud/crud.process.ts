@@ -84,8 +84,18 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        */
       const stateUpdateSanatizd = Object.keys(stateAuthwalled).reduce<State>((state, key) => {
         state[key] = stateAuthwalled[key].map(
-          (entity: any) => entityCreate(key, entityClean(entity)),
-        );
+          (entity: any) => {
+            const cleaned = entityClean(key, entity);
+            if (cleaned) {
+              return entityCreate(
+                key,
+                cleaned,
+                { $owner: jwt.sub },
+              );
+            }
+            return undefined;
+          },
+        ).filter((entity: any) => entity !== undefined);
         return state;
       }, {});
 
@@ -227,7 +237,9 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        * Clean entity properties that should not be updated.
        */
       const stateUpdateSanatizd = Object.keys(stateAuthwalled).reduce<State>((state, key) => {
-        state[key] = stateAuthwalled[key].map((entity: any) => entityClean(entity));
+        state[key] = stateAuthwalled[key].map(
+          (entity: any) => entityClean(key, entity),
+        ).filter((entity: any) => entity !== undefined);
         return state;
       }, {});
 
@@ -316,7 +328,12 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return validateOutput;
       }
 
-      const result = await database.delete(stateFinal);
+      /**
+       * Create an authentication scope object from the array of grant objects.
+       */
+      const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Update);
+
+      const result = await database.delete(stateFinal, authScope, jwt.sub);
 
       /**
        * Add errors for denied keys.

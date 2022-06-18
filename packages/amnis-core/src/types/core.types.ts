@@ -2,6 +2,7 @@
  * Unique reference symbols for core types.
  */
 declare const referenceSymbol: unique symbol;
+declare const sliceKeySymbol: unique symbol;
 declare const dateSymbol: unique symbol;
 declare const surlSymbol: unique symbol;
 
@@ -10,6 +11,12 @@ declare const surlSymbol: unique symbol;
    */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type Reference<T = unknown> = string & {[referenceSymbol]: never};
+
+/**
+ * A key string for a Redux slice.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type SliceKey = string & {[sliceKeySymbol]: never};
 
 /**
   * A string that represents a JSON Date.

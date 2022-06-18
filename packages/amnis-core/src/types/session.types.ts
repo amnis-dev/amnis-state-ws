@@ -39,9 +39,9 @@ export interface CoreSession extends Entity {
   name: string;
 
   /**
-   * Organization.
+   * Domain.
    */
-  org: string;
+  dmn: string;
 
   /**
    * Avatar image url.
