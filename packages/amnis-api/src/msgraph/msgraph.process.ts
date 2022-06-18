@@ -8,7 +8,7 @@ export function apiMSGraphProcesses(): ApiMSGraphProcesses {
     /**
      * API process for creating new data in storage.
      */
-    myendpoint: (input) => {
+    myendpoint: async (input) => {
       const { body } = input;
 
       const output = apiOutput();
