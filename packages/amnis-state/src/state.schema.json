@@ -53,9 +53,13 @@
           "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
-        "organization": {
+        "domain": {
           "type": "string",
-          "description": "Organization this order belongs to."
+          "description": "The domain this uer belongs to."
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "If this is an administrative account."
         },
         "$roles": {
           "type": "array",
@@ -106,9 +110,13 @@
           "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
-        "organization": {
+        "domain": {
           "type": "string",
-          "description": "Organization this order belongs to."
+          "description": "The domain this uer belongs to."
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "If this is an administrative account."
         },
         "$roles": {
           "type": "array",
@@ -248,9 +256,9 @@
           "type": "string",
           "description": "Display name."
         },
-        "org": {
+        "dmn": {
           "type": "string",
-          "description": "Organization."
+          "description": "Domain."
         },
         "avatar": {
           "anyOf": [
@@ -268,9 +276,9 @@
         "$subject",
         "admin",
         "avatar",
+        "dmn",
         "exp",
         "name",
-        "org",
         "tokens"
       ],
       "description": "Type for an entity create object."
@@ -309,9 +317,9 @@
           "type": "string",
           "description": "Display name."
         },
-        "org": {
+        "dmn": {
           "type": "string",
-          "description": "Organization."
+          "description": "Domain."
         },
         "avatar": {
           "anyOf": [
@@ -331,7 +339,7 @@
         "admin",
         "tokens",
         "name",
-        "org",
+        "dmn",
         "avatar"
       ],
       "additionalProperties": false,
@@ -509,9 +517,13 @@
           "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
-        "organization": {
+        "domain": {
           "type": "string",
-          "description": "Organization this order belongs to."
+          "description": "The domain this uer belongs to."
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "If this is an administrative account."
         },
         "$roles": {
           "type": "array",
@@ -551,9 +563,13 @@
           "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
-        "organization": {
+        "domain": {
           "type": "string",
-          "description": "Organization this order belongs to."
+          "description": "The domain this uer belongs to."
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "If this is an administrative account."
         },
         "$roles": {
           "type": "array",
@@ -654,9 +670,9 @@
           "type": "string",
           "description": "Display name."
         },
-        "org": {
+        "dmn": {
           "type": "string",
-          "description": "Organization."
+          "description": "Domain."
         },
         "avatar": {
           "anyOf": [
@@ -702,9 +718,9 @@
           "type": "string",
           "description": "Display name."
         },
-        "org": {
+        "dmn": {
           "type": "string",
-          "description": "Organization."
+          "description": "Domain."
         },
         "avatar": {
           "anyOf": [

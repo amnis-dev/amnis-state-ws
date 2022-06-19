@@ -99,7 +99,7 @@ export async function loginSuccessProcess(database: Database, user: CoreUser) {
     tokens: [
       tokenStringify(tokenAccess),
     ],
-    name: user.name,
+    name: profile.nameDisplay,
     dmn: user.domain || '',
     avatar: profile.avatar || null,
   });

@@ -67,9 +67,13 @@
           "description": "CoreUser password. A null password means another form of auth must be used.",
           "default": "null"
         },
-        "organization": {
+        "domain": {
           "type": "string",
-          "description": "Organization this order belongs to."
+          "description": "The domain this uer belongs to."
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "If this is an administrative account."
         },
         "$roles": {
           "type": "array",

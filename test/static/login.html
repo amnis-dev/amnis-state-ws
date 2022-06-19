@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Client for API Tests</h1>
+
+<section>
+  <h2>Username/Password Login</h2>
+
+  <form id="login-form">
+    <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+    <input type="submit" value="Login" id="login-form-submit">
+  </form>
+
+  <p id="login-msg">&nbsp;</p>
+</section>
+
+<section>
+  <h2>OAuth 2.0 Logins</h2>
+
+  <button id="login-msgraph" style="background-color: #f65314; color: #ffffff">
+    Login with Microsoft Account
+  </button>
+  <button id="login-twitter" style="background-color: #08a0e9; color: #ffffff">
+    Login with Twitter Account
+  </button>
+</section>
+
+<script src="/loginForm.js" defer></script>
+
+</body>
+</html>

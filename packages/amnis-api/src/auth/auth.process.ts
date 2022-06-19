@@ -1,4 +1,5 @@
 import Ajv from 'ajv';
+import fetch from 'cross-fetch';
 import type {
   CoreUser,
 } from '@amnis/core/types';
@@ -13,6 +14,8 @@ import {
 import type {
   ApiAuthProcesses,
   ApiAuthProcessesParams,
+  ApiAuthMicrosoftUser,
+  ApiAuthTwitterUser,
 } from './auth.types';
 import {
   loginSuccessProcess,
@@ -27,16 +30,23 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
   const ajv = new Ajv({ schemas: [authSchema] });
   const validators = {
     login: ajv.getSchema('auth#/definitions/ApiAuthLoginBody'),
+    platform: ajv.getSchema('auth#/definitions/ApiAuthPlatformBody'),
     authorize: ajv.getSchema('auth#/definitions/ApiAuthAuthorizeBody'),
+  };
+
+  const platformUrls = {
+    microsoft: 'https://graph.microsoft.com/v1.0/me/',
+    twitter: 'https://api.twitter.com/2/users/me',
   };
 
   return {
     /**
+     * ================================================================================
+     * LOGIN
      * API Handler for a typical username and password login attempt.
+     * ----------------------------------------
      */
-    login: async (input) => {
-      const { body } = input;
-
+    login: async ({ body }) => {
       const validateOutput = apiValidate(validators.login, body);
       if (validateOutput) {
         return validateOutput;
@@ -82,7 +92,58 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       return successOutput;
     },
     /**
-     * API handler for creating new data in storage.
+     * ================================================================================
+     * PLATFORM
+     * Authenticates signs in the user with a token from a thrid-party platform.
+     * ----------------------------------------
+     */
+    platform: async ({ body }) => {
+      const validateOutput = apiValidate(validators.platform, body);
+      if (validateOutput) {
+        return validateOutput;
+      }
+
+      const output = apiOutput();
+      const { platform, token } = body;
+
+      console.log('PLATFORM BODY', body);
+
+      switch (platform) {
+        case 'microsoft': {
+          const data = await fetch(platformUrls[platform], {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const user = await data.json() as ApiAuthMicrosoftUser;
+          console.log('MICROSOFT RESULT:', user);
+          return output;
+        }
+        case 'twitter': {
+          const data = await fetch(platformUrls[platform], {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const user = await data.json() as ApiAuthTwitterUser;
+          console.log('TWITTER RESULT:', user);
+          return output;
+        }
+        default:
+          output.json.errors.push({
+            title: 'Unknown Platform',
+            message: `Unable to authenticate with '${platform}' platform.`,
+          });
+          return output;
+      }
+    },
+    /**
+     * ================================================================================
+     * AUTHORIZE
+     * - TODO: Not implemented yet. -
+     * ----------------------------------------
      */
     authorize: async (input) => {
       const output = apiOutput();

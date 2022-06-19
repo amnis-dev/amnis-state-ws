@@ -9,6 +9,9 @@
         "login": {
           "$ref": "#/definitions/ApiAuthLoginBody"
         },
+        "platform": {
+          "$ref": "#/definitions/ApiAuthPlatformBody"
+        },
         "authorize": {
           "$ref": "#/definitions/ApiAuthAuthorizeBody"
         }
@@ -28,6 +31,27 @@
       "required": [
         "username",
         "password"
+      ],
+      "additionalProperties": false,
+      "description": "Payload for a login request."
+    },
+    "ApiAuthPlatformBody": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": [
+            "microsoft",
+            "twitter"
+          ]
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "platform",
+        "token"
       ],
       "additionalProperties": false,
       "description": "Payload for a login request."

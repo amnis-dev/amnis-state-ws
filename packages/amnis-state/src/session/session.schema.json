@@ -76,9 +76,9 @@
           "type": "string",
           "description": "Display name."
         },
-        "org": {
+        "dmn": {
           "type": "string",
-          "description": "Organization."
+          "description": "Domain."
         },
         "avatar": {
           "anyOf": [
@@ -103,9 +103,9 @@
         "committed",
         "created",
         "delete",
+        "dmn",
         "exp",
         "name",
-        "org",
         "tokens",
         "updated"
       ],
