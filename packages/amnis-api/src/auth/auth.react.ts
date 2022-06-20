@@ -9,7 +9,7 @@ import { ApiAuthAuthorizeBody, ApiAuthLoginBody, ApiAuthPlatformBody } from './a
 
 const queries = apiQueries();
 
-export const apiCrud = createApi({
+export const apiAuth = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
     baseUrl: apiAuthUrl,
@@ -40,4 +40,4 @@ export const apiCrud = createApi({
   }),
 });
 
-export default apiCrud;
+export default apiAuth;

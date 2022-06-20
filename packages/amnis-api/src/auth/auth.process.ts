@@ -5,7 +5,7 @@ import type {
 } from '@amnis/core/types';
 import {
   passCompare,
-} from '@amnis/auth/index';
+} from '@amnis/auth/pass';
 import authSchema from './auth.schema.json';
 import {
   apiOutput,
@@ -73,7 +73,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
 
       const user = { ...resultsUser.user[0] } as CoreUser;
 
-      if (user.password === null) {
+      if (user.password === null || user.password.length < 8) {
         return outputBadCredentials();
       }
 

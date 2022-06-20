@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 (() => {
-/**
- * View Elements.
- */
+  /**
+   * View Elements.
+   */
   const loginForm = document.getElementById('login-form');
   const loginButton = document.getElementById('login-form-submit');
   const loginMsg = document.getElementById('login-msg');

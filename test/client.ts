@@ -54,6 +54,11 @@ const port = 3000;
 app.use(morgan('dev'));
 
 /**
+ * Set the view engine to ejs
+ */
+app.set('view engine', 'ejs');
+
+/**
  * Specify a folder to serve static content from.
  */
 app.use(express.static(path.join(__dirname, 'static')));
@@ -77,7 +82,10 @@ app.use(apiInput());
  * Serve the login page as the index.
  */
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/login.html'));
+  res.render(path.join(__dirname, 'static/login'), {
+    microsoftClientId: process.env.MICROSOFT_CLIENT_ID,
+    twitterClientId: process.env.TWITTER_CLIENT_ID,
+  });
 });
 
 /**
@@ -85,6 +93,15 @@ app.get('*', (req, res) => {
  */
 app.post('/auth/login', async (req, res) => {
   const output = await authProcesses.login(req.body);
+
+  res.json(output.json);
+});
+
+/**
+ * Listen for auth platform requests.
+ */
+app.post('/auth/platform', async (req, res) => {
+  const output = await authProcesses.platform(req.body);
 
   res.json(output.json);
 });

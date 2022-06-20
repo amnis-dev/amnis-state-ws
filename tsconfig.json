@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "types": ["node", "jest"],
+    "lib": ["esnext", "dom"],
     "paths": {
       "@amnis/core/*": ["./packages/amnis-core/src/*"],
       "@amnis/db/*": ["./packages/amnis-db/src/*"],

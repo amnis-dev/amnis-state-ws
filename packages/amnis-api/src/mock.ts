@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { authHeader } from '@amnis/auth/index';
+import { authHeader } from '@amnis/auth/header';
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import type { ApiProcesses, ApiInput, ApiOutput } from './types';

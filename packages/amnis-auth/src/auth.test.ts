@@ -3,7 +3,7 @@ import {
 } from '@amnis/core/core';
 import { CoreSession, JWTDecoded, Token } from '@amnis/core/types';
 import { passCompare, passCreate } from './pass';
-import { sessionCookieCreate, sessionCookieParse } from './session';
+import { sessionEncode, sessionVerify } from './session';
 import { jwtDecode, jwtEncode, jwtVerify } from './token';
 
 const SECRET_TEST = 'super-secret-code-123456789';
@@ -35,7 +35,7 @@ const session: CoreSession = entityCreate('session', {
     tokenStringify(token),
   ],
   name: '',
-  org: '',
+  dmn: '',
   avatar: surl('https://amnis.dev/avatar.png'),
 });
 
@@ -127,41 +127,22 @@ test('pass should NOT match with mismatched hashed plaintext.', async () => {
 /**
  * ============================================================
  */
-test('session cookie should be serialized.', () => {
-  const sessionCookie = sessionCookieCreate(session, SECRET_TEST);
+test('session should be encoded.', () => {
+  const encoded = sessionEncode(session, SECRET_TEST);
 
-  expect(sessionCookie).toBeDefined();
+  expect(encoded).toMatch(jwtTokenRegex);
 });
 
 /**
  * ============================================================
  */
-test('session cookie should throw error with weak secret.', () => {
-  expect(() => {
-    sessionCookieCreate(session, '1234');
-  }).toThrowError('Secret not set or strong enough.');
-});
+test('session should be verified.', () => {
+  const encoded = sessionEncode(session, SECRET_TEST);
+  const decoded = sessionVerify(encoded, SECRET_TEST);
 
-/**
- * ============================================================
- */
-test('session cookie should be serialized.', () => {
-  const sessionCookie = sessionCookieCreate(session, SECRET_TEST);
+  const { iat, ...sessionDecoded } = decoded as CoreSession;
 
-  expect(sessionCookie).toBeDefined();
-  expect(typeof sessionCookie === 'string').toBe(true);
-});
-
-/**
- * ============================================================
- */
-test('session cookie should be parsed to session object.', () => {
-  const sessionCookie = sessionCookieCreate(session, SECRET_TEST);
-  const sessionParsed = sessionCookieParse(sessionCookie, SECRET_TEST);
-
-  const { iat } = sessionParsed;
-
-  expect(sessionParsed).toBeDefined();
-  expect(typeof iat === 'number').toBe(true);
-  expect(sessionParsed).toEqual({ ...session, iat });
+  expect(decoded).toBeDefined();
+  expect(iat).toEqual(expect.any(Number));
+  expect(sessionDecoded).toEqual(session);
 });

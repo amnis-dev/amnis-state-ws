@@ -100,7 +100,7 @@ export async function loginSuccessProcess(database: Database, user: CoreUser) {
       tokenStringify(tokenAccess),
     ],
     name: profile.nameDisplay,
-    dmn: user.domain || '',
+    dmn: user.domain || 'core',
     avatar: profile.avatar || null,
   });
 

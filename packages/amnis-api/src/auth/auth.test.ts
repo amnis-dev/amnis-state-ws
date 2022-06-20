@@ -1,7 +1,7 @@
 import {
   entityCreate, CoreSession, CoreUser, CoreProfile,
 } from '@amnis/core/index';
-import { passCreateSync } from '@amnis/auth/index';
+import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
 import { apiAuthProcesses } from './auth.process';

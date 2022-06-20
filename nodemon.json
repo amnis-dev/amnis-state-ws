@@ -1,0 +1,7 @@
+{
+  "exec": "ts-node -P test/tsconfig.json",
+  "watch": ["./test"],
+  "ext": "ts",
+  "ignore": ["./test/static/*"],
+  "delay": 2500
+}
