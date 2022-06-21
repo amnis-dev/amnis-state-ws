@@ -24,6 +24,24 @@ export interface ApiAuthPlatformBody {
 }
 
 /**
+ * Logs in from a third-party using the data from OpenID PKCE Authorization.
+ */
+export interface ApiAuthPkceBody {
+  platform: 'microsoft' | 'twitter',
+  clientId: string;
+  code: string;
+  codeVerifier: string;
+  redirectUri: string;
+}
+
+export interface ApiAuthPkce {
+  clientId: string;
+  code: string;
+  codeVerifier: string;
+  redirectUri: string;
+}
+
+/**
  * Payload for an alternative method of authorization.
  */
 export interface ApiAuthAuthorizeBody {
@@ -37,6 +55,7 @@ export interface ApiAuthAuthorizeBody {
 export interface ApiAuthQueries {
   login: ApiQuery<ApiAuthLoginBody>;
   platform: ApiQuery<ApiAuthPlatformBody>;
+  pkce: ApiQuery<ApiAuthPkceBody>;
   authorize: ApiQuery<ApiAuthAuthorizeBody>;
 }
 
@@ -46,6 +65,7 @@ export interface ApiAuthQueries {
 export interface ApiAuthProcesses extends ApiProcesses {
   login: ApiProcess<ApiAuthLoginBody, ResultCreate>;
   platform: ApiProcess<ApiAuthPlatformBody, ResultCreate>;
+  pkce: ApiProcess<ApiAuthPkceBody>;
   authorize: ApiProcess<ApiAuthAuthorizeBody, ResultCreate>;
 }
 
@@ -61,12 +81,3 @@ export interface ApiAuthProcessesParams {
  * Microsoft Graph User
  */
 export type ApiAuthMicrosoftUser = MSGraph.User;
-
-/**
- * Minimal Twitter user interface.
- */
-export interface ApiAuthTwitterUser {
-  id: string;
-  name: string;
-  username: string;
-}

@@ -6,10 +6,10 @@ import { samples } from '@amnis/core/test/samples';
 import {
   apiAuth,
   apiAuthProcesses,
-  apiAuthUrl,
+  API_AUTH_URL,
   apiCrud,
   apiCrudProcesses,
-  apiCrudUrl,
+  API_CRUD_URL,
 } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
@@ -89,7 +89,7 @@ const crudHanders = apiCrudProcesses({
   */
 const mockAuthHandlers = apiMockGenerateHandlers(
   authHandlers,
-  apiAuthUrl,
+  API_AUTH_URL,
 );
 
 /**
@@ -97,7 +97,7 @@ const mockAuthHandlers = apiMockGenerateHandlers(
   */
 const mockCrudHandlers = apiMockGenerateHandlers(
   crudHanders,
-  apiCrudUrl,
+  API_CRUD_URL,
 );
 
 /**

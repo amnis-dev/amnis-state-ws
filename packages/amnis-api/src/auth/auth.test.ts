@@ -18,6 +18,7 @@ const users: CoreUser[] = [
   entityCreate('user', {
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
+    phone: '',
     password: passCreateSync('passwd1'),
     $roles: [],
     $permits: [],

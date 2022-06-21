@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
-  DateJSON, JWTDecoded,
+  DateJSON, JWTDecoded, Reference,
 } from '@amnis/core/index';
 
 /**
@@ -40,6 +40,11 @@ export interface ApiJSON<T = any> {
    * Result data.
    */
   result?: T;
+
+  /**
+   * Possible id remapping.
+   */
+  remaps?: Record<string, Record<Reference, Reference>>;
 
   /**
    * CoreSession expiration date-time.

@@ -84,4 +84,4 @@ export async function microsoftLogin() {
   window.location.href = authUrl.href;
 }
 
-export default { microsoftLogin };
+export default { microsoftInit, microsoftLogin };

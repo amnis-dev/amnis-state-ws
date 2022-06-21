@@ -9,6 +9,7 @@ export function apiOutput<T = any>(): ApiOutput<T> {
     json: {
       errors: [],
       result: undefined,
+      remaps: undefined,
       expire: undefined,
     },
   };

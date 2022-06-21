@@ -1,8 +1,5 @@
 import Ajv from 'ajv';
 import fetch from 'cross-fetch';
-import type {
-  CoreUser,
-} from '@amnis/core/types';
 import {
   passCompare,
 } from '@amnis/auth/pass';
@@ -15,12 +12,13 @@ import type {
   ApiAuthProcesses,
   ApiAuthProcessesParams,
   ApiAuthMicrosoftUser,
-  ApiAuthTwitterUser,
 } from './auth.types';
 import {
+  userFind,
   loginSuccessProcess,
   outputBadCredentials,
 } from './auth.protility';
+import { authTwitter } from './auth.twitter';
 
 /**
  * Sets up authentication processes.
@@ -57,21 +55,11 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
        */
       const { username, password } = body;
 
-      const resultsUser = await database.read({
-        user: {
-          $query: {
-            name: {
-              $eq: username,
-            },
-          },
-        },
-      }, { user: 'global' });
+      const user = await userFind(database, username);
 
-      if (!resultsUser.user?.length) {
+      if (!user) {
         return outputBadCredentials();
       }
-
-      const user = { ...resultsUser.user[0] } as CoreUser;
 
       if (user.password === null || user.password.length < 8) {
         return outputBadCredentials();
@@ -127,7 +115,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
               Authorization: `Bearer ${token}`,
             },
           });
-          const user = await data.json() as ApiAuthTwitterUser;
+          const user = await data.json();
           console.log('TWITTER RESULT:', user);
           return output;
         }
@@ -135,6 +123,30 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
           output.json.errors.push({
             title: 'Unknown Platform',
             message: `Unable to authenticate with '${platform}' platform.`,
+          });
+          return output;
+      }
+    },
+    /**
+     * ================================================================================
+     * PKCE
+     * Authenticates with OpenID OAuth2.0 PKCE flow after client obtains the authroization.
+     * ----------------------------------------
+     */
+    pkce: async ({ body }) => {
+      const output = apiOutput();
+      const { platform, ...pkceAuth } = body;
+
+      switch (platform) {
+        case 'twitter': {
+          const twitterOutput = await authTwitter(database, pkceAuth);
+          return twitterOutput;
+        }
+        default:
+          output.status = 401; // Unauthorized
+          output.json.errors.push({
+            title: 'Unknown Platform',
+            message: `Could not authenticate using the '${platform}' platform.`,
           });
           return output;
       }

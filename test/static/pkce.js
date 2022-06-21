@@ -2,7 +2,7 @@
 /**
  * Generate a random verifier string.
  */
-window.pkceCreateVerifier = (length = 128) => {
+window.pkceRandomString = (length = 128) => {
   const array = new Uint32Array(length / 2);
   window.crypto.getRandomValues(array);
   return Array.from(array, (dec) => (`0${dec.toString(16)}`).slice(-2)).join('');
@@ -24,10 +24,20 @@ window.sha256 = async (plain) => {
   return base64urlencode(hash);
 };
 
-window.pkceGetVerifier = () => {
+window.pkceGetState = (renew = false) => {
+  const storageState = sessionStorage.getItem('pkceState');
+  if (renew || !storageState || storageState.length < 64) {
+    const newPkceState = pkceRandomString(64);
+    sessionStorage.setItem('pkceState', newPkceState);
+    return newPkceState;
+  }
+  return storageState;
+};
+
+window.pkceGetVerifier = (renew = false) => {
   const storageVerifier = sessionStorage.getItem('pkceVerifier');
-  if (!storageVerifier || storageVerifier.length < 64) {
-    const newPkceVerifier = pkceCreateVerifier();
+  if (renew || !storageVerifier || storageVerifier.length < 64) {
+    const newPkceVerifier = pkceRandomString();
     sessionStorage.setItem('pkceVerifier', newPkceVerifier);
     return newPkceVerifier;
   }

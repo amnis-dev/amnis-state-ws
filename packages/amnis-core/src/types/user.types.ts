@@ -14,9 +14,23 @@ export interface CoreUser extends Entity {
 
   /**
    * Email address
-   * @default ""
    */
-  email: string;
+  email?: string;
+
+  /**
+   * If the user email is verified.
+   */
+  emailVerified?: boolean;
+
+  /**
+   * Phone number
+   */
+  phone?: string;
+
+  /**
+   * If the user phone number is verified.
+   */
+  phoneVerified?: boolean;
 
   /**
    * CoreUser password.

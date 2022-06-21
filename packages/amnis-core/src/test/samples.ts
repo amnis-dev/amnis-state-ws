@@ -53,6 +53,7 @@ const users: CoreUser[] = [
   entityCreate('user', {
     name: 'Normie',
     email: 'normy@ecrow.dev',
+    phone: '',
     password: passCreateSync('passwd1'),
     $roles: [roles[0].$id],
     $permits: [],
@@ -60,6 +61,7 @@ const users: CoreUser[] = [
   entityCreate('user', {
     name: 'Moddie',
     email: 'moddie@ecrow.dev',
+    phone: '',
     password: passCreateSync('passwd2'),
     $roles: [roles[1].$id],
     $permits: [],

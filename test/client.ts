@@ -76,7 +76,7 @@ app.use(cookieParser());
 /**
  * Create middleware to form an api input on the reqest object.
  */
-app.use(apiInput());
+app.use('/auth/', apiInput());
 
 /**
  * Serve the login page as the index.
@@ -92,7 +92,8 @@ app.get('*', (req, res) => {
  * Listen for auth login requests.
  */
 app.post('/auth/login', async (req, res) => {
-  const output = await authProcesses.login(req.body);
+  const input: ApiInput = req.body;
+  const output = await authProcesses.login(input);
 
   res.json(output.json);
 });
@@ -101,7 +102,18 @@ app.post('/auth/login', async (req, res) => {
  * Listen for auth platform requests.
  */
 app.post('/auth/platform', async (req, res) => {
-  const output = await authProcesses.platform(req.body);
+  const input: ApiInput = req.body;
+  const output = await authProcesses.platform(input);
+
+  res.json(output.json);
+});
+
+/**
+ * Destination for Twitter oAuth PKCE redirect
+ */
+app.post('/auth/pkce', async (req, res) => {
+  const input: ApiInput = req.body;
+  const output = await authProcesses.pkce(input);
 
   res.json(output.json);
 });

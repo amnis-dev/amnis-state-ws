@@ -3,9 +3,9 @@ import coreSchema from '@amnis/core/core.schema.json';
 
 import {
   apiAuthProcesses,
-  apiAuthUrl,
+  API_AUTH_URL,
   apiCrudProcesses,
-  apiCrudUrl,
+  API_CRUD_URL,
 } from '@amnis/api/index';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
@@ -45,7 +45,7 @@ export function apiSetup(serverStore: Store) {
    */
   const mockAuthHandlers = apiMockGenerateHandlers(
     authHandlers,
-    apiAuthUrl,
+    API_AUTH_URL,
   );
 
   /**
@@ -53,7 +53,7 @@ export function apiSetup(serverStore: Store) {
    */
   const mockCrudHandlers = apiMockGenerateHandlers(
     crudHanders,
-    apiCrudUrl,
+    API_CRUD_URL,
   );
 
   /**

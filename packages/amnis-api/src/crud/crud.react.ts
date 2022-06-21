@@ -10,7 +10,7 @@ import type {
   State,
 } from '@amnis/core/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { apiCrudUrl } from '../const';
+import { API_CRUD_URL } from '../const';
 import { ApiBaseQueryFn, ApiJSON } from '../types';
 import {
   apiCrudQueries,
@@ -21,7 +21,7 @@ const queries = apiCrudQueries();
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',
   baseQuery: fetchBaseQuery({
-    baseUrl: apiCrudUrl,
+    baseUrl: API_CRUD_URL,
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = selectors.selectToken(getState() as State, 'core', 'access');
 

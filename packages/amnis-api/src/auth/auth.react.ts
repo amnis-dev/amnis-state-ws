@@ -1,18 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ResultCreate } from '@amnis/core/types';
-import { apiAuthUrl } from '../const';
+import { API_AUTH_URL } from '../const';
 import {
   apiQueries,
 } from './auth.queries';
 import { ApiJSON } from '../types';
-import { ApiAuthAuthorizeBody, ApiAuthLoginBody, ApiAuthPlatformBody } from './auth.types';
+import {
+  ApiAuthAuthorizeBody,
+  ApiAuthLoginBody,
+  ApiAuthPkceBody,
+  ApiAuthPlatformBody,
+} from './auth.types';
 
 const queries = apiQueries();
 
 export const apiAuth = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
-    baseUrl: apiAuthUrl,
+    baseUrl: API_AUTH_URL,
   }),
   endpoints: (builder) => ({
 
@@ -28,6 +33,13 @@ export const apiAuth = createApi({
     ApiAuthPlatformBody
     >({
       query: queries.platform,
+    }),
+
+    pkce: builder.query<
+    ApiJSON<ResultCreate>,
+    ApiAuthPkceBody
+    >({
+      query: queries.pkce,
     }),
 
     authorize: builder.query<
