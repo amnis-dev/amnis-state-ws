@@ -17,7 +17,7 @@ export type DatabaseCreateMethod = (
   state: Insert,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<[ResultCreate, ResultReID]>;
+) => Promise<ResultCreate>;
 
 export type DatabaseReadMethod = (
   select: Select,

@@ -1,4 +1,3 @@
-import { reIdentify } from '@amnis/core/core';
 import {
   books, bookKey,
 } from '@amnis/core/test/book.store';
@@ -13,13 +12,12 @@ afterEach(() => memoryClear());
  * ============================================================
  */
 test('memory db should create and store new book entity.', async () => {
-  const [result, reids] = await memory.create({ [bookKey]: [books[0]] });
-  const booksReid = reIdentify(books, reids[bookKey]);
+  const result = await memory.create({ [bookKey]: [books[0]] });
 
   expect(
     result,
   ).toEqual({
-    [bookKey]: [booksReid[0]],
+    [bookKey]: [books[0]],
   });
 });
 
@@ -27,19 +25,18 @@ test('memory db should create and store new book entity.', async () => {
  * ============================================================
  */
 test('memory db should update existing book entity.', async () => {
-  const [createResult, reids] = await memory.create({ [bookKey]: books });
-  const booksReid = reIdentify(books, reids[bookKey]);
+  const result = await memory.create({ [bookKey]: books });
 
   expect(
-    createResult,
+    result,
   ).toEqual({
-    [bookKey]: booksReid,
+    [bookKey]: books,
   });
 
   const updateResult = await memory.update({
     [bookKey]: [
       {
-        $id: booksReid[0].$id,
+        $id: books[0].$id,
         price: 4.50,
       },
     ],
@@ -48,7 +45,7 @@ test('memory db should update existing book entity.', async () => {
   expect(
     updateResult,
   ).toEqual({
-    [bookKey]: [{ ...booksReid[0], price: 4.50 }],
+    [bookKey]: [{ ...books[0], price: 4.50 }],
   });
 });
 
@@ -79,8 +76,7 @@ test('memory db should NOT select book with mismatching title.', async () => {
  * ============================================================
  */
 test('memory db should select book with matching title.', async () => {
-  const [, reids] = await memory.create({ [bookKey]: books });
-  const booksReid = reIdentify(books, reids[bookKey]);
+  await memory.create({ [bookKey]: books });
 
   const result = await memory.read({
     [bookKey]: {
@@ -95,7 +91,7 @@ test('memory db should select book with matching title.', async () => {
   expect(
     result,
   ).toEqual({
-    [bookKey]: [booksReid[0]],
+    [bookKey]: [books[0]],
   });
 });
 
@@ -103,14 +99,13 @@ test('memory db should select book with matching title.', async () => {
  * ============================================================
  */
 test('memory db should delete a book entity by id.', async () => {
-  const [, reids] = await memory.create({ [bookKey]: books });
-  const booksReid = reIdentify(books, reids[bookKey]);
+  await memory.create({ [bookKey]: books });
 
   const resultRead = await memory.read({
     [bookKey]: {
       $query: {
         $id: {
-          $eq: booksReid[0].$id,
+          $eq: books[0].$id,
         },
       },
     },
@@ -119,24 +114,24 @@ test('memory db should delete a book entity by id.', async () => {
   expect(
     resultRead,
   ).toEqual({
-    [bookKey]: [booksReid[0]],
+    [bookKey]: [books[0]],
   });
 
   const result = await memory.delete({
-    [bookKey]: [booksReid[0].$id],
+    [bookKey]: [books[0].$id],
   });
 
   expect(
     result,
   ).toEqual({
-    [bookKey]: [booksReid[0].$id],
+    [bookKey]: [books[0].$id],
   });
 
   const resultRead2 = await memory.read({
     [bookKey]: {
       $query: {
         $id: {
-          $eq: booksReid[0].$id,
+          $eq: books[0].$id,
         },
       },
     },

@@ -4,9 +4,9 @@ import {
 import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
-import { dateNumeric, reference, reIdentify } from '@amnis/core/core';
+import { dateNumeric, reference } from '@amnis/core/core';
 import {
-  JWTDecoded, ResultCreate, ResultReID,
+  JWTDecoded, ResultCreate,
 } from '@amnis/core/types';
 import { apiCrudProcesses } from './crud.process';
 import { ApiInput } from '../types';
@@ -61,11 +61,8 @@ test('Handler should create new entities.', async () => {
   expect(output.json.result).toBeDefined();
 
   const result = output.json.result as ResultCreate;
-  const reids = output.json.reids as ResultReID;
 
-  const booksReid = reIdentify(books, reids[bookKey]);
-
-  expect(result).toEqual({ [bookKey]: booksReid });
+  expect(result).toEqual({ [bookKey]: books });
 });
 
 /**
@@ -95,14 +92,12 @@ test('Handler should create entities that do not validate against the schema.', 
  * ============================================================
  */
 test('Handler should read entities.', async () => {
-  const outputCreate = await processes.create({
+  await processes.create({
     body: {
       [bookKey]: books,
     },
     jwt,
   });
-  const resultReid = outputCreate.json.reids as ResultReID;
-  const booksReid = reIdentify(books, resultReid[bookKey]);
 
   const output = await processes.read({
     body: {
@@ -121,7 +116,7 @@ test('Handler should read entities.', async () => {
     output.json,
   ).toEqual({
     errors: [],
-    result: { [bookKey]: [booksReid[0]] },
+    result: { [bookKey]: [books[0]] },
     reids: {},
   });
 });
@@ -163,20 +158,18 @@ test('Handler should NOT read entities that do not exist.', async () => {
  * ============================================================
  */
 test('Handler should be able to update existing entities.', async () => {
-  const outputCreate = await processes.create({
+  await processes.create({
     body: {
       [bookKey]: books,
     },
     jwt,
   });
-  const resultReid = outputCreate.json.reids as ResultReID;
-  const booksReid = reIdentify(books, resultReid[bookKey]);
 
   const result = await processes.update({
     body: {
       [bookKey]: [
         {
-          $id: booksReid[1].$id,
+          $id: books[1].$id,
           title: 'Magic Tree House',
         },
       ],
@@ -188,7 +181,7 @@ test('Handler should be able to update existing entities.', async () => {
     result.json,
   ).toEqual({
     errors: [],
-    result: { [bookKey]: [{ ...booksReid[1], title: 'Magic Tree House' }] },
+    result: { [bookKey]: [{ ...books[1], title: 'Magic Tree House' }] },
     reids: {},
   });
 });

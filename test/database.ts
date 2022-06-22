@@ -6,7 +6,7 @@ import {
 } from '@amnis/state/index';
 
 export async function databaseSetup(database: Database): Promise<ResultCreate> {
-  const [result] = await database.create({
+  const result = await database.create({
     [roleKey]: samples.roles,
     [userKey]: samples.users,
     [profileKey]: samples.profiles,

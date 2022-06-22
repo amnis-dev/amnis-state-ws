@@ -79,7 +79,7 @@ export const memory: Database = {
       return true;
     });
 
-    return [result, reid];
+    return result;
   },
   /**
    * ================================================================================

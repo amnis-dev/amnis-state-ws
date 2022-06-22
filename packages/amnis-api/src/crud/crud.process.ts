@@ -113,7 +113,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return validateOutput;
       }
 
-      const [result, reids] = await database.create(stateFinal);
+      const result = await database.create(stateFinal);
 
       /**
        * Add errors for denied keys.
@@ -133,7 +133,6 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       }
 
       output.json.result = result;
-      output.json.reids = reids;
 
       /**
        * Update the server store with the creation of the entity.
