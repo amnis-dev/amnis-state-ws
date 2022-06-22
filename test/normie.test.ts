@@ -107,17 +107,14 @@ const mockServer = apiMockServer([...mockAuthHandlers, ...mockCrudHandlers]);
 
 beforeAll(async () => {
   /**
-    * Create the test database with pre-intantiated data.
-    */
-  await databaseSetup(memory);
+   * Create the test database with pre-intantiated data.
+   */
+  const createResult = await databaseSetup(memory);
 
   /**
     * Fetch roles from the database and populate the server store.
     */
-  serverStore.dispatch(coreActions.create(await memory.read({
-    role: {},
-  }, { role: 'global' })));
-
+  serverStore.dispatch(coreActions.create(createResult));
   mockServer.listen();
 });
 afterEach(() => {

@@ -4,8 +4,10 @@ import {
 import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
-import { dateNumeric, reference } from '@amnis/core/core';
-import { JWTDecoded } from '@amnis/core/types';
+import { dateNumeric, reference, reIdentify } from '@amnis/core/core';
+import {
+  JWTDecoded, ResultCreate, ResultReID,
+} from '@amnis/core/types';
 import { apiCrudProcesses } from './crud.process';
 import { ApiInput } from '../types';
 
@@ -56,7 +58,14 @@ test('Handler should create new entities.', async () => {
 
   const output = await processes.create(input);
 
-  expect(output.json.result).toEqual({ [bookKey]: books });
+  expect(output.json.result).toBeDefined();
+
+  const result = output.json.result as ResultCreate;
+  const reids = output.json.reids as ResultReID;
+
+  const booksReid = reIdentify(books, reids[bookKey]);
+
+  expect(result).toEqual({ [bookKey]: booksReid });
 });
 
 /**
@@ -85,33 +94,15 @@ test('Handler should create entities that do not validate against the schema.', 
 /**
  * ============================================================
  */
-test('Handler should NOT create existing entities.', async () => {
-  const input: ApiInput = {
-    body: {
-      [bookKey]: books,
-    },
-    jwt,
-  };
-
-  await processes.create(input);
-  const output = await processes.create(input);
-
-  expect(output.json).toEqual({
-    errors: [],
-    result: {},
-  });
-});
-
-/**
- * ============================================================
- */
 test('Handler should read entities.', async () => {
-  await processes.create({
+  const outputCreate = await processes.create({
     body: {
       [bookKey]: books,
     },
     jwt,
   });
+  const resultReid = outputCreate.json.reids as ResultReID;
+  const booksReid = reIdentify(books, resultReid[bookKey]);
 
   const output = await processes.read({
     body: {
@@ -130,7 +121,8 @@ test('Handler should read entities.', async () => {
     output.json,
   ).toEqual({
     errors: [],
-    result: { [bookKey]: [books[0]] },
+    result: { [bookKey]: [booksReid[0]] },
+    reids: {},
   });
 });
 
@@ -163,6 +155,7 @@ test('Handler should NOT read entities that do not exist.', async () => {
   ).toEqual({
     errors: [],
     result: { [bookKey]: [] },
+    reids: {},
   });
 });
 
@@ -170,18 +163,20 @@ test('Handler should NOT read entities that do not exist.', async () => {
  * ============================================================
  */
 test('Handler should be able to update existing entities.', async () => {
-  await processes.create({
+  const outputCreate = await processes.create({
     body: {
       [bookKey]: books,
     },
     jwt,
   });
+  const resultReid = outputCreate.json.reids as ResultReID;
+  const booksReid = reIdentify(books, resultReid[bookKey]);
 
   const result = await processes.update({
     body: {
       [bookKey]: [
         {
-          $id: books[1].$id,
+          $id: booksReid[1].$id,
           title: 'Magic Tree House',
         },
       ],
@@ -193,6 +188,7 @@ test('Handler should be able to update existing entities.', async () => {
     result.json,
   ).toEqual({
     errors: [],
-    result: { [bookKey]: [{ ...books[1], title: 'Magic Tree House' }] },
+    result: { [bookKey]: [{ ...booksReid[1], title: 'Magic Tree House' }] },
+    reids: {},
   });
 });

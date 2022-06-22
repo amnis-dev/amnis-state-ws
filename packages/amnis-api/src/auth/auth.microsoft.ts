@@ -1,10 +1,12 @@
 import fetch from 'cross-fetch';
+import type MSGraph from '@microsoft/microsoft-graph-types';
 import { dateNumeric } from '@amnis/core/core';
 import {
   Database, JWTEncoded, ResultCreate, Token,
 } from '@amnis/core/types';
+import { jwtDecode } from '@amnis/auth/token';
 import type { ApiAuthPkce } from './auth.types';
-import { API_TWITTER_OAUTH2_URL } from '../const';
+import { API_MICROSOFT_OAUTH2_URL } from '../const';
 import { ApiError, ApiOutput } from '../types';
 import { loginSuccessProcess, userFind } from './auth.protility';
 import { register } from './auth.register';
@@ -16,26 +18,29 @@ import { apiOutput } from '../api';
 interface OAuth2TokenData {
   token_type: string;
   expires_in: number,
+  ext_expires_in: number;
   access_token: JWTEncoded;
+  id_token: JWTEncoded;
   scope: string;
   refresh_token?: JWTEncoded;
-  error?: string,
+  error?: string;
   error_description?: string;
 }
 
 /**
- * Minimal Twitter user interface.
+ * Microsoft Graph User
  */
-export interface TwitterUser {
-  id: string;
+export interface MicrosoftId {
   name: string;
-  username: string;
+  preferred_username: string;
+  oid: string,
+  email: string,
 }
 
-const tokenEndpoint = `${API_TWITTER_OAUTH2_URL}oauth2/token`;
-const userEndpoint = `${API_TWITTER_OAUTH2_URL}users/me`;
+const tokenEndpoint = `${API_MICROSOFT_OAUTH2_URL}token`;
+// const userEndpoint = `${API_MICROSOFT_OAUTH2_URL}users/me`;
 
-export async function authTwitter(
+export async function authMicrosoft(
   database: Database,
   auth: ApiAuthPkce,
 ): Promise<ApiOutput<ResultCreate>> {
@@ -61,7 +66,7 @@ export async function authTwitter(
 
   const tokenData = await tokenResponse.json() as OAuth2TokenData;
 
-  if (tokenData.error || typeof tokenData?.access_token !== 'string') {
+  if (typeof tokenData?.access_token !== 'string' || typeof tokenData?.id_token !== 'string') {
     const error: ApiError = {
       title: 'Invaid Request',
       message: tokenData?.error_description || 'Could not verify OAuth 2.0 authentication.',
@@ -71,21 +76,17 @@ export async function authTwitter(
     return output;
   }
 
+  const microsoftId = jwtDecode(tokenData.id_token) as MicrosoftId;
+
   /**
    * STEP 2
    * Obtain user information from the OAuth endpoint.
    */
-  const userResponse = await fetch(userEndpoint, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${tokenData.access_token}`,
-    },
-  });
-
-  const userPayload = await userResponse.json();
-  const userData = userPayload.data as TwitterUser;
-
-  if (typeof userData.name !== 'string' || typeof userData.id !== 'string') {
+  if (
+    typeof microsoftId.name !== 'string'
+    || typeof microsoftId.preferred_username !== 'string'
+    || typeof microsoftId.oid !== 'string'
+  ) {
     const error: ApiError = {
       title: 'Invaid Request',
       message: tokenData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
@@ -99,7 +100,7 @@ export async function authTwitter(
    * Step 3
    * Find the user or register a new one.
    */
-  const username = `TR#${userData.id}`;
+  const username = `MS#${microsoftId.oid}`;
   const userSearch = await userFind(database, username);
 
   /**
@@ -115,19 +116,19 @@ export async function authTwitter(
    */
   const tokens: Token[] = [
     {
-      api: 'twitter',
+      api: 'microsoft',
       type: 'access',
       exp: dateNumeric(`${tokenData.expires_in}s`),
-      jwt: tokenData.access_token as JWTEncoded,
+      jwt: tokenData.access_token,
     },
   ];
 
   if (tokenData.refresh_token) {
     tokens.push({
-      api: 'twitter',
+      api: 'microsoft',
       type: 'refresh',
       exp: dateNumeric('200d'),
-      jwt: tokenData.refresh_token as JWTEncoded,
+      jwt: tokenData.refresh_token,
     });
   }
 
@@ -136,7 +137,8 @@ export async function authTwitter(
     username,
     {
       tokens,
-      nameDisplay: userData?.name || username,
+      nameDisplay: microsoftId.name || username,
+      email: microsoftId.email,
       createSession: true,
     },
   );
@@ -144,4 +146,4 @@ export async function authTwitter(
   return registrationOutput;
 }
 
-export default { authTwitter };
+export default { authMicrosoft };

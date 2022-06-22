@@ -118,3 +118,10 @@ export type ResultUpdate = State<UpdateEntity[]>;
  * A state object with delete ids.
  */
 export type ResultDelete = State<Reference[]>;
+
+/**
+ * ID Remappings.
+ */
+export type ReID = [Reference, Reference];
+
+export type ResultReID = State<ReID[]>;

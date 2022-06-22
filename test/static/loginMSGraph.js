@@ -7,45 +7,29 @@
   const loginMsg = document.getElementById('login-msg');
 
   const authEndpoint = 'https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize';
-  const tokenEndpoint = 'https://login.microsoftonline.com/consumers/oauth2/v2.0/token';
 
   const currentUrl = new URL(window.location.href);
   const code = currentUrl.searchParams.get('code');
   const authPlatform = window.getAuthPlatform();
 
   if (code && authPlatform === 'microsoft') {
+    window.setAuthPlatform('');
     loginMsg.innerHTML = `SUCCESS: Got ${code} from Microsoft oAuth 2.0 PKCE flow`;
-    const params = new URLSearchParams();
-    params.append('grant_type', 'authorization_code');
-    params.append('client_id', config.microsoftClientId);
-    params.append('code', code);
-    // params.append('scope', 'openid profile email User.Read');
-    params.append('redirect_uri', config.redirectUri);
-    params.append('code_verifier', window.pkceGetVerifier());
 
-    fetch(tokenEndpoint, {
+    fetch('http://localhost:3000/auth/pkce', {
       method: 'post',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: params.toString(),
+      body: JSON.stringify({
+        platform: 'microsoft',
+        clientId: config.microsoftClientId,
+        code,
+        codeVerifier: window.pkceGetVerifier(),
+        redirectUri: config.redirectUri,
+      }),
     }).then((response) => {
-      response.json().then((data) => {
-        fetch('http://localhost:3000/auth/platform', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            platform: 'microsoft',
-            token: data?.access_token,
-          }),
-        }).then(async (result) => {
-          const authData = await result.json();
-          console.log('PLATFORM RESULT:', authData);
-          loginMsg.innerHTML = 'Got a response. See console for results...';
-        });
-      });
+      console.log(response);
     });
   }
 

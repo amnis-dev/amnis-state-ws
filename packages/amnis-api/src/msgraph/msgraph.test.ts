@@ -15,5 +15,6 @@ test('Handler should work.', async () => {
   expect(output.json).toEqual({
     errors: [],
     result: { data: null },
+    reids: {},
   });
 });

@@ -1,4 +1,4 @@
-import type {
+import {
   Entity,
   State,
   Database,
@@ -7,7 +7,10 @@ import type {
   ResultUpdate,
   ResultDelete,
   UpdateEntity,
+  reference,
+  ResultReID,
 } from '@amnis/core/index';
+import { nanoid } from '@reduxjs/toolkit';
 
 /**
  * Storage type.
@@ -48,6 +51,7 @@ export const memory: Database = {
    */
   create: async (state) => {
     const result: ResultCreate = {};
+    const reid: ResultReID = {};
 
     Object.keys(state).every((sliceKey) => {
       const col: Entity[] = state[sliceKey];
@@ -75,7 +79,7 @@ export const memory: Database = {
       return true;
     });
 
-    return result;
+    return [result, reid];
   },
   /**
    * ================================================================================

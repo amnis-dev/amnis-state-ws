@@ -1,4 +1,3 @@
-import type MSGraph from '@microsoft/microsoft-graph-types';
 import type { Store } from '@reduxjs/toolkit';
 import type { Database, JWTEncoded, ResultCreate } from '@amnis/core/types';
 import type {
@@ -13,14 +12,6 @@ import type {
 export interface ApiAuthLoginBody {
   username: string,
   password: string,
-}
-
-/**
- * Payload for a login request.
- */
-export interface ApiAuthPlatformBody {
-  platform: 'microsoft' | 'twitter',
-  token: string,
 }
 
 /**
@@ -54,7 +45,6 @@ export interface ApiAuthAuthorizeBody {
  */
 export interface ApiAuthQueries {
   login: ApiQuery<ApiAuthLoginBody>;
-  platform: ApiQuery<ApiAuthPlatformBody>;
   pkce: ApiQuery<ApiAuthPkceBody>;
   authorize: ApiQuery<ApiAuthAuthorizeBody>;
 }
@@ -64,7 +54,6 @@ export interface ApiAuthQueries {
  */
 export interface ApiAuthProcesses extends ApiProcesses {
   login: ApiProcess<ApiAuthLoginBody, ResultCreate>;
-  platform: ApiProcess<ApiAuthPlatformBody, ResultCreate>;
   pkce: ApiProcess<ApiAuthPkceBody>;
   authorize: ApiProcess<ApiAuthAuthorizeBody, ResultCreate>;
 }
@@ -76,8 +65,3 @@ export interface ApiAuthProcessesParams {
   store: Store;
   database: Database;
 }
-
-/**
- * Microsoft Graph User
- */
-export type ApiAuthMicrosoftUser = MSGraph.User;

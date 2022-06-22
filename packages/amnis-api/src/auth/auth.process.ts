@@ -1,5 +1,4 @@
 import Ajv from 'ajv';
-import fetch from 'cross-fetch';
 import {
   passCompare,
 } from '@amnis/auth/pass';
@@ -11,7 +10,6 @@ import {
 import type {
   ApiAuthProcesses,
   ApiAuthProcessesParams,
-  ApiAuthMicrosoftUser,
 } from './auth.types';
 import {
   userFind,
@@ -19,6 +17,7 @@ import {
   outputBadCredentials,
 } from './auth.protility';
 import { authTwitter } from './auth.twitter';
+import { authMicrosoft } from './auth.microsoft';
 
 /**
  * Sets up authentication processes.
@@ -28,13 +27,8 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
   const ajv = new Ajv({ schemas: [authSchema] });
   const validators = {
     login: ajv.getSchema('auth#/definitions/ApiAuthLoginBody'),
-    platform: ajv.getSchema('auth#/definitions/ApiAuthPlatformBody'),
+    pkce: ajv.getSchema('auth#/definitions/ApiAuthPkceBody'),
     authorize: ajv.getSchema('auth#/definitions/ApiAuthAuthorizeBody'),
-  };
-
-  const platformUrls = {
-    microsoft: 'https://graph.microsoft.com/v1.0/me/',
-    twitter: 'https://api.twitter.com/2/users/me',
   };
 
   return {
@@ -81,66 +75,27 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
     },
     /**
      * ================================================================================
-     * PLATFORM
-     * Authenticates signs in the user with a token from a thrid-party platform.
-     * ----------------------------------------
-     */
-    platform: async ({ body }) => {
-      const validateOutput = apiValidate(validators.platform, body);
-      if (validateOutput) {
-        return validateOutput;
-      }
-
-      const output = apiOutput();
-      const { platform, token } = body;
-
-      console.log('PLATFORM BODY', body);
-
-      switch (platform) {
-        case 'microsoft': {
-          const data = await fetch(platformUrls[platform], {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const user = await data.json() as ApiAuthMicrosoftUser;
-          console.log('MICROSOFT RESULT:', user);
-          return output;
-        }
-        case 'twitter': {
-          const data = await fetch(platformUrls[platform], {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const user = await data.json();
-          console.log('TWITTER RESULT:', user);
-          return output;
-        }
-        default:
-          output.json.errors.push({
-            title: 'Unknown Platform',
-            message: `Unable to authenticate with '${platform}' platform.`,
-          });
-          return output;
-      }
-    },
-    /**
-     * ================================================================================
      * PKCE
      * Authenticates with OpenID OAuth2.0 PKCE flow after client obtains the authroization.
      * ----------------------------------------
      */
     pkce: async ({ body }) => {
+      const validateOutput = apiValidate(validators.pkce, body);
+      if (validateOutput) {
+        return validateOutput;
+      }
+
       const output = apiOutput();
       const { platform, ...pkceAuth } = body;
 
       switch (platform) {
+        case 'microsoft': {
+          const pkceOutput = await authMicrosoft(database, pkceAuth);
+          return pkceOutput;
+        }
         case 'twitter': {
-          const twitterOutput = await authTwitter(database, pkceAuth);
-          return twitterOutput;
+          const pkceOutput = await authTwitter(database, pkceAuth);
+          return pkceOutput;
         }
         default:
           output.status = 401; // Unauthorized
@@ -165,14 +120,6 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       if (validateOutput) {
         return validateOutput;
       }
-
-      // switch (method) {
-      //   case 'msgraph':
-      //     // do nothing.
-      //     break;
-
-      //   default:
-      // }
 
       return output;
     },

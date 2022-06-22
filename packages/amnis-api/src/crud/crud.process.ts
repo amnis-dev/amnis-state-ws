@@ -78,7 +78,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Create);
+      const [stateAuthwalled] = authwall(body, grants, Task.Create);
 
       /**
        * Clean entity properties that should not be updated.
@@ -113,20 +113,27 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
         return validateOutput;
       }
 
-      const result = await database.create(stateFinal);
+      const [result, reids] = await database.create(stateFinal);
 
       /**
        * Add errors for denied keys.
        */
-      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
-      if (deniedKeysActual.length > 0) {
+      const deniedKeys = Object.keys(body).map((sliceKey) => {
+        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+          return sliceKey;
+        }
+        return null;
+      }).filter((value) => value !== null);
+
+      if (deniedKeys.length) {
         output.json.errors.push({
           title: 'Creations Disallowed',
-          message: `Missing permissions to create documents in the collections: ${deniedKeysActual.join(', ')}`,
+          message: `Missing permissions to create documents in the collections: ${deniedKeys.join(', ')}`,
         });
       }
 
       output.json.result = result;
+      output.json.reids = reids;
 
       /**
        * Update the server store with the creation of the entity.
@@ -165,7 +172,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Read);
+      const [stateAuthwalled] = authwall(body, grants, Task.Read);
 
       /**
        * finalized state to process
@@ -190,11 +197,17 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Add errors for denied keys.
        */
-      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
-      if (deniedKeysActual.length > 0) {
+      const deniedKeys = Object.keys(body).map((sliceKey) => {
+        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+          return sliceKey;
+        }
+        return null;
+      }).filter((value) => value !== null);
+
+      if (deniedKeys.length) {
         output.json.errors.push({
           title: 'Readings Disallowed',
-          message: `Missing permissions to read from the collections: ${deniedKeysActual.join(', ')}`,
+          message: `Missing permissions to read from the collections: ${deniedKeys.join(', ')}`,
         });
       }
 
@@ -232,7 +245,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Update);
+      const [stateAuthwalled] = authwall(body, grants, Task.Update);
 
       /**
        * Clean entity properties that should not be updated.
@@ -267,11 +280,17 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Add errors for denied keys.
        */
-      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
-      if (deniedKeysActual.length > 0) {
+      const deniedKeys = Object.keys(body).map((sliceKey) => {
+        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+          return sliceKey;
+        }
+        return null;
+      }).filter((value) => value !== null);
+
+      if (deniedKeys.length) {
         output.json.errors.push({
           title: 'Updates Disallowed',
-          message: `Missing permissions to update the collections: ${deniedKeysActual.join(', ')}`,
+          message: `Missing permissions to update the collections: ${deniedKeys.join(', ')}`,
         });
       }
 
@@ -314,7 +333,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled, deniedKeys] = authwall(body, grants, Task.Delete);
+      const [stateAuthwalled] = authwall(body, grants, Task.Delete);
 
       /**
        * finalized state to process
@@ -339,11 +358,17 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Add errors for denied keys.
        */
-      const deniedKeysActual = deniedKeys.filter((key) => !result[key]);
-      if (deniedKeysActual.length > 0) {
+      const deniedKeys = Object.keys(body).map((sliceKey) => {
+        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+          return sliceKey;
+        }
+        return null;
+      }).filter((value) => value !== null);
+
+      if (deniedKeys.length) {
         output.json.errors.push({
           title: 'Deletes Disallowed',
-          message: `Missing permissions to delete from the collections: ${deniedKeysActual.join(', ')}`,
+          message: `Missing permissions to delete from the collections: ${deniedKeys.join(', ')}`,
         });
       }
 

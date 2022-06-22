@@ -9,8 +9,8 @@
         "login": {
           "$ref": "#/definitions/ApiAuthLoginBody"
         },
-        "platform": {
-          "$ref": "#/definitions/ApiAuthPlatformBody"
+        "pkce": {
+          "$ref": "#/definitions/ApiAuthPkceBody"
         },
         "authorize": {
           "$ref": "#/definitions/ApiAuthAuthorizeBody"
@@ -35,7 +35,7 @@
       "additionalProperties": false,
       "description": "Payload for a login request."
     },
-    "ApiAuthPlatformBody": {
+    "ApiAuthPkceBody": {
       "type": "object",
       "properties": {
         "platform": {
@@ -45,16 +45,28 @@
             "twitter"
           ]
         },
-        "token": {
+        "clientId": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "codeVerifier": {
+          "type": "string"
+        },
+        "redirectUri": {
           "type": "string"
         }
       },
       "required": [
         "platform",
-        "token"
+        "clientId",
+        "code",
+        "codeVerifier",
+        "redirectUri"
       ],
       "additionalProperties": false,
-      "description": "Payload for a login request."
+      "description": "Logs in from a third-party using the data from OpenID PKCE Authorization."
     },
     "ApiAuthAuthorizeBody": {
       "type": "object",

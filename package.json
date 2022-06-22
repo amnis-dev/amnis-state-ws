@@ -73,6 +73,7 @@
     "test:api": "jest packages/amnis-api/**/*",
     "test:state": "jest packages/amnis-state/**/*",
     "test:root": "jest test/*",
+    "test:root:normie": "jest test/normie.test.ts",
     "test:watch": "yarn test --watch",
     "start:client": "nodemon test/client",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",

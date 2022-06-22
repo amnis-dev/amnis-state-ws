@@ -21,7 +21,7 @@ export type JWTEncoded = string & {[jwtEncodedSymbol]: never};
  * Token issuers
  * Core is used to identify self-owned tokens.
  */
-export type TokenApi = 'core' | 'msgraph' | 'twitter';
+export type TokenApi = 'core' | 'microsoft' | 'twitter';
 
 /**
  * Token types.

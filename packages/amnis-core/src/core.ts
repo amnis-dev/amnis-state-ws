@@ -19,6 +19,7 @@ import {
   JWTEncoded,
   Task,
   SliceKey,
+  ReID,
 } from './types';
 
 const idDefault = nanoid();
@@ -86,7 +87,7 @@ export const referenceValidate = (ref: string): boolean => {
     return false;
   }
 
-  if (!id || typeof id !== 'string' || id.length !== 21) {
+  if (!id || typeof id !== 'string' || id.length < 1) {
     return false;
   }
 
@@ -152,7 +153,7 @@ export const entityUpdate = <E extends Entity>(
 const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((key) => key);
 
 /**
- * Cleans any entity keys off for a create or update.
+ * Cleans any entity keys off for a database create or update.
  */
 export function entityClean(key: string, entity: Record<string, unknown>) {
   let errored = false;
@@ -173,6 +174,21 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
   }, {});
 
   return errored ? undefined : cleaned;
+}
+
+/**
+ * ReIds an array of entities.
+ */
+export function reIdentify(entities: Entity[], reids: ReID[] | undefined): Entity[] {
+  const reIdEntities = entities.map((entity) => {
+    const reidsChecked = reids || [];
+    const reid = reidsChecked.find((value) => (value[0] === entity.$id));
+    if (reid) {
+      return { ...entity, $id: reid[1] };
+    }
+    return entity;
+  });
+  return reIdEntities;
 }
 
 /**

@@ -19,6 +19,7 @@
     && authPlatform === 'twitter'
     // && state === window.pkceGetState()
   ) {
+    window.setAuthPlatform('');
     loginMsg.innerHTML = `SUCCESS: Got ${code} from Twitter oAuth 2.0 PKCE flow`;
 
     fetch('http://localhost:3000/auth/pkce', {

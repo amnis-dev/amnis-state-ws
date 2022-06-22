@@ -42,8 +42,19 @@
         },
         "email": {
           "type": "string",
-          "description": "Email address",
-          "default": ""
+          "description": "Email address"
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "If the user email is verified."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number"
+        },
+        "phoneVerified": {
+          "type": "boolean",
+          "description": "If the user phone number is verified."
         },
         "password": {
           "type": [
@@ -79,7 +90,6 @@
       "required": [
         "$permits",
         "$roles",
-        "email",
         "name",
         "password"
       ],
@@ -99,8 +109,19 @@
         },
         "email": {
           "type": "string",
-          "description": "Email address",
-          "default": ""
+          "description": "Email address"
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "If the user email is verified."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number"
+        },
+        "phoneVerified": {
+          "type": "boolean",
+          "description": "If the user phone number is verified."
         },
         "password": {
           "type": [
@@ -135,7 +156,6 @@
       },
       "required": [
         "name",
-        "email",
         "password",
         "$roles",
         "$permits"
@@ -506,8 +526,19 @@
         },
         "email": {
           "type": "string",
-          "description": "Email address",
-          "default": ""
+          "description": "Email address"
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "If the user email is verified."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number"
+        },
+        "phoneVerified": {
+          "type": "boolean",
+          "description": "If the user phone number is verified."
         },
         "password": {
           "type": [
@@ -552,8 +583,19 @@
         },
         "email": {
           "type": "string",
-          "description": "Email address",
-          "default": ""
+          "description": "Email address"
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "If the user email is verified."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number"
+        },
+        "phoneVerified": {
+          "type": "boolean",
+          "description": "If the user phone number is verified."
         },
         "password": {
           "type": [

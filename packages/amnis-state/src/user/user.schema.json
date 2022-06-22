@@ -56,8 +56,19 @@
         },
         "email": {
           "type": "string",
-          "description": "Email address",
-          "default": ""
+          "description": "Email address"
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "If the user email is verified."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number"
+        },
+        "phoneVerified": {
+          "type": "boolean",
+          "description": "If the user phone number is verified."
         },
         "password": {
           "type": [
@@ -100,7 +111,6 @@
         "committed",
         "created",
         "delete",
-        "email",
         "name",
         "password",
         "updated"

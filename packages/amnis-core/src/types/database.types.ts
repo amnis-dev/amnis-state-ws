@@ -8,6 +8,7 @@ import type {
   ResultCreate,
   ResultDelete,
   ResultRead,
+  ResultReID,
   ResultUpdate,
   Select,
 } from './state.types';
@@ -16,7 +17,7 @@ export type DatabaseCreateMethod = (
   state: Insert,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<ResultCreate>;
+) => Promise<[ResultCreate, ResultReID]>;
 
 export type DatabaseReadMethod = (
   select: Select,

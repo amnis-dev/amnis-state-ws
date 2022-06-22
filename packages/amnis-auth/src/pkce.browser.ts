@@ -1,7 +1,7 @@
 /**
  * Generate a random verifier string.
  */
-export function pkceCreateVerifier(length = 128) {
+export function pkceRandomString(length = 128) {
   const array = new Uint32Array(length / 2);
   window.crypto.getRandomValues(array);
   return Array.from(array, (dec) => (`0${dec.toString(16)}`).slice(-2)).join('');
@@ -24,12 +24,25 @@ export async function sha256(plain: string) {
 }
 
 /**
+ * Gets a state code.
+ */
+export function pkceGetState(renew = false) {
+  const storageState = sessionStorage.getItem('pkceState');
+  if (renew || !storageState || storageState.length < 64) {
+    const newPkceState = pkceRandomString(64);
+    sessionStorage.setItem('pkceState', newPkceState);
+    return newPkceState;
+  }
+  return storageState;
+}
+
+/**
  * Gets the PKCE Verification string.
  */
-export function pkceGetVerifier() {
+export function pkceGetVerifier(renew = false) {
   const storageVerifier = sessionStorage.getItem('pkceVerifier');
-  if (!storageVerifier || storageVerifier.length < 64) {
-    const newPkceVerifier = pkceCreateVerifier();
+  if (renew || !storageVerifier || storageVerifier.length < 64) {
+    const newPkceVerifier = pkceRandomString();
     sessionStorage.setItem('pkceVerifier', newPkceVerifier);
     return newPkceVerifier;
   }

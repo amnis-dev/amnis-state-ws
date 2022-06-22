@@ -9,7 +9,6 @@ import {
   ApiAuthAuthorizeBody,
   ApiAuthLoginBody,
   ApiAuthPkceBody,
-  ApiAuthPlatformBody,
 } from './auth.types';
 
 const queries = apiQueries();
@@ -26,13 +25,6 @@ export const apiAuth = createApi({
     ApiAuthLoginBody
     >({
       query: queries.login,
-    }),
-
-    platform: builder.query<
-    ApiJSON<ResultCreate>,
-    ApiAuthPlatformBody
-    >({
-      query: queries.platform,
     }),
 
     pkce: builder.query<

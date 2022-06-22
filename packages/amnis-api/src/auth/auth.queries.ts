@@ -9,11 +9,6 @@ export function apiQueries(): ApiAuthQueries {
       method: 'post',
       body: payload,
     }),
-    platform: (payload) => ({
-      url: 'platform',
-      method: 'post',
-      body: payload,
-    }),
     pkce: (payload) => ({
       url: 'pkce',
       method: 'post',

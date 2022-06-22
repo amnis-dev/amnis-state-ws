@@ -6,47 +6,44 @@ import {
   pkceGetAuthPlatform,
   pkceCreateChallenge,
   pkceGetVerifier,
+  pkceGetState,
 } from '@amnis/auth/pkce.browser';
 import {
   apiAuth,
 } from '../auth/auth.react';
 
-export interface PlatformMicrosoftConfig {
+export interface PlatformTwitterConfig {
   authorizeEp: string;
   clientId: string,
   redirectUri: string;
 }
 
-export interface PlatformMicrosoftConfigOptions {
+export interface PlatformTwitterConfigOptions {
   authorizeEp?: string;
   clientId: string,
   redirectUri: string;
 }
 
-let config: PlatformMicrosoftConfig = {
+let config: PlatformTwitterConfig = {
   authorizeEp: 'https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize',
   clientId: '',
   redirectUri: 'http://localhost:3000/',
 };
 
-export function microsoftInit(store: Store, configuration: PlatformMicrosoftConfigOptions) {
+export function twitterInit(store: Store, configuration: PlatformTwitterConfigOptions) {
   config = { ...config, ...configuration };
 
   const currentUrl = new URL(window.location.href);
   const code = currentUrl.searchParams.get('code');
+  const state = currentUrl.searchParams.get('state');
   const platform = pkceGetAuthPlatform();
 
   if (
-    platform === 'microsoft'
+    platform === 'twitter'
     && typeof code === 'string'
+    && state === pkceGetState()
   ) {
     pkceSetAuthPlatform('');
-    // const params = new URLSearchParams();
-    // params.append('grant_type', 'authorization_code');
-    // params.append('client_id', config.clientId);
-    // params.append('code', code);
-    // params.append('redirect_uri', config.redirectUri);
-    // params.append('code_verifier', pkceGetVerifier());
 
     const { clientId, redirectUri } = config;
 
@@ -62,20 +59,20 @@ export function microsoftInit(store: Store, configuration: PlatformMicrosoftConf
   }
 }
 
-export async function microsoftLogin() {
+export async function twitterLogin() {
   const authUrl = new URL(config.authorizeEp);
-  pkceSetAuthPlatform('microsoft');
+  pkceSetAuthPlatform('twitter');
 
   const codeChallenge = await pkceCreateChallenge(pkceGetVerifier(true));
   authUrl.searchParams.append('client_id', config.clientId);
   authUrl.searchParams.append('response_type', 'code');
   authUrl.searchParams.append('redirect_uri', config.redirectUri);
-  authUrl.searchParams.append('response_mode', 'query');
-  authUrl.searchParams.append('scope', 'openid profile email User.Read');
+  authUrl.searchParams.append('scope', 'users.read tweet.read');
+  authUrl.searchParams.append('state', pkceGetState(true));
   authUrl.searchParams.append('code_challenge', codeChallenge);
   authUrl.searchParams.append('code_challenge_method', 'S256');
 
   window.location.href = authUrl.href;
 }
 
-export default { microsoftInit, microsoftLogin };
+export default { twitterInit, twitterLogin };
