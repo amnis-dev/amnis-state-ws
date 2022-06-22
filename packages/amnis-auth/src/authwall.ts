@@ -10,16 +10,12 @@ import {
  *
  * It does return a scope state map for the database to use.
  */
-export function authwall(state: State, grants: Grant[], attempt: Task): [State, string[]] {
+export function authwall(state: State, grants: Grant[], attempt: Task): State {
   const sanitized: State = {};
-  const denied: string[] = [];
 
   grants.every(({ key, task }) => {
     // eslint-disable-next-line no-bitwise
     if ((task & attempt) !== attempt) {
-      if (state[key]) {
-        denied.push(key);
-      }
       return true;
     }
 
@@ -32,7 +28,7 @@ export function authwall(state: State, grants: Grant[], attempt: Task): [State, 
     return true;
   });
 
-  return [sanitized, denied];
+  return sanitized;
 }
 
 export default authwall;

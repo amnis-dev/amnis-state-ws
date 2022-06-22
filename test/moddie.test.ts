@@ -297,8 +297,6 @@ test('user update global should be -DENIED- as Moddie via API', async () => {
     }),
   );
 
-  console.log('MODDIE UPDATE GLOBAL: ', action.data);
-
   expectDenied(action, userKey, 'Updates Disallowed');
 });
 

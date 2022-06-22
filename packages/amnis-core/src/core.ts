@@ -161,7 +161,7 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
     if (prop === '$id' || !entityKeys.includes(prop)) {
       if (prop === '$id') {
         const [sKey, id] = (entity[prop] as string).split(':');
-        if (sKey === key && id?.length === 21 && /^[A-Za-z0-9_-]*/.test(id)) {
+        if (sKey === key && /^[A-Za-z0-9_-]{21,36}/.test(id)) {
           value[prop] = entity[prop];
         } else {
           errored = true;

@@ -78,7 +78,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled] = authwall(body, grants, Task.Create);
+      const stateAuthwalled = authwall(body, grants, Task.Create);
 
       /**
        * Clean entity properties that should not be updated.
@@ -119,7 +119,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        * Add errors for denied keys.
        */
       const deniedKeys = Object.keys(body).map((sliceKey) => {
-        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+        if (typeof result[sliceKey] !== 'object' || Object.keys(result[sliceKey]).length < 1) {
           return sliceKey;
         }
         return null;
@@ -172,7 +172,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled] = authwall(body, grants, Task.Read);
+      const stateAuthwalled = authwall(body, grants, Task.Read);
 
       /**
        * finalized state to process
@@ -198,7 +198,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        * Add errors for denied keys.
        */
       const deniedKeys = Object.keys(body).map((sliceKey) => {
-        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+        if (typeof result[sliceKey] !== 'object') {
           return sliceKey;
         }
         return null;
@@ -245,7 +245,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled] = authwall(body, grants, Task.Update);
+      const stateAuthwalled = authwall(body, grants, Task.Update);
 
       /**
        * Clean entity properties that should not be updated.
@@ -333,7 +333,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Filter non-granted slices on the body (which is a State type).
        */
-      const [stateAuthwalled] = authwall(body, grants, Task.Delete);
+      const stateAuthwalled = authwall(body, grants, Task.Delete);
 
       /**
        * finalized state to process
@@ -359,7 +359,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        * Add errors for denied keys.
        */
       const deniedKeys = Object.keys(body).map((sliceKey) => {
-        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+        if (typeof result[sliceKey] !== 'object' || Object.keys(result[sliceKey]).length < 1) {
           return sliceKey;
         }
         return null;
