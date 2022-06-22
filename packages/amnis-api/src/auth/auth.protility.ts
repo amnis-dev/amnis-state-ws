@@ -3,10 +3,9 @@ import { sessionEncode } from '@amnis/auth/session';
 import { jwtEncode } from '@amnis/auth/token';
 import { dateNumeric, entityCreate, tokenStringify } from '@amnis/core/core';
 import {
-  CoreProfile, CoreSession, CoreUser, Database, Insert, JWTDecoded, ResultCreate, Token,
+  CoreProfile, CoreSession, CoreUser, Database, JWTDecoded, ResultCreate, Token,
 } from '@amnis/core/types';
 import { apiOutput } from '../api';
-import { ApiOutput } from '../types';
 
 /**
  * Finds a user.

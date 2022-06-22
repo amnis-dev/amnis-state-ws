@@ -8,7 +8,6 @@ import type {
   ResultCreate,
   ResultDelete,
   ResultRead,
-  ResultReID,
   ResultUpdate,
   Select,
 } from './state.types';

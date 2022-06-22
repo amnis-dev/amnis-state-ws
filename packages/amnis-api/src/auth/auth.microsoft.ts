@@ -1,5 +1,4 @@
 import fetch from 'cross-fetch';
-import type MSGraph from '@microsoft/microsoft-graph-types';
 import { dateNumeric } from '@amnis/core/core';
 import {
   Database, JWTEncoded, ResultCreate, Token,

@@ -85,7 +85,7 @@ export async function register(
   /**
    * Insert newly created user and profile into the database.
    */
-  const [resultDbCreate] = await database.create(insertion, { user: 'global', profile: 'global' });
+  const resultDbCreate = await database.create(insertion, { user: 'global', profile: 'global' });
   output.json.result = resultDbCreate;
 
   /**
