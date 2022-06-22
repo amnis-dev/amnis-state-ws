@@ -83,6 +83,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
       /**
        * Clean entity properties that should not be updated.
        */
+      let entityIssue = false;
       const stateUpdateSanatizd = Object.keys(stateAuthwalled).reduce<State>((state, key) => {
         state[key] = stateAuthwalled[key].map(
           (entity: any) => {
@@ -94,11 +95,23 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
                 { $owner: jwt.sub },
               );
             }
+            entityIssue = true;
             return undefined;
           },
         ).filter((entity: any) => entity !== undefined);
         return state;
       }, {});
+
+      if (entityIssue) {
+        output.status = 401; // 401 Unauthorized
+        output.json.errors = [
+          {
+            title: 'Invalid Identifier',
+            message: 'There was an invalid identity key used.',
+          },
+        ];
+        return output;
+      }
 
       /**
        * finalized state to process

@@ -153,7 +153,8 @@ export const entityUpdate = <E extends Entity>(
 const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((key) => key);
 
 /**
- * Cleans any entity keys off for a database create or update.
+ * Cleans and validates base entity keys and references for further processing.
+ * TODO: This method can most certainly be made more efficient.
  */
 export function entityClean(key: string, entity: Record<string, unknown>) {
   let errored = false;
@@ -166,6 +167,23 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
         } else {
           errored = true;
         }
+      /**
+       * Only references/reference arrays begin with a '$' character.
+       * Also enure they have valid ids.
+       */
+      } else if (prop.charAt(0) === '$') {
+        if (Array.isArray(entity[prop])) {
+          (entity[prop] as string[]).every((id: string) => {
+            if (!/^[A-Za-z0-9_:-]{21,36}/.test(id)) {
+              errored = true;
+              return false;
+            }
+            return true;
+          });
+        } else if (!/^[A-Za-z0-9_:-]{21,36}/.test(entity[prop] as string)) {
+          errored = true;
+        }
+        value[prop] = entity[prop];
       } else {
         value[prop] = entity[prop];
       }
