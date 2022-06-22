@@ -281,7 +281,7 @@ export function apiCrudProcesses(params: ApiCrudProcessesParams): ApiCrudProcess
        * Add errors for denied keys.
        */
       const deniedKeys = Object.keys(body).map((sliceKey) => {
-        if (typeof stateFinal[sliceKey] !== 'object' || Object.keys(stateFinal[sliceKey]).length < 1) {
+        if (typeof result[sliceKey] !== 'object' || Object.keys(result[sliceKey]).length < 1) {
           return sliceKey;
         }
         return null;
