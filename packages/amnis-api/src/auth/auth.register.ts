@@ -1,5 +1,5 @@
 import { sessionEncode } from '@amnis/auth/session';
-import { entityCreate } from '@amnis/core/core';
+import { entityCreate } from '@amnis/core/index';
 import {
   CoreProfile,
   CoreUser,

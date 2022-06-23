@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import {
   entityCreate,
-} from './core';
+} from './entity';
 import { coreActions } from './actions';
 import type {
   Entity,

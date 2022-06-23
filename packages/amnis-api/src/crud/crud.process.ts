@@ -6,7 +6,7 @@ import { selectors } from '@amnis/core/selectors';
 import { authwall } from '@amnis/auth/authwall';
 import { authScopeCreate } from '@amnis/auth/scope';
 import { State, Task } from '@amnis/core/types';
-import { entityClean, entityCreate } from '@amnis/core/core';
+import { entityClean, entityCreate } from '@amnis/core/index';
 import { coreActions } from '@amnis/core/actions';
 import type {
   ApiCrudProcesses,

@@ -1,7 +1,7 @@
 import { AUTH_SESSION_LIFE, AUTH_TOKEN_LIFE } from '@amnis/auth/const';
 import { sessionEncode } from '@amnis/auth/session';
 import { jwtEncode } from '@amnis/auth/token';
-import { dateNumeric, entityCreate, tokenStringify } from '@amnis/core/core';
+import { dateNumeric, entityCreate, tokenStringify } from '@amnis/core/index';
 import {
   CoreProfile, CoreSession, CoreUser, Database, JWTDecoded, ResultCreate, Token,
 } from '@amnis/core/types';

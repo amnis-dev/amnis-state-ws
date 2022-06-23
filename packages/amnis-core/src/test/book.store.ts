@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import type { Entity, Meta } from '../types';
 import { coreExtraReducers, coreReducers } from '../reducers';
-import { entityCreate } from '../core';
+import { entityCreate } from '../entity';
 
 export interface Book extends Entity {
   title: string;

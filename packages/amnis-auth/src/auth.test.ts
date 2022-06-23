@@ -1,6 +1,6 @@
 import {
   dateNumeric, entityCreate, reference, surl, tokenStringify,
-} from '@amnis/core/core';
+} from '@amnis/core/index';
 import { CoreSession, JWTDecoded, Token } from '@amnis/core/types';
 import { passCompare, passCreate } from './pass';
 import { sessionEncode, sessionVerify } from './session';

@@ -7,10 +7,12 @@ import type {
   CoreProfile,
 } from '../types';
 import {
-  entityCreate,
   grantStringify,
   task,
 } from '../core';
+import {
+  entityCreate,
+} from '../entity';
 
 function passCreateSync(plaintext: string): string {
   return hashSync(plaintext, 8);
