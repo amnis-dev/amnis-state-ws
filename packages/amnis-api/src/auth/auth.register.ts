@@ -1,8 +1,8 @@
 import { sessionEncode } from '@amnis/auth/session';
 import { entityCreate } from '@amnis/core/index';
 import {
-  CoreProfile,
-  CoreUser,
+  Profile,
+  User,
   Database,
   Insert,
   ResultCreate,
@@ -52,7 +52,7 @@ export async function register(
     return output;
   }
 
-  const user = entityCreate<CoreUser>('user', {
+  const user = entityCreate<User>('user', {
     name: username,
     password: password || null,
     $roles: [],
@@ -72,7 +72,7 @@ export async function register(
     }
   }
 
-  const profile = entityCreate<CoreProfile>('profile', {
+  const profile = entityCreate<Profile>('profile', {
     $user: user.$id,
     nameDisplay: nameDisplay || username,
   });

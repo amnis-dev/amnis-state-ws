@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
-import { coreActions } from '@amnis/core/index';
+import {
+  coreActions,
+  User,
+  Session,
+  Profile,
+} from '@amnis/core/index';
 import { samples } from '@amnis/core/test/samples';
 
 import {
@@ -18,12 +23,9 @@ import {
   selectors,
   sessionKey,
   sessionSelectors,
-  Session,
   userKey,
   userSelectors,
-  User,
   profileSelectors,
-  Profile,
   profileKey,
 } from '@amnis/state/index';
 

@@ -3,7 +3,7 @@ import { sessionEncode } from '@amnis/auth/session';
 import { jwtEncode } from '@amnis/auth/token';
 import { dateNumeric, entityCreate, tokenStringify } from '@amnis/core/index';
 import {
-  CoreProfile, CoreSession, CoreUser, Database, JWTDecoded, ResultCreate, Token,
+  Profile, Session, User, Database, JWTDecoded, ResultCreate, Token,
 } from '@amnis/core/types';
 import { apiOutput } from '../api';
 
@@ -13,7 +13,7 @@ import { apiOutput } from '../api';
 export async function userFind(
   database: Database,
   username: string,
-): Promise<CoreUser | undefined> {
+): Promise<User | undefined> {
   const resultsUser = await database.read({
     user: {
       $query: {
@@ -28,17 +28,17 @@ export async function userFind(
     return undefined;
   }
 
-  return { ...resultsUser.user[0] } as CoreUser;
+  return { ...resultsUser.user[0] } as User;
 }
 
 /**
  * Creates a session with user and profile data.
  */
 export function sessionCreate(
-  user: CoreUser,
-  profile: CoreProfile,
+  user: User,
+  profile: Profile,
   otherTokens?: Token[],
-): CoreSession {
+): Session {
   const tokenExpires = dateNumeric(AUTH_TOKEN_LIFE);
   const sessionExpires = dateNumeric(AUTH_SESSION_LIFE);
 
@@ -69,7 +69,7 @@ export function sessionCreate(
   /**
    * Create the new user session.
    */
-  const session = entityCreate<CoreSession>('session', {
+  const session = entityCreate<Session>('session', {
     $subject: user.$id,
     exp: sessionExpires,
     admin: false,
@@ -104,7 +104,7 @@ export function outputBadCredentials() {
 /**
  * Fetch a profile. Create a new one if it doesn't exist.
  */
-export async function profileFetch(database: Database, user: CoreUser): Promise<CoreProfile> {
+export async function profileFetch(database: Database, user: User): Promise<Profile> {
   const results = await database.read({
     profile: {
       $query: {
@@ -119,7 +119,7 @@ export async function profileFetch(database: Database, user: CoreUser): Promise<
    * Create a new profile and store it if no results were found.
    */
   if (!results.profile?.length) {
-    const profile: CoreProfile = entityCreate<CoreProfile>('profile', {
+    const profile: Profile = entityCreate<Profile>('profile', {
       $user: user.$id,
       nameDisplay: user.name,
     }, { $owner: user.$id });
@@ -131,13 +131,13 @@ export async function profileFetch(database: Database, user: CoreUser): Promise<
     return profile;
   }
 
-  return results.profile[0] as CoreProfile;
+  return results.profile[0] as Profile;
 }
 
 /**
  * Processes a successful login with a return result.
  */
-export async function loginSuccessProcess(database: Database, user: CoreUser) {
+export async function loginSuccessProcess(database: Database, user: User) {
   const output = apiOutput<ResultCreate>();
 
   const profile = await profileFetch(database, user);

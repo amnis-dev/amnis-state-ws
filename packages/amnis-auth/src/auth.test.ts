@@ -1,7 +1,7 @@
 import {
   dateNumeric, entityCreate, reference, surl, tokenStringify,
 } from '@amnis/core/index';
-import { CoreSession, JWTDecoded, Token } from '@amnis/core/types';
+import { Session, JWTDecoded, Token } from '@amnis/core/types';
 import { passCompare, passCreate } from './pass';
 import { sessionEncode, sessionVerify } from './session';
 import { jwtDecode, jwtEncode, jwtVerify } from './token';
@@ -27,7 +27,7 @@ const token: Token = {
   type: 'access',
 };
 
-const session: CoreSession = entityCreate('session', {
+const session: Session = entityCreate('session', {
   $subject: reference('user', '1234'),
   exp: jwtDecoded.exp,
   admin: false,
@@ -140,7 +140,7 @@ test('session should be verified.', () => {
   const encoded = sessionEncode(session, SECRET_TEST);
   const decoded = sessionVerify(encoded, SECRET_TEST);
 
-  const { iat, ...sessionDecoded } = decoded as CoreSession;
+  const { iat, ...sessionDecoded } = decoded as Session;
 
   expect(decoded).toBeDefined();
   expect(iat).toEqual(expect.any(Number));

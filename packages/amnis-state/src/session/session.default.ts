@@ -1,9 +1,10 @@
-import { dateNumeric, entityCreate, reference } from '@amnis/core/index';
+import {
+  Session, dateNumeric, entityCreate, reference,
+} from '@amnis/core/index';
 import { sessionKey } from './session';
-import type { Session } from './session.types';
 
 export const sessionDefault: Session = entityCreate<Session>(sessionKey, {
-  $subject: reference('user', ''),
+  $subject: reference('user'),
   exp: dateNumeric(),
   admin: false,
   tokens: [],

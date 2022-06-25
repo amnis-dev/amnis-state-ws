@@ -1,4 +1,4 @@
-import { CoreSession } from '@amnis/core/types';
+import { Session } from '@amnis/core/types';
 // import { serialize, parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import { AUTH_SESSION_SECRET } from './const';
@@ -9,7 +9,7 @@ import { AUTH_SESSION_SECRET } from './const';
 /**
  * Encode a session.
  */
-export function sessionEncode(session: CoreSession, secret = AUTH_SESSION_SECRET) {
+export function sessionEncode(session: Session, secret = AUTH_SESSION_SECRET) {
   const sessionToken = jwt.sign(session, secret);
   return sessionToken;
 }
@@ -20,9 +20,9 @@ export function sessionEncode(session: CoreSession, secret = AUTH_SESSION_SECRET
 export function sessionVerify(
   sessionEncoded: string,
   secret = AUTH_SESSION_SECRET,
-): CoreSession | undefined {
+): Session | undefined {
   try {
-    const decoded = jwt.verify(sessionEncoded, secret) as CoreSession;
+    const decoded = jwt.verify(sessionEncoded, secret) as Session;
 
     return decoded;
   } catch (error) {
@@ -43,7 +43,7 @@ export function sessionVerify(
 //  * response.setHeader('Set-Cookie', sessionCookie);
 //  * ```
 //  */
-// export function sessionCookieCreate(session: CoreSession, secret: string) {
+// export function sessionCookieCreate(session: Session, secret: string) {
 //   if (secret.length < 21) {
 //     throw new Error('Secret not set or strong enough.');
 //   }
@@ -85,9 +85,9 @@ export function sessionVerify(
 // /**
 //  * Returns the session object from a the 'Set-Cookie` header string.
 //  */
-// export function sessionCookieParse(headerCookie: string, secret: string): CoreSession {
+// export function sessionCookieParse(headerCookie: string, secret: string): Session {
 //   const cookies = parse(headerCookie || '');
-//   const session = jwt.verify(cookies[SESSION_COOKIE_NAME], secret) as CoreSession;
+//   const session = jwt.verify(cookies[SESSION_COOKIE_NAME], secret) as Session;
 
 //   return session;
 // }

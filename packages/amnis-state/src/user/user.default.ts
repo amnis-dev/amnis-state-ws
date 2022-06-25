@@ -1,5 +1,4 @@
-import { entityCreate } from '@amnis/core/index';
-import type { User } from './user.types';
+import { entityCreate, User } from '@amnis/core/index';
 import { userKey } from './user';
 
 export const userDefault: User = entityCreate<User>(userKey, {

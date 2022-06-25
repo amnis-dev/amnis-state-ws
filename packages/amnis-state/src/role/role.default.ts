@@ -1,6 +1,5 @@
-import { entityCreate } from '@amnis/core/index';
+import { Role, entityCreate } from '@amnis/core/index';
 import { roleKey } from './role';
-import type { Role } from './role.types';
 
 export const roleDefault: Role = entityCreate<Role>(roleKey, {
   name: 'Base',

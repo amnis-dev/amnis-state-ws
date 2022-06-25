@@ -47,7 +47,7 @@ export interface ApiJSON<T = any> {
   reids: ResultReID;
 
   /**
-   * CoreSession expiration date-time.
+   * Session expiration date-time.
    */
   expire?: DateJSON;
 }

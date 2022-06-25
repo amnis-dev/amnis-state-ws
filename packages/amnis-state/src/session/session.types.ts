@@ -1,9 +1,4 @@
-import type { CoreSession, Meta } from '@amnis/core/types';
-
-/**
- * Session entity
- */
-export type Session = CoreSession;
+import type { Session, Meta } from '@amnis/core/types';
 
 /**
  * Session collection meta data.

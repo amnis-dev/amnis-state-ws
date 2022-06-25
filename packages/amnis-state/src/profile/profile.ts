@@ -3,10 +3,8 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import type {
-  Profile,
-  ProfileMeta,
-} from './profile.types';
+import type { Profile } from '@amnis/core/types';
+import type { ProfileMeta } from './profile.types';
 
 /**
  * Profile slice key.

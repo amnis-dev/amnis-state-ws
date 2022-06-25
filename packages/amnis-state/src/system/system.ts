@@ -3,8 +3,8 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
+import { System } from '@amnis/core/types';
 import type {
-  System,
   SystemMeta,
 } from './system.types';
 

@@ -7,8 +7,6 @@ import {
   DateNumeric,
   SURL,
   Entity,
-  EntityExtension,
-  EntityPartial,
   Grant,
   GrantString,
   Reference,
@@ -30,7 +28,7 @@ export const noop = () => { /** No operation. */ };
 /**
  * Create a reference to another type.
  */
-export const reference = <T>(key: string, id: string) => `${key}:${id}` as Reference<T>;
+export const reference = <T>(key: string, id = nanoid()) => `${key}:${id}` as Reference<T>;
 
 /**
  * Create a slice key.

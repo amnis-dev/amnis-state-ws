@@ -31,6 +31,9 @@ test('should handle creating a new system', () => {
   expect(entities).toHaveLength(1);
 
   expect(entities[0]).toEqual(expect.objectContaining({
-    myProperty: expect.any(String),
+    name: expect.any(String),
+    sessionExpires: expect.any(Number),
+    $website: expect.any(String),
+    $initialRoles: expect.any(Array),
   }));
 });

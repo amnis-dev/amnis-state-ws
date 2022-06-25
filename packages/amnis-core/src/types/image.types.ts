@@ -1,6 +1,6 @@
 import { Media } from './media.types';
 
-export interface CoreImage extends Media {
+export interface Image extends Media {
   /**
    * Original width in pixels.
    */

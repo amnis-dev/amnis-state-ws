@@ -1,6 +1,6 @@
 import { Reference, SURL } from './core.types';
 import { Entity } from './entity.types';
-import { CoreImage } from './image.types';
+import { Image } from './image.types';
 
 /**
  * Types of social networks available.
@@ -26,7 +26,7 @@ export interface WebsiteContacts {
   email: string;
 }
 
-export interface CoreWebsite extends Entity {
+export interface Website extends Entity {
   /**
    * Name of the website.
    */
@@ -45,12 +45,12 @@ export interface CoreWebsite extends Entity {
   /**
    * Reference to the image used for the logo.
    */
-  $logo?: Reference<CoreImage>;
+  $logo?: Reference<Image>;
 
   /**
    * Link the website's favicon
    */
-  $favicon?: Reference<CoreImage>;
+  $favicon?: Reference<Image>;
 
   /**
    * Contacts that should be listed on the website.

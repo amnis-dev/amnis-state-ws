@@ -6,7 +6,7 @@ import type { TokenString } from './token.types';
  * A session object.
  * For stateless servers, it is recommended to store session data in *SECURE* HTTP cookies only.
  */
-export interface CoreSession extends Entity {
+export interface Session extends Entity {
   /**
    * Subject of the session.
    * Typically a user id.

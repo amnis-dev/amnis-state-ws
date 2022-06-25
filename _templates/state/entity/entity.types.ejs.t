@@ -1,17 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import type { Entity, Meta } from '@amnis/core/types';
-
-/**
- * <%= Name %> entity
- */
-export interface <%= Name %> extends Entity {
-  /**
-   * Properties for <%= name %>.
-   */
-  myProperty: string;
-}
+import type { <%= Name %>, Meta } from '@amnis/core/types';
 
 /**
  * <%= Name %> collection meta data.

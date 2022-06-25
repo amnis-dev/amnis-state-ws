@@ -1,11 +1,11 @@
 import type { Reference } from './core.types';
 import type { Entity } from './entity.types';
-import type { CoreRole, Permit } from './auth.types';
+import type { Role, Permit } from './auth.types';
 
 /**
- * Data associated to a CoreUser.
+ * Data associated to a User.
  */
-export interface CoreUser extends Entity {
+export interface User extends Entity {
   /**
    * Name for the user.
    * @default ""
@@ -33,7 +33,7 @@ export interface CoreUser extends Entity {
   phoneVerified?: boolean;
 
   /**
-   * CoreUser password.
+   * User password.
    * A null password means another form of auth must be used.
    * @default null
    */
@@ -52,7 +52,7 @@ export interface CoreUser extends Entity {
   /**
    * Roles this user has been given.
    */
-  readonly $roles: Reference<CoreRole>[];
+  readonly $roles: Reference<Role>[];
 
   /**
    * Special-case permits this user has been bestowed.

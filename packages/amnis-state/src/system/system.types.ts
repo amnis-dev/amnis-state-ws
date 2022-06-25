@@ -1,9 +1,4 @@
-import type { CoreSystem, Meta } from '@amnis/core/types';
-
-/**
- * System entity
- */
-export type System = CoreSystem;
+import type { System, Meta } from '@amnis/core/types';
 
 /**
  * System collection meta data.

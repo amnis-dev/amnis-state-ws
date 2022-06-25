@@ -3,8 +3,8 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
+import type { Session } from '@amnis/core/types';
 import type {
-  Session,
   SessionMeta,
 } from './session.types';
 

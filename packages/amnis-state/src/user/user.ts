@@ -3,10 +3,8 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import type {
-  User,
-  UserMeta,
-} from './user.types';
+import type { User } from '@amnis/core/types';
+import type { UserMeta } from './user.types';
 
 /**
  * User slice key.

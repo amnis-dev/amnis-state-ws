@@ -3,10 +3,8 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import type {
-  Role,
-  RoleMeta,
-} from './role.types';
+import type { Role } from '@amnis/core/types';
+import type { RoleMeta } from './role.types';
 
 /**
  * Role slice key.

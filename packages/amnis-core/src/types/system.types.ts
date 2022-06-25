@@ -1,9 +1,9 @@
-import type { CoreRole } from './auth.types';
+import type { Role } from './auth.types';
 import type { Reference } from './core.types';
 import { Entity } from './entity.types';
-import { CoreWebsite } from './website.types';
+import { Website } from './website.types';
 
-export interface CoreSystem extends Entity {
+export interface System extends Entity {
   /**
    * Name of the system.
    */
@@ -18,11 +18,11 @@ export interface CoreSystem extends Entity {
   /**
    * System's website configurations.
    */
-  $website: Reference<CoreWebsite>;
+  $website: Reference<Website>;
 
   /**
    * The initial roles to assign to a user when a new account is created.
    * @default []
    */
-  $initialRoles: Reference<CoreRole>[];
+  $initialRoles: Reference<Role>[];
 }

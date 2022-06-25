@@ -29,7 +29,7 @@ export type Grant = {
 };
 
 /**
- * CoreRole grant string.
+ * Role grant string.
  */
 export type GrantString = string;
 
@@ -41,7 +41,7 @@ export type AuthScope = State<DataScope>;
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
  */
-export interface CoreRole extends Entity {
+export interface Role extends Entity {
   /**
   * Name of the license.
   */

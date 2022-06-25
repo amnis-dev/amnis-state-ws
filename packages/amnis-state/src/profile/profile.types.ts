@@ -1,11 +1,6 @@
 import type {
-  CoreProfile, Meta,
+  Profile, Meta,
 } from '@amnis/core/types';
-
-/**
- * Profile entity
- */
-export type Profile = CoreProfile;
 
 /**
  * Profile collection meta data.

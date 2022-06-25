@@ -1,9 +1,4 @@
-import type { CoreUser, Meta } from '@amnis/core/index';
-
-/**
- * User information.
- */
-export type User = CoreUser;
+import type { User, Meta } from '@amnis/core/index';
 
 /**
  * User collection meta data.

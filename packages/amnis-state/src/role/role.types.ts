@@ -1,9 +1,4 @@
-import type { CoreRole, Meta } from '@amnis/core/types';
-
-/**
- * Role entity
- */
-export type Role = CoreRole;
+import type { Role, Meta } from '@amnis/core/types';
 
 /**
  * Role collection meta data.

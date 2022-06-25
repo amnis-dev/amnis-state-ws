@@ -1,15 +1,15 @@
 import type { Reference, SURL } from './core.types';
 import type { Entity } from './entity.types';
-import type { CoreUser } from './user.types';
+import type { User } from './user.types';
 
 /**
  * Profile entity
  */
-export interface CoreProfile extends Entity {
+export interface Profile extends Entity {
   /**
    * User this profile is associated with.
    */
-  $user: Reference<CoreUser>;
+  $user: Reference<User>;
 
   /**
    * Display name for the profile.

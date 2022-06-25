@@ -1,7 +1,7 @@
 import { EntityState } from '@reduxjs/toolkit';
 import { grantParse, tokenParse } from './core';
 import {
-  State, CoreSession, Token, TokenApi, TokenType, Meta, Entity, Reference, CoreRole, Grant,
+  State, Session, Token, TokenApi, TokenType, Meta, Entity, Reference, Role, Grant,
 } from './types';
 
 /**
@@ -52,7 +52,7 @@ function selectActive<E extends Entity = Entity>(
  * Selects a type of token of a session.
  */
 function selectToken(state: State, api: TokenApi, type: TokenType): Token | undefined {
-  const sessionSlice = getSlice<CoreSession>(state, 'session');
+  const sessionSlice = getSlice<Session>(state, 'session');
 
   if (!sessionSlice) {
     return undefined;
@@ -80,10 +80,10 @@ function selectToken(state: State, api: TokenApi, type: TokenType): Token | unde
 /**
  * Selects a list of Grants based on an array of role references.
  */
-function selectRoleGrants(state: State, roleRefs: Reference<CoreRole>[]): Grant[] {
+function selectRoleGrants(state: State, roleRefs: Reference<Role>[]): Grant[] {
   const grants: Grant[] = [];
 
-  const roleSlice = getSlice<CoreRole>(state, 'role');
+  const roleSlice = getSlice<Role>(state, 'role');
 
   if (!roleSlice) {
     return grants;
