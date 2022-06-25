@@ -1,10 +1,10 @@
 import { Media } from './media.types';
 
-export interface Image extends Media {
+export interface Video extends Media {
   /**
-   * image format type.
+   * Video format type.
    */
-  format: 'webp' | 'jpeg' | 'png' | 'bmp' | 'tiff';
+  format: 'webm' | 'mp4' | 'mpeg' | 'mov' | 'H264';
 
   /**
    * Original width in pixels.
@@ -20,4 +20,9 @@ export interface Image extends Media {
    * Aspect ratio calculation (width / height).
    */
   aspect: number;
+
+  /**
+   * Duration length of the video in seconds.
+   */
+  duration: number;
 }

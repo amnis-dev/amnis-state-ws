@@ -1,5 +1,6 @@
-import type { SURL } from './core.types';
+import type { Reference, SURL } from './core.types';
 import type { Entity } from './entity.types';
+import type { Profile } from './profile.types';
 
 /**
  * An abstract media type intended to be extended my more specific types: Image, Video, and Audio.
@@ -16,9 +17,14 @@ export interface Media extends Entity {
   description?: string;
 
   /**
-   * Author of the media
+   * String name of the media author.
    */
   author?: string;
+
+  /**
+   * Profile reference to the author.
+   */
+  $author?: Reference<Profile>;
 
   /**
    * The source url for the media.
