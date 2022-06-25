@@ -1,0 +1,135 @@
+{
+  "$id": "core-user",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/User",
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name for the user.",
+          "default": ""
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address"
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "If the user email is verified."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number"
+        },
+        "phoneVerified": {
+          "type": "boolean",
+          "description": "If the user phone number is verified."
+        },
+        "password": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "User password. A null password means another form of auth must be used.",
+          "default": "null"
+        },
+        "domain": {
+          "type": "string",
+          "description": "The domain this uer belongs to."
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "If this is an administrative account."
+        },
+        "$roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CRole%3E"
+          },
+          "description": "Roles this user has been given."
+        },
+        "$permits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CPermit%3E"
+          },
+          "description": "Special-case permits this user has been bestowed."
+        }
+      },
+      "required": [
+        "$creator",
+        "$id",
+        "$owner",
+        "$permits",
+        "$roles",
+        "$updaters",
+        "committed",
+        "created",
+        "delete",
+        "name",
+        "password",
+        "updated"
+      ],
+      "additionalProperties": false,
+      "description": "Data associated to a User."
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "Reference<Role>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "Reference<Permit>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    }
+  }
+}

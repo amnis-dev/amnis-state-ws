@@ -1,0 +1,22 @@
+{
+  "$id": "core-core",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "SliceKey": {
+      "type": "string",
+      "description": "A key string for a Redux slice."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "DateNumeric": {
+      "type": "number",
+      "description": "A string that represents a JSON Date."
+    },
+    "SURL": {
+      "type": "string",
+      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    }
+  }
+}

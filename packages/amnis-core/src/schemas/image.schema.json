@@ -1,0 +1,113 @@
+{
+  "$id": "core-image",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Image",
+  "definitions": {
+    "Image": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that have updated this."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "Author of the media"
+        },
+        "source": {
+          "$ref": "#/definitions/SURL",
+          "description": "The source url for the media."
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        }
+      },
+      "required": [
+        "$creator",
+        "$id",
+        "$owner",
+        "$updaters",
+        "aspect",
+        "committed",
+        "created",
+        "delete",
+        "height",
+        "size",
+        "source",
+        "title",
+        "updated",
+        "width"
+      ],
+      "additionalProperties": false
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "SURL": {
+      "type": "string",
+      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    }
+  }
+}

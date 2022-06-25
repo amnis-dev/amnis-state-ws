@@ -1,0 +1,117 @@
+{
+  "$id": "core-token",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TokenString": {
+      "type": "string",
+      "description": "String representation of a token that contains an encoded jwt."
+    },
+    "JWTEncoded": {
+      "type": "string",
+      "description": "String representation of a jwt encoded token."
+    },
+    "TokenApi": {
+      "type": "string",
+      "enum": [
+        "core",
+        "microsoft",
+        "twitter"
+      ],
+      "description": "Token issuers Core is used to identify self-owned tokens."
+    },
+    "TokenType": {
+      "type": "string",
+      "enum": [
+        "access",
+        "refresh"
+      ],
+      "description": "Token types."
+    },
+    "Token": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "$ref": "#/definitions/TokenApi",
+          "description": "Name of the API E.g. Twitter, MSGraph, Amnis, etc..."
+        },
+        "exp": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Expiration date."
+        },
+        "jwt": {
+          "$ref": "#/definitions/JWTEncoded",
+          "description": "Encoded value of the encoded jwt token."
+        },
+        "type": {
+          "$ref": "#/definitions/TokenType",
+          "description": "Type of token."
+        }
+      },
+      "required": [
+        "api",
+        "exp",
+        "jwt",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "An interface for a token."
+    },
+    "DateNumeric": {
+      "type": "number",
+      "description": "A string that represents a JSON Date."
+    },
+    "JWTDecoded": {
+      "type": "object",
+      "properties": {
+        "iss": {
+          "type": "string",
+          "description": "Issuer of the token."
+        },
+        "sub": {
+          "$ref": "#/definitions/Reference",
+          "description": "Subject identifier. (typically a user id)"
+        },
+        "exp": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Expiration numeric date."
+        },
+        "iat": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Issued-at numeric date."
+        },
+        "typ": {
+          "$ref": "#/definitions/TokenType",
+          "description": "Type of token."
+        },
+        "adm": {
+          "type": "boolean",
+          "description": "If this is considered an administrative token."
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CRole%3E"
+          },
+          "description": "Scope of permissions (role references)."
+        }
+      },
+      "required": [
+        "iss",
+        "sub",
+        "exp",
+        "typ",
+        "roles"
+      ],
+      "additionalProperties": false,
+      "description": "A decoded access token for core apps."
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "Reference<Role>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    }
+  }
+}

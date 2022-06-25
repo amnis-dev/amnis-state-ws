@@ -61,7 +61,7 @@
             "string",
             "null"
           ],
-          "description": "CoreUser password. A null password means another form of auth must be used.",
+          "description": "User password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "domain": {
@@ -75,7 +75,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CCoreRole%3E"
+            "$ref": "#/definitions/Reference%3CRole%3E"
           },
           "description": "Roles this user has been given."
         },
@@ -128,7 +128,7 @@
             "string",
             "null"
           ],
-          "description": "CoreUser password. A null password means another form of auth must be used.",
+          "description": "User password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "domain": {
@@ -142,7 +142,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CCoreRole%3E"
+            "$ref": "#/definitions/Reference%3CRole%3E"
           },
           "description": "Roles this user has been given."
         },
@@ -163,7 +163,7 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
-    "Reference<CoreRole>": {
+    "Reference<Role>": {
       "type": "string",
       "description": "A id reference to another document."
     },
@@ -244,7 +244,7 @@
     },
     "GrantString": {
       "type": "string",
-      "description": "CoreRole grant string."
+      "description": "Role grant string."
     },
     "EntityCreate<Session>": {
       "type": "object",
@@ -381,7 +381,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CCoreUser%3E",
+          "$ref": "#/definitions/Reference%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -435,7 +435,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CCoreUser%3E",
+          "$ref": "#/definitions/Reference%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -482,7 +482,7 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
-    "Reference<CoreUser>": {
+    "Reference<User>": {
       "type": "string",
       "description": "A id reference to another document."
     },
@@ -545,7 +545,7 @@
             "string",
             "null"
           ],
-          "description": "CoreUser password. A null password means another form of auth must be used.",
+          "description": "User password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "domain": {
@@ -559,7 +559,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CCoreRole%3E"
+            "$ref": "#/definitions/Reference%3CRole%3E"
           },
           "description": "Roles this user has been given."
         },
@@ -602,7 +602,7 @@
             "string",
             "null"
           ],
-          "description": "CoreUser password. A null password means another form of auth must be used.",
+          "description": "User password. A null password means another form of auth must be used.",
           "default": "null"
         },
         "domain": {
@@ -616,7 +616,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CCoreRole%3E"
+            "$ref": "#/definitions/Reference%3CRole%3E"
           },
           "description": "Roles this user has been given."
         },
@@ -783,7 +783,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CCoreUser%3E",
+          "$ref": "#/definitions/Reference%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -829,7 +829,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CCoreUser%3E",
+          "$ref": "#/definitions/Reference%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {

@@ -1,12 +1,63 @@
 {
-  "$id": "state-user",
+  "$id": "core-auth",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "User": {
-      "$ref": "#/definitions/CoreUser",
-      "description": "User information."
+    "DataScope": {
+      "type": "string",
+      "enum": [
+        "global",
+        "owned"
+      ],
+      "description": "Data scopes."
     },
-    "CoreUser": {
+    "Task": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2,
+        4,
+        8
+      ],
+      "description": "Data tasks."
+    },
+    "Grant": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/definitions/DataScope"
+        },
+        "task": {
+          "$ref": "#/definitions/Task"
+        }
+      },
+      "required": [
+        "key",
+        "scope",
+        "task"
+      ],
+      "additionalProperties": false,
+      "description": "Grant object."
+    },
+    "GrantString": {
+      "type": "string",
+      "description": "Role grant string."
+    },
+    "AuthScope": {
+      "$ref": "#/definitions/State%3CDataScope%3E",
+      "description": "A stateful mapping of data access scopes."
+    },
+    "State<DataScope>": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/DataScope"
+      },
+      "description": "An ambiguous state."
+    },
+    "Role": {
       "type": "object",
       "properties": {
         "$id": {
@@ -51,72 +102,40 @@
         },
         "name": {
           "type": "string",
-          "description": "Name for the user.",
-          "default": ""
+          "description": "Name of the license."
         },
-        "email": {
+        "description": {
           "type": "string",
-          "description": "Email address"
+          "description": "A brief description of the license."
         },
-        "emailVerified": {
-          "type": "boolean",
-          "description": "If the user email is verified."
-        },
-        "phone": {
+        "color": {
           "type": "string",
-          "description": "Phone number"
+          "description": "Color that represents this role."
         },
-        "phoneVerified": {
-          "type": "boolean",
-          "description": "If the user phone number is verified."
-        },
-        "password": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "description": "CoreUser password. A null password means another form of auth must be used.",
-          "default": "null"
-        },
-        "domain": {
-          "type": "string",
-          "description": "The domain this uer belongs to."
-        },
-        "admin": {
-          "type": "boolean",
-          "description": "If this is an administrative account."
-        },
-        "$roles": {
+        "grants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CCoreRole%3E"
+            "$ref": "#/definitions/GrantString"
           },
-          "description": "Roles this user has been given."
-        },
-        "$permits": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Reference%3CPermit%3E"
-          },
-          "description": "Special-case permits this user has been bestowed."
+          "description": "Permissions this license grants."
         }
       },
       "required": [
         "$creator",
         "$id",
         "$owner",
-        "$permits",
-        "$roles",
         "$updaters",
+        "color",
         "committed",
         "created",
         "delete",
+        "description",
+        "grants",
         "name",
-        "password",
         "updated"
       ],
       "additionalProperties": false,
-      "description": "Data associated to a CoreUser."
+      "description": "A license is a defined object for granting multiple permissions to perform actions or selections."
     },
     "Entity": {
       "type": "object",
@@ -183,62 +202,85 @@
       "type": "string",
       "description": "A string that represents a JSON Date."
     },
-    "Reference<CoreRole>": {
-      "type": "string",
-      "description": "A id reference to another document."
-    },
-    "Reference<Permit>": {
-      "type": "string",
-      "description": "A id reference to another document."
-    },
-    "UserMeta": {
-      "$ref": "#/definitions/Meta%3CUser%3E",
-      "description": "User collection meta data."
-    },
-    "Meta<User>": {
+    "Permit": {
       "type": "object",
       "properties": {
-        "active": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Reference%3CUser%3E"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The entity id referencing the active entity."
+        "$id": {
+          "$ref": "#/definitions/Reference",
+          "description": "Identifier for this entity.",
+          "default": ""
         },
-        "focused": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Reference%3CUser%3E"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The id representing a focused entity."
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
         },
-        "selection": {
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/Reference",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/Reference",
+          "description": "Possible user id creator of the entity."
+        },
+        "$updaters": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CUser%3E"
+            "$ref": "#/definitions/Reference"
           },
-          "description": "List of ids considered to be selected."
+          "description": "Entities that have updated this."
+        },
+        "$issuer": {
+          "$ref": "#/definitions/Reference",
+          "description": "Reference to the entity that issued this permit."
+        },
+        "$holder": {
+          "$ref": "#/definitions/Reference",
+          "description": "Owner of the permit that can perform the granted actions."
+        },
+        "$target": {
+          "$ref": "#/definitions/Reference",
+          "description": "Reference to the entity that the owner has been granted actions on."
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GrantString"
+          },
+          "description": "Grants this permit provides."
         }
       },
       "required": [
-        "active",
-        "focused",
-        "selection"
+        "$creator",
+        "$holder",
+        "$id",
+        "$issuer",
+        "$owner",
+        "$target",
+        "$updaters",
+        "committed",
+        "created",
+        "delete",
+        "grants",
+        "updated"
       ],
       "additionalProperties": false,
-      "description": "Meta information for an entity collection."
-    },
-    "Reference<User>": {
-      "type": "string",
-      "description": "A id reference to another document."
+      "description": "A permit is a list of grants for a specific reference ID."
     }
   }
 }
