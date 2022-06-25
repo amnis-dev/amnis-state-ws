@@ -18,7 +18,15 @@ export const userKey = 'user';
  * Manages the normalized entities.
  */
 export const userAdapter = createEntityAdapter<User>({
+  /**
+   * Identifiers are stored in the `$id` property.
+   */
   selectId: (entity) => entity.$id,
+
+  /**
+   * Sort by the user's name.
+   */
+  sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
 /**

@@ -7,3 +7,7 @@ export * from './session.types';
 export * from './user.types';
 export * from './profile.types';
 export * from './database.types';
+export * from './media.types';
+export * from './image.types';
+export * from './website.types';
+export * from './system.types';

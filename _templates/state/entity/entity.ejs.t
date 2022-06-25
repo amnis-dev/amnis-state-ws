@@ -21,7 +21,15 @@ export const <%= name %>Key = '<%= name %>';
  * Manages the normalized entities.
  */
 export const <%= name %>Adapter = createEntityAdapter<<%= Name %>>({
+  /**
+   * Identifiers are stored in the `$id` property.
+   */
   selectId: (entity) => entity.$id,
+
+  /**
+   * TODO: A sort comparer other than `$id` is ideal.
+   */
+  // sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
 /**

@@ -18,7 +18,15 @@ export const profileKey = 'profile';
  * Manages the normalized entities.
  */
 export const profileAdapter = createEntityAdapter<Profile>({
+  /**
+   * Identifiers are stored in the `$id` property.
+   */
   selectId: (entity) => entity.$id,
+
+  /**
+   * Sort by the profile's display name.
+   */
+  sortComparer: (a, b) => a.nameDisplay.localeCompare(b.nameDisplay),
 });
 
 /**

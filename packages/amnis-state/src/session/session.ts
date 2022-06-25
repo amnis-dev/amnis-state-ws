@@ -18,7 +18,15 @@ export const sessionKey = 'session';
  * Manages the normalized entities.
  */
 export const sessionAdapter = createEntityAdapter<Session>({
+  /**
+   * Identifiers are stored in the `$id` property.
+   */
   selectId: (entity) => entity.$id,
+
+  /**
+   * Sort by the session holder's name.
+   */
+  sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
 /**

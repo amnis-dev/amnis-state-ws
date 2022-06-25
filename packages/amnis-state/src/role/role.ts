@@ -18,7 +18,15 @@ export const roleKey = 'role';
  * Manages the normalized entities.
  */
 export const roleAdapter = createEntityAdapter<Role>({
+  /**
+   * Identifiers are stored in the `$id` property.
+   */
   selectId: (entity) => entity.$id,
+
+  /**
+   * Sort by the role's name.
+   */
+  sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
 /**
