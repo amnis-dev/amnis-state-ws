@@ -1,8 +1,10 @@
 import { sessionEncode } from '@amnis/auth/session';
-import { entityCreate } from '@amnis/core/index';
+import {
+  entityCreate,
+  userCreate,
+} from '@amnis/core/index';
 import {
   Profile,
-  User,
   Database,
   Insert,
   ResultCreate,
@@ -36,40 +38,19 @@ export async function register(
   } = options;
   const output = apiOutput();
 
-  if (password !== undefined && /^[A-Za-z0-9]*/.test(username)) {
-    output.status = 400; // Bad Request
-    output.json.errors.push({
-      title: 'Bad Username',
-      message: 'Usernames can only contain alphanumeric characters.',
-    });
-    return output;
-  } if (username.charAt(2) !== '#') {
-    output.status = 400; // Bad Request
-    output.json.errors.push({
-      title: 'Bad Username',
-      message: 'Username of passwordless accounts must have a hash character.',
-    });
-    return output;
-  }
-
-  const user = entityCreate<User>('user', {
+  const [user, logs] = userCreate({
     name: username,
     password: password || null,
-    $roles: [],
-    $permits: [],
+    email: options.email,
   });
 
-  /** */
-  if (typeof options.email === 'string') {
-    if (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(options.email)) {
-      user.email = options.email;
-    } else {
-      output.json.errors.push({
-        title: 'Bad Email',
-        message: 'Email address is not structured properly.',
-      });
-      return output;
-    }
+  /**
+   * If there were issues with the user creatios, there'll be logs.
+   */
+  if (logs.length > 0) {
+    output.status = 400; // Bad Request
+    output.json.logs = logs;
+    return output;
   }
 
   const profile = entityCreate<Profile>('profile', {

@@ -1,9 +1,9 @@
 {
-  "$id": "core-image",
+  "$id": "core-video",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$ref": "#/definitions/Image",
+  "$ref": "#/definitions/Video",
   "definitions": {
-    "Image": {
+    "Video": {
       "type": "object",
       "properties": {
         "$id": {
@@ -73,13 +73,13 @@
         "format": {
           "type": "string",
           "enum": [
-            "webp",
-            "jpeg",
-            "png",
-            "bmp",
-            "tiff"
+            "webm",
+            "mp4",
+            "mpeg",
+            "mov",
+            "H264"
           ],
-          "description": "image format type."
+          "description": "Video format type."
         },
         "width": {
           "type": "number",
@@ -92,6 +92,10 @@
         "aspect": {
           "type": "number",
           "description": "Aspect ratio calculation (width / height)."
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration length of the video in seconds."
         }
       },
       "required": [
@@ -103,6 +107,7 @@
         "committed",
         "created",
         "delete",
+        "duration",
         "format",
         "height",
         "size",

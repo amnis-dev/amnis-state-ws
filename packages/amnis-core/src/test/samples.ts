@@ -9,10 +9,11 @@ import type {
 import {
   grantStringify,
   task,
-} from '../core';
+} from '../grant';
 import {
   entityCreate,
 } from '../entity';
+import { userCreate } from '../user';
 
 function passCreateSync(plaintext: string): string {
   return hashSync(plaintext, 8);
@@ -52,29 +53,29 @@ const roles: Role[] = [
 ];
 
 const users: User[] = [
-  entityCreate('user', {
+  userCreate({
     name: 'Normie',
     email: 'normy@ecrow.dev',
     phone: '',
     password: passCreateSync('passwd1'),
     $roles: [roles[0].$id],
     $permits: [],
-  }, true),
-  entityCreate('user', {
+  })[0],
+  userCreate({
     name: 'Moddie',
     email: 'moddie@ecrow.dev',
     phone: '',
     password: passCreateSync('passwd2'),
     $roles: [roles[1].$id],
     $permits: [],
-  }, true),
-  entityCreate('user', {
+  })[0],
+  userCreate({
     name: 'Admy',
     email: 'admy@ecrow.dev',
     password: passCreateSync('passwd3'),
     $roles: [roles[2].$id],
     $permits: [],
-  }, true),
+  })[0],
 ];
 
 const profiles: Profile[] = [

@@ -1,10 +1,12 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { dateJSON, reference } from './core';
+import { regexReference, regexUuid } from './regex';
 import type {
   Entity,
   EntityExtension,
   EntityPartial,
   Reference,
+  ReID,
 } from './types';
 
 /**
@@ -80,7 +82,7 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
     if (prop === '$id' || !entityKeys.includes(prop)) {
       if (prop === '$id') {
         const [sKey, id] = (entity[prop] as string).split(':');
-        if (sKey === key && /^[A-Za-z0-9_-]{21,36}/.test(id)) {
+        if (sKey === key && regexUuid.test(id)) {
           value[prop] = entity[prop];
         } else {
           errored = true;
@@ -92,13 +94,13 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
       } else if (prop.charAt(0) === '$') {
         if (Array.isArray(entity[prop])) {
           (entity[prop] as string[]).every((id: string) => {
-            if (!/^[A-Za-z0-9_:-]{21,36}/.test(id)) {
+            if (!regexReference.test(id)) {
               errored = true;
               return false;
             }
             return true;
           });
-        } else if (!/^[A-Za-z0-9_:-]{21,36}/.test(entity[prop] as string)) {
+        } else if (!regexReference.test(entity[prop] as string)) {
           errored = true;
         }
         value[prop] = entity[prop];
@@ -112,8 +114,17 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
   return errored ? undefined : cleaned;
 }
 
-export default {
-  entityCreate,
-  entityUpdate,
-  entityClean,
-};
+/**
+ * ReIds an array of entities.
+ */
+export function reIdentify(entities: Entity[], reids: ReID[] | undefined): Entity[] {
+  const reIdEntities = entities.map((entity) => {
+    const reidsChecked = reids || [];
+    const reid = reidsChecked.find((value) => (value[0] === entity.$id));
+    if (reid) {
+      return { ...entity, $id: reid[1] };
+    }
+    return entity;
+  });
+  return reIdEntities;
+}

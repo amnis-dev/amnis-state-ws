@@ -114,10 +114,10 @@
       "description": "A common stateful result from API."
     },
     "ResultCreate": {
-      "$ref": "#/definitions/State%3Cdef-interface-941791441-165-1341-941791441-0-2496602488886%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cdef-interface-941791441-165-1341-941791441-0-2660602488886%5B%5D%3E",
       "description": "A common stateful result from creations. A state object with entities that were created."
     },
-    "State<def-interface-941791441-165-1341-941791441-0-2496602488886[]>": {
+    "State<def-interface-941791441-165-1341-941791441-0-2660602488886[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
@@ -189,7 +189,7 @@
       "description": "A string that represents a JSON Date."
     },
     "ResultRead": {
-      "$ref": "#/definitions/State%3Cdef-interface-941791441-165-1341-941791441-0-2496602488886%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cdef-interface-941791441-165-1341-941791441-0-2660602488886%5B%5D%3E",
       "description": "A common stateful result from readings. A state object with entities read from a source."
     },
     "UpdateEntity": {

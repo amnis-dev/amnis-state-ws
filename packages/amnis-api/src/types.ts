@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type {
-  DateJSON, JWTDecoded, ResultReID,
+  DateJSON, JWTDecoded, ResultReID, Log,
 } from '@amnis/core/index';
 
 /**
@@ -35,6 +35,11 @@ export interface ApiJSON<T = any> {
    * Possible error details.
    */
   errors: ApiError[];
+
+  /**
+   * Return logs.
+   */
+  logs: Log[];
 
   /**
    * Result data.

@@ -8,6 +8,7 @@ export function apiOutput<T = any>(): ApiOutput<T> {
     cookies: {},
     json: {
       errors: [],
+      logs: [],
       result: undefined,
       reids: {},
       expire: undefined,

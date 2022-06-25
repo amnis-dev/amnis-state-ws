@@ -6,13 +6,8 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import type { <%= Name %> } from '@amnis/core/types';
+import type { <%= Name %>, <%= name %>Key } from '@amnis/core/index';
 import type { <%= Name %>Meta } from './<%= name %>.types';
-
-/**
- * <%= Name %> slice key.
- */
-export const <%= name %>Key = '<%= name %>';
 
 /**
  * RTK <%= name %> adapter.

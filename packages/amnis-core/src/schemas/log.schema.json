@@ -1,65 +1,19 @@
 {
-  "$id": "core-website",
+  "$id": "core-log",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "WebsiteSocialType": {
+    "LogLevel": {
       "type": "string",
       "enum": [
-        "facebook",
-        "twitter",
-        "instagram",
-        "youtube",
-        "reddit",
-        "discord",
-        "twitch",
-        "steam",
-        "itchio"
+        "fatal",
+        "error",
+        "warn",
+        "info",
+        "debug"
       ],
-      "description": "Types of social networks available."
+      "description": "Log levels."
     },
-    "WebsiteSocial": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "$ref": "#/definitions/WebsiteSocialType"
-        },
-        "link": {
-          "$ref": "#/definitions/SURL"
-        }
-      },
-      "required": [
-        "type",
-        "link"
-      ],
-      "additionalProperties": false,
-      "description": "A social network object."
-    },
-    "SURL": {
-      "type": "string",
-      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
-    },
-    "WebsiteContacts": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "phone",
-        "email"
-      ],
-      "additionalProperties": false,
-      "description": "Contacts for the website."
-    },
-    "Website": {
+    "Log": {
       "type": "object",
       "properties": {
         "$id": {
@@ -102,43 +56,25 @@
           },
           "description": "Entities that have updated this."
         },
-        "name": {
-          "type": "string",
-          "description": "Name of the website."
-        },
-        "nameShort": {
-          "type": "string",
-          "description": "Possible name that is shorter."
-        },
-        "domain": {
-          "type": "string",
-          "description": "Domain name."
+        "level": {
+          "$ref": "#/definitions/LogLevel",
+          "description": "Level of the log."
         },
         "title": {
           "type": "string",
-          "description": "A title of the website."
+          "description": "Title of the log."
         },
-        "$logo": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
-          "description": "Reference to the image used for the logo."
+        "description": {
+          "type": "string",
+          "description": "Description of the log."
         },
-        "$favicon": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
-          "description": "Link the website's favicon"
+        "system": {
+          "type": "string",
+          "description": "System this log is from."
         },
-        "contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/WebsiteContacts"
-          },
-          "description": "Contacts that should be listed on the website."
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/WebsiteSocial"
-          },
-          "description": "List of the social network links."
+        "$invoker": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "Reference to a user that invoked the log."
         }
       },
       "required": [
@@ -147,15 +83,16 @@
         "$owner",
         "$updaters",
         "committed",
-        "contacts",
         "created",
         "delete",
-        "domain",
-        "name",
-        "socials",
+        "description",
+        "level",
+        "system",
+        "title",
         "updated"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "An entity object that contains log information."
     },
     "Entity": {
       "type": "object",
@@ -222,7 +159,7 @@
       "type": "string",
       "description": "A string that represents a JSON Date."
     },
-    "Reference<Image>": {
+    "Reference<User>": {
       "type": "string",
       "description": "A id reference to another document."
     }

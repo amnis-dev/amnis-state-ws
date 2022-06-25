@@ -1,8 +1,8 @@
 import { coreActions } from '@amnis/core/actions';
+import { userKey } from '@amnis/core/user';
 import {
   userInitialState,
   userSelectors,
-  userKey,
 } from './user';
 
 import { userStoreSetup } from './user.store';

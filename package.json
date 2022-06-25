@@ -77,6 +77,8 @@
     "start:client": "nodemon test/client",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
     "gen:schema": "ts-node -P scripts/tsconfig.json scripts/schema",
+    "gen:validators": "ts-node -P scripts/tsconfig.json scripts/validators",
+    "gen:code": "yarn gen:schema && yarn gen:validators",
     "set:version": "ts-node -P scripts/tsconfig.json scripts/version",
     "delete-node-modules": "npx rimraf ./**/node_modules"
   }

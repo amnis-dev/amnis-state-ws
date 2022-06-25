@@ -4,3 +4,4 @@ node_modules/
 dist/
 # Ignore js files
 # *.js
+validators/

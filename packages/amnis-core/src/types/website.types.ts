@@ -38,6 +38,11 @@ export interface Website extends Entity {
   nameShort?: string;
 
   /**
+   * Domain name.
+   */
+  domain: string;
+
+  /**
    * A title of the website.
    */
   title?: string;

@@ -38,11 +38,13 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
-          "default": ""
+          "maxLength": 64
         },
         "email": {
           "type": "string",
-          "description": "Email address"
+          "description": "Email address",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64
         },
         "emailVerified": {
           "type": "boolean",
@@ -50,7 +52,8 @@
         },
         "phone": {
           "type": "string",
-          "description": "Phone number"
+          "description": "Phone number",
+          "maxLength": 24
         },
         "phoneVerified": {
           "type": "boolean",
@@ -62,15 +65,24 @@
             "null"
           ],
           "description": "User password. A null password means another form of auth must be used.",
+          "minLength": 6,
+          "maxLength": 64,
           "default": "null"
         },
         "domain": {
           "type": "string",
-          "description": "The domain this uer belongs to."
+          "description": "The domain this user belongs to."
         },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeviceString"
+          },
+          "description": "Devices this user signs in with."
         },
         "$roles": {
           "type": "array",
@@ -90,6 +102,7 @@
       "required": [
         "$permits",
         "$roles",
+        "devices",
         "name",
         "password"
       ],
@@ -105,11 +118,13 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
-          "default": ""
+          "maxLength": 64
         },
         "email": {
           "type": "string",
-          "description": "Email address"
+          "description": "Email address",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64
         },
         "emailVerified": {
           "type": "boolean",
@@ -117,7 +132,8 @@
         },
         "phone": {
           "type": "string",
-          "description": "Phone number"
+          "description": "Phone number",
+          "maxLength": 24
         },
         "phoneVerified": {
           "type": "boolean",
@@ -129,15 +145,24 @@
             "null"
           ],
           "description": "User password. A null password means another form of auth must be used.",
+          "minLength": 6,
+          "maxLength": 64,
           "default": "null"
         },
         "domain": {
           "type": "string",
-          "description": "The domain this uer belongs to."
+          "description": "The domain this user belongs to."
         },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeviceString"
+          },
+          "description": "Devices this user signs in with."
         },
         "$roles": {
           "type": "array",
@@ -157,11 +182,16 @@
       "required": [
         "name",
         "password",
+        "devices",
         "$roles",
         "$permits"
       ],
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
+    },
+    "DeviceString": {
+      "type": "string",
+      "description": "A string that represents a device."
     },
     "Reference<Role>": {
       "type": "string",
@@ -522,11 +552,13 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
-          "default": ""
+          "maxLength": 64
         },
         "email": {
           "type": "string",
-          "description": "Email address"
+          "description": "Email address",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64
         },
         "emailVerified": {
           "type": "boolean",
@@ -534,7 +566,8 @@
         },
         "phone": {
           "type": "string",
-          "description": "Phone number"
+          "description": "Phone number",
+          "maxLength": 24
         },
         "phoneVerified": {
           "type": "boolean",
@@ -546,15 +579,24 @@
             "null"
           ],
           "description": "User password. A null password means another form of auth must be used.",
+          "minLength": 6,
+          "maxLength": 64,
           "default": "null"
         },
         "domain": {
           "type": "string",
-          "description": "The domain this uer belongs to."
+          "description": "The domain this user belongs to."
         },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeviceString"
+          },
+          "description": "Devices this user signs in with."
         },
         "$roles": {
           "type": "array",
@@ -579,11 +621,13 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
-          "default": ""
+          "maxLength": 64
         },
         "email": {
           "type": "string",
-          "description": "Email address"
+          "description": "Email address",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64
         },
         "emailVerified": {
           "type": "boolean",
@@ -591,7 +635,8 @@
         },
         "phone": {
           "type": "string",
-          "description": "Phone number"
+          "description": "Phone number",
+          "maxLength": 24
         },
         "phoneVerified": {
           "type": "boolean",
@@ -603,15 +648,24 @@
             "null"
           ],
           "description": "User password. A null password means another form of auth must be used.",
+          "minLength": 6,
+          "maxLength": 64,
           "default": "null"
         },
         "domain": {
           "type": "string",
-          "description": "The domain this uer belongs to."
+          "description": "The domain this user belongs to."
         },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeviceString"
+          },
+          "description": "Devices this user signs in with."
         },
         "$roles": {
           "type": "array",

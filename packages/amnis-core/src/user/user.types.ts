@@ -1,6 +1,7 @@
-import type { Reference } from './core.types';
-import type { Entity } from './entity.types';
-import type { Role, Permit } from './auth.types';
+import type { Reference } from '../types/core.types';
+import type { Entity } from '../types/entity.types';
+import type { Role, Permit } from '../types/auth.types';
+import type { DeviceString } from '../types/device.types';
 
 /**
  * Data associated to a User.
@@ -8,12 +9,15 @@ import type { Role, Permit } from './auth.types';
 export interface User extends Entity {
   /**
    * Name for the user.
-   * @default ""
+   * @maxLength 64
    */
   name: string;
 
   /**
    * Email address
+   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
+   * @maxLength 64
+   * @errorMessage "There was an email error"
    */
   email?: string;
 
@@ -24,6 +28,7 @@ export interface User extends Entity {
 
   /**
    * Phone number
+   * @maxLength 24
    */
   phone?: string;
 
@@ -35,12 +40,14 @@ export interface User extends Entity {
   /**
    * User password.
    * A null password means another form of auth must be used.
+   * @minLength 6
+   * @maxLength 64
    * @default null
    */
   password: string | null;
 
   /**
-   * The domain this uer belongs to.
+   * The domain this user belongs to.
    */
   domain?: string;
 
@@ -48,6 +55,11 @@ export interface User extends Entity {
    * If this is an administrative account.
    */
   admin?: boolean;
+
+  /**
+   * Devices this user signs in with.
+   */
+  devices: DeviceString[];
 
   /**
    * Roles this user has been given.

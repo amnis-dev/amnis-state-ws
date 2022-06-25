@@ -116,6 +116,12 @@ export type EntityCreate<E extends Entity> = EntityExtension<E> & E['$id'];
 export type EntityUpdate<E extends Entity> = EntityPartial<E> & E['$id'];
 
 /**
+ * Create an entity creation parameters.
+ */
+export type EntityExtensionCreate<E extends Entity, K extends keyof E> =
+ Pick<E, K> & Omit<EntityPartial<E>, K>;
+
+/**
  * An entity state.
  */
 export type MetaState<E extends Entity> = EntityState<E> & Meta<E>;

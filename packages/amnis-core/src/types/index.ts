@@ -11,3 +11,4 @@ export * from './media.types';
 export * from './image.types';
 export * from './website.types';
 export * from './system.types';
+export * from './log.types';

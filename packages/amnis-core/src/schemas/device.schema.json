@@ -1,0 +1,28 @@
+{
+  "$id": "core-device",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DeviceString": {
+      "type": "string",
+      "description": "A string that represents a device."
+    },
+    "Device": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string",
+          "description": "IP address of the device."
+        },
+        "system": {
+          "type": "string",
+          "description": "System of the device."
+        }
+      },
+      "required": [
+        "ip",
+        "system"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

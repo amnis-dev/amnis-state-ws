@@ -1,5 +1,6 @@
 import { EntityState } from '@reduxjs/toolkit';
-import { grantParse, tokenParse } from './core';
+import { tokenParse } from './core';
+import { grantParse } from './grant';
 import {
   State, Session, Token, TokenApi, TokenType, Meta, Entity, Reference, Role, Grant,
 } from './types';

@@ -1,12 +1,9 @@
-import { entityCreate, User } from '@amnis/core/index';
-import { userKey } from './user';
+import { userCreate } from '@amnis/core/index';
 
-export const userDefault: User = entityCreate<User>(userKey, {
+export const [userDefault] = userCreate({
   name: 'Unnamed',
   email: 'unset@amnis.dev',
   password: null,
-  $roles: [],
-  $permits: [],
 });
 
 export default userDefault;

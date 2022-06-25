@@ -56,7 +56,11 @@
         },
         "author": {
           "type": "string",
-          "description": "Author of the media"
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/Reference%3CProfile%3E",
+          "description": "Profile reference to the author."
         },
         "source": {
           "$ref": "#/definitions/SURL",
@@ -90,6 +94,10 @@
     "DateJSON": {
       "type": "string",
       "description": "A string that represents a JSON Date."
+    },
+    "Reference<Profile>": {
+      "type": "string",
+      "description": "A id reference to another document."
     },
     "SURL": {
       "type": "string",

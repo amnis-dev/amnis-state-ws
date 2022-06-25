@@ -2,22 +2,16 @@
 /* eslint-disable no-unused-expressions */
 import { nanoid } from '@reduxjs/toolkit';
 import {
-  DataScope,
   DateJSON,
   DateNumeric,
   SURL,
-  Entity,
-  Grant,
-  GrantString,
   Reference,
   TokenString,
   Token,
   TokenApi,
   TokenType,
   JWTEncoded,
-  Task,
   SliceKey,
-  ReID,
 } from './types';
 
 /**
@@ -91,82 +85,6 @@ export const referenceValidate = (ref: string): boolean => {
 };
 
 /**
- * ReIds an array of entities.
- */
-export function reIdentify(entities: Entity[], reids: ReID[] | undefined): Entity[] {
-  const reIdEntities = entities.map((entity) => {
-    const reidsChecked = reids || [];
-    const reid = reidsChecked.find((value) => (value[0] === entity.$id));
-    if (reid) {
-      return { ...entity, $id: reid[1] };
-    }
-    return entity;
-  });
-  return reIdEntities;
-}
-
-/**
- * Converts a grant to string format.
- */
-export function grantStringify(grant: Grant): GrantString {
-  return `${grant.key}:${grant.scope}:${grant.task}`;
-}
-
-/**
- * Converts a grant string to a grant object.
- */
-export function grantParse(grant: GrantString): Grant | undefined {
-  const [key, scope, tasks] = grant.split(':');
-
-  if (typeof key !== 'string') {
-    return undefined;
-  }
-
-  if (typeof scope !== 'string') {
-    return undefined;
-  }
-
-  if (!['global', 'owned'].includes(scope)) {
-    return undefined;
-  }
-
-  const taskValue: Task = parseInt(tasks, 10);
-
-  if (typeof taskValue !== 'number') {
-    return undefined;
-  }
-
-  if (taskValue < 0 || taskValue > 15) {
-    return undefined;
-  }
-
-  return {
-    key,
-    scope: scope as DataScope,
-    task: taskValue,
-  };
-}
-
-/**
- * Creates a task integer from an array.
- */
-export function task(
-  create: number,
-  read: number,
-  update: number,
-  remove: number,
-): number {
-  let value = Task.None;
-
-  create && (value |= Task.Create);
-  read && (value |= Task.Read);
-  update && (value |= Task.Update);
-  remove && (value |= Task.Delete);
-
-  return value;
-}
-
-/**
  * Converts a token to string format.
  */
 export function tokenStringify(token: Token): TokenString {
@@ -202,15 +120,3 @@ export function tokenParse(tokenString: TokenString): Token | undefined {
     exp: parseInt(exp, 10) as DateNumeric,
   };
 }
-
-export default {
-  noop,
-  reference,
-  surl,
-  dateJSON,
-  dateNumeric,
-  grantStringify,
-  grantParse,
-  tokenStringify,
-  tokenParse,
-};

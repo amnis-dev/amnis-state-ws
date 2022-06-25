@@ -1,5 +1,5 @@
 import {
-  entityCreate, Session, User, Profile,
+  userCreate, Session, User, Profile,
 } from '@amnis/core/index';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
@@ -15,14 +15,11 @@ const appStore = storeSetup();
  * Add a test user to the database.
  */
 const users: User[] = [
-  entityCreate('user', {
+  userCreate({
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
-    phone: '',
     password: passCreateSync('passwd1'),
-    $roles: [],
-    $permits: [],
-  }),
+  })[0],
 ];
 
 const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
