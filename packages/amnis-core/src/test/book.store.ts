@@ -3,9 +3,9 @@ import {
   createSlice,
   configureStore,
 } from '@reduxjs/toolkit';
-import type { Entity, Meta } from '../types';
+import type { Entity, Meta } from '../entity';
 import { coreExtraReducers, coreReducers } from '../reducers';
-import { entityCreate } from '../entity';
+import { entityCreate } from '../entity/entity';
 
 export interface Book extends Entity {
   title: string;

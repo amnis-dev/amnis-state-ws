@@ -1,8 +1,10 @@
 import fetch from 'cross-fetch';
-import { dateNumeric } from '@amnis/core/core';
-import {
-  Database, JWTEncoded, ResultCreate, Token,
-} from '@amnis/core/types';
+
+import { dateNumeric } from '@amnis/core/index';
+import type { Database } from '@amnis/core/types/database.types';
+import type { JWTEncoded, Token } from '@amnis/core/token';
+import type { ResultCreate } from '@amnis/core/state';
+
 import { jwtDecode } from '@amnis/auth/token';
 import type { ApiAuthPkce } from './auth.types';
 import { API_MICROSOFT_OAUTH2_URL } from '../const';

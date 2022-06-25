@@ -1,5 +1,9 @@
 import type { Store } from '@reduxjs/toolkit';
-import type { Database, JWTEncoded, ResultCreate } from '@amnis/core/types';
+
+import type { JWTEncoded } from '@amnis/core/token';
+import { ResultCreate } from '@amnis/core/state';
+import { Database } from '@amnis/core/types/database.types';
+
 import type {
   ApiProcess,
   ApiProcesses,

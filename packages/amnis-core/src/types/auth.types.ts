@@ -1,42 +1,12 @@
-import type { Reference } from './core.types';
-import type { Entity } from './entity.types';
-import { State } from './state.types';
-
-/**
- * Data scopes.
- */
-export type DataScope = 'global' | 'owned';
-
-/**
-  * Data tasks.
-  */
-// eslint-disable-next-line no-shadow
-export enum Task {
-  None = 0,
-  Create = 1,
-  Read = 2,
-  Update = 4,
-  Delete = 8,
-}
-
-/**
- * Grant object.
- */
-export type Grant = {
-  key: string;
-  scope: DataScope;
-  task: Task;
-};
-
-/**
- * Role grant string.
- */
-export type GrantString = string;
+import type { Reference } from '../types';
+import type { Entity } from '../entity/entity.types';
+import type { State } from '../state';
+import type { GrantScope, GrantString } from '../grant';
 
 /**
  * A stateful mapping of data access scopes.
  */
-export type AuthScope = State<DataScope>;
+export type AuthScope = State<GrantScope>;
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.

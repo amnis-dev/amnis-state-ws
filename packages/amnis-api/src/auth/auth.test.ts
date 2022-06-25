@@ -1,6 +1,8 @@
 import {
-  userCreate, Session, User, Profile,
-} from '@amnis/core/index';
+  userCreate, User,
+} from '@amnis/core/user';
+import type { Session } from '@amnis/core/session';
+import type { Profile } from '@amnis/core/profile';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';

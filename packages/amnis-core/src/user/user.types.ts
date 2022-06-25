@@ -1,7 +1,7 @@
-import type { Reference } from '../types/core.types';
-import type { Entity } from '../types/entity.types';
+import type { Reference } from '../types';
+import type { Entity } from '../entity';
 import type { Role, Permit } from '../types/auth.types';
-import type { DeviceString } from '../types/device.types';
+import type { DeviceString } from '../device';
 
 /**
  * Data associated to a User.
@@ -9,6 +9,7 @@ import type { DeviceString } from '../types/device.types';
 export interface User extends Entity {
   /**
    * Name for the user.
+   * @minLength 3
    * @maxLength 64
    */
   name: string;
@@ -58,16 +59,20 @@ export interface User extends Entity {
 
   /**
    * Devices this user signs in with.
+   * @maxLength 253
+   * @default []
    */
   devices: DeviceString[];
 
   /**
    * Roles this user has been given.
+   * @default []
    */
   readonly $roles: Reference<Role>[];
 
   /**
    * Special-case permits this user has been bestowed.
+   * @default []
    */
   readonly $permits: Reference<Permit>[];
 }

@@ -1,7 +1,7 @@
-import type { Grant } from './types';
+import type { Grant } from './grant';
 import {
   grantStringify, grantParse, task,
-} from './grant';
+} from './grant/grant';
 
 const grant: Grant = {
   key: 'key',

@@ -3,7 +3,7 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import { User, userKey } from '@amnis/core/index';
+import { User, userKey } from '@amnis/core/user';
 import type { UserMeta } from './user.types';
 
 /**

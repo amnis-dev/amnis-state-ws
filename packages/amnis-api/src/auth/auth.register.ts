@@ -1,15 +1,11 @@
 import { sessionEncode } from '@amnis/auth/session';
-import {
-  entityCreate,
-  userCreate,
-} from '@amnis/core/index';
-import {
-  Profile,
-  Database,
-  Insert,
-  ResultCreate,
-  Token,
-} from '@amnis/core/types';
+import { logCreate } from '@amnis/core/log';
+import { profileCreate } from '@amnis/core/profile';
+import { Insert, ResultCreate } from '@amnis/core/state';
+import { Token } from '@amnis/core/token';
+import { Database } from '@amnis/core/types/database.types';
+import { userCreate } from '@amnis/core/user';
+
 import { apiOutput } from '../api';
 import { ApiOutput } from '../types';
 import { sessionCreate } from './auth.protility';
@@ -38,25 +34,31 @@ export async function register(
   } = options;
   const output = apiOutput();
 
-  const [user, logs] = userCreate({
+  const logs = [];
+
+  const [user, userLogs] = userCreate({
     name: username,
     password: password || null,
     email: options.email,
   });
 
+  logs.push(...userLogs);
+
+  const [profile, profileLogs] = profileCreate({
+    $user: user.$id,
+    nameDisplay: nameDisplay || username,
+  });
+
+  logs.push(...profileLogs);
+
   /**
-   * If there were issues with the user creatios, there'll be logs.
+   * If there were issues with the creations, there'll be logs.
    */
   if (logs.length > 0) {
     output.status = 400; // Bad Request
     output.json.logs = logs;
     return output;
   }
-
-  const profile = entityCreate<Profile>('profile', {
-    $user: user.$id,
-    nameDisplay: nameDisplay || username,
-  });
 
   const insertion: Insert = {
     user: [user],
@@ -77,6 +79,14 @@ export async function register(
     output.json.result.session = [session];
     output.cookies.session = sessionEncode(session);
   }
+
+  output.json.logs.push(
+    logCreate({
+      level: 'success',
+      title: 'Registration Successful',
+      description: 'A new account has been created.',
+    }),
+  );
 
   return output;
 }

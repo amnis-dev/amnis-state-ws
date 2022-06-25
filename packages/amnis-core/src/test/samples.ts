@@ -1,19 +1,23 @@
 import {
   hashSync,
 } from 'bcrypt';
+import {
+  User,
+  userCreate,
+} from '../user';
+import {
+  Profile,
+} from '../profile';
 import type {
   Role,
-  User,
-  Profile,
 } from '../types';
 import {
   grantStringify,
   task,
-} from '../grant';
+} from '../grant/grant';
 import {
   entityCreate,
-} from '../entity';
-import { userCreate } from '../user';
+} from '../entity/entity';
 
 function passCreateSync(plaintext: string): string {
   return hashSync(plaintext, 8);

@@ -4,7 +4,7 @@ module.exports = {
       {
         type: 'input',
         name: 'name',
-        message: 'Name of the new Entity Slice?',
+        message: 'Name of the new entity slice?',
       },
     ];
 

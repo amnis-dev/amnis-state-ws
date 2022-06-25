@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { entityCreate } from './entity';
+import { entityCreate } from './entity/entity';
 import {
   Entity, EntityExtension, Remove, EntityPartial,
 } from './types';

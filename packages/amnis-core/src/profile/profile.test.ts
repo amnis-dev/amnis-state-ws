@@ -1,0 +1,29 @@
+import { reference } from '../core';
+import { userKey } from '../user';
+import { profileKey, profileCreate } from './profile';
+
+/**
+ * ============================================================
+ */
+test('profile key should be is properly set', () => {
+  expect(profileKey).toEqual('profile');
+});
+
+/**
+ * ============================================================
+ */
+test('should create a profile', () => {
+  const [profile, logs] = profileCreate({
+    nameDisplay: 'Newbie',
+    $user: reference(userKey),
+  });
+
+  expect(profile).toEqual(
+    expect.objectContaining({
+      nameDisplay: expect.any(String),
+      $user: expect.any(String),
+    }),
+  );
+
+  expect(logs).toHaveLength(0);
+});

@@ -6,15 +6,15 @@ import {
 } from '@reduxjs/toolkit';
 import {
   entityCreate,
-} from './entity';
+} from './entity/entity';
 import { coreActions } from './actions';
 import type {
   Entity,
   EntityExtension,
   EntityPartial,
   MetaState,
-  Reference,
-} from './types';
+} from './entity';
+import { Reference } from './types';
 
 export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapter<E>) {
   return {

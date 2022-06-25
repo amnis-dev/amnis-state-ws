@@ -20,23 +20,28 @@ typeSchemaFiles.forEach((filePath) => {
   fse.writeJSONSync(`${dir}/${prefix}.schema.json`, schema, { spaces: 2 });
 });
 
-const coreSchemaFiles = glob.sync('./packages/amnis-core/src/types/*.types.ts', {
-  nodir: true,
-  ignore: './**/node_modules/**',
-});
+// const coreSchemaFiles = glob.sync('./packages/amnis-core/src/user/*.types.ts', {
+//   nodir: true,
+//   ignore: './**/node_modules/**',
+// });
 
-coreSchemaFiles.every((filePath) => {
-  // const dir = path.dirname(filePath);
-  const prefix = path.basename(filePath).split('.')[0];
-  if (prefix === 'database') {
-    return true;
-  }
-  const schema = createGenerator({
-    schemaId: `core-${prefix}`,
-    path: filePath,
-    tsconfig: 'tsconfig.json',
-    type: prefix.charAt(0).toUpperCase() + prefix.slice(1),
-  }).createSchema('*');
-  fse.writeJSONSync(`./packages/amnis-core/src/schemas/${prefix}.schema.json`, schema, { spaces: 2 });
-  return true;
-});
+// coreSchemaFiles.every((filePath) => {
+//   // const dir = path.dirname(filePath);
+//   const prefix = path.basename(filePath).split('.')[0];
+//   if (prefix === 'database') {
+//     return true;
+//   }
+//   const schema = createGenerator({
+//     schemaId: `core-${prefix}`,
+//     path: filePath,
+//     tsconfig: 'tsconfig.json',
+//     type: prefix.charAt(0).toUpperCase() + prefix.slice(1),
+//     expose: 'none',
+//   }).createSchema('*');
+//   fse.writeJSONSync(
+//     `./packages/amnis-core/src/user/${prefix}.schema.json`,
+//     schema,
+//     { spaces: 2 },
+//   );
+//   return true;
+// });

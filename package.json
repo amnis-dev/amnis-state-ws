@@ -75,6 +75,7 @@
     "test:root:normie": "jest test/normie.test.ts",
     "test:watch": "yarn test --watch",
     "start:client": "nodemon test/client",
+    "gen:core": "hygen state core --path packages/amnis-core/src",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
     "gen:schema": "ts-node -P scripts/tsconfig.json scripts/schema",
     "gen:validators": "ts-node -P scripts/tsconfig.json scripts/validators",

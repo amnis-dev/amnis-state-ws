@@ -2,10 +2,10 @@ import { deviceParse } from '../device';
 import { entityCreate } from '../entity';
 import { logCreate } from '../log';
 import { regexAlphanumeric, regexEmail } from '../regex';
-import { DeviceString } from '../types/device.types';
-import type { EntityExtension, EntityExtensionCreate } from '../types/entity.types';
-import { Log } from '../types/log.types';
-import type { User } from '../types/user.types';
+import type { DeviceString } from '../device';
+import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
+import type { Log } from '../log';
+import type { User } from './user.types';
 
 export const userKey = 'user';
 
@@ -35,6 +35,16 @@ export function userValidate(user: User): Log[] {
         level: 'error',
       }),
     );
+
+    if (user.name.length > 32) {
+      logs.push(
+        logCreate({
+          title: 'Invalid Username',
+          description: 'The username is too long.',
+          level: 'error',
+        }),
+      );
+    }
   }
 
   if (user.password === null && user.name.charAt(2) !== '#') {
@@ -75,13 +85,17 @@ export function userValidate(user: User): Log[] {
  */
 export function userCreate(
   user: EntityExtensionCreate<User, 'name'>,
+  validationSkip = false,
 ): [User, Log[]] {
   const userEntity = entityCreate<User>(userKey, {
     ...userBase,
     ...user,
   });
 
-  const logs = userValidate(userEntity);
+  const logs: Log[] = [];
+  if (!validationSkip) {
+    logs.push(...userValidate(userEntity));
+  }
 
   return [userEntity, logs];
 }
