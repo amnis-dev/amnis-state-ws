@@ -1,6 +1,7 @@
 // import { reference, entityCreate } from '@amnis/core/core';
 import { samples } from '@amnis/core/test/samples';
-import { Database, ResultCreate } from '@amnis/core/types';
+import type { ResultCreate } from '@amnis/core/state';
+import type { Database } from '@amnis/db/types';
 import {
   profileKey, roleKey, userKey,
 } from '@amnis/state/index';

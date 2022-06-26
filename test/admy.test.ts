@@ -18,6 +18,7 @@ import {
   Profile,
   profileSelectors,
   profileKey,
+  userCreate,
 } from '@amnis/state/index';
 
 import { passCreateSync } from '@amnis/auth/pass';
@@ -131,14 +132,11 @@ test('user create global should be +ALLOWED+ as Admy via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       user: [
-        {
+        userCreate({
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
           password: passCreateSync('passwd0'),
-          devices: [],
-          $roles: [],
-          $permits: [],
-        },
+        })[0],
       ],
     }),
   );

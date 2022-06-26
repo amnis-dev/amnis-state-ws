@@ -1,5 +1,4 @@
-import { Session } from '@amnis/core/types';
-// import { serialize, parse } from 'cookie';
+import { Session } from '@amnis/core/session';
 import jwt from 'jsonwebtoken';
 import { AUTH_SESSION_SECRET } from './const';
 

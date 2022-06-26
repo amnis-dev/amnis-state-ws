@@ -1,4 +1,4 @@
-import { Result } from '@amnis/core/types';
+import { Result } from '@amnis/core/state';
 import type {
   ApiProcess,
   ApiProcesses,
