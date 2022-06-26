@@ -6,6 +6,7 @@
   ],
   "include": ["src/**/*.ts"],
   "references": [
-      { "path": "../amnis-core/tsconfig.json" }
+      { "path": "../amnis-core/tsconfig.json" },
+      { "path": "../amnis-auth/tsconfig.json" }
   ]
 }

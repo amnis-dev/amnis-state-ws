@@ -1,4 +1,5 @@
-import type { System, Meta } from '@amnis/core/types';
+import type { Meta } from '@amnis/core/entity';
+import type { System } from '@amnis/core/system';
 
 /**
  * System collection meta data.
