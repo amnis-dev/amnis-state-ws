@@ -16,5 +16,6 @@ test('Handler should work.', async () => {
     errors: [],
     result: { data: null },
     reids: {},
+    logs: [],
   });
 });

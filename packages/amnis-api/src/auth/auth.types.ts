@@ -2,7 +2,7 @@ import type { Store } from '@reduxjs/toolkit';
 
 import type { JWTEncoded } from '@amnis/core/token';
 import { ResultCreate } from '@amnis/core/state';
-import { Database } from '@amnis/core/types/database.types';
+import type { Database } from '@amnis/db/index';
 
 import type {
   ApiProcess,

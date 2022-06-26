@@ -1,7 +1,7 @@
-import type { Role } from '../types/auth.types';
+import type { Role } from '../role';
 import type { Reference } from '../types';
-import { Entity } from '../entity/entity.types';
-import { Website } from '../website/website.types';
+import type { Entity } from '../entity';
+import type { Website } from '../website';
 
 export interface System extends Entity {
   /**

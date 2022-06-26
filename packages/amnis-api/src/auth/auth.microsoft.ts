@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch';
 
 import { dateNumeric } from '@amnis/core/index';
-import type { Database } from '@amnis/core/types/database.types';
+import type { Database } from '@amnis/db/index';
 import type { JWTEncoded, Token } from '@amnis/core/token';
 import type { ResultCreate } from '@amnis/core/state';
 

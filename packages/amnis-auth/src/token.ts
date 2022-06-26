@@ -1,4 +1,4 @@
-import type { JWTDecoded, JWTEncoded } from '@amnis/core/types';
+import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
 import jwt from 'jsonwebtoken';
 import { AUTH_TOKEN_SECRET } from './const';
 

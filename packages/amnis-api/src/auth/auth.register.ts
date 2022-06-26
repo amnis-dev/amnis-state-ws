@@ -3,7 +3,7 @@ import { logCreate } from '@amnis/core/log';
 import { profileCreate } from '@amnis/core/profile';
 import { Insert, ResultCreate } from '@amnis/core/state';
 import { Token } from '@amnis/core/token';
-import { Database } from '@amnis/core/types/database.types';
+import type { Database } from '@amnis/db/index';
 import { userCreate } from '@amnis/core/user';
 
 import { apiOutput } from '../api';

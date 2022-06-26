@@ -1,8 +1,8 @@
-import { Profile, entityCreate, reference } from '@amnis/core/index';
-import { userKey } from '../user';
-import { profileKey } from './profile';
+import { userKey } from '@amnis/core/user';
+import { profileCreate } from '@amnis/core/profile';
+import { reference } from '@amnis/core/index';
 
-export const profileDefault: Profile = entityCreate<Profile>(profileKey, {
+export const [profileDefault] = profileCreate({
   $user: reference(userKey, ''),
   nameDisplay: 'Unnamed',
 });

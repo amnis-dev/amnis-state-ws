@@ -3,15 +3,10 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import { System } from '@amnis/core/types';
+import { System, systemKey } from '@amnis/core/system';
 import type {
   SystemMeta,
 } from './system.types';
-
-/**
- * System slice key.
- */
-export const systemKey = 'system';
 
 /**
  * RTK system adapter.

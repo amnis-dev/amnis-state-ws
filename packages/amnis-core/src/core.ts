@@ -6,7 +6,6 @@ import type {
   DateNumeric,
   SURL,
   Reference,
-  SliceKey,
 } from './types';
 
 /**
@@ -18,11 +17,6 @@ export const noop = () => { /** No operation. */ };
  * Create a reference to another type.
  */
 export const reference = <T>(key: string, id = nanoid()) => `${key}:${id}` as Reference<T>;
-
-/**
- * Create a slice key.
- */
-export const sliceKey = (key: string) => key as SliceKey;
 
 /**
  * Creates a string URL (aka SURL).

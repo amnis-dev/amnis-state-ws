@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { ActionReducerMapBuilder, EntityAdapter } from '@reduxjs/toolkit';
-import type { Entity, MetaState } from '@amnis/core/index';
+import type { Entity, MetaState } from '@amnis/core/entity';
 import { apiAuth } from './auth';
 import { apiCrud } from './crud';
 

@@ -8,8 +8,8 @@ import type { Entity } from '../entity';
 export type State<ReducerState = any> = Record<string, ReducerState>;
 
 /**
-  * Filter object for a query.
-  */
+ * Filter object for a query.
+ */
 export interface Filter {
   /**
     * Matches values that are equal to a specified value.

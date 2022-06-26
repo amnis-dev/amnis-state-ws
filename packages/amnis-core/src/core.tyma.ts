@@ -1,6 +1,6 @@
 import {
   Insert, Modify, Remove, Select,
-} from './types';
+} from './state';
 
 export interface Core {
   insert?: Insert,

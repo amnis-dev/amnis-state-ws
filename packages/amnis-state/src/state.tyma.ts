@@ -1,11 +1,8 @@
-import type {
-  EntityCreate,
-  EntityUpdate,
-  User,
-  Role,
-  Session,
-  Profile,
-} from '@amnis/core/index';
+import type { EntityCreate, EntityUpdate } from '@amnis/core/entity';
+import type { Profile } from '@amnis/core/profile';
+import type { Role } from '@amnis/core/role';
+import type { Session } from '@amnis/core/session';
+import type { User } from '@amnis/core/user';
 
 export interface StateCreate {
   user?: EntityCreate<User>[];

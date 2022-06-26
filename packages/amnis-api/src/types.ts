@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
-import type {
-  DateJSON, JWTDecoded, ResultReID, Log,
-} from '@amnis/core/index';
+import type { DateJSON } from '@amnis/core/index';
+import type { JWTDecoded } from '@amnis/core/token';
+import type { Log } from '@amnis/core/log';
 
 /**
  * An API error repsonse.
@@ -49,7 +49,7 @@ export interface ApiJSON<T = any> {
   /**
    * Possible ID remapping.
    */
-  reids: ResultReID;
+  reids: Record<string, unknown>;
 
   /**
    * Session expiration date-time.

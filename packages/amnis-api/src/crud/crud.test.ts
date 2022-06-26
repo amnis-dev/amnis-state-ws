@@ -5,11 +5,11 @@ import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
 import { dateNumeric, reference } from '@amnis/core/core';
-import {
-  JWTDecoded, ResultCreate,
-} from '@amnis/core/types';
+import type { ResultCreate } from '@amnis/core/state';
+import type { JWTDecoded } from '@amnis/core/token';
+
+import type { ApiInput } from '../types';
 import { apiCrudProcesses } from './crud.process';
-import { ApiInput } from '../types';
 
 const appStore = storeSetup();
 
@@ -113,12 +113,12 @@ test('Handler should read entities.', async () => {
   });
 
   expect(
-    output.json,
-  ).toEqual({
-    errors: [],
-    result: { [bookKey]: [books[0]] },
-    reids: {},
-  });
+    output.json.result,
+  ).toEqual({ [bookKey]: [books[0]] });
+
+  expect(
+    output.json.logs,
+  ).toHaveLength(0);
 });
 
 /**
@@ -151,6 +151,7 @@ test('Handler should NOT read entities that do not exist.', async () => {
     errors: [],
     result: { [bookKey]: [] },
     reids: {},
+    logs: [],
   });
 });
 
@@ -183,5 +184,6 @@ test('Handler should be able to update existing entities.', async () => {
     errors: [],
     result: { [bookKey]: [{ ...books[1], title: 'Magic Tree House' }] },
     reids: {},
+    logs: [],
   });
 });

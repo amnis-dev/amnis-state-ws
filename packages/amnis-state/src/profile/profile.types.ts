@@ -1,6 +1,5 @@
-import type {
-  Profile, Meta,
-} from '@amnis/core/types';
+import type { Meta } from '@amnis/core/entity';
+import type { Profile } from '@amnis/core/profile';
 
 /**
  * Profile collection meta data.

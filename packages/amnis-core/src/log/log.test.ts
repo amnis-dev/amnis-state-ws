@@ -11,15 +11,17 @@ test('log key should be is properly set', () => {
  * ============================================================
  */
 test('should create a log', () => {
-  const [log, logs] = logCreate({
-    prop: null,
+  const log = logCreate({
+    title: '',
+    description: '',
+    level: 'error',
   });
 
   expect(log).toEqual(
     expect.objectContaining({
-      prop: null,
+      title: expect.any(String),
+      description: expect.any(String),
+      level: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

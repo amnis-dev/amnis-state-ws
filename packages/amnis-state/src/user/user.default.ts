@@ -1,4 +1,4 @@
-import { userCreate } from '@amnis/core/index';
+import { userCreate } from '@amnis/core/user';
 
 export const [userDefault] = userCreate({
   name: 'Unnamed',

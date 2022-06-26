@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { ResultCreate } from '@amnis/core/types';
+import { ResultCreate } from '@amnis/core/state';
 import { API_AUTH_URL } from '../const';
 import {
   apiQueries,

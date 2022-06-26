@@ -2,7 +2,7 @@ import type {
   PayloadEntityCreate,
   PayloadEntityUpdate,
 } from '@amnis/core/actions';
-import type { Remove, Select } from '@amnis/core/types';
+import type { Remove, Select } from '@amnis/core/state';
 import type {
   ApiCrudQueries,
 } from './crud.types';

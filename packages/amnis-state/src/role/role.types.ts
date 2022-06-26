@@ -1,4 +1,5 @@
-import type { Role, Meta } from '@amnis/core/types';
+import type { Meta } from '@amnis/core/entity';
+import type { Role } from '@amnis/core/role';
 
 /**
  * Role collection meta data.

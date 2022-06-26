@@ -8,7 +8,7 @@ import type {
   ResultUpdate,
   Select,
   State,
-} from '@amnis/core/types';
+} from '@amnis/core/state';
 import fetch, { Headers, Request } from 'cross-fetch';
 import { selectors } from '@amnis/core/selectors';
 import { API_CRUD_URL } from '../const';

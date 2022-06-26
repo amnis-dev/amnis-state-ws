@@ -1,4 +1,5 @@
-import type { Session, Meta } from '@amnis/core/types';
+import type { Meta } from '@amnis/core/entity';
+import type { Session } from '@amnis/core/session';
 
 /**
  * Session collection meta data.

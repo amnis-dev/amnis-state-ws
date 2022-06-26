@@ -1,5 +1,5 @@
-import { Entity } from '../entity/entity.types';
 import type { Reference, DateNumeric, SURL } from '../types';
+import type { Entity } from '../entity';
 import type { TokenString } from '../token';
 
 /**

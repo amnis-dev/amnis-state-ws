@@ -1,7 +1,8 @@
 import type { Reference } from '../types';
 import type { Entity } from '../entity';
-import type { Role, Permit } from '../types/auth.types';
+import type { Permit } from '../permit';
 import type { DeviceString } from '../device';
+import type { Role } from '../role';
 
 /**
  * Data associated to a User.

@@ -1,4 +1,5 @@
-import { AuthScope, Grant, Task } from '@amnis/core/types';
+import { Grant, Task } from '@amnis/core/grant';
+import { AuthScope } from './types';
 
 /**
  * Creates a auth scope object from an array of grants.

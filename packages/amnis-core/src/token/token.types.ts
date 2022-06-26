@@ -1,4 +1,4 @@
-import { Role } from '../types/auth.types';
+import type { Role } from '../role';
 import type { Reference, DateNumeric } from '../types';
 
 /**

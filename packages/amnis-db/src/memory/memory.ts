@@ -1,13 +1,13 @@
-import {
-  Entity,
+import type { Entity } from '@amnis/core/entity';
+import type {
   State,
-  Database,
   ResultCreate,
   ResultRead,
   ResultUpdate,
   ResultDelete,
   UpdateEntity,
-} from '@amnis/core/index';
+} from '@amnis/core/state';
+import type { Database } from '../types';
 
 /**
  * Storage type.

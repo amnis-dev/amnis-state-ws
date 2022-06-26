@@ -5,9 +5,10 @@ import coreSchema from '@amnis/core/core.schema.json';
 import { selectors } from '@amnis/core/selectors';
 import { authwall } from '@amnis/auth/authwall';
 import { authScopeCreate } from '@amnis/auth/scope';
-import { State, Task } from '@amnis/core/types';
-import { entityClean, entityCreate } from '@amnis/core/index';
+import { State } from '@amnis/core/state';
+import { entityClean, entityCreate } from '@amnis/core/entity';
 import { coreActions } from '@amnis/core/actions';
+import { Task } from '@amnis/core/grant';
 import type {
   ApiCrudProcesses,
   ApiCrudProcessesParams,

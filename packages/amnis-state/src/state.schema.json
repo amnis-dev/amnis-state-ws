@@ -38,6 +38,7 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
+          "minLength": 3,
           "maxLength": 64
         },
         "email": {
@@ -82,21 +83,25 @@
           "items": {
             "$ref": "#/definitions/DeviceString"
           },
-          "description": "Devices this user signs in with."
+          "description": "Devices this user signs in with.",
+          "maxLength": 253,
+          "default": []
         },
         "$roles": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CRole%3E"
           },
-          "description": "Roles this user has been given."
+          "description": "Roles this user has been given.",
+          "default": []
         },
         "$permits": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CPermit%3E"
           },
-          "description": "Special-case permits this user has been bestowed."
+          "description": "Special-case permits this user has been bestowed.",
+          "default": []
         }
       },
       "required": [
@@ -118,6 +123,7 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
+          "minLength": 3,
           "maxLength": 64
         },
         "email": {
@@ -162,21 +168,25 @@
           "items": {
             "$ref": "#/definitions/DeviceString"
           },
-          "description": "Devices this user signs in with."
+          "description": "Devices this user signs in with.",
+          "maxLength": 253,
+          "default": []
         },
         "$roles": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CRole%3E"
           },
-          "description": "Roles this user has been given."
+          "description": "Roles this user has been given.",
+          "default": []
         },
         "$permits": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CPermit%3E"
           },
-          "description": "Special-case permits this user has been bestowed."
+          "description": "Special-case permits this user has been bestowed.",
+          "default": []
         }
       },
       "required": [
@@ -552,6 +562,7 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
+          "minLength": 3,
           "maxLength": 64
         },
         "email": {
@@ -596,21 +607,25 @@
           "items": {
             "$ref": "#/definitions/DeviceString"
           },
-          "description": "Devices this user signs in with."
+          "description": "Devices this user signs in with.",
+          "maxLength": 253,
+          "default": []
         },
         "$roles": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CRole%3E"
           },
-          "description": "Roles this user has been given."
+          "description": "Roles this user has been given.",
+          "default": []
         },
         "$permits": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CPermit%3E"
           },
-          "description": "Special-case permits this user has been bestowed."
+          "description": "Special-case permits this user has been bestowed.",
+          "default": []
         }
       },
       "description": "Type for an entity update object."
@@ -621,6 +636,7 @@
         "name": {
           "type": "string",
           "description": "Name for the user.",
+          "minLength": 3,
           "maxLength": 64
         },
         "email": {
@@ -665,21 +681,25 @@
           "items": {
             "$ref": "#/definitions/DeviceString"
           },
-          "description": "Devices this user signs in with."
+          "description": "Devices this user signs in with.",
+          "maxLength": 253,
+          "default": []
         },
         "$roles": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CRole%3E"
           },
-          "description": "Roles this user has been given."
+          "description": "Roles this user has been given.",
+          "default": []
         },
         "$permits": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Reference%3CPermit%3E"
           },
-          "description": "Special-case permits this user has been bestowed."
+          "description": "Special-case permits this user has been bestowed.",
+          "default": []
         }
       },
       "additionalProperties": false,

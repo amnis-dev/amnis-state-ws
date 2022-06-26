@@ -1,8 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
-import { entityCreate } from './entity/entity';
 import {
-  Entity, EntityExtension, Remove, EntityPartial,
-} from './types';
+  entityCreate, Entity, EntityExtension, EntityPartial,
+} from './entity';
+import type { Remove } from './state';
 
 export type PayloadEntityCreate<E extends Entity = Entity> = {
   [slice: string]: EntityExtension<E>[];

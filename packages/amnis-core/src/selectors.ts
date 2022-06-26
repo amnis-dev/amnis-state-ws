@@ -1,9 +1,13 @@
 import { EntityState } from '@reduxjs/toolkit';
-import { tokenParse } from './core';
-import { grantParse } from './grant/grant';
 import {
-  State, Session, Token, TokenApi, TokenType, Meta, Entity, Reference, Role, Grant,
-} from './types';
+  Token, TokenApi, tokenParse, TokenType,
+} from './token';
+import type { Entity, Meta } from './entity';
+import type { State } from './state';
+import type { Session } from './session';
+import type { Reference } from './types';
+import type { Role } from './role';
+import { grantParse, Grant } from './grant';
 
 /**
  * Helper function to get a slice.

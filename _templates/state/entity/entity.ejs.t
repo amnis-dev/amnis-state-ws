@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
-import type { <%= Name %>, <%= name %>Key } from '@amnis/core/index';
+import type { <%= Name %>, <%= name %>Key } from '@amnis/core/<%= name %>';
 import type { <%= Name %>Meta } from './<%= name %>.types';
 
 /**

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AuthScope } from './auth.types';
-import { Reference } from './core.types';
+import type { Reference } from '@amnis/core/index';
+import type { AuthScope } from '@amnis/auth/index';
 import type {
   Insert,
   Modify,
@@ -10,7 +10,7 @@ import type {
   ResultRead,
   ResultUpdate,
   Select,
-} from './state.types';
+} from '@amnis/core/state';
 
 export type DatabaseCreateMethod = (
   state: Insert,

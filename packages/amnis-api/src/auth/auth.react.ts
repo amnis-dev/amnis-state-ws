@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ResultCreate } from '@amnis/core/types';
+import { ResultCreate } from '@amnis/core/state';
 import { API_AUTH_URL } from '../const';
 import {
   apiQueries,

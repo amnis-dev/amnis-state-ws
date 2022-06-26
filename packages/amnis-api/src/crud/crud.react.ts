@@ -8,7 +8,7 @@ import type {
   ResultUpdate,
   Select,
   State,
-} from '@amnis/core/types';
+} from '@amnis/core/state';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_CRUD_URL } from '../const';
 import { ApiBaseQueryFn, ApiJSON } from '../types';

@@ -1,10 +1,9 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.default.ts` : null %>"
 ---
-import { <%= Name %>, entityCreate } from '@amnis/core/index';
-import { <%= name %>Key } from './<%= name %>';
+import { <%= name %>Create } from './<%= name %>';
 
-export const <%= name %>Default: <%= Name %> = entityCreate<<%= Name %>>(<%= name %>Key, {
+export const [<%= name %>Default] = <%= name %>Create({
   myProperty: 'Unnamed',
 });
 

@@ -4,15 +4,15 @@ import type {
   PayloadEntityUpdate,
 } from '@amnis/core/actions';
 import type {
-  Database,
   Remove,
   ResultCreate,
   ResultDelete,
   ResultRead,
   ResultUpdate,
   Select,
-} from '@amnis/core/types';
-import { Store } from '@reduxjs/toolkit';
+} from '@amnis/core/state';
+import type { Database } from '@amnis/db/index';
+import type { Store } from '@reduxjs/toolkit';
 import type {
   ApiProcess,
   ApiProcesses,
