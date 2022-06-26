@@ -15,7 +15,7 @@ import {
   userFind,
   loginSuccessProcess,
   outputBadCredentials,
-} from './auth.protility';
+} from './auth.utility';
 import { authTwitter } from './auth.twitter';
 import { authMicrosoft } from './auth.microsoft';
 

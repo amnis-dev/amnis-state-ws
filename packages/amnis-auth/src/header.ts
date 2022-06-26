@@ -1,11 +1,9 @@
-import { JWTEncoded, JWTDecoded } from '@amnis/core/token';
-import { AUTH_TOKEN_SECRET } from './const';
-import { jwtVerify } from './token';
+import { JWTEncoded } from '@amnis/core/token';
 
 /**
  * Gets a JWT token from an authorization header
  */
-function authorizationParse(authorization?: string | null): JWTDecoded | undefined {
+function authorizationParse(authorization?: string | null): JWTEncoded | undefined {
   if (!authorization) {
     return undefined;
   }
@@ -16,8 +14,7 @@ function authorizationParse(authorization?: string | null): JWTDecoded | undefin
     return undefined;
   }
 
-  const jwt = jwtVerify(jwtEncoded as JWTEncoded, AUTH_TOKEN_SECRET);
-  return jwt;
+  return jwtEncoded as JWTEncoded;
 }
 
 export const authHeader = { authorizationParse };

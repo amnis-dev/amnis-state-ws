@@ -23,7 +23,7 @@ export function apiMockGenerateHandlers(
          * Capture the authorization token if sent with the request.
          */
         const authorization = req.headers.get('Authorization');
-        input.jwt = authHeader.authorizationParse(authorization);
+        input.jwtEncoded = authHeader.authorizationParse(authorization);
 
         /**
          * Call the api process.

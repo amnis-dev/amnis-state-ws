@@ -9,7 +9,7 @@ import { jwtDecode } from '@amnis/auth/token';
 import type { ApiAuthPkce } from './auth.types';
 import { API_MICROSOFT_OAUTH2_URL } from '../const';
 import { ApiError, ApiOutput } from '../types';
-import { loginSuccessProcess, userFind } from './auth.protility';
+import { loginSuccessProcess, userFind } from './auth.utility';
 import { register } from './auth.register';
 import { apiOutput } from '../api';
 

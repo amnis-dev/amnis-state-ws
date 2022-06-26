@@ -1,8 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { DateJSON } from '@amnis/core/index';
-import type { JWTDecoded } from '@amnis/core/token';
+import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
 import type { Log } from '@amnis/core/log';
+
+import type { Database } from '@amnis/db/index';
+import type { Store } from '@reduxjs/toolkit';
+import type { AnyValidateFunction } from 'ajv/dist/types';
+
+/**
+ * API Context for accessing the server store, database, and storage system.
+ */
+export interface ApiContext {
+  store: Store;
+  database: Database;
+  validator?: AnyValidateFunction;
+}
 
 /**
  * An API error repsonse.
@@ -22,7 +35,12 @@ export interface ApiInput<T = any> {
   body: T;
 
   /**
-   * Verified token data.
+   * Encoded JWT data.
+   */
+  jwtEncoded?: JWTEncoded;
+
+  /**
+   * Verified decoded token data.
    */
   jwt?: JWTDecoded;
 }
@@ -95,8 +113,13 @@ export interface ApiQueries {
  * API handler for a request.
  */
 export type ApiProcess<Body = any, Result = any> = (
-  input: ApiInput<Body>
-) => Promise<ApiOutput<Result>>
+  input: ApiInput<Body>,
+) => Promise<ApiOutput<Result>>;
+
+/**
+ * A function that supplies context to a process.
+ */
+export type ApiContextMethod = (context: ApiContext) => ApiProcess;
 
 /**
  * API object containing response handlers.

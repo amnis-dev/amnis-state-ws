@@ -8,7 +8,7 @@ import { userCreate } from '@amnis/core/user';
 
 import { apiOutput } from '../api';
 import { ApiOutput } from '../types';
-import { sessionCreate } from './auth.protility';
+import { sessionCreate } from './auth.utility';
 
 /**
  * Options when processsing a registration.

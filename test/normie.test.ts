@@ -25,6 +25,7 @@ import {
   Profile,
   profileSelectors,
   profileKey,
+  userCreate,
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
@@ -191,12 +192,11 @@ test('user create global should be -DENIED- as Normie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       [userKey]: [
-        {
+        userCreate({
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
           password: passCreateSync('passwd0'),
-          $roles: [],
-        },
+        })[0],
       ],
     }),
   );
@@ -314,7 +314,7 @@ test('profile create global should be -DENIED- as Normie via API', async () => {
     apiCrud.endpoints.create.initiate({
       [profileKey]: [
         {
-          user: userActive?.$id,
+          $user: userActive?.$id,
           nameDisplay: 'MyNormieProfile',
         },
       ],

@@ -6,8 +6,9 @@ import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
 import { dateNumeric, reference } from '@amnis/core/core';
 import type { ResultCreate } from '@amnis/core/state';
-import type { JWTDecoded } from '@amnis/core/token';
+import type { JWTEncoded } from '@amnis/core/token';
 
+import { jwtEncode } from '@amnis/auth/token';
 import type { ApiInput } from '../types';
 import { apiCrudProcesses } from './crud.process';
 
@@ -30,7 +31,7 @@ const expires = dateNumeric(new Date(Date.now() + 60000));
 /**
  * Create a JWT token in order to execute processes.
  */
-const jwt: JWTDecoded = {
+const jwtEncoded: JWTEncoded = jwtEncode({
   iss: 'core',
   sub: reference('user', 'system'),
   exp: expires,
@@ -38,7 +39,7 @@ const jwt: JWTDecoded = {
   typ: 'access',
   adm: true,
   roles: [],
-};
+});
 
 /**
  * Clear memory storage after each run.
@@ -53,7 +54,7 @@ test('Handler should create new entities.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwt,
+    jwtEncoded,
   };
 
   const output = await processes.create(input);
@@ -63,6 +64,23 @@ test('Handler should create new entities.', async () => {
   const result = output.json.result as ResultCreate;
 
   expect(result).toEqual({ [bookKey]: books });
+});
+
+/**
+ * ============================================================
+ */
+test('Handler should fail when a jwt token is not provided.', async () => {
+  const input: ApiInput = {
+    body: {
+      [bookKey]: books,
+    },
+  };
+
+  const output = await processes.create(input);
+
+  expect(output.json.result).not.toBeDefined();
+
+  expect(output.json.errors).toHaveLength(1);
 });
 
 /**
@@ -78,7 +96,7 @@ test('Handler should create entities that do not validate against the schema.', 
         },
       ],
     },
-    jwt,
+    jwtEncoded,
   };
 
   const output = await processes.create(input);
@@ -96,7 +114,7 @@ test('Handler should read entities.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwt,
+    jwtEncoded,
   });
 
   const output = await processes.read({
@@ -109,7 +127,7 @@ test('Handler should read entities.', async () => {
         },
       },
     },
-    jwt,
+    jwtEncoded,
   });
 
   expect(
@@ -129,7 +147,7 @@ test('Handler should NOT read entities that do not exist.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwt,
+    jwtEncoded,
   });
 
   const output = await processes.read({
@@ -142,7 +160,7 @@ test('Handler should NOT read entities that do not exist.', async () => {
         },
       },
     },
-    jwt,
+    jwtEncoded,
   });
 
   expect(
@@ -163,7 +181,7 @@ test('Handler should be able to update existing entities.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwt,
+    jwtEncoded,
   });
 
   const result = await processes.update({
@@ -175,7 +193,7 @@ test('Handler should be able to update existing entities.', async () => {
         },
       ],
     },
-    jwt,
+    jwtEncoded,
   });
 
   expect(

@@ -46,11 +46,31 @@ export interface ApiCrudQueries {
 }
 
 /**
+ * Create process.
+ */
+export type ApiCrudProcessCreate = ApiProcess<PayloadEntityCreate, ResultCreate>;
+
+/**
+ * Read process.
+ */
+export type ApiCrudProcessRead = ApiProcess<Select, ResultRead>;
+
+/**
+ * Update process.
+ */
+export type ApiCrudProcessUpdate = ApiProcess<PayloadEntityUpdate, ResultUpdate>;
+
+/**
+ * Delete process.
+ */
+export type ApiCrudProcessDelete = ApiProcess<Remove, ResultDelete>;
+
+/**
  * API object containing response handlers.
  */
 export interface ApiCrudProcesses extends ApiProcesses {
-  create: ApiProcess<PayloadEntityCreate, ResultCreate>;
-  read: ApiProcess<Select, ResultRead>;
-  update: ApiProcess<PayloadEntityUpdate, ResultUpdate>;
-  delete: ApiProcess<Remove, ResultDelete>;
+  create: ApiCrudProcessCreate;
+  read: ApiCrudProcessRead;
+  update: ApiCrudProcessUpdate;
+  delete: ApiCrudProcessDelete;
 }

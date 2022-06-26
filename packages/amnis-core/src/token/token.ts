@@ -1,4 +1,6 @@
 /* eslint-disable no-bitwise */
+import type { Entity } from '../entity';
+import type { Log } from '../log';
 import type { DateNumeric } from '../types';
 import type {
   TokenString,
@@ -6,6 +8,7 @@ import type {
   TokenApi,
   TokenType,
   JWTEncoded,
+  JWTDecoded,
 } from './token.types';
 /**
  * Converts a token to string format.
@@ -42,4 +45,23 @@ export function tokenParse(tokenString: TokenString): Token | undefined {
     jwt: encoding as JWTEncoded,
     exp: parseInt(exp, 10) as DateNumeric,
   };
+}
+
+/**
+ * A wrapper that modifies an entity creation within the token of a token.
+ * Essentially, sets the $creator and $owner based on the token subject (sub).
+ */
+export function tokenJwtContext<E extends Entity>(
+  createResult: [E, Log[]],
+  token: JWTDecoded,
+): [E, Log[]] {
+  const [entity, logs] = createResult;
+
+  const newEntity: E = {
+    ...entity,
+    $creator: token.sub,
+    $owner: token.sub,
+  };
+
+  return [newEntity, logs];
 }
