@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
-import {
-  coreActions,
-  User,
-  Session,
-  Profile,
-} from '@amnis/core/index';
+import { coreActions } from '@amnis/core/actions';
 import { samples } from '@amnis/core/test/samples';
 
 import {
@@ -21,10 +16,13 @@ import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import {
   storeSetup,
   selectors,
+  Session,
   sessionKey,
   sessionSelectors,
-  userKey,
+  User,
   userSelectors,
+  userKey,
+  Profile,
   profileSelectors,
   profileKey,
 } from '@amnis/state/index';

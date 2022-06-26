@@ -1,9 +1,4 @@
-import {
-  coreActions,
-  User,
-  Session,
-  Profile,
-} from '@amnis/core/index';
+import { coreActions } from '@amnis/core/actions';
 import { samples } from '@amnis/core/test/samples';
 
 import {
@@ -14,10 +9,13 @@ import {
 import {
   storeSetup,
   selectors,
+  Session,
   sessionKey,
   sessionSelectors,
-  userKey,
+  User,
   userSelectors,
+  userKey,
+  Profile,
   profileSelectors,
   profileKey,
 } from '@amnis/state/index';
@@ -137,6 +135,7 @@ test('user create global should be +ALLOWED+ as Admy via API', async () => {
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
           password: passCreateSync('passwd0'),
+          devices: [],
           $roles: [],
           $permits: [],
         },

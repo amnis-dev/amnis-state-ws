@@ -90,7 +90,7 @@ export function userCreate(
   const userEntity = entityCreate<User>(userKey, {
     ...userBase,
     ...user,
-  });
+  }, true);
 
   const logs: Log[] = [];
   if (!validationSkip) {

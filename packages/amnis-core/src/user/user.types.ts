@@ -60,7 +60,6 @@ export interface User extends Entity {
 
   /**
    * Devices this user signs in with.
-   * @maxLength 253
    * @default []
    */
   devices: DeviceString[];

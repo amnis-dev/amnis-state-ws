@@ -84,7 +84,6 @@
             "$ref": "#/definitions/DeviceString"
           },
           "description": "Devices this user signs in with.",
-          "maxLength": 253,
           "default": []
         },
         "$roles": {
@@ -169,7 +168,6 @@
             "$ref": "#/definitions/DeviceString"
           },
           "description": "Devices this user signs in with.",
-          "maxLength": 253,
           "default": []
         },
         "$roles": {
@@ -608,7 +606,6 @@
             "$ref": "#/definitions/DeviceString"
           },
           "description": "Devices this user signs in with.",
-          "maxLength": 253,
           "default": []
         },
         "$roles": {
@@ -682,7 +679,6 @@
             "$ref": "#/definitions/DeviceString"
           },
           "description": "Devices this user signs in with.",
-          "maxLength": 253,
           "default": []
         },
         "$roles": {

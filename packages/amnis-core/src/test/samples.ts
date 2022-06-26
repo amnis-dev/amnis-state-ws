@@ -10,7 +10,7 @@ import {
 } from '../profile';
 import type {
   Role,
-} from '../types';
+} from '../role';
 import {
   grantStringify,
   task,
