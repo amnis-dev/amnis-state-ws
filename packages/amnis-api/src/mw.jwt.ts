@@ -1,5 +1,4 @@
 import { jwtVerify } from '@amnis/auth/token';
-import { logCreate } from '@amnis/core/log';
 import { apiOutput } from './api';
 import type {
   ApiMiddleware,

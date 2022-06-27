@@ -7,7 +7,6 @@ import {
 } from './auth.queries';
 import { ApiJSON } from '../types';
 import {
-  ApiAuthAuthorizeBody,
   ApiAuthLoginBody,
   ApiAuthPkceBody,
 } from './auth.types';
@@ -37,13 +36,6 @@ export const apiAuth = createApi({
     ApiAuthPkceBody
     >({
       query: queries.pkce,
-    }),
-
-    authorize: builder.query<
-    ApiJSON<ResultCreate>,
-    ApiAuthAuthorizeBody
-    >({
-      query: queries.authorize,
     }),
 
   }),

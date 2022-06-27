@@ -14,11 +14,6 @@ export function apiQueries(): ApiAuthQueries {
       method: 'post',
       body: payload,
     }),
-    authorize: (payload) => ({
-      url: 'authorize',
-      method: 'post',
-      body: payload,
-    }),
   };
 }
 

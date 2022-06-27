@@ -50,16 +50,17 @@ export interface ApiAuthAuthorizeBody {
 export interface ApiAuthQueries {
   login: ApiQuery<ApiAuthLoginBody>;
   pkce: ApiQuery<ApiAuthPkceBody>;
-  authorize: ApiQuery<ApiAuthAuthorizeBody>;
 }
+
+export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, ResultCreate>;
+export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, ResultCreate>;
 
 /**
  * API object containing response handlers.
  */
 export interface ApiAuthProcesses extends ApiProcesses {
-  login: ApiProcess<ApiAuthLoginBody, ResultCreate>;
-  pkce: ApiProcess<ApiAuthPkceBody>;
-  authorize: ApiProcess<ApiAuthAuthorizeBody, ResultCreate>;
+  login: ApiAuthProcessLogin;
+  pkce: ApiAuthProcessPkce;
 }
 
 /**
