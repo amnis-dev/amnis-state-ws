@@ -1,5 +1,4 @@
 import { sessionEncode } from '@amnis/auth/session';
-import { logCreate } from '@amnis/core/log';
 import { profileCreate } from '@amnis/core/profile';
 import { Insert, ResultCreate } from '@amnis/core/state';
 import { Token } from '@amnis/core/token';
@@ -8,7 +7,7 @@ import { userCreate } from '@amnis/core/user';
 
 import { apiOutput } from '../api';
 import { ApiOutput } from '../types';
-import { sessionCreate } from './auth.utility';
+import { sessionGenerate } from './auth.utility';
 
 /**
  * Options when processsing a registration.
@@ -75,7 +74,7 @@ export async function register(
    * Create a session entity if needed.
    */
   if (createSession === true) {
-    const session = sessionCreate(user, profile, tokens);
+    const session = sessionGenerate(user, profile, tokens);
     output.json.result.session = [session];
     output.cookies.session = sessionEncode(session);
   }

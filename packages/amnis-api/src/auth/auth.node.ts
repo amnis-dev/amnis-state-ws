@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { ResultCreate } from '@amnis/core/state';
+import { ResultCreate, ResultUpdate } from '@amnis/core/state';
 import { API_AUTH_URL } from '../const';
 import {
   apiQueries,
@@ -9,6 +9,7 @@ import { ApiJSON } from '../types';
 import {
   ApiAuthLoginBody,
   ApiAuthPkceBody,
+  ApiAuthRenewBody,
 } from './auth.types';
 
 global.Headers = Headers;
@@ -36,6 +37,13 @@ export const apiAuth = createApi({
     ApiAuthPkceBody
     >({
       query: queries.pkce,
+    }),
+
+    renew: builder.query<
+    ApiJSON<ResultUpdate>,
+    ApiAuthRenewBody
+    >({
+      query: queries.renew,
     }),
 
   }),

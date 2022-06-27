@@ -2,12 +2,12 @@
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { DateJSON } from '@amnis/core/index';
 import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
-import type { Log, LogBaseCreate } from '@amnis/core/log';
+import type { LogBaseCreate } from '@amnis/core/log';
 
 import type { Database } from '@amnis/db/index';
 import type { Store } from '@reduxjs/toolkit';
 import type { AnyValidateFunction } from 'ajv/dist/types';
-import { apiOutput } from './api';
+import type { Session } from '@amnis/core/session';
 
 /**
  * API Context for accessing the server store, database, and storage system.
@@ -36,6 +36,16 @@ export interface ApiInput<T = any> {
    * Verified decoded token data.
    */
   jwt?: JWTDecoded;
+
+  /**
+   * Encoded Session
+   */
+  sessionEncoded?: JWTEncoded;
+
+  /**
+   * Verified decoded session data.
+   */
+  session?: Session;
 }
 
 /**

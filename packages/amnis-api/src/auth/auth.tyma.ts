@@ -1,7 +1,7 @@
-import type { ApiAuthLoginBody, ApiAuthPkceBody, ApiAuthAuthorizeBody } from './auth.types';
+import type { ApiAuthLoginBody, ApiAuthPkceBody, ApiAuthRenewBody } from './auth.types';
 
 export interface ApiAuthBodies {
   login?: ApiAuthLoginBody;
   pkce?: ApiAuthPkceBody;
-  authorize?: ApiAuthAuthorizeBody;
+  renew?: ApiAuthRenewBody;
 }

@@ -31,6 +31,7 @@ import {
 import stateSchema from '@amnis/state/state.schema.json';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
+import { logSelectors } from '@amnis/state/log';
 import { databaseSetup } from './database';
 
 /**
@@ -183,6 +184,17 @@ test('client store should contain own profile data.', async () => {
       nameDisplay: expect.any(String),
     }),
   );
+});
+
+/**
+ * ============================================================
+ */
+test('should be able to renew session', async () => {
+  const action = await clientStore.dispatch(
+    apiAuth.endpoints.renew.initiate({}),
+  );
+
+  expect(action.status).toBe('fulfilled');
 });
 
 /**
@@ -369,4 +381,26 @@ test('profile update global should be -DENIED- as Normie via API', async () => {
   );
 
   expectDenied(action, profileKey, 'Updates Disallowed');
+});
+
+test('client state should have one user', () => {
+  const users = userSelectors.selectAll(clientStore.getState());
+
+  expect(users).toHaveLength(1);
+});
+
+test('client state should have updated profile', () => {
+  const profile = selectors.selectActive(clientStore.getState(), profileKey);
+
+  expect(profile).toEqual(
+    expect.objectContaining({
+      nameDisplay: 'New Display Name',
+    }),
+  );
+});
+
+test('client state should have error logs', () => {
+  const logs = logSelectors.selectAll(clientStore.getState());
+
+  expect(logs.length).toBeGreaterThanOrEqual(6);
 });

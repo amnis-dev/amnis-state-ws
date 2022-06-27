@@ -12,8 +12,8 @@
         "pkce": {
           "$ref": "#/definitions/ApiAuthPkceBody"
         },
-        "authorize": {
-          "$ref": "#/definitions/ApiAuthAuthorizeBody"
+        "renew": {
+          "$ref": "#/definitions/ApiAuthRenewBody"
         }
       },
       "additionalProperties": false
@@ -68,30 +68,12 @@
       "additionalProperties": false,
       "description": "Logs in from a third-party using the data from OpenID PKCE Authorization."
     },
-    "ApiAuthAuthorizeBody": {
+    "ApiAuthRenewBody": {
       "type": "object",
-      "properties": {
-        "method": {
-          "type": "string",
-          "enum": [
-            "msgraph",
-            "twitter"
-          ]
-        },
-        "jwt": {
-          "$ref": "#/definitions/JWTEncoded"
-        }
+      "additionalProperties": {
+        "not": {}
       },
-      "required": [
-        "method",
-        "jwt"
-      ],
-      "additionalProperties": false,
-      "description": "Payload for an alternative method of authorization."
-    },
-    "JWTEncoded": {
-      "type": "string",
-      "description": "String representation of a jwt encoded token."
+      "description": "Payload for a session and token renewal. Should not have any data in the body."
     }
   }
 }

@@ -7,6 +7,8 @@ import type {
 import { mwValidate } from '../mw.validate';
 import { authProcessLogin } from './auth.process.login';
 import { authProcessPcke } from './auth.process.pkce';
+import { authProcessRenew } from './auth.process.renew';
+import { mwSession } from '../mw.session';
 
 /**
  * Sets up authentication processes.
@@ -16,27 +18,22 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
   const ajv = new Ajv({ schemas: [authSchema] });
 
   return {
-    /**
-     * ================================================================================
-     * LOGIN
-     * API Handler for a typical username and password login attempt.
-     * ----------------------------------------
-     */
     login: mwValidate(authProcessLogin)({
       store,
       database,
       validator: ajv.getSchema('auth#/definitions/ApiAuthLoginBody'),
     }),
-    /**
-     * ================================================================================
-     * PKCE
-     * Authenticates with OpenID OAuth2.0 PKCE flow after client obtains the authroization.
-     * ----------------------------------------
-     */
+
     pkce: mwValidate(authProcessPcke)({
       store,
       database,
       validator: ajv.getSchema('auth#/definitions/ApiAuthPkceBody'),
+    }),
+
+    renew: mwSession(mwValidate(authProcessRenew))({
+      store,
+      database,
+      validator: ajv.getSchema('auth#/definitions/ApiAuthRenewBody'),
     }),
   };
 }

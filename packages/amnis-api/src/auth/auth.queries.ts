@@ -14,6 +14,11 @@ export function apiQueries(): ApiAuthQueries {
       method: 'post',
       body: payload,
     }),
+    renew: (payload) => ({
+      url: 'renew',
+      method: 'post',
+      body: payload,
+    }),
   };
 }
 

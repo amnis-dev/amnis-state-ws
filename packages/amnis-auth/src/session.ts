@@ -1,4 +1,5 @@
-import { Session } from '@amnis/core/session';
+import type { Session } from '@amnis/core/session';
+import type { JWTEncoded } from '@amnis/core/token';
 import jwt from 'jsonwebtoken';
 import { AUTH_SESSION_SECRET } from './const';
 
@@ -10,14 +11,14 @@ import { AUTH_SESSION_SECRET } from './const';
  */
 export function sessionEncode(session: Session, secret = AUTH_SESSION_SECRET) {
   const sessionToken = jwt.sign(session, secret);
-  return sessionToken;
+  return sessionToken as JWTEncoded;
 }
 
 /**
  * Decode a session.
  */
 export function sessionVerify(
-  sessionEncoded: string,
+  sessionEncoded: JWTEncoded,
   secret = AUTH_SESSION_SECRET,
 ): Session | undefined {
   try {

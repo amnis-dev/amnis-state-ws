@@ -1,7 +1,6 @@
 import type { Store } from '@reduxjs/toolkit';
 
-import type { JWTEncoded } from '@amnis/core/token';
-import { ResultCreate } from '@amnis/core/state';
+import { ResultCreate, ResultUpdate } from '@amnis/core/state';
 import type { Database } from '@amnis/db/index';
 
 import type {
@@ -29,6 +28,9 @@ export interface ApiAuthPkceBody {
   redirectUri: string;
 }
 
+/**
+ * ApiAuthPkceBody but without the platform specification
+ */
 export interface ApiAuthPkce {
   clientId: string;
   code: string;
@@ -37,12 +39,10 @@ export interface ApiAuthPkce {
 }
 
 /**
- * Payload for an alternative method of authorization.
+ * Payload for a session and token renewal.
+ * Should not have any data in the body.
  */
-export interface ApiAuthAuthorizeBody {
-  method: 'msgraph' | 'twitter';
-  jwt: JWTEncoded;
-}
+export type ApiAuthRenewBody = Record<string, never>;
 
 /**
  * API object containing request queries.
@@ -50,10 +50,12 @@ export interface ApiAuthAuthorizeBody {
 export interface ApiAuthQueries {
   login: ApiQuery<ApiAuthLoginBody>;
   pkce: ApiQuery<ApiAuthPkceBody>;
+  renew: ApiQuery<ApiAuthRenewBody>;
 }
 
 export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, ResultCreate>;
 export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, ResultCreate>;
+export type ApiAuthProcessRenew = ApiProcess<ApiAuthPkceBody, ResultUpdate>;
 
 /**
  * API object containing response handlers.
@@ -61,6 +63,7 @@ export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, ResultCreate>;
 export interface ApiAuthProcesses extends ApiProcesses {
   login: ApiAuthProcessLogin;
   pkce: ApiAuthProcessPkce;
+  renew: ApiAuthProcessRenew;
 }
 
 /**

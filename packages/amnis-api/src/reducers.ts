@@ -1,8 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { ActionReducerMapBuilder, EntityAdapter } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  EntityAdapter,
+  isRejectedWithValue,
+  isFulfilled,
+} from '@reduxjs/toolkit';
 import type { Entity, MetaState } from '@amnis/core/entity';
+import { userKey } from '@amnis/core/user';
+import { sessionKey } from '@amnis/core/session';
+import { profileKey } from '@amnis/core/profile';
+import { LogBaseCreate, logCreate, logKey } from '@amnis/core/log';
 import { apiAuth } from './auth';
 import { apiCrud } from './crud';
+import type { ApiOutput } from './types';
 
 export function apiExtraReducers<E extends Entity>(
   key: string,
@@ -10,32 +20,177 @@ export function apiExtraReducers<E extends Entity>(
   builder: ActionReducerMapBuilder<MetaState<E>>,
 ) {
   /**
-   * Matches when a login method is fulfilled.
+   * ================================================================================
+   * Matches ANY fulfillment.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(isFulfilled, (state, action) => {
+    const payload = action.payload as ApiOutput['json'];
+    const logs = payload.logs as LogBaseCreate[];
+
+    /**
+     * Insert log entities from the fulfillment.
+     */
+    if (key === logKey && logs?.length > 0) {
+      const logEntities = logs.map((logBase) => logCreate(logBase)[0]);
+      /** @ts-ignore */
+      adapter.addMany(state, logEntities);
+    }
+  });
+
+  /**
+   * ================================================================================
+   * Matches ANY rejection that has a payload.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(isRejectedWithValue, (state, action) => {
+    const payload = action.payload as { data: ApiOutput['json'] } | undefined;
+
+    if (!payload) {
+      return;
+    }
+
+    const logs = payload.data.logs as LogBaseCreate[];
+
+    /**
+     * Insert log entities from the fulfillment.
+     */
+    if (key === logKey && logs?.length > 0) {
+      const logEntities = logs.map((logBase) => logCreate(logBase)[0]);
+      /** @ts-ignore */
+      adapter.addMany(state, logEntities);
+    }
+  });
+
+  /**
+   * ================================================================================
+   * Auth Login
+   * Matches when a login request is fulfilled.
+   * ------------------------------------------------------------
    */
   builder.addMatcher(apiAuth.endpoints.login.matchFulfilled, (state, action) => {
     const { payload } = action;
     const { result } = payload;
-    if (result && Array.isArray(result[key])) {
+    if (result && result[key] && Array.isArray(result[key])) {
       /** @ts-ignore */
       adapter.upsertMany<MetaState<E>>(state, result[key]);
       /**
        * Set the active session/user.
        */
-      if (['user', 'session', 'profile'].includes(key) && !!result[key].length) {
+      if ([userKey, sessionKey, profileKey].includes(key) && !!result[key].length) {
         state.active = result[key][0].$id;
       }
     }
   });
 
   /**
+   * ================================================================================
+   * Auth PKCE
+   * Matches when a PKCE login request is fulfilled.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(apiAuth.endpoints.pkce.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
+      /**
+       * Set the active session/user.
+       */
+      if ([userKey, sessionKey, profileKey].includes(key) && !!result[key].length) {
+        state.active = result[key][0].$id;
+      }
+    }
+  });
+
+  /**
+   * ================================================================================
+   * Auth Renew
+   * Matches when a renew request is fulfilled.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(apiAuth.endpoints.renew.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
+
+      /**
+       * Set the new active session.
+       */
+      if (key === sessionKey && !!result[key].length) {
+        const sessionIdPrev = state.active;
+        state.active = result[key][0].$id;
+
+        /**
+         * Remove the previously active session if it existed.
+         */
+        if (sessionIdPrev) {
+          /** @ts-ignore */
+          adapter.removeOne(state, sessionIdPrev);
+        }
+      }
+    }
+  });
+
+  /**
+   * ================================================================================
+   * CRUD Create
    * Matches when a creation method is fulfilled.
+   * ------------------------------------------------------------
    */
   builder.addMatcher(apiCrud.endpoints.create.matchFulfilled, (state, action) => {
     const { payload } = action;
     const { result } = payload;
-    if (result && Array.isArray(result[key])) {
+    if (result && result[key] && Array.isArray(result[key])) {
       /** @ts-ignore */
       adapter.upsertMany<MetaState<E>>(state, result[key]);
+    }
+  });
+
+  /**
+   * ================================================================================
+   * CRUD Read
+   * Matches when a CRUD read method is fulfilled.
+   */
+  builder.addMatcher(apiCrud.endpoints.read.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
+    }
+  });
+
+  /**
+   * ================================================================================
+   * CRUD Update
+   * Matches when a CRUD update method is fulfilled.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(apiCrud.endpoints.update.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
+    }
+  });
+
+  /**
+   * ================================================================================
+   * CRUD Delete
+   * Matches when a CRUD delete method is fulfilled.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(apiCrud.endpoints.delete.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.removeMany<MetaState<E>>(state, result[key]);
     }
   });
 }

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { authHeader } from '@amnis/auth/header';
+import type { JWTEncoded } from '@amnis/core/token';
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import type { ApiProcesses, ApiInput, ApiOutput } from './types';
@@ -13,11 +14,17 @@ export function apiMockGenerateHandlers(
       `${baseUrl}${key}`,
       async (req, res, ctx) => {
         const { body } = req;
+        const { session } = req.cookies;
 
         /**
          * Setup the process input.
          */
         const input: ApiInput = { body };
+
+        /**
+         * Set the encoded session cookie on the input.
+         */
+        input.sessionEncoded = session as JWTEncoded;
 
         /**
          * Capture the authorization token if sent with the request.

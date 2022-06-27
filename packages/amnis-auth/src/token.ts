@@ -10,8 +10,18 @@ export function jwtEncode(jwtDecoded: JWTDecoded, secret = AUTH_TOKEN_SECRET) {
   return jwt.sign(jwtDecoded, secret) as JWTEncoded;
 }
 
-export function jwtDecode(jwtEncoded: JWTEncoded) {
-  return jwt.decode(jwtEncoded);
+export function jwtDecode(jwtEncoded: JWTEncoded): JWTDecoded | undefined {
+  try {
+    const decoded = jwt.decode(jwtEncoded) as JWTDecoded;
+
+    if (typeof decoded !== 'object') {
+      return undefined;
+    }
+
+    return decoded;
+  } catch (error) {
+    return undefined;
+  }
 }
 
 export function jwtVerify(

@@ -11,7 +11,7 @@ test('log key should be is properly set', () => {
  * ============================================================
  */
 test('should create a log', () => {
-  const log = logCreate({
+  const [log] = logCreate({
     title: '',
     description: '',
     level: 'error',

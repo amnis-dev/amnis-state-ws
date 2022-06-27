@@ -40,7 +40,7 @@ export async function userFind(
 /**
  * Creates a session with user and profile data.
  */
-export function sessionCreate(
+export function sessionGenerate(
   user: User,
   profile: Profile,
   otherTokens?: Token[],
@@ -84,7 +84,7 @@ export function sessionCreate(
       ...additionalTokens,
     ],
     name: profile.nameDisplay,
-    dmn: user.domain || 'core',
+    dmn: user.domain || '',
     avatar: profile.avatar || null,
   });
 
@@ -147,7 +147,7 @@ export async function loginSuccessProcess(database: Database, user: User) {
 
   const profile = await profileFetch(database, user);
 
-  const session = sessionCreate(user, profile);
+  const session = sessionGenerate(user, profile);
 
   user.password = null;
 
@@ -161,9 +161,3 @@ export async function loginSuccessProcess(database: Database, user: User) {
 
   return output;
 }
-
-export default {
-  userFind,
-  outputBadCredentials,
-  loginSuccessProcess,
-};
