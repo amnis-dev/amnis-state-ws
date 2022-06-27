@@ -77,7 +77,17 @@ export async function authMicrosoft(
     return output;
   }
 
-  const microsoftId = jwtDecode(tokenData.id_token) as MicrosoftId;
+  const microsoftId = jwtDecode<MicrosoftId>(tokenData.id_token);
+
+  if (!microsoftId) {
+    output.status = 401; // Unauthorized
+    output.json.logs.push({
+      level: 'error',
+      title: 'ID Token Failure',
+      description: 'The Microsoft ID token could not be decoded.',
+    });
+    return output;
+  }
 
   /**
    * STEP 2

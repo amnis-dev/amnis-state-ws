@@ -10,9 +10,9 @@ export function jwtEncode(jwtDecoded: JWTDecoded, secret = AUTH_TOKEN_SECRET) {
   return jwt.sign(jwtDecoded, secret) as JWTEncoded;
 }
 
-export function jwtDecode(jwtEncoded: JWTEncoded): JWTDecoded | undefined {
+export function jwtDecode<J = JWTDecoded>(jwtEncoded: JWTEncoded): J | undefined {
   try {
-    const decoded = jwt.decode(jwtEncoded) as JWTDecoded;
+    const decoded = jwt.decode(jwtEncoded) as J;
 
     if (typeof decoded !== 'object') {
       return undefined;

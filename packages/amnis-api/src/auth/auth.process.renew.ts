@@ -13,7 +13,7 @@ import { ApiAuthProcessRenew } from './auth.types';
 /**
  * Renews a session holder's session and access tokens.
  */
-export const authProcessRenew: ApiContextMethod = (context): ApiAuthProcessRenew => (
+export const authProcessRenew: ApiContextMethod = (): ApiAuthProcessRenew => (
   async (input) => {
     const { session } = input;
     const output = apiOutput();
