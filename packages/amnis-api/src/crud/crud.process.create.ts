@@ -53,12 +53,11 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
 
     if (entityIssue) {
       output.status = 401; // 401 Unauthorized
-      output.json.errors = [
-        {
-          title: 'Invalid Identifier',
-          message: 'There was an invalid identity key used.',
-        },
-      ];
+      output.json.logs.push({
+        level: 'error',
+        title: 'Invalid Identifier',
+        description: 'There was an invalid identity key used.',
+      });
       return output;
     }
 
@@ -80,9 +79,10 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
     }).filter((value) => value !== null);
 
     if (deniedKeys.length) {
-      output.json.errors.push({
+      output.json.logs.push({
+        level: 'error',
         title: 'Creations Disallowed',
-        message: `Missing permissions to create documents in the collections: ${deniedKeys.join(', ')}`,
+        description: `Missing permissions to create documents in the collections: ${deniedKeys.join(', ')}`,
       });
     }
 

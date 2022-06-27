@@ -3,7 +3,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Role } from './role.types';
 
 export const roleKey = 'role';
@@ -18,8 +18,8 @@ export const roleBase: EntityExtension<Role> = {
 /**
  * Role check method.
  */
-export function roleCheck(role: Role): Log[] {
-  const logs: Log[] = [];
+export function roleCheck(role: Role): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -27,13 +27,13 @@ export function roleCheck(role: Role): Log[] {
 export function roleCreate(
   role: EntityExtensionCreate<Role, 'name'>,
   checkSkip = false,
-): [Role, Log[]] {
+): [Role, LogBaseCreate[]] {
   const roleEntity = entityCreate<Role>(roleKey, {
     ...roleBase,
     ...role,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...roleCheck(roleEntity));
   }

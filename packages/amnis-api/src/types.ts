@@ -2,11 +2,12 @@
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { DateJSON } from '@amnis/core/index';
 import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
-import type { Log } from '@amnis/core/log';
+import type { Log, LogBaseCreate } from '@amnis/core/log';
 
 import type { Database } from '@amnis/db/index';
 import type { Store } from '@reduxjs/toolkit';
 import type { AnyValidateFunction } from 'ajv/dist/types';
+import { apiOutput } from './api';
 
 /**
  * API Context for accessing the server store, database, and storage system.
@@ -15,14 +16,6 @@ export interface ApiContext {
   store: Store;
   database: Database;
   validator?: AnyValidateFunction;
-}
-
-/**
- * An API error repsonse.
- */
-export interface ApiError {
-  title: string;
-  message: string | null;
 }
 
 /**
@@ -50,24 +43,14 @@ export interface ApiInput<T = any> {
  */
 export interface ApiJSON<T = any> {
   /**
-   * Possible error details.
-   */
-  errors: ApiError[];
-
-  /**
    * Return logs.
    */
-  logs: Log[];
+  logs: LogBaseCreate[];
 
   /**
    * Result data.
    */
   result?: T;
-
-  /**
-   * Possible ID remapping.
-   */
-  reids: Record<string, unknown>;
 
   /**
    * Session expiration date-time.
@@ -134,3 +117,11 @@ string | FetchArgs,
 unknown,
 { data: ApiJSON, status: number }
 >
+
+/**
+ * A middlware function.
+ */
+export type ApiMiddleware =
+  (next: ApiContextMethod) =>
+  (context: ApiContext) =>
+  (input: ApiInput) => Promise<ApiOutput>;

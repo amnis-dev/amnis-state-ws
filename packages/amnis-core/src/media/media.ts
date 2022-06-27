@@ -4,7 +4,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Media } from './media.types';
 
 export const mediaKey = 'media';
@@ -18,8 +18,8 @@ export const mediaBase: EntityExtension<Media> = {
 /**
  * Media check method.
  */
-export function mediaCheck(media: Media): Log[] {
-  const logs: Log[] = [];
+export function mediaCheck(media: Media): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -27,13 +27,13 @@ export function mediaCheck(media: Media): Log[] {
 export function mediaCreate(
   media: EntityExtensionCreate<Media, 'title' | 'source'>,
   checkSkip = false,
-): [Media, Log[]] {
+): [Media, LogBaseCreate[]] {
   const mediaEntity = entityCreate<Media>(mediaKey, {
     ...mediaBase,
     ...media,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...mediaCheck(mediaEntity));
   }

@@ -51,9 +51,10 @@ export const crudProcessDelete: ApiContextMethod = (context): ApiCrudProcessDele
     }).filter((value) => value !== null);
 
     if (deniedKeys.length) {
-      output.json.errors.push({
+      output.json.logs.push({
+        level: 'error',
         title: 'Deletes Disallowed',
-        message: `Missing permissions to delete from the collections: ${deniedKeys.join(', ')}`,
+        description: `Missing permissions to delete from the collections: ${deniedKeys.join(', ')}`,
       });
     }
 

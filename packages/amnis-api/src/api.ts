@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { logCreate } from '@amnis/core/log';
 import type { AnyValidateFunction } from 'ajv/dist/types';
-import type { ApiOutput, ApiError } from './types';
+import type { ApiOutput } from './types';
 
 export function apiOutput<T = any>(): ApiOutput<T> {
   return {
     status: 200, // 200 OK
     cookies: {},
     json: {
-      errors: [],
       logs: [],
       result: undefined,
-      reids: {},
       expire: undefined,
     },
   };
@@ -26,10 +25,11 @@ export function apiValidate(
   if (!validator) {
     const output = apiOutput();
     output.status = 503; // 503 Service Unavailable
-    output.json.errors = [{
+    output.json.logs.push({
+      level: 'error',
       title: 'Validator Missing',
-      message: 'The service cannot handle the request without validation.',
-    }];
+      description: 'The service cannot handle the request without validation.',
+    });
     return output;
   }
   /**
@@ -40,10 +40,14 @@ export function apiValidate(
   if (validator.errors !== undefined && validator.errors !== null) {
     const output = apiOutput();
     output.status = 400; // 400 Bad Request
-    output.json.errors = validator.errors.map<ApiError>((verror) => ({
-      title: 'Validation Error',
-      message: verror.message || '',
-    }));
+
+    validator.errors.forEach((verror) => {
+      output.json.logs.push({
+        level: 'error',
+        title: 'Validation Failed',
+        description: verror.message || 'The request is not valid.',
+      });
+    });
     return output;
   }
 

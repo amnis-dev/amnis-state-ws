@@ -4,7 +4,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import { websiteKey } from '../website';
 import type { System } from './system.types';
 
@@ -20,8 +20,8 @@ export const systemBase: EntityExtension<System> = {
 /**
  * System check method.
  */
-export function systemCheck(system: System): Log[] {
-  const logs: Log[] = [];
+export function systemCheck(system: System): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -29,13 +29,13 @@ export function systemCheck(system: System): Log[] {
 export function systemCreate(
   system: EntityExtensionCreate<System, 'name'>,
   checkSkip = false,
-): [System, Log[]] {
+): [System, LogBaseCreate[]] {
   const systemEntity = entityCreate<System>(systemKey, {
     ...systemBase,
     ...system,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...systemCheck(systemEntity));
   }

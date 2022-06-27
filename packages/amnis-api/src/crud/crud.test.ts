@@ -80,7 +80,7 @@ test('Handler should fail when a jwt token is not provided.', async () => {
 
   expect(output.json.result).not.toBeDefined();
 
-  expect(output.json.errors).toHaveLength(1);
+  expect(output.json.logs).toHaveLength(1);
 });
 
 /**
@@ -101,8 +101,8 @@ test('Handler should create entities that do not validate against the schema.', 
 
   const output = await processes.create(input);
 
-  expect(output.json.errors).toHaveLength(1);
-  expect(output.json.errors[0].title).toEqual('Validation Error');
+  expect(output.json.logs).toHaveLength(1);
+  expect(output.json.logs[0].title).toEqual('Validation Failed');
   expect(output.json.result).toEqual(undefined);
 });
 
@@ -166,9 +166,7 @@ test('Handler should NOT read entities that do not exist.', async () => {
   expect(
     output.json,
   ).toEqual({
-    errors: [],
     result: { [bookKey]: [] },
-    reids: {},
     logs: [],
   });
 });
@@ -199,9 +197,7 @@ test('Handler should be able to update existing entities.', async () => {
   expect(
     result.json,
   ).toEqual({
-    errors: [],
     result: { [bookKey]: [{ ...books[1], title: 'Magic Tree House' }] },
-    reids: {},
     logs: [],
   });
 });

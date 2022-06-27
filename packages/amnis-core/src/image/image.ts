@@ -4,7 +4,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Image } from './image.types';
 
 export const imageKey = 'image';
@@ -22,8 +22,8 @@ export const imageBase: EntityExtension<Image> = {
 /**
  * Image check method.
  */
-export function imageCheck(image: Image): Log[] {
-  const logs: Log[] = [];
+export function imageCheck(image: Image): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -31,13 +31,13 @@ export function imageCheck(image: Image): Log[] {
 export function imageCreate(
   image: EntityExtensionCreate<Image, 'title'>,
   checkSkip = false,
-): [Image, Log[]] {
+): [Image, LogBaseCreate[]] {
   const imageEntity = entityCreate<Image>(imageKey, {
     ...imageBase,
     ...image,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...imageCheck(imageEntity));
   }

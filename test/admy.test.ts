@@ -146,7 +146,7 @@ test('user create global should be +ALLOWED+ as Admy via API', async () => {
   const { data } = action;
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**
@@ -170,7 +170,7 @@ test('user read owned should be +ALLOWED+ as Admy via API', async () => {
   const { data } = action;
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**
@@ -194,7 +194,7 @@ test('user read global should be +ALLOWED+ as Admy via API', async () => {
   const { data } = action;
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**
@@ -222,7 +222,7 @@ test('user update owned should be +ALLOWED+ as Admy via API', async () => {
   expect(users).toBeDefined();
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**
@@ -249,7 +249,7 @@ test('user update global should be +ALLOWED+ as Admy via API', async () => {
   expect(users).toBeDefined();
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**
@@ -271,5 +271,5 @@ test('user delete owned should be +ALLOWED+ as Admy via API', async () => {
   expect(userIds).toBeDefined();
 
   expect(userIds).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });

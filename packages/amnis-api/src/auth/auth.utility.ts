@@ -98,12 +98,11 @@ export function outputBadCredentials() {
   const output = apiOutput();
 
   output.status = 401; // 401 Unauthorized
-  output.json.errors = [
-    {
-      title: 'Bad Credentials',
-      message: 'Username or password is incorrect.',
-    },
-  ];
+  output.json.logs.push({
+    level: 'error',
+    title: 'Bad Credentials',
+    description: 'Username or password is incorrect.',
+  });
   return output;
 }
 

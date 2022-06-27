@@ -95,7 +95,7 @@ test('auth should fail login with invalid credentials.', async () => {
 
   const user = output.json.result?.user[0];
 
-  expect(output.json.errors).toHaveLength(1);
-  expect(output.json.errors[0].title).toEqual('Bad Credentials');
+  expect(output.json.logs).toHaveLength(1);
+  expect(output.json.logs[0].title).toEqual('Bad Credentials');
   expect(user).toEqual(undefined);
 });

@@ -1,5 +1,5 @@
 import type { Reference } from '../types';
-import type { Entity } from '../entity/entity.types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { User } from '../user/user.types';
 
 /**
@@ -36,3 +36,13 @@ export interface Log extends Entity {
    */
   $invoker?: Reference<User>;
 }
+
+/**
+ * Base properties excluding the extended entities.
+ */
+export type LogBase = EntityExtension<Log>;
+
+/**
+ * Base properties in order to create a log.
+ */
+export type LogBaseCreate = EntityExtensionCreate<Log, 'title' | 'description' | 'level'>;

@@ -1,44 +1,41 @@
 import { jwtVerify } from '@amnis/auth/token';
+import { logCreate } from '@amnis/core/log';
 import { apiOutput } from './api';
 import type {
-  ApiContext, ApiContextMethod, ApiInput,
+  ApiMiddleware,
 } from './types';
 
 /**
  * Ensures a JWT token is set.
  */
-export const mwJwt = (next: ApiContextMethod) => (
-  (context: ApiContext) => async (input: ApiInput) => {
-    const { jwtEncoded } = input;
+export const mwJwt: ApiMiddleware = (next) => (context) => async (input) => {
+  const { jwtEncoded } = input;
 
-    if (!jwtEncoded) {
-      const output = apiOutput();
-      output.status = 401; // 401 Unauthorized
-      output.json.errors = [
-        {
-          title: 'Unauthorized',
-          message: 'Access token is required.',
-        },
-      ];
-      return output;
-    }
-
-    input.jwt = jwtVerify(jwtEncoded);
-
-    if (!input.jwt) {
-      const output = apiOutput();
-      output.status = 401; // 401 Unauthorized
-      output.json.errors = [
-        {
-          title: 'Unauthorized',
-          message: 'Access token is invalid.',
-        },
-      ];
-      return output;
-    }
-
-    return next(context)(input);
+  if (!jwtEncoded) {
+    const output = apiOutput();
+    output.status = 401; // 401 Unauthorized
+    output.json.logs.push({
+      level: 'error',
+      title: 'Unauthorized',
+      description: 'Access token is required.',
+    });
+    return output;
   }
-);
+
+  input.jwt = jwtVerify(jwtEncoded);
+
+  if (!input.jwt) {
+    const output = apiOutput();
+    output.status = 401; // 401 Unauthorized
+    output.json.logs.push({
+      level: 'error',
+      title: 'Unauthorized',
+      description: 'Access token is invalid.',
+    });
+    return output;
+  }
+
+  return next(context)(input);
+};
 
 export default { mwJwt };

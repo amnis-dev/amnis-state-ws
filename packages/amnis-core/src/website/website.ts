@@ -3,7 +3,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Website } from './website.types';
 
 export const websiteKey = 'website';
@@ -18,8 +18,8 @@ export const websiteBase: EntityExtension<Website> = {
 /**
  * Website check method.
  */
-export function websiteCheck(website: Website): Log[] {
-  const logs: Log[] = [];
+export function websiteCheck(website: Website): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -27,13 +27,13 @@ export function websiteCheck(website: Website): Log[] {
 export function websiteCreate(
   website: EntityExtensionCreate<Website, 'name' | 'domain'>,
   checkSkip = false,
-): [Website, Log[]] {
+): [Website, LogBaseCreate[]] {
   const websiteEntity = entityCreate<Website>(websiteKey, {
     ...websiteBase,
     ...website,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...websiteCheck(websiteEntity));
   }

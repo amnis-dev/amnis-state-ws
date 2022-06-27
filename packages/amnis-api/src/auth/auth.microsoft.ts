@@ -8,7 +8,7 @@ import type { ResultCreate } from '@amnis/core/state';
 import { jwtDecode } from '@amnis/auth/token';
 import type { ApiAuthPkce } from './auth.types';
 import { API_MICROSOFT_OAUTH2_URL } from '../const';
-import { ApiError, ApiOutput } from '../types';
+import { ApiOutput } from '../types';
 import { loginSuccessProcess, userFind } from './auth.utility';
 import { register } from './auth.register';
 import { apiOutput } from '../api';
@@ -68,12 +68,12 @@ export async function authMicrosoft(
   const tokenData = await tokenResponse.json() as OAuth2TokenData;
 
   if (typeof tokenData?.access_token !== 'string' || typeof tokenData?.id_token !== 'string') {
-    const error: ApiError = {
-      title: 'Invaid Request',
-      message: tokenData?.error_description || 'Could not verify OAuth 2.0 authentication.',
-    };
     output.status = 401; // Unauthorized
-    output.json.errors.push(error);
+    output.json.logs.push({
+      level: 'error',
+      title: 'Invaid Request',
+      description: tokenData?.error_description || 'Could not verify OAuth 2.0 authentication.',
+    });
     return output;
   }
 
@@ -88,12 +88,12 @@ export async function authMicrosoft(
     || typeof microsoftId.preferred_username !== 'string'
     || typeof microsoftId.oid !== 'string'
   ) {
-    const error: ApiError = {
-      title: 'Invaid Request',
-      message: tokenData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
-    };
     output.status = 401; // Unauthorized
-    output.json.errors.push(error);
+    output.json.logs.push({
+      level: 'error',
+      title: 'Invaid Request',
+      description: tokenData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
+    });
     return output;
   }
 

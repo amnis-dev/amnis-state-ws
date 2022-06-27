@@ -4,7 +4,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Session } from './session.types';
 
 export const sessionKey = 'session';
@@ -22,8 +22,8 @@ export const sessionBase: EntityExtension<Session> = {
 /**
  * Session check method.
  */
-export function sessionCheck(session: Session): Log[] {
-  const logs: Log[] = [];
+export function sessionCheck(session: Session): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -31,13 +31,13 @@ export function sessionCheck(session: Session): Log[] {
 export function sessionCreate(
   session: EntityExtensionCreate<Session, '$subject' | 'exp' | 'name'>,
   checkSkip = false,
-): [Session, Log[]] {
+): [Session, LogBaseCreate[]] {
   const sessionEntity = entityCreate<Session>(sessionKey, {
     ...sessionBase,
     ...session,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...sessionCheck(sessionEntity));
   }

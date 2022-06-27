@@ -99,9 +99,10 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
         }
         default:
           output.status = 401; // Unauthorized
-          output.json.errors.push({
+          output.json.logs.push({
+            level: 'error',
             title: 'Unknown Platform',
-            message: `Could not authenticate using the '${platform}' platform.`,
+            description: `Could not authenticate using the '${platform}' platform.`,
           });
           return output;
       }

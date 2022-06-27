@@ -15,12 +15,11 @@ export const crudProcessRead: ApiContextMethod = (context): ApiCrudProcessRead =
 
     if (!jwt) {
       output.status = 401; // 401 Unauthorized
-      output.json.errors = [
-        {
-          title: 'Unauthorized',
-          message: 'Access token is invalid.',
-        },
-      ];
+      output.json.logs.push({
+        level: 'error',
+        title: 'Unauthorized',
+        description: 'Access token is invalid.',
+      });
       return output;
     }
 
@@ -57,9 +56,10 @@ export const crudProcessRead: ApiContextMethod = (context): ApiCrudProcessRead =
     }).filter((value) => value !== null);
 
     if (deniedKeys.length) {
-      output.json.errors.push({
+      output.json.logs.push({
+        level: 'error',
         title: 'Readings Disallowed',
-        message: `Missing permissions to read from the collections: ${deniedKeys.join(', ')}`,
+        description: `Missing permissions to read from the collections: ${deniedKeys.join(', ')}`,
       });
     }
 

@@ -80,13 +80,11 @@ export async function register(
     output.cookies.session = sessionEncode(session);
   }
 
-  output.json.logs.push(
-    logCreate({
-      level: 'success',
-      title: 'Registration Successful',
-      description: 'A new account has been created.',
-    }),
-  );
+  output.json.logs.push({
+    level: 'success',
+    title: 'Registration Successful',
+    description: 'A new account has been created.',
+  });
 
   return output;
 }

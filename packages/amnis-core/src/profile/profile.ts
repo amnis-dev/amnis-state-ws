@@ -1,7 +1,7 @@
 import { reference } from '../core';
 import { entityCreate } from '../entity/entity';
 import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Profile } from './profile.types';
 import { userKey } from '../user/user';
 
@@ -15,8 +15,8 @@ export const profileBase: EntityExtension<Profile> = {
 /**
  * Profile check method.
  */
-export function profileCheck(profile: Profile): Log[] {
-  const logs: Log[] = [];
+export function profileCheck(profile: Profile): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -24,13 +24,13 @@ export function profileCheck(profile: Profile): Log[] {
 export function profileCreate(
   profile: EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>,
   checkSkip = false,
-): [Profile, Log[]] {
+): [Profile, LogBaseCreate[]] {
   const profileEntity = entityCreate<Profile>(profileKey, {
     ...profileBase,
     ...profile,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...profileCheck(profileEntity));
   }

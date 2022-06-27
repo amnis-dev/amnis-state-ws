@@ -4,7 +4,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Video } from './video.types';
 
 export const videoKey = 'video';
@@ -23,8 +23,8 @@ export const videoBase: EntityExtension<Video> = {
 /**
  * Video check method.
  */
-export function videoCheck(video: Video): Log[] {
-  const logs: Log[] = [];
+export function videoCheck(video: Video): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -32,13 +32,13 @@ export function videoCheck(video: Video): Log[] {
 export function videoCreate(
   video: EntityExtensionCreate<Video, 'title'>,
   checkSkip = false,
-): [Video, Log[]] {
+): [Video, LogBaseCreate[]] {
   const videoEntity = entityCreate<Video>(videoKey, {
     ...videoBase,
     ...video,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...videoCheck(videoEntity));
   }

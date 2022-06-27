@@ -46,8 +46,8 @@ function expectDenied(action: any, key: string, errorTitle: string) {
 
   expect(entities).not.toBeDefined();
 
-  expect(data?.errors).toHaveLength(1);
-  expect(data?.errors[0].title).toEqual(errorTitle);
+  expect(data?.logs).toHaveLength(1);
+  expect(data?.logs[0].title).toEqual(errorTitle);
 }
 
 /**
@@ -228,7 +228,7 @@ test('user read owned should be +ALLOWED+ as Moddie via API', async () => {
   const { data } = action;
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**
@@ -252,7 +252,7 @@ test('user read global should be +ALLOWED+ as Moddie via API', async () => {
   const { data } = action;
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**
@@ -278,7 +278,7 @@ test('user update owned should be +ALLOWED+ as Moddie via API', async () => {
   expect(users).toBeDefined();
 
   expect(data?.result?.user).toHaveLength(1);
-  expect(data?.errors).toHaveLength(0);
+  expect(data?.logs).toHaveLength(0);
 });
 
 /**

@@ -7,7 +7,7 @@ import type { ResultCreate } from '@amnis/core/state';
 
 import type { ApiAuthPkce } from './auth.types';
 import { API_TWITTER_OAUTH2_URL } from '../const';
-import { ApiError, ApiOutput } from '../types';
+import { ApiOutput } from '../types';
 import { loginSuccessProcess, userFind } from './auth.utility';
 import { register } from './auth.register';
 import { apiOutput } from '../api';
@@ -64,12 +64,12 @@ export async function authTwitter(
   const tokenData = await tokenResponse.json() as OAuth2TokenData;
 
   if (tokenData.error || typeof tokenData?.access_token !== 'string') {
-    const error: ApiError = {
-      title: 'Invaid Request',
-      message: tokenData?.error_description || 'Could not verify OAuth 2.0 authentication.',
-    };
     output.status = 401; // Unauthorized
-    output.json.errors.push(error);
+    output.json.logs.push({
+      level: 'error',
+      title: 'Invaid Request',
+      description: tokenData?.error_description || 'Could not verify OAuth 2.0 authentication.',
+    });
     return output;
   }
 
@@ -88,12 +88,12 @@ export async function authTwitter(
   const userData = userPayload.data as TwitterUser;
 
   if (typeof userData.name !== 'string' || typeof userData.id !== 'string') {
-    const error: ApiError = {
-      title: 'Invaid Request',
-      message: tokenData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
-    };
     output.status = 401; // Unauthorized
-    output.json.errors.push(error);
+    output.json.logs.push({
+      level: 'error',
+      title: 'Invaid Request',
+      description: tokenData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
+    });
     return output;
   }
 

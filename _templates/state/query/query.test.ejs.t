@@ -17,7 +17,6 @@ test('Handler should work.', () => {
   });
 
   expect(output.json).toEqual({
-    errors: [],
     result: { data: null },
   });
 });

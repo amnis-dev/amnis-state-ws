@@ -4,7 +4,7 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { Log } from '../log';
+import type { LogBaseCreate } from '../log';
 import type { Permit } from './permit.types';
 
 export const permitKey = 'permit';
@@ -19,8 +19,8 @@ export const permitBase: EntityExtension<Permit> = {
 /**
  * Permit check method.
  */
-export function permitCheck(permit: Permit): Log[] {
-  const logs: Log[] = [];
+export function permitCheck(permit: Permit): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   return logs;
 }
@@ -28,13 +28,13 @@ export function permitCheck(permit: Permit): Log[] {
 export function permitCreate(
   permit: EntityExtensionCreate<Permit, '$issuer' | '$holder' | '$target'>,
   checkSkip = false,
-): [Permit, Log[]] {
+): [Permit, LogBaseCreate[]] {
   const permitEntity = entityCreate<Permit>(permitKey, {
     ...permitBase,
     ...permit,
   });
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!checkSkip) {
     logs.push(...permitCheck(permitEntity));
   }

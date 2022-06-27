@@ -1,10 +1,9 @@
 import { deviceParse } from '../device';
 import { entityCreate } from '../entity';
-import { logCreate } from '../log';
+import { LogBaseCreate } from '../log';
 import { regexAlphanumeric, regexEmail } from '../regex';
 import type { DeviceString } from '../device';
 import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
-import type { Log } from '../log';
 import type { User } from './user.types';
 
 export const userKey = 'user';
@@ -24,57 +23,47 @@ export function userValidateDevices(devices: DeviceString[]): boolean {
 /**
  * User validation method.
  */
-export function userValidate(user: User): Log[] {
-  const logs: Log[] = [];
+export function userValidate(user: User): LogBaseCreate[] {
+  const logs: LogBaseCreate[] = [];
 
   if (user.password !== null && !regexAlphanumeric.test(user.name)) {
-    logs.push(
-      logCreate({
-        title: 'Invalid Username',
-        description: 'The username must be alphanumeric.',
-        level: 'error',
-      }),
-    );
+    logs.push({
+      title: 'Invalid Username',
+      description: 'The username must be alphanumeric.',
+      level: 'error',
+    });
 
     if (user.name.length > 32) {
-      logs.push(
-        logCreate({
-          title: 'Invalid Username',
-          description: 'The username is too long.',
-          level: 'error',
-        }),
-      );
+      logs.push({
+        title: 'Invalid Username',
+        description: 'The username is too long.',
+        level: 'error',
+      });
     }
   }
 
   if (user.password === null && user.name.charAt(2) !== '#') {
-    logs.push(
-      logCreate({
-        title: 'Invalid Username',
-        description: 'Username of passwordless accounts must have a hash character.',
-        level: 'error',
-      }),
-    );
+    logs.push({
+      title: 'Invalid Username',
+      description: 'Username of passwordless accounts must have a hash character.',
+      level: 'error',
+    });
   }
 
   if (user.email && !regexEmail.test(user.email)) {
-    logs.push(
-      logCreate({
-        title: 'Invalid User Email',
-        description: 'User email address is not structured properly.',
-        level: 'error',
-      }),
-    );
+    logs.push({
+      title: 'Invalid User Email',
+      description: 'User email address is not structured properly.',
+      level: 'error',
+    });
   }
 
   if (user.devices?.length && userValidateDevices(user.devices)) {
-    logs.push(
-      logCreate({
-        title: 'Invalid Device',
-        description: 'The device associated with the user is invalid.',
-        level: 'error',
-      }),
-    );
+    logs.push({
+      title: 'Invalid Device',
+      description: 'The device associated with the user is invalid.',
+      level: 'error',
+    });
   }
 
   return logs;
@@ -86,13 +75,13 @@ export function userValidate(user: User): Log[] {
 export function userCreate(
   user: EntityExtensionCreate<User, 'name'>,
   validationSkip = false,
-): [User, Log[]] {
+): [User, LogBaseCreate[]] {
   const userEntity = entityCreate<User>(userKey, {
     ...userBase,
     ...user,
   }, true);
 
-  const logs: Log[] = [];
+  const logs: LogBaseCreate[] = [];
   if (!validationSkip) {
     logs.push(...userValidate(userEntity));
   }
