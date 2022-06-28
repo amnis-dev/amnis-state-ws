@@ -1,6 +1,6 @@
 {
   "name": "@amnis/state",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "main": "index.ts",
   "license": "MIT",
   "private": false,
@@ -13,9 +13,9 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.1.0-alpha.4",
-    "@amnis/auth": "0.1.0-alpha.4",
-    "@amnis/db": "0.1.0-alpha.4",
-    "@amnis/api": "0.1.0-alpha.4"
+    "@amnis/core": "0.1.0-alpha.5",
+    "@amnis/auth": "0.1.0-alpha.5",
+    "@amnis/db": "0.1.0-alpha.5",
+    "@amnis/api": "0.1.0-alpha.5"
   }
 }
