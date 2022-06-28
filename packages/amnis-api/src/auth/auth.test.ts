@@ -1,11 +1,12 @@
-import {
-  userCreate, User,
-} from '@amnis/core/user';
+import { dateNumeric, reference } from '@amnis/core/core';
+import { userCreate, User } from '@amnis/core/user';
 import type { Session } from '@amnis/core/session';
 import type { Profile } from '@amnis/core/profile';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
+import { Token, tokenStringify } from '@amnis/core/token';
+import { jwtEncode } from '@amnis/auth/token';
 import { apiAuthProcesses } from './auth.process';
 
 /**
@@ -25,6 +26,27 @@ const users: User[] = [
 ];
 
 const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
+
+/**
+ * Create a JWT token in order to execute processes.
+ */
+const jwtEncoded = jwtEncode({
+  iss: 'core',
+  sub: reference('user'),
+  exp: dateNumeric('30m'),
+  typ: 'access',
+  adm: true,
+  roles: [],
+});
+
+const jwtEncodedInvalid = jwtEncode({
+  iss: 'core',
+  sub: reference('user'),
+  exp: dateNumeric('30m'),
+  typ: 'access',
+  adm: true,
+  roles: [],
+}, 'INVALIDTOKENSCERET123456789');
 
 /**
  * Create test data in the memory database.
@@ -98,4 +120,46 @@ test('auth should fail login with invalid credentials.', async () => {
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0].title).toEqual('Bad Credentials');
   expect(user).toEqual(undefined);
+});
+
+/**
+ * ============================================================
+ */
+test('auth should verify valid token.', async () => {
+  const token = tokenStringify({
+    api: 'core',
+    type: 'access',
+    exp: dateNumeric('30m'),
+    jwt: jwtEncoded,
+  });
+
+  const output = await processes.verify({
+    body: {
+      token,
+    },
+  });
+
+  expect(output.json.result).toEqual(true);
+  expect(output.json.logs).toHaveLength(0);
+});
+
+/**
+ * ============================================================
+ */
+test('auth should not verify an invalid token.', async () => {
+  const token = tokenStringify({
+    api: 'core',
+    type: 'access',
+    exp: dateNumeric('30m'),
+    jwt: jwtEncodedInvalid,
+  });
+
+  const output = await processes.verify({
+    body: {
+      token,
+    },
+  });
+
+  expect(output.json.result).toEqual(false);
+  expect(output.json.logs).toHaveLength(0);
 });

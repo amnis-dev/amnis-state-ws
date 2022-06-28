@@ -3,6 +3,7 @@ import type { Store } from '@reduxjs/toolkit';
 import type { ResultCreate, ResultUpdate } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
 
+import type { TokenString } from '@amnis/core/token';
 import type {
   ApiProcess,
   ApiProcesses,
@@ -45,17 +46,26 @@ export interface ApiAuthPkce {
 export type ApiAuthRenewBody = Record<string, never>;
 
 /**
+ * Verifies the validity of a stringified token.
+ */
+export interface ApiAuthVerifyBody {
+  token: TokenString;
+}
+
+/**
  * API object containing request queries.
  */
 export interface ApiAuthQueries {
   login: ApiQuery<ApiAuthLoginBody>;
   pkce: ApiQuery<ApiAuthPkceBody>;
   renew: ApiQuery<ApiAuthRenewBody>;
+  verify: ApiQuery<ApiAuthVerifyBody>;
 }
 
 export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, ResultCreate>;
 export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, ResultCreate>;
 export type ApiAuthProcessRenew = ApiProcess<ApiAuthPkceBody, ResultUpdate>;
+export type ApiAuthProcessVerify = ApiProcess<ApiAuthVerifyBody, boolean>;
 
 /**
  * API object containing response handlers.
@@ -64,6 +74,7 @@ export interface ApiAuthProcesses extends ApiProcesses {
   login: ApiAuthProcessLogin;
   pkce: ApiAuthProcessPkce;
   renew: ApiAuthProcessRenew;
+  verify: ApiAuthProcessVerify;
 }
 
 /**

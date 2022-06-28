@@ -9,6 +9,7 @@ import { authProcessLogin } from './auth.process.login';
 import { authProcessPcke } from './auth.process.pkce';
 import { authProcessRenew } from './auth.process.renew';
 import { mwSession } from '../mw.session';
+import { authProcessVerify } from './auth.process.verify';
 
 /**
  * Sets up authentication processes.
@@ -34,6 +35,12 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       store,
       database,
       validator: ajv.getSchema('auth#/definitions/ApiAuthRenewBody'),
+    }),
+
+    verify: mwValidate(authProcessVerify)({
+      store,
+      database,
+      validator: ajv.getSchema('auth#/definitions/ApiAuthVerifyBody'),
     }),
   };
 }

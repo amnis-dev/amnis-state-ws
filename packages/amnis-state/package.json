@@ -15,7 +15,6 @@
   "dependencies": {
     "@amnis/core": "0.1.0-alpha.5",
     "@amnis/auth": "0.1.0-alpha.5",
-    "@amnis/db": "0.1.0-alpha.5",
     "@amnis/api": "0.1.0-alpha.5"
   }
 }

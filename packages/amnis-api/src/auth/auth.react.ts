@@ -9,6 +9,7 @@ import {
   ApiAuthLoginBody,
   ApiAuthPkceBody,
   ApiAuthRenewBody,
+  ApiAuthVerifyBody,
 } from './auth.types';
 
 const queries = apiQueries();
@@ -39,6 +40,13 @@ export const apiAuth = createApi({
     ApiAuthRenewBody
     >({
       query: queries.renew,
+    }),
+
+    verify: builder.query<
+    ApiJSON<boolean>,
+    ApiAuthVerifyBody
+    >({
+      query: queries.verify,
     }),
 
   }),

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@amnis/eslint-config-node@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@amnis/eslint-config-node/-/eslint-config-node-1.3.3.tgz#c828202928832fdcd6eb3a957f035145d87bbf29"
-  integrity sha512-eLl7Umg9+840ZFQP2IZDr8FO4eP3h6AKZdqLJoSSWgxQk+hxzQISx3pmFmH7WxUGInDrZSadtGW/IsOUCXMVng==
+"@amnis/eslint-config-node@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@amnis/eslint-config-node/-/eslint-config-node-1.3.5.tgz#31865c7ec94a25c2815375a8858d8c8f2139663a"
+  integrity sha512-pBJQPTF+s19n/h5D3GhU2K92SvzVuwgOwLlxi+HA34YotwwpyafXbNILhUJ/cTrGE3U9V87928K0Sjjqfw/Gsw==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.18.0"
     "@typescript-eslint/parser" "^5.18.0"
@@ -13,10 +13,10 @@
     eslint-import-resolver-typescript "^2.7.1"
     eslint-plugin-import "^2.26.0"
 
-"@amnis/tsconfig-node@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@amnis/tsconfig-node/-/tsconfig-node-1.3.3.tgz#639506f2cd0f94b5cc2e72543305a2bdd0f2e3fa"
-  integrity sha512-S+BucMMTqlhb6s6DTJB/roFPrYhNCauvaFufIKpxDSsCwRhGgddpWbPoVCgG/Xxpo40hf3yD2wQV9PXMBggsVw==
+"@amnis/tsconfig-node@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@amnis/tsconfig-node/-/tsconfig-node-1.3.5.tgz#6031c4529fe28dc599b380ab20cbcb5601038afa"
+  integrity sha512-FAvb8LqfKfUwcDrI8QgK29P0OGFmm0M+Vs7zWWc+4sjzsfd1xPpSDEYYjMnvLJQFykzsqT44oYF58EUuDW6pVg==
   dependencies:
     "@types/node" latest
 

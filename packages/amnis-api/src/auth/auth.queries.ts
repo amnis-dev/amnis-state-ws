@@ -19,6 +19,11 @@ export function apiQueries(): ApiAuthQueries {
       method: 'post',
       body: payload,
     }),
+    verify: (payload) => ({
+      url: 'verify',
+      method: 'post',
+      body: payload,
+    }),
   };
 }
 

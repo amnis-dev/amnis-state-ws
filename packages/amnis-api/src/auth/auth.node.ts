@@ -10,6 +10,7 @@ import {
   ApiAuthLoginBody,
   ApiAuthPkceBody,
   ApiAuthRenewBody,
+  ApiAuthVerifyBody,
 } from './auth.types';
 
 global.Headers = Headers;
@@ -44,6 +45,13 @@ export const apiAuth = createApi({
     ApiAuthRenewBody
     >({
       query: queries.renew,
+    }),
+
+    verify: builder.query<
+    ApiJSON<boolean>,
+    ApiAuthVerifyBody
+    >({
+      query: queries.verify,
     }),
 
   }),
