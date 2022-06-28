@@ -2,11 +2,11 @@
 import coreSchema from '@amnis/core/core.schema.json';
 
 import {
-  apiAuthProcesses,
   API_AUTH_URL,
-  apiCrudProcesses,
   API_CRUD_URL,
-} from '@amnis/api/index';
+} from '@amnis/api/const';
+import { apiAuthProcesses } from '@amnis/api/auth';
+import { apiCrudProcesses } from '@amnis/api/crud';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
 import stateSchema from '@amnis/state/state.schema.json';

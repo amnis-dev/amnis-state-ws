@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
-import type { DateJSON } from '@amnis/core/index';
+import type { DateJSON } from '@amnis/core/types';
 import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
 import type { LogBaseCreate } from '@amnis/core/log';
 
-import type { Database } from '@amnis/db/index';
+import type { Database } from '@amnis/db/types';
 import type { Store } from '@reduxjs/toolkit';
 import type { AnyValidateFunction } from 'ajv/dist/types';
 import type { Session } from '@amnis/core/session';

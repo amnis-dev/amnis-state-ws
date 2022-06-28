@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Reference } from '@amnis/core/index';
-import type { AuthScope } from '@amnis/auth/index';
+import type { Reference } from '@amnis/core/types';
+import type { AuthScope } from '@amnis/auth/types';
 import type {
   Insert,
   Modify,

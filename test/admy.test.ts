@@ -1,10 +1,8 @@
 import { coreActions } from '@amnis/core/actions';
 import { samples } from '@amnis/core/test/samples';
 
-import {
-  apiAuth,
-  apiCrud,
-} from '@amnis/api/index';
+import { apiAuth } from '@amnis/api/auth';
+import { apiCrud } from '@amnis/api/crud';
 
 import {
   storeSetup,

@@ -3,11 +3,11 @@ import { sessionEncode } from '@amnis/auth/session';
 import { jwtEncode } from '@amnis/auth/token';
 import { entityCreate } from '@amnis/core/entity';
 
-import { dateNumeric } from '@amnis/core/index';
+import { dateNumeric } from '@amnis/core/core';
 import { JWTDecoded, Token, tokenStringify } from '@amnis/core/token';
 import type { Profile } from '@amnis/core/profile';
 import type { Session } from '@amnis/core/session';
-import type { Database } from '@amnis/db/index';
+import type { Database } from '@amnis/db/types';
 import type { User } from '@amnis/core/user';
 import type { ResultCreate } from '@amnis/core/state';
 

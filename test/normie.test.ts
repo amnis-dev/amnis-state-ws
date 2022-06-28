@@ -6,11 +6,15 @@ import { samples } from '@amnis/core/test/samples';
 import {
   apiAuth,
   apiAuthProcesses,
-  API_AUTH_URL,
+} from '@amnis/api/auth';
+import {
   apiCrud,
   apiCrudProcesses,
+} from '@amnis/api/crud';
+import {
+  API_AUTH_URL,
   API_CRUD_URL,
-} from '@amnis/api/index';
+} from '@amnis/api/const';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
 import {

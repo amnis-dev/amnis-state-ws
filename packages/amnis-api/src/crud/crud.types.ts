@@ -11,7 +11,7 @@ import type {
   ResultUpdate,
   Select,
 } from '@amnis/core/state';
-import type { Database } from '@amnis/db/index';
+import type { Database } from '@amnis/db/types';
 import type { Store } from '@reduxjs/toolkit';
 import type {
   ApiProcess,

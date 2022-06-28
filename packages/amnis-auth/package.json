@@ -10,10 +10,10 @@
   },
   "homepage": "https://github.com/amnis-dev/amnis-auth",
   "peerDependencies": {
-    "@reduxjs/toolkit": "^1.8.1"
+    "@reduxjs/toolkit": "^1.8.1",
+    "@amnis/core": "0.1.0-alpha.4"
   },
   "dependencies": {
-    "@amnis/core": "0.1.0-alpha.4",
     "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1"
   }

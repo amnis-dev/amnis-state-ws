@@ -2,7 +2,7 @@ import { sessionEncode } from '@amnis/auth/session';
 import { profileCreate } from '@amnis/core/profile';
 import { Insert, ResultCreate } from '@amnis/core/state';
 import { Token } from '@amnis/core/token';
-import type { Database } from '@amnis/db/index';
+import type { Database } from '@amnis/db/types';
 import { userCreate } from '@amnis/core/user';
 
 import { apiOutput } from '../api';

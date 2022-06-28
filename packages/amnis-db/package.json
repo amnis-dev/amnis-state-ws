@@ -10,9 +10,7 @@
   },
   "homepage": "https://github.com/amnis-dev/amnis-state",
   "peerDependencies": {
-    "@reduxjs/toolkit": "^1.8.1"
-  },
-  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "@amnis/core": "0.1.0-alpha.4",
     "@amnis/auth": "0.1.0-alpha.4"
   }

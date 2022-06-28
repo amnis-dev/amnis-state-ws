@@ -1,4 +1,5 @@
-import { apiAuth, apiCrud } from '@amnis/api/index';
+import { apiAuth } from '@amnis/api/auth';
+import { apiCrud } from '@amnis/api/crud';
 import { roleSlice } from './role';
 import { sessionSlice } from './session';
 import { userSlice } from './user';

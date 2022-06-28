@@ -8,7 +8,8 @@ import path from 'path';
 
 import { coreActions } from '@amnis/core/actions';
 import { memory } from '@amnis/db/memory';
-import { ApiInput, apiAuthProcesses } from '@amnis/api/index';
+import { ApiInput } from '@amnis/api/types';
+import { apiAuthProcesses } from '@amnis/api/auth';
 import { storeSetup } from '@amnis/state/store';
 
 import { databaseSetup } from './database';

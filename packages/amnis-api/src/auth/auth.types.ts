@@ -1,7 +1,7 @@
 import type { Store } from '@reduxjs/toolkit';
 
-import { ResultCreate, ResultUpdate } from '@amnis/core/state';
-import type { Database } from '@amnis/db/index';
+import type { ResultCreate, ResultUpdate } from '@amnis/core/state';
+import type { Database } from '@amnis/db/types';
 
 import type {
   ApiProcess,
