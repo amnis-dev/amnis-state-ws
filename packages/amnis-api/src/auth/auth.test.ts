@@ -5,7 +5,7 @@ import type { Profile } from '@amnis/core/profile';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
-import { Token, tokenStringify } from '@amnis/core/token';
+import { tokenStringify } from '@amnis/core/token';
 import { jwtEncode } from '@amnis/auth/token';
 import { apiAuthProcesses } from './auth.process';
 
