@@ -41,12 +41,15 @@ export async function register(
     email: options.email,
   });
 
+  user.$owner = user.$id;
+
   logs.push(...userLogs);
 
   const [profile, profileLogs] = profileCreate({
     $user: user.$id,
     nameDisplay: nameDisplay || username,
   });
+  profile.$owner = user.$id;
 
   logs.push(...profileLogs);
 
@@ -75,6 +78,7 @@ export async function register(
    */
   if (createSession === true) {
     const session = sessionGenerate(user, profile, tokens);
+    session.$owner = user.$id;
     output.json.result.session = [session];
     output.cookies.session = sessionEncode(session);
   }

@@ -1,4 +1,4 @@
-import { reference } from '../core';
+import { durationCalc, reference } from '../core';
 import {
   EntityExtension,
   EntityExtensionCreate,
@@ -12,7 +12,7 @@ export const systemKey = 'system';
 
 export const systemBase: EntityExtension<System> = {
   name: '',
-  sessionExpires: 36000,
+  sessionExpires: durationCalc('1h'),
   $website: reference(websiteKey),
   $initialRoles: [],
 };
@@ -22,6 +22,22 @@ export const systemBase: EntityExtension<System> = {
  */
 export function systemCheck(system: System): LogBaseCreate[] {
   const logs: LogBaseCreate[] = [];
+
+  if (system.name.length < 1) {
+    logs.push({
+      title: 'System Name Required',
+      description: 'The system must have a name.',
+      level: 'error',
+    });
+  }
+
+  if (system.$initialRoles.length < 1) {
+    logs.push({
+      title: 'Missing Default Roles',
+      description: 'New accounts will have same access as anonymous users.',
+      level: 'warn',
+    });
+  }
 
   return logs;
 }

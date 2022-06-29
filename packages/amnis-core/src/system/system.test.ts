@@ -1,3 +1,4 @@
+import { reference } from '../core';
 import { systemKey, systemCreate } from './system';
 
 /**
@@ -13,6 +14,7 @@ test('system key should be is properly set', () => {
 test('should create a system', () => {
   const [system, logs] = systemCreate({
     name: 'Amnis System',
+    $initialRoles: [reference('role')],
   });
 
   expect(system).toEqual(

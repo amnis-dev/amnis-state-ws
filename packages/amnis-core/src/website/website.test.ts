@@ -13,13 +13,13 @@ test('website key should be is properly set', () => {
 test('should create a website', () => {
   const [website, logs] = websiteCreate({
     name: 'Amnis',
-    domain: 'https://amnis.dev',
+    url: 'https://amnis.dev',
   });
 
   expect(website).toEqual(
     expect.objectContaining({
       name: expect.any(String),
-      domain: expect.any(String),
+      url: expect.any(String),
     }),
   );
 

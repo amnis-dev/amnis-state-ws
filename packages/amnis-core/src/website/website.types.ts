@@ -1,6 +1,7 @@
-import { Reference, SURL } from '../types';
-import { Entity } from '../entity/entity.types';
-import { Image } from '../image/image.types';
+import type { Reference, SURL } from '../types';
+import type { Entity } from '../entity/entity.types';
+import type { Image } from '../image/image.types';
+import type { Contact } from '../contact';
 
 /**
  * Types of social networks available.
@@ -8,23 +9,6 @@ import { Image } from '../image/image.types';
 export type WebsiteSocialType =
 'facebook' | 'twitter' | 'instagram' | 'youtube'
 | 'reddit' | 'discord' | 'twitch' | 'steam' | 'itchio';
-
-/**
- * A social network object.
- */
-export interface WebsiteSocial {
-  type: WebsiteSocialType;
-  link: SURL;
-}
-
-/**
- * Contacts for the website.
- */
-export interface WebsiteContacts {
-  name: string;
-  phone: string;
-  email: string;
-}
 
 export interface Website extends Entity {
   /**
@@ -38,12 +22,12 @@ export interface Website extends Entity {
   nameShort?: string;
 
   /**
-   * Domain name.
+   * Primary to the website.
    */
-  domain: string;
+  url: string;
 
   /**
-   * A title of the website.
+   * A title to access the website.
    */
   title?: string;
 
@@ -60,10 +44,10 @@ export interface Website extends Entity {
   /**
    * Contacts that should be listed on the website.
    */
-  contacts: WebsiteContacts[];
+  $contacts: Reference<Contact>[];
 
   /**
    * List of the social network links.
    */
-  socials: WebsiteSocial[];
+  socials: SURL[];
 }

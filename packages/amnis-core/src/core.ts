@@ -57,6 +57,31 @@ export const dateNumeric = (date?: Date | string): DateNumeric => {
 };
 
 /**
+ * Returns a duration in mulliseconds.
+ */
+export function durationCalc(duration: string): number {
+  const unit = duration.slice(-1);
+  const value = parseInt(duration, 10);
+  if (Number.isNaN(value)) {
+    throw new Error(`Could not parse a numeric value from the time ${duration} provided.`);
+  }
+  switch (unit) {
+    case 'ms':
+      return value;
+    case 's':
+      return value * 1000;
+    case 'm':
+      return value * 60000;
+    case 'h':
+      return value * 3600000;
+    case 'd':
+      return value * 86400000;
+    default:
+      throw new Error('Please use one of the units: ms, s, m, h, or d');
+  }
+}
+
+/**
  * Validates a reference type.
  */
 export const referenceValidate = (ref: string): boolean => {

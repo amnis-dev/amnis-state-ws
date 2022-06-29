@@ -40,17 +40,17 @@ export interface Entity {
   /**
    * Entity that owns this data.
    */
-  readonly $owner: Reference;
+  $owner: Reference;
 
   /**
    * Possible user id creator of the entity.
    */
-  readonly $creator: Reference;
+  $creator: Reference;
 
   /**
    * Entities that have updated this.
    */
-  readonly $updaters: Reference[];
+  $updaters: Reference[];
 
   // /**
   //  * Anything that begins with a '$' must be a document reference.

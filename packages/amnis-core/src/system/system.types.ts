@@ -10,8 +10,8 @@ export interface System extends Entity {
   name: string;
 
   /**
-   * Number in minutes that an authentication session should live.
-   * @default 60
+   * Number in milliseconds that an authentication session should live.
+   * @default 3600000
    */
   sessionExpires: number;
 
