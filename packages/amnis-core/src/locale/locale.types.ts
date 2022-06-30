@@ -21,11 +21,15 @@ export type LocaleTranslations = Record<LocaleTranslationKey, string>;
 export interface Locale extends Entity {
   /**
    * Two-character language code.
+   * @minLength 2
+   * @maxLength 2
    */
   code: string;
 
   /**
    * Name of the translation set for organization.
+   * @minLength 1
+   * @maxLength 32
    */
   set: string;
 

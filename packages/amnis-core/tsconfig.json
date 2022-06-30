@@ -5,6 +5,7 @@
     "declarationDir": "./.dist",
     "composite": true,
     "declaration": true,
+    "sourceMap": false,
     "rootDir": "./src"
   },
   "include": [
