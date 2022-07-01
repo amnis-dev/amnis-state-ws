@@ -7,7 +7,7 @@ import type { ResultCreate } from '@amnis/core/state';
 
 import { jwtDecode } from '@amnis/auth/token';
 import type { ApiAuthPkce } from './auth.types';
-import { API_MICROSOFT_OAUTH2_URL } from '../const';
+import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
 import { loginSuccessProcess, userFind } from './auth.utility';
 import { register } from './auth.register';
@@ -38,7 +38,7 @@ export interface MicrosoftId {
   email: string,
 }
 
-const tokenEndpoint = `${API_MICROSOFT_OAUTH2_URL}token`;
+const tokenEndpoint = `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
 // const userEndpoint = `${API_MICROSOFT_OAUTH2_URL}users/me`;
 
 export async function authMicrosoft(

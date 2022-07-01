@@ -3,22 +3,16 @@ import coreSchema from '@amnis/core/core.schema.json';
 import { coreActions } from '@amnis/core/actions';
 import { samples } from '@amnis/core/test/samples';
 
-import {
-  apiAuth,
-  apiAuthProcesses,
-} from '@amnis/api/auth';
-import {
-  apiCrud,
-  apiCrudProcesses,
-} from '@amnis/api/crud';
-import {
-  API_AUTH_URL,
-  API_CRUD_URL,
-} from '@amnis/api/const';
+import { apiAuth } from '@amnis/api/auth/auth.api.node';
+import { apiAuthProcesses } from '@amnis/api/auth/auth.process';
+import { apiCrud } from '@amnis/api/crud/crud.api.node';
+import { apiCrudProcesses } from '@amnis/api/crud/crud.process';
+import { apiConfig } from '@amnis/api/config';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
+import { storeSetup } from '@amnis/state/env.node/store';
+
 import {
-  storeSetup,
   selectors,
   Session,
   sessionKey,
@@ -94,7 +88,7 @@ const crudHanders = apiCrudProcesses({
   */
 const mockAuthHandlers = apiMockGenerateHandlers(
   authHandlers,
-  API_AUTH_URL,
+  apiConfig.API_AUTH_URL,
 );
 
 /**
@@ -102,7 +96,7 @@ const mockAuthHandlers = apiMockGenerateHandlers(
   */
 const mockCrudHandlers = apiMockGenerateHandlers(
   crudHanders,
-  API_CRUD_URL,
+  apiConfig.API_CRUD_URL,
 );
 
 /**

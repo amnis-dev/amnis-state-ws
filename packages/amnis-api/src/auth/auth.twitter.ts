@@ -6,7 +6,7 @@ import type { JWTEncoded, Token } from '@amnis/core/token';
 import type { ResultCreate } from '@amnis/core/state';
 
 import type { ApiAuthPkce } from './auth.types';
-import { API_TWITTER_OAUTH2_URL } from '../const';
+import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
 import { loginSuccessProcess, userFind } from './auth.utility';
 import { register } from './auth.register';
@@ -34,8 +34,8 @@ export interface TwitterUser {
   username: string;
 }
 
-const tokenEndpoint = `${API_TWITTER_OAUTH2_URL}oauth2/token`;
-const userEndpoint = `${API_TWITTER_OAUTH2_URL}users/me`;
+const tokenEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}oauth2/token`;
+const userEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}users/me`;
 
 export async function authTwitter(
   database: Database,

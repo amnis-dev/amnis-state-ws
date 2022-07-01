@@ -1,11 +1,12 @@
 import { coreActions } from '@amnis/core/actions';
 import { samples } from '@amnis/core/test/samples';
 
-import { apiAuth } from '@amnis/api/auth';
-import { apiCrud } from '@amnis/api/crud';
+import { apiAuth } from '@amnis/api/auth/auth.api.node';
+import { apiCrud } from '@amnis/api/crud/crud.api.node';
+
+import { storeSetup } from '@amnis/state/env.node/store';
 
 import {
-  storeSetup,
   selectors,
   Session,
   sessionKey,

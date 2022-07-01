@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ResultCreate, ResultUpdate } from '@amnis/core/state';
-import { API_AUTH_URL } from '../const';
+import { apiConfig } from '../config';
 import {
   apiQueries,
 } from './auth.queries';
@@ -17,7 +17,7 @@ const queries = apiQueries();
 export const apiAuth = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
-    baseUrl: API_AUTH_URL,
+    baseUrl: apiConfig.API_AUTH_URL,
   }),
   endpoints: (builder) => ({
 

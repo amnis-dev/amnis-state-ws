@@ -9,7 +9,7 @@ import {
 } from '@amnis/auth/pkce.browser';
 import {
   apiAuth,
-} from '../auth/auth.react';
+} from '../auth/auth.api.react';
 
 export interface PlatformMicrosoftConfig {
   authorizeEp: string;

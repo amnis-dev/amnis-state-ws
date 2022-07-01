@@ -10,8 +10,8 @@ import { userKey } from '@amnis/core/user';
 import { sessionKey } from '@amnis/core/session';
 import { profileKey } from '@amnis/core/profile';
 import { LogBaseCreate, logCreate, logKey } from '@amnis/core/log';
-import { apiAuth } from './auth';
-import { apiCrud } from './crud';
+import { apiAuth } from './auth/auth.api.browser';
+import { apiCrud } from './crud/crud.api.browser';
 import type { ApiOutput } from './types';
 
 export function apiExtraReducers<E extends Entity>(

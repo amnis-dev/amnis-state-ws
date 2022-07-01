@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
 
-import {
-  API_AUTH_URL,
-  API_CRUD_URL,
-} from '@amnis/api/const';
-import { apiAuthProcesses } from '@amnis/api/auth';
-import { apiCrudProcesses } from '@amnis/api/crud';
+import { apiConfig } from '@amnis/api/config';
+import { apiAuthProcesses } from '@amnis/api/auth/auth.process';
+import { apiCrudProcesses } from '@amnis/api/crud/crud.process';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
 import stateSchema from '@amnis/state/state.schema.json';
@@ -45,7 +42,7 @@ export function apiSetup(serverStore: Store) {
    */
   const mockAuthHandlers = apiMockGenerateHandlers(
     authHandlers,
-    API_AUTH_URL,
+    apiConfig.API_AUTH_URL,
   );
 
   /**
@@ -53,7 +50,7 @@ export function apiSetup(serverStore: Store) {
    */
   const mockCrudHandlers = apiMockGenerateHandlers(
     crudHanders,
-    API_CRUD_URL,
+    apiConfig.API_CRUD_URL,
   );
 
   /**

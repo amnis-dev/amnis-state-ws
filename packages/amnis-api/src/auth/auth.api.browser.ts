@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
-import fetch, { Headers, Request } from 'cross-fetch';
 import { ResultCreate, ResultUpdate } from '@amnis/core/state';
-import { API_AUTH_URL } from '../const';
+import { apiConfig } from '../config';
 import {
   apiQueries,
 } from './auth.queries';
@@ -13,16 +12,12 @@ import {
   ApiAuthVerifyBody,
 } from './auth.types';
 
-global.Headers = Headers;
-global.Request = Request;
-
 const queries = apiQueries();
 
 export const apiAuth = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
-    baseUrl: API_AUTH_URL,
-    fetchFn: fetch,
+    baseUrl: apiConfig.API_AUTH_URL,
   }),
   endpoints: (builder) => ({
 

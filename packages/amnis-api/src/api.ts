@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { logCreate } from '@amnis/core/log';
 import type { AnyValidateFunction } from 'ajv/dist/types';
 import type { ApiOutput } from './types';
 
