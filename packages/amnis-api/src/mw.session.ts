@@ -16,7 +16,7 @@ export const mwSession: ApiMiddleware = (next) => (context) => async (input) => 
     output.json.logs.push({
       level: 'error',
       title: 'Unauthorized',
-      description: 'A session has been established.',
+      description: 'A session has not been established.',
     });
     return output;
   }

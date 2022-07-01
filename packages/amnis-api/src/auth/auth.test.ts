@@ -101,7 +101,7 @@ test('auth should successfully login with valid credentials.', async () => {
     }),
   );
 
-  expect(output.cookies?.session).toMatch(jwtTokenRegex);
+  expect(output.cookies?.authSession).toMatch(jwtTokenRegex);
 });
 
 /**

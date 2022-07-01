@@ -7,16 +7,19 @@ export function apiQueries(): ApiAuthQueries {
     login: (payload) => ({
       url: 'login',
       method: 'post',
+      credentials: 'include',
       body: payload,
     }),
     pkce: (payload) => ({
       url: 'pkce',
       method: 'post',
+      credentials: 'include',
       body: payload,
     }),
     renew: (payload) => ({
       url: 'renew',
       method: 'post',
+      credentials: 'include',
       body: payload,
     }),
     verify: (payload) => ({

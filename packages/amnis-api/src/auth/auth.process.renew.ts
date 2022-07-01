@@ -99,7 +99,7 @@ export const authProcessRenew: ApiContextMethod = (): ApiAuthProcessRenew => (
       tokens: [newAccessToken],
     }, true);
 
-    output.cookies.session = sessionEncode(sessionNew);
+    output.cookies.authSession = sessionEncode(sessionNew);
 
     output.json.result = {
       session: [sessionNew],

@@ -14,7 +14,7 @@ export function apiMockGenerateHandlers(
       `${baseUrl}${key}`,
       async (req, res, ctx) => {
         const { body } = req;
-        const { session } = req.cookies;
+        const { authSession } = req.cookies;
 
         /**
          * Setup the process input.
@@ -24,7 +24,7 @@ export function apiMockGenerateHandlers(
         /**
          * Set the encoded session cookie on the input.
          */
-        input.sessionEncoded = session as JWTEncoded;
+        input.sessionEncoded = authSession as JWTEncoded;
 
         /**
          * Capture the authorization token if sent with the request.

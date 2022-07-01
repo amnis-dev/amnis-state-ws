@@ -6,7 +6,7 @@ import { entityCreate } from '@amnis/core/entity';
 import { dateNumeric } from '@amnis/core/core';
 import { JWTDecoded, Token, tokenStringify } from '@amnis/core/token';
 import type { Profile } from '@amnis/core/profile';
-import type { Session } from '@amnis/core/session';
+import { Session, sessionKey } from '@amnis/core/session';
 import type { Database } from '@amnis/db/types';
 import type { User } from '@amnis/core/user';
 import type { ResultCreate } from '@amnis/core/state';
@@ -75,7 +75,7 @@ export function sessionGenerate(
   /**
    * Create the new user session.
    */
-  const session = entityCreate<Session>('session', {
+  const session = entityCreate<Session>(sessionKey, {
     $subject: user.$id,
     exp: sessionExpires,
     admin: false,
@@ -157,7 +157,7 @@ export async function loginSuccessProcess(database: Database, user: User) {
     session: [session],
   };
 
-  output.cookies.session = sessionEncode(session);
+  output.cookies.authSession = sessionEncode(session);
 
   return output;
 }

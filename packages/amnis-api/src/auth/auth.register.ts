@@ -80,7 +80,7 @@ export async function register(
     const session = sessionGenerate(user, profile, tokens);
     session.$owner = user.$id;
     output.json.result.session = [session];
-    output.cookies.session = sessionEncode(session);
+    output.cookies.authSession = sessionEncode(session);
   }
 
   output.json.logs.push({
