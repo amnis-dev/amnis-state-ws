@@ -30,6 +30,7 @@ import stateSchema from '@amnis/state/state.schema.json';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { logSelectors } from '@amnis/state/log';
+import { tokenSelectors } from '@amnis/state/token';
 import { databaseSetup } from './database';
 
 /**
@@ -393,6 +394,17 @@ test('client state should have updated profile', () => {
   expect(profile).toEqual(
     expect.objectContaining({
       nameDisplay: 'New Display Name',
+    }),
+  );
+});
+
+test('client state should have a core access token', () => {
+  const token = tokenSelectors.selectById(clientStore.getState(), 'core:access');
+
+  expect(token).toEqual(
+    expect.objectContaining({
+      api: 'core',
+      type: 'access',
     }),
   );
 });

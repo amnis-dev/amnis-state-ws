@@ -50,7 +50,7 @@ export async function userFindById(
   const resultsUser = await database.read({
     user: {
       $query: {
-        id: {
+        $id: {
           $eq: userId,
         },
       },
