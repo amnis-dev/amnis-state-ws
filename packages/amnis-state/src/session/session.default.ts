@@ -6,7 +6,6 @@ export const [sessionDefault] = sessionCreate({
   $subject: reference(userKey),
   exp: dateNumeric(),
   admin: false,
-  tokens: [],
   name: 'Unknown Session Holder',
   dmn: '',
 });
