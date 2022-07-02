@@ -33,6 +33,11 @@ export type TokenType = 'access' | 'refresh';
  */
 export interface Token {
   /**
+   * Token identifier.
+   */
+  id: string;
+
+  /**
    * Name of the API
    * E.g. Twitter, MSGraph, Amnis, etc...
    */

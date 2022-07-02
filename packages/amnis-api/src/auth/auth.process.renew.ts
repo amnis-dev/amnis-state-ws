@@ -1,22 +1,21 @@
-import { AUTH_SESSION_LIFE, AUTH_TOKEN_LIFE } from '@amnis/auth/const';
+import { AUTH_SESSION_LIFE } from '@amnis/auth/const';
 import { sessionEncode } from '@amnis/auth/session';
-import { jwtDecode, jwtEncode } from '@amnis/auth/token';
 import { dateNumeric } from '@amnis/core/core';
 import { sessionCreate } from '@amnis/core/session';
-import {
-  JWTDecoded, Token, tokenParse, tokenStringify,
-} from '@amnis/core/token';
+import { ResultUpdate } from '@amnis/core/state';
 import { apiOutput } from '../api';
 import { ApiContextMethod } from '../types';
 import { ApiAuthProcessRenew } from './auth.types';
+import { tokenGenerate, userFindById } from './auth.utility';
 
 /**
  * Renews a session holder's session and access tokens.
  */
-export const authProcessRenew: ApiContextMethod = (): ApiAuthProcessRenew => (
+export const authProcessRenew: ApiContextMethod = (context): ApiAuthProcessRenew => (
   async (input) => {
+    const { database } = context;
     const { session } = input;
-    const output = apiOutput();
+    const output = apiOutput<ResultUpdate>();
 
     if (!session) {
       output.status = 401; // 401 Unauthorized
@@ -29,63 +28,24 @@ export const authProcessRenew: ApiContextMethod = (): ApiAuthProcessRenew => (
     }
 
     /**
-     * Decode old access token.
+     * Find user by ID
      */
-    const jwtAccessOldSearch = session.tokens.find((token) => token.startsWith('core:access:'));
+    const user = await userFindById(database, session.$subject);
 
-    if (!jwtAccessOldSearch) {
+    if (!user) {
       output.status = 401; // 401 Unauthorized
       output.json.logs.push({
         level: 'error',
-        title: 'Session Token Missing',
-        description: 'The core access token has not been established on the session.',
-      });
-      return output;
-    }
-
-    const jwtAccessOldParsed = tokenParse(jwtAccessOldSearch);
-
-    if (!jwtAccessOldParsed) {
-      output.status = 401; // 401 Unauthorized
-      output.json.logs.push({
-        level: 'error',
-        title: 'Session Token Invalid',
-        description: 'The core access token on the session is poorly formatted.',
-      });
-      return output;
-    }
-
-    const jwtAccessOld = jwtDecode(jwtAccessOldParsed.jwt);
-
-    if (!jwtAccessOld) {
-      output.status = 401; // 401 Unauthorized
-      output.json.logs.push({
-        level: 'error',
-        title: 'Session Token Issue',
-        description: 'The cor',
+        title: 'Missing User',
+        description: 'The session holder\'s user account could not be found.',
       });
       return output;
     }
 
     /**
-     * Create a new access token
+     * Create new tokens for access.
      */
-    const jwtDecoded: JWTDecoded = {
-      iss: '',
-      sub: jwtAccessOld.sub,
-      exp: dateNumeric(AUTH_TOKEN_LIFE),
-      typ: 'access',
-      roles: jwtAccessOld.roles,
-    };
-
-    const tokenAccess: Token = {
-      api: 'core',
-      exp: dateNumeric(AUTH_TOKEN_LIFE),
-      jwt: jwtEncode(jwtDecoded),
-      type: 'access',
-    };
-
-    const newAccessToken = tokenStringify(tokenAccess);
+    const token = tokenGenerate(user, 'access');
 
     /**
      * Create a new session.
@@ -96,7 +56,6 @@ export const authProcessRenew: ApiContextMethod = (): ApiAuthProcessRenew => (
       name: session.name,
       avatar: session.avatar,
       admin: session.admin,
-      tokens: [newAccessToken],
     }, true);
 
     output.cookies.authSession = sessionEncode(sessionNew);
@@ -104,6 +63,8 @@ export const authProcessRenew: ApiContextMethod = (): ApiAuthProcessRenew => (
     output.json.result = {
       session: [sessionNew],
     };
+
+    output.json.tokens = [token];
 
     return output;
   }

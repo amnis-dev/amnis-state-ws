@@ -79,21 +79,67 @@
       "description": "Payload for a session and token renewal. Should not have any data in the body."
     },
     "ApiAuthVerifyBody": {
+      "$ref": "#/definitions/Token",
+      "description": "Verifies the validity of a stringified token."
+    },
+    "Token": {
       "type": "object",
       "properties": {
-        "token": {
-          "$ref": "#/definitions/TokenString"
+        "id": {
+          "type": "string",
+          "description": "Token identifier."
+        },
+        "api": {
+          "$ref": "#/definitions/TokenApi",
+          "description": "Name of the API E.g. Twitter, MSGraph, Amnis, etc..."
+        },
+        "exp": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Expiration date."
+        },
+        "jwt": {
+          "$ref": "#/definitions/JWTEncoded",
+          "description": "Encoded value of the encoded jwt token."
+        },
+        "type": {
+          "$ref": "#/definitions/TokenType",
+          "description": "Type of token."
         }
       },
       "required": [
-        "token"
+        "id",
+        "api",
+        "exp",
+        "jwt",
+        "type"
       ],
       "additionalProperties": false,
-      "description": "Verifies the validity of a stringified token."
+      "description": "An interface for a token."
     },
-    "TokenString": {
+    "TokenApi": {
       "type": "string",
-      "description": "String representation of a token that contains an encoded jwt."
+      "enum": [
+        "core",
+        "microsoft",
+        "twitter"
+      ],
+      "description": "Token issuers Core is used to identify self-owned tokens."
+    },
+    "DateNumeric": {
+      "type": "number",
+      "description": "A string that represents a JSON Date."
+    },
+    "JWTEncoded": {
+      "type": "string",
+      "description": "String representation of a jwt encoded token."
+    },
+    "TokenType": {
+      "type": "string",
+      "enum": [
+        "access",
+        "refresh"
+      ],
+      "description": "Token types."
     }
   }
 }

@@ -2,14 +2,13 @@ import fetch from 'cross-fetch';
 
 import { dateNumeric } from '@amnis/core/core';
 import type { Database } from '@amnis/db/types';
-import type { JWTEncoded, Token } from '@amnis/core/token';
+import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token';
 import type { ResultCreate } from '@amnis/core/state';
 
-import { jwtDecode } from '@amnis/auth/token';
 import type { ApiAuthPkce } from './auth.types';
 import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
-import { loginSuccessProcess, userFind } from './auth.utility';
+import { loginSuccessProcess, userFindByName } from './auth.utility';
 import { register } from './auth.register';
 import { apiOutput } from '../api';
 
@@ -19,29 +18,26 @@ import { apiOutput } from '../api';
 interface OAuth2TokenData {
   token_type: string;
   expires_in: number,
-  ext_expires_in: number;
   access_token: JWTEncoded;
-  id_token: JWTEncoded;
   scope: string;
   refresh_token?: JWTEncoded;
-  error?: string;
+  error?: string,
   error_description?: string;
 }
 
 /**
- * Microsoft Graph User
+ * Minimal Twitter user interface.
  */
-export interface MicrosoftId {
+export interface TwitterUser {
+  id: string;
   name: string;
-  preferred_username: string;
-  oid: string,
-  email: string,
+  username: string;
 }
 
-const tokenEndpoint = `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
-// const userEndpoint = `${API_MICROSOFT_OAUTH2_URL}users/me`;
+const tokenEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}oauth2/token`;
+const userEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}users/me`;
 
-export async function authMicrosoft(
+export async function authTwitter(
   database: Database,
   auth: ApiAuthPkce,
 ): Promise<ApiOutput<ResultCreate>> {
@@ -67,7 +63,7 @@ export async function authMicrosoft(
 
   const tokenData = await tokenResponse.json() as OAuth2TokenData;
 
-  if (typeof tokenData?.access_token !== 'string' || typeof tokenData?.id_token !== 'string') {
+  if (tokenData.error || typeof tokenData?.access_token !== 'string') {
     output.status = 401; // Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -77,27 +73,21 @@ export async function authMicrosoft(
     return output;
   }
 
-  const microsoftId = jwtDecode<MicrosoftId>(tokenData.id_token);
-
-  if (!microsoftId) {
-    output.status = 401; // Unauthorized
-    output.json.logs.push({
-      level: 'error',
-      title: 'ID Token Failure',
-      description: 'The Microsoft ID token could not be decoded.',
-    });
-    return output;
-  }
-
   /**
    * STEP 2
    * Obtain user information from the OAuth endpoint.
    */
-  if (
-    typeof microsoftId.name !== 'string'
-    || typeof microsoftId.preferred_username !== 'string'
-    || typeof microsoftId.oid !== 'string'
-  ) {
+  const userResponse = await fetch(userEndpoint, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${tokenData.access_token}`,
+    },
+  });
+
+  const userPayload = await userResponse.json();
+  const userData = userPayload.data as TwitterUser;
+
+  if (typeof userData.name !== 'string' || typeof userData.id !== 'string') {
     output.status = 401; // Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -111,8 +101,8 @@ export async function authMicrosoft(
    * Step 3
    * Find the user or register a new one.
    */
-  const username = `MS#${microsoftId.oid}`;
-  const userSearch = await userFind(database, username);
+  const username = `TR#${userData.id}`;
+  const userSearch = await userFindByName(database, username);
 
   /**
    * If the user already exists, return the login success.
@@ -125,31 +115,32 @@ export async function authMicrosoft(
   /**
    * If a user didn't exist, register a new account.
    */
-  const tokens: Token[] = [
-    {
-      api: 'microsoft',
-      type: 'access',
-      exp: dateNumeric(`${tokenData.expires_in}s`),
-      jwt: tokenData.access_token,
-    },
-  ];
+  const tokens: Token[] = [];
+
+  const tokenAccess = tokenCreate({
+    api: 'twitter',
+    type: 'access',
+    exp: dateNumeric(`${tokenData.expires_in}s`),
+    jwt: tokenData.access_token as JWTEncoded,
+  });
+  tokens.push(tokenAccess);
 
   if (tokenData.refresh_token) {
-    tokens.push({
-      api: 'microsoft',
+    const tokenRefresh = tokenCreate({
+      api: 'twitter',
       type: 'refresh',
       exp: dateNumeric('200d'),
-      jwt: tokenData.refresh_token,
+      jwt: tokenData.refresh_token as JWTEncoded,
     });
+    tokens.push(tokenRefresh);
   }
 
   const registrationOutput = await register(
     database,
     username,
     {
-      tokens,
-      nameDisplay: microsoftId.name || username,
-      email: microsoftId.email,
+      otherTokens: tokens,
+      nameDisplay: userData?.name || '',
       createSession: true,
     },
   );
@@ -157,4 +148,4 @@ export async function authMicrosoft(
   return registrationOutput;
 }
 
-export default { authMicrosoft };
+export default { authTwitter };

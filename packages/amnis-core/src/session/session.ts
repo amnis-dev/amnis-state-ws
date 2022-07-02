@@ -13,7 +13,6 @@ export const sessionBase: EntityExtension<Session> = {
   $subject: reference('user'),
   exp: dateNumeric(),
   admin: false,
-  tokens: [],
   name: 'Unnamed Session Holder',
   dmn: '',
   avatar: null,

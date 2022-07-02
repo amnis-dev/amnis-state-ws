@@ -4,19 +4,22 @@ import { jwtEncode } from '@amnis/auth/token';
 import { entityCreate } from '@amnis/core/entity';
 
 import { dateNumeric } from '@amnis/core/core';
-import { JWTDecoded, Token, tokenStringify } from '@amnis/core/token';
+import {
+  JWTDecoded, Token, tokenCreate, TokenType,
+} from '@amnis/core/token';
 import type { Profile } from '@amnis/core/profile';
-import { Session, sessionKey } from '@amnis/core/session';
+import { Session, sessionCreate } from '@amnis/core/session';
 import type { Database } from '@amnis/db/types';
 import type { User } from '@amnis/core/user';
 import type { ResultCreate } from '@amnis/core/state';
 
+import { Reference } from '@amnis/core/types';
 import { apiOutput } from '../api';
 
 /**
- * Finds a user.
+ * Finds a user by name.
  */
-export async function userFind(
+export async function userFindByName(
   database: Database,
   username: string,
 ): Promise<User | undefined> {
@@ -38,15 +41,61 @@ export async function userFind(
 }
 
 /**
+ * Finds a user by ID.
+ */
+export async function userFindById(
+  database: Database,
+  userId: Reference<User>,
+): Promise<User | undefined> {
+  const resultsUser = await database.read({
+    user: {
+      $query: {
+        id: {
+          $eq: userId,
+        },
+      },
+    },
+  }, { user: 'global' });
+
+  if (!resultsUser.user?.length) {
+    return undefined;
+  }
+
+  return { ...resultsUser.user[0] } as User;
+}
+
+/**
  * Creates a session with user and profile data.
  */
 export function sessionGenerate(
   user: User,
   profile: Profile,
-  otherTokens?: Token[],
 ): Session {
-  const tokenExpires = dateNumeric(AUTH_TOKEN_LIFE);
   const sessionExpires = dateNumeric(AUTH_SESSION_LIFE);
+
+  /**
+   * Create the new user session.
+   */
+  const [session] = sessionCreate({
+    $subject: user.$id,
+    exp: sessionExpires,
+    admin: false,
+    name: profile.nameDisplay,
+    dmn: user.domain || '',
+    avatar: profile.avatar || null,
+  });
+
+  return session;
+}
+
+/**
+ * Generates a new set of tokens
+ */
+export function tokenGenerate(
+  user: User,
+  type: TokenType = 'access',
+): Token {
+  const tokenExpires = dateNumeric(type === 'access' ? AUTH_TOKEN_LIFE : '200d');
 
   /**
    * Create the JWT data.
@@ -55,7 +104,7 @@ export function sessionGenerate(
     iss: '',
     sub: user.$id,
     exp: tokenExpires,
-    typ: 'access',
+    typ: type,
     roles: user.$roles,
   };
 
@@ -63,32 +112,14 @@ export function sessionGenerate(
    * Create the token container.
    * This is so we have ensured data about our JWT.
    */
-  const tokenAccess: Token = {
+  const tokenAccess = tokenCreate({
     api: 'core',
     exp: tokenExpires,
     jwt: jwtEncode(jwtDecoded),
-    type: 'access',
-  };
-
-  const additionalTokens = otherTokens?.map((token) => tokenStringify(token)) || [];
-
-  /**
-   * Create the new user session.
-   */
-  const session = entityCreate<Session>(sessionKey, {
-    $subject: user.$id,
-    exp: sessionExpires,
-    admin: false,
-    tokens: [
-      tokenStringify(tokenAccess),
-      ...additionalTokens,
-    ],
-    name: profile.nameDisplay,
-    dmn: user.domain || '',
-    avatar: profile.avatar || null,
+    type,
   });
 
-  return session;
+  return tokenAccess;
 }
 
 /**
@@ -149,6 +180,8 @@ export async function loginSuccessProcess(database: Database, user: User) {
 
   const session = sessionGenerate(user, profile);
 
+  const tokenAccess = tokenGenerate(user, 'access');
+
   user.password = null;
 
   output.json.result = {
@@ -156,6 +189,8 @@ export async function loginSuccessProcess(database: Database, user: User) {
     profile: [profile],
     session: [session],
   };
+
+  output.json.tokens = [tokenAccess];
 
   output.cookies.authSession = sessionEncode(session);
 

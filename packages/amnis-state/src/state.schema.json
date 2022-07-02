@@ -303,13 +303,6 @@
           "type": "boolean",
           "description": "Flag that determines if this is an administrative session."
         },
-        "tokens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TokenString"
-          },
-          "description": "Tokens this session possesses"
-        },
         "name": {
           "type": "string",
           "description": "Display name."
@@ -336,8 +329,7 @@
         "avatar",
         "dmn",
         "exp",
-        "name",
-        "tokens"
+        "name"
       ],
       "description": "Type for an entity create object."
     },
@@ -364,13 +356,6 @@
           "type": "boolean",
           "description": "Flag that determines if this is an administrative session."
         },
-        "tokens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TokenString"
-          },
-          "description": "Tokens this session possesses"
-        },
         "name": {
           "type": "string",
           "description": "Display name."
@@ -395,7 +380,6 @@
         "$subject",
         "exp",
         "admin",
-        "tokens",
         "name",
         "dmn",
         "avatar"
@@ -406,10 +390,6 @@
     "DateNumeric": {
       "type": "number",
       "description": "A string that represents a JSON Date."
-    },
-    "TokenString": {
-      "type": "string",
-      "description": "String representation of a token that contains an encoded jwt."
     },
     "SURL": {
       "type": "string",
@@ -771,13 +751,6 @@
           "type": "boolean",
           "description": "Flag that determines if this is an administrative session."
         },
-        "tokens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TokenString"
-          },
-          "description": "Tokens this session possesses"
-        },
         "name": {
           "type": "string",
           "description": "Display name."
@@ -818,13 +791,6 @@
         "admin": {
           "type": "boolean",
           "description": "Flag that determines if this is an administrative session."
-        },
-        "tokens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TokenString"
-          },
-          "description": "Tokens this session possesses"
         },
         "name": {
           "type": "string",

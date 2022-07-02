@@ -5,7 +5,7 @@ import type { Profile } from '@amnis/core/profile';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
-import { tokenStringify } from '@amnis/core/token';
+import { Token, tokenCreate } from '@amnis/core/token';
 import { jwtEncode } from '@amnis/auth/token';
 import { apiAuthProcesses } from './auth.process';
 
@@ -74,9 +74,20 @@ test('auth should successfully login with valid credentials.', async () => {
     },
   });
 
+  // const token = output.json.result?.token[0] as Profile;
+
+  expect(output.json.result).toEqual({
+    user: expect.any(Array),
+    session: expect.any(Array),
+    profile: expect.any(Array),
+  });
+
+  expect(output.json.tokens?.length).toBeGreaterThan(0);
+
   const user = output.json.result?.user[0] as User;
   const session = output.json.result?.session[0] as Session;
   const profile = output.json.result?.profile[0] as Profile;
+  const token = output.json.tokens?.[0] as Token;
 
   expect(user).toEqual(
     expect.objectContaining({
@@ -98,6 +109,13 @@ test('auth should successfully login with valid credentials.', async () => {
     expect.objectContaining({
       $user: user?.$id,
       nameDisplay: expect.any(String),
+    }),
+  );
+
+  expect(token).toEqual(
+    expect.objectContaining({
+      api: 'core',
+      type: 'access',
     }),
   );
 
@@ -126,7 +144,7 @@ test('auth should fail login with invalid credentials.', async () => {
  * ============================================================
  */
 test('auth should verify valid token.', async () => {
-  const token = tokenStringify({
+  const token = tokenCreate({
     api: 'core',
     type: 'access',
     exp: dateNumeric('30m'),
@@ -134,9 +152,7 @@ test('auth should verify valid token.', async () => {
   });
 
   const output = await processes.verify({
-    body: {
-      token,
-    },
+    body: token,
   });
 
   expect(output.json.result).toEqual(true);
@@ -147,7 +163,7 @@ test('auth should verify valid token.', async () => {
  * ============================================================
  */
 test('auth should not verify an invalid token.', async () => {
-  const token = tokenStringify({
+  const token = tokenCreate({
     api: 'core',
     type: 'access',
     exp: dateNumeric('30m'),
@@ -155,9 +171,7 @@ test('auth should not verify an invalid token.', async () => {
   });
 
   const output = await processes.verify({
-    body: {
-      token,
-    },
+    body: token,
   });
 
   expect(output.json.result).toEqual(false);

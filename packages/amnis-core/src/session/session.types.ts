@@ -1,6 +1,5 @@
 import type { Reference, DateNumeric, SURL } from '../types';
 import type { Entity } from '../entity';
-import type { TokenString } from '../token';
 
 /**
  * A session object.
@@ -27,11 +26,6 @@ export interface Session extends Entity {
    * Flag that determines if this is an administrative session.
    */
   admin: boolean;
-
-  /**
-   * Tokens this session possesses
-   */
-  tokens: TokenString[];
 
   /**
    * Display name.

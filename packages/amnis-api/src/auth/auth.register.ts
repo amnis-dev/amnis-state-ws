@@ -7,7 +7,7 @@ import { userCreate } from '@amnis/core/user';
 
 import { apiOutput } from '../api';
 import { ApiOutput } from '../types';
-import { sessionGenerate } from './auth.utility';
+import { sessionGenerate, tokenGenerate } from './auth.utility';
 
 /**
  * Options when processsing a registration.
@@ -17,7 +17,7 @@ interface RegisterOptions {
   email?: string;
   password?: string;
   createSession?: boolean;
-  tokens?: Token[];
+  otherTokens?: Token[];
 }
 
 /**
@@ -29,9 +29,9 @@ export async function register(
   options: RegisterOptions,
 ): Promise<ApiOutput<ResultCreate>> {
   const {
-    password, nameDisplay, createSession, tokens,
+    password, nameDisplay, createSession, otherTokens,
   } = options;
-  const output = apiOutput();
+  const output = apiOutput<ResultCreate>();
 
   const logs = [];
 
@@ -77,10 +77,19 @@ export async function register(
    * Create a session entity if needed.
    */
   if (createSession === true) {
-    const session = sessionGenerate(user, profile, tokens);
+    const session = sessionGenerate(user, profile);
     session.$owner = user.$id;
     output.json.result.session = [session];
     output.cookies.authSession = sessionEncode(session);
+  }
+
+  /**
+   * Return tokens
+   */
+  output.json.tokens = [tokenGenerate(user)];
+
+  if (otherTokens?.length) {
+    output.json.tokens.push(...otherTokens);
   }
 
   output.json.logs.push({

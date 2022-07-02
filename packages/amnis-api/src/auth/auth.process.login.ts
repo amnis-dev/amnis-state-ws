@@ -1,7 +1,7 @@
 import { passCompare } from '@amnis/auth/pass';
 import { ApiContextMethod } from '../types';
 import { ApiAuthProcessLogin } from './auth.types';
-import { userFind, outputBadCredentials, loginSuccessProcess } from './auth.utility';
+import { userFindByName, outputBadCredentials, loginSuccessProcess } from './auth.utility';
 
 export const authProcessLogin: ApiContextMethod = (context): ApiAuthProcessLogin => (
   async (input) => {
@@ -13,7 +13,7 @@ export const authProcessLogin: ApiContextMethod = (context): ApiAuthProcessLogin
      */
     const { username, password } = body;
 
-    const user = await userFind(database, username);
+    const user = await userFindByName(database, username);
 
     if (!user) {
       return outputBadCredentials();

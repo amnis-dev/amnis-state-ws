@@ -20,8 +20,8 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
     const roleRefs: Reference<Role>[] = jwt?.roles || [];
 
     /**
-   * Get array of grants from roles in the service store.
-   */
+     * Get array of grants from roles in the service store.
+     */
     const grants = selectors.selectRoleGrants(store.getState(), roleRefs);
 
     /**
@@ -62,8 +62,8 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
     }
 
     /**
-   * finalized state to process
-   */
+     * finalized state to process
+     */
     const stateFinal = jwt?.adm === true ? body : stateUpdateSanatizd;
 
     const result = await database.create(stateFinal);

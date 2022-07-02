@@ -1,10 +1,9 @@
 import { EntityState } from '@reduxjs/toolkit';
 import {
-  Token, TokenApi, tokenParse, TokenType,
+  Token, TokenApi, tokenKey, TokenType,
 } from './token';
 import type { Entity, Meta } from './entity';
 import type { State } from './state';
-import type { Session } from './session';
 import type { Reference } from './types';
 import type { Role } from './role';
 import { grantParse, Grant } from './grant';
@@ -57,29 +56,21 @@ function selectActive<E extends Entity = Entity>(
  * Selects a type of token of a session.
  */
 function selectToken(state: State, api: TokenApi, type: TokenType): Token | undefined {
-  const sessionSlice = getSlice<Session>(state, 'session');
+  const tokenSlice = state[tokenKey] as EntityState<Token>;
 
-  if (!sessionSlice) {
+  if (!tokenSlice) {
     return undefined;
   }
 
-  const session = sessionSlice.entities[sessionSlice.active || ''];
+  const tokenId = `${api}:${type}`;
+  const tokenEntities = tokenSlice.entities;
+  const tokenEntity = tokenEntities[tokenId];
 
-  if (!session) {
+  if (!tokenEntity) {
     return undefined;
   }
 
-  const tokenStrings = session.tokens;
-
-  const tokenString = tokenStrings.find((current) => current.startsWith(`${api}:${type}`));
-
-  if (!tokenString) {
-    return undefined;
-  }
-
-  const token = tokenParse(tokenString);
-
-  return token;
+  return tokenEntity;
 }
 
 /**

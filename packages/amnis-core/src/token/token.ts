@@ -1,6 +1,7 @@
 /* eslint-disable no-bitwise */
-import type { Entity } from '../entity';
-import type { Log } from '../log';
+import {
+  Entity,
+} from '../entity';
 import type { DateNumeric } from '../types';
 import type {
   TokenString,
@@ -10,10 +11,25 @@ import type {
   JWTEncoded,
   JWTDecoded,
 } from './token.types';
+import type { Log } from '../log';
+
+export const tokenKey = 'token';
+
+export function tokenCreate(
+  token: Omit<Token, 'id'>,
+): Token {
+  const tokenNew: Token = {
+    id: `${token.api}:${token.type}`,
+    ...token,
+  };
+
+  return tokenNew;
+}
+
 /**
  * Converts a token to string format.
  */
-export function tokenStringify(token: Token): TokenString {
+export function tokenStringify(token: Omit<Token, 'id'>): TokenString {
   return `${token.api}:${token.type}:${token.exp}:${token.jwt}` as TokenString;
 }
 
@@ -40,6 +56,7 @@ export function tokenParse(tokenString: TokenString): Token | undefined {
   }
 
   return {
+    id: `${api}:${type}`,
     api: api as TokenApi,
     type: type as TokenType,
     jwt: encoding as JWTEncoded,

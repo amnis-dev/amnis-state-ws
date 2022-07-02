@@ -3,7 +3,7 @@ import type { Store } from '@reduxjs/toolkit';
 import type { ResultCreate, ResultUpdate } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
 
-import type { TokenString } from '@amnis/core/token';
+import type { Token } from '@amnis/core/token';
 import type {
   ApiProcess,
   ApiProcesses,
@@ -48,9 +48,7 @@ export type ApiAuthRenewBody = Record<string, never>;
 /**
  * Verifies the validity of a stringified token.
  */
-export interface ApiAuthVerifyBody {
-  token: TokenString;
-}
+export type ApiAuthVerifyBody = Token;
 
 /**
  * API object containing request queries.

@@ -1,15 +1,17 @@
+import type { ResultCreate } from '@amnis/core/state';
+
+import type { ApiContextMethod } from '../types';
+import type { ApiAuthProcessPkce } from './auth.types';
 import { apiOutput } from '../api';
-import { ApiContextMethod } from '../types';
-import { authMicrosoft } from './auth.microsoft';
-import { authTwitter } from './auth.twitter';
-import { ApiAuthProcessPkce } from './auth.types';
+import { authMicrosoft } from './auth.pkce.microsoft';
+import { authTwitter } from './auth.pkce.twitter';
 
 export const authProcessPcke: ApiContextMethod = (context): ApiAuthProcessPkce => (
   async (input) => {
     const { database } = context;
     const { body } = input;
 
-    const output = apiOutput();
+    const output = apiOutput<ResultCreate>();
     const { platform, ...pkceAuth } = body;
 
     switch (platform) {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { DateJSON } from '@amnis/core/types';
-import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
+import type { JWTDecoded, JWTEncoded, Token } from '@amnis/core/token';
 import type { LogBaseCreate } from '@amnis/core/log';
 
 import type { Database } from '@amnis/db/types';
@@ -66,6 +66,11 @@ export interface ApiJSON<T = any> {
    * Session expiration date-time.
    */
   expire?: DateJSON;
+
+  /**
+   * Possible tokens.
+   */
+  tokens?: Token[];
 }
 
 /**

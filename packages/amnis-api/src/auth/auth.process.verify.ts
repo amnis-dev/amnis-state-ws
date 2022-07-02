@@ -1,5 +1,4 @@
 import { jwtVerify } from '@amnis/auth/token';
-import { tokenParse } from '@amnis/core/token';
 import { apiOutput } from '../api';
 import { ApiContextMethod } from '../types';
 import { ApiAuthProcessVerify } from './auth.types';
@@ -9,11 +8,10 @@ import { ApiAuthProcessVerify } from './auth.types';
  */
 export const authProcessVerify: ApiContextMethod = (): ApiAuthProcessVerify => (
   async (input) => {
-    const { body } = input;
-    const output = apiOutput();
-    output.json.result = false;
+    const { body: token } = input;
+    const output = apiOutput<boolean>();
 
-    const token = tokenParse(body.token);
+    output.json.result = false;
 
     if (!token) {
       return output;

@@ -23,20 +23,10 @@ const jwtDecoded: JWTDecoded = {
   ],
 };
 
-const token: Token = {
-  api: 'core',
-  exp: jwtDecoded.exp,
-  jwt: jwtEncode(jwtDecoded, SECRET_TEST),
-  type: 'access',
-};
-
 const session: Session = entityCreate('session', {
   $subject: reference('user', '1234'),
   exp: jwtDecoded.exp,
   admin: false,
-  tokens: [
-    tokenStringify(token),
-  ],
   name: '',
   dmn: '',
   avatar: surl('https://amnis.dev/avatar.png'),
