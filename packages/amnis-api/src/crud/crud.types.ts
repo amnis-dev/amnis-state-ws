@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
-  PayloadEntityCreate,
-  PayloadEntityUpdate,
-} from '@amnis/core/actions';
-import type {
   Remove,
   StateCreate,
   StateDelete,
@@ -48,7 +44,7 @@ export interface ApiCrudQueries {
 /**
  * Create process.
  */
-export type ApiCrudProcessCreate = ApiProcess<PayloadEntityCreate, StateCreate>;
+export type ApiCrudProcessCreate = ApiProcess<StateCreate, StateCreate>;
 
 /**
  * Read process.
@@ -58,7 +54,7 @@ export type ApiCrudProcessRead = ApiProcess<Select, StateRead>;
 /**
  * Update process.
  */
-export type ApiCrudProcessUpdate = ApiProcess<PayloadEntityUpdate, StateUpdate>;
+export type ApiCrudProcessUpdate = ApiProcess<StateUpdate, StateUpdate>;
 
 /**
  * Delete process.

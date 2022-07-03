@@ -1,15 +1,13 @@
 import type {
-  PayloadEntityCreate,
-  PayloadEntityUpdate,
-} from '@amnis/core/actions';
-import type { Remove, Select } from '@amnis/core/state';
+  Remove, Select, StateCreate, StateUpdate,
+} from '@amnis/core/state';
 import type {
   ApiCrudQueries,
 } from './crud.types';
 
 export function apiCrudQueries(): ApiCrudQueries {
   return {
-    create: (payload: PayloadEntityCreate) => ({
+    create: (payload: StateCreate) => ({
       url: 'create',
       method: 'post',
       body: payload,
@@ -19,7 +17,7 @@ export function apiCrudQueries(): ApiCrudQueries {
       method: 'post',
       body: payload,
     }),
-    update: (payload: PayloadEntityUpdate) => ({
+    update: (payload: StateUpdate) => ({
       url: 'update',
       method: 'post',
       body: payload,

@@ -1,4 +1,3 @@
-import type { PayloadEntityCreate, PayloadEntityUpdate } from '@amnis/core/actions';
 import { selectors } from '@amnis/core/selectors';
 import type {
   Remove,
@@ -34,7 +33,7 @@ export const apiCrud = createApi({
   endpoints: (builder) => ({
     create: builder.query<
     ApiJSON<StateCreate>,
-    PayloadEntityCreate
+    StateCreate
     >({
       query: queries.create,
     }),
@@ -48,7 +47,7 @@ export const apiCrud = createApi({
 
     update: builder.query<
     ApiJSON<StateUpdate>,
-    PayloadEntityUpdate
+    StateUpdate
     >({
       query: queries.update,
     }),

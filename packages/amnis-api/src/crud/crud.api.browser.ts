@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
-import type { PayloadEntityCreate, PayloadEntityUpdate } from '@amnis/core/actions';
 import type {
   Remove,
   StateCreate,
@@ -34,7 +33,7 @@ export const apiCrud = createApi({
   endpoints: (builder) => ({
     create: builder.query<
     ApiJSON<StateCreate>,
-    PayloadEntityCreate
+    StateCreate
     >({
       query: queries.create,
     }),
@@ -48,7 +47,7 @@ export const apiCrud = createApi({
 
     update: builder.query<
     ApiJSON<StateUpdate>,
-    PayloadEntityUpdate
+    StateUpdate
     >({
       query: queries.update,
     }),
