@@ -3,7 +3,7 @@ import { authwall } from '@amnis/auth/authwall';
 import { entityClean, entityCreate } from '@amnis/core/entity';
 import { Task } from '@amnis/core/grant';
 import { selectors } from '@amnis/core/selectors';
-import type { State } from '@amnis/core/state';
+import type { State, StateCreate } from '@amnis/core/state';
 import type { Role } from '@amnis/core/role';
 import type{ Reference } from '@amnis/core/types';
 import type { ApiContextMethod } from '../types';
@@ -14,7 +14,7 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
-    const output = apiOutput();
+    const output = apiOutput<StateCreate>();
 
     const roleRefs: Reference<Role>[] = jwt?.roles || [];
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Reference } from '../types';
-import type { Entity } from '../entity';
+import type { Entity, EntityExtension } from '../entity';
 
 /**
  * An ambiguous state.
@@ -110,7 +110,7 @@ export type StateRead = State<Entity[]>;
   * A common stateful result from updates.
   * A state object with parial entities to update.
   */
-export type UpdateEntity = { $id: string } & Partial<Entity>;
+export type UpdateEntity = { $id: Entity['$id'] } & Record<string, unknown>;
 export type StateUpdate = State<UpdateEntity[]>;
 
 /**

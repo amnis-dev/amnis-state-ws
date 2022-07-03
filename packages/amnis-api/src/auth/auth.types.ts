@@ -62,7 +62,7 @@ export interface ApiAuthQueries {
 
 export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, StateCreate>;
 export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, StateCreate>;
-export type ApiAuthProcessRenew = ApiProcess<ApiAuthRenewBody, StateUpdate>;
+export type ApiAuthProcessRenew = ApiProcess<ApiAuthRenewBody, StateCreate>;
 export type ApiAuthProcessVerify = ApiProcess<ApiAuthVerifyBody, boolean>;
 
 /**

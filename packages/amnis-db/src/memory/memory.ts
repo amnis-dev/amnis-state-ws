@@ -2,10 +2,7 @@ import type { Entity } from '@amnis/core/entity';
 import type {
   State,
   StateCreate,
-  StateRead,
-  StateUpdate,
   StateDelete,
-  UpdateEntity,
 } from '@amnis/core/state';
 import type { Database } from '../types';
 
@@ -83,7 +80,7 @@ export const memory: Database = {
    * ----------------------------------------
    */
   read: async (select, scope, subject) => {
-    const result: StateRead = {};
+    const result: StateCreate = {};
 
     Object.keys(select).every((selectKey) => {
       /**
@@ -151,7 +148,7 @@ export const memory: Database = {
    * ----------------------------------------
    */
   update: async (state, scope, subject) => {
-    const result: StateUpdate = {};
+    const result: StateCreate = {};
 
     Object.keys(state).every((sliceKey) => {
       /**
@@ -185,7 +182,7 @@ export const memory: Database = {
           return false;
         }
         if (!result[sliceKey]) {
-          result[sliceKey] = [] as UpdateEntity[];
+          result[sliceKey] = [];
         }
         storage[sliceKey][entityId] = {
           ...storage[sliceKey][entityId],

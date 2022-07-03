@@ -7,8 +7,6 @@ import type {
   Remove,
   StateCreate,
   StateDelete,
-  StateRead,
-  StateUpdate,
   Select,
 } from '@amnis/core/state';
 
@@ -22,13 +20,13 @@ export type DatabaseReadMethod = (
   select: Select,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<StateRead>;
+) => Promise<StateCreate>;
 
 export type DatabaseUpdateMethod = (
   state: Modify,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<StateUpdate>;
+) => Promise<StateCreate>;
 
 export type DatabaseDeleteMethod = (
   references: Remove,

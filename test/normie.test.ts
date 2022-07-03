@@ -24,6 +24,7 @@ import {
   profileSelectors,
   profileKey,
   userCreate,
+  profileCreate,
 } from '@amnis/state/index';
 
 import stateSchema from '@amnis/state/state.schema.json';
@@ -268,6 +269,12 @@ test('user read global should be -DENIED- as Normie via API', async () => {
 test('user update owned should be -DENIED- as Normie via API', async () => {
   const userActive = selectors.selectActive(clientStore.getState(), userKey);
 
+  expect(userActive).toBeTruthy();
+
+  if (!userActive) {
+    return;
+  }
+
   const action = await clientStore.dispatch(
     apiCrud.endpoints.update.initiate({
       [userKey]: [
@@ -321,13 +328,19 @@ test('user delete owned should be -DENIED- as Normie via API', async () => {
 test('profile create global should be -DENIED- as Normie via API', async () => {
   const userActive = selectors.selectActive(clientStore.getState(), userKey);
 
+  expect(userActive).toBeTruthy();
+
+  if (!userActive) {
+    return;
+  }
+
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       [profileKey]: [
-        {
-          $user: userActive?.$id,
+        profileCreate({
+          $user: userActive.$id,
           nameDisplay: 'MyNormieProfile',
-        },
+        })[0],
       ],
     }),
   );
@@ -340,6 +353,12 @@ test('profile create global should be -DENIED- as Normie via API', async () => {
  */
 test('profile update owned should be +ALLOWED+ as Normie via API', async () => {
   const profileActive = selectors.selectActive(clientStore.getState(), profileKey);
+
+  expect(profileActive).toBeTruthy();
+
+  if (!profileActive) {
+    return;
+  }
 
   const action = await clientStore.dispatch(
     apiCrud.endpoints.update.initiate({

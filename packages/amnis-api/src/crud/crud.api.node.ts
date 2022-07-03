@@ -3,7 +3,6 @@ import type {
   Remove,
   StateCreate,
   StateDelete,
-  StateRead,
   StateUpdate,
   Select,
   State,
@@ -44,14 +43,14 @@ export const apiCrud = createApi({
     }),
 
     read: builder.query<
-    ApiJSON<StateRead>,
+    ApiJSON<StateCreate>,
     Select
     >({
       query: queries.read,
     }),
 
     update: builder.query<
-    ApiJSON<StateUpdate>,
+    ApiJSON<StateCreate>,
     StateUpdate
     >({
       query: queries.update,

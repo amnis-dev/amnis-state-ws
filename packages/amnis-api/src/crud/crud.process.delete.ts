@@ -6,6 +6,7 @@ import { authScopeCreate } from '@amnis/auth/scope';
 import { coreActions } from '@amnis/core/actions';
 import type { Reference } from '@amnis/core/types';
 import type { Role } from '@amnis/core/role';
+import type { StateDelete } from '@amnis/core/state';
 import type { ApiContextMethod } from '../types';
 import { apiOutput } from '../api';
 import type { ApiCrudProcessDelete } from './crud.types';
@@ -14,7 +15,7 @@ export const crudProcessDelete: ApiContextMethod = (context): ApiCrudProcessDele
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
-    const output = apiOutput();
+    const output = apiOutput<StateDelete>();
 
     const roleRefs: Reference<Role>[] = jwt?.roles || [];
 

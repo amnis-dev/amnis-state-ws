@@ -3,7 +3,6 @@ import type {
   Remove,
   StateCreate,
   StateDelete,
-  StateRead,
   StateUpdate,
   Select,
 } from '@amnis/core/state';
@@ -49,12 +48,12 @@ export type ApiCrudProcessCreate = ApiProcess<StateCreate, StateCreate>;
 /**
  * Read process.
  */
-export type ApiCrudProcessRead = ApiProcess<Select, StateRead>;
+export type ApiCrudProcessRead = ApiProcess<Select, StateCreate>;
 
 /**
  * Update process.
  */
-export type ApiCrudProcessUpdate = ApiProcess<StateUpdate, StateUpdate>;
+export type ApiCrudProcessUpdate = ApiProcess<StateUpdate, StateCreate>;
 
 /**
  * Delete process.

@@ -259,6 +259,12 @@ test('user read global should be +ALLOWED+ as Moddie via API', async () => {
 test('user update owned should be +ALLOWED+ as Moddie via API', async () => {
   const userActive = selectors.selectActive(clientStore.getState(), userKey);
 
+  expect(userActive).toBeTruthy();
+
+  if (!userActive) {
+    return;
+  }
+
   const action = await clientStore.dispatch(
     apiCrud.endpoints.update.initiate({
       user: [

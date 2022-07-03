@@ -3,6 +3,7 @@ import { authwall } from '@amnis/auth/authwall';
 import { Task } from '@amnis/core/grant';
 import { selectors } from '@amnis/core/selectors';
 import { authScopeCreate } from '@amnis/auth/scope';
+import type { StateCreate } from '@amnis/core/state';
 import type { ApiContextMethod } from '../types';
 import { apiOutput } from '../api';
 import type { ApiCrudProcessRead } from './crud.types';
@@ -11,7 +12,7 @@ export const crudProcessRead: ApiContextMethod = (context): ApiCrudProcessRead =
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
-    const output = apiOutput();
+    const output = apiOutput<StateCreate>();
 
     if (!jwt) {
       output.status = 401; // 401 Unauthorized
