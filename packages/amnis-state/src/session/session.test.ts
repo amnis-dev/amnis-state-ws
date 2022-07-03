@@ -33,6 +33,5 @@ test('should handle creating a new session', () => {
     $id: expect.any(String),
     $subject: expect.any(String),
     name: expect.any(String),
-    tokens: expect.any(Array),
   }));
 });
