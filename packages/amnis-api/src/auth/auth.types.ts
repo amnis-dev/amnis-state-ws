@@ -1,6 +1,6 @@
 import type { Store } from '@reduxjs/toolkit';
 
-import type { ResultCreate, ResultUpdate } from '@amnis/core/state';
+import type { StateCreate, StateUpdate } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
 
 import type { Token } from '@amnis/core/token';
@@ -60,9 +60,9 @@ export interface ApiAuthQueries {
   verify: ApiQuery<ApiAuthVerifyBody>;
 }
 
-export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, ResultCreate>;
-export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, ResultCreate>;
-export type ApiAuthProcessRenew = ApiProcess<ApiAuthRenewBody, ResultUpdate>;
+export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, StateCreate>;
+export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, StateCreate>;
+export type ApiAuthProcessRenew = ApiProcess<ApiAuthRenewBody, StateUpdate>;
 export type ApiAuthProcessVerify = ApiProcess<ApiAuthVerifyBody, boolean>;
 
 /**

@@ -1,10 +1,10 @@
 import type { Entity } from '@amnis/core/entity';
 import type {
   State,
-  ResultCreate,
-  ResultRead,
-  ResultUpdate,
-  ResultDelete,
+  StateCreate,
+  StateRead,
+  StateUpdate,
+  StateDelete,
   UpdateEntity,
 } from '@amnis/core/state';
 import type { Database } from '../types';
@@ -47,7 +47,7 @@ export const memory: Database = {
    * ----------------------------------------
    */
   create: async (state) => {
-    const result: ResultCreate = {};
+    const result: StateCreate = {};
 
     Object.keys(state).every((sliceKey) => {
       const col: Entity[] = state[sliceKey];
@@ -83,7 +83,7 @@ export const memory: Database = {
    * ----------------------------------------
    */
   read: async (select, scope, subject) => {
-    const result: ResultRead = {};
+    const result: StateRead = {};
 
     Object.keys(select).every((selectKey) => {
       /**
@@ -151,7 +151,7 @@ export const memory: Database = {
    * ----------------------------------------
    */
   update: async (state, scope, subject) => {
-    const result: ResultUpdate = {};
+    const result: StateUpdate = {};
 
     Object.keys(state).every((sliceKey) => {
       /**
@@ -206,7 +206,7 @@ export const memory: Database = {
    * ----------------------------------------
    */
   delete: async (state, scope, subject) => {
-    const result: ResultDelete = {};
+    const result: StateDelete = {};
 
     Object.keys(state).every((sliceKey) => {
       /**

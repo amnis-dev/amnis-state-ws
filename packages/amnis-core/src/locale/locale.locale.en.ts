@@ -1,4 +1,4 @@
-import { ResultCreate } from '../state';
+import { StateCreate } from '../state';
 import { localeCreate, localeKey, tk } from './locale';
 
 /**
@@ -16,7 +16,7 @@ export const localeDataEnLogs = localeCreate({
 /**
  * Initial data for locale state.
  */
-export const localeDataEnCreate: ResultCreate = {
+export const localeDataEnCreate: StateCreate = {
   [localeKey]: [
     localeDataEnLogs,
   ],

@@ -1,6 +1,6 @@
 import { sessionEncode } from '@amnis/auth/session';
 import { profileCreate } from '@amnis/core/profile';
-import { Insert, ResultCreate } from '@amnis/core/state';
+import { Insert, StateCreate } from '@amnis/core/state';
 import { Token } from '@amnis/core/token';
 import type { Database } from '@amnis/db/types';
 import { userCreate } from '@amnis/core/user';
@@ -27,11 +27,11 @@ export async function register(
   database: Database,
   username: string,
   options: RegisterOptions,
-): Promise<ApiOutput<ResultCreate>> {
+): Promise<ApiOutput<StateCreate>> {
   const {
     password, nameDisplay, createSession, otherTokens,
   } = options;
-  const output = apiOutput<ResultCreate>();
+  const output = apiOutput<StateCreate>();
 
   const logs = [];
 

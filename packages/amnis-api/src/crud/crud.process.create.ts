@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { authwall } from '@amnis/auth/authwall';
-import { coreActions } from '@amnis/core/actions';
 import { entityClean, entityCreate } from '@amnis/core/entity';
 import { Task } from '@amnis/core/grant';
 import { selectors } from '@amnis/core/selectors';
@@ -87,11 +86,6 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
     }
 
     output.json.result = result;
-
-    /**
-   * Update the server store with the creation of the entity.
-   */
-    store.dispatch(coreActions.create(result));
 
     return output;
   }

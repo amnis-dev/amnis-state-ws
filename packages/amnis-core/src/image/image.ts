@@ -6,6 +6,7 @@ import {
 } from '../entity';
 import type { LogBaseCreate } from '../log';
 import type { Image } from './image.types';
+import { coreConfig } from '../config';
 
 export const imageKey = 'image';
 
@@ -24,6 +25,22 @@ export const imageBase: EntityExtension<Image> = {
  */
 export function imageCheck(image: Image): LogBaseCreate[] {
   const logs: LogBaseCreate[] = [];
+
+  if (image.width > coreConfig.imageMaxWidth) {
+    logs.push({
+      level: 'error',
+      title: 'Large Image Size',
+      description: `Image width cannot be greater than ${coreConfig.imageMaxWidth} pixels.`,
+    });
+  }
+
+  if (image.height > coreConfig.imageMaxHeight) {
+    logs.push({
+      level: 'error',
+      title: 'Large Image Size',
+      description: `Image height cannot be greater than ${coreConfig.imageMaxHeight} pixels.`,
+    });
+  }
 
   return logs;
 }

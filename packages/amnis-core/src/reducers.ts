@@ -136,7 +136,7 @@ export function coreExtraReducers<E extends Entity>(
 ) {
   builder.addCase(coreActions.create, (state, action) => {
     const { payload } = action;
-    if (Array.isArray(payload[key])) {
+    if (payload[key] && Array.isArray(payload[key])) {
       /** @ts-ignore */
       adapter.addMany<MetaState<E>>(state, payload[key]);
     }
@@ -144,9 +144,17 @@ export function coreExtraReducers<E extends Entity>(
 
   builder.addCase(coreActions.update, (state, action) => {
     const { payload } = action;
-    if (Array.isArray(payload[key])) {
+    if (payload[key] && Array.isArray(payload[key])) {
       /** @ts-ignore */
       adapter.upsertMany<MetaState<E>>(state, payload[key]);
+    }
+  });
+
+  builder.addCase(coreActions.delete, (state, action) => {
+    const { payload } = action;
+    if (payload[key] && Array.isArray(payload[key])) {
+      /** @ts-ignore */
+      adapter.removeMany<MetaState<E>>(state, payload[key]);
     }
   });
 }

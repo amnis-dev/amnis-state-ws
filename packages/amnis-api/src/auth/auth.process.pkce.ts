@@ -1,4 +1,4 @@
-import type { ResultCreate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state';
 
 import type { ApiContextMethod } from '../types';
 import type { ApiAuthProcessPkce } from './auth.types';
@@ -11,7 +11,7 @@ export const authProcessPcke: ApiContextMethod = (context): ApiAuthProcessPkce =
     const { database } = context;
     const { body } = input;
 
-    const output = apiOutput<ResultCreate>();
+    const output = apiOutput<StateCreate>();
     const { platform, ...pkceAuth } = body;
 
     switch (platform) {

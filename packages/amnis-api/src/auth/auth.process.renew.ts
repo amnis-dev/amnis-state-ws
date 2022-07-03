@@ -2,7 +2,7 @@ import { AUTH_SESSION_LIFE } from '@amnis/auth/const';
 import { sessionEncode } from '@amnis/auth/session';
 import { dateNumeric } from '@amnis/core/core';
 import { sessionCreate } from '@amnis/core/session';
-import { ResultUpdate } from '@amnis/core/state';
+import { StateUpdate } from '@amnis/core/state';
 import { apiOutput } from '../api';
 import { ApiContextMethod } from '../types';
 import { ApiAuthProcessRenew } from './auth.types';
@@ -15,7 +15,7 @@ export const authProcessRenew: ApiContextMethod = (context): ApiAuthProcessRenew
   async (input) => {
     const { database } = context;
     const { session } = input;
-    const output = apiOutput<ResultUpdate>();
+    const output = apiOutput<StateUpdate>();
 
     if (!session) {
       output.status = 401; // 401 Unauthorized

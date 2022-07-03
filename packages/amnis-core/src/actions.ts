@@ -1,51 +1,16 @@
 import { createAction } from '@reduxjs/toolkit';
-import {
-  entityCreate, Entity, EntityExtension, EntityPartial,
-} from './entity';
-import type { Remove } from './state';
-
-export type PayloadEntityCreate<E extends Entity = Entity> = {
-  [slice: string]: EntityExtension<E>[];
-};
-
-export type PayloadEntityUpdate = {
-  [slice: string]: EntityPartial<Entity>[];
-};
+import type {
+  StateCreate,
+  StateUpdate,
+  StateDelete,
+} from './state';
 
 export const coreActions = {
-  create: createAction('@core/entityCreate', (entitySliceMap: PayloadEntityCreate) => {
-    const entitySliceMapNew = Object.keys(entitySliceMap).reduce<PayloadEntityCreate>(
-      (sliceMap, key) => {
-        sliceMap[key] = entitySliceMap[key].map((entity) => (
-          entityCreate(key, entity)
-        ));
-        return sliceMap;
-      },
-      {},
-    );
+  create: createAction<StateCreate>('@core/create'),
 
-    return {
-      payload: entitySliceMapNew,
-    };
-  }),
+  update: createAction<StateUpdate>('@core/update'),
 
-  update: createAction('@core/entityUpdate', (entitySliceMap: PayloadEntityUpdate) => {
-    const entitySliceMapNew = Object.keys(entitySliceMap).reduce<PayloadEntityUpdate>(
-      (sliceMap, key) => {
-        sliceMap[key] = entitySliceMap[key].map((entity) => entityCreate(key, entity));
-        return sliceMap;
-      },
-      {},
-    );
-
-    return {
-      payload: entitySliceMapNew,
-    };
-  }),
-
-  delete: createAction('@core/entityDelete', (entitySliceMap: Remove) => ({
-    payload: entitySliceMap,
-  })),
+  delete: createAction<StateDelete>('@core/delete'),
 };
 
-export default coreActions;
+export default { coreActions };

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ResultCreate, ResultUpdate } from '@amnis/core/state';
+import { StateCreate, StateUpdate } from '@amnis/core/state';
 import { apiConfig } from '../config';
 import {
   apiQueries,
@@ -22,21 +22,21 @@ export const apiAuth = createApi({
   endpoints: (builder) => ({
 
     login: builder.query<
-    ApiJSON<ResultCreate>,
+    ApiJSON<StateCreate>,
     ApiAuthLoginBody
     >({
       query: queries.login,
     }),
 
     pkce: builder.query<
-    ApiJSON<ResultCreate>,
+    ApiJSON<StateCreate>,
     ApiAuthPkceBody
     >({
       query: queries.pkce,
     }),
 
     renew: builder.query<
-    ApiJSON<ResultUpdate>,
+    ApiJSON<StateUpdate>,
     ApiAuthRenewBody
     >({
       query: queries.renew,

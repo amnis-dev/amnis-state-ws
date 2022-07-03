@@ -5,10 +5,10 @@ import type {
   Insert,
   Modify,
   Remove,
-  ResultCreate,
-  ResultDelete,
-  ResultRead,
-  ResultUpdate,
+  StateCreate,
+  StateDelete,
+  StateRead,
+  StateUpdate,
   Select,
 } from '@amnis/core/state';
 
@@ -16,25 +16,25 @@ export type DatabaseCreateMethod = (
   state: Insert,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<ResultCreate>;
+) => Promise<StateCreate>;
 
 export type DatabaseReadMethod = (
   select: Select,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<ResultRead>;
+) => Promise<StateRead>;
 
 export type DatabaseUpdateMethod = (
   state: Modify,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<ResultUpdate>;
+) => Promise<StateUpdate>;
 
 export type DatabaseDeleteMethod = (
   references: Remove,
   scope?: AuthScope,
   subject?: Reference
-) => Promise<ResultDelete>;
+) => Promise<StateDelete>;
 
 /**
  * Core interface for database methods.

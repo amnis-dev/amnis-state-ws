@@ -3,7 +3,7 @@ import fetch from 'cross-fetch';
 import { dateNumeric } from '@amnis/core/core';
 import type { Database } from '@amnis/db/types';
 import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token';
-import type { ResultCreate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state';
 
 import type { ApiAuthPkce } from './auth.types';
 import { apiConfig } from '../config';
@@ -40,8 +40,8 @@ const userEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}users/me`;
 export async function authTwitter(
   database: Database,
   auth: ApiAuthPkce,
-): Promise<ApiOutput<ResultCreate>> {
-  const output = apiOutput<ResultCreate>();
+): Promise<ApiOutput<StateCreate>> {
+  const output = apiOutput<StateCreate>();
   /**
    * STEP 1
    * Get the access and refresh tokens.

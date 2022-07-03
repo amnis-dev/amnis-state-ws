@@ -27,13 +27,17 @@ function getSlice<
 }
 
 /**
- * Selects the active entity on a slice (of one is active).
+ * Selects the focused entity on a slice (if one is active).
  */
 function selectActive<E extends Entity = Entity>(
   state: State,
   sliceKey: string,
 ): E | undefined {
-  const slice = state[sliceKey];
+  const slice = getSlice(state, sliceKey);
+
+  if (!slice) {
+    return undefined;
+  }
 
   if (!slice.active) {
     return undefined;
@@ -43,13 +47,69 @@ function selectActive<E extends Entity = Entity>(
     return undefined;
   }
 
-  const entity = slice.entities[slice.active];
+  const entity = slice.entities[slice.active] as E;
 
   if (!entity) {
     return undefined;
   }
 
   return entity;
+}
+
+/**
+ * Selects the focused entity on a slice (if one is focused).
+ */
+function selectFocused<E extends Entity = Entity>(
+  state: State,
+  sliceKey: string,
+): E | undefined {
+  const slice = getSlice(state, sliceKey);
+
+  if (!slice) {
+    return undefined;
+  }
+
+  if (!slice.focused) {
+    return undefined;
+  }
+
+  if (!slice.entities) {
+    return undefined;
+  }
+
+  const entity = slice.entities[slice.focused] as E;
+
+  if (!entity) {
+    return undefined;
+  }
+
+  return entity;
+}
+
+/**
+ * Selects the selected entity on a slice.
+ */
+function selectSelection<E extends Entity = Entity>(
+  state: State,
+  sliceKey: string,
+): E[] {
+  const slice = getSlice(state, sliceKey);
+
+  if (!slice) {
+    return [];
+  }
+
+  if (!slice.selection) {
+    return [];
+  }
+
+  if (!slice.entities) {
+    return [];
+  }
+
+  const entities = slice.selection.map((selected) => slice.entities[selected]) as E[];
+
+  return entities;
 }
 
 /**
@@ -106,6 +166,8 @@ function selectRoleGrants(state: State, roleRefs: Reference<Role>[]): Grant[] {
  */
 export const selectors = {
   selectActive,
+  selectFocused,
+  selectSelection,
   selectToken,
   selectRoleGrants,
 };

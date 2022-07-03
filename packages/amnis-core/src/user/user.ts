@@ -5,6 +5,7 @@ import { regexAlphanumeric, regexEmail } from '../regex';
 import type { DeviceString } from '../device';
 import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { User } from './user.types';
+import { coreConfig } from '../config';
 
 export const userKey = 'user';
 
@@ -33,10 +34,10 @@ export function userValidate(user: User): LogBaseCreate[] {
       level: 'error',
     });
 
-    if (user.name.length > 32) {
+    if (user.name.length > coreConfig.nameLength) {
       logs.push({
         title: 'Invalid Username',
-        description: 'The username is too long.',
+        description: `The username cannot be longer than ${coreConfig.nameLength} characters.`,
         level: 'error',
       });
     }

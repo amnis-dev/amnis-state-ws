@@ -2,10 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import type { PayloadEntityCreate, PayloadEntityUpdate } from '@amnis/core/actions';
 import type {
   Remove,
-  ResultCreate,
-  ResultDelete,
-  ResultRead,
-  ResultUpdate,
+  StateCreate,
+  StateDelete,
+  StateRead,
+  StateUpdate,
   Select,
   State,
 } from '@amnis/core/state';
@@ -38,28 +38,28 @@ export const apiCrud = createApi({
   }) as ApiBaseQueryFn,
   endpoints: (builder) => ({
     create: builder.query<
-    ApiJSON<ResultCreate>,
+    ApiJSON<StateCreate>,
     PayloadEntityCreate
     >({
       query: queries.create,
     }),
 
     read: builder.query<
-    ApiJSON<ResultRead>,
+    ApiJSON<StateRead>,
     Select
     >({
       query: queries.read,
     }),
 
     update: builder.query<
-    ApiJSON<ResultUpdate>,
+    ApiJSON<StateUpdate>,
     PayloadEntityUpdate
     >({
       query: queries.update,
     }),
 
     delete: builder.query<
-    ApiJSON<ResultDelete>,
+    ApiJSON<StateDelete>,
     Remove
     >({
       query: queries.delete,

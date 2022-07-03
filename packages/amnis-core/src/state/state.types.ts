@@ -98,26 +98,26 @@ export type Result = any;
   * A common stateful result from creations.
   * A state object with entities that were created.
   */
-export type ResultCreate = State<Entity[]>;
+export type StateCreate = State<Entity[]>;
 
 /**
   * A common stateful result from readings.
   * A state object with entities read from a source.
   */
-export type ResultRead = State<Entity[]>;
+export type StateRead = State<Entity[]>;
 
 /**
   * A common stateful result from updates.
   * A state object with parial entities to update.
   */
 export type UpdateEntity = { $id: string } & Partial<Entity>;
-export type ResultUpdate = State<UpdateEntity[]>;
+export type StateUpdate = State<UpdateEntity[]>;
 
 /**
   * A common stateful result from deletions.
   * A state object with delete ids.
   */
-export type ResultDelete = State<Reference[]>;
+export type StateDelete = State<Reference[]>;
 
 /**
   * ID Remappings.

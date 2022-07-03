@@ -5,10 +5,10 @@ import type {
 } from '@amnis/core/actions';
 import type {
   Remove,
-  ResultCreate,
-  ResultDelete,
-  ResultRead,
-  ResultUpdate,
+  StateCreate,
+  StateDelete,
+  StateRead,
+  StateUpdate,
   Select,
 } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
@@ -48,22 +48,22 @@ export interface ApiCrudQueries {
 /**
  * Create process.
  */
-export type ApiCrudProcessCreate = ApiProcess<PayloadEntityCreate, ResultCreate>;
+export type ApiCrudProcessCreate = ApiProcess<PayloadEntityCreate, StateCreate>;
 
 /**
  * Read process.
  */
-export type ApiCrudProcessRead = ApiProcess<Select, ResultRead>;
+export type ApiCrudProcessRead = ApiProcess<Select, StateRead>;
 
 /**
  * Update process.
  */
-export type ApiCrudProcessUpdate = ApiProcess<PayloadEntityUpdate, ResultUpdate>;
+export type ApiCrudProcessUpdate = ApiProcess<PayloadEntityUpdate, StateUpdate>;
 
 /**
  * Delete process.
  */
-export type ApiCrudProcessDelete = ApiProcess<Remove, ResultDelete>;
+export type ApiCrudProcessDelete = ApiProcess<Remove, StateDelete>;
 
 /**
  * API object containing response handlers.

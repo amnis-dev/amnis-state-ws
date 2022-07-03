@@ -5,7 +5,7 @@ import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
 import { dateNumeric, reference } from '@amnis/core/core';
-import type { ResultCreate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state';
 import type { JWTEncoded } from '@amnis/core/token';
 
 import { jwtEncode } from '@amnis/auth/token';
@@ -61,7 +61,7 @@ test('Handler should create new entities.', async () => {
 
   expect(output.json.result).toBeDefined();
 
-  const result = output.json.result as ResultCreate;
+  const result = output.json.result as StateCreate;
 
   expect(result).toEqual({ [bookKey]: books });
 });

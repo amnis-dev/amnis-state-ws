@@ -11,7 +11,7 @@ import type { Profile } from '@amnis/core/profile';
 import { Session, sessionCreate } from '@amnis/core/session';
 import type { Database } from '@amnis/db/types';
 import type { User } from '@amnis/core/user';
-import type { ResultCreate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state';
 
 import { Reference } from '@amnis/core/types';
 import { apiOutput } from '../api';
@@ -174,7 +174,7 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
  * Processes a successful login with a return result.
  */
 export async function loginSuccessProcess(database: Database, user: User) {
-  const output = apiOutput<ResultCreate>();
+  const output = apiOutput<StateCreate>();
 
   const profile = await profileFetch(database, user);
 

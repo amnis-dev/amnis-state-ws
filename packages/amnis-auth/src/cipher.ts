@@ -1,5 +1,4 @@
 import {
-  CipherCCMTypes,
   BinaryLike,
   randomBytes,
   createCipheriv,
