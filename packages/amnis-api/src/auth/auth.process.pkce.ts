@@ -8,7 +8,7 @@ import { authTwitter } from './auth.pkce.twitter';
 
 export const authProcessPcke: ApiContextMethod = (context): ApiAuthProcessPkce => (
   async (input) => {
-    const { database } = context;
+    const { store, database } = context;
     const { body } = input;
 
     const output = apiOutput<StateCreate>();
@@ -16,11 +16,11 @@ export const authProcessPcke: ApiContextMethod = (context): ApiAuthProcessPkce =
 
     switch (platform) {
       case 'microsoft': {
-        const pkceOutput = await authMicrosoft(database, pkceAuth);
+        const pkceOutput = await authMicrosoft(store, database, pkceAuth);
         return pkceOutput;
       }
       case 'twitter': {
-        const pkceOutput = await authTwitter(database, pkceAuth);
+        const pkceOutput = await authTwitter(store, database, pkceAuth);
         return pkceOutput;
       }
       default:

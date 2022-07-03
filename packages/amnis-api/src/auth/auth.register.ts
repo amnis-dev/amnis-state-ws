@@ -1,9 +1,13 @@
-import { sessionEncode } from '@amnis/auth/session';
+import { Store } from '@reduxjs/toolkit';
+
+import type { Insert, StateCreate } from '@amnis/core/state';
+import type { Token } from '@amnis/core/token';
+import { System, systemKey } from '@amnis/core/system';
 import { profileCreate } from '@amnis/core/profile';
-import { Insert, StateCreate } from '@amnis/core/state';
-import { Token } from '@amnis/core/token';
-import type { Database } from '@amnis/db/types';
 import { userCreate } from '@amnis/core/user';
+import { selectors } from '@amnis/core/selectors';
+import { sessionEncode } from '@amnis/auth/session';
+import type { Database } from '@amnis/db/types';
 
 import { apiOutput } from '../api';
 import { ApiOutput } from '../types';
@@ -24,6 +28,7 @@ interface RegisterOptions {
  * Create an API Outputs registering an account.
  */
 export async function register(
+  store: Store,
   database: Database,
   username: string,
   options: RegisterOptions,
@@ -32,13 +37,28 @@ export async function register(
     password, nameDisplay, createSession, otherTokens,
   } = options;
   const output = apiOutput<StateCreate>();
-
   const logs = [];
+
+  /**
+   * Set system settings from the store.
+   */
+  const system = selectors.selectActive<System>(store.getState(), systemKey);
+
+  if (!system) {
+    output.status = 503; // Service Unavailable
+    output.json.logs.push({
+      level: 'error',
+      title: 'Service Unavailable',
+      description: 'The service has not been configured to handle this request.',
+    });
+    return output;
+  }
 
   const [user, userLogs] = userCreate({
     name: username,
     password: password || null,
     email: options.email,
+    $roles: [...system.$initialRoles],
   });
 
   user.$owner = user.$id;

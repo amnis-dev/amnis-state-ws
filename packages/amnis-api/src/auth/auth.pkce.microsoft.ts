@@ -6,6 +6,7 @@ import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token';
 import type { StateCreate } from '@amnis/core/state';
 
 import { jwtDecode } from '@amnis/auth/token';
+import { Store } from '@reduxjs/toolkit';
 import type { ApiAuthPkce } from './auth.types';
 import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
@@ -42,6 +43,7 @@ const tokenEndpoint = `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
 // const userEndpoint = `${API_MICROSOFT_OAUTH2_URL}users/me`;
 
 export async function authMicrosoft(
+  store: Store,
   database: Database,
   auth: ApiAuthPkce,
 ): Promise<ApiOutput<StateCreate>> {
@@ -146,6 +148,7 @@ export async function authMicrosoft(
   }
 
   const registrationOutput = await register(
+    store,
     database,
     username,
     {

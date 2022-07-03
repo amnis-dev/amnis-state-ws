@@ -29,7 +29,7 @@ import {
 import stateSchema from '@amnis/state/state.schema.json';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
-import { databaseSetup } from './database';
+import { serviceSetup } from './database';
 
 /**
  * Utility functions
@@ -108,7 +108,7 @@ beforeAll(async () => {
   /**
     * Create the test database with pre-intantiated data.
     */
-  await databaseSetup(memory);
+  await serviceSetup(serverStore, memory);
 
   /**
     * Fetch roles from the database and populate the server store.

@@ -1,6 +1,6 @@
 import type { Store } from '@reduxjs/toolkit';
 
-import type { StateCreate, StateUpdate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
 
 import type { Token } from '@amnis/core/token';

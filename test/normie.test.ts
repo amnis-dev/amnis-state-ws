@@ -32,7 +32,7 @@ import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { logSelectors } from '@amnis/state/log';
 import { tokenSelectors } from '@amnis/state/token';
-import { databaseSetup } from './database';
+import { serviceSetup } from './database';
 
 /**
  * Utility functions
@@ -111,7 +111,7 @@ beforeAll(async () => {
   /**
    * Create the test database with pre-intantiated data.
    */
-  const createResult = await databaseSetup(memory);
+  const createResult = await serviceSetup(serverStore, memory);
 
   /**
     * Fetch roles from the database and populate the server store.
