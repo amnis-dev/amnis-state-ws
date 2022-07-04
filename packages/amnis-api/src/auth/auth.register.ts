@@ -1,6 +1,6 @@
 import { Store } from '@reduxjs/toolkit';
 
-import type { Insert, StateCreate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state';
 import type { Token } from '@amnis/core/token';
 import { System, systemKey } from '@amnis/core/system';
 import { profileCreate } from '@amnis/core/profile';
@@ -82,13 +82,13 @@ export async function register(
     return output;
   }
 
-  const insertion: Insert = {
+  const insertion: StateCreate = {
     user: [user],
     profile: [profile],
   };
 
   /**
-   * Insert newly created user and profile into the database.
+   * StateCreate newly created user and profile into the database.
    */
   const resultDbCreate = await database.create(insertion, { user: 'global', profile: 'global' });
   output.json.result = resultDbCreate;

@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 import type {
-  Remove,
-  StateCreate,
   StateDelete,
+  StateCreate,
   StateUpdate,
-  Select,
+  StateQuery,
   State,
 } from '@amnis/core/state';
 import fetch, { Headers, Request } from 'cross-fetch';
@@ -44,7 +43,7 @@ export const apiCrud = createApi({
 
     read: builder.query<
     ApiJSON<StateCreate>,
-    Select
+    StateQuery
     >({
       query: queries.read,
     }),
@@ -58,7 +57,7 @@ export const apiCrud = createApi({
 
     delete: builder.query<
     ApiJSON<StateDelete>,
-    Remove
+    StateDelete
     >({
       query: queries.delete,
     }),

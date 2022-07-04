@@ -1,5 +1,5 @@
 import type {
-  Remove, Select, StateCreate, StateUpdate,
+  StateDelete, StateQuery, StateCreate, StateUpdate,
 } from '@amnis/core/state';
 import type {
   ApiCrudQueries,
@@ -12,7 +12,7 @@ export function apiCrudQueries(): ApiCrudQueries {
       method: 'post',
       body: payload,
     }),
-    read: (payload: Select) => ({
+    read: (payload: StateQuery) => ({
       url: 'read',
       method: 'post',
       body: payload,
@@ -22,7 +22,7 @@ export function apiCrudQueries(): ApiCrudQueries {
       method: 'post',
       body: payload,
     }),
-    delete: (payload: Remove) => ({
+    delete: (payload: StateDelete) => ({
       url: 'delete',
       method: 'post',
       body: payload,

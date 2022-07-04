@@ -29,7 +29,7 @@ export function apiExtraReducers<E extends Entity>(
     const logs = payload.logs as LogBaseCreate[];
 
     /**
-     * Insert log entities from the fulfillment.
+     * StateCreate log entities from the fulfillment.
      */
     if (key === logKey && logs?.length > 0) {
       const logEntities = logs.map((logBase) => logCreate(logBase)[0]);
@@ -53,7 +53,7 @@ export function apiExtraReducers<E extends Entity>(
     const logs = payload.data.logs as LogBaseCreate[];
 
     /**
-     * Insert log entities from the fulfillment.
+     * StateCreate log entities from the fulfillment.
      */
     if (key === logKey && logs?.length > 0) {
       const logEntities = logs.map((logBase) => logCreate(logBase)[0]);
@@ -125,7 +125,7 @@ export function apiExtraReducers<E extends Entity>(
         state.active = result[key][0].$id;
 
         /**
-         * Remove the previously active session if it existed.
+         * StateDelete the previously active session if it existed.
          */
         if (sessionIdPrev) {
           /** @ts-ignore */

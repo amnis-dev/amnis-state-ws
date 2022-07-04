@@ -1,10 +1,10 @@
 import {
-  Insert, Modify, Remove, Select,
+  StateCreate, StateUpdate, StateDelete, StateQuery,
 } from './state';
 
 export interface Core {
-  insert?: Insert,
-  select?: Select,
-  modify?: Modify,
-  remove?: Remove,
+  insert?: StateCreate,
+  query?: StateQuery,
+  modify?: StateUpdate,
+  remove?: StateDelete,
 }

@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
-  Remove,
-  StateCreate,
   StateDelete,
+  StateCreate,
   StateUpdate,
-  Select,
+  StateQuery,
 } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
 import type { Store } from '@reduxjs/toolkit';
@@ -48,7 +47,7 @@ export type ApiCrudProcessCreate = ApiProcess<StateCreate, StateCreate>;
 /**
  * Read process.
  */
-export type ApiCrudProcessRead = ApiProcess<Select, StateCreate>;
+export type ApiCrudProcessRead = ApiProcess<StateQuery, StateCreate>;
 
 /**
  * Update process.
@@ -58,7 +57,7 @@ export type ApiCrudProcessUpdate = ApiProcess<StateUpdate, StateCreate>;
 /**
  * Delete process.
  */
-export type ApiCrudProcessDelete = ApiProcess<Remove, StateDelete>;
+export type ApiCrudProcessDelete = ApiProcess<StateDelete, StateDelete>;
 
 /**
  * API object containing response handlers.

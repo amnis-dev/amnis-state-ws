@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Reference } from '../types';
-import type { Entity, EntityExtension } from '../entity';
+import type { Entity } from '../entity';
 
 /**
  * An ambiguous state.
@@ -43,18 +43,18 @@ export interface Filter {
 }
 
 /**
-  * Select range
+  * StateQuery range
   */
 export type Range = {
   /**
-    * Start query at record value.
-    */
-  _start?: number;
+   * Start query at record value.
+   */
+  start?: number;
 
   /**
-     * Limit results of the query.
-     */
-  _limit?: number;
+   * Limit results of the query.
+   */
+  limit?: number;
 }
 
 export type Query = {
@@ -64,30 +64,16 @@ export type Query = {
   $query?: { [key: string]: Filter };
 
   /**
-    * Range of query.
-    */
+   * Range of query.
+   */
   $range?: Range;
+
+  /**
+   * Depth to query for other referenced entities.
+   * @default 1
+   */
+  $depth?: number;
 };
-
-/**
-  * A definition to insert new data.
-  */
-export type Insert = State<any[]>;
-
-/**
-  * A selector definition object.
-  */
-export type Select = State<Query>;
-
-/**
-  * A definition to modify data.
-  */
-export type Modify = State<any[]>;
-
-/**
-  * A removal definition object.
-  */
-export type Remove = State<Reference[]>;
 
 /**
   * A common stateful result from API.
@@ -101,8 +87,7 @@ export type Result = any;
 export type StateCreate = State<Entity[]>;
 
 /**
-  * A common stateful result from readings.
-  * A state object with entities read from a source.
+  * A query object to search for entities.
   */
 export type StateQuery = State<Query>;
 
@@ -110,8 +95,8 @@ export type StateQuery = State<Query>;
   * A common stateful result from updates.
   * A state object with parial entities to update.
   */
-export type UpdateEntity = { $id: Entity['$id'] } & Record<string, unknown>;
-export type StateUpdate = State<UpdateEntity[]>;
+export type StateUpdateEntity = { $id: Entity['$id'] } & Record<string, unknown>;
+export type StateUpdate = State<StateUpdateEntity[]>;
 
 /**
   * A common stateful result from deletions.

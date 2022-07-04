@@ -62,7 +62,7 @@ export const crudProcessDelete: ApiContextMethod = (context): ApiCrudProcessDele
     output.json.result = result;
 
     /**
-     * Remove possible entities from the server store.
+     * StateDelete possible entities from the server store.
      */
     store.dispatch(coreActions.delete(result));
 

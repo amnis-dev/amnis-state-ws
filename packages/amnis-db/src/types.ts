@@ -2,34 +2,32 @@
 import type { Reference } from '@amnis/core/types';
 import type { AuthScope } from '@amnis/auth/types';
 import type {
-  Insert,
-  Modify,
-  Remove,
-  StateCreate,
+  StateUpdate,
   StateDelete,
-  Select,
+  StateCreate,
+  StateQuery,
 } from '@amnis/core/state';
 
 export type DatabaseCreateMethod = (
-  state: Insert,
+  state: StateCreate,
   scope?: AuthScope,
   subject?: Reference
 ) => Promise<StateCreate>;
 
 export type DatabaseReadMethod = (
-  select: Select,
+  select: StateQuery,
   scope?: AuthScope,
   subject?: Reference
 ) => Promise<StateCreate>;
 
 export type DatabaseUpdateMethod = (
-  state: Modify,
+  state: StateUpdate,
   scope?: AuthScope,
   subject?: Reference
 ) => Promise<StateCreate>;
 
 export type DatabaseDeleteMethod = (
-  references: Remove,
+  references: StateDelete,
   scope?: AuthScope,
   subject?: Reference
 ) => Promise<StateDelete>;

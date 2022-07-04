@@ -31,9 +31,9 @@ export function apiSetup(serverStore: Store) {
     schemas: [coreSchema, stateSchema],
     definitions: {
       create: 'state#/definitions/StateCreate',
-      read: 'core#/definitions/Select',
+      read: 'core#/definitions/StateQuery',
       update: 'state#/definitions/StateUpdate',
-      delete: 'core#/definitions/Remove',
+      delete: 'core#/definitions/StateDelete',
     },
   });
 

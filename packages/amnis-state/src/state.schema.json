@@ -415,20 +415,16 @@
           "description": "Family/Last name"
         },
         "birthDate": {
-          "type": "string",
+          "$ref": "#/definitions/DateJSON",
           "description": "Date of birth."
         },
         "title": {
           "type": "string",
           "description": "Title for work or otherwise."
         },
-        "email": {
-          "type": "string",
-          "description": "Profile's email."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Profiles phone number."
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
         },
         "organiation": {
           "type": "string",
@@ -469,20 +465,16 @@
           "description": "Family/Last name"
         },
         "birthDate": {
-          "type": "string",
+          "$ref": "#/definitions/DateJSON",
           "description": "Date of birth."
         },
         "title": {
           "type": "string",
           "description": "Title for work or otherwise."
         },
-        "email": {
-          "type": "string",
-          "description": "Profile's email."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Profiles phone number."
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
         },
         "organiation": {
           "type": "string",
@@ -501,6 +493,14 @@
       "description": "Omitted types of the core Entity interface."
     },
     "Reference<User>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "Reference<Contact>": {
       "type": "string",
       "description": "A id reference to another document."
     },
@@ -835,20 +835,16 @@
           "description": "Family/Last name"
         },
         "birthDate": {
-          "type": "string",
+          "$ref": "#/definitions/DateJSON",
           "description": "Date of birth."
         },
         "title": {
           "type": "string",
           "description": "Title for work or otherwise."
         },
-        "email": {
-          "type": "string",
-          "description": "Profile's email."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Profiles phone number."
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
         },
         "organiation": {
           "type": "string",
@@ -881,20 +877,16 @@
           "description": "Family/Last name"
         },
         "birthDate": {
-          "type": "string",
+          "$ref": "#/definitions/DateJSON",
           "description": "Date of birth."
         },
         "title": {
           "type": "string",
           "description": "Title for work or otherwise."
         },
-        "email": {
-          "type": "string",
-          "description": "Profile's email."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Profiles phone number."
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
         },
         "organiation": {
           "type": "string",

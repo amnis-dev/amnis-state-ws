@@ -17,10 +17,10 @@ import { mwValidate } from '../mw.validate';
  * Default schema definitions for validating the input.
  */
 const definitionsDefault = {
-  create: 'core#/definitions/Insert',
-  read: 'core#/definitions/Select',
-  update: 'core#/definitions/Modify',
-  delete: 'core#/definitions/Remove',
+  create: 'core#/definitions/StateCreate',
+  read: 'core#/definitions/StateQuery',
+  update: 'core#/definitions/StateUpdate',
+  delete: 'core#/definitions/StateDelete',
 };
 
 /**
