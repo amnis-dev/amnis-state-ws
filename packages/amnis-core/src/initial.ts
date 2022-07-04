@@ -35,6 +35,7 @@ export function coreInitialState(systemName = 'New System'): StateCreate {
   const system = systemCreate({
     name: systemName,
     $website: website.$id,
+    $adminRole: roleAdmin.$id,
     $initialRoles: [roleBasic.$id],
   })[0];
 

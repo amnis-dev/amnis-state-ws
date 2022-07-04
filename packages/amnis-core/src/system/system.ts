@@ -5,6 +5,7 @@ import {
   entityCreate,
 } from '../entity';
 import type { LogBaseCreate } from '../log';
+import { roleKey } from '../role';
 import { websiteKey } from '../website';
 import type { System } from './system.types';
 
@@ -14,6 +15,7 @@ export const systemBase: EntityExtension<System> = {
   name: '',
   sessionExpires: durationCalc('1h'),
   $website: reference(websiteKey),
+  $adminRole: reference(roleKey),
   $initialRoles: [],
 };
 
@@ -43,7 +45,7 @@ export function systemCheck(system: System): LogBaseCreate[] {
 }
 
 export function systemCreate(
-  system: EntityExtensionCreate<System, 'name'>,
+  system: EntityExtensionCreate<System, 'name' | '$adminRole'>,
   checkSkip = false,
 ): [System, LogBaseCreate[]] {
   const systemEntity = entityCreate<System>(systemKey, {

@@ -12,16 +12,16 @@ export interface Contact extends Entity {
   name: string;
 
   /**
-   * phone number
-   * @title Phone Nubmer
+   * phone numbers
+   * @title Phone Numbers
    */
-  phone?: string;
+  phones: string[];
 
   /**
-   * Contact email.
-   * @title E-Mail Address
+   * Contact emails.
+   * @title E-Mail Addresses
    */
-  email?: string;
+  emails: string[];
 
   /**
    * Contact's social urls.

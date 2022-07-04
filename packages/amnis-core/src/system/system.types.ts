@@ -21,6 +21,11 @@ export interface System extends Entity {
   $website: Reference<Website>;
 
   /**
+   * Role identifier that considers the user an administrator.
+   */
+  $adminRole: Reference<Role>;
+
+  /**
    * The initial roles to assign to a user when a new account is created.
    * @default []
    */

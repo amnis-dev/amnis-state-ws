@@ -7,6 +7,8 @@ export const contactKey = 'contact';
 
 export const contactBase: ContactBase = {
   name: 'Unknown Contact',
+  phones: [],
+  emails: [],
   socials: [],
 };
 

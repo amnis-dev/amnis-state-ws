@@ -104,7 +104,7 @@ export type StateCreate = State<Entity[]>;
   * A common stateful result from readings.
   * A state object with entities read from a source.
   */
-export type StateRead = State<Entity[]>;
+export type StateQuery = State<Query>;
 
 /**
   * A common stateful result from updates.

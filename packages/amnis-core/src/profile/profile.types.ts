@@ -1,6 +1,7 @@
-import type { Reference, SURL } from '../types';
+import type { DateJSON, Reference, SURL } from '../types';
 import type { Entity } from '../entity/entity.types';
 import type { User } from '../user/user.types';
+import { Contact } from '../contact';
 
 /**
  * Profile entity
@@ -29,7 +30,7 @@ export interface Profile extends Entity {
   /**
    * Date of birth.
    */
-  birthDate?: string;
+  birthDate?: DateJSON;
 
   /**
    * Title for work or otherwise.
@@ -37,14 +38,9 @@ export interface Profile extends Entity {
   title?: string;
 
   /**
-   * Profile's email.
+   * Profile Contact.
    */
-  email?: string;
-
-  /**
-   * Profiles phone number.
-   */
-  phone?: string;
+  $contact?: Reference<Contact>;
 
   /**
    * Organization profile is a part of.
