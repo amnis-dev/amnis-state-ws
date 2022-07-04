@@ -158,7 +158,7 @@ export const memory: Database = {
         return true;
       }
 
-      const col: Entity[] = state[sliceKey];
+      const col = state[sliceKey];
       if (!Array.isArray(col)) {
         return true;
       }
