@@ -70,7 +70,9 @@ export type Query = {
 
   /**
    * Depth to query for other referenced entities.
-   * @default 1
+   * @default 0
+   * @minimum 0
+   * @multipleOf 1
    */
   $depth?: number;
 };

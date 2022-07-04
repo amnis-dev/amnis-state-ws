@@ -31,6 +31,6 @@ test('should handle creating a new contact', () => {
   expect(entities).toHaveLength(1);
 
   expect(entities[0]).toEqual(expect.objectContaining({
-    myProperty: expect.any(String),
+    name: expect.any(String),
   }));
 });

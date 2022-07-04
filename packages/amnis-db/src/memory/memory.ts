@@ -133,6 +133,10 @@ export const memory: Database = {
             return true;
           }
 
+          if (filter.$in !== undefined && filter.$in.includes(entity[entityKey])) {
+            return true;
+          }
+
           return false;
         }).slice(0, limit);
       });
