@@ -29,8 +29,8 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
     const stateAuthwalled = authwall(body, grants, Task.Create);
 
     /**
-   * Clean entity properties that should not be updated.
-   */
+     * Clean entity properties that should not be updated.
+     */
     let entityIssue = false;
     const stateUpdateSanatizd = Object.keys(stateAuthwalled).reduce<State>((state, key) => {
       state[key] = stateAuthwalled[key].map(
@@ -40,7 +40,7 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
             return entityCreate(
               key,
               cleaned,
-              { $owner: jwt?.sub },
+              { $owner: jwt?.sub, $creator: jwt?.sub },
             );
           }
           entityIssue = true;

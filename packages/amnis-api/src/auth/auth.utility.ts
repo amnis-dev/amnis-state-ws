@@ -1,16 +1,15 @@
 import { AUTH_SESSION_LIFE, AUTH_TOKEN_LIFE } from '@amnis/auth/const';
 import { sessionEncode } from '@amnis/auth/session';
 import { jwtEncode } from '@amnis/auth/token';
-import { entityCreate } from '@amnis/core/entity';
 
 import { dateNumeric } from '@amnis/core/core';
 import {
   JWTDecoded, Token, tokenCreate, TokenType,
 } from '@amnis/core/token';
-import type { Profile } from '@amnis/core/profile';
-import { Session, sessionCreate } from '@amnis/core/session';
+import { Profile, profileCreate, profileKey } from '@amnis/core/profile';
+import { Session, sessionCreate, sessionKey } from '@amnis/core/session';
 import type { Database } from '@amnis/db/types';
-import type { User } from '@amnis/core/user';
+import { User, userKey } from '@amnis/core/user';
 import type { StateCreate } from '@amnis/core/state';
 
 import { Reference } from '@amnis/core/types';
@@ -24,20 +23,20 @@ export async function userFindByName(
   username: string,
 ): Promise<User | undefined> {
   const resultsUser = await database.read({
-    user: {
+    [userKey]: {
       $query: {
         name: {
           $eq: username,
         },
       },
     },
-  }, { user: 'global' });
+  }, { [userKey]: 'global' });
 
-  if (!resultsUser.user?.length) {
+  if (!resultsUser[userKey]?.length) {
     return undefined;
   }
 
-  return { ...resultsUser.user[0] } as User;
+  return { ...resultsUser[userKey][0] } as User;
 }
 
 /**
@@ -48,20 +47,20 @@ export async function userFindById(
   userId: Reference<User>,
 ): Promise<User | undefined> {
   const resultsUser = await database.read({
-    user: {
+    [userKey]: {
       $query: {
         $id: {
           $eq: userId,
         },
       },
     },
-  }, { user: 'global' });
+  }, { [userKey]: 'global' });
 
-  if (!resultsUser.user?.length) {
+  if (!resultsUser[userKey]?.length) {
     return undefined;
   }
 
-  return { ...resultsUser.user[0] } as User;
+  return { ...resultsUser[userKey][0] } as User;
 }
 
 /**
@@ -142,32 +141,32 @@ export function outputBadCredentials() {
  */
 export async function profileFetch(database: Database, user: User): Promise<Profile> {
   const results = await database.read({
-    profile: {
+    [profileKey]: {
       $query: {
         $user: {
           $eq: user.$id,
         },
       },
     },
-  }, { user: 'global' });
+  }, { [userKey]: 'global', [profileKey]: 'global' });
 
   /**
    * Create a new profile and store it if no results were found.
    */
-  if (!results.profile?.length) {
-    const profile: Profile = entityCreate<Profile>('profile', {
+  if (!results[profileKey] || results[profileKey].length < 1) {
+    const profile = profileCreate({
       $user: user.$id,
       nameDisplay: user.name,
-    }, { $owner: user.$id });
+    })[0];
 
     database.create({
-      profile: [profile],
+      [profileKey]: [profile],
     });
 
     return profile;
   }
 
-  return results.profile[0] as Profile;
+  return results[profileKey][0] as Profile;
 }
 
 /**
@@ -185,9 +184,9 @@ export async function loginSuccessProcess(database: Database, user: User) {
   user.password = null;
 
   output.json.result = {
-    user: [user],
-    profile: [profile],
-    session: [session],
+    [userKey]: [user],
+    [profileKey]: [profile],
+    [sessionKey]: [session],
   };
 
   output.json.tokens = [tokenAccess];

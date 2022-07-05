@@ -11,6 +11,9 @@ import type { ApiContextMethod } from '../types';
 import { apiOutput } from '../api';
 import type { ApiCrudProcessRead } from './crud.types';
 
+/**
+ * Performs a recursive read on the database based on the depth value of each query.
+ */
 async function readRecursive(
   database: Database,
   grants: Grant[],
@@ -19,12 +22,32 @@ async function readRecursive(
   subject: Reference,
   depth: number,
 ): Promise<StateCreate> {
+  /**
+   * Query for the initial result.
+   */
   const result = await database.read(query, authScope, subject);
+
+  /**
+   * A search depth less than 1 means we no longer need to go deeper.
+   * Return the final result.
+   */
   if (depth < 1) {
     return result;
   }
+
+  /**
+   * Create the new query based on the references in the previous database result.
+   */
   const queryNext = stateReferenceQuery(result);
+
+  /**
+   * Need to ensure the user has the right permissions for the next depth query.
+   */
   const queryAuthwalled: StateQuery = authwall(queryNext, grants, Task.Read);
+
+  /**
+   * Process the next result
+   */
   const nextResult = await readRecursive(
     database,
     grants,
@@ -34,6 +57,9 @@ async function readRecursive(
     depth - 1,
   );
 
+  /**
+   * Merge the new result with the previous.
+   */
   Object.keys(nextResult).forEach((sliceKey) => {
     if (Array.isArray(result[sliceKey])) {
       result[sliceKey].push(...nextResult[sliceKey]);
