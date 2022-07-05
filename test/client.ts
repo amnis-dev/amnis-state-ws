@@ -12,7 +12,7 @@ import { ApiInput } from '@amnis/api/types';
 import { apiAuthProcesses } from '@amnis/api/auth/auth.process';
 import { storeSetup } from '@amnis/state/env.node/store';
 
-import { databaseSetup } from './database';
+import { serviceSetup } from './database';
 
 const apiInput = (): RequestHandler => (
   (req: Request, res: Response, next: NextFunction) => {
@@ -123,7 +123,7 @@ async function init() {
   /**
    * Create the test database with pre-intantiated data.
    */
-  await databaseSetup(memory);
+  await serviceSetup(serverStore, memory);
 
   /**
    * Fetch roles from the database and populate the server store.

@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { dateJSON, reference } from '../core';
+import { dateJSON } from '../core';
 import { regexReference, regexUuid } from '../regex';
 import type {
   Reference,
@@ -11,11 +11,6 @@ import type {
 } from './entity.types';
 
 /**
- * Default identifier.
- */
-const idDefault = nanoid();
-
-/**
  * Creates an entity.
  */
 export const entityCreate = <E extends Entity>(
@@ -23,7 +18,6 @@ export const entityCreate = <E extends Entity>(
   entity: EntityExtension<E>,
   set?: Partial<Entity> | boolean,
 ): E => {
-  const systemKey = 'system';
   const id = `${key}:${nanoid()}` as Reference;
   const now = dateJSON();
   const base: Entity = {
@@ -31,8 +25,8 @@ export const entityCreate = <E extends Entity>(
     created: now,
     updated: now,
     delete: false,
-    $owner: reference(systemKey, idDefault),
-    $creator: reference(systemKey, idDefault),
+    $owner: id,
+    $creator: id,
     $updaters: [],
     committed: false,
   };

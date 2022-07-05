@@ -49,6 +49,8 @@ const roles: Role[] = [
     description: 'Most permissive role for complete administration.',
     color: '#cc0000',
     grants: [
+      grantStringify({ key: 'system', scope: 'global', task: task(1, 1, 1, 1) }),
+      grantStringify({ key: 'website', scope: 'global', task: task(1, 1, 1, 1) }),
       grantStringify({ key: 'user', scope: 'global', task: task(1, 1, 1, 1) }),
       grantStringify({ key: 'role', scope: 'global', task: task(1, 1, 1, 1) }),
       grantStringify({ key: 'profile', scope: 'global', task: task(1, 1, 1, 1) }),

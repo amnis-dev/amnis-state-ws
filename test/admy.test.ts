@@ -89,6 +89,7 @@ test('client store should contain session.', async () => {
   const session = selectors.selectActive<Session>(clientStore.getState(), sessionKey);
 
   expect(session).not.toBeUndefined();
+  expect(session?.name).toEqual('Admy');
 });
 
 /**
@@ -122,6 +123,33 @@ test('client store should contain own profile data.', async () => {
       nameDisplay: expect.any(String),
     }),
   );
+});
+
+/**
+ * ============================================================
+ */
+test('should be able to depth search the system as Admy via API', async () => {
+  const action = await clientStore.dispatch(apiCrud.endpoints.read.initiate({
+    system: {
+      $query: {
+        name: {
+          $eq: 'Amnis System',
+        },
+      },
+      $depth: 1,
+    },
+  }));
+
+  expect(action.status).toBe('fulfilled');
+
+  const { data } = action;
+  const systems = data?.result?.system;
+  const websites = data?.result?.website;
+
+  console.log(JSON.stringify(data?.result, null, 2));
+
+  expect(systems).toHaveLength(1);
+  expect(websites).toHaveLength(1);
 });
 
 /**

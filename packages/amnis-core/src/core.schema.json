@@ -128,7 +128,9 @@
         "$depth": {
           "type": "number",
           "description": "Depth to query for other referenced entities.",
-          "default": 1
+          "default": 0,
+          "minimum": 0,
+          "multipleOf": 1
         }
       },
       "additionalProperties": false
@@ -180,9 +182,9 @@
       "description": "StateQuery range"
     },
     "StateUpdate": {
-      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1621-1807-2094046105-0-2112600678921%5B%5D%3E"
+      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1656-1842-2094046105-0-2147600678921%5B%5D%3E"
     },
-    "State<def-alias-2094046105-1621-1807-2094046105-0-2112600678921[]>": {
+    "State<def-alias-2094046105-1656-1842-2094046105-0-2147600678921[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
