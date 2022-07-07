@@ -13,10 +13,9 @@ export const logBase: LogBase = {
 /**
  * Creates a log entry.
  */
-export function logCreate(log: LogBaseCreate): [Log, Log[]] {
-  const logs: Log[] = [];
-  return [entityCreate<Log>(logKey, {
+export function logCreate(log: LogBaseCreate): Log {
+  return entityCreate<Log>(logKey, {
     ...logBase,
     ...log,
-  }), logs];
+  });
 }

@@ -26,17 +26,11 @@ export function roleCheck(role: Role): LogBaseCreate[] {
 
 export function roleCreate(
   role: EntityExtensionCreate<Role, 'name'>,
-  checkSkip = false,
-): [Role, LogBaseCreate[]] {
+): Role {
   const roleEntity = entityCreate<Role>(roleKey, {
     ...roleBase,
     ...role,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...roleCheck(roleEntity));
-  }
-
-  return [roleEntity, logs];
+  return roleEntity;
 }

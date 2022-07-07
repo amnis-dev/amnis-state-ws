@@ -14,7 +14,7 @@ test('locale key should be is properly set', () => {
  * ============================================================
  */
 test('should create a locale', () => {
-  const [locale, logs] = localeCreate({
+  const locale = localeCreate({
     code: 'en',
     set: 'core',
   });
@@ -26,8 +26,6 @@ test('should create a locale', () => {
       t: expect.any(Object),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });
 
 /**

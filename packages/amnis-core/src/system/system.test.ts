@@ -12,7 +12,7 @@ test('system key should be is properly set', () => {
  * ============================================================
  */
 test('should create a system', () => {
-  const [system, logs] = systemCreate({
+  const system = systemCreate({
     name: 'Amnis System',
     $adminRole: reference('role'),
     $initialRoles: [reference('role')],
@@ -23,6 +23,4 @@ test('should create a system', () => {
       name: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

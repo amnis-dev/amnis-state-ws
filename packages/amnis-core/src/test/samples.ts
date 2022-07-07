@@ -66,7 +66,7 @@ const users: User[] = [
     password: passCreateSync('passwd1'),
     $roles: [roles[0].$id],
     $permits: [],
-  })[0],
+  }),
   userCreate({
     name: 'Moddie',
     email: 'moddie@ecrow.dev',
@@ -74,14 +74,14 @@ const users: User[] = [
     password: passCreateSync('passwd2'),
     $roles: [roles[1].$id],
     $permits: [],
-  })[0],
+  }),
   userCreate({
     name: 'Admy',
     email: 'admy@ecrow.dev',
     password: passCreateSync('passwd3'),
     $roles: [roles[2].$id],
     $permits: [],
-  })[0],
+  }),
 ];
 
 const profiles: Profile[] = [

@@ -16,6 +16,31 @@ import type {
 } from './entity';
 import { Reference } from './types';
 
+export interface MetaOptions {
+  active?: boolean;
+  focused?: boolean;
+  selection?: boolean;
+}
+
+export interface CreatePayload<E extends Entity> {
+  entity: E;
+  meta?: MetaOptions;
+}
+
+function setMeta<E extends Entity>(state: MetaState<E>, ref: E['$id'], meta?: MetaOptions) {
+  if (meta) {
+    if (meta.active) {
+      state.active = ref;
+    }
+    if (meta.focused) {
+      state.focused = ref;
+    }
+    if (meta.selection) {
+      state.selection.push(ref);
+    }
+  }
+}
+
 export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapter<E>) {
   return {
     /**
@@ -24,11 +49,18 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
     create: {
       reducer: (
         state: MetaState<E>,
-        action: PayloadAction<E>,
+        action: PayloadAction<CreatePayload<E>>,
       ) => {
-        adapter.addOne(state, action.payload);
+        const { entity, meta } = action.payload;
+        adapter.addOne(state, entity);
+        setMeta(state, entity.$id, meta);
       },
-      prepare: (entityNew: EntityExtension<E>) => ({ payload: entityCreate(key, entityNew) }),
+      prepare: (entityNew: EntityExtension<E>, meta?: MetaOptions) => ({
+        payload: {
+          entity: entityCreate(key, entityNew),
+          meta,
+        },
+      }),
     },
 
     /**
@@ -155,6 +187,23 @@ export function coreExtraReducers<E extends Entity>(
     if (payload[key] && Array.isArray(payload[key])) {
       /** @ts-ignore */
       adapter.removeMany<MetaState<E>>(state, payload[key]);
+
+      if (state.active && payload[key].includes(state.active)) {
+        state.active = null;
+      }
+
+      if (state.focused && payload[key].includes(state.focused)) {
+        state.focused = null;
+      }
+
+      if (
+        state.selection.length > 0
+        && payload[key].some((id) => state.selection.includes(id))
+      ) {
+        state.selection = state.selection.filter((selectionId) => (
+          payload[key].includes(selectionId)
+        ));
+      }
     }
   });
 }

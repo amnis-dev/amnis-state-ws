@@ -13,7 +13,7 @@ test('profile key should be is properly set', () => {
  * ============================================================
  */
 test('should create a profile', () => {
-  const [profile, logs] = profileCreate({
+  const profile = profileCreate({
     nameDisplay: 'Newbie',
     $user: reference(userKey),
   });
@@ -24,6 +24,4 @@ test('should create a profile', () => {
       $user: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

@@ -18,6 +18,7 @@ export const apiAuth = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.API_AUTH_URL,
+    fetchFn: fetch || (() => undefined),
   }),
   endpoints: (builder) => ({
 

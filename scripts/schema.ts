@@ -10,7 +10,7 @@ const typeSchemaFiles = glob.sync('./**/*.tyma.ts', {
 
 typeSchemaFiles.forEach((filePath) => {
   const dir = path.dirname(filePath);
-  const prefix = path.basename(filePath).split('.')[0];
+  const prefix = path.basename(filePath).split('.');
   const schema = createGenerator({
     schemaId: prefix,
     path: filePath,
@@ -27,7 +27,7 @@ typeSchemaFiles.forEach((filePath) => {
 
 // coreSchemaFiles.every((filePath) => {
 //   // const dir = path.dirname(filePath);
-//   const prefix = path.basename(filePath).split('.')[0];
+//   const prefix = path.basename(filePath).split('.');
 //   if (prefix === 'database') {
 //     return true;
 //   }

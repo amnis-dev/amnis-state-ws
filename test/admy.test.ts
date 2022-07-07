@@ -163,7 +163,7 @@ test('user create global should be +ALLOWED+ as Admy via API', async () => {
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
           password: passCreateSync('passwd0'),
-        })[0],
+        }),
       ],
     }),
   );

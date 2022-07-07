@@ -26,17 +26,11 @@ export function mediaCheck(media: Media): LogBaseCreate[] {
 
 export function mediaCreate(
   media: EntityExtensionCreate<Media, 'title' | 'source'>,
-  checkSkip = false,
-): [Media, LogBaseCreate[]] {
+): Media {
   const mediaEntity = entityCreate<Media>(mediaKey, {
     ...mediaBase,
     ...media,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...mediaCheck(mediaEntity));
-  }
-
-  return [mediaEntity, logs];
+  return mediaEntity;
 }

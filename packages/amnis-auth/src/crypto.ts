@@ -13,4 +13,4 @@ export async function sha256(plain: string) {
   return createHash('sha256').update(plain).digest('base64url');
 }
 
-export default { cryptoRandomString };
+export default { sha256, cryptoRandomString };

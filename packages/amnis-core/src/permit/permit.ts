@@ -27,17 +27,11 @@ export function permitCheck(permit: Permit): LogBaseCreate[] {
 
 export function permitCreate(
   permit: EntityExtensionCreate<Permit, '$issuer' | '$holder' | '$target'>,
-  checkSkip = false,
-): [Permit, LogBaseCreate[]] {
+): Permit {
   const permitEntity = entityCreate<Permit>(permitKey, {
     ...permitBase,
     ...permit,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...permitCheck(permitEntity));
-  }
-
-  return [permitEntity, logs];
+  return permitEntity;
 }

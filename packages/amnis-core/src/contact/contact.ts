@@ -33,17 +33,11 @@ export function contactCheck(contact: Contact): LogBaseCreate[] {
 
 export function contactCreate(
   contact: ContactBaseCreate,
-  checkSkip = false,
-): [Contact, LogBaseCreate[]] {
+): Contact {
   const contactEntity = entityCreate<Contact>(contactKey, {
     ...contactBase,
     ...contact,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...contactCheck(contactEntity));
-  }
-
-  return [contactEntity, logs];
+  return contactEntity;
 }

@@ -46,17 +46,11 @@ export function systemCheck(system: System): LogBaseCreate[] {
 
 export function systemCreate(
   system: EntityExtensionCreate<System, 'name' | '$adminRole'>,
-  checkSkip = false,
-): [System, LogBaseCreate[]] {
+): System {
   const systemEntity = entityCreate<System>(systemKey, {
     ...systemBase,
     ...system,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...systemCheck(systemEntity));
-  }
-
-  return [systemEntity, logs];
+  return systemEntity;
 }

@@ -60,17 +60,11 @@ export function localeCheck(locale: Locale): LogBaseCreate[] {
 
 export function localeCreate(
   locale: LocaleBaseCreate,
-  checkSkip = false,
-): [Locale, LogBaseCreate[]] {
+): Locale {
   const localeEntity = entityCreate<Locale>(localeKey, {
     ...localeBase,
     ...locale,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...localeCheck(localeEntity));
-  }
-
-  return [localeEntity, logs];
+  return localeEntity;
 }

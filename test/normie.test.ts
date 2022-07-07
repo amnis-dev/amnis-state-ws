@@ -208,7 +208,7 @@ test('user create global should be -DENIED- as Normie via API', async () => {
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
           password: passCreateSync('passwd0'),
-        })[0],
+        }),
       ],
     }),
   );
@@ -340,7 +340,7 @@ test('profile create global should be -DENIED- as Normie via API', async () => {
         profileCreate({
           $user: userActive.$id,
           nameDisplay: 'MyNormieProfile',
-        })[0],
+        }),
       ],
     }),
   );

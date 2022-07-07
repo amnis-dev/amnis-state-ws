@@ -11,7 +11,7 @@ test('website key should be is properly set', () => {
  * ============================================================
  */
 test('should create a website', () => {
-  const [website, logs] = websiteCreate({
+  const website = websiteCreate({
     name: 'Amnis',
     url: 'https://amnis.dev',
   });
@@ -22,6 +22,4 @@ test('should create a website', () => {
       url: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

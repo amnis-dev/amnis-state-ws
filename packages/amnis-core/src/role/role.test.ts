@@ -11,7 +11,7 @@ test('role key should be is properly set', () => {
  * ============================================================
  */
 test('should create a role', () => {
-  const [role, logs] = roleCreate({
+  const role = roleCreate({
     name: 'Base Role',
   });
 
@@ -20,6 +20,4 @@ test('should create a role', () => {
       name: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

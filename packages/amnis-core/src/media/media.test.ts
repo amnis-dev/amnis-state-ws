@@ -12,7 +12,7 @@ test('media key should be is properly set', () => {
  * ============================================================
  */
 test('should create a media', () => {
-  const [media, logs] = mediaCreate({
+  const media = mediaCreate({
     title: 'Amnis Media',
     source: surl('source'),
   });
@@ -23,6 +23,4 @@ test('should create a media', () => {
       source: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

@@ -75,17 +75,11 @@ export function userValidate(user: User): LogBaseCreate[] {
  */
 export function userCreate(
   user: EntityExtensionCreate<User, 'name'>,
-  validationSkip = false,
-): [User, LogBaseCreate[]] {
+): User {
   const userEntity = entityCreate<User>(userKey, {
     ...userBase,
     ...user,
-  }, true);
+  });
 
-  const logs: LogBaseCreate[] = [];
-  if (!validationSkip) {
-    logs.push(...userValidate(userEntity));
-  }
-
-  return [userEntity, logs];
+  return userEntity;
 }

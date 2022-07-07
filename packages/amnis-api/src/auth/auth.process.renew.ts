@@ -50,13 +50,13 @@ export const authProcessRenew: ApiContextMethod = (context): ApiAuthProcessRenew
     /**
      * Create a new session.
      */
-    const [sessionNew] = sessionCreate({
+    const sessionNew = sessionCreate({
       $subject: session.$subject,
       exp: dateNumeric(AUTH_SESSION_LIFE),
       name: session.name,
       avatar: session.avatar,
       admin: session.admin,
-    }, true);
+    });
 
     output.cookies.authSession = sessionEncode(sessionNew);
 

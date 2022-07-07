@@ -53,17 +53,11 @@ export function websiteCheck(website: Website): LogBaseCreate[] {
 
 export function websiteCreate(
   website: EntityExtensionCreate<Website, 'name' | 'url'>,
-  checkSkip = false,
-): [Website, LogBaseCreate[]] {
+): Website {
   const websiteEntity = entityCreate<Website>(websiteKey, {
     ...websiteBase,
     ...website,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...websiteCheck(websiteEntity));
-  }
-
-  return [websiteEntity, logs];
+  return websiteEntity;
 }

@@ -19,6 +19,7 @@ export const apiCrud = createApi({
   reducerPath: 'apiCrud',
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.API_CRUD_URL,
+    fetchFn: fetch || (() => undefined),
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = selectors.selectToken(getState() as State, 'core', 'access');
 

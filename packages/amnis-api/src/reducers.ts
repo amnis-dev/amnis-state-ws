@@ -32,7 +32,7 @@ export function apiExtraReducers<E extends Entity>(
      * StateCreate log entities from the fulfillment.
      */
     if (key === logKey && logs?.length > 0) {
-      const logEntities = logs.map((logBase) => logCreate(logBase)[0]);
+      const logEntities = logs.map((logBase) => logCreate(logBase));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }
@@ -50,13 +50,12 @@ export function apiExtraReducers<E extends Entity>(
       return;
     }
 
-    const logs = payload.data.logs as LogBaseCreate[];
-
     /**
      * StateCreate log entities from the fulfillment.
      */
-    if (key === logKey && logs?.length > 0) {
-      const logEntities = logs.map((logBase) => logCreate(logBase)[0]);
+    if (key === logKey && payload?.data?.logs?.length > 0) {
+      const logs = payload.data.logs as LogBaseCreate[];
+      const logEntities = logs.map((logBase) => logCreate(logBase));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }
@@ -191,6 +190,23 @@ export function apiExtraReducers<E extends Entity>(
     if (result && result[key] && Array.isArray(result[key])) {
       /** @ts-ignore */
       adapter.removeMany<MetaState<E>>(state, result[key]);
+
+      if (state.active && result[key].includes(state.active)) {
+        state.active = null;
+      }
+
+      if (state.focused && result[key].includes(state.focused)) {
+        state.focused = null;
+      }
+
+      if (
+        state.selection.length > 0
+        && result[key].some((id) => state.selection.includes(id))
+      ) {
+        state.selection = state.selection.filter((selectionId) => (
+          result[key].includes(selectionId)
+        ));
+      }
     }
   });
 }

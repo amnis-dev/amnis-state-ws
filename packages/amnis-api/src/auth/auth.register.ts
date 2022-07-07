@@ -8,6 +8,7 @@ import { userCreate } from '@amnis/core/user';
 import { selectors } from '@amnis/core/selectors';
 import { sessionEncode } from '@amnis/auth/session';
 import type { Database } from '@amnis/db/types';
+import type { Log } from '@amnis/core/log';
 
 import { apiOutput } from '../api';
 import { ApiOutput } from '../types';
@@ -37,7 +38,7 @@ export async function register(
     password, nameDisplay, createSession, otherTokens,
   } = options;
   const output = apiOutput<StateCreate>();
-  const logs = [];
+  const logs: Log[] = [];
 
   /**
    * Set system settings from the store.
@@ -54,7 +55,7 @@ export async function register(
     return output;
   }
 
-  const [user, userLogs] = userCreate({
+  const user = userCreate({
     name: username,
     password: password || null,
     email: options.email,
@@ -63,15 +64,11 @@ export async function register(
 
   user.$owner = user.$id;
 
-  logs.push(...userLogs);
-
-  const [profile, profileLogs] = profileCreate({
+  const profile = profileCreate({
     $user: user.$id,
     nameDisplay: nameDisplay || username,
   });
   profile.$owner = user.$id;
-
-  logs.push(...profileLogs);
 
   /**
    * If there were issues with the creations, there'll be logs.

@@ -29,7 +29,7 @@ test('should not generically create a new user with mismatched keys', () => {
       userCreate({
         name: 'eCrow',
         $roles: [],
-      })[0],
+      }),
     ],
   });
 
@@ -49,7 +49,7 @@ test('should handle generically creating a new user', () => {
       userCreate({
         name: 'eCrow',
         $roles: [],
-      })[0],
+      }),
     ],
   });
 

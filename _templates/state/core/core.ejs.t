@@ -22,17 +22,11 @@ export function <%= name %>Check(<%= name %>: <%= Name %>): LogBaseCreate[] {
 
 export function <%= name %>Create(
   <%= name %>: <%= Name %>BaseCreate,
-  checkSkip = false,
-): [<%= Name %>, LogBaseCreate[]] {
+): <%= Name %> {
   const <%= name %>Entity = entityCreate<<%= Name %>>(<%= name %>Key, {
     ...<%= name %>Base,
     ...<%= name %>,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...<%= name %>Check(<%= name %>Entity));
-  }
-
-  return [<%= name %>Entity, logs];
+  return <%= name %>Entity;
 }

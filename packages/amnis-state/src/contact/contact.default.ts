@@ -1,6 +1,6 @@
 import { contactCreate } from '@amnis/core/contact';
 
-export const [contactDefault] = contactCreate({
+export const contactDefault = contactCreate({
   name: 'Unnamed Contact',
 });
 

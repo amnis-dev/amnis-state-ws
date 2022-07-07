@@ -47,17 +47,11 @@ export function imageCheck(image: Image): LogBaseCreate[] {
 
 export function imageCreate(
   image: EntityExtensionCreate<Image, 'title'>,
-  checkSkip = false,
-): [Image, LogBaseCreate[]] {
+): Image {
   const imageEntity = entityCreate<Image>(imageKey, {
     ...imageBase,
     ...image,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...imageCheck(imageEntity));
-  }
-
-  return [imageEntity, logs];
+  return imageEntity;
 }

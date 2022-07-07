@@ -11,7 +11,7 @@ test('video key should be is properly set', () => {
  * ============================================================
  */
 test('should create a video', () => {
-  const [video, logs] = videoCreate({
+  const video = videoCreate({
     title: 'Introduction to Amnis State',
   });
 
@@ -20,6 +20,4 @@ test('should create a video', () => {
       title: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

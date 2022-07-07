@@ -1,25 +1,11 @@
-import { randomBytes, createHash } from 'crypto';
-
-/**
- * Generate a random verifier string.
- */
-export function pkceCreateVerifier(length = 128) {
-  return randomBytes(length).toString('hex');
-}
+import { sha256, cryptoRandomString } from './crypto';
 
 // Base64-urlencodes the input string
 export function base64urlencode(value: ArrayBuffer) {
   return Buffer.from(value).toString('base64');
 }
 
-/**
- * Encrypt with SHA-256.
- */
-export async function sha256(plain: string) {
-  return createHash('sha256').update(plain).digest('base64url');
-}
-
-const pkceVerifier = pkceCreateVerifier();
+const pkceVerifier = cryptoRandomString(128);
 
 export function pkceGetVerifier() {
   return pkceVerifier;

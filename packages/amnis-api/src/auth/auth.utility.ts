@@ -75,7 +75,7 @@ export function sessionGenerate(
   /**
    * Create the new user session.
    */
-  const [session] = sessionCreate({
+  const session = sessionCreate({
     $subject: user.$id,
     exp: sessionExpires,
     admin: false,
@@ -157,7 +157,7 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
     const profile = profileCreate({
       $user: user.$id,
       nameDisplay: user.name,
-    })[0];
+    });
 
     database.create({
       [profileKey]: [profile],

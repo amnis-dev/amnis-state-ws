@@ -11,7 +11,7 @@ test('contact key should be is properly set', () => {
  * ============================================================
  */
 test('should create a contact', () => {
-  const [contact, logs] = contactCreate({
+  const contact = contactCreate({
     name: 'Amnis Contact',
   });
 
@@ -21,6 +21,4 @@ test('should create a contact', () => {
       socials: expect.any(Array),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

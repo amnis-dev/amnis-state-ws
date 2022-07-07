@@ -11,7 +11,7 @@ test('image key should be is properly set', () => {
  * ============================================================
  */
 test('should create a image', () => {
-  const [image, logs] = imageCreate({
+  const image = imageCreate({
     title: 'Amnis Logo',
   });
 
@@ -20,6 +20,4 @@ test('should create a image', () => {
       title: expect.any(String),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

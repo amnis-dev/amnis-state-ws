@@ -13,7 +13,7 @@ const schemaFiles = glob.sync('./packages/amnis-core/src/schemas/*.schema.json',
 });
 
 schemaFiles.forEach((schemaPath) => {
-  const prefix = path.basename(schemaPath).split('.')[0];
+  const prefix = path.basename(schemaPath).split('.');
   const schema = fse.readJSONSync(schemaPath);
   const validate = ajv.compile(schema);
   const moduleCode = standaloneCode(ajv, validate);

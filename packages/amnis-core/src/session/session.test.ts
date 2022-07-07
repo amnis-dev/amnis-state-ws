@@ -12,7 +12,7 @@ test('session key should be is properly set', () => {
  * ============================================================
  */
 test('should create a session', () => {
-  const [session, logs] = sessionCreate({
+  const session = sessionCreate({
     $subject: reference('user'),
     name: 'Newbie',
     exp: dateNumeric(),
@@ -25,6 +25,4 @@ test('should create a session', () => {
       exp: expect.any(Number),
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

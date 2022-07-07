@@ -14,7 +14,7 @@ test('<%= name %> key should be is properly set', () => {
  * ============================================================
  */
 test('should create a <%= name %>', () => {
-  const [<%= name %>, logs] = <%= name %>Create({
+  const <%= name %> = <%= name %>Create({
     prop: null,
   });
 
@@ -23,6 +23,4 @@ test('should create a <%= name %>', () => {
       prop: null,
     }),
   );
-
-  expect(logs).toHaveLength(0);
 });

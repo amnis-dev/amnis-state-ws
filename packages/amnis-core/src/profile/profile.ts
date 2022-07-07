@@ -23,17 +23,11 @@ export function profileCheck(profile: Profile): LogBaseCreate[] {
 
 export function profileCreate(
   profile: EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>,
-  checkSkip = false,
-): [Profile, LogBaseCreate[]] {
+): Profile {
   const profileEntity = entityCreate<Profile>(profileKey, {
     ...profileBase,
     ...profile,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...profileCheck(profileEntity));
-  }
-
-  return [profileEntity, logs];
+  return profileEntity;
 }

@@ -22,7 +22,7 @@ const users: User[] = [
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
     password: passCreateSync('passwd1'),
-  })[0],
+  }),
 ];
 
 const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;

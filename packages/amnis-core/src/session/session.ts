@@ -29,17 +29,11 @@ export function sessionCheck(session: Session): LogBaseCreate[] {
 
 export function sessionCreate(
   session: EntityExtensionCreate<Session, '$subject' | 'exp' | 'name'>,
-  checkSkip = false,
-): [Session, LogBaseCreate[]] {
+): Session {
   const sessionEntity = entityCreate<Session>(sessionKey, {
     ...sessionBase,
     ...session,
   });
 
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...sessionCheck(sessionEntity));
-  }
-
-  return [sessionEntity, logs];
+  return sessionEntity;
 }

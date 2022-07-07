@@ -31,17 +31,10 @@ export function videoCheck(video: Video): LogBaseCreate[] {
 
 export function videoCreate(
   video: EntityExtensionCreate<Video, 'title'>,
-  checkSkip = false,
-): [Video, LogBaseCreate[]] {
+): Video {
   const videoEntity = entityCreate<Video>(videoKey, {
     ...videoBase,
     ...video,
   });
-
-  const logs: LogBaseCreate[] = [];
-  if (!checkSkip) {
-    logs.push(...videoCheck(videoEntity));
-  }
-
-  return [videoEntity, logs];
+  return videoEntity;
 }

@@ -11,7 +11,7 @@ const system = systemCreate({
   $adminRole: reference(roleKey),
   $initialRoles: [reference(roleKey), reference(roleKey)],
   $website: reference(websiteKey),
-})[0];
+});
 
 system.$creator = system.$id;
 system.$owner = system.$id;

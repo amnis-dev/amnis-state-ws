@@ -13,7 +13,7 @@ export function coreInitialState(systemName = 'New System'): StateCreate {
       grantStringify({ key: 'profile', scope: 'owned', task: task(0, 1, 1, 0) }),
       grantStringify({ key: 'profile', scope: 'global', task: task(0, 1, 0, 0) }),
     ],
-  })[0];
+  });
 
   const roleAdmin = roleCreate({
     name: 'Admin',
@@ -25,19 +25,19 @@ export function coreInitialState(systemName = 'New System'): StateCreate {
       grantStringify({ key: 'user', scope: 'global', task: task(0, 1, 0, 0) }),
       grantStringify({ key: 'profile', scope: 'global', task: task(0, 1, 1, 0) }),
     ],
-  })[0];
+  });
 
   const website = websiteCreate({
     name: 'New Website',
     url: 'http://localhost',
-  })[0];
+  });
 
   const system = systemCreate({
     name: systemName,
     $website: website.$id,
     $adminRole: roleAdmin.$id,
     $initialRoles: [roleBasic.$id],
-  })[0];
+  });
 
   /**
  * Initial recommended core state to be created.
