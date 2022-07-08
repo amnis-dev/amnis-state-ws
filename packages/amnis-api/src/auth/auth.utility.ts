@@ -6,7 +6,7 @@ import { dateNumeric } from '@amnis/core/core';
 import {
   JWTDecoded, Token, tokenCreate, TokenType,
 } from '@amnis/core/token';
-import { Profile, profileCreate, profileKey } from '@amnis/core/profile';
+import { Profile, profileKey } from '@amnis/core/profile';
 import { Session, sessionCreate, sessionKey } from '@amnis/core/session';
 import type { Database } from '@amnis/db/types';
 import { User, userKey } from '@amnis/core/user';
@@ -139,7 +139,7 @@ export function outputBadCredentials() {
 /**
  * Fetch a profile. Create a new one if it doesn't exist.
  */
-export async function profileFetch(database: Database, user: User): Promise<Profile> {
+export async function profileFetch(database: Database, user: User): Promise<Profile | undefined> {
   const results = await database.read({
     [profileKey]: {
       $query: {
@@ -154,16 +154,24 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
    * Create a new profile and store it if no results were found.
    */
   if (!results[profileKey] || results[profileKey].length < 1) {
-    const profile = profileCreate({
-      $user: user.$id,
-      nameDisplay: user.name,
-    });
+    /**
+     * TODO: Find out if creating a new profile if not found
+     * is a good choice.
+     * The profile should have been created upon registration...
+     * but a user can exist without a profile.
+     */
+    // const profile = profileCreate({
+    //   $user: user.$id,
+    //   nameDisplay: user.name,
+    // });
 
-    database.create({
-      [profileKey]: [profile],
-    });
+    // const resultDb = await database.create({
+    //   [profileKey]: [profile],
+    // });
 
-    return profile;
+    // const profileResult = resultDb[profileKey]?.[0] as Profile | undefined;
+
+    return undefined;
   }
 
   return results[profileKey][0] as Profile;
@@ -176,6 +184,16 @@ export async function loginSuccessProcess(database: Database, user: User) {
   const output = apiOutput<StateCreate>();
 
   const profile = await profileFetch(database, user);
+
+  if (!profile) {
+    output.status = 500; // Internal Server Error
+    output.json.logs.push({
+      level: 'error',
+      title: 'Profile Missing',
+      description: 'Could not find the account profile.',
+    });
+    return output;
+  }
 
   const session = sessionGenerate(user, profile);
 

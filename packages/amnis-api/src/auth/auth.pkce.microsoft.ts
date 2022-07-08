@@ -7,6 +7,8 @@ import type { StateCreate } from '@amnis/core/state';
 
 import { jwtDecode } from '@amnis/auth/token';
 import { Store } from '@reduxjs/toolkit';
+import { selectors } from '@amnis/core/selectors';
+import { System, systemKey } from '@amnis/core/system';
 import type { ApiAuthPkce } from './auth.types';
 import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
@@ -40,7 +42,6 @@ export interface MicrosoftId {
 }
 
 const tokenEndpoint = `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
-// const userEndpoint = `${API_MICROSOFT_OAUTH2_URL}users/me`;
 
 export async function authMicrosoft(
   store: Store,
@@ -119,7 +120,7 @@ export async function authMicrosoft(
   /**
    * If the user already exists, return the login success.
    */
-  if (userSearch) {
+  if (userSearch !== undefined) {
     const successOutput = await loginSuccessProcess(database, userSearch);
     return successOutput;
   }
@@ -147,11 +148,17 @@ export async function authMicrosoft(
     tokens.push(tokenRefresh);
   }
 
+  /**
+   * Set system settings from the store.
+   */
+  const system = selectors.selectActive<System>(store.getState(), systemKey);
+
   const registrationOutput = await register(
-    store,
     database,
+    system,
     username,
     {
+      withTokens: true,
       otherTokens: tokens,
       nameDisplay: microsoftId.name || '',
       email: microsoftId.email,

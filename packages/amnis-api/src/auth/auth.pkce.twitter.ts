@@ -6,6 +6,8 @@ import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token';
 import type { StateCreate } from '@amnis/core/state';
 
 import { Store } from '@reduxjs/toolkit';
+import { selectors } from '@amnis/core/selectors';
+import { System, systemKey } from '@amnis/core/system';
 import type { ApiAuthPkce } from './auth.types';
 import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
@@ -137,9 +139,14 @@ export async function authTwitter(
     tokens.push(tokenRefresh);
   }
 
+  /**
+   * Set system settings from the store.
+   */
+  const system = selectors.selectActive<System>(store.getState(), systemKey);
+
   const registrationOutput = await register(
-    store,
     database,
+    system,
     username,
     {
       otherTokens: tokens,

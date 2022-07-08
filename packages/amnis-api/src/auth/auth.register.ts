@@ -1,14 +1,11 @@
-import { Store } from '@reduxjs/toolkit';
-
 import type { StateCreate } from '@amnis/core/state';
 import type { Token } from '@amnis/core/token';
-import { System, systemKey } from '@amnis/core/system';
-import { profileCreate } from '@amnis/core/profile';
-import { userCreate } from '@amnis/core/user';
-import { selectors } from '@amnis/core/selectors';
+import { System } from '@amnis/core/system';
+import { profileCheck, profileCreate } from '@amnis/core/profile';
+import { userCheck, userCreate } from '@amnis/core/user';
 import { sessionEncode } from '@amnis/auth/session';
 import type { Database } from '@amnis/db/types';
-import type { Log } from '@amnis/core/log';
+import type { LogBaseCreate } from '@amnis/core/log';
 
 import { apiOutput } from '../api';
 import { ApiOutput } from '../types';
@@ -22,6 +19,7 @@ interface RegisterOptions {
   email?: string;
   password?: string;
   createSession?: boolean;
+  withTokens?: boolean;
   otherTokens?: Token[];
 }
 
@@ -29,21 +27,16 @@ interface RegisterOptions {
  * Create an API Outputs registering an account.
  */
 export async function register(
-  store: Store,
   database: Database,
+  system: System | undefined,
   username: string,
   options: RegisterOptions,
 ): Promise<ApiOutput<StateCreate>> {
   const {
-    password, nameDisplay, createSession, otherTokens,
+    password, nameDisplay, createSession, withTokens, otherTokens,
   } = options;
   const output = apiOutput<StateCreate>();
-  const logs: Log[] = [];
-
-  /**
-   * Set system settings from the store.
-   */
-  const system = selectors.selectActive<System>(store.getState(), systemKey);
+  const logs: LogBaseCreate[] = [];
 
   if (!system) {
     output.status = 503; // Service Unavailable
@@ -64,11 +57,15 @@ export async function register(
 
   user.$owner = user.$id;
 
+  logs.push(...userCheck(user));
+
   const profile = profileCreate({
     $user: user.$id,
     nameDisplay: nameDisplay || username,
   });
   profile.$owner = user.$id;
+
+  logs.push(...profileCheck(profile));
 
   /**
    * If there were issues with the creations, there'll be logs.
@@ -103,10 +100,12 @@ export async function register(
   /**
    * Return tokens
    */
-  output.json.tokens = [tokenGenerate(user)];
+  if (withTokens === true) {
+    output.json.tokens = [tokenGenerate(user)];
 
-  if (otherTokens?.length) {
-    output.json.tokens.push(...otherTokens);
+    if (otherTokens?.length) {
+      output.json.tokens.push(...otherTokens);
+    }
   }
 
   output.json.logs.push({

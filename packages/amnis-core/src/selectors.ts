@@ -172,4 +172,4 @@ export const selectors = {
   selectRoleGrants,
 };
 
-export default selectors;
+export default { selectors };

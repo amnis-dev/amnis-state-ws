@@ -17,14 +17,14 @@ export const userBase: EntityExtension<User> = {
   $permits: [],
 };
 
-export function userValidateDevices(devices: DeviceString[]): boolean {
+export function userCheckDevices(devices: DeviceString[]): boolean {
   return !!devices.find((device) => !deviceParse(device));
 }
 
 /**
  * User validation method.
  */
-export function userValidate(user: User): LogBaseCreate[] {
+export function userCheck(user: User): LogBaseCreate[] {
   const logs: LogBaseCreate[] = [];
 
   if (user.password !== null && !regexAlphanumeric.test(user.name)) {
@@ -59,7 +59,7 @@ export function userValidate(user: User): LogBaseCreate[] {
     });
   }
 
-  if (user.devices?.length && userValidateDevices(user.devices)) {
+  if (user.devices?.length && userCheckDevices(user.devices)) {
     logs.push({
       title: 'Invalid Device',
       description: 'The device associated with the user is invalid.',
