@@ -43,7 +43,12 @@ export interface ApiAuthPkce {
  * Payload for a session and token renewal.
  * Should not have any data in the body.
  */
-export type ApiAuthRenewBody = Record<string, never>;
+export interface ApiAuthRenewBody {
+  /**
+   * Include user and profile data with the response.
+   */
+  info?: boolean;
+}
 
 /**
  * Verifies the validity of a stringified token.

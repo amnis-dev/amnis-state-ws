@@ -35,4 +35,4 @@ export const authProcessPcke: ApiContextMethod = (context): ApiAuthProcessPkce =
   }
 );
 
-export default authProcessPcke;
+export default { authProcessPcke };

@@ -73,9 +73,13 @@
     },
     "ApiAuthRenewBody": {
       "type": "object",
-      "additionalProperties": {
-        "not": {}
+      "properties": {
+        "info": {
+          "type": "boolean",
+          "description": "Include user and profile data with the response."
+        }
       },
+      "additionalProperties": false,
       "description": "Payload for a session and token renewal. Should not have any data in the body."
     },
     "ApiAuthVerifyBody": {

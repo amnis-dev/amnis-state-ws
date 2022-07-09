@@ -146,8 +146,6 @@ test('should be able to depth search the system as Admy via API', async () => {
   const systems = data?.result?.system;
   const websites = data?.result?.website;
 
-  console.log(JSON.stringify(data?.result, null, 2));
-
   expect(systems).toHaveLength(1);
   expect(websites).toHaveLength(1);
 });

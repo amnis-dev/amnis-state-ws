@@ -28,4 +28,4 @@ export const authProcessVerify: ApiContextMethod = (): ApiAuthProcessVerify => (
   }
 );
 
-export default authProcessVerify;
+export default { authProcessVerify };

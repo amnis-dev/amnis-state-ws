@@ -39,4 +39,4 @@ export const authProcessLogin: ApiContextMethod = (context): ApiAuthProcessLogin
   }
 );
 
-export default authProcessLogin;
+export default { authProcessLogin };

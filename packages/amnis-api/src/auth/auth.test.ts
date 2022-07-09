@@ -1,7 +1,7 @@
 import { dateNumeric, reference } from '@amnis/core/core';
 import { userCreate, User } from '@amnis/core/user';
 import type { Session } from '@amnis/core/session';
-import type { Profile } from '@amnis/core/profile';
+import { Profile, profileCreate } from '@amnis/core/profile';
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
@@ -15,13 +15,20 @@ import { apiAuthProcesses } from './auth.process';
 const appStore = storeSetup();
 
 /**
- * Add a test user to the database.
+ * Add a test user and profile to the database.
  */
 const users: User[] = [
   userCreate({
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
     password: passCreateSync('passwd1'),
+  }),
+];
+
+const profiles: Profile[] = [
+  profileCreate({
+    nameDisplay: 'Example User',
+    $user: users[0].$id,
   }),
 ];
 
@@ -53,6 +60,7 @@ const jwtEncodedInvalid = jwtEncode({
  */
 memory.create({
   user: users,
+  profile: profiles,
 });
 
 /**
@@ -101,7 +109,7 @@ test('auth should successfully login with valid credentials.', async () => {
   expect(session).toEqual(
     expect.objectContaining({
       $subject: user?.$id,
-      name: user?.name,
+      name: profile?.nameDisplay,
     }),
   );
 

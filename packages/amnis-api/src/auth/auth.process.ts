@@ -45,4 +45,4 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
   };
 }
 
-export default apiAuthProcesses;
+export default { apiAuthProcesses };
