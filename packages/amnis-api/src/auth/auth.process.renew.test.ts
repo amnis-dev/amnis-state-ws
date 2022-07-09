@@ -69,6 +69,7 @@ test('Should be able to renew session and tokens', async () => {
   expect(output.cookies.authSession).toBeDefined();
 
   expect(output.json.result).toBeDefined();
+  expect(Object.keys(output.json.result || {})).toHaveLength(1);
   expect(output.json.result?.session).toHaveLength(1);
   expect(output.json.tokens).toHaveLength(1);
 });
