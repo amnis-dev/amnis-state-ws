@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
+import fetch from 'cross-fetch';
 import { StateCreate, StateUpdate } from '@amnis/core/state';
 import { apiConfig } from '../config';
 import {
@@ -18,7 +19,7 @@ export const apiAuth = createApi({
   reducerPath: 'apiAuth',
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.API_AUTH_URL,
-    fetchFn: fetch || (() => undefined),
+    fetchFn: fetch,
   }),
   endpoints: (builder) => ({
 

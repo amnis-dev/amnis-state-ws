@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
+import fetch from 'cross-fetch';
 import type {
   StateDelete,
   StateCreate,
@@ -19,7 +20,7 @@ export const apiCrud = createApi({
   reducerPath: 'apiCrud',
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.API_CRUD_URL,
-    fetchFn: fetch || (() => undefined),
+    fetchFn: fetch,
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = selectors.selectToken(getState() as State, 'core', 'access');
 
