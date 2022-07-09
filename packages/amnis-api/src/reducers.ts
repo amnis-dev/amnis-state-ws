@@ -131,6 +131,13 @@ export function apiExtraReducers<E extends Entity>(
           adapter.removeOne(state, sessionIdPrev);
         }
       }
+
+      /**
+       * Set the active user/profile.
+       */
+      if ([userKey, profileKey].includes(key) && !!result[key].length) {
+        state.active = result[key][0].$id;
+      }
     }
   });
 
