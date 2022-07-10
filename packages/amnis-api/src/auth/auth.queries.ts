@@ -10,6 +10,12 @@ export function apiQueries(): ApiAuthQueries {
       credentials: 'include',
       body: payload,
     }),
+    logout: (payload) => ({
+      url: 'logout',
+      method: 'post',
+      credentials: 'include',
+      body: payload,
+    }),
     pkce: (payload) => ({
       url: 'pkce',
       method: 'post',

@@ -25,6 +25,12 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       validator: ajv.getSchema('auth#/definitions/ApiAuthLoginBody'),
     }),
 
+    logout: mwSession(mwValidate(authProcessRenew))({
+      store,
+      database,
+      validator: ajv.getSchema('auth#/definitions/ApiAuthLogoutBody'),
+    }),
+
     pkce: mwValidate(authProcessPcke)({
       store,
       database,

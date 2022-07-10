@@ -1,5 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
+  createEntityAdapter, createSlice, isAnyOf,
 } from '@reduxjs/toolkit';
 import { Token, tokenKey } from '@amnis/core/token';
 import { apiAuth } from '@amnis/api/auth/auth.api.browser';
@@ -69,6 +69,17 @@ export const tokenSlice = createSlice({
       if (tokens?.length) {
         tokenAdapter.upsertMany(state, tokens);
       }
+    });
+
+    /**
+     * Remove all tokens from the state.
+     */
+    builder.addMatcher(isAnyOf(
+      apiAuth.endpoints.logout.matchFulfilled,
+      apiAuth.endpoints.logout.matchRejected,
+    ), (state) => {
+      const tokenIds = state.ids;
+      tokenAdapter.removeMany(state, tokenIds);
     });
   },
 });

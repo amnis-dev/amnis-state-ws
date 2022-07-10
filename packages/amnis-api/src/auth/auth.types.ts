@@ -1,6 +1,6 @@
 import type { Store } from '@reduxjs/toolkit';
 
-import type { StateCreate } from '@amnis/core/state';
+import type { StateCreate, StateDelete } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
 
 import type { Token } from '@amnis/core/token';
@@ -19,6 +19,13 @@ export interface ApiAuthLoginBody {
 }
 
 /**
+ * Payload that destroys the user session and connection.
+ */
+export interface ApiAuthLogoutBody {
+  [key: string]: never;
+}
+
+/**
  * Logs in from a third-party using the data from OpenID PKCE Authorization.
  */
 export interface ApiAuthPkceBody {
@@ -31,6 +38,7 @@ export interface ApiAuthPkceBody {
 
 /**
  * ApiAuthPkceBody but without the platform specification
+ * (used internally by the processes)
  */
 export interface ApiAuthPkce {
   clientId: string;
@@ -60,12 +68,14 @@ export type ApiAuthVerifyBody = Token;
  */
 export interface ApiAuthQueries {
   login: ApiQuery<ApiAuthLoginBody>;
+  logout: ApiQuery<ApiAuthLogoutBody>;
   pkce: ApiQuery<ApiAuthPkceBody>;
   renew: ApiQuery<ApiAuthRenewBody>;
   verify: ApiQuery<ApiAuthVerifyBody>;
 }
 
 export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, StateCreate>;
+export type ApiAuthProcessLogout = ApiProcess<ApiAuthLogoutBody, StateDelete>;
 export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, StateCreate>;
 export type ApiAuthProcessRenew = ApiProcess<ApiAuthRenewBody, StateCreate>;
 export type ApiAuthProcessVerify = ApiProcess<ApiAuthVerifyBody, boolean>;
@@ -75,6 +85,7 @@ export type ApiAuthProcessVerify = ApiProcess<ApiAuthVerifyBody, boolean>;
  */
 export interface ApiAuthProcesses extends ApiProcesses {
   login: ApiAuthProcessLogin;
+  logout: ApiAuthProcessLogout;
   pkce: ApiAuthProcessPkce;
   renew: ApiAuthProcessRenew;
   verify: ApiAuthProcessVerify;

@@ -9,6 +9,9 @@
         "login": {
           "$ref": "#/definitions/ApiAuthLoginBody"
         },
+        "logout": {
+          "$ref": "#/definitions/ApiAuthLogoutBody"
+        },
         "pkce": {
           "$ref": "#/definitions/ApiAuthPkceBody"
         },
@@ -37,6 +40,13 @@
       ],
       "additionalProperties": false,
       "description": "Payload for a login request."
+    },
+    "ApiAuthLogoutBody": {
+      "type": "object",
+      "additionalProperties": {
+        "not": {}
+      },
+      "description": "Payload that destroys the user session and connection."
     },
     "ApiAuthPkceBody": {
       "type": "object",

@@ -85,7 +85,7 @@ export interface ApiOutput<T = any> {
   /**
    * Repsonse cookies.
    */
-  cookies: Record<string, string>;
+  cookies: Record<string, string | undefined>;
 
   /**
    * JSON data on the response object.
