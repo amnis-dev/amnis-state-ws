@@ -433,3 +433,11 @@ test('client state should have error logs', () => {
 
   expect(logs.length).toBeGreaterThanOrEqual(6);
 });
+
+test('client should be able to logout', async () => {
+  const action = await clientStore.dispatch(
+    apiAuth.endpoints.logout.initiate({}),
+  );
+
+  expect(action.status).toBe('fulfilled');
+});

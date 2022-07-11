@@ -41,16 +41,22 @@ export function apiMockGenerateHandlers(
          * Set the response cookies based on the output cookies array.
          */
         const ctxCookies = Object.keys(output.cookies).map(
-          (cookieName) => ctx.cookie(cookieName, output.cookies[cookieName], {
-            path: '/',
-            sameSite: 'lax',
-            httpOnly: true,
-            /**
-             * Secure is false since this is a mock service.
-             * Ensure this is true for a production service.
-             */
-            secure: false,
-          }),
+          (cookieName) => {
+            const cookieValue = output.cookies[cookieName];
+            if (cookieValue !== undefined) {
+              return ctx.cookie(cookieName, cookieValue, {
+                path: '/',
+                sameSite: 'lax',
+                httpOnly: true,
+                /**
+               * Secure is false since this is a mock service.
+               * Ensure this is true for a production service.
+               */
+                secure: false,
+              });
+            }
+            return ctx.cookie(cookieName, '', { expires: new Date() });
+          },
         );
 
         return res(

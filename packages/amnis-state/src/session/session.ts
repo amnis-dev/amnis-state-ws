@@ -4,10 +4,10 @@ import {
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
 import { Session, sessionKey } from '@amnis/core/session';
+import { apiAuth } from '@amnis/api/auth/auth.api.browser';
 import type {
   SessionMeta,
 } from './session.types';
-import { apiAuth } from '../env.browser';
 
 /**
  * RTK session adapter.

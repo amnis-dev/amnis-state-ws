@@ -41,14 +41,16 @@ export interface MicrosoftId {
   email: string,
 }
 
-const tokenEndpoint = `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
-
 export async function authMicrosoft(
   store: Store,
   database: Database,
   auth: ApiAuthPkce,
 ): Promise<ApiOutput<StateCreate>> {
+  const tokenEndpoint = auth.tenantId
+    ? `https://login.microsoftonline.com/${auth.tenantId}/oauth2/v2.0/token`
+    : `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
   const output = apiOutput<StateCreate>();
+
   /**
    * STEP 1
    * Get the access and refresh tokens.

@@ -19,5 +19,3 @@ export const reducerMap = {
 };
 
 export const reducerMiddleware = [];
-
-export default { reducerMap };
