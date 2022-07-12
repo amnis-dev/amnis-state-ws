@@ -14,7 +14,17 @@ import type {
  * Payload for a login request.
  */
 export interface ApiAuthLoginBody {
+  /**
+   * @minLength 3
+   * @maxLength 64
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
   username: string,
+
+  /**
+   * @minLength 6
+   * @maxLength 128
+   */
   password: string,
 }
 
@@ -29,12 +39,49 @@ export interface ApiAuthLogoutBody {
  * Logs in from a third-party using the data from OpenID PKCE Authorization.
  */
 export interface ApiAuthPkceBody {
+  /**
+   * Supported PKCE login methods.
+   */
   platform: 'microsoft' | 'twitter',
+
+  /**
+   * @minLength 16
+   * @maxLength 128
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
   clientId: string;
+
+  /**
+   * @minLength 32
+   * @maxLength 256
+   * @pattern ^[a-zA-Z0-9-_.]+$
+   */
   code: string;
+
+  /**
+   * @minLength 32
+   * @maxLength 256
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
   codeVerifier: string;
+
+  /**
+   * @minLength 8
+   * @maxLength 512
+   * @pattern https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?
+   */
   redirectUri: string;
+
+  /**
+   * @minLength 16
+   * @maxLength 64
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
   tenantId?: string;
+
+  /**
+   * True or false value.
+   */
   gov?: boolean;
 }
 

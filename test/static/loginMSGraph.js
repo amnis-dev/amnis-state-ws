@@ -14,7 +14,7 @@
 
   if (code && authPlatform === 'microsoft') {
     window.setAuthPlatform('');
-    loginMsg.innerHTML = `SUCCESS: Got ${code} from Microsoft oAuth 2.0 PKCE flow`;
+    loginMsg.innerHTML = `IN PROCESS... Got ${code} from Microsoft oAuth 2.0 PKCE flow`;
 
     fetch('http://localhost:3000/auth/pkce', {
       method: 'post',
@@ -29,7 +29,10 @@
         redirectUri: config.redirectUri,
       }),
     }).then((response) => {
+      loginMsg.innerHTML = 'SUCCESSFUL LOGIN!';
       console.log(response);
+    }).catch(() => {
+      loginMsg.innerHTML = 'Login failed...';
     });
   }
 
