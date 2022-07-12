@@ -53,7 +53,7 @@ export interface ApiAuthPkceBody {
 
   /**
    * @minLength 32
-   * @maxLength 256
+   * @maxLength 1024
    * @pattern ^[a-zA-Z0-9-_.]+$
    */
   code: string;
