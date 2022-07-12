@@ -35,6 +35,7 @@ export interface ApiAuthPkceBody {
   codeVerifier: string;
   redirectUri: string;
   tenantId?: string;
+  gov?: boolean;
 }
 
 /**
@@ -47,6 +48,7 @@ export interface ApiAuthPkce {
   codeVerifier: string;
   redirectUri: string;
   tenantId?: string;
+  gov?: boolean;
 }
 
 /**

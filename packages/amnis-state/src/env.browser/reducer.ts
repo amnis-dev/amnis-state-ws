@@ -9,8 +9,6 @@ export const reducerMap = {
   ...base.reducerMap,
 };
 
-console.log({ base });
-
 export const reducerMiddleware = [
   apiAuth.middleware,
   apiCrud.middleware,

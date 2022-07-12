@@ -47,7 +47,7 @@ export async function authMicrosoft(
   auth: ApiAuthPkce,
 ): Promise<ApiOutput<StateCreate>> {
   const tokenEndpoint = auth.tenantId
-    ? `https://login.microsoftonline.com/${auth.tenantId}/oauth2/v2.0/token`
+    ? `https://login.microsoftonline.${auth.gov ? 'us' : 'com'}/${auth.tenantId}/oauth2/v2.0/token`
     : `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
   const output = apiOutput<StateCreate>();
 
