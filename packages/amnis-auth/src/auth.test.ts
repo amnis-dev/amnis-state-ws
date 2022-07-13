@@ -23,9 +23,30 @@ const jwtDecoded: JWTDecoded = {
   ],
 };
 
+const jwtDecodedExpired: JWTDecoded = {
+  iss: 'core',
+  sub: reference('user', '1234'),
+  exp: dateNumeric(),
+  iat: dateNumeric(),
+  typ: 'access',
+  roles: [
+    reference('role', '1'),
+    reference('role', '2'),
+  ],
+};
+
 const session: Session = entityCreate('session', {
   $subject: reference('user', '1234'),
   exp: jwtDecoded.exp,
+  admin: false,
+  name: '',
+  dmn: '',
+  avatar: surl('https://amnis.dev/avatar.png'),
+});
+
+const sessionExpired: Session = entityCreate('session', {
+  $subject: reference('user', '1234'),
+  exp: dateNumeric(),
   admin: false,
   name: '',
   dmn: '',
@@ -59,7 +80,10 @@ test('token should be decoded.', () => {
   const encoded = jwtEncode(jwtDecoded, SECRET_TEST);
   const decoded = jwtDecode(encoded);
 
-  expect(decoded).toEqual(jwtDecoded);
+  expect(decoded).toEqual({
+    ...jwtDecoded,
+    exp: Math.floor(jwtDecoded.exp / 1000) * 1000,
+  });
 });
 
 /**
@@ -80,7 +104,20 @@ test('token should be verified with matching secret.', () => {
   const decoded = jwtVerify(encoded, SECRET_TEST);
 
   expect(decoded).toBeDefined();
-  expect(decoded).toEqual(jwtDecoded);
+  expect(decoded).toEqual({
+    ...jwtDecoded,
+    exp: Math.floor(jwtDecoded.exp / 1000) * 1000,
+  });
+});
+
+/**
+ * ============================================================
+ */
+test('expired token should fail verification.', () => {
+  const encoded = jwtEncode(jwtDecodedExpired, SECRET_TEST);
+  const decoded = jwtVerify(encoded, SECRET_TEST);
+
+  expect(decoded).not.toBeDefined();
 });
 
 /**
@@ -137,5 +174,18 @@ test('session should be verified.', () => {
 
   expect(decoded).toBeDefined();
   expect(iat).toEqual(expect.any(Number));
-  expect(sessionDecoded).toEqual(session);
+  expect(sessionDecoded).toEqual({
+    ...session,
+    exp: Math.floor(session.exp / 1000) * 1000,
+  });
+});
+
+/**
+ * ============================================================
+ */
+test('expired session should be NOT be verified.', () => {
+  const encoded = sessionEncode(sessionExpired, SECRET_TEST);
+  const decoded = sessionVerify(encoded, SECRET_TEST);
+
+  expect(decoded).not.toBeDefined();
 });

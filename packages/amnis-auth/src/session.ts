@@ -10,7 +10,11 @@ import { AUTH_SESSION_SECRET } from './const';
  * Encode a session.
  */
 export function sessionEncode(session: Session, secret = AUTH_SESSION_SECRET) {
-  const sessionToken = jwt.sign(session, secret);
+  const sessionPrep = {
+    ...session,
+    exp: Math.floor(session.exp / 1000),
+  };
+  const sessionToken = jwt.sign(sessionPrep, secret);
   return sessionToken as JWTEncoded;
 }
 
@@ -22,9 +26,14 @@ export function sessionVerify(
   secret = AUTH_SESSION_SECRET,
 ): Session | undefined {
   try {
-    const decoded = jwt.verify(sessionEncoded, secret) as Session;
+    const decoded = jwt.verify(sessionEncoded, secret, {}) as Session;
 
-    return decoded;
+    const sessionDecoded = {
+      ...decoded,
+      exp: decoded.exp * 1000,
+    } as Session;
+
+    return sessionDecoded;
   } catch (error) {
     return undefined;
   }

@@ -75,8 +75,8 @@ export interface JWTDecoded {
   sub: Reference;
 
   /**
-    * Expiration numeric date.
-    */
+   * Expiration numeric date.
+   */
   exp: DateNumeric;
 
   /**

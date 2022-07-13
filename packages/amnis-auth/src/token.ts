@@ -7,15 +7,35 @@ export function jwtEncode(jwtDecoded: JWTDecoded, secret = AUTH_TOKEN_SECRET) {
     throw new Error('Secret not set or strong enough.');
   }
 
-  return jwt.sign(jwtDecoded, secret) as JWTEncoded;
+  const jwtPrep = {
+    ...jwtDecoded,
+    exp: Math.floor(jwtDecoded.exp / 1000), // Seconds Since the Epoch
+  };
+
+  return jwt.sign(jwtPrep, secret) as JWTEncoded;
 }
 
-export function jwtDecode<J = JWTDecoded>(jwtEncoded: JWTEncoded): J | undefined {
+export function jwtDecode(
+  jwtEncoded: JWTEncoded,
+) {
   try {
-    const decoded = jwt.decode(jwtEncoded) as J;
+    const decoded = jwt.decode(jwtEncoded);
 
     if (typeof decoded !== 'object') {
       return undefined;
+    }
+
+    if (
+      decoded?.iss
+      && decoded?.exp
+      && decoded.iss === 'core'
+      && typeof decoded.exp === 'number'
+    ) {
+      const jwtDecoded = {
+        ...decoded,
+        exp: decoded.exp * 1000,
+      };
+      return jwtDecoded;
     }
 
     return decoded;
@@ -31,7 +51,12 @@ export function jwtVerify(
   try {
     const decoded = jwt.verify(jwtEncoded, secret) as JWTDecoded;
 
-    return decoded;
+    const jwtDecoded = {
+      ...decoded,
+      exp: decoded.exp * 1000,
+    } as JWTDecoded;
+
+    return jwtDecoded;
   } catch (error) {
     return undefined;
   }

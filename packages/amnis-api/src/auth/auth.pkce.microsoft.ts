@@ -82,7 +82,7 @@ export async function authMicrosoft(
     return output;
   }
 
-  const microsoftId = jwtDecode<MicrosoftId>(tokenData.id_token);
+  const microsoftId = jwtDecode(tokenData.id_token) as MicrosoftId;
 
   if (!microsoftId) {
     output.status = 401; // Unauthorized
