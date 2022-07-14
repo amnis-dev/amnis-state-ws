@@ -13,7 +13,7 @@ import { profileFetch, tokenGenerate, userFindById } from './auth.utility';
 /**
  * Renews a session holder's session and access tokens.
  */
-export const authProcessRenew: ApiContextMethod = (context): ApiAuthProcessRenew => (
+export const authProcessRenew: ApiContextMethod<ApiAuthProcessRenew> = (context) => (
   async (input) => {
     const { database } = context;
     const { session, body } = input;

@@ -3,7 +3,7 @@ import { ApiContextMethod } from '../types';
 import { ApiAuthProcessLogin } from './auth.types';
 import { userFindByName, outputBadCredentials, loginSuccessProcess } from './auth.utility';
 
-export const authProcessLogin: ApiContextMethod = (context): ApiAuthProcessLogin => (
+export const authProcessLogin: ApiContextMethod<ApiAuthProcessLogin> = (context) => (
   async (input) => {
     const { database } = context;
     const { body } = input;

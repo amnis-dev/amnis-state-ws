@@ -15,15 +15,15 @@ import type {
  */
 export interface ApiAuthLoginBody {
   /**
-   * @minLength 3
-   * @maxLength 64
+   * @minLength 2
+   * @maxLength 24
    * @pattern ^[a-zA-Z0-9-_]+$
    */
   username: string,
 
   /**
    * @minLength 6
-   * @maxLength 128
+   * @maxLength 64
    */
   password: string,
 }
@@ -82,19 +82,6 @@ export interface ApiAuthPkceBody {
   /**
    * True or false value.
    */
-  gov?: boolean;
-}
-
-/**
- * ApiAuthPkceBody but without the platform specification
- * (used internally by the processes)
- */
-export interface ApiAuthPkce {
-  clientId: string;
-  code: string;
-  codeVerifier: string;
-  redirectUri: string;
-  tenantId?: string;
   gov?: boolean;
 }
 

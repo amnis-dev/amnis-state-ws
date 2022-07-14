@@ -7,7 +7,7 @@ import type { ApiAuthProcessLogout } from './auth.types';
 /**
  * Renews a session holder's session and access tokens.
  */
-export const authProcessLogout: ApiContextMethod = (): ApiAuthProcessLogout => (
+export const authProcessLogout: ApiContextMethod<ApiAuthProcessLogout> = () => (
   async (input) => {
     const { session } = input;
     const output = apiOutput<StateDelete>();

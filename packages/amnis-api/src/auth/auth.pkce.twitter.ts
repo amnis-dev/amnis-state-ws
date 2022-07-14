@@ -8,7 +8,7 @@ import type { StateCreate } from '@amnis/core/state';
 import { Store } from '@reduxjs/toolkit';
 import { selectors } from '@amnis/core/selectors';
 import { System, systemKey } from '@amnis/core/system';
-import type { ApiAuthPkce } from './auth.types';
+import type { ApiAuthPkceBody } from './auth.types';
 import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
 import { loginSuccessProcess, userFindByName } from './auth.utility';
@@ -43,7 +43,7 @@ const userEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}users/me`;
 export async function authTwitter(
   store: Store,
   database: Database,
-  auth: ApiAuthPkce,
+  auth: Omit<ApiAuthPkceBody, 'platform'>,
 ): Promise<ApiOutput<StateCreate>> {
   const output = apiOutput<StateCreate>();
   /**

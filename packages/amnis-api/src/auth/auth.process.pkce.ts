@@ -6,7 +6,7 @@ import { apiOutput } from '../api';
 import { authMicrosoft } from './auth.pkce.microsoft';
 import { authTwitter } from './auth.pkce.twitter';
 
-export const authProcessPcke: ApiContextMethod = (context): ApiAuthProcessPkce => (
+export const authProcessPcke: ApiContextMethod<ApiAuthProcessPkce> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body } = input;

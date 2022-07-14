@@ -6,7 +6,7 @@ import { ApiAuthProcessVerify } from './auth.types';
 /**
  * Verifies the validity of an access token.
  */
-export const authProcessVerify: ApiContextMethod = (): ApiAuthProcessVerify => (
+export const authProcessVerify: ApiContextMethod<ApiAuthProcessVerify> = () => (
   async (input) => {
     const { body: token } = input;
     const output = apiOutput<boolean>();

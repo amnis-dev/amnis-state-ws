@@ -117,7 +117,7 @@ export type ApiProcess<Body = any, Result = any> = (
 /**
  * A function that supplies context to a process.
  */
-export type ApiContextMethod = (context: ApiContext) => ApiProcess;
+export type ApiContextMethod<P extends ApiProcess = ApiProcess> = (context: ApiContext) => P;
 
 /**
  * API object containing response handlers.

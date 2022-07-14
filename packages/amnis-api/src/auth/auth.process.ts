@@ -5,10 +5,11 @@ import type {
   ApiAuthProcessesParams,
 } from './auth.types';
 import { mwValidate } from '../mw.validate';
+import { mwSession } from '../mw.session';
 import { authProcessLogin } from './auth.process.login';
+import { authProcessLogout } from './auth.process.logout';
 import { authProcessPcke } from './auth.process.pkce';
 import { authProcessRenew } from './auth.process.renew';
-import { mwSession } from '../mw.session';
 import { authProcessVerify } from './auth.process.verify';
 
 /**
@@ -25,7 +26,7 @@ export function apiAuthProcesses(params: ApiAuthProcessesParams): ApiAuthProcess
       validator: ajv.getSchema('auth#/definitions/ApiAuthLoginBody'),
     }),
 
-    logout: mwSession(mwValidate(authProcessRenew))({
+    logout: mwSession(mwValidate(authProcessLogout))({
       store,
       database,
       validator: ajv.getSchema('auth#/definitions/ApiAuthLogoutBody'),
