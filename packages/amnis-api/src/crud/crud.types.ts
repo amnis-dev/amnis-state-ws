@@ -30,7 +30,7 @@ export type ApiCrudIODelete = ApiIO<StateDelete, StateDelete>;
 /**
  * API object containing response handlers.
  */
-export interface ApiCrudIOes extends ApiProcesses {
+export interface ApiCrudProcesses extends ApiProcesses {
   create: ApiProcess<ApiCrudIOCreate>;
   read: ApiProcess<ApiCrudIORead>;
   update: ApiProcess<ApiCrudIOUpdate>;

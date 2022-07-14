@@ -130,6 +130,11 @@ export type ApiProcess<P extends ApiIO = ApiIO> = (context: ApiContext) => P;
 export type ApiProcesses = Record<string, ApiProcess>;
 
 /**
+ * Object mapping of ApiIOs.
+ */
+export type ApiIOs<K extends keyof any> = Record<K, ApiIO>;
+
+/**
  * RTK Error type.
  */
 export type ApiBaseQueryFn = BaseQueryFn<

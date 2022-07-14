@@ -9,6 +9,9 @@ import { apiCrud } from '@amnis/api/crud/crud.api.node';
 import { apiCrudProcesses } from '@amnis/api/crud/crud.process';
 import { apiConfig } from '@amnis/api/config';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
+import { configureValidators } from '@amnis/api/validators';
+import { apiIO } from '@amnis/api/api.io.node';
+import authSchema from '@amnis/api/auth/auth.schema.json';
 
 import { storeSetup } from '@amnis/state/env.node/store';
 
@@ -64,39 +67,39 @@ const serverStore = storeSetup();
 const clientStore = storeSetup();
 
 /**
-  * Setup the server processes for the Auth operations
-  */
-const authHandlers = apiAuthProcesses({
-  store: serverStore,
-  database: memory,
-});
+ * Configure the validation methods.
+ */
+const validators = configureValidators([coreSchema, authSchema, stateSchema]);
 
 /**
-  * Setup the server processes for CRUD operations.
-  */
-const crudHanders = apiCrudProcesses({
+   * Setup the server processes for the Auth operations
+   */
+const authHandlers = apiIO({
   store: serverStore,
   database: memory,
-  schemas: [coreSchema, stateSchema],
-  definitions: {
-    create: 'state#/definitions/StateCreate',
-    read: 'core#/definitions/StateQuery',
-    update: 'state#/definitions/StateUpdate',
-    delete: 'core#/definitions/StateDelete',
-  },
-});
+  validators,
+}, apiAuthProcesses);
 
 /**
-  * Mock the Auth API server for the tests.
-  */
+   * Setup the server processes for CRUD operations.
+   */
+const crudHanders = apiIO({
+  store: serverStore,
+  database: memory,
+  validators,
+}, apiCrudProcesses);
+
+/**
+   * Mock the Auth API server for the tests.
+   */
 const mockAuthHandlers = apiMockGenerateHandlers(
   authHandlers,
   apiConfig.API_AUTH_URL,
 );
 
 /**
-  * Mock the CRUD API server for the tests.
-  */
+   * Mock the CRUD API server for the tests.
+   */
 const mockCrudHandlers = apiMockGenerateHandlers(
   crudHanders,
   apiConfig.API_CRUD_URL,

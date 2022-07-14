@@ -29,14 +29,14 @@
       "properties": {
         "username": {
           "type": "string",
-          "minLength": 3,
-          "maxLength": 64,
+          "minLength": 2,
+          "maxLength": 24,
           "pattern": "^[a-zA-Z0-9-_]+$"
         },
         "password": {
           "type": "string",
           "minLength": 6,
-          "maxLength": 128
+          "maxLength": 64
         }
       },
       "required": [

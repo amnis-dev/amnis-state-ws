@@ -36,6 +36,8 @@ const process: ApiProcess<ApiAuthIOPkce> = (context) => (
   }
 );
 
-export const authProcessPcke = mwValidate('ApiAuthBodyPkce')(process);
+export const authProcessPcke = mwValidate('ApiAuthBodyPkce')(
+  process,
+);
 
 export default { authProcessPcke };

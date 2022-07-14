@@ -12,7 +12,7 @@ import type { ApiCrudIOUpdate } from './crud.types';
 import { mwJwt } from '../mw.jwt';
 import { mwValidate } from '../mw.validate';
 
-export const crudProcessUpdate: ApiProcess = (context): ApiCrudIOUpdate => (
+export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
@@ -87,6 +87,12 @@ export const crudProcessUpdate: ApiProcess = (context): ApiCrudIOUpdate => (
 
     return output;
   }
+);
+
+export const crudProcessUpdate = mwJwt()(
+  mwValidate('StateUpdate')(
+    process,
+  ),
 );
 
 export default crudProcessUpdate;

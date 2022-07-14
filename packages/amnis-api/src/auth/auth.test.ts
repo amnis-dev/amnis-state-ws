@@ -8,6 +8,9 @@ import { storeSetup } from '@amnis/core/test/book.store';
 import { Token, tokenCreate } from '@amnis/core/token';
 import { jwtEncode } from '@amnis/auth/token';
 import { apiAuthProcesses } from './auth.process';
+import { apiIO } from '../api.io.node';
+import { configureValidators } from '../validators';
+import authSchema from './auth.schema.json';
 
 /**
  * Setup the required application store.
@@ -66,10 +69,11 @@ memory.create({
 /**
  * Setup the processes
  */
-const processes = apiAuthProcesses({
+const processes = apiIO({
   store: appStore,
   database: memory,
-});
+  validators: configureValidators(authSchema),
+}, apiAuthProcesses);
 
 /**
  * ============================================================

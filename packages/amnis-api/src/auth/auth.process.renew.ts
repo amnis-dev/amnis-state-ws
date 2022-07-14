@@ -94,6 +94,6 @@ const process: ApiProcess<ApiAuthIORenew> = (context) => (
   }
 );
 
-export const authProcessRenew = mwSession()(mwValidate('ApiAuthBodyVerify')(process));
+export const authProcessRenew = mwSession()(mwValidate('ApiAuthBodyRenew')(process));
 
 export default { authProcessRenew };

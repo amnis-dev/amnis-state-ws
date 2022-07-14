@@ -1,41 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
+import stateSchema from '@amnis/state/state.schema.json';
+import authSchema from '@amnis/api/auth/auth.schema.json';
 
 import { apiConfig } from '@amnis/api/config';
 import { apiAuthProcesses } from '@amnis/api/auth/auth.process';
 import { apiCrudProcesses } from '@amnis/api/crud/crud.process';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
-import stateSchema from '@amnis/state/state.schema.json';
 import { memory } from '@amnis/db/memory';
 import { Store } from '@reduxjs/toolkit';
+import { apiIO } from '@amnis/api/api.io.node';
+import { configureValidators } from '@amnis/api/validators';
 
 /**
  * Function that prepares the api mock services.
  */
 export function apiSetup(serverStore: Store) {
   /**
+   * Configure the validation methods.
+   */
+  const validators = configureValidators([coreSchema, authSchema, stateSchema]);
+
+  /**
   * Setup the server processes for the Auth operations
   */
-  const authHandlers = apiAuthProcesses({
+  const authHandlers = apiIO({
     store: serverStore,
     database: memory,
-  });
+    validators,
+  }, apiAuthProcesses);
 
   /**
    * Setup the server processes for CRUD operations.
    */
-  const crudHanders = apiCrudProcesses({
+  const crudHanders = apiIO({
     store: serverStore,
     database: memory,
-    schemas: [coreSchema, stateSchema],
-    definitions: {
-      create: 'state#/definitions/StateCreate',
-      read: 'core#/definitions/StateQuery',
-      update: 'state#/definitions/StateUpdate',
-      delete: 'core#/definitions/StateDelete',
-    },
-  });
+    validators,
+  }, apiCrudProcesses);
 
   /**
    * Mock the Auth API server for the tests.

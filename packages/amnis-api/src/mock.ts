@@ -3,13 +3,15 @@ import { authHeader } from '@amnis/auth/header';
 import type { JWTEncoded } from '@amnis/core/token';
 import { rest, RestHandler } from 'msw';
 import { setupServer } from 'msw/node';
-import type { ApiProcesses, ApiInput, ApiOutput } from './types';
+import type {
+  ApiInput, ApiOutput, ApiIOs,
+} from './types';
 
 export function apiMockGenerateHandlers(
-  processes: ApiProcesses,
+  apiIOs: ApiIOs,
   baseUrl: string,
 ) {
-  const mockHandlers: RestHandler[] = Object.keys(processes).map((key) => (
+  const mockHandlers: RestHandler[] = Object.keys(apiIOs).map((key) => (
     rest.post<ApiInput['body'], never, ApiOutput['json']>(
       `${baseUrl}${key}`,
       async (req, res, ctx) => {
@@ -35,7 +37,7 @@ export function apiMockGenerateHandlers(
         /**
          * Call the api process.
          */
-        const output = await processes[key](input);
+        const output = await apiIOs[key](input);
 
         /**
          * Set the response cookies based on the output cookies array.

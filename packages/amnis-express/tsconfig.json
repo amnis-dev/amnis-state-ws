@@ -10,5 +10,10 @@
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.json",
+    "index.d.ts",
   ],
+  "references": [
+    { "path": "../amnis-state/tsconfig.json" }
+  ]
 }
