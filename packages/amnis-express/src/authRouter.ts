@@ -1,24 +1,26 @@
-import express from 'express';
+import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
 
 import { mwInputOutput } from './middleware/mwInputOutput';
 
+export const authRouter = (): Router => {
 /**
  * Initialize modulated router.
  */
-const router = express.Router();
+  const router = express.Router();
 
-/**
- * Required middleware.
- */
-router.use(express.json());
-router.use(cookieParser());
+  /**
+   * Required middleware.
+   */
+  router.use(express.json());
+  router.use(cookieParser());
 
-/**
- * Amnis middleware.
- */
-router.use(mwInputOutput());
+  /**
+   * Amnis middleware.
+   */
+  router.use(mwInputOutput());
 
-export const authRouter = router;
+  return router;
+};
 
 export default authRouter;

@@ -1,9 +1,10 @@
 import { passCompare } from '@amnis/auth/pass';
-import { ApiContextMethod } from '../types';
-import { ApiAuthProcessLogin } from './auth.types';
+import { mwValidate } from '../mw.validate';
+import { ApiProcess } from '../types';
+import { ApiAuthIOLogin } from './auth.types';
 import { userFindByName, outputBadCredentials, loginSuccessProcess } from './auth.utility';
 
-export const authProcessLogin: ApiContextMethod<ApiAuthProcessLogin> = (context) => (
+const process: ApiProcess<ApiAuthIOLogin> = (context) => (
   async (input) => {
     const { database } = context;
     const { body } = input;
@@ -32,11 +33,14 @@ export const authProcessLogin: ApiContextMethod<ApiAuthProcessLogin> = (context)
     /**
      * SUCCESSFUL LOGIN
      */
-
     const successOutput = await loginSuccessProcess(database, user);
 
     return successOutput;
   }
+);
+
+export const authProcessLogin = mwValidate('ApiAuthBodyLogin')(
+  process,
 );
 
 export default { authProcessLogin };

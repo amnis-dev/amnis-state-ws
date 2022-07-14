@@ -6,11 +6,13 @@ import { authScopeCreate } from '@amnis/auth/scope';
 import { coreActions } from '@amnis/core/actions';
 import { entityClean } from '@amnis/core/entity';
 import type { State } from '@amnis/core/state';
-import type { ApiContextMethod } from '../types';
+import type { ApiProcess } from '../types';
 import { apiOutput } from '../api';
-import type { ApiCrudProcessUpdate } from './crud.types';
+import type { ApiCrudIOUpdate } from './crud.types';
+import { mwJwt } from '../mw.jwt';
+import { mwValidate } from '../mw.validate';
 
-export const crudProcessUpdate: ApiContextMethod = (context): ApiCrudProcessUpdate => (
+export const crudProcessUpdate: ApiProcess = (context): ApiCrudIOUpdate => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;

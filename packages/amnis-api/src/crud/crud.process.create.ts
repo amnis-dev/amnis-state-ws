@@ -6,11 +6,13 @@ import { selectors } from '@amnis/core/selectors';
 import type { State, StateCreate } from '@amnis/core/state';
 import type { Role } from '@amnis/core/role';
 import type{ Reference } from '@amnis/core/types';
-import type { ApiContextMethod } from '../types';
+import type { ApiProcess } from '../types';
 import { apiOutput } from '../api';
-import type { ApiCrudProcessCreate } from './crud.types';
+import type { ApiCrudIOCreate } from './crud.types';
+import { mwJwt } from '../mw.jwt';
+import { mwValidate } from '../mw.validate';
 
-export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCreate => (
+const process: ApiProcess<ApiCrudIOCreate> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
@@ -91,4 +93,10 @@ export const crudProcessCreate: ApiContextMethod = (context): ApiCrudProcessCrea
   }
 );
 
-export default crudProcessCreate;
+export const crudProcessCreate = mwJwt()(
+  mwValidate('StateCreate')(
+    process,
+  ),
+);
+
+export default { crudProcessCreate };

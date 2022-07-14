@@ -7,11 +7,13 @@ import { coreActions } from '@amnis/core/actions';
 import { Task } from '@amnis/core/grant';
 import { authwall } from '@amnis/auth/authwall';
 import { authScopeCreate } from '@amnis/auth/scope';
-import type { ApiContextMethod } from '../types';
-import type { ApiCrudProcessDelete } from './crud.types';
+import type { ApiProcess } from '../types';
+import type { ApiCrudIODelete } from './crud.types';
 import { apiOutput } from '../api';
+import { mwJwt } from '../mw.jwt';
+import { mwValidate } from '../mw.validate';
 
-export const crudProcessDelete: ApiContextMethod = (context): ApiCrudProcessDelete => (
+export const process: ApiProcess<ApiCrudIODelete> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
@@ -70,4 +72,10 @@ export const crudProcessDelete: ApiContextMethod = (context): ApiCrudProcessDele
   }
 );
 
-export default crudProcessDelete;
+export const crudProcessDelete = mwJwt()(
+  mwValidate('StateDelete')(
+    process,
+  ),
+);
+
+export default { crudProcessDelete };

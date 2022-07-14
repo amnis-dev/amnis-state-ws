@@ -1,10 +1,7 @@
-import type { Store } from '@reduxjs/toolkit';
-
 import type { StateCreate, StateDelete } from '@amnis/core/state';
-import type { Database } from '@amnis/db/types';
-
 import type { Token } from '@amnis/core/token';
 import type {
+  ApiIO,
   ApiProcess,
   ApiProcesses,
   ApiQuery,
@@ -13,7 +10,7 @@ import type {
 /**
  * Payload for a login request.
  */
-export interface ApiAuthLoginBody {
+export interface ApiAuthBodyLogin {
   /**
    * @minLength 2
    * @maxLength 24
@@ -31,14 +28,14 @@ export interface ApiAuthLoginBody {
 /**
  * Payload that destroys the user session and connection.
  */
-export interface ApiAuthLogoutBody {
+export interface ApiAuthBodyLogout {
   [key: string]: never;
 }
 
 /**
  * Logs in from a third-party using the data from OpenID PKCE Authorization.
  */
-export interface ApiAuthPkceBody {
+export interface ApiAuthBodyPkce {
   /**
    * Supported PKCE login methods.
    */
@@ -89,7 +86,7 @@ export interface ApiAuthPkceBody {
  * Payload for a session and token renewal.
  * Should not have any data in the body.
  */
-export interface ApiAuthRenewBody {
+export interface ApiAuthBodyRenew {
   /**
    * Include user and profile data with the response.
    */
@@ -99,40 +96,32 @@ export interface ApiAuthRenewBody {
 /**
  * Verifies the validity of a stringified token.
  */
-export type ApiAuthVerifyBody = Token;
+export type ApiAuthBodyVerify = Token;
 
 /**
  * API object containing request queries.
  */
 export interface ApiAuthQueries {
-  login: ApiQuery<ApiAuthLoginBody>;
-  logout: ApiQuery<ApiAuthLogoutBody>;
-  pkce: ApiQuery<ApiAuthPkceBody>;
-  renew: ApiQuery<ApiAuthRenewBody>;
-  verify: ApiQuery<ApiAuthVerifyBody>;
+  login: ApiQuery<ApiAuthBodyLogin>;
+  logout: ApiQuery<ApiAuthBodyLogout>;
+  pkce: ApiQuery<ApiAuthBodyPkce>;
+  renew: ApiQuery<ApiAuthBodyRenew>;
+  verify: ApiQuery<ApiAuthBodyVerify>;
 }
 
-export type ApiAuthProcessLogin = ApiProcess<ApiAuthLoginBody, StateCreate>;
-export type ApiAuthProcessLogout = ApiProcess<ApiAuthLogoutBody, StateDelete>;
-export type ApiAuthProcessPkce = ApiProcess<ApiAuthPkceBody, StateCreate>;
-export type ApiAuthProcessRenew = ApiProcess<ApiAuthRenewBody, StateCreate>;
-export type ApiAuthProcessVerify = ApiProcess<ApiAuthVerifyBody, boolean>;
+export type ApiAuthIOLogin = ApiIO<ApiAuthBodyLogin, StateCreate>;
+export type ApiAuthIOLogout = ApiIO<ApiAuthBodyLogout, StateDelete>;
+export type ApiAuthIOPkce = ApiIO<ApiAuthBodyPkce, StateCreate>;
+export type ApiAuthIORenew = ApiIO<ApiAuthBodyRenew, StateCreate>;
+export type ApiAuthIOVerify = ApiIO<ApiAuthBodyVerify, boolean>;
 
 /**
  * API object containing response handlers.
  */
 export interface ApiAuthProcesses extends ApiProcesses {
-  login: ApiAuthProcessLogin;
-  logout: ApiAuthProcessLogout;
-  pkce: ApiAuthProcessPkce;
-  renew: ApiAuthProcessRenew;
-  verify: ApiAuthProcessVerify;
-}
-
-/**
- * Api Handler configurations
- */
-export interface ApiAuthProcessesParams {
-  store: Store;
-  database: Database;
+  login: ApiProcess<ApiAuthIOLogin>;
+  logout: ApiProcess<ApiAuthIOLogout>;
+  pkce: ApiProcess<ApiAuthIOPkce>;
+  renew: ApiProcess<ApiAuthIORenew>;
+  verify: ApiProcess<ApiAuthIOVerify>;
 }

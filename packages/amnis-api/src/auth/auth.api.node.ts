@@ -7,11 +7,11 @@ import {
 } from './auth.queries';
 import { ApiJSON } from '../types';
 import {
-  ApiAuthLoginBody,
-  ApiAuthLogoutBody,
-  ApiAuthPkceBody,
-  ApiAuthRenewBody,
-  ApiAuthVerifyBody,
+  ApiAuthBodyLogin,
+  ApiAuthBodyLogout,
+  ApiAuthBodyPkce,
+  ApiAuthBodyRenew,
+  ApiAuthBodyVerify,
 } from './auth.types';
 
 global.Headers = Headers;
@@ -29,35 +29,35 @@ export const apiAuth = createApi({
 
     login: builder.query<
     ApiJSON<StateCreate>,
-    ApiAuthLoginBody
+    ApiAuthBodyLogin
     >({
       query: queries.login,
     }),
 
     logout: builder.query<
     ApiJSON<StateDelete>,
-    ApiAuthLogoutBody
+    ApiAuthBodyLogout
     >({
       query: queries.logout,
     }),
 
     pkce: builder.query<
     ApiJSON<StateCreate>,
-    ApiAuthPkceBody
+    ApiAuthBodyPkce
     >({
       query: queries.pkce,
     }),
 
     renew: builder.query<
     ApiJSON<StateUpdate>,
-    ApiAuthRenewBody
+    ApiAuthBodyRenew
     >({
       query: queries.renew,
     }),
 
     verify: builder.query<
     ApiJSON<boolean>,
-    ApiAuthVerifyBody
+    ApiAuthBodyVerify
     >({
       query: queries.verify,
     }),

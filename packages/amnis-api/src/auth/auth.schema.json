@@ -7,24 +7,24 @@
       "type": "object",
       "properties": {
         "login": {
-          "$ref": "#/definitions/ApiAuthLoginBody"
+          "$ref": "#/definitions/ApiAuthBodyLogin"
         },
         "logout": {
-          "$ref": "#/definitions/ApiAuthLogoutBody"
+          "$ref": "#/definitions/ApiAuthBodyLogout"
         },
         "pkce": {
-          "$ref": "#/definitions/ApiAuthPkceBody"
+          "$ref": "#/definitions/ApiAuthBodyPkce"
         },
         "renew": {
-          "$ref": "#/definitions/ApiAuthRenewBody"
+          "$ref": "#/definitions/ApiAuthBodyRenew"
         },
         "verify": {
-          "$ref": "#/definitions/ApiAuthVerifyBody"
+          "$ref": "#/definitions/ApiAuthBodyVerify"
         }
       },
       "additionalProperties": false
     },
-    "ApiAuthLoginBody": {
+    "ApiAuthBodyLogin": {
       "type": "object",
       "properties": {
         "username": {
@@ -46,14 +46,14 @@
       "additionalProperties": false,
       "description": "Payload for a login request."
     },
-    "ApiAuthLogoutBody": {
+    "ApiAuthBodyLogout": {
       "type": "object",
       "additionalProperties": {
         "not": {}
       },
       "description": "Payload that destroys the user session and connection."
     },
-    "ApiAuthPkceBody": {
+    "ApiAuthBodyPkce": {
       "type": "object",
       "properties": {
         "platform": {
@@ -109,7 +109,7 @@
       "additionalProperties": false,
       "description": "Logs in from a third-party using the data from OpenID PKCE Authorization."
     },
-    "ApiAuthRenewBody": {
+    "ApiAuthBodyRenew": {
       "type": "object",
       "properties": {
         "info": {
@@ -120,7 +120,7 @@
       "additionalProperties": false,
       "description": "Payload for a session and token renewal. Should not have any data in the body."
     },
-    "ApiAuthVerifyBody": {
+    "ApiAuthBodyVerify": {
       "$ref": "#/definitions/Token",
       "description": "Verifies the validity of a stringified token."
     },
