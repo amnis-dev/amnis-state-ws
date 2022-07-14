@@ -1,12 +1,12 @@
 import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
 
-import { apiAuthProcesses } from '@amnis/state/env.node';
+import { apiCrudProcesses } from '@amnis/state/env.node';
 import type { ApiContext } from '@amnis/state/index';
 
 import { mwInputOutput } from './middleware/mwInputOutput';
 
-export const authRouter = (context: ApiContext): Router => {
+export const crudRouter = (context: ApiContext): Router => {
   /**
    * Initialize modulated router.
    */
@@ -26,9 +26,9 @@ export const authRouter = (context: ApiContext): Router => {
   /**
    * Build the routes.
    */
-  Object.keys(apiAuthProcesses).forEach((key) => {
+  Object.keys(apiCrudProcesses).forEach((key) => {
     router.post(`/${key}`, async (req, res) => {
-      const output = await apiAuthProcesses[key](context)(req.input);
+      const output = await apiCrudProcesses[key](context)(req.input);
       res.output(output);
     });
   });
@@ -36,4 +36,4 @@ export const authRouter = (context: ApiContext): Router => {
   return router;
 };
 
-export default authRouter;
+export default crudRouter;

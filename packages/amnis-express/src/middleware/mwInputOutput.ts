@@ -42,12 +42,18 @@ export const mwInputOutput = (): RequestHandler => (
        * Prepare any cookies set on the output.
        */
       Object.keys(output.cookies).forEach(
-        (cookieName) => res.cookie(cookieName, output.cookies[cookieName], {
-          path: '/',
-          sameSite: process.env.NODE_ENV !== 'development' ? 'none' : 'lax',
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== 'development',
-        }),
+        (cookieName) => {
+          if (output.cookies[cookieName] !== undefined) {
+            res.cookie(cookieName, output.cookies[cookieName], {
+              path: '/',
+              sameSite: process.env.NODE_ENV !== 'development' ? 'none' : 'lax',
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== 'development',
+            });
+          } else {
+            res.clearCookie(cookieName);
+          }
+        },
       );
 
       /**
