@@ -132,7 +132,7 @@ export type ApiProcesses = Record<string, ApiProcess>;
 /**
  * Object mapping of ApiIOs.
  */
-export type ApiIOs<K extends keyof any> = Record<K, ApiIO>;
+export type ApiIOs<K extends keyof any = keyof any> = Record<K, ApiIO>;
 
 /**
  * RTK Error type.
