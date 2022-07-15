@@ -30,6 +30,7 @@ export const crudRouter = (context: ApiContext): Router => {
     router.post(`/${key}`, async (req, res) => {
       const output = await apiCrudProcesses[key](context)(req.input);
       res.output(output);
+      res.end();
     });
   });
 

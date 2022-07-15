@@ -8,7 +8,7 @@ import { userCreate } from '@amnis/core/user';
 import { memory } from '@amnis/db/memory';
 import { apiIO } from '../api.io.node';
 import { ApiInput } from '../types';
-import { configureValidators } from '../validators';
+import { validatorsSetup } from '../validators';
 import { apiAuthProcesses } from './auth.process';
 import authSchema from './auth.schema.json';
 
@@ -56,7 +56,7 @@ memory.create({
 const io = apiIO({
   store: appStore,
   database: memory,
-  validators: configureValidators(authSchema),
+  validators: validatorsSetup(authSchema),
 }, apiAuthProcesses);
 
 test('Should be able to renew session and tokens', async () => {

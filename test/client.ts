@@ -12,7 +12,7 @@ import { ApiInput } from '@amnis/api/types';
 import { apiAuthProcesses } from '@amnis/api/auth/auth.process';
 import { storeSetup } from '@amnis/state/env.node/store';
 
-import { configureValidators } from '@amnis/api/validators';
+import { validatorsSetup } from '@amnis/api/validators';
 import { apiIO } from '@amnis/api/api.io.node';
 import authSchema from '@amnis/api/auth/auth.schema.json';
 import { serviceSetup } from './database';
@@ -44,7 +44,7 @@ const serverStore = storeSetup();
 const authProcesses = apiIO({
   store: serverStore,
   database: memory,
-  validators: configureValidators(authSchema),
+  validators: validatorsSetup(authSchema),
 }, apiAuthProcesses);
 
 /**

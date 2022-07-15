@@ -13,5 +13,6 @@
       "@amnis/express/*": ["./packages/amnis-express/src/*"],
     }
   },
-  "include": ["./packages/**/*.ts*", "./test/**/*.ts*"]
+  "include": ["./packages/**/*.ts*", "./test/**/*.ts*"],
+  "files": ["./types/index.d.ts"]
 }

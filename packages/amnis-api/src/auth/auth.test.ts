@@ -9,7 +9,7 @@ import { Token, tokenCreate } from '@amnis/core/token';
 import { jwtEncode } from '@amnis/auth/token';
 import { apiAuthProcesses } from './auth.process';
 import { apiIO } from '../api.io.node';
-import { configureValidators } from '../validators';
+import { validatorsSetup } from '../validators';
 import authSchema from './auth.schema.json';
 
 /**
@@ -72,7 +72,7 @@ memory.create({
 const processes = apiIO({
   store: appStore,
   database: memory,
-  validators: configureValidators(authSchema),
+  validators: validatorsSetup(authSchema),
 }, apiAuthProcesses);
 
 /**

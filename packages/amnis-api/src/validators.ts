@@ -37,7 +37,7 @@ function compileValidators(schema: AnySchema): Validators {
  * Configures validators from one or more schemas. The validators are created from the definitions
  * object within each schema.
  */
-export function configureValidators(schemas: AnySchema | AnySchema[]) {
+export function validatorsSetup(schemas: AnySchema | AnySchema[]) {
   const validators: Validators = {};
 
   if (Array.isArray(schemas)) {
@@ -53,4 +53,4 @@ export function configureValidators(schemas: AnySchema | AnySchema[]) {
   return validators;
 }
 
-export default { configureValidators };
+export default { validatorsSetup };

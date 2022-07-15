@@ -9,7 +9,7 @@ import { apiCrud } from '@amnis/api/crud/crud.api.node';
 import { apiCrudProcesses } from '@amnis/api/crud/crud.process';
 import { apiConfig } from '@amnis/api/config';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
-import { configureValidators } from '@amnis/api/validators';
+import { validatorsSetup } from '@amnis/api/validators';
 import { apiIO } from '@amnis/api/api.io.node';
 import authSchema from '@amnis/api/auth/auth.schema.json';
 
@@ -66,7 +66,7 @@ const clientStore = storeSetup();
 /**
  * Configure the validation methods.
  */
-const validators = configureValidators([coreSchema, authSchema, stateSchema]);
+const validators = validatorsSetup([coreSchema, authSchema, stateSchema]);
 
 /**
   * Setup the server processes for the Auth operations

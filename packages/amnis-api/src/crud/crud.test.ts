@@ -7,7 +7,7 @@ import { memory, memoryClear } from '@amnis/db/memory';
 import { dateNumeric, reference } from '@amnis/core/core';
 import type { StateCreate } from '@amnis/core/state';
 import type { JWTEncoded } from '@amnis/core/token';
-import { configureValidators } from '@amnis/api/validators';
+import { validatorsSetup } from '@amnis/api/validators';
 import { apiIO } from '@amnis/api/api.io.node';
 
 import { jwtEncode } from '@amnis/auth/token';
@@ -16,7 +16,7 @@ import { apiCrudProcesses } from './crud.process';
 
 const appStore = storeSetup();
 
-const validators = configureValidators([coreSchema, bookSchema]);
+const validators = validatorsSetup([coreSchema, bookSchema]);
 
 /**
  * Setup the crud io.

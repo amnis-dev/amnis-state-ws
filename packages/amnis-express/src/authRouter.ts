@@ -30,6 +30,7 @@ export const authRouter = (context: ApiContext): Router => {
     router.post(`/${key}`, async (req, res) => {
       const output = await apiAuthProcesses[key](context)(req.input);
       res.output(output);
+      res.end();
     });
   });
 

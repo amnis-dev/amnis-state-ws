@@ -11,7 +11,7 @@ import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { memory } from '@amnis/db/memory';
 import { Store } from '@reduxjs/toolkit';
 import { apiIO } from '@amnis/api/api.io.node';
-import { configureValidators } from '@amnis/api/validators';
+import { validatorsSetup } from '@amnis/api/validators';
 
 /**
  * Function that prepares the api mock services.
@@ -20,7 +20,7 @@ export function apiSetup(serverStore: Store) {
   /**
    * Configure the validation methods.
    */
-  const validators = configureValidators([coreSchema, authSchema, stateSchema]);
+  const validators = validatorsSetup([coreSchema, authSchema, stateSchema]);
 
   /**
   * Setup the server processes for the Auth operations
