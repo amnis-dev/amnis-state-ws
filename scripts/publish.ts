@@ -11,6 +11,7 @@ const packagePaths = [
   'packages/amnis-auth',
   'packages/amnis-api',
   'packages/amnis-state',
+  'packages/amnis-express',
 ];
 
 function publish() {

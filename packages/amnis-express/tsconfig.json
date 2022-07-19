@@ -6,12 +6,13 @@
     "composite": true,
     "declaration": true,
     "sourceMap": false,
-    "rootDir": "./src",
+    "rootDir": "./src"
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.json",
   ],
+  "files": ["./types/index.d.ts"],
   "references": [
     { "path": "../amnis-state/tsconfig.json" }
   ]

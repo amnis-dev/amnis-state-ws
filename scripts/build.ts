@@ -13,6 +13,7 @@ const packagePaths = [
   'packages/amnis-db',
   'packages/amnis-api',
   'packages/amnis-state',
+  'packages/amnis-express',
 ];
 
 function tsCompile() {
