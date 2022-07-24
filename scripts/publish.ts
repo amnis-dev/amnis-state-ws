@@ -19,7 +19,7 @@ function publish() {
     const command = 'yarn publish --access public';
     console.log(`Running '${command}' in '${path}'...`);
     execSync(command, {
-      cwd: `${path}/.dist`,
+      cwd: `${path}/.lib`,
       env: { ...process.env },
     });
     console.log('Publishing complete.');

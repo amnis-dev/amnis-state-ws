@@ -10,6 +10,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@amnis/acom": "^0.1.0-alpha.2",
     "@amnis/eslint-config-node": "^1.3.5",
     "@amnis/tsconfig-node": "^1.3.5",
     "@babel/core": "^7.18.0",
@@ -61,10 +62,10 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "build": "ts-node -P scripts/tsconfig.json scripts/build",
+    "build": "acom build library -p ./packages",
     "pub": "ts-node -P scripts/tsconfig.json scripts/publish",
     "clean": "yarn clean:dist && yarn clean:ts && yarn clean:rollup",
-    "clean:dist": "npx rimraf ./**/.dist ./**/.srv",
+    "clean:dist": "npx rimraf ./**/.dist ./**/.lib ./**/.srv",
     "clean:ts": "npx rimraf ./**/*.tsbuildinfo",
     "clean:rollup": "npx rimraf ./**/.rollup.cache",
     "lint": "eslint --ext .ts --ext .tsx \"./\"",
