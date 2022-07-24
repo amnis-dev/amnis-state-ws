@@ -7,19 +7,19 @@
     "source.fixAll.eslint": true
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "files.eol": "\n",
-  "files.associations": {
-    "*.ejs": "html",
-    "*.ejs.t": "html"
-  },
   "eslint.enable": true,
+  "eslint.run": "onSave",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
     "typescriptreact"
   ],
-  "eslint.workingDirectories": ["storybook/*", "packages/*"],
+  "files.eol": "\n",
+  "files.associations": {
+    "*.ejs": "html",
+    "*.ejs.t": "html"
+  },
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -29,6 +29,7 @@
     "**/node_modules": true,
     "**/wwwroot": true
   },
+  "html.format.unformatted": "wbr,%",
   "debug.internalConsoleOptions": "neverOpen",
   "npm.packageManager": "yarn",
   "[typescriptreact]": {

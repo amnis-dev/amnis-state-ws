@@ -3,7 +3,7 @@
   "version": "0.2.0-alpha.8",
   "main": "index.ts",
   "repository": "https://github.com/amnis-dev/amnis-state",
-  "author": "Eric Crowell <eric.crowell@ecrow.dev>",
+  "author": "Eric Crowell <admin@amnis.dev>",
   "license": "MIT",
   "private": true,
   "workspaces": [
@@ -64,7 +64,7 @@
     "build": "ts-node -P scripts/tsconfig.json scripts/build",
     "pub": "ts-node -P scripts/tsconfig.json scripts/publish",
     "clean": "yarn clean:dist && yarn clean:ts && yarn clean:rollup",
-    "clean:dist": "npx rimraf ./**/.dist",
+    "clean:dist": "npx rimraf ./**/.dist ./**/.srv",
     "clean:ts": "npx rimraf ./**/*.tsbuildinfo",
     "clean:rollup": "npx rimraf ./**/.rollup.cache",
     "lint": "eslint --ext .ts --ext .tsx \"./\"",
