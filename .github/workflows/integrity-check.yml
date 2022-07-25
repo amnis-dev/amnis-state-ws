@@ -26,7 +26,7 @@ jobs:
         cache-dependency-path: 'yarn.lock'
     
     - name: Build Express Service
-      run: yarn build:service
+      run: npx @amnis/acom build service -p ./packages/amnis-express -r
 
     - name: Deploy Express Service to Azure
       uses: azure/webapps-deploy@v2
