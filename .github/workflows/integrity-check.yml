@@ -24,9 +24,12 @@ jobs:
         node-version: '18'
         cache: 'yarn'
         cache-dependency-path: 'yarn.lock'
+
+    - name: Install NodeJS Dependencies
+      run: yarn install
     
     - name: Build Express Service
-      run: npx @amnis/acom build service -p ./packages/amnis-express -r
+      run: yarn build:service
 
     - name: Deploy Express Service to Azure
       uses: azure/webapps-deploy@v2
