@@ -15,7 +15,30 @@ jobs:
 
     steps:
 
-    - name: 
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup NodeJS with Yarn Caching
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'yarn'
+        cache-dependency-path: 'yarn.lock'
+
+    - name: Install NodeJS Dependencies
+      run: yarn install
+    
+    - name: Build Express Service
+      run: yarn build:service
+
+    - name: Deploy Express Service to Azure
+      uses: azure/webapps-deploy@v2
+      id: deploy-to-webapp
+      with:
+        app-name: 'amnis-express-devop'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AMNIS_EXPRESS_DEVOP_PUBLISH_PROFILE }}
+        package: ./packages/amnis-express/.srv
 
   build:
     runs-on: ubuntu-latest
