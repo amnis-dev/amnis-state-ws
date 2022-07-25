@@ -10,7 +10,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@amnis/acom": "^0.1.0-alpha.4",
+    "@amnis/acom": "^0.1.0-alpha.5",
     "@amnis/eslint-config-node": "^1.3.5",
     "@amnis/tsconfig-node": "^1.3.5",
     "@babel/core": "^7.18.0",

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@amnis/acom@^0.1.0-alpha.4":
-  version "0.1.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@amnis/acom/-/acom-0.1.0-alpha.4.tgz#5430bbe594238947d03fb35e255058d58f4e29db"
-  integrity sha512-+wzRS9u3b2Rue+ePsZ7nLlPoaeo1D+uz2MEnzboomj1LBaUJa7dEhSl97ZQxWJ6CkWA610jmbBnv8LN3Upt+6w==
+"@amnis/acom@^0.1.0-alpha.5":
+  version "0.1.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@amnis/acom/-/acom-0.1.0-alpha.5.tgz#27fa8dbf8ff5f45fda296d52f3e469cd4b77e571"
+  integrity sha512-iepcQRdsMHuzUGnyNOIBSFPEfqAl51NzhxF+34MWBKYk1zJ/4w0LcNlq5RkLPJeWakVPuLhPMpGB6/0IFdWEEw==
   dependencies:
     "@rollup/plugin-commonjs" "^22.0.1"
     "@rollup/plugin-json" "^4.1.0"
