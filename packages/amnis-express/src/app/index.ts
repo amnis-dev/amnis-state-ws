@@ -5,7 +5,7 @@ import { storeSetup } from '@amnis/state/env.node/store';
 import { memory } from '@amnis/state/env.node/db.memory';
 import { authSchema } from '@amnis/state/env.node/schema.auth';
 
-import { authRouter } from '../src/authRouter';
+import { authRouter } from '../authRouter';
 
 const app = express();
 
