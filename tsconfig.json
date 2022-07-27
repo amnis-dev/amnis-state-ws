@@ -10,6 +10,7 @@
       "@amnis/auth/*": ["./packages/amnis-auth/src/*"],
       "@amnis/api/*": ["./packages/amnis-api/src/*"],
       "@amnis/state/*": ["./packages/amnis-state/src/*"],
+      "@amnis/express/*": ["./packages/amnis-express/src/*"],
     }
   },
   "include": ["./packages/**/*.ts*", "./test/**/*.ts*"]

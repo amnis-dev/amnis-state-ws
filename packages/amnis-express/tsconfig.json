@@ -1,14 +1,17 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "outDir": "./.dist",
-    "declarationDir": "./.dist",
-    "composite": true,
-    "declaration": true,
+    "outDir": "./.srv",
     "sourceMap": false,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "typeRoots" : ["./src/types", "../../node_modules/@types"]
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.json",
   ],
+  "files": ["src/types/express/index.d.ts"],
+  "references": [
+    { "path": "../amnis-state/tsconfig.json" }
+  ]
 }

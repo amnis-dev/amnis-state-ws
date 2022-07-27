@@ -5,29 +5,12 @@ import type {
   StateUpdate,
   StateQuery,
 } from '@amnis/core/state';
-import type { Database } from '@amnis/db/types';
-import type { Store } from '@reduxjs/toolkit';
 import type {
+  ApiIO,
   ApiProcess,
   ApiProcesses,
   ApiQuery,
 } from '../types';
-
-/**
- * Api Handler configurations
- */
-export interface ApiCrudProcessesParams {
-  store: Store;
-  database: Database;
-  schemas?: any[],
-  definitions?: {
-    create?: string,
-    read?: string,
-    update?: string,
-    delete?: string,
-  },
-  noauth?: boolean;
-}
 
 /**
  * API object containing request queries.
@@ -39,32 +22,17 @@ export interface ApiCrudQueries {
   delete: ApiQuery;
 }
 
-/**
- * Create process.
- */
-export type ApiCrudProcessCreate = ApiProcess<StateCreate, StateCreate>;
-
-/**
- * Read process.
- */
-export type ApiCrudProcessRead = ApiProcess<StateQuery, StateCreate>;
-
-/**
- * Update process.
- */
-export type ApiCrudProcessUpdate = ApiProcess<StateUpdate, StateCreate>;
-
-/**
- * Delete process.
- */
-export type ApiCrudProcessDelete = ApiProcess<StateDelete, StateDelete>;
+export type ApiCrudIOCreate = ApiIO<StateCreate, StateCreate>;
+export type ApiCrudIORead = ApiIO<StateQuery, StateCreate>;
+export type ApiCrudIOUpdate = ApiIO<StateUpdate, StateCreate>;
+export type ApiCrudIODelete = ApiIO<StateDelete, StateDelete>;
 
 /**
  * API object containing response handlers.
  */
 export interface ApiCrudProcesses extends ApiProcesses {
-  create: ApiCrudProcessCreate;
-  read: ApiCrudProcessRead;
-  update: ApiCrudProcessUpdate;
-  delete: ApiCrudProcessDelete;
+  create: ApiProcess<ApiCrudIOCreate>;
+  read: ApiProcess<ApiCrudIORead>;
+  update: ApiProcess<ApiCrudIOUpdate>;
+  delete: ApiProcess<ApiCrudIODelete>;
 }

@@ -7,6 +7,8 @@ import { memory, memoryClear } from '@amnis/db/memory';
 import { dateNumeric, reference } from '@amnis/core/core';
 import type { StateCreate } from '@amnis/core/state';
 import type { JWTEncoded } from '@amnis/core/token';
+import { validatorsSetup } from '@amnis/api/validators';
+import { apiIO } from '@amnis/api/api.io.node';
 
 import { jwtEncode } from '@amnis/auth/token';
 import type { ApiInput } from '../types';
@@ -14,22 +16,20 @@ import { apiCrudProcesses } from './crud.process';
 
 const appStore = storeSetup();
 
+const validators = validatorsSetup([coreSchema, bookSchema]);
+
 /**
- * Setup the crud processes.
+ * Setup the crud io.
  */
-const processes = apiCrudProcesses({
+const io = apiIO({
   store: appStore,
   database: memory,
-  schemas: [coreSchema, bookSchema],
-  definitions: {
-    create: 'book#/definitions/BookState',
-    update: 'book#/definitions/BookStatePartial',
-  },
-});
+  validators,
+}, apiCrudProcesses);
 
 const expires = dateNumeric(new Date(Date.now() + 60000));
 /**
- * Create a JWT token in order to execute processes.
+ * Create a JWT token in order to execute io.
  */
 const jwtEncoded: JWTEncoded = jwtEncode({
   iss: 'core',
@@ -57,7 +57,7 @@ test('Handler should create new entities.', async () => {
     jwtEncoded,
   };
 
-  const output = await processes.create(input);
+  const output = await io.create(input);
 
   expect(output.json.result).toBeDefined();
 
@@ -76,7 +76,7 @@ test('Handler should fail when a jwt token is not provided.', async () => {
     },
   };
 
-  const output = await processes.create(input);
+  const output = await io.create(input);
 
   expect(output.json.result).not.toBeDefined();
 
@@ -99,7 +99,7 @@ test('Handler should create entities that do not validate against the schema.', 
     jwtEncoded,
   };
 
-  const output = await processes.create(input);
+  const output = await io.create(input);
 
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0].title).toEqual('Validation Failed');
@@ -110,14 +110,14 @@ test('Handler should create entities that do not validate against the schema.', 
  * ============================================================
  */
 test('Handler should read entities.', async () => {
-  await processes.create({
+  await io.create({
     body: {
       [bookKey]: books,
     },
     jwtEncoded,
   });
 
-  const output = await processes.read({
+  const output = await io.read({
     body: {
       [bookKey]: {
         $query: {
@@ -143,14 +143,14 @@ test('Handler should read entities.', async () => {
  * ============================================================
  */
 test('Handler should NOT read entities that do not exist.', async () => {
-  await processes.create({
+  await io.create({
     body: {
       [bookKey]: books,
     },
     jwtEncoded,
   });
 
-  const output = await processes.read({
+  const output = await io.read({
     body: {
       [bookKey]: {
         $query: {
@@ -175,14 +175,14 @@ test('Handler should NOT read entities that do not exist.', async () => {
  * ============================================================
  */
 test('Handler should be able to update existing entities.', async () => {
-  await processes.create({
+  await io.create({
     body: {
       [bookKey]: books,
     },
     jwtEncoded,
   });
 
-  const result = await processes.update({
+  const result = await io.update({
     body: {
       [bookKey]: [
         {

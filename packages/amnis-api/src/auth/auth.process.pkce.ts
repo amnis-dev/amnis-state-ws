@@ -1,12 +1,13 @@
 import type { StateCreate } from '@amnis/core/state';
 
-import type { ApiContextMethod } from '../types';
-import type { ApiAuthProcessPkce } from './auth.types';
+import type { ApiProcess } from '../types';
+import type { ApiAuthIOPkce } from './auth.types';
 import { apiOutput } from '../api';
 import { authMicrosoft } from './auth.pkce.microsoft';
 import { authTwitter } from './auth.pkce.twitter';
+import { mwValidate } from '../mw.validate';
 
-export const authProcessPcke: ApiContextMethod<ApiAuthProcessPkce> = (context) => (
+const process: ApiProcess<ApiAuthIOPkce> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body } = input;
@@ -33,6 +34,10 @@ export const authProcessPcke: ApiContextMethod<ApiAuthProcessPkce> = (context) =
         return output;
     }
   }
+);
+
+export const authProcessPcke = mwValidate('ApiAuthBodyPkce')(
+  process,
 );
 
 export default { authProcessPcke };

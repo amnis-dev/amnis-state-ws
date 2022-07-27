@@ -1,15 +1,15 @@
 import type {
-  ApiAuthLoginBody,
-  ApiAuthLogoutBody,
-  ApiAuthPkceBody,
-  ApiAuthRenewBody,
-  ApiAuthVerifyBody,
+  ApiAuthBodyLogin,
+  ApiAuthBodyLogout,
+  ApiAuthBodyPkce,
+  ApiAuthBodyRenew,
+  ApiAuthBodyVerify,
 } from './auth.types';
 
 export interface ApiAuthBodies {
-  login?: ApiAuthLoginBody;
-  logout?: ApiAuthLogoutBody;
-  pkce?: ApiAuthPkceBody;
-  renew?: ApiAuthRenewBody;
-  verify?: ApiAuthVerifyBody;
+  login?: ApiAuthBodyLogin;
+  logout?: ApiAuthBodyLogout;
+  pkce?: ApiAuthBodyPkce;
+  renew?: ApiAuthBodyRenew;
+  verify?: ApiAuthBodyVerify;
 }

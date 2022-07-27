@@ -1,6 +1,6 @@
 {
   "exec": "ts-node -P test/tsconfig.json",
-  "watch": ["./test", "./packages/amnis-core", "./packages/amnis-auth", "./packages/amnis-api"],
+  "watch": ["./test", "./packages/amnis-express", "./packages/amnis-core", "./packages/amnis-auth", "./packages/amnis-api"],
   "ext": "ts",
   "ignore": ["./test/static/*"],
   "delay": 2500

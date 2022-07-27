@@ -16,6 +16,7 @@ export function apiOutput<T = any>(): ApiOutput<T> {
 
 /**
  * Common method of validating json that returns an errored output if invalid.
+ * Returns an error output if failed.
  */
 export function apiValidate(
   validator: AnyValidateFunction | undefined,

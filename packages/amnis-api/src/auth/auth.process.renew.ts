@@ -6,14 +6,16 @@ import { sessionCreate, sessionKey } from '@amnis/core/session';
 import type { StateCreate } from '@amnis/core/state';
 import { userKey } from '@amnis/core/user';
 import { apiOutput } from '../api';
-import { ApiContextMethod } from '../types';
-import { ApiAuthProcessRenew } from './auth.types';
+import { ApiProcess } from '../types';
+import { ApiAuthIORenew } from './auth.types';
 import { profileFetch, tokenGenerate, userFindById } from './auth.utility';
+import { mwSession } from '../mw.session';
+import { mwValidate } from '../mw.validate';
 
 /**
  * Renews a session holder's session and access tokens.
  */
-export const authProcessRenew: ApiContextMethod<ApiAuthProcessRenew> = (context) => (
+const process: ApiProcess<ApiAuthIORenew> = (context) => (
   async (input) => {
     const { database } = context;
     const { session, body } = input;
@@ -91,5 +93,7 @@ export const authProcessRenew: ApiContextMethod<ApiAuthProcessRenew> = (context)
     return output;
   }
 );
+
+export const authProcessRenew = mwSession()(mwValidate('ApiAuthBodyRenew')(process));
 
 export default { authProcessRenew };

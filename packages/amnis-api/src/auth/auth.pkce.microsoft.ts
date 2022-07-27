@@ -9,7 +9,7 @@ import { jwtDecode } from '@amnis/auth/token';
 import { Store } from '@reduxjs/toolkit';
 import { selectors } from '@amnis/core/selectors';
 import { System, systemKey } from '@amnis/core/system';
-import type { ApiAuthPkceBody } from './auth.types';
+import type { ApiAuthBodyPkce } from './auth.types';
 import { apiConfig } from '../config';
 import { ApiOutput } from '../types';
 import { loginSuccessProcess, userFindByName } from './auth.utility';
@@ -44,7 +44,7 @@ export interface MicrosoftId {
 export async function authMicrosoft(
   store: Store,
   database: Database,
-  auth: Omit<ApiAuthPkceBody, 'platform'>,
+  auth: Omit<ApiAuthBodyPkce, 'platform'>,
 ): Promise<ApiOutput<StateCreate>> {
   const tokenEndpoint = auth.tenantId
     ? `https://login.microsoftonline.${auth.gov ? 'us' : 'com'}/${auth.tenantId}/oauth2/v2.0/token`

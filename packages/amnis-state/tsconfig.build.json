@@ -4,10 +4,10 @@
   "exclude": [
     "src/**/*.test.*",
     "src/**/*.mock.*",
-    "src/**/*.store.*",
+    "src/**/*.store.*"
   ],
   "references": [
-    { "path": "../amnis-core/tsconfig.json" },
-    { "path": "../amnis-api/tsconfig.json" }
+    { "path": "../amnis-core/tsconfig.build.json" },
+    { "path": "../amnis-api/tsconfig.build.json" }
   ]
 }

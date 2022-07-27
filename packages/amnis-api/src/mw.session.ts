@@ -7,7 +7,7 @@ import type {
 /**
  * Ensures a JWT token is set.
  */
-export const mwSession: ApiMiddleware = (next) => (context) => async (input) => {
+export const mwSession: ApiMiddleware = () => (next) => (context) => async (input) => {
   const { sessionEncoded } = input;
 
   if (!sessionEncoded) {

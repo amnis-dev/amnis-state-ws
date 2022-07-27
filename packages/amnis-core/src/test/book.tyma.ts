@@ -1,9 +1,9 @@
 import type { Book } from './book.store';
 
-export interface BookState {
+export interface StateCreate {
   book?: Book[];
 }
 
-export interface BookStatePartial {
+export interface StateUpdate {
   book?: Partial<Book>[];
 }

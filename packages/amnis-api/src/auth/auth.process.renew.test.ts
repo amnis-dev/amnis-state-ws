@@ -6,8 +6,11 @@ import { sessionCreate } from '@amnis/core/session';
 import { storeSetup } from '@amnis/core/test/book.store';
 import { userCreate } from '@amnis/core/user';
 import { memory } from '@amnis/db/memory';
+import { apiIO } from '../api.io.node';
 import { ApiInput } from '../types';
+import { validatorsSetup } from '../validators';
 import { apiAuthProcesses } from './auth.process';
+import authSchema from './auth.schema.json';
 
 /**
  * Setup the required application store.
@@ -48,12 +51,13 @@ memory.create({
 });
 
 /**
-  * Setup the processes
-  */
-const processes = apiAuthProcesses({
+ * Setup the io
+ */
+const io = apiIO({
   store: appStore,
   database: memory,
-});
+  validators: validatorsSetup(authSchema),
+}, apiAuthProcesses);
 
 test('Should be able to renew session and tokens', async () => {
   const input: ApiInput = {
@@ -61,7 +65,7 @@ test('Should be able to renew session and tokens', async () => {
     body: {},
   };
 
-  const output = await processes.renew(input);
+  const output = await io.renew(input);
 
   /**
    * Should see the new session cookie in the output.
@@ -82,7 +86,7 @@ test('Should be able to renew session and tokens with user and profile informati
     },
   };
 
-  const output = await processes.renew(input);
+  const output = await io.renew(input);
 
   /**
    * Should see the new session cookie in the output.

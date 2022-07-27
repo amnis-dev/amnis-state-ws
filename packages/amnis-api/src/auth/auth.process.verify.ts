@@ -1,12 +1,13 @@
 import { jwtVerify } from '@amnis/auth/token';
 import { apiOutput } from '../api';
-import { ApiContextMethod } from '../types';
-import { ApiAuthProcessVerify } from './auth.types';
+import { mwValidate } from '../mw.validate';
+import { ApiProcess } from '../types';
+import { ApiAuthIOVerify } from './auth.types';
 
 /**
  * Verifies the validity of an access token.
  */
-export const authProcessVerify: ApiContextMethod<ApiAuthProcessVerify> = () => (
+export const process: ApiProcess<ApiAuthIOVerify> = () => (
   async (input) => {
     const { body: token } = input;
     const output = apiOutput<boolean>();
@@ -26,6 +27,10 @@ export const authProcessVerify: ApiContextMethod<ApiAuthProcessVerify> = () => (
     output.json.result = true;
     return output;
   }
+);
+
+export const authProcessVerify = mwValidate('ApiAuthBodyVerify')(
+  process,
 );
 
 export default { authProcessVerify };

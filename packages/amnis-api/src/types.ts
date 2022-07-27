@@ -10,12 +10,17 @@ import type { AnyValidateFunction } from 'ajv/dist/types';
 import type { Session } from '@amnis/core/session';
 
 /**
+ * Validator mapping.
+ */
+export type Validators = Record<string, AnyValidateFunction>;
+
+/**
  * API Context for accessing the server store, database, and storage system.
  */
 export interface ApiContext {
   store: Store;
   database: Database;
-  validator?: AnyValidateFunction;
+  validators: Validators;
 }
 
 /**
@@ -110,19 +115,24 @@ export interface ApiQueries {
 /**
  * API handler for a request.
  */
-export type ApiProcess<Body = any, Result = any> = (
+export type ApiIO<Body = any, Result = any> = (
   input: ApiInput<Body>,
 ) => Promise<ApiOutput<Result>>;
 
 /**
  * A function that supplies context to a process.
  */
-export type ApiContextMethod<P extends ApiProcess = ApiProcess> = (context: ApiContext) => P;
+export type ApiProcess<P extends ApiIO = ApiIO> = (context: ApiContext) => P;
 
 /**
  * API object containing response handlers.
  */
 export type ApiProcesses = Record<string, ApiProcess>;
+
+/**
+ * Object mapping of ApiIOs.
+ */
+export type ApiIOs<K extends keyof any = keyof any> = Record<K, ApiIO>;
 
 /**
  * RTK Error type.
@@ -136,7 +146,4 @@ unknown,
 /**
  * A middlware function.
  */
-export type ApiMiddleware =
-  (next: ApiContextMethod) =>
-  (context: ApiContext) =>
-  (input: ApiInput) => Promise<ApiOutput>;
+export type ApiMiddleware<P = void> = (params: P) => (next: ApiProcess) => ApiProcess;

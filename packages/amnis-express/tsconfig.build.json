@@ -1,11 +1,14 @@
 {
   "extends": "./tsconfig",
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
   "exclude": [
     "src/**/*.test.*",
     "src/test/*"
   ],
   "include": ["src/**/*.ts"],
   "references": [
-    { "path": "../amnis-core/tsconfig.json" }
+    { "path": "../amnis-state/tsconfig.build.json" }
   ]
 }

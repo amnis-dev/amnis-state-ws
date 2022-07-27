@@ -1,13 +1,15 @@
 import type { StateDelete } from '@amnis/core/state';
 import { userKey } from '@amnis/core/user';
 import { apiOutput } from '../api';
-import type { ApiContextMethod } from '../types';
-import type { ApiAuthProcessLogout } from './auth.types';
+import { mwSession } from '../mw.session';
+import { mwValidate } from '../mw.validate';
+import type { ApiProcess } from '../types';
+import type { ApiAuthIOLogout } from './auth.types';
 
 /**
  * Renews a session holder's session and access tokens.
  */
-export const authProcessLogout: ApiContextMethod<ApiAuthProcessLogout> = () => (
+const process: ApiProcess<ApiAuthIOLogout> = () => (
   async (input) => {
     const { session } = input;
     const output = apiOutput<StateDelete>();
@@ -28,6 +30,12 @@ export const authProcessLogout: ApiContextMethod<ApiAuthProcessLogout> = () => (
 
     return output;
   }
+);
+
+export const authProcessLogout = mwSession()(
+  mwValidate('ApiAuthBodyLogout')(
+    process,
+  ),
 );
 
 export default { authProcessLogout };

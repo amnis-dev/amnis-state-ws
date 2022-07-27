@@ -7,9 +7,11 @@ import { StateCreate, StateQuery, stateReferenceQuery } from '@amnis/core/state'
 import type { Database } from '@amnis/db/types';
 import type { AuthScope } from '@amnis/auth/types';
 import type{ Reference } from '@amnis/core/types';
-import type { ApiContextMethod } from '../types';
+import type { ApiProcess } from '../types';
 import { apiOutput } from '../api';
-import type { ApiCrudProcessRead } from './crud.types';
+import type { ApiCrudIORead } from './crud.types';
+import { mwJwt } from '../mw.jwt';
+import { mwValidate } from '../mw.validate';
 
 /**
  * Performs a recursive read on the database based on the depth value of each query.
@@ -71,7 +73,7 @@ async function readRecursive(
   return result;
 }
 
-export const crudProcessRead: ApiContextMethod = (context): ApiCrudProcessRead => (
+export const process: ApiProcess<ApiCrudIORead> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
@@ -152,4 +154,10 @@ export const crudProcessRead: ApiContextMethod = (context): ApiCrudProcessRead =
   }
 );
 
-export default crudProcessRead;
+export const crudProcessRead = mwJwt()(
+  mwValidate('StateQuery')(
+    process,
+  ),
+);
+
+export default { crudProcessRead };
