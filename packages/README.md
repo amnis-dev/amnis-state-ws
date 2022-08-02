@@ -1,3 +1,3 @@
 # Amnis State Packages
 
-Suite of libraries for managing data states and persistence.
+Suite of Node.js packages for managing data states and persistence.
