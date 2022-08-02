@@ -9,8 +9,7 @@
       "@amnis/db/*": ["./packages/amnis-db/src/*"],
       "@amnis/auth/*": ["./packages/amnis-auth/src/*"],
       "@amnis/api/*": ["./packages/amnis-api/src/*"],
-      "@amnis/state/*": ["./packages/amnis-state/src/*"],
-      "@amnis/express/*": ["./packages/amnis-express/src/*"],
+      "@amnis/state/*": ["./packages/amnis-state/src/*"]
     }
   },
   "include": ["./packages/**/*.ts*", "./test/**/*.ts*"]
