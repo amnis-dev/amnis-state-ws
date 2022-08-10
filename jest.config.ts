@@ -1,14 +1,14 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  preset: 'ts-jest',
-  verbose: true,
-  testEnvironment: 'node',
-  fakeTimers: {
-    enableGlobally: true,
-  },
-  transform: {},
-  extensionsToTreatAsEsm: ['.ts'],
+  preset: 'ts-jest/presets/default-esm',
+  // verbose: true,
+  // testEnvironment: 'node',
+  // fakeTimers: {
+  //   enableGlobally: true,
+  // },
+  // transform: {},
+  // extensionsToTreatAsEsm: ['.ts'],
   globals: {
     'ts-jest': {
       useESM: true,
