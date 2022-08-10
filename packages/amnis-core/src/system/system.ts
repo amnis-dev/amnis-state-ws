@@ -1,13 +1,13 @@
-import { durationCalc, reference } from '../core';
+import { durationCalc, reference } from '../core.js';
 import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { LogBaseCreate } from '../log';
-import { roleKey } from '../role';
-import { websiteKey } from '../website';
-import type { System } from './system.types';
+} from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import { roleKey } from '../role/index.js';
+import { websiteKey } from '../website/index.js';
+import type { System } from './system.types.js';
 
 export const systemKey = 'system';
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
-import type { Reference, DateJSON } from '../types';
+import type { Reference, DateJSON } from '../types.js';
 
 /**
  * A common entity object.

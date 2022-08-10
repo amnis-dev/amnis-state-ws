@@ -1,14 +1,14 @@
-import { nanoid } from '@reduxjs/toolkit';
-import { dateJSON } from '../core';
-import { regexReference, regexUuid } from '../regex';
+import { rtk } from '../rtk.js';
+import { dateJSON } from '../core.js';
+import { regexReference, regexUuid } from '../regex.js';
 import type {
   Reference,
-} from '../types';
+} from '../types.js';
 import type {
   Entity,
   EntityExtension,
   EntityPartial,
-} from './entity.types';
+} from './entity.types.js';
 
 /**
  * Creates an entity.
@@ -18,7 +18,7 @@ export const entityCreate = <E extends Entity>(
   entity: EntityExtension<E>,
   set?: Partial<Entity> | boolean,
 ): E => {
-  const id = `${key}:${nanoid()}` as Reference;
+  const id = `${key}:${rtk.nanoid()}` as Reference;
   const now = dateJSON();
   const base: Entity = {
     $id: id,

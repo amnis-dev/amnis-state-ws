@@ -1,4 +1,4 @@
-import type { Media } from '../media';
+import type { Media } from '../media/index.js';
 
 export interface Video extends Media {
   /**

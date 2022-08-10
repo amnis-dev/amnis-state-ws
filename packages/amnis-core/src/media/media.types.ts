@@ -1,6 +1,6 @@
-import type { Reference, SURL } from '../types';
-import type { Entity } from '../entity';
-import type { Profile } from '../profile';
+import type { Reference, SURL } from '../types.js';
+import type { Entity } from '../entity/index.js';
+import type { Profile } from '../profile/index.js';
 
 /**
  * An abstract media type intended to be extended my more specific types: Image, Video, and Audio.

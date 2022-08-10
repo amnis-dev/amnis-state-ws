@@ -1,7 +1,7 @@
-import type { Reference, SURL } from '../types';
-import type { Entity } from '../entity/entity.types';
-import type { Image } from '../image/image.types';
-import type { Contact } from '../contact';
+import type { Reference, SURL } from '../types.js';
+import type { Entity } from '../entity/entity.types.js';
+import type { Image } from '../image/image.types.js';
+import type { Contact } from '../contact/index.js';
 
 /**
  * Types of social networks available.

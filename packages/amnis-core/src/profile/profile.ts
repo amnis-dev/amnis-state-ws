@@ -1,9 +1,9 @@
-import { reference } from '../core';
-import { entityCreate } from '../entity/entity';
-import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
-import type { LogBaseCreate } from '../log';
-import type { Profile } from './profile.types';
-import { userKey } from '../user/user';
+import { reference } from '../core.js';
+import { entityCreate } from '../entity/entity.js';
+import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types.js';
+import type { LogBaseCreate } from '../log/index.js';
+import type { Profile } from './profile.types.js';
+import { userKey } from '../user/user.js';
 
 export const profileKey = 'profile';
 

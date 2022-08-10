@@ -1,11 +1,9 @@
 import {
-  createEntityAdapter,
-  createSlice,
-  configureStore,
-} from '@reduxjs/toolkit';
-import type { Entity, Meta } from '../entity';
-import { coreExtraReducers, coreReducers } from '../reducers';
-import { entityCreate } from '../entity/entity';
+  rtk,
+} from '../rtk.js';
+import type { Entity, Meta } from '../entity/entity.types.js';
+import { coreExtraReducers, coreReducers } from '../reducers.js';
+import { entityCreate } from '../entity/entity.js';
 
 export interface Book extends Entity {
   title: string;
@@ -16,14 +14,14 @@ export type BookMeta = Meta<Book>;
 
 export const bookKey = 'book';
 
-const booksAdapter = createEntityAdapter<Book>({
+const booksAdapter = rtk.createEntityAdapter<Book>({
   // Assume IDs are stored in a field other than `book.id`
   selectId: (book) => book.$id,
   // Keep the "all IDs" array sorted based on book titles
   sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
-export const booksSlice = createSlice({
+export const booksSlice = rtk.createSlice({
   name: bookKey,
   initialState: booksAdapter.getInitialState<BookMeta>({
     active: null,
@@ -38,7 +36,7 @@ export const booksSlice = createSlice({
   },
 });
 
-export const storeSetup = () => configureStore({
+export const storeSetup = () => rtk.configureStore({
   reducer: {
     [booksSlice.name]: booksSlice.reducer,
   },

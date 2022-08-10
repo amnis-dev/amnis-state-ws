@@ -5,10 +5,10 @@ import {
   <%= name %>InitialState,
   <%= name %>Selectors,
   <%= name %>Actions,
-} from './<%= name %>';
-import { <%= name %>Default } from './<%= name %>.default';
+} from './<%= name %>.js';
+import { <%= name %>Default } from './<%= name %>.default.js';
 
-import { <%= name %>StoreSetup } from './<%= name %>.store';
+import { <%= name %>StoreSetup } from './<%= name %>.store.js';
 
 /**
  * ============================================================

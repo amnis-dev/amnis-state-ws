@@ -6,15 +6,15 @@ import {
 } from '@reduxjs/toolkit';
 import {
   entityCreate,
-} from './entity/entity';
-import { coreActions } from './actions';
+} from './entity/entity.js';
+import { coreActions } from './actions.js';
 import type {
   Entity,
   EntityExtension,
   EntityPartial,
   MetaState,
-} from './entity';
-import { Reference } from './types';
+} from './entity/entity.types.js';
+import type { Reference } from './types.js';
 
 export interface MetaOptions {
   active?: boolean;

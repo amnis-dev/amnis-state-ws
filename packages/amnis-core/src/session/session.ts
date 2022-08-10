@@ -1,11 +1,11 @@
-import { dateNumeric, reference } from '../core';
+import { dateNumeric, reference } from '../core.js';
 import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { LogBaseCreate } from '../log';
-import type { Session } from './session.types';
+} from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import type { Session } from './session.types.js';
 
 export const sessionKey = 'session';
 

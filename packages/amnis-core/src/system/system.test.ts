@@ -1,5 +1,5 @@
-import { reference } from '../core';
-import { systemKey, systemCreate } from './system';
+import { reference } from '../core.js';
+import { systemKey, systemCreate } from './system.js';
 
 /**
  * ============================================================

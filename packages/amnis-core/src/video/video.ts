@@ -1,11 +1,11 @@
-import { surl } from '../core';
+import { surl } from '../core.js';
 import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { LogBaseCreate } from '../log';
-import type { Video } from './video.types';
+} from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import type { Video } from './video.types.js';
 
 export const videoKey = 'video';
 

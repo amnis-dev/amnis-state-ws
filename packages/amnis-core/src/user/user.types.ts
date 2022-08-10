@@ -1,8 +1,8 @@
-import type { Reference } from '../types';
-import type { Entity } from '../entity';
-import type { Permit } from '../permit';
-import type { DeviceString } from '../device';
-import type { Role } from '../role';
+import type { Reference } from '../types.js';
+import type { Entity } from '../entity/index.js';
+import type { Permit } from '../permit/index.js';
+import type { DeviceString } from '../device/index.js';
+import type { Role } from '../role/index.js';
 
 /**
  * Data associated to a User.

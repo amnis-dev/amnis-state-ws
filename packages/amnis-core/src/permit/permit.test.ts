@@ -1,5 +1,5 @@
-import { reference } from '../core';
-import { permitKey, permitCreate } from './permit';
+import { reference } from '../core.js';
+import { permitKey, permitCreate } from './permit.js';
 
 /**
  * ============================================================

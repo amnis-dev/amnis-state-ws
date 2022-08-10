@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
 
 /**
  * <%= Name %> entity

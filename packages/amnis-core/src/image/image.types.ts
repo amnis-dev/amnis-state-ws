@@ -1,4 +1,4 @@
-import { Media } from '../media';
+import { Media } from '../media/index.js';
 
 export interface Image extends Media {
   /**

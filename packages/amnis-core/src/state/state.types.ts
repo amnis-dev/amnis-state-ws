@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Reference } from '../types';
-import type { Entity } from '../entity';
+import type { Reference } from '../types.js';
+import type { Entity } from '../entity/index.js';
 
 /**
  * An ambiguous state.

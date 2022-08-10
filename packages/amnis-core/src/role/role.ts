@@ -2,9 +2,9 @@ import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { LogBaseCreate } from '../log';
-import type { Role } from './role.types';
+} from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import type { Role } from './role.types.js';
 
 export const roleKey = 'role';
 

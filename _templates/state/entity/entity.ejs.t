@@ -7,7 +7,7 @@ import {
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
 import { apiExtraReducers } from '@amnis/api/reducers';
 import { <%= Name %>, <%= name %>Key } from '@amnis/core/<%= name %>';
-import type { <%= Name %>Meta } from './<%= name %>.types';
+import type { <%= Name %>Meta } from './<%= name %>.types.js';
 
 /**
  * RTK <%= name %> adapter.

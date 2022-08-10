@@ -1,7 +1,7 @@
-import type { Role } from '../role';
-import type { Reference } from '../types';
-import type { Entity } from '../entity';
-import type { Website } from '../website';
+import type { Role } from '../role/index.js';
+import type { Reference } from '../types.js';
+import type { Entity } from '../entity/index.js';
+import type { Website } from '../website/index.js';
 
 export interface System extends Entity {
   /**

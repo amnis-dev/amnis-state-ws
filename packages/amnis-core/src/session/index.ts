@@ -1,2 +1,2 @@
-export * from './session.types';
-export * from './session';
+export * from './session.types.js';
+export * from './session.js';

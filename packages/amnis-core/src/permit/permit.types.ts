@@ -1,6 +1,6 @@
-import type { Reference } from '../types';
-import type { Entity } from '../entity';
-import type { GrantString } from '../grant';
+import type { Reference } from '../types.js';
+import type { Entity } from '../entity/index.js';
+import type { GrantString } from '../grant/index.js';
 
 /**
  * A permit is a list of grants for a specific reference ID.

@@ -1,4 +1,4 @@
-import { videoKey, videoCreate } from './video';
+import { videoKey, videoCreate } from './video.js';
 
 /**
  * ============================================================

@@ -1,11 +1,11 @@
-import { reference } from '../core';
+import { reference } from '../core.js';
 import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { LogBaseCreate } from '../log';
-import type { Permit } from './permit.types';
+} from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import type { Permit } from './permit.types.js';
 
 export const permitKey = 'permit';
 

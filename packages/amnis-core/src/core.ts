@@ -1,12 +1,12 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable no-unused-expressions */
-import { nanoid } from '@reduxjs/toolkit';
+import { rtk } from './rtk.js';
 import type {
   DateJSON,
   DateNumeric,
   SURL,
   Reference,
-} from './types';
+} from './types.js';
 
 /**
  * Function for no operation.
@@ -16,7 +16,7 @@ export const noop = () => { /** No operation. */ };
 /**
  * Create a reference to another type.
  */
-export const reference = <T>(key: string, id = nanoid()) => `${key}:${id}` as Reference<T>;
+export const reference = <T>(key: string, id = rtk.nanoid()) => `${key}:${id}` as Reference<T>;
 
 /**
  * Creates a string URL (aka SURL).

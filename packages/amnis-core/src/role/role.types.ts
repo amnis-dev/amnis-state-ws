@@ -1,5 +1,5 @@
-import type { Entity } from '../entity';
-import type { GrantString } from '../grant';
+import type { Entity } from '../entity/index.js';
+import type { GrantString } from '../grant/index.js';
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.

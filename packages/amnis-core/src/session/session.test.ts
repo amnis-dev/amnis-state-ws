@@ -1,5 +1,5 @@
-import { dateNumeric, reference } from '../core';
-import { sessionKey, sessionCreate } from './session';
+import { dateNumeric, reference } from '../core.js';
+import { sessionKey, sessionCreate } from './session.js';
 
 /**
  * ============================================================

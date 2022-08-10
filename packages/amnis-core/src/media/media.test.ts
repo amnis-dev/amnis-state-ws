@@ -1,5 +1,5 @@
-import { surl } from '../core';
-import { mediaKey, mediaCreate } from './media';
+import { surl } from '../core.js';
+import { mediaKey, mediaCreate } from './media.js';
 
 /**
  * ============================================================

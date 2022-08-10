@@ -1,9 +1,9 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 ---
-import { entityCreate } from '../entity';
-import type { LogBaseCreate } from '../log';
-import type { <%= Name %>, <%= Name %>Base, <%= Name %>BaseCreate } from './<%= name %>.types';
+import { entityCreate } from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import type { <%= Name %>, <%= Name %>Base, <%= Name %>BaseCreate } from './<%= name %>.types.js';
 
 export const <%= name %>Key = '<%= name %>';
 

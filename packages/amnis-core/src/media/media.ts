@@ -1,11 +1,11 @@
-import { surl } from '../core';
+import { surl } from '../core.js';
 import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { LogBaseCreate } from '../log';
-import type { Media } from './media.types';
+} from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import type { Media } from './media.types.js';
 
 export const mediaKey = 'media';
 

@@ -1,2 +1,2 @@
-export * from './permit.types';
-export * from './permit';
+export * from './permit.types.js';
+export * from './permit.js';

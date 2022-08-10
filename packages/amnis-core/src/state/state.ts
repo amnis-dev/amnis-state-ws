@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { StateCreate, StateQuery } from './state.types';
+import { StateCreate, StateQuery } from './state.types.js';
 
 function stateQueryReferenceMutate(
   stateQuery: StateQuery,

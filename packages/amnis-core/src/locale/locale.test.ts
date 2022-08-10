@@ -1,7 +1,7 @@
 import {
   localeKey, localeCreate, t, tk,
-} from './locale';
-import { localeDataEnLogs } from './locale.locale.en';
+} from './locale.js';
+import { localeDataEnLogs } from './locale.locale.en.js';
 
 /**
  * ============================================================

@@ -1,7 +1,7 @@
-import type { DateJSON, Reference, SURL } from '../types';
-import type { Entity } from '../entity/entity.types';
-import type { User } from '../user/user.types';
-import { Contact } from '../contact';
+import type { DateJSON, Reference, SURL } from '../types.js';
+import type { Entity } from '../entity/entity.types.js';
+import type { User } from '../user/user.types.js';
+import type { Contact } from '../contact/index.js';
 
 /**
  * Profile entity

@@ -1,6 +1,6 @@
-import { reference } from '../core';
-import { userKey } from '../user';
-import { profileKey, profileCreate } from './profile';
+import { reference } from '../core.js';
+import { userKey } from '../user/index.js';
+import { profileKey, profileCreate } from './profile.js';
 
 /**
  * ============================================================

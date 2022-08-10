@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
 ---
-import { <%= name %>Key, <%= name %>Create } from './<%= name %>';
+import { <%= name %>Key, <%= name %>Create } from './<%= name %>.js';
 
 /**
  * ============================================================

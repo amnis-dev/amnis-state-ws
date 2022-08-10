@@ -1,5 +1,5 @@
-import type { Role } from '../role';
-import type { Reference, DateNumeric } from '../types';
+import type { Role } from '../role/index.js';
+import type { Reference, DateNumeric } from '../types.js';
 
 /**
  * Unique reference symbol for a token string.

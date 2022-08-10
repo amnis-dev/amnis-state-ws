@@ -2,10 +2,10 @@ import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { LogBaseCreate } from '../log';
-import { regexWebUrl } from '../regex';
-import type { Website } from './website.types';
+} from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import { regexWebUrl } from '../regex.js';
+import type { Website } from './website.types.js';
 
 export const websiteKey = 'website';
 
