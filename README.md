@@ -75,7 +75,7 @@ import { reducerMap, reducerMiddleware } from '@amnis-state/env.react';
 
 ### Node.js Runtime
 
-Use this import if you are running your project in a Node.js environment.
+Use this import if you are running your project within a Node.js environment.
 
 ```typescript
 import { reducerMap, reducerMiddleware } from '@amnis-state/env.node';
