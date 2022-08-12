@@ -29,7 +29,7 @@ Workflows
 
 ### Prerequisite
 
-This library requires [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) as a state container.
+This library requires [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) to implement Redux state logic.
 
 ```sh
 # NPM
@@ -53,42 +53,39 @@ yarn add @amnis/state
 
 ## Basic Setup
 
-Amnis State can be quickly setup by adding the library's reducers and middlewares to your Redux store. Importing these resources depends the runtime environment of your project.
+Amnis State can be quickly setup by adding the library's reducers and middlewares to your Redux store. Importing these resources depends on the runtime environment of your project.
 
 There are three ways to import the reducers and middlewares...
 
-### Browser Runtime Import
+### Browser Runtime
+
+Use this import if you are running your project within a browser environment.
 
 ```typescript
-/** 
- * Use this import if you are running your project in a browser environment.
- */
 import { reducerMap, reducerMiddleware } from '@amnis-state/env.browser';
 ```
 
-### Browser Runtime (with React Tools) Import
+### Browser Runtime (with React)
+
+Use this import if you are running your project within a browser environment with React components.
 
 ```typescript
-/** 
- * Use this import if you are running your project in a browser environment with React.
- */
 import { reducerMap, reducerMiddleware } from '@amnis-state/env.react';
 ```
 
-### Node.js Runtime Import
+### Node.js Runtime
+
+Use this import if you are running your project in a Node.js environment.
 
 ```typescript
-/** 
- * Use this import if you are running your project in a browser environment with React.
- */
 import { reducerMap, reducerMiddleware } from '@amnis-state/env.node';
 ```
 
-### Redux Toolkit Configuration Example 
+### Example: Redux Toolkit Configuration 
 
 ```typescript
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from '@amnis-state/env.[your runtime]';
+import { reducerMap, reducerMiddleware } from '@amnis-state/env.[runtime]';
 
 /**
  * Setup your Redux store.
