@@ -24,3 +24,85 @@ Workflows
 [![Package](https://github.com/amnis-dev/amnis-state/actions/workflows/package.yml/badge.svg)](https://github.com/amnis-dev/amnis-state/actions/workflows/package.yml)
 
 </div>
+
+## Installation
+
+### Prerequisite
+
+This library requires [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) as a state container.
+
+```sh
+# NPM
+npm install @reduxjs/toolkit
+
+# Yarn
+yarn add @reduxjs/toolkit
+```
+
+### Add the Package
+
+Amnis State is available as an [npm package](https://www.npmjs.com/package/@amnis/state).
+
+```sh
+# NPM
+npm install @amnis/state
+
+# Yarn
+yarn add @amnis/state
+```
+
+## Basic Setup
+
+Amnis State can be quickly setup by adding the library's reducers and middlewares to your Redux store. Importing these resources depends the runtime environment of your project.
+
+There are three ways to import the reducers and middlewares...
+
+### Browser Runtime Import
+
+```typescript
+/** 
+ * Use this import if you are running your project in a browser environment.
+ */
+import { reducerMap, reducerMiddleware } from '@amnis-state/env.browser';
+```
+
+### Browser Runtime (with React Tools) Import
+
+```typescript
+/** 
+ * Use this import if you are running your project in a browser environment with React.
+ */
+import { reducerMap, reducerMiddleware } from '@amnis-state/env.react';
+```
+
+### Node.js Runtime Import
+
+```typescript
+/** 
+ * Use this import if you are running your project in a browser environment with React.
+ */
+import { reducerMap, reducerMiddleware } from '@amnis-state/env.node';
+```
+
+### Redux Toolkit Configuration Example 
+
+```typescript
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { reducerMap, reducerMiddleware } from '@amnis-state/env.[your runtime]';
+
+/**
+ * Setup your Redux store.
+ */
+const rootReducer = combineReducers(reducerMap);
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => (
+    getDefaultMiddleware().concat(reducerMiddleware)
+  ),
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export default store;
+```
