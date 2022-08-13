@@ -9,7 +9,7 @@
 <h1 align="center">Amnis State</h1>
 
 <p align="center">
-  A redux-based data management system for node-based applications.
+  A Redux-based data management system for Node.js applications.
 </p>
 
 <div align="center">
@@ -25,11 +25,17 @@ Workflows
 
 </div>
 
+## About
+
+Amnis State is a library of extensible data structures and logic for complex applications. It contains authentication, authorization, processing, and storage methods for that data; simplifying important patterns in enterprise level JavaScript applications.
+
+Amnis State is framework independent and can run in either a Browser or Node.js runtime environment.
+
 ## Installation
 
-### Prerequisite
+### Prerequisites
 
-This library requires [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) to implement Redux state logic.
+This library requires [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) to implement Redux state container.
 
 ```sh
 # NPM
@@ -38,6 +44,8 @@ npm install @reduxjs/toolkit
 # Yarn
 yarn add @reduxjs/toolkit
 ```
+
+Although it is not a requirement to utilize this library, it is highly recommended to [understand the logic and principles of Redux](https://redux.js.org/introduction/getting-started). It will help with troubleshooting and extending this library for your project needs.
 
 ### Add the Package
 
@@ -53,9 +61,9 @@ yarn add @amnis/state
 
 ## Basic Setup
 
-Amnis State can be quickly setup by adding the library's reducers and middlewares to your Redux store. Importing these resources depends on the runtime environment of your project.
+Amnis State can be quickly setup by adding the library's reducers and middlewares to your Redux store.
 
-There are three ways to import the reducers and middlewares...
+There are three ways to import the Redux reducers and middlewares based on your runtime environment...
 
 ### Browser Runtime
 
@@ -81,9 +89,12 @@ Use this import if you are running your project within a Node.js environment.
 import { reducerMap, reducerMiddleware } from '@amnis-state/env.node';
 ```
 
-### Example: Redux Toolkit Configuration 
+### Example: Redux Toolkit Configuration
 
 ```typescript
+/**
+ * store.ts
+ */
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { reducerMap, reducerMiddleware } from '@amnis-state/env.[runtime]';
 
