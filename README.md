@@ -29,13 +29,13 @@ Workflows
 
 Amnis State is a library of extensible data structures and logic for complex applications. Additionally, it contains authentication, authorization, processing, and storage methods for that data; simplifying important patterns in enterprise level JavaScript applications.
 
-Amnis State is framework independent and can run in either a Browser or Node.js runtime environment (with or without a UI layer).
+Amnis State is framework independent and can run in either a Browser or Node.js runtime - with or without a UI layer.
 
 ## Installation
 
 ### Prerequisites
 
-This library requires [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) to implement Redux state container.
+This library requires [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) to implement a state containment system.
 
 ```sh
 # NPM
@@ -45,7 +45,7 @@ npm install @reduxjs/toolkit
 yarn add @reduxjs/toolkit
 ```
 
-Although it is not a requirement to utilize this library, it is highly recommended to [understand the logic and principles of Redux](https://redux.js.org/introduction/getting-started). It will help with troubleshooting and extending this library for your project needs.
+Although it is not a requirement, it is highly recommended to [understand the logic and principles of Redux](https://redux.js.org/introduction/getting-started). It will help with customizing and extending this library for your specific project needs.
 
 ### Add the Package
 

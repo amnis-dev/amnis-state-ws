@@ -6,6 +6,14 @@ const config: Config.InitialOptions = {
   fakeTimers: {
     enableGlobally: true,
   },
+  modulePathIgnorePatterns: [
+    '.srv',
+    '.lib',
+    '.pkg',
+    '.dist',
+    '.web',
+    '.out',
+  ],
 };
 
 export default config;

@@ -5,6 +5,7 @@ export * from '@amnis/api/crud/crud.api.node';
 export * from '@amnis/api/crud/crud.process';
 export * from '@amnis/api/api.io.node';
 export * from '@amnis/api/validators';
+export * from '@amnis/api/config';
 export * from '@amnis/auth/env.node';
 export * from './system';
 export * from './reducer';

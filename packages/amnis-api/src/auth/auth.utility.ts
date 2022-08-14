@@ -1,4 +1,4 @@
-import { AUTH_SESSION_LIFE, AUTH_TOKEN_LIFE } from '@amnis/auth/const';
+import { cryptConfig } from '@amnis/auth/config';
 import { sessionEncode } from '@amnis/auth/session';
 import { jwtEncode } from '@amnis/auth/token';
 
@@ -70,7 +70,7 @@ export function sessionGenerate(
   user: User,
   profile: Profile,
 ): Session {
-  const sessionExpires = dateNumeric(AUTH_SESSION_LIFE);
+  const sessionExpires = dateNumeric(cryptConfig.AUTH_SESSION_LIFE);
 
   /**
    * Create the new user session.
@@ -94,7 +94,7 @@ export function tokenGenerate(
   user: User,
   type: TokenType = 'access',
 ): Token {
-  const tokenExpires = dateNumeric(type === 'access' ? AUTH_TOKEN_LIFE : '200d');
+  const tokenExpires = dateNumeric(type === 'access' ? cryptConfig.AUTH_TOKEN_LIFE : '200d');
 
   /**
    * Create the JWT data.

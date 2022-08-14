@@ -1,4 +1,4 @@
-import { AUTH_SESSION_LIFE } from '@amnis/auth/const';
+import { cryptConfig } from '@amnis/auth/config';
 import { sessionEncode } from '@amnis/auth/session';
 import { dateNumeric } from '@amnis/core/core';
 import { profileKey } from '@amnis/core/profile';
@@ -78,7 +78,7 @@ const process: ApiProcess<ApiAuthIORenew> = (context) => (
      */
     const sessionNew = sessionCreate({
       $subject: session.$subject,
-      exp: dateNumeric(AUTH_SESSION_LIFE),
+      exp: dateNumeric(cryptConfig.AUTH_SESSION_LIFE),
       name: session.name,
       avatar: session.avatar,
       admin: session.admin,

@@ -1,4 +1,4 @@
-export * from './const';
+export * from './config';
 export * from './authwall';
 export * from './crypto';
 export * from './header';

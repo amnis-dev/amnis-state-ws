@@ -1,8 +1,8 @@
 import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
 import jwt from 'jsonwebtoken';
-import { AUTH_TOKEN_SECRET } from './const';
+import { cryptConfig } from './config';
 
-export function jwtEncode(jwtDecoded: JWTDecoded, secret = AUTH_TOKEN_SECRET) {
+export function jwtEncode(jwtDecoded: JWTDecoded, secret = cryptConfig.AUTH_TOKEN_SECRET) {
   if (secret.length < 21) {
     throw new Error('Secret not set or strong enough.');
   }
@@ -46,7 +46,7 @@ export function jwtDecode(
 
 export function jwtVerify(
   jwtEncoded: JWTEncoded,
-  secret = AUTH_TOKEN_SECRET,
+  secret = cryptConfig.AUTH_TOKEN_SECRET,
 ): JWTDecoded | undefined {
   try {
     const decoded = jwt.verify(jwtEncoded, secret) as JWTDecoded;

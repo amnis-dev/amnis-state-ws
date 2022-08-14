@@ -2,7 +2,7 @@
 to: "<%= path ? `${path}/${name}/${name}.react.ts` : null %>"
 ---
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { apiBaseUrl } from '../const';
+import { apiBaseUrl } from '../config';
 import { ApiJSON, ApiBaseQueryFn } from '../types';
 import {
   api<%= Name %>Queries,
