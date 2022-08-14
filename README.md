@@ -27,9 +27,9 @@ Workflows
 
 ## About
 
-Amnis State is a library of extensible data structures and logic for complex applications. Additionally, it contains authentication, authorization, processing, and storage methods for that data; simplifying important patterns in enterprise level JavaScript applications.
+Amnis State is a library of extensible data structures and logic for complex applications. It contains typings, validations, actions, reducers, authentication, authorization, processing, and persistent storage methods; simplifying important patterns in enterprise-level JavaScript applications.
 
-Amnis State is framework independent and can run in either a Browser or Node.js runtime - with or without a UI layer.
+Amnis State is framework independent. It can run within a Browser or Node.js runtime (with or without a UI layer).
 
 ## Installation
 
@@ -45,7 +45,7 @@ npm install @reduxjs/toolkit
 yarn add @reduxjs/toolkit
 ```
 
-Although it is not a requirement, it is highly recommended to [understand the logic and principles of Redux](https://redux.js.org/introduction/getting-started). It will help with customizing and extending this library for your specific project needs.
+It is highly recommended to [understand the logic and principles of Redux](https://redux.js.org/introduction/getting-started). It will help with customizing and extending this library for your specific project needs.
 
 ### Add the Package
 
@@ -75,7 +75,7 @@ import { reducerMap, reducerMiddleware } from '@amnis-state/env.browser';
 
 ### Browser Runtime (with React)
 
-Use this import if you are running your project within a browser environment with React components.
+Use this import if you are running your project within a browser environment leveraging React components.
 
 ```typescript
 import { reducerMap, reducerMiddleware } from '@amnis-state/env.react';
