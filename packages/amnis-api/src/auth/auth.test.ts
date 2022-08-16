@@ -7,7 +7,7 @@ import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
 import { Token, tokenCreate } from '@amnis/core/token';
 import { jwtEncode } from '@amnis/auth/token';
-import { apiAuthProcesses } from './auth.process';
+import { apiAuthProcess } from './auth.process';
 import { apiIO } from '../api.io.node';
 import { validatorsSetup } from '../validators';
 import authSchema from './auth.schema.json';
@@ -73,7 +73,7 @@ const processes = apiIO({
   store: appStore,
   database: memory,
   validators: validatorsSetup(authSchema),
-}, apiAuthProcesses);
+}, apiAuthProcess);
 
 /**
  * ============================================================

@@ -6,11 +6,11 @@ import { crudProcessRead } from './crud.process.read';
 import { crudProcessUpdate } from './crud.process.update';
 import { crudProcessDelete } from './crud.process.delete';
 
-export const apiCrudProcesses: ApiCrudProcesses = {
+export const apiCrudProcess: ApiCrudProcesses = {
   create: crudProcessCreate,
   read: crudProcessRead,
   update: crudProcessUpdate,
   delete: crudProcessDelete,
 };
 
-export default { apiCrudProcesses };
+export default { apiCrudProcess };

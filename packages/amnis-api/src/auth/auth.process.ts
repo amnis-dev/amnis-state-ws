@@ -7,7 +7,7 @@ import { authProcessPcke } from './auth.process.pkce';
 import { authProcessRenew } from './auth.process.renew';
 import { authProcessVerify } from './auth.process.verify';
 
-export const apiAuthProcesses: ApiAuthProcesses = {
+export const apiAuthProcess: ApiAuthProcesses = {
   login: authProcessLogin,
   logout: authProcessLogout,
   pkce: authProcessPcke,
@@ -15,4 +15,4 @@ export const apiAuthProcesses: ApiAuthProcesses = {
   verify: authProcessVerify,
 };
 
-export default { apiAuthProcesses };
+export default { apiAuthProcess };

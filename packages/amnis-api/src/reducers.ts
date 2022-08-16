@@ -10,6 +10,7 @@ import { userKey } from '@amnis/core/user';
 import { sessionKey } from '@amnis/core/session';
 import { profileKey } from '@amnis/core/profile';
 import { LogBaseCreate, logCreate, logKey } from '@amnis/core/log';
+import type { Reference } from '@amnis/core/types';
 import { apiAuth } from './auth/auth.api.browser';
 import { apiCrud } from './crud/crud.api.browser';
 import type { ApiOutput } from './types';
@@ -208,7 +209,7 @@ export function apiExtraReducers<E extends Entity>(
 
       if (
         state.selection.length > 0
-        && result[key].some((id) => state.selection.includes(id))
+        && result[key].some((id: Reference) => state.selection.includes(id))
       ) {
         state.selection = state.selection.filter((selectionId) => (
           result[key].includes(selectionId)

@@ -2,8 +2,8 @@
 import coreSchema from '@amnis/core/core.schema.json';
 import { coreActions } from '@amnis/core/actions';
 
-import { apiAuthProcesses } from '@amnis/api/auth/auth.process';
-import { apiCrudProcesses } from '@amnis/api/crud/crud.process';
+import { apiAuthProcess } from '@amnis/api/auth/auth.process';
+import { apiCrudProcess } from '@amnis/api/crud/crud.process';
 import { apiConfig } from '@amnis/api/config';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { validatorsSetup } from '@amnis/api/validators';
@@ -34,7 +34,7 @@ const authHandlers = apiIO({
   store: serverStore,
   database: memory,
   validators,
-}, apiAuthProcesses);
+}, apiAuthProcess);
 
 /**
  * Setup the server processes for CRUD operations.
@@ -43,7 +43,7 @@ const crudHanders = apiIO({
   store: serverStore,
   database: memory,
   validators,
-}, apiCrudProcesses);
+}, apiCrudProcess);
 
 /**
  * Mock the Auth API server for the tests.

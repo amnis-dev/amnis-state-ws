@@ -4,8 +4,8 @@ import stateSchema from '@amnis/state/state.schema.json';
 import authSchema from '@amnis/api/auth/auth.schema.json';
 
 import { apiConfig } from '@amnis/api/config';
-import { apiAuthProcesses } from '@amnis/api/auth/auth.process';
-import { apiCrudProcesses } from '@amnis/api/crud/crud.process';
+import { apiAuthProcess } from '@amnis/api/auth/auth.process';
+import { apiCrudProcess } from '@amnis/api/crud/crud.process';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 
 import { memory } from '@amnis/db/memory';
@@ -29,7 +29,7 @@ export function apiSetup(serverStore: Store) {
     store: serverStore,
     database: memory,
     validators,
-  }, apiAuthProcesses);
+  }, apiAuthProcess);
 
   /**
    * Setup the server processes for CRUD operations.
@@ -38,7 +38,7 @@ export function apiSetup(serverStore: Store) {
     store: serverStore,
     database: memory,
     validators,
-  }, apiCrudProcesses);
+  }, apiCrudProcess);
 
   /**
    * Mock the Auth API server for the tests.

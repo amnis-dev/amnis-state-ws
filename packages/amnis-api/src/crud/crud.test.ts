@@ -12,7 +12,7 @@ import { apiIO } from '@amnis/api/api.io.node';
 
 import { jwtEncode } from '@amnis/auth/token';
 import type { ApiInput } from '../types';
-import { apiCrudProcesses } from './crud.process';
+import { apiCrudProcess } from './crud.process';
 
 const appStore = storeSetup();
 
@@ -25,7 +25,7 @@ const io = apiIO({
   store: appStore,
   database: memory,
   validators,
-}, apiCrudProcesses);
+}, apiCrudProcess);
 
 const expires = dateNumeric(new Date(Date.now() + 60000));
 /**

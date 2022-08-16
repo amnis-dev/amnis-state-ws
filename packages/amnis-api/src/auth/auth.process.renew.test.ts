@@ -9,7 +9,7 @@ import { memory } from '@amnis/db/memory';
 import { apiIO } from '../api.io.node';
 import { ApiInput } from '../types';
 import { validatorsSetup } from '../validators';
-import { apiAuthProcesses } from './auth.process';
+import { apiAuthProcess } from './auth.process';
 import authSchema from './auth.schema.json';
 
 /**
@@ -57,7 +57,7 @@ const io = apiIO({
   store: appStore,
   database: memory,
   validators: validatorsSetup(authSchema),
-}, apiAuthProcesses);
+}, apiAuthProcess);
 
 test('Should be able to renew session and tokens', async () => {
   const input: ApiInput = {
