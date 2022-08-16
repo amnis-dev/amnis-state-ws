@@ -206,6 +206,14 @@ export function coreExtraReducers<E extends Entity>(
       }
     }
   });
+
+  builder.addCase(coreActions.expunge, (state) => {
+    state.active = null;
+    state.focused = null;
+    state.selection = [];
+    /** @ts-ignore */
+    adapter.removeAll(state);
+  });
 }
 
 export default { coreReducers, coreExtraReducers };
