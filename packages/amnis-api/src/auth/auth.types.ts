@@ -15,14 +15,23 @@ export interface ApiAuthBodyLogin {
    * @minLength 2
    * @maxLength 24
    * @pattern ^[a-zA-Z0-9-_]+$
+   * Unique name for login credentials
    */
-  username: string,
+  username: string;
 
   /**
    * @minLength 6
    * @maxLength 64
+   * Secret phrase associated with the username.
    */
-  password: string,
+  password: string;
+
+  /**
+   * @minLength 3
+   * @maxLength 32
+   * Domain to scope data access.
+   */
+  domain?: string;
 }
 
 /**
@@ -75,6 +84,13 @@ export interface ApiAuthBodyPkce {
    * @pattern ^[a-zA-Z0-9-_]+$
    */
   tenantId?: string;
+
+  /**
+   * @minLength 3
+   * @maxLength 32
+   * Domain to scope data access.
+   */
+  domain?: string;
 
   /**
    * True or false value.

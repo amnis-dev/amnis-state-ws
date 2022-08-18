@@ -90,6 +90,11 @@ export interface JWTDecoded {
   typ: TokenType;
 
   /**
+   * Domain.
+   */
+  dmn?: string;
+
+  /**
    * If this is considered an administrative token.
    */
   adm?: boolean;

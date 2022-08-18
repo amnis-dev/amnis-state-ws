@@ -63,7 +63,9 @@ test('memory db should NOT select book with mismatching title.', async () => {
         },
       },
     },
-  }, { [bookKey]: 'global' });
+  }, {
+    scope: { [bookKey]: 'global' },
+  });
 
   expect(
     result,
@@ -86,7 +88,9 @@ test('memory db should select book with matching title.', async () => {
         },
       },
     },
-  }, { [bookKey]: 'global' });
+  }, {
+    scope: { [bookKey]: 'global' },
+  });
 
   expect(
     result,
@@ -109,7 +113,9 @@ test('memory db should delete a book entity by id.', async () => {
         },
       },
     },
-  }, { [bookKey]: 'global' });
+  }, {
+    scope: { [bookKey]: 'global' },
+  });
 
   expect(
     resultRead,
@@ -135,11 +141,62 @@ test('memory db should delete a book entity by id.', async () => {
         },
       },
     },
-  }, { [bookKey]: 'global' });
+  }, {
+    scope: { [bookKey]: 'global' },
+  });
 
   expect(
     resultRead2,
   ).toEqual({
     [bookKey]: [],
+  });
+});
+
+/**
+ * ============================================================
+ */
+test('memory db should create and read entries scoped by domain.', async () => {
+  await memory.create(
+    {
+      [bookKey]: books,
+    },
+    {
+      domain: 'amnis',
+    },
+  );
+
+  const resultNoDomain = await memory.read({
+    [bookKey]: {
+      $query: {
+        title: {
+          $eq: 'Lord of the Rings',
+        },
+      },
+    },
+  }, {
+    scope: { [bookKey]: 'global' },
+  });
+
+  expect(
+    resultNoDomain,
+  ).toEqual({});
+
+  const resultDomain = await memory.read({
+    [bookKey]: {
+      $query: {
+        title: {
+          $eq: 'Lord of the Rings',
+        },
+      },
+    },
+  }, {
+    scope: { [bookKey]: 'global' },
+    domain: 'amnis',
+  });
+
+  expect(
+    resultDomain,
+  ).toEqual({
+    [bookKey]: [books[0]],
   });
 });

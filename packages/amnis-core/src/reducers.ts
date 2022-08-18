@@ -207,7 +207,7 @@ export function coreExtraReducers<E extends Entity>(
     }
   });
 
-  builder.addCase(coreActions.expunge, (state) => {
+  builder.addCase(coreActions.wipe, (state) => {
     state.active = null;
     state.focused = null;
     state.selection = [];

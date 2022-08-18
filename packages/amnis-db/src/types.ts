@@ -8,28 +8,30 @@ import type {
   StateQuery,
 } from '@amnis/core/state';
 
+export interface DatabaseControls {
+  scope?: AuthScope;
+  subject?: Reference;
+  domain?: string;
+}
+
 export type DatabaseCreateMethod = (
   state: StateCreate,
-  scope?: AuthScope,
-  subject?: Reference
+  controls?: DatabaseControls
 ) => Promise<StateCreate>;
 
 export type DatabaseReadMethod = (
   select: StateQuery,
-  scope?: AuthScope,
-  subject?: Reference
+  controls?: DatabaseControls
 ) => Promise<StateCreate>;
 
 export type DatabaseUpdateMethod = (
   state: StateUpdate,
-  scope?: AuthScope,
-  subject?: Reference
+  controls?: DatabaseControls
 ) => Promise<StateCreate>;
 
 export type DatabaseDeleteMethod = (
   references: StateDelete,
-  scope?: AuthScope,
-  subject?: Reference
+  controls?: DatabaseControls
 ) => Promise<StateDelete>;
 
 /**

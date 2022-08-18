@@ -58,7 +58,14 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
      */
     const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Update);
 
-    const result = await database.update(stateFinal, authScope, jwt.sub);
+    const result = await database.update(
+      stateFinal,
+      {
+        scope: authScope,
+        subject: jwt.sub,
+        domain: jwt.dmn,
+      },
+    );
 
     /**
      * Add errors for denied keys.

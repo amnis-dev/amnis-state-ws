@@ -41,7 +41,14 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
      */
     const authScope = jwt?.adm === true ? undefined : authScopeCreate(grants, Task.Update);
 
-    const result = await database.delete(stateFinal, authScope, jwt?.sub);
+    const result = await database.delete(
+      stateFinal,
+      {
+        scope: authScope,
+        subject: jwt?.sub,
+        domain: jwt?.dmn,
+      },
+    );
 
     /**
      * Add errors for denied keys.

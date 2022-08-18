@@ -2,7 +2,6 @@ import { createAction } from '@reduxjs/toolkit';
 import type {
   StateCreate,
   StateDelete,
-  StateUpdate,
 } from './state';
 
 export const coreActions = {
@@ -14,7 +13,7 @@ export const coreActions = {
   /**
    * Batch updates entities.
    */
-  update: createAction<StateUpdate>('@core/update'),
+  update: createAction<StateCreate>('@core/update'),
 
   /**
    * Batch deletes entities.
@@ -24,7 +23,7 @@ export const coreActions = {
   /**
    * Wipes all entities from the state.
    */
-  expunge: createAction('@core/expunge'),
+  wipe: createAction('@core/wipe'),
 };
 
 export default { coreActions };

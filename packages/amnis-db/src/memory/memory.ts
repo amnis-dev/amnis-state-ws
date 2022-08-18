@@ -43,7 +43,8 @@ export const memory: Database = {
    * CREATE
    * ----------------------------------------
    */
-  create: async (state) => {
+  create: async (state, controls = {}) => {
+    const { domain } = controls;
     const result: StateCreate = {};
 
     Object.keys(state).every((sliceKey) => {
@@ -56,16 +57,19 @@ export const memory: Database = {
         if (!entity || !entityId) {
           return true;
         }
-        if (!storage[sliceKey]) {
-          storage[sliceKey] = {};
+
+        const storageKey = domain ? `${domain}_${sliceKey}` : sliceKey;
+
+        if (!storage[storageKey]) {
+          storage[storageKey] = {};
         }
-        if (storage[sliceKey][entityId]) {
+        if (storage[storageKey][entityId]) {
           return true;
         }
         if (!result[sliceKey]) {
           result[sliceKey] = [];
         }
-        storage[sliceKey][entityId] = entity;
+        storage[storageKey][entityId] = entity;
         result[sliceKey].push(entity);
         return true;
       });
@@ -79,10 +83,13 @@ export const memory: Database = {
    * READ
    * ----------------------------------------
    */
-  read: async (select, scope, subject) => {
+  read: async (select, controls = {}) => {
+    const { scope, subject, domain } = controls;
     const result: StateCreate = {};
 
     Object.keys(select).every((selectKey) => {
+      const storageKey = domain ? `${domain}_${selectKey}` : selectKey;
+
       /**
        * Ensure this selection is within auth scope.
        */
@@ -95,7 +102,7 @@ export const memory: Database = {
       /**
        * Skip if the query is undefined or key doesn't exist on storage.
        */
-      if (!query || !storage[selectKey]) {
+      if (!query || !storage[storageKey]) {
         return true;
       }
 
@@ -106,7 +113,7 @@ export const memory: Database = {
         query.delete = { $eq: false };
       }
 
-      result[selectKey] = Object.values(storage[selectKey]);
+      result[selectKey] = Object.values(storage[storageKey]);
 
       /**
        * Loop through the query properties.
@@ -151,10 +158,13 @@ export const memory: Database = {
    * UPDATE
    * ----------------------------------------
    */
-  update: async (state, scope, subject) => {
+  update: async (state, controls = {}) => {
+    const { scope, subject, domain } = controls;
     const result: StateCreate = {};
 
     Object.keys(state).every((sliceKey) => {
+      const storageKey = domain ? `${domain}_${sliceKey}` : sliceKey;
+
       /**
        * Ensure this selection is within auth scope.
        */
@@ -172,27 +182,27 @@ export const memory: Database = {
         if (!entity || !entityId) {
           return true;
         }
-        if (!storage[sliceKey]) {
+        if (!storage[storageKey]) {
           return true;
         }
-        if (!storage[sliceKey][entityId]) {
+        if (!storage[storageKey][entityId]) {
           return true;
         }
         /**
          * Check to ensure this entity is within the scope.
          * If the scope is owner only, the entity must have the owner id match the subject.
          */
-        if (scope && scope[sliceKey] === 'owned' && storage[sliceKey][entityId].$owner !== subject) {
+        if (scope && scope[sliceKey] === 'owned' && storage[storageKey][entityId].$owner !== subject) {
           return false;
         }
         if (!result[sliceKey]) {
           result[sliceKey] = [];
         }
-        storage[sliceKey][entityId] = {
-          ...storage[sliceKey][entityId],
+        storage[storageKey][entityId] = {
+          ...storage[storageKey][entityId],
           ...entity,
         };
-        result[sliceKey].push(storage[sliceKey][entityId]);
+        result[sliceKey].push(storage[storageKey][entityId]);
         return true;
       });
 
@@ -206,10 +216,13 @@ export const memory: Database = {
    * DELETE
    * ----------------------------------------
    */
-  delete: async (state, scope, subject) => {
+  delete: async (state, controls = {}) => {
+    const { scope, subject, domain } = controls;
     const result: StateDelete = {};
 
     Object.keys(state).every((sliceKey) => {
+      const storageKey = domain ? `${domain}_${sliceKey}` : sliceKey;
+
       /**
        * Ensure this selection is within auth scope.
        */
@@ -217,24 +230,24 @@ export const memory: Database = {
         return true;
       }
 
-      if (!storage[sliceKey]) {
+      if (!storage[storageKey]) {
         return true;
       }
       const references = state[sliceKey];
 
       references.every((ref) => {
-        if (!storage[sliceKey][ref]) {
+        if (!storage[storageKey][ref]) {
           return true;
         }
         /**
          * Check to ensure this entity is within the scope.
          * If the scope is owner only, the entity must have the owner id match the subject.
          */
-        if (scope && scope[sliceKey] === 'owned' && storage[sliceKey][ref].$owner !== subject) {
+        if (scope && scope[sliceKey] === 'owned' && storage[storageKey][ref].$owner !== subject) {
           return false;
         }
 
-        delete storage[sliceKey][ref];
+        delete storage[storageKey][ref];
         if (!result[sliceKey]) {
           result[sliceKey] = [];
         }
