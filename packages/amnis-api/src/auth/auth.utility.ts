@@ -30,7 +30,9 @@ export async function userFindByName(
         },
       },
     },
-  }, { [userKey]: 'global' });
+  }, {
+    scope: { [userKey]: 'global' },
+  });
 
   if (!resultsUser[userKey]?.length) {
     return undefined;
@@ -54,7 +56,9 @@ export async function userFindById(
         },
       },
     },
-  }, { [userKey]: 'global' });
+  }, {
+    scope: { [userKey]: 'global' },
+  });
 
   if (!resultsUser[userKey]?.length) {
     return undefined;
@@ -148,7 +152,9 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
         },
       },
     },
-  }, { [userKey]: 'global', [profileKey]: 'global' });
+  }, {
+    scope: { [userKey]: 'global', [profileKey]: 'global' },
+  });
 
   /**
    * Create a new profile and store it if no results were found.

@@ -84,7 +84,9 @@ export async function register(
   /**
    * StateCreate newly created user and profile into the database.
    */
-  const resultDbCreate = await database.create(insertion, { user: 'global', profile: 'global' });
+  const resultDbCreate = await database.create(insertion, {
+    scope: { user: 'global', profile: 'global' },
+  });
   output.json.result = resultDbCreate;
 
   /**
