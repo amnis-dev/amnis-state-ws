@@ -70,7 +70,7 @@ There are three ways to import the Redux reducers and middlewares based on your 
 Use this import if you are running your project within a browser environment.
 
 ```typescript
-import { reducerMap, reducerMiddleware } from '@amnis-state/env.browser';
+import { reducerMap, reducerMiddleware } from '@amnis/state/env.browser';
 ```
 
 ### Browser Runtime (with React)
@@ -78,7 +78,7 @@ import { reducerMap, reducerMiddleware } from '@amnis-state/env.browser';
 Use this import if you are running your project within a browser environment leveraging React components.
 
 ```typescript
-import { reducerMap, reducerMiddleware } from '@amnis-state/env.react';
+import { reducerMap, reducerMiddleware } from '@amnis/state/env.react';
 ```
 
 ### Node.js Runtime
@@ -86,7 +86,7 @@ import { reducerMap, reducerMiddleware } from '@amnis-state/env.react';
 Use this import if you are running your project within a Node.js environment.
 
 ```typescript
-import { reducerMap, reducerMiddleware } from '@amnis-state/env.node';
+import { reducerMap, reducerMiddleware } from '@amnis/state/env.node';
 ```
 
 ### Example: Redux Toolkit Configuration
@@ -96,7 +96,7 @@ import { reducerMap, reducerMiddleware } from '@amnis-state/env.node';
  * store.ts
  */
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from '@amnis-state/env.[runtime]';
+import { reducerMap, reducerMiddleware } from '@amnis/state/env.[runtime]';
 
 /**
  * Setup your Redux store.

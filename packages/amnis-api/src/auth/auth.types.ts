@@ -29,7 +29,8 @@ export interface ApiAuthBodyLogin {
   /**
    * @minLength 3
    * @maxLength 32
-   * Domain to scope data access.
+   * @pattern ^[a-zA-Z0-9]*$
+   * Domain to scope data access. Only alphanumeric characters allowed.
    */
   domain?: string;
 }
@@ -88,7 +89,8 @@ export interface ApiAuthBodyPkce {
   /**
    * @minLength 3
    * @maxLength 32
-   * Domain to scope data access.
+   * @pattern ^[a-zA-Z0-9]*$
+   * Domain to scope data access. Only alphanumeric characters allowed.
    */
   domain?: string;
 
