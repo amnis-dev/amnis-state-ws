@@ -5,7 +5,8 @@ import {
 import { memory } from '@amnis/db/memory';
 
 import { initialState } from './initial';
-import { store as storeDefault } from '../store';
+import { store as storeDefault } from './store';
+import { systemActions } from '../system';
 
 export interface ContextOptions extends Partial<ApiContext> {
   initial?: StateCreate;
@@ -32,10 +33,15 @@ export async function contextCreate(options: ContextOptions = {}): Promise<ApiCo
    * Initialize the system if one isn't found.
    */
   if (!readResult[systemKey]?.length) {
-    await databaseNext.create(initialNext);
+    const createResult = await databaseNext.create(initialNext);
+    const system = createResult[systemKey][0];
+    storeNext.dispatch(coreActions.create(createResult));
+    storeNext.dispatch(systemActions.activeSet(system.$id));
+  } else {
+    const system = readResult[systemKey][0];
+    storeNext.dispatch(coreActions.create(readResult));
+    storeNext.dispatch(systemActions.activeSet(system.$id));
   }
-
-  storeNext.dispatch(coreActions.create(readResult));
 
   return {
     store: storeNext,
