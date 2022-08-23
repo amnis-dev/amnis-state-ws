@@ -29,7 +29,7 @@ Workflows
 
 Amnis State is a library of extensible data structures and logic for complex applications. It contains typings, validations, actions, reducers, authentication, authorization, processing, and persistent storage methods. The target is to simplify important patterns in enterprise-level JavaScript applications.
 
-Amnis State is framework independent. It can be utilized within a Browser or Node.js runtime (with or without a UI layer).
+Amnis State is framework independent. It can be utilized within a Browser or Node.js runtime (with or without a UI layer). For example: [Express](https://github.com/expressjs/express), [React](https://github.com/facebook/react/), or [Angular](https://github.com/angular/angular).
 
 ## Installation
 
