@@ -3,7 +3,7 @@ import { systemSelectors } from '../system/index';
 import { roleSelectors } from '../role/index';
 
 test('should create initial node context', async () => {
-  const context = await contextCreate();
+  const context = await contextCreate({ initialize: true });
 
   const systems = systemSelectors.selectAll(context.store.getState());
   const roles = roleSelectors.selectAll(context.store.getState());
