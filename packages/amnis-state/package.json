@@ -1,6 +1,6 @@
 {
   "name": "@amnis/state",
-  "version": "0.2.0-alpha.11",
+  "version": "0.2.0-alpha.12",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -12,8 +12,8 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.2.0-alpha.11",
-    "@amnis/auth": "0.2.0-alpha.11",
-    "@amnis/api": "0.2.0-alpha.11"
+    "@amnis/core": "0.2.0-alpha.12",
+    "@amnis/auth": "0.2.0-alpha.12",
+    "@amnis/api": "0.2.0-alpha.12"
   }
 }
