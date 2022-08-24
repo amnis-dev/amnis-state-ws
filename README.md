@@ -31,6 +31,10 @@ Amnis State is a library of extensible data structures and logic for complex app
 
 Amnis State is framework independent. It can be utilized within a Browser or Node.js runtime (with or without a UI layer). For example: [Express](https://github.com/expressjs/express), [React](https://github.com/facebook/react/), or [Angular](https://github.com/angular/angular).
 
+
+## Important Notice
+
+This package is still in the Alpha stages of development. Expect frequent breaking changes as this library is being refined. I expect to have a stable beta release for Amnis State by the beginning of 2023.
 ## Installation
 
 ### Prerequisites
