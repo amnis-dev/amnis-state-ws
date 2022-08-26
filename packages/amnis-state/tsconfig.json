@@ -8,7 +8,10 @@
     "sourceMap": false,
     "rootDir": "./src"
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.json"
+  ],
   "references": [
     { "path": "../amnis-core/tsconfig.json" },
     { "path": "../amnis-api/tsconfig.json" }
