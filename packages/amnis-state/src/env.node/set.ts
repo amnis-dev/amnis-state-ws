@@ -1,16 +1,23 @@
 import { apiAuth } from '@amnis/api/auth/auth.api.node';
 import { apiCrud } from '@amnis/api/crud/crud.api.node';
 
-import * as base from '../reducer';
+import baseSet from '../set';
 
-export const reducerMap = {
+const reducers = {
   [apiAuth.reducerPath]: apiAuth.reducer,
   [apiCrud.reducerPath]: apiCrud.reducer,
-  ...base.reducerMap,
+  ...baseSet.reducers,
 };
 
-export const reducerMiddleware = [
+const middleware = [
   apiAuth.middleware,
   apiCrud.middleware,
-  ...base.reducerMiddleware,
+  ...baseSet.middleware,
 ];
+
+export const set = {
+  reducers,
+  middleware,
+};
+
+export default set;

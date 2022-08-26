@@ -15,14 +15,14 @@ export interface ApiAuthBodyLogin {
    * @minLength 2
    * @maxLength 24
    * @pattern ^[a-zA-Z0-9-_]+$
-   * Unique name for login credentials
+   * @description Unique name for login credentials
    */
   username: string;
 
   /**
    * @minLength 6
    * @maxLength 64
-   * Secret phrase associated with the username.
+   * @description Secret phrase associated with the username.
    */
   password: string;
 
@@ -30,7 +30,7 @@ export interface ApiAuthBodyLogin {
    * @minLength 3
    * @maxLength 32
    * @pattern ^[a-zA-Z0-9]*$
-   * Domain to scope data access. Only alphanumeric characters allowed.
+   * @description Domain to scope data access. Only alphanumeric characters allowed.
    */
   domain?: string;
 }
@@ -90,7 +90,7 @@ export interface ApiAuthBodyPkce {
    * @minLength 3
    * @maxLength 32
    * @pattern ^[a-zA-Z0-9]*$
-   * Domain to scope data access. Only alphanumeric characters allowed.
+   * @description Domain to scope data access. Only alphanumeric characters allowed.
    */
   domain?: string;
 

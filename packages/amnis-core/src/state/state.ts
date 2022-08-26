@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { StateCreate, StateQuery } from './state.types';
+import type { EntityState } from '@reduxjs/toolkit';
+import type { Entity } from '../entity';
+import type { State, StateCreate, StateQuery } from './state.types';
 
 function stateQueryReferenceMutate(
   stateQuery: StateQuery,
@@ -87,4 +89,23 @@ export function stateReferenceQuery(stateCreate: StateCreate): StateQuery {
   return stateQuery;
 }
 
-export default { stateReferenceQuery };
+/**
+ * Converts a redux state tree to a state create object type.
+ */
+export function stateToCreate(state: State): StateCreate {
+  const stateCreate: StateCreate = {};
+
+  Object.keys(state).every((sliceKey) => {
+    const slice = state[sliceKey] as EntityState<Entity>;
+
+    if (!slice.entities) {
+      return true;
+    }
+
+    stateCreate[sliceKey] = Object.values(slice.entities) as Entity[];
+
+    return true;
+  });
+
+  return stateCreate;
+}

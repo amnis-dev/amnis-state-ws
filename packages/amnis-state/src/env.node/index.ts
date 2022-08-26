@@ -4,4 +4,4 @@ export * from '@amnis/api/index.node';
 export * from './context';
 export * from './initial';
 export * from './system';
-export * from './reducer';
+export * from './set';

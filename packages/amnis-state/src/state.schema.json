@@ -5,10 +5,22 @@
     "StateCreate": {
       "type": "object",
       "properties": {
-        "user": {
+        "contact": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CUser%3E"
+            "$ref": "#/definitions/EntityCreate%3CContact%3E"
+          }
+        },
+        "log": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CLog%3E"
+          }
+        },
+        "profile": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CProfile%3E"
           }
         },
         "role": {
@@ -17,20 +29,483 @@
             "$ref": "#/definitions/EntityCreate%3CRole%3E"
           }
         },
+        "system": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CSystem%3E"
+          }
+        },
+        "user": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CUser%3E"
+          }
+        },
         "session": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityCreate%3CSession%3E"
           }
         },
-        "profile": {
+        "website": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CProfile%3E"
+            "$ref": "#/definitions/EntityCreate%3CWebsite%3E"
           }
         }
       },
       "additionalProperties": false
+    },
+    "EntityCreate<Contact>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name (or title) of the contact",
+          "title": "Name"
+        },
+        "phones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "phone numbers",
+          "title": "Phone Numbers"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Contact emails.",
+          "title": "E-Mail Addresses"
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "Contact's social urls."
+        }
+      },
+      "required": [
+        "emails",
+        "name",
+        "phones",
+        "socials"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Contact>": {
+      "$ref": "#/definitions/EntityOmit%3CContact%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Contact>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name (or title) of the contact",
+          "title": "Name"
+        },
+        "phones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "phone numbers",
+          "title": "Phone Numbers"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Contact emails.",
+          "title": "E-Mail Addresses"
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "Contact's social urls."
+        }
+      },
+      "required": [
+        "name",
+        "phones",
+        "emails",
+        "socials"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "SURL": {
+      "type": "string",
+      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    },
+    "Reference": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "EntityCreate<Log>": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "$ref": "#/definitions/LogLevel",
+          "description": "Level of the log."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the log."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the log."
+        },
+        "system": {
+          "type": "string",
+          "description": "System this log is from."
+        },
+        "$invoker": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "Reference to a user that invoked the log."
+        }
+      },
+      "required": [
+        "description",
+        "level",
+        "system",
+        "title"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Log>": {
+      "$ref": "#/definitions/EntityOmit%3CLog%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Log>": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "$ref": "#/definitions/LogLevel",
+          "description": "Level of the log."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the log."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the log."
+        },
+        "system": {
+          "type": "string",
+          "description": "System this log is from."
+        },
+        "$invoker": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "Reference to a user that invoked the log."
+        }
+      },
+      "required": [
+        "level",
+        "title",
+        "description",
+        "system"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "LogLevel": {
+      "type": "string",
+      "enum": [
+        "fatal",
+        "error",
+        "success",
+        "warn",
+        "info",
+        "debug"
+      ],
+      "description": "Log levels."
+    },
+    "Reference<User>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "EntityCreate<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name"
+        },
+        "birthDate": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date of birth."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar string url to an image."
+        }
+      },
+      "required": [
+        "$user",
+        "nameDisplay"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Profile>": {
+      "$ref": "#/definitions/EntityOmit%3CProfile%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name"
+        },
+        "birthDate": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date of birth."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar string url to an image."
+        }
+      },
+      "required": [
+        "$user",
+        "nameDisplay"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "Reference<Contact>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "EntityCreate<Role>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the license."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the license."
+        },
+        "color": {
+          "type": "string",
+          "description": "Color that represents this role."
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GrantString"
+          },
+          "description": "Permissions this license grants."
+        }
+      },
+      "required": [
+        "color",
+        "description",
+        "grants",
+        "name"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Role>": {
+      "$ref": "#/definitions/EntityOmit%3CRole%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Role>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the license."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the license."
+        },
+        "color": {
+          "type": "string",
+          "description": "Color that represents this role."
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GrantString"
+          },
+          "description": "Permissions this license grants."
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "color",
+        "grants"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "GrantString": {
+      "type": "string",
+      "description": "Role grant string."
+    },
+    "EntityCreate<System>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the system."
+        },
+        "sessionExpires": {
+          "type": "number",
+          "description": "Number in milliseconds that an authentication session should live.",
+          "default": 3600000
+        },
+        "domain": {
+          "type": "string",
+          "description": "Optional domain id to reference this system."
+        },
+        "$website": {
+          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "description": "System's website configurations."
+        },
+        "$adminRole": {
+          "$ref": "#/definitions/Reference%3CRole%3E",
+          "description": "Role identifier that considers the user an administrator."
+        },
+        "$initialRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CRole%3E"
+          },
+          "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        }
+      },
+      "required": [
+        "$adminRole",
+        "$initialRoles",
+        "$website",
+        "name",
+        "sessionExpires"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<System>": {
+      "$ref": "#/definitions/EntityOmit%3CSystem%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<System>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the system."
+        },
+        "sessionExpires": {
+          "type": "number",
+          "description": "Number in milliseconds that an authentication session should live.",
+          "default": 3600000
+        },
+        "domain": {
+          "type": "string",
+          "description": "Optional domain id to reference this system."
+        },
+        "$website": {
+          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "description": "System's website configurations."
+        },
+        "$adminRole": {
+          "$ref": "#/definitions/Reference%3CRole%3E",
+          "description": "Role identifier that considers the user an administrator."
+        },
+        "$initialRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CRole%3E"
+          },
+          "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        }
+      },
+      "required": [
+        "name",
+        "sessionExpires",
+        "$website",
+        "$adminRole",
+        "$initialRoles"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "Reference<Website>": {
+      "type": "string",
+      "description": "A id reference to another document."
+    },
+    "Reference<Role>": {
+      "type": "string",
+      "description": "A id reference to another document."
     },
     "EntityCreate<User>": {
       "type": "object",
@@ -201,88 +676,9 @@
       "type": "string",
       "description": "A string that represents a device."
     },
-    "Reference<Role>": {
-      "type": "string",
-      "description": "A id reference to another document."
-    },
     "Reference<Permit>": {
       "type": "string",
       "description": "A id reference to another document."
-    },
-    "Reference": {
-      "type": "string",
-      "description": "A id reference to another document."
-    },
-    "EntityCreate<Role>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the license."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the license."
-        },
-        "color": {
-          "type": "string",
-          "description": "Color that represents this role."
-        },
-        "grants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GrantString"
-          },
-          "description": "Permissions this license grants."
-        }
-      },
-      "required": [
-        "color",
-        "description",
-        "grants",
-        "name"
-      ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Role>": {
-      "$ref": "#/definitions/EntityOmit%3CRole%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Role>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the license."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the license."
-        },
-        "color": {
-          "type": "string",
-          "description": "Color that represents this role."
-        },
-        "grants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GrantString"
-          },
-          "description": "Permissions this license grants."
-        }
-      },
-      "required": [
-        "name",
-        "description",
-        "color",
-        "grants"
-      ],
-      "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
-    },
-    "GrantString": {
-      "type": "string",
-      "description": "Role grant string."
     },
     "EntityCreate<Session>": {
       "type": "object",
@@ -391,126 +787,134 @@
       "type": "number",
       "description": "A string that represents a JSON Date."
     },
-    "SURL": {
-      "type": "string",
-      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
-    },
-    "EntityCreate<Profile>": {
+    "EntityCreate<Website>": {
       "type": "object",
       "properties": {
-        "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "User this profile is associated with."
-        },
-        "nameDisplay": {
+        "name": {
           "type": "string",
-          "description": "Display name for the profile."
+          "description": "Name of the website."
         },
-        "nameGiven": {
+        "nameShort": {
           "type": "string",
-          "description": "Given/First name"
+          "description": "Possible name that is shorter."
         },
-        "nameFamily": {
+        "url": {
           "type": "string",
-          "description": "Family/Last name"
-        },
-        "birthDate": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Date of birth."
+          "description": "Primary to the website."
         },
         "title": {
           "type": "string",
-          "description": "Title for work or otherwise."
+          "description": "A title to access the website."
         },
-        "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
-          "description": "Profile Contact."
+        "$logo": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Reference to the image used for the logo."
         },
-        "organiation": {
-          "type": "string",
-          "description": "Organization profile is a part of."
+        "$favicon": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Link the website's favicon"
         },
-        "avatar": {
-          "$ref": "#/definitions/SURL",
-          "description": "Avatar string url to an image."
+        "$contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CContact%3E"
+          },
+          "description": "Contacts that should be listed on the website."
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "List of the social network links."
         }
       },
       "required": [
-        "$user",
-        "nameDisplay"
+        "$contacts",
+        "name",
+        "socials",
+        "url"
       ],
       "description": "Type for an entity create object."
     },
-    "EntityExtension<Profile>": {
-      "$ref": "#/definitions/EntityOmit%3CProfile%3E",
+    "EntityExtension<Website>": {
+      "$ref": "#/definitions/EntityOmit%3CWebsite%3E",
       "description": "Type for creation method"
     },
-    "EntityOmit<Profile>": {
+    "EntityOmit<Website>": {
       "type": "object",
       "properties": {
-        "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "User this profile is associated with."
-        },
-        "nameDisplay": {
+        "name": {
           "type": "string",
-          "description": "Display name for the profile."
+          "description": "Name of the website."
         },
-        "nameGiven": {
+        "nameShort": {
           "type": "string",
-          "description": "Given/First name"
+          "description": "Possible name that is shorter."
         },
-        "nameFamily": {
+        "url": {
           "type": "string",
-          "description": "Family/Last name"
-        },
-        "birthDate": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Date of birth."
+          "description": "Primary to the website."
         },
         "title": {
           "type": "string",
-          "description": "Title for work or otherwise."
+          "description": "A title to access the website."
         },
-        "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
-          "description": "Profile Contact."
+        "$logo": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Reference to the image used for the logo."
         },
-        "organiation": {
-          "type": "string",
-          "description": "Organization profile is a part of."
+        "$favicon": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Link the website's favicon"
         },
-        "avatar": {
-          "$ref": "#/definitions/SURL",
-          "description": "Avatar string url to an image."
+        "$contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CContact%3E"
+          },
+          "description": "Contacts that should be listed on the website."
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "List of the social network links."
         }
       },
       "required": [
-        "$user",
-        "nameDisplay"
+        "name",
+        "url",
+        "$contacts",
+        "socials"
       ],
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
-    "Reference<User>": {
-      "type": "string",
-      "description": "A id reference to another document."
-    },
-    "DateJSON": {
-      "type": "string",
-      "description": "A string that represents a JSON Date."
-    },
-    "Reference<Contact>": {
+    "Reference<Image>": {
       "type": "string",
       "description": "A id reference to another document."
     },
     "StateUpdate": {
       "type": "object",
       "properties": {
-        "user": {
+        "contact": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CUser%3E"
+            "$ref": "#/definitions/EntityUpdate%3CContact%3E"
+          }
+        },
+        "log": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CLog%3E"
+          }
+        },
+        "profile": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CProfile%3E"
           }
         },
         "role": {
@@ -519,20 +923,361 @@
             "$ref": "#/definitions/EntityUpdate%3CRole%3E"
           }
         },
+        "system": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CSystem%3E"
+          }
+        },
+        "user": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CUser%3E"
+          }
+        },
         "session": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityUpdate%3CSession%3E"
           }
         },
-        "profile": {
+        "website": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CProfile%3E"
+            "$ref": "#/definitions/EntityUpdate%3CWebsite%3E"
           }
         }
       },
       "additionalProperties": false
+    },
+    "EntityUpdate<Contact>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name (or title) of the contact",
+          "title": "Name"
+        },
+        "phones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "phone numbers",
+          "title": "Phone Numbers"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Contact emails.",
+          "title": "E-Mail Addresses"
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "Contact's social urls."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Contact>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name (or title) of the contact",
+          "title": "Name"
+        },
+        "phones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "phone numbers",
+          "title": "Phone Numbers"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Contact emails.",
+          "title": "E-Mail Addresses"
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "Contact's social urls."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Log>": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "$ref": "#/definitions/LogLevel",
+          "description": "Level of the log."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the log."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the log."
+        },
+        "system": {
+          "type": "string",
+          "description": "System this log is from."
+        },
+        "$invoker": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "Reference to a user that invoked the log."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Log>": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "$ref": "#/definitions/LogLevel",
+          "description": "Level of the log."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the log."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the log."
+        },
+        "system": {
+          "type": "string",
+          "description": "System this log is from."
+        },
+        "$invoker": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "Reference to a user that invoked the log."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name"
+        },
+        "birthDate": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date of birth."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar string url to an image."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Profile>": {
+      "type": "object",
+      "properties": {
+        "$user": {
+          "$ref": "#/definitions/Reference%3CUser%3E",
+          "description": "User this profile is associated with."
+        },
+        "nameDisplay": {
+          "type": "string",
+          "description": "Display name for the profile."
+        },
+        "nameGiven": {
+          "type": "string",
+          "description": "Given/First name"
+        },
+        "nameFamily": {
+          "type": "string",
+          "description": "Family/Last name"
+        },
+        "birthDate": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date of birth."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title for work or otherwise."
+        },
+        "$contact": {
+          "$ref": "#/definitions/Reference%3CContact%3E",
+          "description": "Profile Contact."
+        },
+        "organiation": {
+          "type": "string",
+          "description": "Organization profile is a part of."
+        },
+        "avatar": {
+          "$ref": "#/definitions/SURL",
+          "description": "Avatar string url to an image."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Role>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the license."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the license."
+        },
+        "color": {
+          "type": "string",
+          "description": "Color that represents this role."
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GrantString"
+          },
+          "description": "Permissions this license grants."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Role>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the license."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the license."
+        },
+        "color": {
+          "type": "string",
+          "description": "Color that represents this role."
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GrantString"
+          },
+          "description": "Permissions this license grants."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<System>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the system."
+        },
+        "sessionExpires": {
+          "type": "number",
+          "description": "Number in milliseconds that an authentication session should live.",
+          "default": 3600000
+        },
+        "domain": {
+          "type": "string",
+          "description": "Optional domain id to reference this system."
+        },
+        "$website": {
+          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "description": "System's website configurations."
+        },
+        "$adminRole": {
+          "$ref": "#/definitions/Reference%3CRole%3E",
+          "description": "Role identifier that considers the user an administrator."
+        },
+        "$initialRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CRole%3E"
+          },
+          "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<System>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the system."
+        },
+        "sessionExpires": {
+          "type": "number",
+          "description": "Number in milliseconds that an authentication session should live.",
+          "default": 3600000
+        },
+        "domain": {
+          "type": "string",
+          "description": "Optional domain id to reference this system."
+        },
+        "$website": {
+          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "description": "System's website configurations."
+        },
+        "$adminRole": {
+          "$ref": "#/definitions/Reference%3CRole%3E",
+          "description": "Role identifier that considers the user an administrator."
+        },
+        "$initialRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CRole%3E"
+          },
+          "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
     },
     "EntityUpdate<User>": {
       "type": "object",
@@ -681,57 +1426,6 @@
       "additionalProperties": false,
       "description": "Type for an partial method."
     },
-    "EntityUpdate<Role>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the license."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the license."
-        },
-        "color": {
-          "type": "string",
-          "description": "Color that represents this role."
-        },
-        "grants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GrantString"
-          },
-          "description": "Permissions this license grants."
-        }
-      },
-      "description": "Type for an entity update object."
-    },
-    "EntityPartial<Role>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the license."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the license."
-        },
-        "color": {
-          "type": "string",
-          "description": "Color that represents this role."
-        },
-        "grants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GrantString"
-          },
-          "description": "Permissions this license grants."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
-    },
     "EntityUpdate<Session>": {
       "type": "object",
       "properties": {
@@ -815,86 +1509,90 @@
       "additionalProperties": false,
       "description": "Type for an partial method."
     },
-    "EntityUpdate<Profile>": {
+    "EntityUpdate<Website>": {
       "type": "object",
       "properties": {
-        "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "User this profile is associated with."
-        },
-        "nameDisplay": {
+        "name": {
           "type": "string",
-          "description": "Display name for the profile."
+          "description": "Name of the website."
         },
-        "nameGiven": {
+        "nameShort": {
           "type": "string",
-          "description": "Given/First name"
+          "description": "Possible name that is shorter."
         },
-        "nameFamily": {
+        "url": {
           "type": "string",
-          "description": "Family/Last name"
-        },
-        "birthDate": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Date of birth."
+          "description": "Primary to the website."
         },
         "title": {
           "type": "string",
-          "description": "Title for work or otherwise."
+          "description": "A title to access the website."
         },
-        "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
-          "description": "Profile Contact."
+        "$logo": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Reference to the image used for the logo."
         },
-        "organiation": {
-          "type": "string",
-          "description": "Organization profile is a part of."
+        "$favicon": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Link the website's favicon"
         },
-        "avatar": {
-          "$ref": "#/definitions/SURL",
-          "description": "Avatar string url to an image."
+        "$contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CContact%3E"
+          },
+          "description": "Contacts that should be listed on the website."
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "List of the social network links."
         }
       },
       "description": "Type for an entity update object."
     },
-    "EntityPartial<Profile>": {
+    "EntityPartial<Website>": {
       "type": "object",
       "properties": {
-        "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "User this profile is associated with."
-        },
-        "nameDisplay": {
+        "name": {
           "type": "string",
-          "description": "Display name for the profile."
+          "description": "Name of the website."
         },
-        "nameGiven": {
+        "nameShort": {
           "type": "string",
-          "description": "Given/First name"
+          "description": "Possible name that is shorter."
         },
-        "nameFamily": {
+        "url": {
           "type": "string",
-          "description": "Family/Last name"
-        },
-        "birthDate": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Date of birth."
+          "description": "Primary to the website."
         },
         "title": {
           "type": "string",
-          "description": "Title for work or otherwise."
+          "description": "A title to access the website."
         },
-        "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
-          "description": "Profile Contact."
+        "$logo": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Reference to the image used for the logo."
         },
-        "organiation": {
-          "type": "string",
-          "description": "Organization profile is a part of."
+        "$favicon": {
+          "$ref": "#/definitions/Reference%3CImage%3E",
+          "description": "Link the website's favicon"
         },
-        "avatar": {
-          "$ref": "#/definitions/SURL",
-          "description": "Avatar string url to an image."
+        "$contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference%3CContact%3E"
+          },
+          "description": "Contacts that should be listed on the website."
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "List of the social network links."
         }
       },
       "additionalProperties": false,

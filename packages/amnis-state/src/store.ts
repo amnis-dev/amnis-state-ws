@@ -1,13 +1,13 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './reducer';
+import { set } from './set';
 
 export function storeSetup() {
-  const rootReducer = combineReducers(reducerMap);
+  const rootReducer = combineReducers(set.reducers);
 
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
-      getDefaultMiddleware().concat(reducerMiddleware)
+      getDefaultMiddleware().concat(set.middleware)
     ),
   });
 

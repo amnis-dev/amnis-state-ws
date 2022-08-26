@@ -3,7 +3,7 @@ import { roleKey } from '../role';
 import { systemCreate, systemKey } from '../system';
 import { websiteKey } from '../website';
 
-import { stateReferenceQuery } from './state';
+import { stateReferenceQuery, stateToCreate } from './state';
 import { StateCreate, StateQuery } from './state.types';
 
 const system = systemCreate({
@@ -15,6 +15,32 @@ const system = systemCreate({
 
 system.$creator = system.$id;
 system.$owner = system.$id;
+
+const stateBasic = {
+  users: {
+    entities: {
+      a1: {
+        name: 'User1',
+      },
+      a2: {
+        name: 'User2',
+      },
+    },
+  },
+  session: {
+    noEntities: false,
+  },
+  messages: {
+    entities: {
+      b1: {
+        text: 'Message1',
+      },
+      b2: {
+        text: 'Message2',
+      },
+    },
+  },
+};
 
 const stateArray: StateCreate = {
   [systemKey]: [system],
@@ -49,4 +75,20 @@ test('should generate a proper reference query', () => {
   };
 
   expect(stateQuery).toEqual(expectation);
+});
+
+/**
+ * ============================================================
+ */
+test('should convert state to create state object', () => {
+  const stateCreate = stateToCreate(stateBasic);
+
+  const values = Object.values(stateCreate);
+  expect(values).toHaveLength(2);
+  values.forEach((entities) => {
+    expect(Array.isArray(entities)).toEqual(true);
+    expect(entities).toHaveLength(2);
+  });
+
+  console.log(stateCreate);
 });
