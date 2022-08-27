@@ -10,7 +10,7 @@ import { apiIO } from '../api.io.node';
 import { ApiInput } from '../types';
 import { validatorsSetup } from '../validators';
 import { apiAuthProcess } from './auth.process';
-import authSchema from './auth.schema.json';
+import schemaAuth from './auth.schema.json';
 
 /**
  * Setup the required application store.
@@ -56,7 +56,7 @@ memory.create({
 const io = apiIO({
   store: appStore,
   database: memory,
-  validators: validatorsSetup(authSchema),
+  validators: validatorsSetup(schemaAuth),
 }, apiAuthProcess);
 
 test('Should be able to renew session and tokens', async () => {

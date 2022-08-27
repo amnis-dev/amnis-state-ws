@@ -11,7 +11,7 @@ import { apiConfig } from '@amnis/api/config';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
 import { validatorsSetup } from '@amnis/api/validators';
 import { apiIO } from '@amnis/api/api.io.node';
-import authSchema from '@amnis/api/auth/auth.schema.json';
+import schemaAuth from '@amnis/api/auth/auth.schema.json';
 
 import { storeSetup } from '@amnis/state/env.node/store';
 
@@ -66,7 +66,7 @@ const clientStore = storeSetup();
 /**
  * Configure the validation methods.
  */
-const validators = validatorsSetup([coreSchema, authSchema, stateSchema]);
+const validators = validatorsSetup([coreSchema, schemaAuth, stateSchema]);
 
 /**
   * Setup the server processes for the Auth operations
@@ -118,7 +118,7 @@ beforeAll(async () => {
     */
   serverStore.dispatch(coreActions.create(await memory.read({
     role: {},
-  }, { role: 'global' })));
+  }, { scope: { role: 'global' } })));
 
   mockServer.listen();
 });

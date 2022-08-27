@@ -10,7 +10,7 @@ import { jwtEncode } from '@amnis/auth/token';
 import { apiAuthProcess } from './auth.process';
 import { apiIO } from '../api.io.node';
 import { validatorsSetup } from '../validators';
-import authSchema from './auth.schema.json';
+import schemaAuth from './auth.schema.json';
 
 /**
  * Setup the required application store.
@@ -72,7 +72,7 @@ memory.create({
 const processes = apiIO({
   store: appStore,
   database: memory,
-  validators: validatorsSetup(authSchema),
+  validators: validatorsSetup(schemaAuth),
 }, apiAuthProcess);
 
 /**

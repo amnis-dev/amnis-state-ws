@@ -1,5 +1,5 @@
 import schema from '../state.schema.json';
 
-export const crudSchema = schema;
+export const schemaCrud = schema;
 
-export default crudSchema;
+export default schemaCrud;

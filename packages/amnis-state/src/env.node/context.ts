@@ -4,7 +4,7 @@ import {
 } from '@amnis/core/index.node';
 import { memory } from '@amnis/db/memory';
 
-import { initialState } from './initial';
+import { entitiesInitial } from './entities';
 import { store as storeDefault } from './store';
 import { systemActions } from '../system';
 
@@ -15,9 +15,9 @@ export interface ContextOptions extends Partial<ApiContext> {
   initialize?: boolean | 'database';
 
   /**
-   * Set initial data.
+   * Set initial entity data.
    */
-  initial?: StateCreate;
+  entities?: StateCreate;
 }
 
 /**
@@ -25,12 +25,12 @@ export interface ContextOptions extends Partial<ApiContext> {
  */
 export async function contextCreate(options: ContextOptions = {}): Promise<ApiContext> {
   const {
-    store, validators, database, initialize, initial,
+    store, validators, database, initialize, entities,
   } = options;
   const storeNext = store ?? storeDefault;
   const validatorsNext = (validators || []) as Validators;
   const databaseNext = database ?? memory;
-  const initialNext = initial ?? initialState();
+  const entitiesNext = entities ?? entitiesInitial();
 
   if (initialize) {
     const readResult = await databaseNext.read({
@@ -42,7 +42,7 @@ export async function contextCreate(options: ContextOptions = {}): Promise<ApiCo
    * Initialize the system if one isn't found.
    */
     if (!readResult[systemKey]?.length) {
-      const createResult = await databaseNext.create(initialNext);
+      const createResult = await databaseNext.create(entitiesNext);
 
       if (initialize === true) {
         const system = createResult[systemKey][0];

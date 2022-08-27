@@ -29,8 +29,7 @@ Workflows
 
 Amnis State is a library of extensible data structures and logic for complex applications. It contains typings, validations, actions, reducers, authentication, authorization, processing, and persistent storage methods. The target is to simplify important patterns in enterprise-level JavaScript applications.
 
-Amnis State is framework independent. It can be utilized within a Browser or Node.js runtime (with or without a UI layer). For example: [Express](https://github.com/expressjs/express), [React](https://github.com/facebook/react/), or [Angular](https://github.com/angular/angular).
-
+Amnis State is framework independent. For example, the library can be used with [Express](https://github.com/expressjs/express), [React](https://github.com/facebook/react/), [Angular](https://github.com/angular/angular), or anything else. It can be utilized within a Browser or Node.js runtime (with or without a UI layer).
 
 ## Important Notice
 
@@ -118,3 +117,13 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
 ```
+
+## Future Plans
+
+### Pure ESM
+
+This project will be transitioning to [Pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). I'm waiting for [Redux](https://redux.js.org/), [Redux Toolkit](https://redux-toolkit.js.org/), and [Jest](https://jestjs.io/) to fully support it.
+
+### Bun Runtime
+
+There will be plans to ensure this package is optimized for the [Bun runtime environment](https://bun.sh/) as well as [Node.js](https://nodejs.org/).

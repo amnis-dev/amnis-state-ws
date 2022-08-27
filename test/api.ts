@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
 import stateSchema from '@amnis/state/state.schema.json';
-import authSchema from '@amnis/api/auth/auth.schema.json';
+import schemaAuth from '@amnis/api/auth/auth.schema.json';
 
 import { apiConfig } from '@amnis/api/config';
 import { apiAuthProcess } from '@amnis/api/auth/auth.process';
@@ -20,7 +20,7 @@ export function apiSetup(serverStore: Store) {
   /**
    * Configure the validation methods.
    */
-  const validators = validatorsSetup([coreSchema, authSchema, stateSchema]);
+  const validators = validatorsSetup([coreSchema, schemaAuth, stateSchema]);
 
   /**
   * Setup the server processes for the Auth operations

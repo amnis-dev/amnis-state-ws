@@ -24,7 +24,7 @@ function passCreateSync(plaintext: string): string {
   return hashSync(plaintext, 8);
 }
 
-export function initialState(): StateCreate {
+export function entitiesInitial(): StateCreate {
   const roles: Role[] = [
     entityCreate<Role>('role', {
       name: 'Basic',
@@ -83,4 +83,4 @@ export function initialState(): StateCreate {
   };
 }
 
-export default initialState;
+export default entitiesInitial;
