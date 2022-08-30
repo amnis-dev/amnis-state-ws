@@ -1,18 +1,20 @@
 import type { JWTDecoded, JWTEncoded } from '@amnis/core/token';
 import jwt from 'jsonwebtoken';
-import { cryptConfig } from './config';
+import { getRsaPrivateKey, getRsaPublicKey } from './rsa';
 
-export function jwtEncode(jwtDecoded: JWTDecoded, secret = cryptConfig.AUTH_TOKEN_SECRET) {
-  if (secret.length < 21) {
-    throw new Error('Secret not set or strong enough.');
-  }
-
+/**
+ * Encodes an Amnis-structured Token.
+ */
+export function jwtEncode(
+  jwtDecoded: JWTDecoded,
+  privateKey = getRsaPrivateKey(),
+) {
   const jwtPrep = {
     ...jwtDecoded,
     exp: Math.floor(jwtDecoded.exp / 1000), // Seconds Since the Epoch
   };
 
-  return jwt.sign(jwtPrep, secret) as JWTEncoded;
+  return jwt.sign(jwtPrep, privateKey, { algorithm: 'RS256' }) as JWTEncoded;
 }
 
 export function jwtDecode(
@@ -44,12 +46,15 @@ export function jwtDecode(
   }
 }
 
+/**
+ * Verifies an amnis token.
+ */
 export function jwtVerify(
   jwtEncoded: JWTEncoded,
-  secret = cryptConfig.AUTH_TOKEN_SECRET,
+  publicKey = getRsaPublicKey(),
 ): JWTDecoded | undefined {
   try {
-    const decoded = jwt.verify(jwtEncoded, secret) as JWTDecoded;
+    const decoded = jwt.verify(jwtEncoded, publicKey) as JWTDecoded;
 
     const jwtDecoded = {
       ...decoded,

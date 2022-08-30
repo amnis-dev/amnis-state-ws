@@ -1,0 +1,51 @@
+import { RSAKeyPairOptions, generateKeyPairSync, KeyPairSyncResult } from 'node:crypto';
+import { cryptConfig } from './config';
+
+/**
+ * RSA Key Pair
+ */
+let rsaKeyPair: KeyPairSyncResult<string, string> | null = null;
+
+/**
+ * Generate a new RSA Key Pair
+ */
+export function generateRsa() {
+  const rsaOptions: RSAKeyPairOptions<'pem', 'pem'> = {
+    modulusLength: cryptConfig.AUTH_RSA_MODULUS_LENGTH as number || 4096,
+    publicKeyEncoding: {
+      type: cryptConfig.AUTH_RSA_PUBLIC_KEY_TYPE as 'spki' | 'pkcs1' || 'spki',
+      format: 'pem',
+    },
+    privateKeyEncoding: {
+      type: cryptConfig.AUTH_RSA_PRIVATE_KEY_TYPE as 'pkcs1' | 'pkcs8' || 'pkcs8',
+      format: 'pem',
+    },
+  };
+
+  return generateKeyPairSync('rsa', rsaOptions);
+}
+
+/**
+ * Gets the singlton an RSA Key Pair.
+ */
+export function getRsaKeyPair() {
+  if (rsaKeyPair === null) {
+    rsaKeyPair = generateRsa();
+  }
+
+  return rsaKeyPair;
+}
+
+/**
+ * Get the RSA Private Key
+ */
+export function getRsaPrivateKey() {
+  return getRsaKeyPair().privateKey;
+}
+
+/**
+ * Get the RSA Public Key
+ */
+export function getRsaPublicKey() {
+  return getRsaKeyPair().privateKey;
+}
