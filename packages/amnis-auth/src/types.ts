@@ -1,3 +1,4 @@
+import type { KeyPairSyncResult } from 'node:crypto';
 import type { GrantScope } from '@amnis/core/grant';
 import type { State } from '@amnis/core/state';
 
@@ -12,10 +13,7 @@ export type PublicKey = string & {[publicKeySymbol]: never};
 /**
  * Key Pair interface.
  */
-export interface KeyPair {
-  privateKey: PrivateKey;
-  publicKey: PublicKey;
-}
+export type KeyPair = KeyPairSyncResult<string, string>;
 
 /**
  * Private Key.

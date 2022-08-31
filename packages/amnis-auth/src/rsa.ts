@@ -9,7 +9,7 @@ let rsaKeyPair: KeyPairSyncResult<string, string> | null = null;
 /**
  * Generate a new RSA Key Pair
  */
-export function generateRsa() {
+export function generateRsa(): KeyPairSyncResult<string, string> {
   const rsaOptions: RSAKeyPairOptions<'pem', 'pem'> = {
     modulusLength: cryptConfig.AUTH_RSA_MODULUS_LENGTH as number || 4096,
     publicKeyEncoding: {
@@ -28,7 +28,7 @@ export function generateRsa() {
 /**
  * Gets the singlton an RSA Key Pair.
  */
-export function getRsaKeyPair() {
+export function getRsaKeyPair(): KeyPairSyncResult<string, string> {
   if (rsaKeyPair === null) {
     rsaKeyPair = generateRsa();
   }
@@ -39,13 +39,13 @@ export function getRsaKeyPair() {
 /**
  * Get the RSA Private Key
  */
-export function getRsaPrivateKey() {
+export function getRsaPrivateKey(): KeyPairSyncResult<string, string>['privateKey'] {
   return getRsaKeyPair().privateKey;
 }
 
 /**
  * Get the RSA Public Key
  */
-export function getRsaPublicKey() {
-  return getRsaKeyPair().privateKey;
+export function getRsaPublicKey(): KeyPairSyncResult<string, string>['publicKey'] {
+  return getRsaKeyPair().publicKey;
 }
