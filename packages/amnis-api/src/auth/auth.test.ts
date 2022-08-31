@@ -7,6 +7,7 @@ import { memory } from '@amnis/db/memory';
 import { storeSetup } from '@amnis/core/test/book.store';
 import { Token, tokenCreate } from '@amnis/core/token';
 import { jwtEncode } from '@amnis/auth/token';
+import { generateRsa } from '@amnis/auth/rsa';
 import { apiAuthProcess } from './auth.process';
 import { apiIO } from '../api.io.node';
 import { validatorsSetup } from '../validators';
@@ -49,6 +50,8 @@ const jwtEncoded = jwtEncode({
   roles: [],
 });
 
+const rsaKeyPairAnother = generateRsa();
+
 const jwtEncodedInvalid = jwtEncode({
   iss: 'core',
   sub: reference('user'),
@@ -56,7 +59,7 @@ const jwtEncodedInvalid = jwtEncode({
   typ: 'access',
   adm: true,
   roles: [],
-}, 'INVALIDTOKENSCERET123456789');
+}, rsaKeyPairAnother.privateKey);
 
 /**
  * Create test data in the memory database.

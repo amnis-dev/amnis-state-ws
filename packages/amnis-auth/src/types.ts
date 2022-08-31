@@ -1,5 +1,27 @@
+import type { KeyPairSyncResult } from 'node:crypto';
 import type { GrantScope } from '@amnis/core/grant';
 import type { State } from '@amnis/core/state';
+
+/**
+ * Unique reference symbols and types for RSA
+ */
+declare const privateKeySymbol: unique symbol;
+declare const publicKeySymbol: unique symbol;
+export type PrivateKey = string & {[privateKeySymbol]: never};
+export type PublicKey = string & {[publicKeySymbol]: never};
+
+/**
+ * Key Pair interface.
+ */
+export type KeyPair = KeyPairSyncResult<string, string>;
+
+/**
+ * Private Key.
+ */
+
+/**
+ * Public Key.
+ */
 
 /**
  * A stateful mapping of data access scopes.
