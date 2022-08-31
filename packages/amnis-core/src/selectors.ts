@@ -6,6 +6,7 @@ import type { Entity, Meta } from './entity';
 import type { State } from './state';
 import type { Reference } from './types';
 import type { Role } from './role';
+import { Crypto, cryptoKey } from './crypto';
 import { grantParse, Grant } from './grant';
 
 /**
@@ -134,6 +135,23 @@ function selectToken(state: State, api: TokenApi, type: TokenType): Token | unde
 }
 
 /**
+ * Selects a public key from the crypto slice.
+ */
+function selectPublicKey(state: State, tag: string): string | undefined {
+  const slice = getSlice<Crypto>(state, cryptoKey);
+
+  if (!slice) {
+    return undefined;
+  }
+
+  const cryptoPub = Object.values(slice.entities).find(
+    (entity) => (entity?.tag === tag && entity.pair === 'public'),
+  );
+
+  return cryptoPub?.value;
+}
+
+/**
  * Selects a list of Grants based on an array of role references.
  */
 function selectRoleGrants(state: State, roleRefs: Reference<Role>[]): Grant[] {
@@ -169,6 +187,7 @@ export const selectors = {
   selectFocused,
   selectSelection,
   selectToken,
+  selectPublicKey,
   selectRoleGrants,
 };
 

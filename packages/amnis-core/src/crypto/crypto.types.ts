@@ -10,6 +10,11 @@ export interface Crypto extends Entity {
   name: string;
 
   /**
+   * A unique tag name that identifies this public key.
+   */
+  tag: string;
+
+  /**
    * Type of cyptographic key.
    */
   type: 'rsa';
@@ -33,4 +38,4 @@ export type CryptoBase = EntityExtension<Crypto>;
 /**
  * Base properties in order to create a log.
  */
-export type CryptoBaseCreate = EntityExtensionCreate<Crypto, 'name' | 'pair' | 'value'>;
+export type CryptoBaseCreate = EntityExtensionCreate<Crypto, 'name' | 'tag' | 'pair' | 'value'>;

@@ -5,6 +5,7 @@ export const cryptoKey = 'crypto';
 
 export const cryptoBase: CryptoBase = {
   name: 'Unknown Key',
+  tag: 'unknown',
   type: 'rsa',
   pair: 'public',
   value: '',

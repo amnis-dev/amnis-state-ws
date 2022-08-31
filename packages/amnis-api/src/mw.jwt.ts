@@ -1,5 +1,7 @@
 import { jwtVerify } from '@amnis/auth/token';
+import { selectors } from '@amnis/core/selectors';
 import { apiOutput } from './api';
+import { apiConfig } from './config';
 import type {
   ApiMiddleware,
 } from './types';
@@ -21,7 +23,15 @@ export const mwJwt: ApiMiddleware = () => (next) => (context) => async (input) =
     return output;
   }
 
-  input.jwt = jwtVerify(jwtEncoded);
+  /**
+   * Fetch the auth service public key from the store.
+   */
+  const publicKey = selectors.selectPublicKey(
+    context.store.getState(),
+    apiConfig.API_AUTH_CRYPTO_TAG,
+  );
+
+  input.jwt = jwtVerify(jwtEncoded, publicKey);
 
   if (!input.jwt) {
     const output = apiOutput();

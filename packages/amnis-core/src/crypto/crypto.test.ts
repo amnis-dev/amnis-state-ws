@@ -13,6 +13,7 @@ test('crypto key should be is properly set', () => {
 test('should create a crypto', () => {
   const crypto = cryptoCreate({
     name: 'Test Crypto Key',
+    tag: 'test',
     pair: 'public',
     value: '',
   });
