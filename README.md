@@ -73,7 +73,7 @@ There are three ways to import the Redux reducers and middlewares based on your 
 Use this import if you are running your project within a browser environment.
 
 ```typescript
-import { reducerMap, reducerMiddleware } from '@amnis/state/env.browser';
+import { set } from '@amnis/state/env.browser';
 ```
 
 ### Browser Runtime (with React)
@@ -81,7 +81,7 @@ import { reducerMap, reducerMiddleware } from '@amnis/state/env.browser';
 Use this import if you are running your project within a browser environment leveraging React components.
 
 ```typescript
-import { reducerMap, reducerMiddleware } from '@amnis/state/env.react';
+import { set } from '@amnis/state/env.react';
 ```
 
 ### Node.js Runtime
@@ -89,7 +89,7 @@ import { reducerMap, reducerMiddleware } from '@amnis/state/env.react';
 Use this import if you are running your project within a Node.js environment.
 
 ```typescript
-import { reducerMap, reducerMiddleware } from '@amnis/state/env.node';
+import { set } from '@amnis/state/env.node';
 ```
 
 ### Example: Redux Toolkit Configuration
@@ -99,17 +99,17 @@ import { reducerMap, reducerMiddleware } from '@amnis/state/env.node';
  * store.ts
  */
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from '@amnis/state/env.[runtime]';
+import { set } from '@amnis/state/env.[runtime]';
 
 /**
  * Setup your Redux store.
  */
-const rootReducer = combineReducers(reducerMap);
+const rootReducer = combineReducers(set.reducers);
 
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => (
-    getDefaultMiddleware().concat(reducerMiddleware)
+    getDefaultMiddleware().concat(set.middleware)
   ),
 });
 
