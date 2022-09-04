@@ -89,6 +89,4 @@ test('should convert state to create state object', () => {
     expect(Array.isArray(entities)).toEqual(true);
     expect(entities).toHaveLength(2);
   });
-
-  console.log(stateCreate);
 });

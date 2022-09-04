@@ -1,4 +1,5 @@
 export * from './types';
+export * from './config';
 export * from './api';
 export * from './reducers';
 export * from './validators';

@@ -14,6 +14,8 @@ const config: Config.InitialOptions = {
     '.web',
     '.out',
   ],
+  collectCoverage: true,
+  coverageReporters: ['json', 'html'],
 };
 
 export default config;

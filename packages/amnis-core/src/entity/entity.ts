@@ -26,6 +26,7 @@ export const entityCreate = <E extends Entity>(
     updated: now,
     delete: false,
     $owner: id,
+    $readers: [],
     $creator: id,
     $updaters: [],
     committed: false,

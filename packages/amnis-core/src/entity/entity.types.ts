@@ -43,6 +43,12 @@ export interface Entity {
   $owner: Reference;
 
   /**
+   * Entities that can observe this data.
+   * Pseudo-owners of this data, but only as a reader.
+   */
+  $readers: Reference[];
+
+  /**
    * Possible user id creator of the entity.
    */
   $creator: Reference;

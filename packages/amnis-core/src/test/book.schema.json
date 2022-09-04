@@ -46,6 +46,13 @@
           "$ref": "#/definitions/Reference",
           "description": "Entity that owns this data."
         },
+        "$readers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
+        },
         "$creator": {
           "$ref": "#/definitions/Reference",
           "description": "Possible user id creator of the entity."
@@ -68,6 +75,7 @@
         "$creator",
         "$id",
         "$owner",
+        "$readers",
         "$updaters",
         "committed",
         "created",
@@ -110,6 +118,13 @@
           "$ref": "#/definitions/Reference",
           "description": "Entity that owns this data."
         },
+        "$readers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
+        },
         "$creator": {
           "$ref": "#/definitions/Reference",
           "description": "Possible user id creator of the entity."
@@ -129,6 +144,7 @@
         "committed",
         "delete",
         "$owner",
+        "$readers",
         "$creator",
         "$updaters"
       ],
@@ -185,6 +201,13 @@
               "$owner": {
                 "$ref": "#/definitions/Reference",
                 "description": "Entity that owns this data."
+              },
+              "$readers": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Reference"
+                },
+                "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
               },
               "$creator": {
                 "$ref": "#/definitions/Reference",

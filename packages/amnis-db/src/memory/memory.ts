@@ -4,6 +4,7 @@ import type {
   StateCreate,
   StateDelete,
 } from '@amnis/core/state';
+import { Reference } from '@amnis/core/types';
 import type { Database } from '../types';
 
 /**
@@ -128,7 +129,11 @@ export const memory: Database = {
            * Check to ensure this entity is within the scope.
            * If the scope is owner only, the entity must have the owner id match the subject.
            */
-          if (scope && scope[selectKey] === 'owned' && entity.$owner !== subject) {
+          if (
+            scope
+            && scope[selectKey] === 'owned'
+            && (entity.$owner !== subject && !entity.$readers.includes(subject as Reference))
+          ) {
             return false;
           }
 

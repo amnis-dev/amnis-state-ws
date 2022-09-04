@@ -80,6 +80,7 @@
     "test:root": "jest test/*",
     "test:root:normie": "jest test/normie.test.ts",
     "test:watch": "yarn test --watch",
+    "test:coverage": "jest --coverage",
     "start:client": "nodemon test/client",
     "start:server": "nodemon packages/amnis-express/test/server",
     "gen:core": "hygen state core --path packages/amnis-core/src",

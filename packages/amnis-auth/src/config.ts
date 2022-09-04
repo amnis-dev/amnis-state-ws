@@ -2,7 +2,7 @@ import {
   createHash, randomBytes,
 } from 'crypto';
 
-const AUTH_SESSION_SECRET = process.env.AMNIS_AUTH_SESSION_SECRET || createHash('sha256').update(randomBytes(32)).digest('base64').slice(0, 32);
+const AUTH_SESSION_SECRET = process.env.AMNIS_AUTH_SESSION_SECRET || createHash('sha256').update(randomBytes(256)).digest('base64').slice(0, 256);
 
 const AUTH_TOKEN_LIFE = process.env.AMNIS_AUTH_TOKEN_LIFE || '30m';
 const AUTH_SESSION_LIFE = process.env.AMNIS_AUTH_SESSION_LIFE || '1h';
