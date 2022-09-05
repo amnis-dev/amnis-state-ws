@@ -1,6 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
 ---
+import { <%= name %>Base } from '@amnis/core/<%= name %>';
 import {
   <%= name %>InitialState,
   <%= name %>Selectors,
@@ -33,7 +34,5 @@ test('should handle creating a new <%= name %>', () => {
   const entities = <%= name %>Selectors.selectAll(store.getState());
   expect(entities).toHaveLength(1);
 
-  expect(entities[0]).toEqual(expect.objectContaining({
-    myProperty: expect.any(String),
-  }));
+  expect(entities[0]).toEqual(expect.objectContaining(<%= name %>Base));
 });

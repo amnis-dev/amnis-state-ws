@@ -1,5 +1,5 @@
 import type { Reference, SURL } from '../types';
-import type { Entity } from '../entity';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
 import type { Profile } from '../profile';
 
 /**
@@ -36,3 +36,13 @@ export interface Media extends Entity {
    */
   size: number;
 }
+
+/**
+ * Crypto properties excluding the extended entity properties.
+ */
+export type MediaBase = EntityExtension<Media>;
+
+/**
+  * Base properties in order to create a log.
+  */
+export type MediaBaseCreate = EntityExtensionCreate<Media, 'title' | 'source'>;

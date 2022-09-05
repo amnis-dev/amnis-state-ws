@@ -1,10 +1,8 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.default.ts` : null %>"
 ---
-import { <%= name %>Create } from '@amnis/core/<%= name %>';
+import { <%= name %>Create, <%= name %>Base } from '@amnis/core/<%= name %>';
 
-export const <%= name %>Default = <%= name %>Create({
-  myProperty: 'Unnamed',
-});
+export const <%= name %>Default = <%= name %>Create(<%= name %>Base);
 
 export default <%= name %>Default;

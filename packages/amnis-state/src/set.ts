@@ -1,5 +1,7 @@
+import { auditSlice } from './audit/index';
 import { contactSlice } from './contact/index';
 import { cryptoSlice } from './crypto/index';
+import { historySlice } from './history/index';
 import { logSlice } from './log/index';
 import { profileSlice } from './profile/index';
 import { roleSlice } from './role/index';
@@ -11,8 +13,10 @@ import { userSlice } from './user/index';
 import { websiteSlice } from './website/index';
 
 const reducers = {
+  [auditSlice.name]: auditSlice.reducer,
   [contactSlice.name]: contactSlice.reducer,
   [cryptoSlice.name]: cryptoSlice.reducer,
+  [historySlice.name]: historySlice.reducer,
   [logSlice.name]: logSlice.reducer,
   [profileSlice.name]: profileSlice.reducer,
   [roleSlice.name]: roleSlice.reducer,
