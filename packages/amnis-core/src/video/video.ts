@@ -4,7 +4,6 @@ import {
   EntityExtensionCreate,
   entityCreate,
 } from '../entity';
-import type { LogBaseCreate } from '../log';
 import type { Video } from './video.types';
 
 export const videoKey = 'video';
@@ -19,15 +18,6 @@ export const videoBase: EntityExtension<Video> = {
   source: surl(''),
   size: 0,
 };
-
-/**
- * Video check method.
- */
-export function videoCheck(video: Video): LogBaseCreate[] {
-  const logs: LogBaseCreate[] = [];
-
-  return logs;
-}
 
 export function videoCreate(
   video: EntityExtensionCreate<Video, 'title'>,

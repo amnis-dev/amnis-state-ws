@@ -14,6 +14,11 @@ export interface Entity {
   readonly $id: Reference;
 
   /**
+   * Partition key for database optimization.
+   */
+  readonly partition: string;
+
+  /**
    * Creation date string.
    * @default ""
    */

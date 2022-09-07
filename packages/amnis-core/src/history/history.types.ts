@@ -7,9 +7,14 @@ import { DateJSON, Reference } from '../types';
  */
 export interface History extends Entity {
   /**
-   * The subject that created the history.
+   * The subject that was updated.
    */
-  $subject?: Reference;
+  $subject: Reference;
+
+  /**
+   * The possible invoker of the historic update.
+   */
+  $invoker?: Reference;
 
   /**
    * The date of the historical update.
@@ -30,4 +35,4 @@ export type HistoryBase = EntityExtension<History>;
 /**
  * Base properties in order to create a log.
  */
-export type HistoryBaseCreate = EntityExtensionCreate<History, 'update' | 'date'>;
+export type HistoryBaseCreate = EntityExtensionCreate<History, '$subject' | 'update' | 'date'>;

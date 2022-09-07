@@ -1,5 +1,5 @@
 import type { DateJSON, Reference, SURL } from '../types';
-import type { Entity } from '../entity/entity.types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { User } from '../user/user.types';
 import { Contact } from '../contact';
 
@@ -52,3 +52,13 @@ export interface Profile extends Entity {
    */
   avatar?: SURL;
 }
+
+/**
+ * Profile properties excluding the extended entity properties.
+ */
+export type AuditBase = EntityExtension<Profile>;
+
+/**
+  * Base properties.
+  */
+export type AuditBaseCreate = EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>;

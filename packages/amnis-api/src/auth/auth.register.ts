@@ -1,7 +1,7 @@
 import type { StateCreate } from '@amnis/core/state';
 import type { Token } from '@amnis/core/token';
 import { System } from '@amnis/core/system';
-import { profileCheck, profileCreate } from '@amnis/core/profile';
+import { profileCreate } from '@amnis/core/profile';
 import { userCheck, userCreate } from '@amnis/core/user';
 import { sessionEncode } from '@amnis/auth/session';
 import type { Database } from '@amnis/db/types';
@@ -64,8 +64,6 @@ export async function register(
     nameDisplay: nameDisplay || username,
   });
   profile.$owner = user.$id;
-
-  logs.push(...profileCheck(profile));
 
   /**
    * If there were issues with the creations, there'll be logs.

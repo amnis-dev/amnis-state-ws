@@ -1,4 +1,4 @@
-import type { Entity } from '../entity';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
 import type { GrantString } from '../grant';
 
 /**
@@ -25,3 +25,13 @@ export interface Role extends Entity {
    */
   grants: GrantString[];
 }
+
+/**
+ * Profile properties excluding the extended entity properties.
+ */
+export type RoleBase = EntityExtension<Role>;
+
+/**
+   * Base properties.
+   */
+export type RoleBaseCreate = EntityExtensionCreate<Role, 'name'>;
