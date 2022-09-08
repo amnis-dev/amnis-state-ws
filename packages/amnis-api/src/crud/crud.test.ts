@@ -11,6 +11,7 @@ import { validatorsSetup } from '@amnis/api/validators';
 import { apiIO } from '@amnis/api/api.io.node';
 
 import { jwtEncode } from '@amnis/auth/token';
+import { historyKey } from '@amnis/core/history';
 import type { ApiInput } from '../types';
 import { apiCrudProcess } from './crud.process';
 
@@ -182,22 +183,30 @@ test('Handler should be able to update existing entities.', async () => {
     jwtEncoded,
   });
 
+  const updateObject = {
+    $id: books[1].$id,
+    title: 'Magic Tree House',
+  };
+
   const result = await io.update({
     body: {
-      [bookKey]: [
-        {
-          $id: books[1].$id,
-          title: 'Magic Tree House',
-        },
-      ],
+      [bookKey]: [updateObject],
     },
     jwtEncoded,
   });
 
   expect(
-    result.json,
-  ).toEqual({
-    result: { [bookKey]: [{ ...books[1], title: 'Magic Tree House' }] },
-    logs: [],
-  });
+    result.json.result[bookKey],
+  ).toEqual([{ ...books[1], title: 'Magic Tree House' }]);
+
+  expect(
+    result.json.logs,
+  ).toEqual([]);
+
+  expect(
+    result.json.result[historyKey][0],
+  ).toEqual(expect.objectContaining({
+    $subject: books[1].$id,
+    update: updateObject,
+  }));
 });

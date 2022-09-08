@@ -1,4 +1,8 @@
-import { historyKey, historyCreate, historyBase } from './history';
+import { reference } from '../core';
+import type { StateUpdate } from '../state';
+import {
+  historyKey, historyCreate, historyBase, historyMake,
+} from './history';
 
 /**
  * ============================================================
@@ -15,5 +19,30 @@ test('should create a history', () => {
 
   expect(history).toEqual(
     expect.objectContaining(historyBase),
+  );
+});
+
+/**
+ * ============================================================
+ */
+test('should make history', () => {
+  const profileId = reference('profile');
+  const stateUpdate: StateUpdate = {
+    profile: [{
+      $id: profileId,
+      nameDisplay: 'New Name',
+    }],
+  };
+
+  const creatorId = reference('user');
+
+  const stateCreateHistory = historyMake(stateUpdate, creatorId);
+
+  expect(stateCreateHistory[historyKey][0]).toEqual(
+    expect.objectContaining({
+      $subject: profileId,
+      update: stateUpdate.profile[0],
+      $creator: creatorId,
+    }),
   );
 });

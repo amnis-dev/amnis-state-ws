@@ -5,7 +5,9 @@ import { selectors } from '@amnis/core/selectors';
 import { authScopeCreate } from '@amnis/auth/scope';
 import { coreActions } from '@amnis/core/actions';
 import { entityClean } from '@amnis/core/entity';
-import type { State } from '@amnis/core/state';
+import { historyCreate, historyKey, historyMake } from '@amnis/core/history';
+import type { State, StateCreate, StateUpdate } from '@amnis/core/state';
+import { dateJSON } from '@amnis/core/core';
 import type { ApiProcess } from '../types';
 import { apiOutput } from '../api';
 import type { ApiCrudIOUpdate } from './crud.types';
@@ -51,7 +53,7 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
     /**
      * finalized state to process
      */
-    const stateFinal = jwt.adm === true ? body : stateUpdateSanatizd;
+    const stateFinal = jwt.adm === true ? body : stateUpdateSanatizd as StateUpdate;
 
     /**
      * Create an authentication scope object from the array of grant objects.
@@ -85,7 +87,14 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
       });
     }
 
+    /**
+     * Create historic records of the updates.
+     */
+    const stateCreateHistory = historyMake(stateFinal, jwt.sub);
+    const resultHistory = await database.create(stateCreateHistory);
+
     output.json.result = result;
+    output.json.result[historyKey] = resultHistory[historyKey];
 
     /**
      * Update the server store with possible changes.

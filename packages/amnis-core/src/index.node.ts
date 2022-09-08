@@ -4,10 +4,12 @@ export * from './actions';
 export * from './reducers';
 export * from './selectors';
 
+export * from './audit/index';
 export * from './contact/index';
 export * from './device/index';
 export * from './entity/index';
 export * from './grant/index';
+export * from './history/index';
 export * from './image/index';
 export * from './locale/index';
 export * from './log/index';

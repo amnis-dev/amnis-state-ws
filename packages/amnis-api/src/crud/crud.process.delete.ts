@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Reference } from '@amnis/core/types';
 import type { Role } from '@amnis/core/role';
-import type { StateDelete } from '@amnis/core/state';
+import type { StateDelete, StateUpdate, StateUpdateEntity } from '@amnis/core/state';
 import { selectors } from '@amnis/core/selectors';
 import { coreActions } from '@amnis/core/actions';
 import { Task } from '@amnis/core/grant';
 import { authwall } from '@amnis/auth/authwall';
 import { authScopeCreate } from '@amnis/auth/scope';
+import { historyKey, historyMake } from '@amnis/core/history';
 import type { ApiProcess } from '../types';
 import type { ApiCrudIODelete } from './crud.types';
 import { apiOutput } from '../api';
@@ -34,7 +35,7 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
     /**
      * finalized state to process
      */
-    const stateFinal = jwt?.adm === true ? body : stateAuthwalled;
+    const stateFinal = jwt?.adm === true ? body : stateAuthwalled as StateDelete;
 
     /**
      * Create an authentication scope object from the array of grant objects.
@@ -67,6 +68,31 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
         description: `Missing permissions to delete from the collections: ${deniedKeys.join(', ')}`,
       });
     }
+
+    /**
+     * Create historic records of the delete.
+     * TODO: Determine if necessary.
+     */
+    // const stateUpdateHistory: StateUpdate = {
+    //   [historyKey]: [],
+    // };
+    // Object.keys(stateFinal).every((sliceKey) => {
+    //   if (sliceKey === historyKey) {
+    //     return true;
+    //   }
+    //   stateFinal[sliceKey].forEach((deleteId) => {
+    //     const deleteUpdateObj: StateUpdateEntity = {
+    //       $id: deleteId,
+    //       delete: true,
+    //     };
+    //     stateUpdateHistory[historyKey].push(deleteUpdateObj);
+    //   });
+
+    //   return true;
+    // });
+
+    // const stateCreateHistory = historyMake(stateUpdateHistory, jwt?.sub);
+    // await database.create(stateCreateHistory);
 
     output.json.result = result;
 

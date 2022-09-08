@@ -1,5 +1,5 @@
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { StateUpdate } from '../state';
+import type { StateUpdateEntity } from '../state';
 import { DateJSON, Reference } from '../types';
 
 /**
@@ -12,11 +12,6 @@ export interface History extends Entity {
   $subject: Reference;
 
   /**
-   * The possible invoker of the historic update.
-   */
-  $invoker?: Reference;
-
-  /**
    * The date of the historical update.
    */
   date: DateJSON;
@@ -24,7 +19,7 @@ export interface History extends Entity {
   /**
    * The state update record that was performed.
    */
-  update: StateUpdate;
+  update: StateUpdateEntity;
 }
 
 /**

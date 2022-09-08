@@ -56,9 +56,9 @@ export interface Profile extends Entity {
 /**
  * Profile properties excluding the extended entity properties.
  */
-export type AuditBase = EntityExtension<Profile>;
+export type ProfileBase = EntityExtension<Profile>;
 
 /**
   * Base properties.
   */
-export type AuditBaseCreate = EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>;
+export type ProfileBaseCreate = EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>;
