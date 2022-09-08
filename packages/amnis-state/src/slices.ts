@@ -1,4 +1,6 @@
+export * from './audit/index';
 export * from './contact/index';
+export * from './history/index';
 export * from './log/index';
 export * from './profile/index';
 export * from './role/index';
