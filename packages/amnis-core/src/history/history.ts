@@ -31,7 +31,11 @@ export function historyCreate(
 /**
  * Create historic records of the updates.
  */
-export function historyMake(stateUpdate: StateUpdate, creator?: Reference): StateCreate {
+export function historyMake(
+  stateUpdate: StateUpdate,
+  creator?: Reference,
+  deniedKeys?: string[],
+): StateCreate {
   const stateCreateHistory: StateCreate = {
     [historyKey]: [],
   };
@@ -40,6 +44,11 @@ export function historyMake(stateUpdate: StateUpdate, creator?: Reference): Stat
       // Cannot create history of history.
       return true;
     }
+
+    if (deniedKeys?.includes(sliceKey)) {
+      return true;
+    }
+
     const updateEntities = stateUpdate[sliceKey];
     updateEntities.forEach((entity) => {
       stateCreateHistory[historyKey].push(

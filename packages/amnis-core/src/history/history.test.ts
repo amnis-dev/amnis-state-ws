@@ -1,4 +1,5 @@
 import { reference } from '../core';
+import { profileKey } from '../profile';
 import type { StateUpdate } from '../state';
 import {
   historyKey, historyCreate, historyBase, historyMake,
@@ -45,4 +46,23 @@ test('should make history', () => {
       $creator: creatorId,
     }),
   );
+});
+
+/**
+ * ============================================================
+ */
+test('should not make history with denied key', () => {
+  const profileId = reference('profile');
+  const stateUpdate: StateUpdate = {
+    profile: [{
+      $id: profileId,
+      nameDisplay: 'New Name',
+    }],
+  };
+
+  const creatorId = reference('user');
+
+  const stateCreateHistory = historyMake(stateUpdate, creatorId, [profileKey]);
+
+  expect(stateCreateHistory[historyKey]).toHaveLength(0);
 });

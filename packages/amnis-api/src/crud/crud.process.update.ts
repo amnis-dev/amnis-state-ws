@@ -68,6 +68,8 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
       },
     );
 
+    output.json.result = result;
+
     /**
      * Add errors for denied keys.
      */
@@ -76,7 +78,7 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
         return sliceKey;
       }
       return null;
-    }).filter((value) => value !== null);
+    }).filter((value) => value !== null) as string[];
 
     if (deniedKeys.length) {
       output.json.logs.push({
@@ -89,10 +91,8 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
     /**
      * Create historic records of the updates.
      */
-    const stateCreateHistory = historyMake(stateFinal, jwt.sub);
+    const stateCreateHistory = historyMake(stateFinal, jwt.sub, deniedKeys);
     const resultHistory = await database.create(stateCreateHistory);
-
-    output.json.result = result;
     output.json.result[historyKey] = resultHistory[historyKey];
 
     /**

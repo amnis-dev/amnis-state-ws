@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { DateJSON, Reference } from '../types';
+import type { Reference } from '../types';
 
 /**
  * A data structure for audit information.
@@ -10,11 +10,6 @@ export interface Audit extends Entity {
    * Action attempted
    */
   action: string;
-
-  /**
-   * Date invoked.
-   */
-  dateInvoked: DateJSON;
 
   /**
    * If the action was completed.
@@ -50,4 +45,4 @@ export type AuditBase = EntityExtension<Audit>;
 /**
  * Base properties in order to create a log.
  */
-export type AuditBaseCreate = EntityExtensionCreate<Audit, 'action' | 'dateInvoked' | 'completed'>;
+export type AuditBaseCreate = EntityExtensionCreate<Audit, 'action' | 'completed'>;
