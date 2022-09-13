@@ -13,7 +13,7 @@ export type LocaleTranslationKey = string & {[localeSymbol]: never};
 /**
  * Record of locale translations.
  */
-export type LocaleTranslations = Record<LocaleTranslationKey, string>;
+export type LocaleTranslation = Record<LocaleTranslationKey, string>;
 
 /**
  * Locale entity
@@ -36,7 +36,12 @@ export interface Locale extends Entity {
   /**
    * The language key value translations.
    */
-  t: LocaleTranslations;
+  t: LocaleTranslation;
+
+  /**
+   * Variables that can be inserted into translation text.
+   */
+  v: string[],
 }
 
 /**

@@ -41,7 +41,7 @@ test('should translate existing key', () => {
  * ============================================================
  */
 test('should translate existing key with args', () => {
-  const text = t(localeDataEnLogs.t, tk('error_required_name_desc'), 'system');
+  const text = t(localeDataEnLogs.t, tk('error_required_name_desc'), ...localeDataEnLogs.v);
 
   expect(text).toEqual('The system name must be defined.');
 });

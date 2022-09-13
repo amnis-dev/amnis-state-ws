@@ -11,6 +11,7 @@ export const localeDataEnLogs = localeCreate({
     [tk('error_required_name_title')]: 'Name Required',
     [tk('error_required_name_desc')]: 'The {0} name must be defined.',
   },
+  v: ['system'],
 });
 
 /**

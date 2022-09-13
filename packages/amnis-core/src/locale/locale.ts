@@ -1,7 +1,7 @@
-import { entityCreate } from '../entity';
+import { Entity, entityCreate } from '../entity';
 import type { LogBaseCreate } from '../log';
 import type {
-  Locale, LocaleBase, LocaleBaseCreate, LocaleTranslationKey, LocaleTranslations,
+  Locale, LocaleBase, LocaleBaseCreate, LocaleTranslationKey, LocaleTranslation,
 } from './locale.types';
 
 export const localeKey = 'locale';
@@ -10,6 +10,7 @@ export const localeBase: LocaleBase = {
   code: 'en',
   set: 'core',
   t: {},
+  v: [],
 };
 
 /**
@@ -23,7 +24,7 @@ export function tk(key: string) {
  * Translate method
  */
 export function t(
-  translations: LocaleTranslations,
+  translations: LocaleTranslation,
   key: LocaleTranslationKey,
   ...args: string[]
 ) {
@@ -60,10 +61,14 @@ export function localeCheck(locale: Locale): LogBaseCreate[] {
 
 export function localeCreate(
   locale: LocaleBaseCreate,
+  entity: Partial<Entity> = {},
 ): Locale {
   const localeEntity = entityCreate<Locale>(localeKey, {
     ...localeBase,
     ...locale,
+  }, {
+    ...entity,
+    partition: `${locale.code}-${locale.set}`,
   });
 
   return localeEntity;
