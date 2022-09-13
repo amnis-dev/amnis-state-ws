@@ -44,8 +44,7 @@ export const memory: Database = {
    * CREATE
    * ----------------------------------------
    */
-  create: async (state, controls = {}) => {
-    const { domain } = controls;
+  create: async (state) => {
     const result: StateCreate = {};
 
     Object.keys(state).every((sliceKey) => {
@@ -59,7 +58,7 @@ export const memory: Database = {
           return true;
         }
 
-        const storageKey = domain ? `${domain}_${sliceKey}` : sliceKey;
+        const storageKey = sliceKey;
 
         if (!storage[storageKey]) {
           storage[storageKey] = {};
@@ -85,11 +84,11 @@ export const memory: Database = {
    * ----------------------------------------
    */
   read: async (select, controls = {}) => {
-    const { scope, subject, domain } = controls;
+    const { scope, subject } = controls;
     const result: StateCreate = {};
 
     Object.keys(select).every((selectKey) => {
-      const storageKey = domain ? `${domain}_${selectKey}` : selectKey;
+      const storageKey = selectKey;
 
       /**
        * Ensure this selection is within auth scope.
@@ -164,11 +163,11 @@ export const memory: Database = {
    * ----------------------------------------
    */
   update: async (state, controls = {}) => {
-    const { scope, subject, domain } = controls;
+    const { scope, subject } = controls;
     const result: StateCreate = {};
 
     Object.keys(state).every((sliceKey) => {
-      const storageKey = domain ? `${domain}_${sliceKey}` : sliceKey;
+      const storageKey = sliceKey;
 
       /**
        * Ensure this selection is within auth scope.
@@ -222,11 +221,11 @@ export const memory: Database = {
    * ----------------------------------------
    */
   delete: async (state, controls = {}) => {
-    const { scope, subject, domain } = controls;
+    const { scope, subject } = controls;
     const result: StateDelete = {};
 
     Object.keys(state).every((sliceKey) => {
-      const storageKey = domain ? `${domain}_${sliceKey}` : sliceKey;
+      const storageKey = sliceKey;
 
       /**
        * Ensure this selection is within auth scope.

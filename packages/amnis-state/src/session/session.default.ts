@@ -7,7 +7,6 @@ export const sessionDefault = sessionCreate({
   exp: dateNumeric(),
   admin: false,
   name: 'Unknown Session Holder',
-  dmn: '',
 });
 
 export default sessionDefault;

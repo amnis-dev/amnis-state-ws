@@ -25,14 +25,6 @@ export interface ApiAuthBodyLogin {
    * @description Secret phrase associated with the username.
    */
   password: string;
-
-  /**
-   * @minLength 3
-   * @maxLength 32
-   * @pattern ^[a-zA-Z0-9]*$
-   * @description Domain to scope data access. Only alphanumeric characters allowed.
-   */
-  domain?: string;
 }
 
 /**
@@ -85,14 +77,6 @@ export interface ApiAuthBodyPkce {
    * @pattern ^[a-zA-Z0-9-_]+$
    */
   tenantId?: string;
-
-  /**
-   * @minLength 3
-   * @maxLength 32
-   * @pattern ^[a-zA-Z0-9]*$
-   * @description Domain to scope data access. Only alphanumeric characters allowed.
-   */
-  domain?: string;
 
   /**
    * True or false value.

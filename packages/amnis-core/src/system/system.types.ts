@@ -16,11 +16,6 @@ export interface System extends Entity {
   sessionExpires: number;
 
   /**
-   * Optional domain id to reference this system.
-   */
-  domain?: string;
-
-  /**
    * System's website configurations.
    */
   $website: Reference<Website>;

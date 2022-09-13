@@ -13,7 +13,6 @@ export const sessionBase: EntityExtension<Session> = {
   exp: dateNumeric(),
   admin: false,
   name: 'Unnamed Session Holder',
-  dmn: '',
   avatar: null,
 };
 

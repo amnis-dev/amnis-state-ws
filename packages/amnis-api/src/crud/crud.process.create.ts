@@ -67,7 +67,7 @@ const process: ApiProcess<ApiCrudIOCreate> = (context) => (
      */
     const stateFinal = jwt?.adm === true ? body : stateUpdateSanatizd;
 
-    const result = await database.create(stateFinal, { domain: jwt?.dmn });
+    const result = await database.create(stateFinal);
 
     /**
    * Add errors for denied keys.

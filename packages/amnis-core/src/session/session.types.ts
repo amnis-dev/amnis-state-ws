@@ -33,11 +33,6 @@ export interface Session extends Entity {
   name: string;
 
   /**
-   * Domain.
-   */
-  dmn: string;
-
-  /**
    * Avatar image url.
    */
   avatar: SURL | null;

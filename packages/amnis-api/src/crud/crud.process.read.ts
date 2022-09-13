@@ -23,12 +23,11 @@ async function readRecursive(
   authScope: AuthScope | undefined,
   subject: Reference,
   depth: number,
-  domain?: string,
 ): Promise<StateCreate> {
   /**
    * Query for the initial result.
    */
-  const result = await database.read(query, { scope: authScope, subject, domain });
+  const result = await database.read(query, { scope: authScope, subject });
 
   /**
    * A search depth less than 1 means we no longer need to go deeper.
@@ -58,7 +57,6 @@ async function readRecursive(
     authScope,
     subject,
     depth - 1,
-    domain,
   );
 
   /**
@@ -115,7 +113,7 @@ export const process: ApiProcess<ApiCrudIORead> = (context) => (
      * Build the result based on the query depth.
      */
     const resultPromises = Object.values(stateFinal).map((slice) => (
-      readRecursive(database, grants, stateFinal, authScope, jwt.sub, slice.$depth || 0, jwt.dmn)
+      readRecursive(database, grants, stateFinal, authScope, jwt.sub, slice.$depth || 0)
     ));
     const results = await Promise.all(resultPromises);
     const result = results.reduce<StateCreate>((prev, next) => {

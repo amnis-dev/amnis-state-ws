@@ -17,12 +17,5 @@ export function auditCreate(
     ...audit,
   }, entity);
 
-  /**
-   * Rare exception to modify a read-only property.
-   */
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
-  auditEntity.partition = auditEntity.created;
-
   return auditEntity;
 }

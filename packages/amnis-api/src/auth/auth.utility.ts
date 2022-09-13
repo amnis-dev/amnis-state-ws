@@ -84,7 +84,6 @@ export function sessionGenerate(
     exp: sessionExpires,
     admin: false,
     name: profile.nameDisplay,
-    dmn: user.domain || '',
     avatar: profile.avatar || null,
   });
 

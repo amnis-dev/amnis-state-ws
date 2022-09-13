@@ -64,7 +64,6 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
       {
         scope: authScope,
         subject: jwt.sub,
-        domain: jwt.dmn,
       },
     );
 

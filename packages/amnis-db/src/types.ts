@@ -11,7 +11,6 @@ import type {
 export interface DatabaseControls {
   scope?: AuthScope;
   subject?: Reference;
-  domain?: string;
 }
 
 export type DatabaseCreateMethod = (

@@ -49,11 +49,6 @@ export interface User extends Entity {
   password: string | null;
 
   /**
-   * The domain this user belongs to.
-   */
-  domain?: string;
-
-  /**
    * If this is an administrative account.
    */
   admin?: boolean;

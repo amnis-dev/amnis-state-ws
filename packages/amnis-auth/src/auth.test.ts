@@ -44,7 +44,6 @@ const session: Session = entityCreate('session', {
   exp: jwtDecoded.exp,
   admin: false,
   name: '',
-  dmn: '',
   avatar: surl('https://amnis.dev/avatar.png'),
 });
 
@@ -53,7 +52,6 @@ const sessionExpired: Session = entityCreate('session', {
   exp: dateNumeric(),
   admin: false,
   name: '',
-  dmn: '',
   avatar: surl('https://amnis.dev/avatar.png'),
 });
 

@@ -46,7 +46,6 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
       {
         scope: authScope,
         subject: jwt?.sub,
-        domain: jwt?.dmn,
       },
     );
 
