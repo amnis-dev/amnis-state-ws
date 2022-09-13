@@ -4,8 +4,8 @@
 declare const deviceSymbol: unique symbol;
 
 /**
-  * A string that represents a device.
-  */
+ * A string that represents a device.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type DeviceString = string & {[deviceSymbol]: never};
 
