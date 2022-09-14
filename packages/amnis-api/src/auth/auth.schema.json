@@ -39,13 +39,6 @@
           "minLength": 6,
           "maxLength": 64,
           "description": "Secret phrase associated with the username."
-        },
-        "domain": {
-          "type": "string",
-          "minLength": 3,
-          "maxLength": 32,
-          "pattern": "^[a-zA-Z0-9]*$",
-          "description": "Domain to scope data access. Only alphanumeric characters allowed."
         }
       },
       "required": [
@@ -102,13 +95,6 @@
           "minLength": 16,
           "maxLength": 64,
           "pattern": "^[a-zA-Z0-9-_]+$"
-        },
-        "domain": {
-          "type": "string",
-          "minLength": 3,
-          "maxLength": 32,
-          "pattern": "^[a-zA-Z0-9]*$",
-          "description": "Domain to scope data access. Only alphanumeric characters allowed."
         },
         "gov": {
           "type": "boolean",

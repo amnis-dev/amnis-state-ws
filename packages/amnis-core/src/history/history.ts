@@ -1,4 +1,4 @@
-import { dateJSON, reference } from '../core';
+import { reference } from '../core';
 import { Entity, entityCreate } from '../entity';
 import { StateCreate, StateUpdate } from '../state';
 import { Reference } from '../types';
@@ -11,7 +11,6 @@ export const historyBase: HistoryBase = {
   update: {
     $id: reference(''),
   },
-  date: dateJSON(),
 };
 
 export function historyCreate(
@@ -21,10 +20,7 @@ export function historyCreate(
   const historyEntity = entityCreate<History>(historyKey, {
     ...historyBase,
     ...history,
-  }, {
-    ...entity,
-    partition: history.$subject,
-  });
+  }, entity);
 
   return historyEntity;
 }
@@ -56,7 +52,6 @@ export function historyMake(
           {
             $subject: entity.$id, // The entity being updates is the subject.
             update: entity, // The update object.
-            date: dateJSON(), // The timestamp of the historical update.
           },
           (creator ? { $creator: creator } : {}),
         ),

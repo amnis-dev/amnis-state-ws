@@ -22,10 +22,10 @@
       "additionalProperties": false
     },
     "StateCreate": {
-      "$ref": "#/definitions/State%3Cdef-interface-1570551179-161-1534-1570551179-0-2853602488886%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cdef-interface-1570551179-161-1445-1570551179-0-2764602488886%5B%5D%3E",
       "description": "A common stateful result from creations. A state object with entities that were created."
     },
-    "State<def-interface-1570551179-161-1534-1570551179-0-2853602488886[]>": {
+    "State<def-interface-1570551179-161-1445-1570551179-0-2764602488886[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
@@ -42,10 +42,6 @@
           "$ref": "#/definitions/Reference",
           "description": "Identifier for this entity.",
           "default": ""
-        },
-        "partition": {
-          "type": "string",
-          "description": "Partition key for database optimization."
         },
         "created": {
           "$ref": "#/definitions/DateJSON",
@@ -92,7 +88,6 @@
       },
       "required": [
         "$id",
-        "partition",
         "created",
         "updated",
         "committed",

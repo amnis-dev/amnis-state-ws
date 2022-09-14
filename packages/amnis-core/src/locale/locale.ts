@@ -66,10 +66,7 @@ export function localeCreate(
   const localeEntity = entityCreate<Locale>(localeKey, {
     ...localeBase,
     ...locale,
-  }, {
-    ...entity,
-    partition: `${locale.code}-${locale.set}`,
-  });
+  }, entity);
 
   return localeEntity;
 }

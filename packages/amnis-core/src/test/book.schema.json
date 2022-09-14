@@ -22,10 +22,6 @@
           "description": "Identifier for this entity.",
           "default": ""
         },
-        "partition": {
-          "type": "string",
-          "description": "Partition key for database optimization."
-        },
         "created": {
           "$ref": "#/definitions/DateJSON",
           "description": "Creation date string.",
@@ -84,7 +80,6 @@
         "committed",
         "created",
         "delete",
-        "partition",
         "price",
         "title",
         "updated"
@@ -98,10 +93,6 @@
           "$ref": "#/definitions/Reference",
           "description": "Identifier for this entity.",
           "default": ""
-        },
-        "partition": {
-          "type": "string",
-          "description": "Partition key for database optimization."
         },
         "created": {
           "$ref": "#/definitions/DateJSON",
@@ -148,7 +139,6 @@
       },
       "required": [
         "$id",
-        "partition",
         "created",
         "updated",
         "committed",
@@ -187,10 +177,6 @@
                 "$ref": "#/definitions/Reference",
                 "description": "Identifier for this entity.",
                 "default": ""
-              },
-              "partition": {
-                "type": "string",
-                "description": "Partition key for database optimization."
               },
               "created": {
                 "$ref": "#/definitions/DateJSON",

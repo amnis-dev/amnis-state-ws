@@ -22,7 +22,6 @@ export const entityCreate = <E extends Entity>(
   const now = dateJSON();
   const base: Entity = {
     $id: id,
-    partition: id,
     created: now,
     updated: now,
     delete: false,

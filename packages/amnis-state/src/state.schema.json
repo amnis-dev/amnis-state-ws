@@ -422,10 +422,6 @@
           "description": "Number in milliseconds that an authentication session should live.",
           "default": 3600000
         },
-        "domain": {
-          "type": "string",
-          "description": "Optional domain id to reference this system."
-        },
         "$website": {
           "$ref": "#/definitions/Reference%3CWebsite%3E",
           "description": "System's website configurations."
@@ -467,10 +463,6 @@
           "type": "number",
           "description": "Number in milliseconds that an authentication session should live.",
           "default": 3600000
-        },
-        "domain": {
-          "type": "string",
-          "description": "Optional domain id to reference this system."
         },
         "$website": {
           "$ref": "#/definitions/Reference%3CWebsite%3E",
@@ -544,10 +536,6 @@
           "minLength": 6,
           "maxLength": 64,
           "default": "null"
-        },
-        "domain": {
-          "type": "string",
-          "description": "The domain this user belongs to."
         },
         "admin": {
           "type": "boolean",
@@ -629,10 +617,6 @@
           "maxLength": 64,
           "default": "null"
         },
-        "domain": {
-          "type": "string",
-          "description": "The domain this user belongs to."
-        },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
@@ -703,10 +687,6 @@
           "type": "string",
           "description": "Display name."
         },
-        "dmn": {
-          "type": "string",
-          "description": "Domain."
-        },
         "avatar": {
           "anyOf": [
             {
@@ -723,7 +703,6 @@
         "$subject",
         "admin",
         "avatar",
-        "dmn",
         "exp",
         "name"
       ],
@@ -756,10 +735,6 @@
           "type": "string",
           "description": "Display name."
         },
-        "dmn": {
-          "type": "string",
-          "description": "Domain."
-        },
         "avatar": {
           "anyOf": [
             {
@@ -777,7 +752,6 @@
         "exp",
         "admin",
         "name",
-        "dmn",
         "avatar"
       ],
       "additionalProperties": false,
@@ -1220,10 +1194,6 @@
           "description": "Number in milliseconds that an authentication session should live.",
           "default": 3600000
         },
-        "domain": {
-          "type": "string",
-          "description": "Optional domain id to reference this system."
-        },
         "$website": {
           "$ref": "#/definitions/Reference%3CWebsite%3E",
           "description": "System's website configurations."
@@ -1254,10 +1224,6 @@
           "type": "number",
           "description": "Number in milliseconds that an authentication session should live.",
           "default": 3600000
-        },
-        "domain": {
-          "type": "string",
-          "description": "Optional domain id to reference this system."
         },
         "$website": {
           "$ref": "#/definitions/Reference%3CWebsite%3E",
@@ -1316,10 +1282,6 @@
           "minLength": 6,
           "maxLength": 64,
           "default": "null"
-        },
-        "domain": {
-          "type": "string",
-          "description": "The domain this user belongs to."
         },
         "admin": {
           "type": "boolean",
@@ -1390,10 +1352,6 @@
           "maxLength": 64,
           "default": "null"
         },
-        "domain": {
-          "type": "string",
-          "description": "The domain this user belongs to."
-        },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
@@ -1449,10 +1407,6 @@
           "type": "string",
           "description": "Display name."
         },
-        "dmn": {
-          "type": "string",
-          "description": "Domain."
-        },
         "avatar": {
           "anyOf": [
             {
@@ -1489,10 +1443,6 @@
         "name": {
           "type": "string",
           "description": "Display name."
-        },
-        "dmn": {
-          "type": "string",
-          "description": "Domain."
         },
         "avatar": {
           "anyOf": [

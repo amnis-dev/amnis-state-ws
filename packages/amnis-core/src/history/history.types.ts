@@ -1,6 +1,6 @@
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
 import type { StateUpdateEntity } from '../state';
-import { DateJSON, Reference } from '../types';
+import { Reference } from '../types';
 
 /**
  * Historical updates to data.
@@ -9,12 +9,7 @@ export interface History extends Entity {
   /**
    * The subject that was updated.
    */
-  $subject: Reference;
-
-  /**
-   * The date of the historical update.
-   */
-  date: DateJSON;
+  readonly $subject: Reference;
 
   /**
    * The state update record that was performed.
@@ -30,4 +25,4 @@ export type HistoryBase = EntityExtension<History>;
 /**
  * Base properties in order to create a log.
  */
-export type HistoryBaseCreate = EntityExtensionCreate<History, '$subject' | 'update' | 'date'>;
+export type HistoryBaseCreate = EntityExtensionCreate<History, '$subject' | 'update'>;
