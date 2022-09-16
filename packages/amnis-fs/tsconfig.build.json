@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig",
+  "exclude": [
+    "src/**/*.test.*",
+    "src/test/*"
+  ],
+  "include": ["src/**/*.ts"],
+  "references": [
+      { "path": "../amnis-core/tsconfig.build.json" },
+      { "path": "../amnis-auth/tsconfig.build.json" }
+  ]
+}

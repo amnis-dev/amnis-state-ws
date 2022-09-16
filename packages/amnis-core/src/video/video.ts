@@ -9,7 +9,8 @@ import type { Video } from './video.types';
 export const videoKey = 'video';
 
 export const videoBase: EntityExtension<Video> = {
-  format: 'webm',
+  extension: 'webm',
+  mimetype: 'video/webm',
   width: 0,
   height: 0,
   aspect: 0,

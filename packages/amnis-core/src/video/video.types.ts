@@ -1,10 +1,10 @@
-import type { Media } from '../media';
+import type { File } from '../file';
 
-export interface Video extends Media {
+export interface Video extends File {
   /**
    * Video format type.
    */
-  format: 'webm' | 'mp4' | 'mpeg' | 'mov' | 'H264';
+  extension: 'webm' | 'mp4' | 'mpeg' | 'mov' | 'H264';
 
   /**
    * Original width in pixels.

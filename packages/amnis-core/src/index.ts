@@ -10,7 +10,7 @@ export * from './grant/index';
 export * from './image/index';
 export * from './locale/index';
 export * from './log/index';
-export * from './media/index';
+export * from './file/index';
 export * from './permit/index';
 export * from './profile/index';
 export * from './role/index';
