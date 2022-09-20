@@ -1,9 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Image } from '@amnis/core/image';
+import { Reference } from '@amnis/core/types';
 
-export type FileSystemSaveImageMethod = (
+/**
+ * Method for saving data.
+ */
+export type FileSystemImageWriteMethod = (
   buffer: Buffer,
-) => Promise<Image>;
+  imageProps: Partial<Image>
+) => Promise<Image | undefined>;
+
+/**
+ * Method for saving data.
+ */
+export type FileSystemImageReadMethod = (
+  imageId: Reference<Image>
+) => Promise<Buffer | undefined>;
 
 /**
  * Core interface for database methods.
@@ -18,5 +30,10 @@ export interface FileSystem {
    * Method for saving/storing files onto the filesystem.
    * If successful, it will return the storaged file information.
    */
-  saveImage: FileSystemSaveImageMethod;
+  imageWrite: FileSystemImageWriteMethod;
+
+  /**
+   * Method for reading images from
+   */
+  imageRead: FileSystemImageReadMethod;
 }

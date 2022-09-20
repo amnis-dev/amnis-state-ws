@@ -1,10 +1,11 @@
+import { EntityExtension, EntityExtensionCreate } from '../entity';
 import type { File } from '../file';
 
 export interface Video extends File {
   /**
    * Video format type.
    */
-  extension: 'webm' | 'mp4' | 'mpeg' | 'mov' | 'H264';
+  extension: 'webm' | 'mp4' | 'mpeg' | 'mov';
 
   /**
    * Original width in pixels.
@@ -26,3 +27,13 @@ export interface Video extends File {
    */
   duration: number;
 }
+
+/**
+ * Video properties excluding the extended entity properties.
+ */
+export type VideoBase = EntityExtension<Video>;
+
+/**
+    * Base properties in order to create an image.
+    */
+export type VideoBaseCreate = EntityExtensionCreate<Video, 'title' | 'mimetype' | 'size' | 'extension' | 'width' | 'height' | 'duration'>;

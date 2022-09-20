@@ -5,7 +5,7 @@ export const fileKey = 'file';
 
 export const fileBase: FileBase = {
   title: 'Untitled File',
-  slug: 'untitled-file',
+  slug: '',
   mimetype: 'text/plain',
   size: 0,
 };
@@ -18,7 +18,7 @@ export function fileCreate<F extends File>(
   const fileEntity = entityCreate<File>(key, {
     ...fileBase,
     ...file,
-    slug: file.slug ?? file.title.replace(/ /g, '-').replace(/[-]+/g, '-').replace(/[^\w-]+/g, ''),
+    slug: file.slug?.length ? file.slug : file.title.replace(/ /g, '-').replace(/[-]+/g, '-').replace(/[^\w-]+/g, '').toLowerCase(),
   }, entity);
 
   return fileEntity as F;

@@ -15,6 +15,6 @@
   "dependencies": {
     "@amnis/core": "0.4.0-alpha.3",
     "@amnis/auth": "0.4.0-alpha.3",
-    "fluent-ffmpeg": "^2.1.2"
+    "image-size": "^1.0.2"
   }
 }

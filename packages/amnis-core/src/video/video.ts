@@ -1,14 +1,10 @@
-import { surl } from '../core';
-import {
-  EntityExtension,
-  EntityExtensionCreate,
-  entityCreate,
-} from '../entity';
-import type { Video } from './video.types';
+import type { Entity } from '../entity';
+import { fileCreate } from '../file';
+import type { Video, VideoBase, VideoBaseCreate } from './video.types';
 
 export const videoKey = 'video';
 
-export const videoBase: EntityExtension<Video> = {
+export const videoBase: VideoBase = {
   extension: 'webm',
   mimetype: 'video/webm',
   width: 0,
@@ -16,16 +12,19 @@ export const videoBase: EntityExtension<Video> = {
   aspect: 0,
   duration: 0,
   title: 'Untitled Video',
-  source: surl(''),
+  slug: 'untitled-video',
   size: 0,
 };
 
 export function videoCreate(
-  video: EntityExtensionCreate<Video, 'title'>,
+  video: VideoBaseCreate,
+  entity: Entity,
 ): Video {
-  const videoEntity = entityCreate<Video>(videoKey, {
+  const videoEntity = fileCreate<Video>(videoKey, {
     ...videoBase,
     ...video,
-  });
+    aspect: video.aspect ?? (video.width / video.height),
+  }, entity);
+
   return videoEntity;
 }

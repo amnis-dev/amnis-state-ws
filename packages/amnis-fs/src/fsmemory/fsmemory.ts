@@ -1,41 +1,71 @@
-import fs from 'node:fs';
-import stream from 'node:stream';
-import ffmpeg from 'fluent-ffmpeg';
-import { imageCreate } from '@amnis/core/image';
+// import { fileTypeFromBuffer } from 'file-type';
+import sizeOf from 'image-size';
+import { imageCreate } from '@amnis/core/image/index';
 import type { FileSystem } from '../types';
+import { fsConfig } from '../config';
+import { isWebp } from '../utility';
 
 const storage: Record<string, Buffer> = {};
 
 export const fsmemory: FileSystem = {
   initialize: () => { /** noop */ },
-  saveImage: async (buffer) => new Promise((resolve, reject) => {
+
+  imageWrite: async (buffer, imageProps = {}) => {
     /**
-     * Attempt to convert the image buffer data to a webm file.
+     * Ensure the file type is a webp.
+     * Only webp files can be uploaded to the service.
      */
-    const streamRead = fs.createReadStream(buffer);
-    const streamWrite = new stream.Writable();
-    const command = ffmpeg();
-    command
-      .input(streamRead)
-      .format('webp')
-      .addOutputOptions(['-quality 100'])
-      .on('error', () => {
-        console.error('FS: WRITE FAILED :(');
-        reject();
-      })
-      .on('end', () => {
-        console.log('FS: WRITE SUCCESS :)');
-        resolve(imageCreate({
-          extension: 'webp',
-          mimetype: 'image/webp',
-          title: 'Unknown Image',
-          height: 0,
-          width: 0,
-          size: 0,
-        }));
-      })
-      .writeToStream(streamWrite);
-  }),
+    /** TODO: Import file-type when project is ESM */
+    // const fileType = await fileTypeFromBuffer(buffer);
+
+    // if (!fileType || fileType.mime !== 'image/webp') {
+    //   return undefined;
+    // }
+
+    if (!isWebp(buffer)) {
+      return undefined;
+    }
+
+    /**
+     * Get the dimensions of the image.
+     * Images can be no greater than the configured amount.
+     */
+    const fileDimensions = await sizeOf(buffer);
+
+    if (
+      !fileDimensions.width
+      || !fileDimensions.height
+      || fileDimensions.width > fsConfig.FS_MAX_IMAGE_SIZE
+      || fileDimensions.height > fsConfig.FS_MAX_IMAGE_SIZE
+    ) {
+      return undefined;
+    }
+
+    /**
+     * Create an image entity.
+     */
+    const imageEntity = imageCreate({
+      extension: 'webp',
+      mimetype: 'image/webp',
+      title: 'Unknown Image',
+      height: fileDimensions.height,
+      width: fileDimensions.width,
+      size: Buffer.byteLength(buffer),
+      ...imageProps,
+    });
+
+    /**
+     * Save the file to memory.
+     */
+    storage[imageEntity.$id] = buffer;
+
+    /**
+     * Return the image entity object.
+     */
+    return imageEntity;
+  },
+
+  imageRead: async (imageId) => storage[imageId],
 };
 
 export default fsmemory;
