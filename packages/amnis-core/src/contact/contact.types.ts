@@ -12,13 +12,18 @@ export interface Contact extends Entity {
   name: string;
 
   /**
-   * phone numbers
+   * Details about the contact.
+   */
+  description?: string;
+
+  /**
+   * Phone numbers. First item in the array is the primary phone number.
    * @title Phone Numbers
    */
   phones: string[];
 
   /**
-   * Contact emails.
+   * Contact emails. First item in the array is the primary email.
    * @title E-Mail Addresses
    */
   emails: string[];

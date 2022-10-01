@@ -17,7 +17,7 @@ test('should create a contact', () => {
 
   expect(contact).toEqual(
     expect.objectContaining({
-      name: expect.any(String),
+      name: 'Amnis Contact',
       socials: expect.any(Array),
     }),
   );

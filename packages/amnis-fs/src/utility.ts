@@ -1,3 +1,5 @@
+const magicWebp = [87, 69, 66, 80];
+
 /**
  * Returns true if a buffer is webp data.
  */
@@ -6,7 +8,7 @@ export function isWebp(buffer: Buffer) {
     return false;
   }
 
-  return (buffer[8] === 87 && buffer[9] === 69 && buffer[10] === 66 && buffer[11] === 80);
+  return buffer.slice(8, 12).every((byte, i) => byte === magicWebp[i]);
 }
 
 export default { isWebp };

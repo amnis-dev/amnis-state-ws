@@ -17,17 +17,17 @@ export interface Website extends Entity {
   name: string;
 
   /**
-   * Possible name that is shorter.
+   * Sorter name of the website. Important for smaller displays.
    */
   nameShort?: string;
 
   /**
-   * Primary to the website.
+   * Primary URL to the website.
    */
   url: string;
 
   /**
-   * A title to access the website.
+   * Default title for the website. This is for meta data and the text seen on the browser tab.
    */
   title?: string;
 
