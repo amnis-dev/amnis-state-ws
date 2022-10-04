@@ -1,25 +1,25 @@
-import type { Reference } from '../types';
+import type { Identifier } from '../types';
 import type { Entity } from '../entity';
 import type { GrantString } from '../grant';
 
 /**
- * A permit is a list of grants for a specific reference ID.
+ * A permit is a list of grants for a specific identifier ID.
  */
 export interface Permit extends Entity {
   /**
-   * Reference to the entity that issued this permit.
+   * Identifier to the entity that issued this permit.
    */
-  $issuer: Reference;
+  $issuer: Identifier;
 
   /**
    * Owner of the permit that can perform the granted actions.
    */
-  $holder: Reference;
+  $holder: Identifier;
 
   /**
-   * Reference to the entity that the owner has been granted actions on.
+   * Identifier to the entity that the owner has been granted actions on.
    */
-  $target: Reference;
+  $target: Identifier;
 
   /**
    * Grants this permit provides.

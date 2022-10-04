@@ -5,7 +5,7 @@ import type {
   DateJSON,
   DateNumeric,
   SURL,
-  Reference,
+  Identifier,
 } from './types';
 
 /**
@@ -14,9 +14,9 @@ import type {
 export const noop = () => { /** No operation. */ };
 
 /**
- * Create a reference to another type.
+ * Create a identifier to another type.
  */
-export const reference = <T>(key: string, id = nanoid()) => `${key}:${id}` as Reference<T>;
+export const identifier = <T>(key: string, id = nanoid()) => `${key}:${id}` as Identifier<T>;
 
 /**
  * Creates a string URL (aka SURL).
@@ -82,7 +82,7 @@ export function durationCalc(duration: string): number {
 }
 
 /**
- * Validates a reference type.
+ * Validates a identifier type.
  */
 export const referenceValidate = (ref: string): boolean => {
   const [key, id] = ref.split(':');

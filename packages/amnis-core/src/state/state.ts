@@ -5,19 +5,19 @@ import type { State, StateCreate, StateQuery } from './state.types';
 
 function stateQueryReferenceMutate(
   stateQuery: StateQuery,
-  reference: string | string[],
+  identifier: string | string[],
 ) {
   let sliceKey = '';
   const ids = new Set();
 
-  if (typeof reference === 'string') {
-    const [key] = reference.split(':');
+  if (typeof identifier === 'string') {
+    const [key] = identifier.split(':');
     sliceKey = key;
-    ids.add(reference);
-  } else if (reference.length > 0) {
-    const [key] = reference[0].split(':');
+    ids.add(identifier);
+  } else if (identifier.length > 0) {
+    const [key] = identifier[0].split(':');
     sliceKey = key;
-    reference.forEach((ref) => ids.add(ref));
+    identifier.forEach((ref) => ids.add(ref));
   } else {
     return;
   }

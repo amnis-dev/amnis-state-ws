@@ -5,7 +5,7 @@ import { Task } from '@amnis/core/grant';
 import { selectors } from '@amnis/core/selectors';
 import type { State, StateCreate } from '@amnis/core/state';
 import type { Role } from '@amnis/core/role';
-import type{ Reference } from '@amnis/core/types';
+import type{ Identifier } from '@amnis/core/types';
 import type { ApiProcess } from '../types';
 import { apiOutput } from '../api';
 import type { ApiCrudIOCreate } from './crud.types';
@@ -18,7 +18,7 @@ const process: ApiProcess<ApiCrudIOCreate> = (context) => (
     const { body, jwt } = input;
     const output = apiOutput<StateCreate>();
 
-    const roleRefs: Reference<Role>[] = jwt?.roles || [];
+    const roleRefs: Identifier<Role>[] = jwt?.roles || [];
 
     /**
      * Get array of grants from roles in the service store.
@@ -57,7 +57,7 @@ const process: ApiProcess<ApiCrudIOCreate> = (context) => (
       output.json.logs.push({
         level: 'error',
         title: 'Invalid Identifier',
-        description: 'There was an invalid identity key used.',
+        description: 'There was an invalid identifier key used.',
       });
       return output;
     }

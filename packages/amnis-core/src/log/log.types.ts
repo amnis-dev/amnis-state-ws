@@ -1,4 +1,4 @@
-import type { Reference } from '../types';
+import type { Identifier } from '../types';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { User } from '../user/user.types';
 
@@ -32,9 +32,9 @@ export interface Log extends Entity {
   system: string;
 
   /**
-   * Reference to a user that invoked the log.
+   * Identifier to a user that invoked the log.
    */
-  $invoker?: Reference<User>;
+  $invoker?: Identifier<User>;
 }
 
 /**

@@ -1,4 +1,4 @@
-import { dateNumeric, reference } from '../core';
+import { dateNumeric, identifier } from '../core';
 import { sessionKey, sessionCreate } from './session';
 
 /**
@@ -13,7 +13,7 @@ test('session key should be is properly set', () => {
  */
 test('should create a session', () => {
   const session = sessionCreate({
-    $subject: reference('user'),
+    $subject: identifier('user'),
     name: 'Newbie',
     exp: dateNumeric(),
   });

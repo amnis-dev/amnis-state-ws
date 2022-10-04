@@ -4,7 +4,7 @@ import type {
   StateCreate,
   StateDelete,
 } from '@amnis/core/state';
-import { Reference } from '@amnis/core/types';
+import { Identifier } from '@amnis/core/types';
 import type { Database } from '../types';
 
 /**
@@ -131,7 +131,7 @@ export const memory: Database = {
           if (
             scope
             && scope[selectKey] === 'owned'
-            && (entity.$owner !== subject && !entity.$readers.includes(subject as Reference))
+            && (entity.$owner !== subject && !entity.$readers.includes(subject as Identifier))
           ) {
             return false;
           }

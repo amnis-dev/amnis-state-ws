@@ -1,4 +1,4 @@
-import { reference } from '../core';
+import { identifier } from '../core';
 import { profileKey } from '../profile';
 import type { StateUpdate } from '../state';
 import {
@@ -27,7 +27,7 @@ test('should create a history', () => {
  * ============================================================
  */
 test('should make history', () => {
-  const profileId = reference('profile');
+  const profileId = identifier('profile');
   const stateUpdate: StateUpdate = {
     profile: [{
       $id: profileId,
@@ -35,7 +35,7 @@ test('should make history', () => {
     }],
   };
 
-  const creatorId = reference('user');
+  const creatorId = identifier('user');
 
   const stateCreateHistory = historyMake(stateUpdate, creatorId);
 
@@ -52,7 +52,7 @@ test('should make history', () => {
  * ============================================================
  */
 test('should not make history with denied key', () => {
-  const profileId = reference('profile');
+  const profileId = identifier('profile');
   const stateUpdate: StateUpdate = {
     profile: [{
       $id: profileId,
@@ -60,7 +60,7 @@ test('should not make history with denied key', () => {
     }],
   };
 
-  const creatorId = reference('user');
+  const creatorId = identifier('user');
 
   const stateCreateHistory = historyMake(stateUpdate, creatorId, [profileKey]);
 

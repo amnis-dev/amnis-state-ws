@@ -1,4 +1,4 @@
-import type { Reference, DateNumeric, SURL } from '../types';
+import type { Identifier, DateNumeric, SURL } from '../types';
 import type { Entity } from '../entity';
 
 /**
@@ -10,7 +10,7 @@ export interface Session extends Entity {
    * Subject of the session.
    * Typically a user id.
    */
-  $subject: Reference;
+  $subject: Identifier;
 
   /**
    * Possible "Issued At" property when decoding.

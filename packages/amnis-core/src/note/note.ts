@@ -1,11 +1,11 @@
-import { reference } from '../core';
+import { identifier } from '../core';
 import { Entity, entityCreate } from '../entity';
 import type { Note, NoteBase, NoteBaseCreate } from './note.types';
 
 export const noteKey = 'note';
 
 export const noteBase: NoteBase = {
-  $subject: reference(''),
+  $subject: identifier(''),
   text: '',
 };
 

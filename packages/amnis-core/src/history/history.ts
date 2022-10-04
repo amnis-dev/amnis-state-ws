@@ -1,15 +1,15 @@
-import { reference } from '../core';
+import { identifier } from '../core';
 import { Entity, entityCreate } from '../entity';
 import { StateCreate, StateUpdate } from '../state';
-import { Reference } from '../types';
+import { Identifier } from '../types';
 import type { History, HistoryBase, HistoryBaseCreate } from './history.types';
 
 export const historyKey = 'history';
 
 export const historyBase: HistoryBase = {
-  $subject: reference(historyKey),
+  $subject: identifier(historyKey),
   update: {
-    $id: reference(''),
+    $id: identifier(''),
   },
 };
 
@@ -29,7 +29,7 @@ export function historyCreate(
  */
 export function historyMake(
   stateUpdate: StateUpdate,
-  creator?: Reference,
+  creator?: Identifier,
   deniedKeys?: string[],
 ): StateCreate {
   const stateCreateHistory: StateCreate = {

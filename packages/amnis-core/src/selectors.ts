@@ -4,7 +4,7 @@ import {
 } from './token';
 import type { Entity, Meta } from './entity';
 import type { State } from './state';
-import type { Reference } from './types';
+import type { Identifier } from './types';
 import type { Role } from './role';
 import { Crypto, cryptoKey } from './crypto';
 import { grantParse, Grant } from './grant';
@@ -154,7 +154,7 @@ function selectPublicKey(state: State, tag: string): string | undefined {
 /**
  * Selects a list of Grants based on an array of role references.
  */
-function selectRoleGrants(state: State, roleRefs: Reference<Role>[]): Grant[] {
+function selectRoleGrants(state: State, roleRefs: Identifier<Role>[]): Grant[] {
   const grants: Grant[] = [];
 
   const roleSlice = getSlice<Role>(state, 'role');

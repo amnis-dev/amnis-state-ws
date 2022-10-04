@@ -2,7 +2,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { dateJSON } from '../core';
 import { regexReference, regexUuid } from '../regex';
 import type {
-  Reference,
+  Identifier,
 } from '../types';
 import type {
   Entity,
@@ -18,7 +18,7 @@ export const entityCreate = <E extends Entity>(
   entity: EntityExtension<E>,
   set?: Partial<Entity> | boolean,
 ): E => {
-  const id = `${key}:${nanoid()}` as Reference;
+  const id = `${key}:${nanoid()}` as Identifier;
   const now = dateJSON();
   const base: Entity = {
     $id: id,
@@ -49,7 +49,7 @@ export const entityCreate = <E extends Entity>(
 export const entityUpdate = <E extends Entity>(
   target: E,
   modification: EntityPartial<E>,
-  updater?: Reference,
+  updater?: Identifier,
 ): E => {
   const now = new Date().toJSON();
   const result: E = {
@@ -84,7 +84,7 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
           errored = true;
         }
       /**
-       * Only references/reference arrays begin with a '$' character.
+       * Only references/identifier arrays begin with a '$' character.
        * Also enure they have valid ids.
        */
       } else if (prop.charAt(0) === '$') {

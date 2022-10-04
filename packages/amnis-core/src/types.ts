@@ -1,15 +1,15 @@
 /**
- * Unique reference symbols for core types.
+ * Unique identifier symbols for core types.
  */
 declare const referenceSymbol: unique symbol;
 declare const dateSymbol: unique symbol;
 declare const surlSymbol: unique symbol;
 
 /**
-    * A id reference to another document.
+    * A id identifier to another document.
     */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type Reference<T = unknown> = string & {[referenceSymbol]: never};
+export type Identifier<T = unknown> = string & {[referenceSymbol]: never};
 
 /**
    * A string that represents a JSON Date.

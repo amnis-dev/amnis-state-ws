@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Reference } from '../types';
+import type { Identifier } from '../types';
 import type { Entity } from '../entity';
 
 /**
@@ -104,11 +104,11 @@ export type StateUpdate = State<StateUpdateEntity[]>;
   * A common stateful result from deletions.
   * A state object with delete ids.
   */
-export type StateDelete = State<Reference[]>;
+export type StateDelete = State<Identifier[]>;
 
 /**
   * ID Remappings.
   */
-export type ReID = [Reference, Reference];
+export type ReID = [Identifier, Identifier];
 
 export type ResultReID = State<ReID[]>;

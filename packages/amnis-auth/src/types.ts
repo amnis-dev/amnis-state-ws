@@ -3,7 +3,7 @@ import type { GrantScope } from '@amnis/core/grant';
 import type { State } from '@amnis/core/state';
 
 /**
- * Unique reference symbols and types for RSA
+ * Unique identifier symbols and types for RSA
  */
 declare const privateKeySymbol: unique symbol;
 declare const publicKeySymbol: unique symbol;
@@ -29,7 +29,7 @@ export type KeyPair = KeyPairSyncResult<string, string>;
 export type AuthScope = State<GrantScope>;
 
 /**
- * Unique reference symbol for an SHA256 hashed string.
+ * Unique identifier symbol for an SHA256 hashed string.
  */
 declare const sha256Symbol: unique symbol;
 
@@ -39,7 +39,7 @@ declare const sha256Symbol: unique symbol;
 export type SHA256 = string & {[sha256Symbol]: never};
 
 /**
- * Unique reference symbol for an SHA256 cipher encryption string.
+ * Unique identifier symbol for an SHA256 cipher encryption string.
  */
 declare const aes256Symbol: unique symbol;
 

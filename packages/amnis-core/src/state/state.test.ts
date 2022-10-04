@@ -1,4 +1,4 @@
-import { reference } from '../core';
+import { identifier } from '../core';
 import { roleKey } from '../role';
 import { systemCreate, systemKey } from '../system';
 import { websiteKey } from '../website';
@@ -8,9 +8,9 @@ import { StateCreate, StateQuery } from './state.types';
 
 const system = systemCreate({
   name: 'Query System',
-  $adminRole: reference(roleKey),
-  $initialRoles: [reference(roleKey), reference(roleKey)],
-  $website: reference(websiteKey),
+  $adminRole: identifier(roleKey),
+  $initialRoles: [identifier(roleKey), identifier(roleKey)],
+  $website: identifier(websiteKey),
 });
 
 system.$creator = system.$id;
@@ -49,7 +49,7 @@ const stateArray: StateCreate = {
 /**
  * ============================================================
  */
-test('should generate a proper reference query', () => {
+test('should generate a proper identifier query', () => {
   const stateQuery = stateReferenceQuery(stateArray);
 
   const expectation: StateQuery = {

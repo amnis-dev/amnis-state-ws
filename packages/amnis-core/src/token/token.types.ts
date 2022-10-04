@@ -1,8 +1,8 @@
 import type { Role } from '../role';
-import type { Reference, DateNumeric } from '../types';
+import type { Identifier, DateNumeric } from '../types';
 
 /**
- * Unique reference symbol for a token string.
+ * Unique identifier symbol for a token string.
  */
 declare const tokenSymbol: unique symbol;
 declare const jwtEncodedSymbol: unique symbol;
@@ -72,7 +72,7 @@ export interface JWTDecoded {
     * Subject identifier.
     * (typically a user id)
     */
-  sub: Reference;
+  sub: Identifier;
 
   /**
    * Expiration numeric date.
@@ -97,5 +97,5 @@ export interface JWTDecoded {
   /**
    * Scope of permissions (role references).
    */
-  roles: Reference<Role>[];
+  roles: Identifier<Role>[];
 }

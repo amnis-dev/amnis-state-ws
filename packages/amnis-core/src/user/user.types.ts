@@ -1,4 +1,4 @@
-import type { Reference } from '../types';
+import type { Identifier } from '../types';
 import type { Entity } from '../entity';
 import type { Permit } from '../permit';
 import type { DeviceString } from '../device';
@@ -63,11 +63,11 @@ export interface User extends Entity {
    * Roles this user has been given.
    * @default []
    */
-  readonly $roles: Reference<Role>[];
+  readonly $roles: Identifier<Role>[];
 
   /**
    * Special-case permits this user has been bestowed.
    * @default []
    */
-  readonly $permits: Reference<Permit>[];
+  readonly $permits: Identifier<Permit>[];
 }

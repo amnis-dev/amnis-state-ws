@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
-import type { Reference, DateJSON } from '../types';
+import type { Identifier, DateJSON } from '../types';
 
 /**
  * A common entity object.
@@ -11,7 +11,7 @@ export interface Entity {
    * Identifier for this entity.
    * @default ""
    */
-  readonly $id: Reference;
+  readonly $id: Identifier;
 
   /**
    * Creation date string.
@@ -40,28 +40,28 @@ export interface Entity {
   /**
    * Entity that owns this data.
    */
-  $owner: Reference;
+  $owner: Identifier;
 
   /**
    * Entities that can observe this data.
    * Pseudo-owners of this data, but only as a reader.
    */
-  $readers: Reference[];
+  $readers: Identifier[];
 
   /**
    * Possible user id creator of the entity.
    */
-  $creator: Reference;
+  $creator: Identifier;
 
   /**
    * Entities that have updated this.
    */
-  $updaters: Reference[];
+  $updaters: Identifier[];
 
   // /**
-  //  * Anything that begins with a '$' must be a document reference.
+  //  * Anything that begins with a '$' must be a document identifier.
   //  */
-  // [key: `$${string}`]: Reference | Reference[];
+  // [key: `$${string}`]: Identifier | Identifier[];
 
   // /**
   //  * Properties can only be serializable, normalized, values.
@@ -76,17 +76,17 @@ export interface Meta<E extends Entity> {
   /**
    * The entity id referencing the active entity.
    */
-  active: Reference<E> | null;
+  active: Identifier<E> | null;
 
   /**
     * The id representing a focused entity.
     */
-  focused: Reference<E> | null;
+  focused: Identifier<E> | null;
 
   /**
     * List of ids considered to be selected.
     */
-  selection: Reference<E>[];
+  selection: Identifier<E>[];
 }
 
 /**

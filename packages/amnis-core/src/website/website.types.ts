@@ -1,4 +1,4 @@
-import type { Reference, SURL } from '../types';
+import type { Identifier, SURL } from '../types';
 import type { Entity } from '../entity/entity.types';
 import type { Image } from '../image/image.types';
 import type { Contact } from '../contact';
@@ -32,19 +32,19 @@ export interface Website extends Entity {
   title?: string;
 
   /**
-   * Reference to the image used for the logo.
+   * Identifier to the image used for the logo.
    */
-  $logo?: Reference<Image>;
+  $logo?: Identifier<Image>;
 
   /**
    * Link the website's favicon
    */
-  $favicon?: Reference<Image>;
+  $favicon?: Identifier<Image>;
 
   /**
    * Contacts that should be listed on the website.
    */
-  $contacts: Reference<Contact>[];
+  $contacts: Identifier<Contact>[];
 
   /**
    * List of the social network links.

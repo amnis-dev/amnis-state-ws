@@ -4,7 +4,7 @@ import {
 import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
-import { dateNumeric, reference } from '@amnis/core/core';
+import { dateNumeric, identifier } from '@amnis/core/core';
 import type { StateCreate } from '@amnis/core/state';
 import type { JWTEncoded } from '@amnis/core/token';
 import { validatorsSetup } from '@amnis/api/validators';
@@ -34,7 +34,7 @@ const expires = dateNumeric(new Date(Date.now() + 60000));
  */
 const jwtEncoded: JWTEncoded = jwtEncode({
   iss: 'core',
-  sub: reference('user', 'system'),
+  sub: identifier('user', 'system'),
   exp: expires,
   iat: expires,
   typ: 'access',

@@ -1,4 +1,4 @@
-import type { Reference } from '../types';
+import type { Identifier } from '../types';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
 import type { Profile } from '../profile';
 
@@ -72,9 +72,9 @@ export interface File extends Entity {
   author?: string;
 
   /**
-   * Profile reference to the author.
+   * Profile identifier to the author.
    */
-  $author?: Reference<Profile>;
+  $author?: Identifier<Profile>;
 }
 
 /**

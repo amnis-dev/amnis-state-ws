@@ -1,4 +1,4 @@
-import { dateNumeric, reference } from '@amnis/core/core';
+import { dateNumeric, identifier } from '@amnis/core/core';
 import { userCreate, User } from '@amnis/core/user';
 import type { Session } from '@amnis/core/session';
 import { Profile, profileCreate } from '@amnis/core/profile';
@@ -43,7 +43,7 @@ const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
  */
 const jwtEncoded = jwtEncode({
   iss: 'core',
-  sub: reference('user'),
+  sub: identifier('user'),
   exp: dateNumeric('30m'),
   typ: 'access',
   adm: true,
@@ -54,7 +54,7 @@ const rsaKeyPairAnother = generateRsa();
 
 const jwtEncodedInvalid = jwtEncode({
   iss: 'core',
-  sub: reference('user'),
+  sub: identifier('user'),
   exp: dateNumeric('30m'),
   typ: 'access',
   adm: true,

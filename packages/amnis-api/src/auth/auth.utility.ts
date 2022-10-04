@@ -12,7 +12,7 @@ import type { Database } from '@amnis/db/types';
 import { User, userKey } from '@amnis/core/user';
 import type { StateCreate } from '@amnis/core/state';
 
-import { Reference } from '@amnis/core/types';
+import { Identifier } from '@amnis/core/types';
 import { apiOutput } from '../api';
 
 /**
@@ -46,7 +46,7 @@ export async function userFindByName(
  */
 export async function userFindById(
   database: Database,
-  userId: Reference<User>,
+  userId: Identifier<User>,
 ): Promise<User | undefined> {
   const resultsUser = await database.read({
     [userKey]: {
