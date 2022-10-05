@@ -28,7 +28,6 @@ export const entityCreate = <E extends Entity>(
     $owner: id,
     $readers: [],
     $creator: id,
-    $updaters: [],
     committed: false,
   };
 
@@ -49,7 +48,6 @@ export const entityCreate = <E extends Entity>(
 export const entityUpdate = <E extends Entity>(
   target: E,
   modification: EntityPartial<E>,
-  updater?: Identifier,
 ): E => {
   const now = new Date().toJSON();
   const result: E = {
@@ -57,9 +55,6 @@ export const entityUpdate = <E extends Entity>(
     ...modification,
     updated: now,
   };
-  if (updater) {
-    result.$updaters.push(updater);
-  }
   return result;
 };
 

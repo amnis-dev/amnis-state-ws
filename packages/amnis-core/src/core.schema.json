@@ -22,10 +22,10 @@
       "additionalProperties": false
     },
     "StateCreate": {
-      "$ref": "#/definitions/State%3Cdef-interface-1570551179-161-1445-1570551179-0-2764602488886%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cdef-interface-1570551179-162-1447-1570551179-0-2769602488886%5B%5D%3E",
       "description": "A common stateful result from creations. A state object with entities that were created."
     },
-    "State<def-interface-1570551179-161-1445-1570551179-0-2764602488886[]>": {
+    "State<def-interface-1570551179-162-1447-1570551179-0-2769602488886[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
@@ -39,7 +39,7 @@
       "type": "object",
       "properties": {
         "$id": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Identifier for this entity.",
           "default": ""
         },
@@ -64,26 +64,26 @@
           "default": false
         },
         "$owner": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Entity that owns this data."
         },
         "$readers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference"
+            "$ref": "#/definitions/Identifier"
           },
           "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
         },
         "$creator": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Possible user id creator of the entity."
         },
-        "$updaters": {
+        "$children": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference"
+            "$ref": "#/definitions/Identifier"
           },
-          "description": "Entities that have updated this."
+          "description": "Children of this entity."
         }
       },
       "required": [
@@ -94,15 +94,14 @@
         "delete",
         "$owner",
         "$readers",
-        "$creator",
-        "$updaters"
+        "$creator"
       ],
       "additionalProperties": false,
       "description": "A common entity object. Entity's are serializable (JSON) objects that can be committed to NoSQL Databases."
     },
-    "Reference": {
+    "Identifier": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
     },
     "DateJSON": {
       "type": "string",
@@ -190,9 +189,9 @@
       "description": "StateQuery range"
     },
     "StateUpdate": {
-      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1656-1842-2094046105-0-2147600678921%5B%5D%3E"
+      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1657-1843-2094046105-0-2151600678921%5B%5D%3E"
     },
-    "State<def-alias-2094046105-1656-1842-2094046105-0-2147600678921[]>": {
+    "State<def-alias-2094046105-1657-1843-2094046105-0-2151600678921[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
@@ -206,7 +205,7 @@
       "type": "object",
       "properties": {
         "$id": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Identifier for this entity.",
           "default": ""
         }
@@ -217,15 +216,15 @@
       "description": "A common stateful result from updates. A state object with parial entities to update."
     },
     "StateDelete": {
-      "$ref": "#/definitions/State%3Cdef-alias-1934150204-179-369-1934150204-0-946232013809%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cdef-alias-1934150204-180-372-1934150204-0-9491336678745%5B%5D%3E",
       "description": "A common stateful result from deletions. A state object with delete ids."
     },
-    "State<def-alias-1934150204-179-369-1934150204-0-946232013809[]>": {
+    "State<def-alias-1934150204-180-372-1934150204-0-9491336678745[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
         "items": {
-          "$ref": "#/definitions/Reference"
+          "$ref": "#/definitions/Identifier"
         }
       },
       "description": "An ambiguous state."

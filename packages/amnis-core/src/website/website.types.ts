@@ -1,7 +1,8 @@
 import type { Identifier, SURL } from '../types';
-import type { Entity } from '../entity/entity.types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { Image } from '../image/image.types';
 import type { Contact } from '../contact';
+import type { Route } from '../route';
 
 /**
  * Types of social networks available.
@@ -25,6 +26,11 @@ export interface Website extends Entity {
    * Primary URL to the website.
    */
   url: string;
+
+  /**
+   * Primary navigational routes.
+   */
+  $navigation: Identifier<Route>[];
 
   /**
    * Default title for the website. This is for meta data and the text seen on the browser tab.
@@ -51,3 +57,13 @@ export interface Website extends Entity {
    */
   socials: SURL[];
 }
+
+/**
+ * Website properties excluding the extended entity properties.
+ */
+export type WebsiteBase = EntityExtension<Website>;
+
+/**
+ * Base properties in order to create a log.
+ */
+export type WebsiteBaseCreate = EntityExtensionCreate<Website, 'name' | 'url'>;

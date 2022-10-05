@@ -64,12 +64,16 @@
           "description": "Name (or title) of the contact",
           "title": "Name"
         },
+        "description": {
+          "type": "string",
+          "description": "Details about the contact."
+        },
         "phones": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "phone numbers",
+          "description": "Phone numbers. First item in the array is the primary phone number.",
           "title": "Phone Numbers"
         },
         "emails": {
@@ -77,7 +81,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Contact emails.",
+          "description": "Contact emails. First item in the array is the primary email.",
           "title": "E-Mail Addresses"
         },
         "socials": {
@@ -108,12 +112,16 @@
           "description": "Name (or title) of the contact",
           "title": "Name"
         },
+        "description": {
+          "type": "string",
+          "description": "Details about the contact."
+        },
         "phones": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "phone numbers",
+          "description": "Phone numbers. First item in the array is the primary phone number.",
           "title": "Phone Numbers"
         },
         "emails": {
@@ -121,7 +129,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Contact emails.",
+          "description": "Contact emails. First item in the array is the primary email.",
           "title": "E-Mail Addresses"
         },
         "socials": {
@@ -145,9 +153,9 @@
       "type": "string",
       "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
     },
-    "Reference": {
+    "Identifier": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
     },
     "EntityCreate<Log>": {
       "type": "object",
@@ -169,8 +177,8 @@
           "description": "System this log is from."
         },
         "$invoker": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "Reference to a user that invoked the log."
+          "$ref": "#/definitions/Identifier%3CUser%3E",
+          "description": "Identifier to a user that invoked the log."
         }
       },
       "required": [
@@ -205,8 +213,8 @@
           "description": "System this log is from."
         },
         "$invoker": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "Reference to a user that invoked the log."
+          "$ref": "#/definitions/Identifier%3CUser%3E",
+          "description": "Identifier to a user that invoked the log."
         }
       },
       "required": [
@@ -230,15 +238,15 @@
       ],
       "description": "Log levels."
     },
-    "Reference<User>": {
+    "Identifier<User>": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
     },
     "EntityCreate<Profile>": {
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Identifier%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -262,7 +270,7 @@
           "description": "Title for work or otherwise."
         },
         "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
+          "$ref": "#/definitions/Identifier%3CContact%3E",
           "description": "Profile Contact."
         },
         "organiation": {
@@ -288,7 +296,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Identifier%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -312,7 +320,7 @@
           "description": "Title for work or otherwise."
         },
         "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
+          "$ref": "#/definitions/Identifier%3CContact%3E",
           "description": "Profile Contact."
         },
         "organiation": {
@@ -335,9 +343,9 @@
       "type": "string",
       "description": "A string that represents a JSON Date."
     },
-    "Reference<Contact>": {
+    "Identifier<Contact>": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
     },
     "EntityCreate<Role>": {
       "type": "object",
@@ -423,17 +431,17 @@
           "default": 3600000
         },
         "$website": {
-          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "$ref": "#/definitions/Identifier%3CWebsite%3E",
           "description": "System's website configurations."
         },
         "$adminRole": {
-          "$ref": "#/definitions/Reference%3CRole%3E",
+          "$ref": "#/definitions/Identifier%3CRole%3E",
           "description": "Role identifier that considers the user an administrator."
         },
         "$initialRoles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "The initial roles to assign to a user when a new account is created.",
           "default": []
@@ -465,17 +473,17 @@
           "default": 3600000
         },
         "$website": {
-          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "$ref": "#/definitions/Identifier%3CWebsite%3E",
           "description": "System's website configurations."
         },
         "$adminRole": {
-          "$ref": "#/definitions/Reference%3CRole%3E",
+          "$ref": "#/definitions/Identifier%3CRole%3E",
           "description": "Role identifier that considers the user an administrator."
         },
         "$initialRoles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "The initial roles to assign to a user when a new account is created.",
           "default": []
@@ -491,13 +499,13 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
-    "Reference<Website>": {
+    "Identifier<Website>": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
     },
-    "Reference<Role>": {
+    "Identifier<Role>": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
     },
     "EntityCreate<User>": {
       "type": "object",
@@ -552,7 +560,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "Roles this user has been given.",
           "default": []
@@ -560,7 +568,7 @@
         "$permits": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CPermit%3E"
+            "$ref": "#/definitions/Identifier%3CPermit%3E"
           },
           "description": "Special-case permits this user has been bestowed.",
           "default": []
@@ -632,7 +640,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "Roles this user has been given.",
           "default": []
@@ -640,7 +648,7 @@
         "$permits": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CPermit%3E"
+            "$ref": "#/definitions/Identifier%3CPermit%3E"
           },
           "description": "Special-case permits this user has been bestowed.",
           "default": []
@@ -660,15 +668,15 @@
       "type": "string",
       "description": "A string that represents a device."
     },
-    "Reference<Permit>": {
+    "Identifier<Permit>": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
     },
     "EntityCreate<Session>": {
       "type": "object",
       "properties": {
         "$subject": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Subject of the session. Typically a user id."
         },
         "iat": {
@@ -716,7 +724,7 @@
       "type": "object",
       "properties": {
         "$subject": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Subject of the session. Typically a user id."
         },
         "iat": {
@@ -770,28 +778,35 @@
         },
         "nameShort": {
           "type": "string",
-          "description": "Possible name that is shorter."
+          "description": "Sorter name of the website. Important for smaller displays."
         },
         "url": {
           "type": "string",
-          "description": "Primary to the website."
+          "description": "Primary URL to the website."
+        },
+        "$navigation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier%3CRoute%3E"
+          },
+          "description": "Primary navigational routes."
         },
         "title": {
           "type": "string",
-          "description": "A title to access the website."
+          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
         },
         "$logo": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
-          "description": "Reference to the image used for the logo."
+          "$ref": "#/definitions/Identifier%3CImage%3E",
+          "description": "Identifier to the image used for the logo."
         },
         "$favicon": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
+          "$ref": "#/definitions/Identifier%3CImage%3E",
           "description": "Link the website's favicon"
         },
         "$contacts": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CContact%3E"
+            "$ref": "#/definitions/Identifier%3CContact%3E"
           },
           "description": "Contacts that should be listed on the website."
         },
@@ -805,6 +820,7 @@
       },
       "required": [
         "$contacts",
+        "$navigation",
         "name",
         "socials",
         "url"
@@ -824,28 +840,35 @@
         },
         "nameShort": {
           "type": "string",
-          "description": "Possible name that is shorter."
+          "description": "Sorter name of the website. Important for smaller displays."
         },
         "url": {
           "type": "string",
-          "description": "Primary to the website."
+          "description": "Primary URL to the website."
+        },
+        "$navigation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier%3CRoute%3E"
+          },
+          "description": "Primary navigational routes."
         },
         "title": {
           "type": "string",
-          "description": "A title to access the website."
+          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
         },
         "$logo": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
-          "description": "Reference to the image used for the logo."
+          "$ref": "#/definitions/Identifier%3CImage%3E",
+          "description": "Identifier to the image used for the logo."
         },
         "$favicon": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
+          "$ref": "#/definitions/Identifier%3CImage%3E",
           "description": "Link the website's favicon"
         },
         "$contacts": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CContact%3E"
+            "$ref": "#/definitions/Identifier%3CContact%3E"
           },
           "description": "Contacts that should be listed on the website."
         },
@@ -860,15 +883,20 @@
       "required": [
         "name",
         "url",
+        "$navigation",
         "$contacts",
         "socials"
       ],
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
-    "Reference<Image>": {
+    "Identifier<Route>": {
       "type": "string",
-      "description": "A id reference to another document."
+      "description": "A id identifier to another document."
+    },
+    "Identifier<Image>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
     "StateUpdate": {
       "type": "object",
@@ -932,12 +960,16 @@
           "description": "Name (or title) of the contact",
           "title": "Name"
         },
+        "description": {
+          "type": "string",
+          "description": "Details about the contact."
+        },
         "phones": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "phone numbers",
+          "description": "Phone numbers. First item in the array is the primary phone number.",
           "title": "Phone Numbers"
         },
         "emails": {
@@ -945,7 +977,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Contact emails.",
+          "description": "Contact emails. First item in the array is the primary email.",
           "title": "E-Mail Addresses"
         },
         "socials": {
@@ -966,12 +998,16 @@
           "description": "Name (or title) of the contact",
           "title": "Name"
         },
+        "description": {
+          "type": "string",
+          "description": "Details about the contact."
+        },
         "phones": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "phone numbers",
+          "description": "Phone numbers. First item in the array is the primary phone number.",
           "title": "Phone Numbers"
         },
         "emails": {
@@ -979,7 +1015,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Contact emails.",
+          "description": "Contact emails. First item in the array is the primary email.",
           "title": "E-Mail Addresses"
         },
         "socials": {
@@ -1013,8 +1049,8 @@
           "description": "System this log is from."
         },
         "$invoker": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "Reference to a user that invoked the log."
+          "$ref": "#/definitions/Identifier%3CUser%3E",
+          "description": "Identifier to a user that invoked the log."
         }
       },
       "description": "Type for an entity update object."
@@ -1039,8 +1075,8 @@
           "description": "System this log is from."
         },
         "$invoker": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
-          "description": "Reference to a user that invoked the log."
+          "$ref": "#/definitions/Identifier%3CUser%3E",
+          "description": "Identifier to a user that invoked the log."
         }
       },
       "additionalProperties": false,
@@ -1050,7 +1086,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Identifier%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -1074,7 +1110,7 @@
           "description": "Title for work or otherwise."
         },
         "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
+          "$ref": "#/definitions/Identifier%3CContact%3E",
           "description": "Profile Contact."
         },
         "organiation": {
@@ -1092,7 +1128,7 @@
       "type": "object",
       "properties": {
         "$user": {
-          "$ref": "#/definitions/Reference%3CUser%3E",
+          "$ref": "#/definitions/Identifier%3CUser%3E",
           "description": "User this profile is associated with."
         },
         "nameDisplay": {
@@ -1116,7 +1152,7 @@
           "description": "Title for work or otherwise."
         },
         "$contact": {
-          "$ref": "#/definitions/Reference%3CContact%3E",
+          "$ref": "#/definitions/Identifier%3CContact%3E",
           "description": "Profile Contact."
         },
         "organiation": {
@@ -1195,17 +1231,17 @@
           "default": 3600000
         },
         "$website": {
-          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "$ref": "#/definitions/Identifier%3CWebsite%3E",
           "description": "System's website configurations."
         },
         "$adminRole": {
-          "$ref": "#/definitions/Reference%3CRole%3E",
+          "$ref": "#/definitions/Identifier%3CRole%3E",
           "description": "Role identifier that considers the user an administrator."
         },
         "$initialRoles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "The initial roles to assign to a user when a new account is created.",
           "default": []
@@ -1226,17 +1262,17 @@
           "default": 3600000
         },
         "$website": {
-          "$ref": "#/definitions/Reference%3CWebsite%3E",
+          "$ref": "#/definitions/Identifier%3CWebsite%3E",
           "description": "System's website configurations."
         },
         "$adminRole": {
-          "$ref": "#/definitions/Reference%3CRole%3E",
+          "$ref": "#/definitions/Identifier%3CRole%3E",
           "description": "Role identifier that considers the user an administrator."
         },
         "$initialRoles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "The initial roles to assign to a user when a new account is created.",
           "default": []
@@ -1298,7 +1334,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "Roles this user has been given.",
           "default": []
@@ -1306,7 +1342,7 @@
         "$permits": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CPermit%3E"
+            "$ref": "#/definitions/Identifier%3CPermit%3E"
           },
           "description": "Special-case permits this user has been bestowed.",
           "default": []
@@ -1367,7 +1403,7 @@
         "$roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CRole%3E"
+            "$ref": "#/definitions/Identifier%3CRole%3E"
           },
           "description": "Roles this user has been given.",
           "default": []
@@ -1375,7 +1411,7 @@
         "$permits": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CPermit%3E"
+            "$ref": "#/definitions/Identifier%3CPermit%3E"
           },
           "description": "Special-case permits this user has been bestowed.",
           "default": []
@@ -1388,7 +1424,7 @@
       "type": "object",
       "properties": {
         "$subject": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Subject of the session. Typically a user id."
         },
         "iat": {
@@ -1425,7 +1461,7 @@
       "type": "object",
       "properties": {
         "$subject": {
-          "$ref": "#/definitions/Reference",
+          "$ref": "#/definitions/Identifier",
           "description": "Subject of the session. Typically a user id."
         },
         "iat": {
@@ -1468,28 +1504,35 @@
         },
         "nameShort": {
           "type": "string",
-          "description": "Possible name that is shorter."
+          "description": "Sorter name of the website. Important for smaller displays."
         },
         "url": {
           "type": "string",
-          "description": "Primary to the website."
+          "description": "Primary URL to the website."
+        },
+        "$navigation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier%3CRoute%3E"
+          },
+          "description": "Primary navigational routes."
         },
         "title": {
           "type": "string",
-          "description": "A title to access the website."
+          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
         },
         "$logo": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
-          "description": "Reference to the image used for the logo."
+          "$ref": "#/definitions/Identifier%3CImage%3E",
+          "description": "Identifier to the image used for the logo."
         },
         "$favicon": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
+          "$ref": "#/definitions/Identifier%3CImage%3E",
           "description": "Link the website's favicon"
         },
         "$contacts": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CContact%3E"
+            "$ref": "#/definitions/Identifier%3CContact%3E"
           },
           "description": "Contacts that should be listed on the website."
         },
@@ -1512,28 +1555,35 @@
         },
         "nameShort": {
           "type": "string",
-          "description": "Possible name that is shorter."
+          "description": "Sorter name of the website. Important for smaller displays."
         },
         "url": {
           "type": "string",
-          "description": "Primary to the website."
+          "description": "Primary URL to the website."
+        },
+        "$navigation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier%3CRoute%3E"
+          },
+          "description": "Primary navigational routes."
         },
         "title": {
           "type": "string",
-          "description": "A title to access the website."
+          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
         },
         "$logo": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
-          "description": "Reference to the image used for the logo."
+          "$ref": "#/definitions/Identifier%3CImage%3E",
+          "description": "Identifier to the image used for the logo."
         },
         "$favicon": {
-          "$ref": "#/definitions/Reference%3CImage%3E",
+          "$ref": "#/definitions/Identifier%3CImage%3E",
           "description": "Link the website's favicon"
         },
         "$contacts": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reference%3CContact%3E"
+            "$ref": "#/definitions/Identifier%3CContact%3E"
           },
           "description": "Contacts that should be listed on the website."
         },

@@ -54,9 +54,9 @@ export interface Entity {
   $creator: Identifier;
 
   /**
-   * Entities that have updated this.
+   * Children of this entity.
    */
-  $updaters: Identifier[];
+  $children?: Identifier[];
 
   // /**
   //  * Anything that begins with a '$' must be a document identifier.
