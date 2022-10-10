@@ -136,7 +136,7 @@ async function init() {
    */
   serverStore.dispatch(coreActions.create(await memory.read({
     role: {},
-  }, { role: 'global' })));
+  }, { scope: { role: 'global' } })));
 
   /**
    * Start the service to serve the client files.

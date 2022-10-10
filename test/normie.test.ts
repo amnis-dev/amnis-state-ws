@@ -35,6 +35,7 @@ import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { logSelectors } from '@amnis/state/log';
 import { tokenSelectors } from '@amnis/state/token';
+import { identifierList } from '@amnis/core/core';
 import { serviceSetup } from './database';
 
 /**
@@ -318,7 +319,7 @@ test('user delete owned should be -DENIED- as Normie via API', async () => {
   const userMod = samples.users[1];
   const action = await clientStore.dispatch(
     apiCrud.endpoints.delete.initiate({
-      [userKey]: [userMod.$id],
+      [userKey]: identifierList([userMod.$id]),
     }),
   );
 

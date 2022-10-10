@@ -18,7 +18,7 @@ export const videoBase: VideoBase = {
 
 export function videoCreate(
   video: VideoBaseCreate,
-  entity: Entity,
+  entity: Partial<Entity> = {},
 ): Video {
   const videoEntity = fileCreate<Video>(videoKey, {
     ...videoBase,
