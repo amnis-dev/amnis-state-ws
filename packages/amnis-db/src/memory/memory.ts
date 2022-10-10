@@ -1,10 +1,11 @@
+import { identifierList } from '@amnis/core/core';
 import type { Entity } from '@amnis/core/entity';
 import type {
   State,
   StateCreate,
   StateDelete,
 } from '@amnis/core/state';
-import { Identifier } from '@amnis/core/types';
+import type { Identifier } from '@amnis/core/types';
 import type { Database } from '../types';
 
 /**
@@ -253,7 +254,7 @@ export const memory: Database = {
 
         delete storage[storageKey][ref];
         if (!result[sliceKey]) {
-          result[sliceKey] = [];
+          result[sliceKey] = identifierList();
         }
         result[sliceKey].push(ref);
 
