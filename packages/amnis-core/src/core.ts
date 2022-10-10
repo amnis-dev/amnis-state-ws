@@ -6,6 +6,8 @@ import type {
   DateNumeric,
   SURL,
   Identifier,
+  IdentifierTree,
+  IdentifierList,
 } from './types';
 
 /**
@@ -17,6 +19,20 @@ export const noop = () => { /** No operation. */ };
  * Create a identifier to another type.
  */
 export const identifier = <T>(key: string, id = nanoid()) => `${key}:${id}` as Identifier<T>;
+
+/**
+ * Create a new identifier list.
+ */
+export const identifierList = <T>(
+  list: Identifier<T>[] = [],
+) => list as IdentifierList<T>;
+
+/**
+ * Create a new identifier tree.
+ */
+export const identifierTree = <T>(
+  tree: [Identifier<T>, Identifier<T> | null][] = [],
+) => tree as IdentifierTree<T>;
 
 /**
  * Creates a string URL (aka SURL).
@@ -84,7 +100,7 @@ export function durationCalc(duration: string): number {
 /**
  * Validates a identifier type.
  */
-export const referenceValidate = (ref: string): boolean => {
+export const identifierValidate = (ref: string): boolean => {
   const [key, id] = ref.split(':');
 
   if (!key || typeof key !== 'string') {

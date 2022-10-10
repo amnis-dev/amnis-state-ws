@@ -1,9 +1,5 @@
-import { nanoid } from '@reduxjs/toolkit';
-import { dateJSON } from '../core';
+import { dateJSON, identifierList, identifier } from '../core';
 import { regexReference, regexUuid } from '../regex';
-import type {
-  Identifier,
-} from '../types';
 import type {
   Entity,
   EntityExtension,
@@ -18,7 +14,7 @@ export const entityCreate = <E extends Entity>(
   entity: EntityExtension<E>,
   set?: Partial<Entity> | boolean,
 ): E => {
-  const id = `${key}:${nanoid()}` as Identifier;
+  const id = identifier(key);
   const now = dateJSON();
   const base: Entity = {
     $id: id,
@@ -26,7 +22,7 @@ export const entityCreate = <E extends Entity>(
     updated: now,
     delete: false,
     $owner: id,
-    $readers: [],
+    $readers: identifierList(),
     $creator: id,
     committed: false,
   };
@@ -83,14 +79,31 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
        * Also enure they have valid ids.
        */
       } else if (prop.charAt(0) === '$') {
+        /**
+         * The property value being an array indicates that this is
+         * a list or tree identification type.
+         */
         if (Array.isArray(entity[prop])) {
-          (entity[prop] as string[]).every((id: string) => {
-            if (!regexReference.test(id)) {
+          (entity[prop] as string[]).every((id: string | string[]) => {
+            if (Array.isArray(id)) {
+              if (!regexReference.test(id[0])) {
+                errored = true;
+                return false;
+              }
+              if (id[1] && !regexReference.test(id[1])) {
+                errored = true;
+                return false;
+              }
+            } else if (!regexReference.test(id)) {
               errored = true;
               return false;
             }
             return true;
           });
+        /**
+         * If the property value is not an array, it must sinply be an
+         * identifier string.
+         */
         } else if (!regexReference.test(entity[prop] as string)) {
           errored = true;
         }
@@ -104,18 +117,3 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
 
   return errored ? undefined : cleaned;
 }
-
-/**
- * ReIds an array of entities.
- */
-// export function reIdentify(entities: Entity[], reids: ReID[] | undefined): Entity[] {
-//   const reIdEntities = entities.map((entity) => {
-//     const reidsChecked = reids || [];
-//     const reid = reidsChecked.find((value) => (value[0] === entity.$id));
-//     if (reid) {
-//       return { ...entity, $id: reid[1] };
-//     }
-//     return entity;
-//   });
-//   return reIdEntities;
-// }

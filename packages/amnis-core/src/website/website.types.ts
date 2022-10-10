@@ -1,4 +1,4 @@
-import type { Identifier, SURL } from '../types';
+import type { Identifier, SURL, IdentifierTree } from '../types';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { Image } from '../image/image.types';
 import type { Contact } from '../contact';
@@ -30,7 +30,7 @@ export interface Website extends Entity {
   /**
    * Primary navigational routes.
    */
-  $navigation: Identifier<Route>[];
+  $navigation: IdentifierTree<Route>;
 
   /**
    * Default title for the website. This is for meta data and the text seen on the browser tab.

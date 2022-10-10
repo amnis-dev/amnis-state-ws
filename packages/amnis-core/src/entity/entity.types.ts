@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
-import type { Identifier, DateJSON } from '../types';
+import type { Identifier, IdentifierList, DateJSON } from '../types';
 
 /**
  * A common entity object.
@@ -43,30 +43,15 @@ export interface Entity {
   $owner: Identifier;
 
   /**
-   * Entities that can observe this data.
-   * Pseudo-owners of this data, but only as a reader.
-   */
-  $readers: Identifier[];
-
-  /**
    * Possible user id creator of the entity.
    */
   $creator: Identifier;
 
   /**
-   * Children of this entity.
+   * Entities that can observe this data.
+   * Pseudo-owners of this data, but only as a reader.
    */
-  $children?: Identifier[];
-
-  // /**
-  //  * Anything that begins with a '$' must be a document identifier.
-  //  */
-  // [key: `$${string}`]: Identifier | Identifier[];
-
-  // /**
-  //  * Properties can only be serializable, normalized, values.
-  //  */
-  // [key: string]: boolean | number | string | null | undefined | string[];
+  $readers: IdentifierList;
 }
 
 /**

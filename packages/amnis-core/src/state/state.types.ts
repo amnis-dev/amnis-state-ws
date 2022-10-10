@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Identifier } from '../types';
+import type { Identifier, IdentifierList } from '../types';
 import type { Entity } from '../entity';
 
 /**
@@ -104,7 +104,7 @@ export type StateUpdate = State<StateUpdateEntity[]>;
   * A common stateful result from deletions.
   * A state object with delete ids.
   */
-export type StateDelete = State<Identifier[]>;
+export type StateDelete = State<IdentifierList>;
 
 /**
   * ID Remappings.
