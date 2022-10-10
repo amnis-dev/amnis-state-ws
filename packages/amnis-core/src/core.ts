@@ -18,19 +18,19 @@ export const noop = () => { /** No operation. */ };
 /**
  * Create a identifier to another type.
  */
-export const identifier = <T>(key: string, id = nanoid()) => `${key}:${id}` as Identifier<T>;
+export const uid = <T>(key: string, id = nanoid()) => `${key}:${id}` as Identifier<T>;
 
 /**
  * Create a new identifier list.
  */
-export const identifierList = <T>(
+export const uidList = <T>(
   list: Identifier<T>[] = [],
 ) => list as IdentifierList<T>;
 
 /**
  * Create a new identifier tree.
  */
-export const identifierTree = <T>(
+export const uidTree = <T>(
   tree: [Identifier<T>, Identifier<T> | null][] = [],
 ) => tree as IdentifierTree<T>;
 

@@ -1,4 +1,4 @@
-import { dateJSON, identifierList, identifier } from '../core';
+import { dateJSON, uidList, uid } from '../core';
 import { regexReference, regexUuid } from '../regex';
 import type {
   Entity,
@@ -14,7 +14,7 @@ export const entityCreate = <E extends Entity>(
   entity: EntityExtension<E>,
   set?: Partial<Entity> | boolean,
 ): E => {
-  const id = identifier(key);
+  const id = uid(key);
   const now = dateJSON();
   const base: Entity = {
     $id: id,
@@ -22,7 +22,7 @@ export const entityCreate = <E extends Entity>(
     updated: now,
     delete: false,
     $owner: id,
-    $readers: identifierList(),
+    $readers: uidList(),
     $creator: id,
     committed: false,
   };

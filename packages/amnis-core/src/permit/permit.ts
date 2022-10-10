@@ -1,4 +1,4 @@
-import { identifier } from '../core';
+import { uid } from '../core';
 import {
   EntityExtension,
   EntityExtensionCreate,
@@ -9,9 +9,9 @@ import type { Permit } from './permit.types';
 export const permitKey = 'permit';
 
 export const permitBase: EntityExtension<Permit> = {
-  $issuer: identifier('user'),
-  $holder: identifier('user'),
-  $target: identifier('entity'),
+  $issuer: uid('user'),
+  $holder: uid('user'),
+  $target: uid('entity'),
   grants: [],
 };
 

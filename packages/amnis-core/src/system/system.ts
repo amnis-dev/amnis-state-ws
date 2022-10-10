@@ -1,4 +1,4 @@
-import { durationCalc, identifier } from '../core';
+import { durationCalc, uid } from '../core';
 import {
   EntityExtension,
   EntityExtensionCreate,
@@ -14,8 +14,8 @@ export const systemKey = 'system';
 export const systemBase: EntityExtension<System> = {
   name: '',
   sessionExpires: durationCalc('1h'),
-  $website: identifier(websiteKey),
-  $adminRole: identifier(roleKey),
+  $website: uid(websiteKey),
+  $adminRole: uid(roleKey),
   $initialRoles: [],
 };
 

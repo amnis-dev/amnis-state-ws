@@ -1,4 +1,4 @@
-import { identifier } from '@amnis/core/core';
+import { uid } from '@amnis/core/core';
 import { Role, roleKey } from '@amnis/core/role';
 import { systemCreate } from '@amnis/core/system';
 import { memory } from '@amnis/db/memory';
@@ -6,8 +6,8 @@ import { register } from './auth.register';
 
 const system = systemCreate({
   name: 'Amnis Test System',
-  $adminRole: identifier<Role>(roleKey),
-  $initialRoles: [identifier<Role>(roleKey), identifier<Role>(roleKey)],
+  $adminRole: uid<Role>(roleKey),
+  $initialRoles: [uid<Role>(roleKey), uid<Role>(roleKey)],
 });
 
 /**

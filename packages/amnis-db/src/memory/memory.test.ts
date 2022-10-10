@@ -1,4 +1,4 @@
-import { identifierList } from '@amnis/core/core';
+import { uidList } from '@amnis/core/core';
 import {
   books, bookKey,
 } from '@amnis/core/test/book.store';
@@ -125,7 +125,7 @@ test('memory db should delete a book entity by id.', async () => {
   });
 
   const result = await memory.delete({
-    [bookKey]: identifierList([books[0].$id]),
+    [bookKey]: uidList([books[0].$id]),
   });
 
   expect(

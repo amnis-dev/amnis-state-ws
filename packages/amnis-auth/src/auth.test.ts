@@ -1,5 +1,5 @@
 import {
-  dateNumeric, identifier, surl,
+  dateNumeric, uid, surl,
 } from '@amnis/core/core';
 import { JWTDecoded } from '@amnis/core/token';
 import { Session } from '@amnis/core/session';
@@ -17,30 +17,30 @@ const rsaKeyPair2 = generateRsa();
 
 const jwtDecoded: JWTDecoded = {
   iss: 'core',
-  sub: identifier('user', '1234'),
+  sub: uid('user', '1234'),
   exp: dateNumeric(new Date(Date.now() + 60 * 1000)),
   iat: dateNumeric(),
   typ: 'access',
   roles: [
-    identifier('role', '1'),
-    identifier('role', '2'),
+    uid('role', '1'),
+    uid('role', '2'),
   ],
 };
 
 const jwtDecodedExpired: JWTDecoded = {
   iss: 'core',
-  sub: identifier('user', '1234'),
+  sub: uid('user', '1234'),
   exp: dateNumeric(),
   iat: dateNumeric(),
   typ: 'access',
   roles: [
-    identifier('role', '1'),
-    identifier('role', '2'),
+    uid('role', '1'),
+    uid('role', '2'),
   ],
 };
 
 const session: Session = entityCreate('session', {
-  $subject: identifier('user', '1234'),
+  $subject: uid('user', '1234'),
   exp: jwtDecoded.exp,
   admin: false,
   name: '',
@@ -48,7 +48,7 @@ const session: Session = entityCreate('session', {
 });
 
 const sessionExpired: Session = entityCreate('session', {
-  $subject: identifier('user', '1234'),
+  $subject: uid('user', '1234'),
   exp: dateNumeric(),
   admin: false,
   name: '',

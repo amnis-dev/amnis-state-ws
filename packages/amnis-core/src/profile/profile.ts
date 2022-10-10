@@ -1,4 +1,4 @@
-import { identifier } from '../core';
+import { uid } from '../core';
 import { entityCreate } from '../entity/entity';
 import type { Entity } from '../entity/entity.types';
 import type { Profile, ProfileBase, ProfileBaseCreate } from './profile.types';
@@ -8,7 +8,7 @@ export const profileKey = 'profile';
 
 export const profileBase: ProfileBase = {
   nameDisplay: 'Unnamed',
-  $user: identifier(userKey),
+  $user: uid(userKey),
 };
 
 export function profileCreate(

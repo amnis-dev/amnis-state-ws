@@ -1,4 +1,4 @@
-import { identifier } from '../core';
+import { uid } from '../core';
 import { roleKey } from '../role';
 import { systemCreate, systemKey } from '../system';
 import { websiteKey } from '../website';
@@ -8,9 +8,9 @@ import { StateCreate, StateQuery } from './state.types';
 
 const system = systemCreate({
   name: 'Query System',
-  $adminRole: identifier(roleKey),
-  $initialRoles: [identifier(roleKey), identifier(roleKey)],
-  $website: identifier(websiteKey),
+  $adminRole: uid(roleKey),
+  $initialRoles: [uid(roleKey), uid(roleKey)],
+  $website: uid(websiteKey),
 });
 
 system.$creator = system.$id;

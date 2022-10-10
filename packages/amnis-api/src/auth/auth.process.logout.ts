@@ -1,4 +1,4 @@
-import { identifierList } from '@amnis/core/core';
+import { uidList } from '@amnis/core/core';
 import type { StateDelete } from '@amnis/core/state';
 import { userKey } from '@amnis/core/user';
 import { apiOutput } from '../api';
@@ -25,7 +25,7 @@ const process: ApiProcess<ApiAuthIOLogout> = () => (
      */
     if (session) {
       output.json.result = {
-        [userKey]: identifierList([session.$subject]),
+        [userKey]: uidList([session.$subject]),
       };
     }
 

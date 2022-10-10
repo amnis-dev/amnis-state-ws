@@ -1,4 +1,4 @@
-import { identifier } from '../core';
+import { uid } from '../core';
 import { systemKey, systemCreate } from './system';
 
 /**
@@ -14,8 +14,8 @@ test('system key should be is properly set', () => {
 test('should create a system', () => {
   const system = systemCreate({
     name: 'Amnis System',
-    $adminRole: identifier('role'),
-    $initialRoles: [identifier('role')],
+    $adminRole: uid('role'),
+    $initialRoles: [uid('role')],
   });
 
   expect(system).toEqual(

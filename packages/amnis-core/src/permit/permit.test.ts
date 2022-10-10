@@ -1,4 +1,4 @@
-import { identifier } from '../core';
+import { uid } from '../core';
 import { permitKey, permitCreate } from './permit';
 
 /**
@@ -13,9 +13,9 @@ test('permit key should be is properly set', () => {
  */
 test('should create a permit', () => {
   const permit = permitCreate({
-    $issuer: identifier('user'),
-    $holder: identifier('user'),
-    $target: identifier('entity'),
+    $issuer: uid('user'),
+    $holder: uid('user'),
+    $target: uid('entity'),
   });
 
   expect(permit).toEqual(

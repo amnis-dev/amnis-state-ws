@@ -1,4 +1,4 @@
-import { dateNumeric, identifier } from '../core';
+import { dateNumeric, uid } from '../core';
 import {
   EntityExtension,
   EntityExtensionCreate,
@@ -9,7 +9,7 @@ import type { Session } from './session.types';
 export const sessionKey = 'session';
 
 export const sessionBase: EntityExtension<Session> = {
-  $subject: identifier('user'),
+  $subject: uid('user'),
   exp: dateNumeric(),
   admin: false,
   name: 'Unnamed Session Holder',

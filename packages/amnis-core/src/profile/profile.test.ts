@@ -1,4 +1,4 @@
-import { identifier } from '../core';
+import { uid } from '../core';
 import { userKey } from '../user';
 import { profileKey, profileCreate } from './profile';
 
@@ -15,7 +15,7 @@ test('profile key should be is properly set', () => {
 test('should create a profile', () => {
   const profile = profileCreate({
     nameDisplay: 'Newbie',
-    $user: identifier(userKey),
+    $user: uid(userKey),
   });
 
   expect(profile).toEqual(

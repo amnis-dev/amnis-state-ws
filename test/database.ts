@@ -1,4 +1,4 @@
-// import { identifier, entityCreate } from '@amnis/core/core';
+// import { uid, entityCreate } from '@amnis/core/core';
 import { samples } from '@amnis/core/test/samples';
 import type { StateCreate } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';

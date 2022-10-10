@@ -1,4 +1,4 @@
-import { identifierTree } from '../core';
+import { uidTree } from '../core';
 import { entityCreate } from '../entity';
 import type { Website, WebsiteBase, WebsiteBaseCreate } from './website.types';
 
@@ -7,7 +7,7 @@ export const websiteKey = 'website';
 export const websiteBase: WebsiteBase = {
   name: 'Unnamed Website',
   url: 'http://localhost',
-  $navigation: identifierTree(),
+  $navigation: uidTree(),
   $contacts: [],
   socials: [],
 };

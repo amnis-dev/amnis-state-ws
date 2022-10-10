@@ -1,4 +1,4 @@
-import { identifier } from '../core';
+import { uid } from '../core';
 import { Entity, entityCreate } from '../entity';
 import { StateCreate, StateUpdate } from '../state';
 import { Identifier } from '../types';
@@ -7,9 +7,9 @@ import type { History, HistoryBase, HistoryBaseCreate } from './history.types';
 export const historyKey = 'history';
 
 export const historyBase: HistoryBase = {
-  $subject: identifier(historyKey),
+  $subject: uid(historyKey),
   update: {
-    $id: identifier(''),
+    $id: uid(''),
   },
 };
 

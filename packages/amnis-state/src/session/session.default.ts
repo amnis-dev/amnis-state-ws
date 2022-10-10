@@ -1,9 +1,9 @@
-import { identifier, dateNumeric } from '@amnis/core/core';
+import { uid, dateNumeric } from '@amnis/core/core';
 import { sessionCreate } from '@amnis/core/session';
 import { userKey } from '@amnis/core/user';
 
 export const sessionDefault = sessionCreate({
-  $subject: identifier(userKey),
+  $subject: uid(userKey),
   exp: dateNumeric(),
   admin: false,
   name: 'Unknown Session Holder',

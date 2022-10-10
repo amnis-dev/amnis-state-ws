@@ -22,7 +22,7 @@ import {
 
 import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
-import { identifierList } from '@amnis/core/core';
+import { uidList } from '@amnis/core/core';
 import { serviceSetup } from './database';
 import { apiSetup } from './api';
 
@@ -291,7 +291,7 @@ test('user delete owned should be +ALLOWED+ as Admy via API', async () => {
   const userMod = samples.users[1];
   const action = await clientStore.dispatch(
     apiCrud.endpoints.delete.initiate({
-      user: identifierList([userMod.$id]),
+      user: uidList([userMod.$id]),
     }),
   );
 
