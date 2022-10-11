@@ -1,4 +1,4 @@
-import { uid } from '../core';
+import { uid } from '../uid';
 import { Entity, entityCreate } from '../entity';
 import { StateCreate, StateUpdate } from '../state';
 import { Identifier } from '../types';

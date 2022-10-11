@@ -1,4 +1,4 @@
-import { uid } from '../core';
+import { uid } from '../uid';
 import { entityCreate } from '../entity/entity';
 import type { Entity } from '../entity/entity.types';
 import type { Profile, ProfileBase, ProfileBaseCreate } from './profile.types';

@@ -1,4 +1,4 @@
-import { uid } from '../core';
+import { uid } from '../uid';
 import { permitKey, permitCreate } from './permit';
 
 /**

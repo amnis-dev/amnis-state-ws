@@ -1,4 +1,5 @@
-import { dateNumeric, uid } from '@amnis/core/core';
+import { dateNumeric } from '@amnis/core/core';
+import { uid } from '@amnis/core/uid';
 import { userCreate, User } from '@amnis/core/user';
 import type { Session } from '@amnis/core/session';
 import { Profile, profileCreate } from '@amnis/core/profile';

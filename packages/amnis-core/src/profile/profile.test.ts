@@ -1,4 +1,4 @@
-import { uid } from '../core';
+import { uid } from '../uid';
 import { userKey } from '../user';
 import { profileKey, profileCreate } from './profile';
 

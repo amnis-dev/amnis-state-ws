@@ -1,4 +1,5 @@
-import { dateNumeric, uid } from '../core';
+import { uid } from '../uid';
+import { dateNumeric } from '../core';
 import {
   EntityExtension,
   EntityExtensionCreate,

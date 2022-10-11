@@ -1,4 +1,5 @@
-import { durationCalc, uid } from '../core';
+import { uid } from '../uid';
+import { durationCalc } from '../core';
 import {
   EntityExtension,
   EntityExtensionCreate,

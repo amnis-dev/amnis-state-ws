@@ -1,6 +1,7 @@
 import {
-  dateNumeric, uid, surl,
+  dateNumeric, surl,
 } from '@amnis/core/core';
+import { uid } from '@amnis/core/uid';
 import { JWTDecoded } from '@amnis/core/token';
 import { Session } from '@amnis/core/session';
 import { entityCreate } from '@amnis/core/entity';

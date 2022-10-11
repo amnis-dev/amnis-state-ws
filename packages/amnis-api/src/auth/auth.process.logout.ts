@@ -1,4 +1,4 @@
-import { uidList } from '@amnis/core/core';
+import { uidList } from '@amnis/core/uid';
 import type { StateDelete } from '@amnis/core/state';
 import { userKey } from '@amnis/core/user';
 import { apiOutput } from '../api';

@@ -35,7 +35,7 @@ import { passCreateSync } from '@amnis/auth/pass';
 import { memory } from '@amnis/db/memory';
 import { logSelectors } from '@amnis/state/log';
 import { tokenSelectors } from '@amnis/state/token';
-import { uidList } from '@amnis/core/core';
+import { uidList } from '@amnis/core/uid';
 import { serviceSetup } from './database';
 
 /**

@@ -1,4 +1,4 @@
-import { uidList } from '@amnis/core/core';
+import { uidList } from '@amnis/core/uid';
 import type { Entity } from '@amnis/core/entity';
 import type {
   State,

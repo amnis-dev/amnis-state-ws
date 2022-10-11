@@ -4,7 +4,8 @@ import {
 import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db/memory';
-import { dateNumeric, uid } from '@amnis/core/core';
+import { dateNumeric } from '@amnis/core/core';
+import { uid } from '@amnis/core/uid';
 import type { StateCreate } from '@amnis/core/state';
 import type { JWTEncoded } from '@amnis/core/token';
 import { validatorsSetup } from '@amnis/api/validators';

@@ -1,4 +1,4 @@
-import { uid } from '../core';
+import { uid } from '../uid';
 import { roleKey } from '../role';
 import { systemCreate, systemKey } from '../system';
 import { websiteKey } from '../website';

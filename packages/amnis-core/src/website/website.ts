@@ -1,4 +1,4 @@
-import { uidTree } from '../core';
+import { uidTree } from '../uid';
 import { entityCreate } from '../entity';
 import type { Website, WebsiteBase, WebsiteBaseCreate } from './website.types';
 

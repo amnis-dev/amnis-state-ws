@@ -1,4 +1,4 @@
-import { uid } from '@amnis/core/core';
+import { uid } from '@amnis/core/uid';
 import { systemCreate } from '@amnis/core/system';
 import { roleKey } from '../role';
 

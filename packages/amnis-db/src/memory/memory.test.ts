@@ -1,4 +1,4 @@
-import { uidList } from '@amnis/core/core';
+import { uidList } from '@amnis/core/uid';
 import {
   books, bookKey,
 } from '@amnis/core/test/book.store';

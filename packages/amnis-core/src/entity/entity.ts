@@ -1,4 +1,5 @@
-import { dateJSON, uidList, uid } from '../core';
+import { dateJSON } from '../core';
+import { uidList, uid } from '../uid';
 import { regexReference, regexUuid } from '../regex';
 import type {
   Entity,

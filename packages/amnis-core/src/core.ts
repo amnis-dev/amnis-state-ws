@@ -1,38 +1,15 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable no-unused-expressions */
-import { nanoid } from '@reduxjs/toolkit';
 import type {
   DateJSON,
   DateNumeric,
   SURL,
-  Identifier,
-  IdentifierTree,
-  IdentifierList,
 } from './types';
 
 /**
  * Function for no operation.
  */
 export const noop = () => { /** No operation. */ };
-
-/**
- * Create a identifier to another type.
- */
-export const uid = <T>(key: string, id = nanoid()) => `${key}:${id}` as Identifier<T>;
-
-/**
- * Create a new identifier list.
- */
-export const uidList = <T>(
-  list: Identifier<T>[] = [],
-) => list as IdentifierList<T>;
-
-/**
- * Create a new identifier tree.
- */
-export const uidTree = <T>(
-  tree: [Identifier<T>, Identifier<T> | null][] = [],
-) => tree as IdentifierTree<T>;
 
 /**
  * Creates a string URL (aka SURL).
@@ -96,20 +73,3 @@ export function durationCalc(duration: string): number {
       throw new Error('Please use one of the units: ms, s, m, h, or d');
   }
 }
-
-/**
- * Validates a identifier type.
- */
-export const identifierValidate = (ref: string): boolean => {
-  const [key, id] = ref.split(':');
-
-  if (!key || typeof key !== 'string') {
-    return false;
-  }
-
-  if (!id || typeof id !== 'string' || id.length < 1) {
-    return false;
-  }
-
-  return true;
-};
