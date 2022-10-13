@@ -22,7 +22,8 @@
     },
     {
       "filename": "packages/amnis-state/package.json",
-      "type": "json"
+      "type": "json",
+      "updater": "scripts/standard-version-updater.js"
     }
   ]
 }
