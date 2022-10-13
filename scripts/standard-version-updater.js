@@ -1,6 +1,5 @@
 module.exports.readVersion = (contents) => {
   const json = JSON.parse(contents);
-  console.log(json.version);
   return json.version;
 };
 
