@@ -1,0 +1,28 @@
+{
+  "bumpFiles": [
+    {
+      "filename": "packages/amnis-core/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "packages/amnis-db/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "packages/amnis-fs/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "packages/amnis-auth/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "packages/amnis-api/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "packages/amnis-state/package.json",
+      "type": "json"
+    }
+  ]
+}
