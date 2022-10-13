@@ -1,6 +1,6 @@
 {
   "name": "@amnis/state-workspace",
-  "version": "0.4.1-0",
+  "version": "0.4.1-alpha.0",
   "main": "index.ts",
   "repository": "https://github.com/amnis-dev/amnis-state",
   "author": "Eric Crowell <admin@amnis.dev>",
@@ -66,7 +66,7 @@
     "typescript": "^4.6.4"
   },
   "scripts": {
-    "release": "standard-version",
+    "release": "standard-version --prerelease alpha",
     "tsc": "tsc",
     "build": "acom build library -p ./packages",
     "build:service": "acom build service -p ./packages/amnis-express -r",
