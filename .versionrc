@@ -1,24 +1,33 @@
 {
   "bumpFiles": [
     {
-      "filename": "packages/amnis-core/package.json",
+      "filename": "package.json",
       "type": "json"
+    },
+    {
+      "filename": "packages/amnis-core/package.json",
+      "type": "json",
+      "updater": "scripts/standard-version-updater.js"
     },
     {
       "filename": "packages/amnis-db/package.json",
-      "type": "json"
+      "type": "json",
+      "updater": "scripts/standard-version-updater.js"
     },
     {
       "filename": "packages/amnis-fs/package.json",
-      "type": "json"
+      "type": "json",
+      "updater": "scripts/standard-version-updater.js"
     },
     {
       "filename": "packages/amnis-auth/package.json",
-      "type": "json"
+      "type": "json",
+      "updater": "scripts/standard-version-updater.js"
     },
     {
       "filename": "packages/amnis-api/package.json",
-      "type": "json"
+      "type": "json",
+      "updater": "scripts/standard-version-updater.js"
     },
     {
       "filename": "packages/amnis-state/package.json",
