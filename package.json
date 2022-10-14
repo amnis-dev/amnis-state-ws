@@ -1,6 +1,6 @@
 {
   "name": "@amnis/state-workspace",
-  "version": "0.4.1-alpha.3",
+  "version": "0.4.1",
   "main": "index.ts",
   "repository": "https://github.com/amnis-dev/amnis-state",
   "author": "Eric Crowell <admin@amnis.dev>",

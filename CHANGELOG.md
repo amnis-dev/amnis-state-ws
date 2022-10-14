@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/amnis-dev/amnis-state/compare/v0.4.1-alpha.3...v0.4.1) (2022-10-14)
+
+
+### Features
+
+* Publishing no longer performs a dry run and versioning is no longer alpha. ([a265c1f](https://github.com/amnis-dev/amnis-state/commit/a265c1fabbded2111548cfe6dd457488f8d8b212))
+
 ### [0.4.1-alpha.3](https://github.com/amnis-dev/amnis-state/compare/v0.4.1-alpha.2...v0.4.1-alpha.3) (2022-10-14)
 
 
