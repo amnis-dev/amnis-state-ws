@@ -1,6 +1,6 @@
 {
   "name": "@amnis/db",
-  "version": "0.4.1-alpha.2",
+  "version": "0.4.1-alpha.3",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -20,7 +20,11 @@
     }
   },
   "typesVersions": {
-    ">=3.2": { "*": ["./.lib/*"] }
+    ">=3.2": {
+      "*": [
+        "./.lib/*"
+      ]
+    }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -30,7 +34,7 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.4.1-alpha.2",
-    "@amnis/auth": "0.4.1-alpha.2"
+    "@amnis/core": "0.4.1-alpha.3",
+    "@amnis/auth": "0.4.1-alpha.3"
   }
 }

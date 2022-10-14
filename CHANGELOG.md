@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1-alpha.3](https://github.com/amnis-dev/amnis-state/compare/v0.4.1-alpha.2...v0.4.1-alpha.3) (2022-10-14)
+
+
+### Features
+
+* Added lerna workspace tools and refactored packages ([c72d4d3](https://github.com/amnis-dev/amnis-state/commit/c72d4d301162c0cf9dc8f962ae00b2a477d5c383))
+
+
+### Bug Fixes
+
+* Added nominals as exports to fix build issues within TypeScript parsing. ([9a7876a](https://github.com/amnis-dev/amnis-state/commit/9a7876a2fdca444fadae11e41da0383f657351db))
+
 ### [0.4.1-alpha.2](https://github.com/amnis-dev/amnis-state/compare/v0.4.1-alpha.1...v0.4.1-alpha.2) (2022-10-13)
 
 

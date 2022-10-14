@@ -1,6 +1,6 @@
 {
   "name": "@amnis/core",
-  "version": "0.4.1-alpha.2",
+  "version": "0.4.1-alpha.3",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -20,7 +20,11 @@
     }
   },
   "typesVersions": {
-    ">=3.2": { "*": ["./.lib/*"] }
+    ">=3.2": {
+      "*": [
+        "./.lib/*"
+      ]
+    }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
