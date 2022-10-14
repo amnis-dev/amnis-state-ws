@@ -11,10 +11,10 @@
   ],
   "scripts": {
     "tsc": "tsc",
-    "release": "standard-version --prerelease alpha",
+    "release": "standard-version",
     "changelog": "lerna changelog",
     "build": "lerna run build",
-    "pub": "npm publish --workspaces --dry-run",
+    "pub": "npm publish --workspaces",
     "clean": "yarn clean:dist && yarn clean:ts && yarn clean:rollup",
     "clean:dist": "npx rimraf ./**/.dist ./**/.lib ./**/.srv",
     "clean:ts": "npx rimraf ./**/*.tsbuildinfo",
