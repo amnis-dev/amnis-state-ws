@@ -5,7 +5,6 @@ import type {
   StateCreate,
   StateDelete,
 } from '@amnis/core/state';
-import type { UID } from '@amnis/core/types';
 import type { Database } from '../types';
 
 /**
@@ -132,8 +131,9 @@ export const memory: Database = {
           if (
             scope
             && scope[selectKey] === 'owned'
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            && (entity.$owner !== subject && !entity.$readers.includes(subject as any))
+            && subject
+            && (entity.$owner !== subject
+              && !entity.$readers.includes(subject))
           ) {
             return false;
           }

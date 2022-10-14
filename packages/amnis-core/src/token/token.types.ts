@@ -5,18 +5,18 @@ import type { UID, DateNumeric } from '../types';
 /**
  * Unique identifier symbol for a token string.
  */
-enum TokenBrand { _ = '' }
-enum JWTEncodedBrand { _ = '' }
+export enum TokenNominal { _ = '' }
+export enum JWTEncodedNominal { _ = '' }
 
 /**
  * String representation of a token that contains an encoded jwt.
  */
-export type TokenString = TokenBrand & string;
+export type TokenString = TokenNominal & string;
 
 /**
  * String representation of a jwt encoded token.
  */
-export type JWTEncoded = JWTEncodedBrand & string;
+export type JWTEncoded = JWTEncodedNominal & string;
 
 /**
  * Token issuers
