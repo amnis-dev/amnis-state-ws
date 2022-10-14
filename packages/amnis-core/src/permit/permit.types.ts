@@ -1,4 +1,4 @@
-import type { Identifier } from '../types';
+import type { UID } from '../types';
 import type { Entity } from '../entity';
 import type { GrantString } from '../grant';
 
@@ -7,19 +7,19 @@ import type { GrantString } from '../grant';
  */
 export interface Permit extends Entity {
   /**
-   * Identifier to the entity that issued this permit.
+   * UID to the entity that issued this permit.
    */
-  $issuer: Identifier;
+  $issuer: UID;
 
   /**
    * Owner of the permit that can perform the granted actions.
    */
-  $holder: Identifier;
+  $holder: UID;
 
   /**
-   * Identifier to the entity that the owner has been granted actions on.
+   * UID to the entity that the owner has been granted actions on.
    */
-  $target: Identifier;
+  $target: UID;
 
   /**
    * Grants this permit provides.

@@ -1,16 +1,16 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { regexUuid } from './regex';
-import type { Identifier, IdentifierList, IdentifierTree } from './types';
+import type { UID, UIDList, UIDTree } from './types';
 
 /**
  * Create a identifier to another type.
  */
-export const uid = <T>(key: string, id = nanoid()) => `${key}:${id}` as Identifier<T>;
+export const uid = <T>(key: string, id = nanoid()) => `${key}:${id}` as UID<T>;
 
 /**
  * Validates a unique idenifier.
  */
-export const uidValidate = <T>(id: Identifier<T>): boolean => {
+export const uidValidate = <T>(id: UID<T>): boolean => {
   // Identifiers must be strings.
   if (typeof id !== 'string') return false;
 
@@ -34,13 +34,13 @@ export const uidValidate = <T>(id: Identifier<T>): boolean => {
  * Create a new identifier list.
  */
 export const uidList = <T>(
-  list: Identifier<T>[] = [],
-) => list as IdentifierList<T>;
+  list: UID<T>[] = [],
+) => list as UIDList<T>;
 
 /**
  * Create a new identifier list.
  */
-export const uidListValidate = <T>(list: IdentifierList<T>): boolean => {
+export const uidListValidate = <T>(list: UIDList<T>): boolean => {
   if (!Array.isArray(list)) {
     return false;
   }
@@ -53,13 +53,13 @@ export const uidListValidate = <T>(list: IdentifierList<T>): boolean => {
  * Create a new identifier tree.
  */
 export const uidTree = <T>(
-  tree: [Identifier<T>, Identifier<T> | null][] = [],
-) => tree as IdentifierTree<T>;
+  tree: [UID<T>, UID<T> | null][] = [],
+) => tree as UIDTree<T>;
 
 /**
  * Validates an identifier tree.
  */
-export const uidTreeValidate = <T>(tree: IdentifierTree<T>): boolean => {
+export const uidTreeValidate = <T>(tree: UIDTree<T>): boolean => {
   if (!Array.isArray(tree)) {
     return false;
   }
@@ -68,7 +68,7 @@ export const uidTreeValidate = <T>(tree: IdentifierTree<T>): boolean => {
     return false;
   }
 
-  const ids = tree.map<Identifier<T>>((tuple) => tuple[0]);
+  const ids = tree.map<UID<T>>((tuple) => tuple[0]);
 
   if (ids.some((id) => !uidValidate(id))) {
     return false;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Image } from '@amnis/core/image';
-import { Identifier } from '@amnis/core/types';
+import { UID } from '@amnis/core/types';
 
 /**
  * Method for saving data.
@@ -14,7 +14,7 @@ export type FileSystemImageWriteMethod = (
  * Method for saving data.
  */
 export type FileSystemImageReadMethod = (
-  imageId: Identifier<Image>
+  imageId: UID<Image>
 ) => Promise<Buffer | undefined>;
 
 /**

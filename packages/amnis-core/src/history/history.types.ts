@@ -1,6 +1,6 @@
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
 import type { StateUpdateEntity } from '../state';
-import { Identifier } from '../types';
+import { UID } from '../types';
 
 /**
  * Historical updates to data.
@@ -9,7 +9,7 @@ export interface History extends Entity {
   /**
    * The subject that was updated.
    */
-  readonly $subject: Identifier;
+  readonly $subject: UID;
 
   /**
    * The state update record that was performed.

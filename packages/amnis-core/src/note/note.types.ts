@@ -1,5 +1,5 @@
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import { Identifier } from '../types';
+import { UID } from '../types';
 
 /**
  * A message to aid memory about the historic change.
@@ -8,7 +8,7 @@ export interface Note extends Entity {
   /**
    * Subject this note is attached to.
    */
-  readonly $subject: Identifier;
+  readonly $subject: UID;
 
   /**
    * Textual content of the note.

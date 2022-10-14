@@ -1,5 +1,5 @@
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { Identifier } from '../types';
+import type { UID } from '../types';
 
 /**
  * Data for routing to a resouce.
@@ -18,7 +18,7 @@ export interface Route extends Entity {
   /**
    * Entity this route points to.
    */
-  $entity?: Identifier;
+  $entity?: UID;
 
   /**
    * An icon associated with the route.

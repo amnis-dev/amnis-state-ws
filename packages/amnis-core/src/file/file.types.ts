@@ -1,4 +1,4 @@
-import type { Identifier } from '../types';
+import type { UID } from '../types';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
 import type { Profile } from '../profile';
 
@@ -74,7 +74,7 @@ export interface File extends Entity {
   /**
    * Profile identifier to the author.
    */
-  $author?: Identifier<Profile>;
+  $author?: UID<Profile>;
 }
 
 /**

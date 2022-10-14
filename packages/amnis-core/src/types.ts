@@ -11,18 +11,18 @@ declare const surlSymbol: unique symbol;
     * A id identifier to another document.
     */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type Identifier<T = unknown> = string & {[identifierSymbol]: never};
+export type UID<T = unknown> = string & {[identifierSymbol]: never};
 
 /**
  * An array of identifiers.
  */
-export type IdentifierList<T = unknown> = Identifier<T>[] & {[identifierListSymbol]: never};
+export type UIDList<T = unknown> = UID<T>[] & {[identifierListSymbol]: never};
 
 /**
  * A record that links indentifiers in directory tree fashion.
  */
-export type IdentifierTree<T = unknown> =
-  [Identifier<T>, Identifier<T> | null][] & {[identifierTreeSymbol]: never};
+export type UIDTree<T = unknown> =
+  [UID<T>, UID<T> | null][] & {[identifierTreeSymbol]: never};
 
 /**
  * A string that represents a JSON Date.

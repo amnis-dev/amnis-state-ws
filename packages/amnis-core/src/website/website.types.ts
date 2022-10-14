@@ -1,4 +1,4 @@
-import type { Identifier, SURL, IdentifierTree } from '../types';
+import type { UID, SURL, UIDTree } from '../types';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { Image } from '../image/image.types';
 import type { Contact } from '../contact';
@@ -30,7 +30,7 @@ export interface Website extends Entity {
   /**
    * Primary navigational routes.
    */
-  $navigation: IdentifierTree<Route>;
+  $navigation: UIDTree<Route>;
 
   /**
    * Default title for the website. This is for meta data and the text seen on the browser tab.
@@ -38,19 +38,19 @@ export interface Website extends Entity {
   title?: string;
 
   /**
-   * Identifier to the image used for the logo.
+   * UID to the image used for the logo.
    */
-  $logo?: Identifier<Image>;
+  $logo?: UID<Image>;
 
   /**
    * Link the website's favicon
    */
-  $favicon?: Identifier<Image>;
+  $favicon?: UID<Image>;
 
   /**
    * Contacts that should be listed on the website.
    */
-  $contacts: Identifier<Contact>[];
+  $contacts: UID<Contact>[];
 
   /**
    * List of the social network links.

@@ -4,7 +4,7 @@
 export const regexUuid = /^[A-Za-z0-9_-]{21,36}/;
 
 /**
- * Identifier identifier.
+ * UID identifier.
  */
 export const regexReference = /^[A-Za-z0-9_:-]{21,36}/;
 

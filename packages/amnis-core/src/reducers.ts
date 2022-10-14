@@ -14,7 +14,7 @@ import type {
   EntityPartial,
   MetaState,
 } from './entity';
-import { Identifier } from './types';
+import { UID } from './types';
 
 export interface MetaOptions {
   active?: boolean;
@@ -100,7 +100,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      */
     activeSet: (
       state: MetaState<E>,
-      action: PayloadAction<Identifier<E>>,
+      action: PayloadAction<UID<E>>,
     ) => {
       const id = action.payload;
       if (state.entities[id]) {
@@ -122,7 +122,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      */
     focusSet: (
       state: MetaState<E>,
-      action: PayloadAction<Identifier<E>>,
+      action: PayloadAction<UID<E>>,
     ) => {
       const id = action.payload;
       if (state.entities[id]) {
@@ -144,7 +144,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      */
     selectionSet: (
       state: MetaState<E>,
-      action: PayloadAction<Identifier<E>[]>,
+      action: PayloadAction<UID<E>[]>,
     ) => {
       const selection = action.payload;
       state.selection = [...selection];

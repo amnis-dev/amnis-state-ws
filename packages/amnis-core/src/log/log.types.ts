@@ -1,4 +1,4 @@
-import type { Identifier } from '../types';
+import type { UID } from '../types';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { User } from '../user/user.types';
 
@@ -32,9 +32,9 @@ export interface Log extends Entity {
   system: string;
 
   /**
-   * Identifier to a user that invoked the log.
+   * UID to a user that invoked the log.
    */
-  $invoker?: Identifier<User>;
+  $invoker?: UID<User>;
 }
 
 /**

@@ -1,7 +1,7 @@
 import { uid } from '../uid';
 import { Entity, entityCreate } from '../entity';
 import { StateCreate, StateUpdate } from '../state';
-import { Identifier } from '../types';
+import { UID } from '../types';
 import type { History, HistoryBase, HistoryBaseCreate } from './history.types';
 
 export const historyKey = 'history';
@@ -29,7 +29,7 @@ export function historyCreate(
  */
 export function historyMake(
   stateUpdate: StateUpdate,
-  creator?: Identifier,
+  creator?: UID,
   deniedKeys?: string[],
 ): StateCreate {
   const stateCreateHistory: StateCreate = {

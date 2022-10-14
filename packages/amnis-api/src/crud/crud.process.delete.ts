@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Identifier } from '@amnis/core/types';
+import type { UID } from '@amnis/core/types';
 import type { Role } from '@amnis/core/role';
 import type { StateDelete } from '@amnis/core/state';
 import { selectors } from '@amnis/core/selectors';
@@ -19,7 +19,7 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
     const { body, jwt } = input;
     const output = apiOutput<StateDelete>();
 
-    const roleRefs: Identifier<Role>[] = jwt?.roles || [];
+    const roleRefs: UID<Role>[] = jwt?.roles || [];
 
     /**
      * Get array of grants from roles in the service store.

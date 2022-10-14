@@ -2,7 +2,7 @@ import {
   uid, uidList, uidListValidate, uidTree, uidTreeValidate, uidValidate,
 } from './uid';
 import { regexUuid } from './regex';
-import { Identifier } from './types';
+import { UID } from './types';
 
 test('should generate a unique identifier', () => {
   const id = uid('identity');
@@ -14,9 +14,9 @@ test('should generate a unique identifier', () => {
 
 test('should distinguish between a valid and invalid uid', () => {
   const idValid = uid('slice');
-  const idInvalid1 = '' as Identifier;
-  const idInvalid2 = 'slice:' as Identifier;
-  const idInvalid3 = 'slice:notauuid' as Identifier;
+  const idInvalid1 = '' as UID;
+  const idInvalid2 = 'slice:' as UID;
+  const idInvalid3 = 'slice:notauuid' as UID;
 
   expect(uidValidate(idValid)).toBe(true);
   expect(uidValidate(idInvalid1)).toBe(false);
@@ -47,7 +47,7 @@ test('should validate an identifier list', () => {
   const idListInvalid = uidList([
     uid('identifier'),
     uid('identifier'),
-    'invalid:identity' as Identifier,
+    'invalid:identity' as UID,
     uid('identifier'),
   ]);
 
@@ -102,7 +102,7 @@ test('should validate an identifier tree', () => {
   const idTreeInvalid2 = uidTree([
     [idRoot1, null],
     [idRoot2, null],
-    ['invalid:identifier' as Identifier, null],
+    ['invalid:identifier' as UID, null],
     [idChild1, idRoot1],
     [idChild2, idRoot2],
     [idChild3, idRoot1],

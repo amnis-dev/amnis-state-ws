@@ -1,4 +1,4 @@
-import type { DateJSON, Identifier, SURL } from '../types';
+import type { DateJSON, UID, SURL } from '../types';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
 import type { User } from '../user/user.types';
 import { Contact } from '../contact';
@@ -10,7 +10,7 @@ export interface Profile extends Entity {
   /**
    * User this profile is associated with.
    */
-  $user: Identifier<User>;
+  $user: UID<User>;
 
   /**
    * Display name for the profile.
@@ -40,7 +40,7 @@ export interface Profile extends Entity {
   /**
    * Profile Contact.
    */
-  $contact?: Identifier<Contact>;
+  $contact?: UID<Contact>;
 
   /**
    * Organization profile is a part of.

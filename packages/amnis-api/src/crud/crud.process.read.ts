@@ -6,7 +6,7 @@ import { authScopeCreate } from '@amnis/auth/scope';
 import { StateCreate, StateQuery, stateReferenceQuery } from '@amnis/core/state';
 import type { Database } from '@amnis/db/types';
 import type { AuthScope } from '@amnis/auth/types';
-import type{ Identifier } from '@amnis/core/types';
+import type{ UID } from '@amnis/core/types';
 import type { ApiProcess } from '../types';
 import { apiOutput } from '../api';
 import type { ApiCrudIORead } from './crud.types';
@@ -21,7 +21,7 @@ async function readRecursive(
   grants: Grant[],
   query: StateQuery,
   authScope: AuthScope | undefined,
-  subject: Identifier,
+  subject: UID,
   depth: number,
 ): Promise<StateCreate> {
   /**

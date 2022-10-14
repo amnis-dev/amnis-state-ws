@@ -1,5 +1,5 @@
 import type { Role } from '../role';
-import type { Identifier } from '../types';
+import type { UID } from '../types';
 import type { Entity } from '../entity';
 import type { Website } from '../website';
 
@@ -18,16 +18,16 @@ export interface System extends Entity {
   /**
    * System's website configurations.
    */
-  $website: Identifier<Website>;
+  $website: UID<Website>;
 
   /**
    * Role identifier that considers the user an administrator.
    */
-  $adminRole: Identifier<Role>;
+  $adminRole: UID<Role>;
 
   /**
    * The initial roles to assign to a user when a new account is created.
    * @default []
    */
-  $initialRoles: Identifier<Role>[];
+  $initialRoles: UID<Role>[];
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
-import type { Identifier, IdentifierList, DateJSON } from '../types';
+import type { UID, UIDList, DateJSON } from '../types';
 
 /**
  * A common entity object.
@@ -8,10 +8,10 @@ import type { Identifier, IdentifierList, DateJSON } from '../types';
  */
 export interface Entity {
   /**
-   * Identifier for this entity.
+   * UID for this entity.
    * @default ""
    */
-  readonly $id: Identifier;
+  readonly $id: UID;
 
   /**
    * Creation date string.
@@ -40,18 +40,18 @@ export interface Entity {
   /**
    * Entity that owns this data.
    */
-  $owner: Identifier;
+  $owner: UID;
 
   /**
    * Possible user id creator of the entity.
    */
-  $creator: Identifier;
+  $creator: UID;
 
   /**
    * Entities that can observe this data.
    * Pseudo-owners of this data, but only as a reader.
    */
-  $readers: IdentifierList;
+  $readers: UIDList;
 }
 
 /**
@@ -61,17 +61,17 @@ export interface Meta<E extends Entity> {
   /**
    * The entity id referencing the active entity.
    */
-  active: Identifier<E> | null;
+  active: UID<E> | null;
 
   /**
     * The id representing a focused entity.
     */
-  focused: Identifier<E> | null;
+  focused: UID<E> | null;
 
   /**
     * List of ids considered to be selected.
     */
-  selection: Identifier<E>[];
+  selection: UID<E>[];
 }
 
 /**

@@ -1,5 +1,5 @@
 import type { Role } from '../role';
-import type { Identifier, DateNumeric } from '../types';
+import type { UID, DateNumeric } from '../types';
 
 /**
  * Unique identifier symbol for a token string.
@@ -72,7 +72,7 @@ export interface JWTDecoded {
     * Subject identifier.
     * (typically a user id)
     */
-  sub: Identifier;
+  sub: UID;
 
   /**
    * Expiration numeric date.
@@ -97,5 +97,5 @@ export interface JWTDecoded {
   /**
    * Scope of permissions (role references).
    */
-  roles: Identifier<Role>[];
+  roles: UID<Role>[];
 }

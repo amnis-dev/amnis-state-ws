@@ -1,6 +1,6 @@
 import stream from 'node:stream';
 import ffmpeg from 'fluent-ffmpeg';
-import type { Identifier } from '@amnis/core/types';
+import type { UID } from '@amnis/core/types';
 import type { Image } from '@amnis/core/image/index';
 import { uid } from '@amnis/core/uid';
 import { fsmemory } from './fsmemory';
@@ -29,7 +29,7 @@ function imageLoad(path: string): Promise<Buffer> {
   });
 }
 
-let imageId: Identifier<Image> = uid('image');
+let imageId: UID<Image> = uid('image');
 
 /**
  * ============================================================

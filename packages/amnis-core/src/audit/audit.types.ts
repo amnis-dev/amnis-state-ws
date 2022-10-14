@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { Identifier } from '../types';
+import type { UID } from '../types';
 
 /**
  * A data structure for audit information.
@@ -24,7 +24,7 @@ export interface Audit extends Entity {
   /**
    * Subject id of the audit.
    */
-  $subject?: Identifier;
+  $subject?: UID;
 
   /**
    * IP address of the subject.

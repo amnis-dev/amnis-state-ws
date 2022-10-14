@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Identifier } from '@amnis/core/types';
+import type { UID } from '@amnis/core/types';
 import type { AuthScope } from '@amnis/auth/types';
 import type {
   StateUpdate,
@@ -10,7 +10,7 @@ import type {
 
 export interface DatabaseControls {
   scope?: AuthScope;
-  subject?: Identifier;
+  subject?: UID;
 }
 
 export type DatabaseCreateMethod = (
