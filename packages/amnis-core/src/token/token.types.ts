@@ -1,21 +1,22 @@
+/* eslint-disable no-shadow */
 import type { Role } from '../role';
 import type { UID, DateNumeric } from '../types';
 
 /**
  * Unique identifier symbol for a token string.
  */
-declare const tokenSymbol: unique symbol;
-declare const jwtEncodedSymbol: unique symbol;
+enum TokenBrand { _ = '' }
+enum JWTEncodedBrand { _ = '' }
 
 /**
  * String representation of a token that contains an encoded jwt.
  */
-export type TokenString = string & {[tokenSymbol]: never};
+export type TokenString = TokenBrand & string;
 
 /**
  * String representation of a jwt encoded token.
  */
-export type JWTEncoded = string & {[jwtEncodedSymbol]: never};
+export type JWTEncoded = JWTEncodedBrand & string;
 
 /**
  * Token issuers

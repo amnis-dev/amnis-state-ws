@@ -1,13 +1,14 @@
+/* eslint-disable no-shadow */
 /**
  * Unique symbol for a serialized device string;
  */
-declare const deviceSymbol: unique symbol;
+enum DeviceBrand { _ = '' }
 
 /**
  * A string that represents a device.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type DeviceString = string & {[deviceSymbol]: never};
+export type DeviceString = DeviceBrand & string;
 
 export interface Device {
   /**

@@ -18,8 +18,8 @@
       "type": "object",
       "properties": {
         "$id": {
-          "$ref": "#/definitions/Identifier",
-          "description": "Identifier for this entity.",
+          "$ref": "#/definitions/UID",
+          "description": "UID for this entity.",
           "default": ""
         },
         "created": {
@@ -43,26 +43,16 @@
           "default": false
         },
         "$owner": {
-          "$ref": "#/definitions/Identifier",
+          "$ref": "#/definitions/UID",
           "description": "Entity that owns this data."
         },
-        "$readers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Identifier"
-          },
-          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
-        },
         "$creator": {
-          "$ref": "#/definitions/Identifier",
+          "$ref": "#/definitions/UID",
           "description": "Possible user id creator of the entity."
         },
-        "$children": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Identifier"
-          },
-          "description": "Children of this entity."
+        "$readers": {
+          "$ref": "#/definitions/UIDList",
+          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
         },
         "title": {
           "type": "string"
@@ -89,8 +79,8 @@
       "type": "object",
       "properties": {
         "$id": {
-          "$ref": "#/definitions/Identifier",
-          "description": "Identifier for this entity.",
+          "$ref": "#/definitions/UID",
+          "description": "UID for this entity.",
           "default": ""
         },
         "created": {
@@ -114,26 +104,16 @@
           "default": false
         },
         "$owner": {
-          "$ref": "#/definitions/Identifier",
+          "$ref": "#/definitions/UID",
           "description": "Entity that owns this data."
         },
-        "$readers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Identifier"
-          },
-          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
-        },
         "$creator": {
-          "$ref": "#/definitions/Identifier",
+          "$ref": "#/definitions/UID",
           "description": "Possible user id creator of the entity."
         },
-        "$children": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Identifier"
-          },
-          "description": "Children of this entity."
+        "$readers": {
+          "$ref": "#/definitions/UIDList",
+          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
         }
       },
       "required": [
@@ -143,19 +123,30 @@
         "committed",
         "delete",
         "$owner",
-        "$readers",
-        "$creator"
+        "$creator",
+        "$readers"
       ],
       "additionalProperties": false,
       "description": "A common entity object. Entity's are serializable (JSON) objects that can be committed to NoSQL Databases."
     },
-    "Identifier": {
+    "UID": {
       "type": "string",
       "description": "A id identifier to another document."
     },
     "DateJSON": {
       "type": "string",
       "description": "A string that represents a JSON Date."
+    },
+    "UIDList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UID%3Cunknown%3E"
+      },
+      "description": "An array of identifiers."
+    },
+    "UID<unknown>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
     "StateUpdate": {
       "type": "object",
@@ -172,8 +163,8 @@
                 "type": "number"
               },
               "$id": {
-                "$ref": "#/definitions/Identifier",
-                "description": "Identifier for this entity.",
+                "$ref": "#/definitions/UID",
+                "description": "UID for this entity.",
                 "default": ""
               },
               "created": {
@@ -197,26 +188,16 @@
                 "default": false
               },
               "$owner": {
-                "$ref": "#/definitions/Identifier",
+                "$ref": "#/definitions/UID",
                 "description": "Entity that owns this data."
               },
-              "$readers": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Identifier"
-                },
-                "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
-              },
               "$creator": {
-                "$ref": "#/definitions/Identifier",
+                "$ref": "#/definitions/UID",
                 "description": "Possible user id creator of the entity."
               },
-              "$children": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Identifier"
-                },
-                "description": "Children of this entity."
+              "$readers": {
+                "$ref": "#/definitions/UIDList",
+                "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
               }
             },
             "additionalProperties": false

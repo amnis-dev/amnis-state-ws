@@ -45,7 +45,7 @@ export function apiValidate(
       output.json.logs.push({
         level: 'error',
         title: 'Validation Failed',
-        description: verror.message || 'The request is not valid.',
+        description: `${verror.instancePath} ${verror.message}` || 'The request is not valid.',
       });
     });
     return output;

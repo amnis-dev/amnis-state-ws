@@ -1,7 +1,6 @@
 {
   "name": "@amnis/api",
   "version": "0.4.1-alpha.2",
-  "main": "index.ts",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -9,6 +8,24 @@
     "url": "https://github.com/amnis-dev/amnis-state"
   },
   "homepage": "https://github.com/amnis-dev/amnis-state",
+  "directories": {
+    "lib": ".lib"
+  },
+  "files": [
+    ".lib"
+  ],
+  "exports": {
+    "./*": {
+      "import": "./.lib/*.js"
+    }
+  },
+  "typesVersions": {
+    ">=3.2": { "*": ["./.lib/*"] }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "jest"
+  },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"
   },

@@ -132,7 +132,8 @@ export const memory: Database = {
           if (
             scope
             && scope[selectKey] === 'owned'
-            && (entity.$owner !== subject && !entity.$readers.includes(subject as UID))
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            && (entity.$owner !== subject && !entity.$readers.includes(subject as any))
           ) {
             return false;
           }
