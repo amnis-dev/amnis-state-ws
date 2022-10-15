@@ -16,7 +16,7 @@
     "build": "lerna run build",
     "pub": "npm publish --workspaces --access public",
     "clean": "yarn clean:dist && yarn clean:ts && yarn clean:rollup",
-    "clean:dist": "npx rimraf ./**/.dist ./**/.lib ./**/.srv",
+    "clean:dist": "npx rimraf ./**/dist ./**/lib ./**/srv",
     "clean:ts": "npx rimraf ./**/*.tsbuildinfo",
     "clean:rollup": "npx rimraf ./**/.rollup.cache",
     "lint": "tsc --noEmit && eslint --ext .ts --ext .tsx \"./\"",
