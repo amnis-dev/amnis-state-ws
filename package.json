@@ -14,7 +14,7 @@
     "release": "standard-version",
     "changelog": "lerna changelog",
     "build": "lerna run build",
-    "pub": "npm publish --workspaces",
+    "pub": "npm publish --workspaces --access public",
     "clean": "yarn clean:dist && yarn clean:ts && yarn clean:rollup",
     "clean:dist": "npx rimraf ./**/.dist ./**/.lib ./**/.srv",
     "clean:ts": "npx rimraf ./**/*.tsbuildinfo",
