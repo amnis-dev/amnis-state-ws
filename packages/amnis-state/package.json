@@ -9,20 +9,22 @@
   },
   "homepage": "https://github.com/amnis-dev/amnis-state",
   "directories": {
-    "lib": ".lib"
+    "lib": "lib"
   },
   "files": [
-    ".lib"
+    "lib"
   ],
   "exports": {
     "./*": {
-      "import": "./.lib/*.js"
+      "default": "./lib/*.js",
+      "import": "./lib/*.js",
+      "require": "./lib/*.js"
     }
   },
   "typesVersions": {
     ">=3.2": {
       "*": [
-        "./.lib/*"
+        "./lib/*"
       ]
     }
   },
