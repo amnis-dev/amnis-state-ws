@@ -1,6 +1,6 @@
 {
   "name": "@amnis/auth",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -36,7 +36,7 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.4.2",
+    "@amnis/core": "0.4.3",
     "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1"
   }

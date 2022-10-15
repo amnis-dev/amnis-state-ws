@@ -1,6 +1,6 @@
 {
   "name": "@amnis/api",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -36,9 +36,9 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.4.2",
-    "@amnis/auth": "0.4.2",
-    "@amnis/db": "0.4.2",
+    "@amnis/core": "0.4.3",
+    "@amnis/auth": "0.4.3",
+    "@amnis/db": "0.4.3",
     "ajv": "^8.11.0",
     "cross-fetch": "^3.1.5"
   },

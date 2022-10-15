@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.3](https://github.com/amnis-dev/amnis-state/compare/v0.4.2...v0.4.3) (2022-10-15)
+
+
+### Features
+
+* Updated package export configurations ([3757fdd](https://github.com/amnis-dev/amnis-state/commit/3757fdd894bc674bc87b4647022a310e92c4b972))
+* Updated package export configurations ([cc050b4](https://github.com/amnis-dev/amnis-state/commit/cc050b411d4ec45ef516a8297f5d6e7b0aec8d02))
+
+
+### Bug Fixes
+
+* Enabled public access flag for NPM publishing ([1c92c95](https://github.com/amnis-dev/amnis-state/commit/1c92c95d24064e66a02c0ef7072b911ac7c3bbf5))
+
 ### [0.4.2](https://github.com/amnis-dev/amnis-state/compare/v0.4.1...v0.4.2) (2022-10-14)
 
 ### [0.4.1](https://github.com/amnis-dev/amnis-state/compare/v0.4.1-alpha.3...v0.4.1) (2022-10-14)
