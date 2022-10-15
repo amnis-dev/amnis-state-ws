@@ -1,4 +1,4 @@
-import { tokenSlice } from './token';
+import { tokenSlice } from './token.js';
 
 export const reducerMap = {
   [tokenSlice.name]: tokenSlice.reducer,

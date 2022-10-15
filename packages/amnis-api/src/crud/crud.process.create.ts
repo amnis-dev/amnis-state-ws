@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { authwall } from '@amnis/auth/authwall';
-import { entityClean, entityCreate } from '@amnis/core/entity';
-import { Task } from '@amnis/core/grant';
-import { selectors } from '@amnis/core/selectors';
-import type { State, StateCreate } from '@amnis/core/state';
-import type { Role } from '@amnis/core/role';
-import type{ UID } from '@amnis/core/types';
-import type { ApiProcess } from '../types';
-import { apiOutput } from '../api';
-import type { ApiCrudIOCreate } from './crud.types';
-import { mwJwt } from '../mw.jwt';
-import { mwValidate } from '../mw.validate';
+import { authwall } from '@amnis/auth/authwall.js';
+import { entityClean, entityCreate } from '@amnis/core/entity/index.js';
+import { Task } from '@amnis/core/grant/index.js';
+import { selectors } from '@amnis/core/selectors.js';
+import type { State, StateCreate } from '@amnis/core/state/index.js';
+import type { Role } from '@amnis/core/role/index.js';
+import type{ UID } from '@amnis/core/types.js';
+import type { ApiProcess } from '../types.js';
+import { apiOutput } from '../api.js';
+import type { ApiCrudIOCreate } from './crud.types.js';
+import { mwJwt } from '../mw.jwt.js';
+import { mwValidate } from '../mw.validate.js';
 
 const process: ApiProcess<ApiCrudIOCreate> = (context) => (
   async (input) => {

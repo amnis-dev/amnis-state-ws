@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import type { KeyPairSyncResult } from 'node:crypto';
-import type { GrantScope } from '@amnis/core/grant';
-import type { State } from '@amnis/core/state';
+import type { GrantScope } from '@amnis/core/grant/index.js';
+import type { State } from '@amnis/core/state/index.js';
 
 /**
  * Unique identifier symbols and types for RSA

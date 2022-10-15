@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Note, noteKey } from '@amnis/core/note';
-import type { NoteMeta } from './note.types';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Note, noteKey } from '@amnis/core/note/index.js';
+import type { NoteMeta } from './note.types.js';
 
 /**
  * RTK note adapter.

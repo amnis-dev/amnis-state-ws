@@ -1,4 +1,4 @@
-import { imageKey, imageCreate } from './image';
+import { imageKey, imageCreate } from './image.js';
 
 /**
  * ============================================================

@@ -1,13 +1,13 @@
 import { EntityState } from '@reduxjs/toolkit';
 import {
   Token, TokenApi, tokenKey, TokenType,
-} from './token';
-import type { Entity, Meta } from './entity';
-import type { State } from './state';
-import type { UID } from './types';
-import type { Role } from './role';
-import { Crypto, cryptoKey } from './crypto';
-import { grantParse, Grant } from './grant';
+} from './token/index.js';
+import type { Entity, Meta } from './entity/index.js';
+import type { State } from './state/index.js';
+import type { UID } from './types.js';
+import type { Role } from './role/index.js';
+import { Crypto, cryptoKey } from './crypto/index.js';
+import { grantParse, Grant } from './grant/index.js';
 
 /**
  * Helper function to get a slice.

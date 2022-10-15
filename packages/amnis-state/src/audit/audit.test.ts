@@ -1,12 +1,12 @@
-import { auditBase } from '@amnis/core/audit';
+import { auditBase } from '@amnis/core/audit/index.js';
 import {
   auditInitialState,
   auditSelectors,
   auditActions,
-} from './audit';
-import { auditDefault } from './audit.default';
+} from './audit.js';
+import { auditDefault } from './audit.default.js';
 
-import { auditStoreSetup } from './audit.store';
+import { auditStoreSetup } from './audit.store.js';
 
 /**
  * ============================================================

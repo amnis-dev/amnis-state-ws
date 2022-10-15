@@ -1,6 +1,6 @@
-import { uid } from '@amnis/core/uid';
-import { systemCreate } from '@amnis/core/system';
-import { roleKey } from '../role';
+import { uid } from '@amnis/core/uid.js';
+import { systemCreate } from '@amnis/core/system/index.js';
+import { roleKey } from '../role/index.js';
 
 export const systemDefault = systemCreate({
   name: 'Amnis System',

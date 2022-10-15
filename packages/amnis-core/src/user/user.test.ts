@@ -1,5 +1,5 @@
-import { deviceStringify } from '../device';
-import { userKey, userCreate } from './user';
+import { deviceStringify } from '../device/index.js';
+import { userKey, userCreate } from './user.js';
 
 /**
  * ============================================================

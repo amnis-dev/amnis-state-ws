@@ -1,9 +1,9 @@
 import type {
   StateDelete, StateQuery, StateCreate, StateUpdate,
-} from '@amnis/core/state';
+} from '@amnis/core/state/index.js';
 import type {
   ApiCrudQueries,
-} from './crud.types';
+} from './crud.types.js';
 
 export function apiCrudQueries(): ApiCrudQueries {
   return {

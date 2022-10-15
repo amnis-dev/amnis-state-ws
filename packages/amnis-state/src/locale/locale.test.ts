@@ -1,12 +1,12 @@
-import { localeBase } from '@amnis/core/locale';
+import { localeBase } from '@amnis/core/locale/index.js';
 import {
   localeInitialState,
   localeSelectors,
   localeActions,
-} from './locale';
-import { localeDefault } from './locale.default';
+} from './locale.js';
+import { localeDefault } from './locale.default.js';
 
-import { localeStoreSetup } from './locale.store';
+import { localeStoreSetup } from './locale.store.js';
 
 /**
  * ============================================================

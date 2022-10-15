@@ -7,10 +7,10 @@ import {
   pkceCreateChallenge,
   pkceGetVerifier,
   pkceGetState,
-} from '@amnis/auth/pkce.browser';
+} from '@amnis/auth/pkce.browser.js';
 import {
   apiAuth,
-} from '../auth/auth.api.react';
+} from '../auth/auth.api.node.js';
 
 export interface PlatformTwitterConfig {
   authorizeEp: string;

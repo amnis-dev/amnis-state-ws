@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Profile, profileKey } from '@amnis/core/profile';
-import type { ProfileMeta } from './profile.types';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Profile, profileKey } from '@amnis/core/profile/index.js';
+import type { ProfileMeta } from './profile.types.js';
 
 /**
  * RTK profile adapter.

@@ -1,5 +1,5 @@
-import { entityCreate } from '../entity';
-import type { Sheet, SheetBase, SheetBaseCreate } from './sheet.types';
+import { entityCreate } from '../entity/index.js';
+import type { Sheet, SheetBase, SheetBaseCreate } from './sheet.types.js';
 
 export const sheetKey = 'sheet';
 

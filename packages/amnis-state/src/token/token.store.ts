@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './token.reducer';
+import { reducerMap, reducerMiddleware } from './token.reducer.js';
 
 export function tokenStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

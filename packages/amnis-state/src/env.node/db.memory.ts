@@ -1,1 +1,1 @@
-export * from '@amnis/db/memory';
+export * from '@amnis/db/memory/index.js';

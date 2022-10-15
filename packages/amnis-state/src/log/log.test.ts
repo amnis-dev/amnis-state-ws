@@ -2,10 +2,10 @@ import {
   logInitialState,
   logSelectors,
   logActions,
-} from './log';
-import { logDefault } from './log.default';
+} from './log.js';
+import { logDefault } from './log.default.js';
 
-import { logStoreSetup } from './log.store';
+import { logStoreSetup } from './log.store.js';
 
 /**
  * ============================================================

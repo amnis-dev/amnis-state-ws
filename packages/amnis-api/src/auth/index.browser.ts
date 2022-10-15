@@ -1,2 +1,2 @@
-export * from './auth.types';
-export * from './auth.api.browser';
+export * from './auth.types.js';
+export * from './auth.api.browser.js';

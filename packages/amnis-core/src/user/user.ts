@@ -1,11 +1,11 @@
-import { deviceParse } from '../device';
-import { entityCreate } from '../entity';
-import { LogBaseCreate } from '../log';
-import { regexAlphanumeric, regexEmail } from '../regex';
-import type { DeviceString } from '../device';
-import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
-import type { User } from './user.types';
-import { coreConfig } from '../config';
+import { deviceParse } from '../device/index.js';
+import { entityCreate } from '../entity/index.js';
+import { LogBaseCreate } from '../log/index.js';
+import { regexAlphanumeric, regexEmail } from '../regex.js';
+import type { DeviceString } from '../device/index.js';
+import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types.js';
+import type { User } from './user.types.js';
+import { coreConfig } from '../config.js';
 
 export const userKey = 'user';
 

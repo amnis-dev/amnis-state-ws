@@ -1,11 +1,11 @@
 {
   "name": "@amnis/state-workspace",
   "version": "0.4.3",
-  "main": "index.ts",
   "repository": "https://github.com/amnis-dev/amnis-state",
   "author": "Eric Crowell <admin@amnis.dev>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -43,8 +43,8 @@
     "delete-node-modules": "npx rimraf ./**/node_modules"
   },
   "devDependencies": {
-    "@amnis/eslint-config-node": "^1.3.5",
-    "@amnis/tsconfig-node": "^1.3.5",
+    "@amnis/eslint-config-node": "^2.0.0",
+    "@amnis/tsconfig-node": "^2.0.0",
     "@babel/core": "^7.18.0",
     "@babel/preset-env": "^7.18.0",
     "@babel/preset-typescript": "^7.17.12",

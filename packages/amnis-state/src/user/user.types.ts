@@ -1,5 +1,5 @@
-import type { Meta } from '@amnis/core/entity';
-import type { User } from '@amnis/core/user';
+import type { Meta } from '@amnis/core/entity/index.js';
+import type { User } from '@amnis/core/user/index.js';
 
 /**
  * User collection meta data.

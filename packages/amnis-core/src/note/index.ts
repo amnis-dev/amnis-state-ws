@@ -1,2 +1,2 @@
-export * from './note.types';
-export * from './note';
+export * from './note.types.js';
+export * from './note.js';

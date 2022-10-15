@@ -1,5 +1,5 @@
 import { RSAKeyPairOptions, generateKeyPairSync, KeyPairSyncResult } from 'node:crypto';
-import { cryptConfig } from './config';
+import { cryptConfig } from './config.js';
 
 /**
  * RSA Key Pair

@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import browserSet from './set';
+import browserSet from './set.js';
 
 export function storeSetup() {
   const rootReducer = combineReducers(browserSet.reducers);

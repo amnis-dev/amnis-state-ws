@@ -1,17 +1,17 @@
-import { dateNumeric } from '@amnis/core/core';
-import { uid } from '@amnis/core/uid';
-import { userCreate, User } from '@amnis/core/user';
-import type { Session } from '@amnis/core/session';
-import { Profile, profileCreate } from '@amnis/core/profile';
-import { passCreateSync } from '@amnis/auth/pass';
-import { memory } from '@amnis/db/memory';
-import { storeSetup } from '@amnis/core/test/book.store';
-import { Token, tokenCreate } from '@amnis/core/token';
-import { jwtEncode } from '@amnis/auth/token';
-import { generateRsa } from '@amnis/auth/rsa';
-import { apiAuthProcess } from './auth.process';
-import { apiIO } from '../api.io.node';
-import { validatorsSetup } from '../validators';
+import { dateNumeric } from '@amnis/core/core.js';
+import { uid } from '@amnis/core/uid.js';
+import { userCreate, User } from '@amnis/core/user/index.js';
+import type { Session } from '@amnis/core/session/index.js';
+import { Profile, profileCreate } from '@amnis/core/profile/index.js';
+import { passCreateSync } from '@amnis/auth/pass.js';
+import { memory } from '@amnis/db/memory/index.js';
+import { storeSetup } from '@amnis/core/test/book.store.js';
+import { Token, tokenCreate } from '@amnis/core/token/index.js';
+import { jwtEncode } from '@amnis/auth/token.js';
+import { generateRsa } from '@amnis/auth/rsa.js';
+import { apiAuthProcess } from './auth.process.js';
+import { apiIO } from '../api.io.node.js';
+import { validatorsSetup } from '../validators.js';
 import schemaAuth from './auth.schema.json';
 
 /**

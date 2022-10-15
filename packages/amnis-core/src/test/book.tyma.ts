@@ -1,4 +1,4 @@
-import type { Book } from './book.store';
+import type { Book } from './book.store.js';
 
 export interface StateCreate {
   book?: Book[];

@@ -1,5 +1,5 @@
-import type { UID, DateNumeric, SURL } from '../types';
-import type { Entity } from '../entity';
+import type { UID, DateNumeric, SURL } from '../types.js';
+import type { Entity } from '../entity/index.js';
 
 /**
  * A session object.

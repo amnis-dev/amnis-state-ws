@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { User, userKey } from '@amnis/core/user';
-import type { UserMeta } from './user.types';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { User, userKey } from '@amnis/core/user/index.js';
+import type { UserMeta } from './user.types.js';
 
 /**
  * RTK user adapter.

@@ -1,5 +1,5 @@
-import { Entity, entityCreate } from '../entity';
-import type { Crypto, CryptoBase, CryptoBaseCreate } from './crypto.types';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { Crypto, CryptoBase, CryptoBaseCreate } from './crypto.types.js';
 
 export const cryptoKey = 'crypto';
 

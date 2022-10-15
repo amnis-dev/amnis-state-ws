@@ -1,6 +1,6 @@
-import type { UID } from '../types';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { Profile } from '../profile';
+import type { UID } from '../types.js';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import type { Profile } from '../profile/index.js';
 
 /**
  * Image Mime Types.

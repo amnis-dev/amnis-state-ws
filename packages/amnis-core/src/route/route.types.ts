@@ -1,5 +1,5 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { UID } from '../types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import type { UID } from '../types.js';
 
 /**
  * Data for routing to a resouce.

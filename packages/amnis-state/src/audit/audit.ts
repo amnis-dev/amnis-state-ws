@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Audit, auditKey } from '@amnis/core/audit';
-import type { AuditMeta } from './audit.types';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Audit, auditKey } from '@amnis/core/audit/index.js';
+import type { AuditMeta } from './audit.types.js';
 
 /**
  * RTK audit adapter.

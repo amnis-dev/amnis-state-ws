@@ -1,2 +1,2 @@
-export * from './pkce.browser';
-export * from './types';
+export * from './pkce.browser.js';
+export * from './types.js';

@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './profile.reducer';
+import { reducerMap, reducerMiddleware } from './profile.reducer.js';
 
 export function profileStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

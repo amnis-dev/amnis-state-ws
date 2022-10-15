@@ -1,11 +1,12 @@
-import { uidList } from '@amnis/core/uid';
-import type { Entity } from '@amnis/core/entity';
+import { uidList } from '@amnis/core/uid.js';
+import type { Entity } from '@amnis/core/entity/index.js';
 import type {
   State,
   StateCreate,
   StateDelete,
-} from '@amnis/core/state';
-import type { Database } from '../types';
+} from '@amnis/core/state/index.js';
+import type { UID } from '@amnis/core/types.js';
+import type { Database } from '../types.js';
 
 /**
  * Storage type.
@@ -241,7 +242,7 @@ export const memory: Database = {
       }
       const references = state[sliceKey];
 
-      references.every((ref) => {
+      references.every((ref: UID) => {
         if (!storage[storageKey][ref]) {
           return true;
         }

@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './session.reducer';
+import { reducerMap, reducerMiddleware } from './session.reducer.js';
 
 export function sessionStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

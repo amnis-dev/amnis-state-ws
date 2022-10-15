@@ -1,2 +1,2 @@
-export * from './locale.types';
-export * from './locale';
+export * from './locale.types.js';
+export * from './locale.js';

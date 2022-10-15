@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './history.reducer';
+import { reducerMap, reducerMiddleware } from './history.reducer.js';
 
 export function historyStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

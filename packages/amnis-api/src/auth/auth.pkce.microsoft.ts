@@ -1,20 +1,20 @@
 import fetch from 'cross-fetch';
 
-import { dateNumeric } from '@amnis/core/core';
-import type { Database } from '@amnis/db/types';
-import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token';
-import type { StateCreate } from '@amnis/core/state';
+import { dateNumeric } from '@amnis/core/core.js';
+import type { Database } from '@amnis/db/types.js';
+import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token/index.js';
+import type { StateCreate } from '@amnis/core/state/index.js';
 
-import { jwtDecode } from '@amnis/auth/token';
+import { jwtDecode } from '@amnis/auth/token.js';
 import { Store } from '@reduxjs/toolkit';
-import { selectors } from '@amnis/core/selectors';
-import { System, systemKey } from '@amnis/core/system';
-import type { ApiAuthBodyPkce } from './auth.types';
-import { apiConfig } from '../config';
-import { ApiOutput } from '../types';
-import { loginSuccessProcess, userFindByName } from './auth.utility';
-import { register } from './auth.register';
-import { apiOutput } from '../api';
+import { selectors } from '@amnis/core/selectors.js';
+import { System, systemKey } from '@amnis/core/system/index.js';
+import type { ApiAuthBodyPkce } from './auth.types.js';
+import { apiConfig } from '../config.js';
+import { ApiOutput } from '../types.js';
+import { loginSuccessProcess, userFindByName } from './auth.utility.js';
+import { register } from './auth.register.js';
+import { apiOutput } from '../api.js';
 
 /**
  * OAuth2 Response.

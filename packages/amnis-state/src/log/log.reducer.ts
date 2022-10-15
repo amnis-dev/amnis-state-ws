@@ -1,4 +1,4 @@
-import { logSlice } from './log';
+import { logSlice } from './log.js';
 
 export const reducerMap = {
   [logSlice.name]: logSlice.reducer,

@@ -1,4 +1,4 @@
-import { noteKey, noteCreate, noteBase } from './note';
+import { noteKey, noteCreate, noteBase } from './note.js';
 
 /**
  * ============================================================

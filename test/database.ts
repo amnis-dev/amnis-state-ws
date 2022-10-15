@@ -1,11 +1,11 @@
-// import { uid, entityCreate } from '@amnis/core/core';
-import { samples } from '@amnis/core/test/samples';
-import type { StateCreate } from '@amnis/core/state';
-import type { Database } from '@amnis/db/types';
+// import { uid, entityCreate } from '@amnis/core/core.js';
+import { samples } from '@amnis/core/test/samples.js';
+import type { StateCreate } from '@amnis/core/state/index.js';
+import type { Database } from '@amnis/db/types.js';
 import {
   profileKey, roleKey, userKey,
-} from '@amnis/state/index';
-import { systemInitialize } from '@amnis/state/env.node';
+} from '@amnis/state/index.js';
+import { systemInitialize } from '@amnis/state/env.node/index.js';
 import { Store } from '@reduxjs/toolkit';
 
 export async function serviceSetup(store: Store, database: Database): Promise<StateCreate> {

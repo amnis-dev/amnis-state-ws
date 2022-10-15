@@ -1,6 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { regexUuid } from './regex';
-import type { UID, UIDList, UIDTree } from './types';
+import { regexUuid } from './regex.js';
+import type { UID, UIDList, UIDTree } from './types.js';
 
 /**
  * Create a identifier to another type.

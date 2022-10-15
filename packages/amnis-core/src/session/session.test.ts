@@ -1,6 +1,6 @@
-import { uid } from '../uid';
-import { dateNumeric } from '../core';
-import { sessionKey, sessionCreate } from './session';
+import { uid } from '../uid.js';
+import { dateNumeric } from '../core.js';
+import { sessionKey, sessionCreate } from './session.js';
 
 /**
  * ============================================================

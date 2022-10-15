@@ -1,5 +1,5 @@
-import { entityCreate } from '../entity';
-import type { Role, RoleBase, RoleBaseCreate } from './role.types';
+import { entityCreate } from '../entity/index.js';
+import type { Role, RoleBase, RoleBaseCreate } from './role.types.js';
 
 export const roleKey = 'role';
 

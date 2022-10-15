@@ -4,7 +4,7 @@ import type {
   ApiAuthBodyPkce,
   ApiAuthBodyRenew,
   ApiAuthBodyVerify,
-} from './auth.types';
+} from './auth.types.js';
 
 export interface ApiAuthBodies {
   login?: ApiAuthBodyLogin;

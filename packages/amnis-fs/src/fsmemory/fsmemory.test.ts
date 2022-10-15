@@ -1,9 +1,9 @@
 import stream from 'node:stream';
 import ffmpeg from 'fluent-ffmpeg';
-import type { UID } from '@amnis/core/types';
-import type { Image } from '@amnis/core/image/index';
-import { uid } from '@amnis/core/uid';
-import { fsmemory } from './fsmemory';
+import type { UID } from '@amnis/core/types.js';
+import type { Image } from '@amnis/core/image/index.js';
+import { uid } from '@amnis/core/uid.js';
+import { fsmemory } from './fsmemory.js';
 
 function imageLoad(path: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {

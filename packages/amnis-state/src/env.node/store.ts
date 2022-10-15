@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import nodeSet from './set';
+import nodeSet from './set.js';
 
 export function storeSetup() {
   const rootReducer = combineReducers(nodeSet.reducers);

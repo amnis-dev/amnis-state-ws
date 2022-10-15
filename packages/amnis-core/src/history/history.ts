@@ -1,8 +1,8 @@
-import { uid } from '../uid';
-import { Entity, entityCreate } from '../entity';
-import { StateCreate, StateUpdate } from '../state';
-import { UID } from '../types';
-import type { History, HistoryBase, HistoryBaseCreate } from './history.types';
+import { uid } from '../uid.js';
+import { Entity, entityCreate } from '../entity/index.js';
+import { StateCreate, StateUpdate } from '../state/index.js';
+import { UID } from '../types.js';
+import type { History, HistoryBase, HistoryBaseCreate } from './history.types.js';
 
 export const historyKey = 'history';
 

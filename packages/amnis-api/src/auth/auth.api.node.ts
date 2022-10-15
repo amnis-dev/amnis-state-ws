@@ -1,18 +1,18 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/index.js';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { StateCreate, StateDelete, StateUpdate } from '@amnis/core/state';
-import { apiConfig } from '../config';
+import { StateCreate, StateDelete, StateUpdate } from '@amnis/core/state/index.js';
+import { apiConfig } from '../config.js';
 import {
   apiQueries,
-} from './auth.queries';
-import { ApiJSON } from '../types';
+} from './auth.queries.js';
+import { ApiJSON } from '../types.js';
 import {
   ApiAuthBodyLogin,
   ApiAuthBodyLogout,
   ApiAuthBodyPkce,
   ApiAuthBodyRenew,
   ApiAuthBodyVerify,
-} from './auth.types';
+} from './auth.types.js';
 
 global.Headers = Headers;
 global.Request = Request;

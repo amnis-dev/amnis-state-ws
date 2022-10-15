@@ -2,10 +2,10 @@ import {
   serviceInitialState,
   serviceSelectors,
   serviceActions,
-} from './service';
-import { serviceDefault } from './service.default';
+} from './service.js';
+import { serviceDefault } from './service.default.js';
 
-import { serviceStoreSetup } from './service.store';
+import { serviceStoreSetup } from './service.store.js';
 
 /**
  * ============================================================

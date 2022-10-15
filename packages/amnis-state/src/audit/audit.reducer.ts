@@ -1,4 +1,4 @@
-import { auditSlice } from './audit';
+import { auditSlice } from './audit.js';
 
 export const reducerMap = {
   [auditSlice.name]: auditSlice.reducer,

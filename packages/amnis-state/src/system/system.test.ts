@@ -2,10 +2,10 @@ import {
   systemInitialState,
   systemSelectors,
   systemActions,
-} from './system';
-import { systemDefault } from './system.default';
+} from './system.js';
+import { systemDefault } from './system.default.js';
 
-import { systemStoreSetup } from './system.store';
+import { systemStoreSetup } from './system.store.js';
 
 /**
  * ============================================================

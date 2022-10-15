@@ -1,20 +1,20 @@
 import {
   storeSetup, books, bookKey,
-} from '@amnis/core/test/book.store';
+} from '@amnis/core/test/book.store.js';
 import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
-import { memory, memoryClear } from '@amnis/db/memory';
-import { dateNumeric } from '@amnis/core/core';
-import { uid } from '@amnis/core/uid';
-import type { StateCreate } from '@amnis/core/state';
-import type { JWTEncoded } from '@amnis/core/token';
-import { validatorsSetup } from '@amnis/api/validators';
-import { apiIO } from '@amnis/api/api.io.node';
+import { memory, memoryClear } from '@amnis/db/memory/index.js';
+import { dateNumeric } from '@amnis/core/core.js';
+import { uid } from '@amnis/core/uid.js';
+import type { StateCreate } from '@amnis/core/state/index.js';
+import type { JWTEncoded } from '@amnis/core/token/index.js';
+import { validatorsSetup } from '@amnis/api/validators.js';
+import { apiIO } from '@amnis/api/api.io.node.js';
 
-import { jwtEncode } from '@amnis/auth/token';
-import { historyKey } from '@amnis/core/history';
-import type { ApiInput } from '../types';
-import { apiCrudProcess } from './crud.process';
+import { jwtEncode } from '@amnis/auth/token.js';
+import { historyKey } from '@amnis/core/history/index.js';
+import type { ApiInput } from '../types.js';
+import { apiCrudProcess } from './crud.process.js';
 
 const appStore = storeSetup();
 

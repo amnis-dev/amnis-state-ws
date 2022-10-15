@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './website.reducer';
+import { reducerMap, reducerMiddleware } from './website.reducer.js';
 
 export function websiteStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

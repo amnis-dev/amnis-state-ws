@@ -4,13 +4,13 @@ import type {
   StateCreate,
   StateUpdate,
   StateQuery,
-} from '@amnis/core/state';
+} from '@amnis/core/state/index.js';
 import type {
   ApiIO,
   ApiProcess,
   ApiProcesses,
   ApiQuery,
-} from '../types';
+} from '../types.js';
 
 /**
  * API object containing request queries.

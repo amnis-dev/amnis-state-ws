@@ -1,8 +1,8 @@
 import {
   tokenInitialState,
-} from './token';
+} from './token.js';
 
-import { tokenStoreSetup } from './token.store';
+import { tokenStoreSetup } from './token.store.js';
 
 /**
  * ============================================================

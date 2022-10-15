@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './locale.reducer';
+import { reducerMap, reducerMiddleware } from './locale.reducer.js';
 
 export function localeStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

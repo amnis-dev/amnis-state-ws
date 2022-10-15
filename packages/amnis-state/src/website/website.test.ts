@@ -2,10 +2,10 @@ import {
   websiteInitialState,
   websiteSelectors,
   websiteActions,
-} from './website';
-import { websiteDefault } from './website.default';
+} from './website.js';
+import { websiteDefault } from './website.default.js';
 
-import { websiteStoreSetup } from './website.store';
+import { websiteStoreSetup } from './website.store.js';
 
 /**
  * ============================================================

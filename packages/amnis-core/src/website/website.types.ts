@@ -1,8 +1,8 @@
-import type { UID, SURL, UIDTree } from '../types';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
-import type { Image } from '../image/image.types';
-import type { Contact } from '../contact';
-import type { Route } from '../route';
+import type { UID, SURL, UIDTree } from '../types.js';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types.js';
+import type { Image } from '../image/image.types.js';
+import type { Contact } from '../contact/index.js';
+import type { Route } from '../route/index.js';
 
 /**
  * Types of social networks available.

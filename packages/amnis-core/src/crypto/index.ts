@@ -1,2 +1,2 @@
-export * from './crypto.types';
-export * from './crypto';
+export * from './crypto.types.js';
+export * from './crypto.js';

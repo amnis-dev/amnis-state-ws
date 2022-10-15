@@ -1,15 +1,15 @@
 import {
   dateNumeric, surl,
-} from '@amnis/core/core';
-import { uid } from '@amnis/core/uid';
-import { JWTDecoded } from '@amnis/core/token';
-import { Session } from '@amnis/core/session';
-import { entityCreate } from '@amnis/core/entity';
+} from '@amnis/core/core.js';
+import { uid } from '@amnis/core/uid.js';
+import { JWTDecoded } from '@amnis/core/token/index.js';
+import { Session } from '@amnis/core/session/index.js';
+import { entityCreate } from '@amnis/core/entity/index.js';
 
-import { passCompare, passCreate } from './pass';
-import { sessionEncode, sessionVerify } from './session';
-import { jwtDecode, jwtEncode, jwtVerify } from './token';
-import { generateRsa } from './rsa';
+import { passCompare, passCreate } from './pass.js';
+import { sessionEncode, sessionVerify } from './session.js';
+import { jwtDecode, jwtEncode, jwtVerify } from './token.js';
+import { generateRsa } from './rsa.js';
 
 const SECRET_TEST = 'super-secret-code-123456789';
 

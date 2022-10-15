@@ -1,12 +1,12 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import { Result } from '@amnis/core/types';
+import { Result } from '@amnis/core/types.js';
 import type {
   ApiProcess,
   ApiProcesses,
   ApiQuery,
-} from '../types';
+} from '../types.js';
 
 /**
  * My Endpoint requestType

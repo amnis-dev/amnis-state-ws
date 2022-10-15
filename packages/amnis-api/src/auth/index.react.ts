@@ -1,2 +1,2 @@
-export * from './auth.types';
-export * from './auth.api.react';
+export * from './auth.types.js';
+export * from './auth.api.react.js';

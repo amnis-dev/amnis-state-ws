@@ -1,7 +1,7 @@
-import type { Session } from '@amnis/core/session';
-import type { JWTEncoded } from '@amnis/core/token';
+import type { Session } from '@amnis/core/session/index.js';
+import type { JWTEncoded } from '@amnis/core/token/index.js';
 import jwt from 'jsonwebtoken';
-import { cryptConfig } from './config';
+import { cryptConfig } from './config.js';
 
 // const SESSION_COOKIE_NAME = 'session';
 // const MAX_AGE = 60 * 60 * 24 * 7; // 1 week

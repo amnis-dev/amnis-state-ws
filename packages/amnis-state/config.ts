@@ -1,4 +1,4 @@
-import { apiConfigure, ApiConfig } from '@amnis/api/config';
+import { apiConfigure, ApiConfig } from '@amnis/api/config.js';
 
 export type StateConfig = ApiConfig;
 

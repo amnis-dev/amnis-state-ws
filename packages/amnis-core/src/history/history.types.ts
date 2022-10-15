@@ -1,6 +1,6 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { StateUpdateEntity } from '../state';
-import { UID } from '../types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import type { StateUpdateEntity } from '../state/index.js';
+import { UID } from '../types.js';
 
 /**
  * Historical updates to data.

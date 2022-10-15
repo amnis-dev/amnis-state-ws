@@ -1,2 +1,2 @@
-export * from './crud.types';
-export * from './crud.api.react';
+export * from './crud.types.js';
+export * from './crud.api.react.js';

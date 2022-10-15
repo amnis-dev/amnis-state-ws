@@ -1,4 +1,4 @@
-import { roleSlice } from './role';
+import { roleSlice } from './role.js';
 
 export const reducerMap = {
   [roleSlice.name]: roleSlice.reducer,

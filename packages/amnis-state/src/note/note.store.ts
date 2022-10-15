@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './note.reducer';
+import { reducerMap, reducerMiddleware } from './note.reducer.js';
 
 export function noteStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

@@ -1,5 +1,5 @@
-import { uid } from '../uid';
-import { systemKey, systemCreate } from './system';
+import { uid } from '../uid.js';
+import { systemKey, systemCreate } from './system.js';
 
 /**
  * ============================================================

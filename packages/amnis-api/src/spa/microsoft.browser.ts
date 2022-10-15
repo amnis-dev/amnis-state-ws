@@ -6,10 +6,10 @@ import {
   pkceGetAuthPlatform,
   pkceCreateChallenge,
   pkceGetVerifier,
-} from '@amnis/auth/pkce.browser';
+} from '@amnis/auth/pkce.browser.js';
 import {
   apiAuth,
-} from '../auth/auth.api.react';
+} from '../auth/auth.api.node.js';
 
 export interface PlatformMicrosoftConfig {
   authorizeEp: string;

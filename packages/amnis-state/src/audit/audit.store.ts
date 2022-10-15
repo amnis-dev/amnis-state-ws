@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './audit.reducer';
+import { reducerMap, reducerMiddleware } from './audit.reducer.js';
 
 export function auditStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

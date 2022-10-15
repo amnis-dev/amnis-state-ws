@@ -1,8 +1,8 @@
-import { uidList } from '@amnis/core/uid';
+import { uidList } from '@amnis/core/uid.js';
 import {
   books, bookKey,
-} from '@amnis/core/test/book.store';
-import { memory, memoryClear } from './memory';
+} from '@amnis/core/test/book.store.js';
+import { memory, memoryClear } from './memory.js';
 
 /**
  * Clear memory storage after each run.

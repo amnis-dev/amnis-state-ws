@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
 } from '@reduxjs/toolkit';
-import { Token, tokenKey } from '@amnis/core/token';
-import { apiAuth } from '@amnis/api/auth/auth.api.browser';
+import { Token, tokenKey } from '@amnis/core/token/index.js';
+import { apiAuth } from '@amnis/api/auth/auth.api.browser.js';
 
-import type { TokenMeta } from './token.types';
+import type { TokenMeta } from './token.types.js';
 
 /**
  * RTK token adapter.

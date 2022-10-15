@@ -1,5 +1,5 @@
-import type { Meta } from '@amnis/core/entity';
-import type { History } from '@amnis/core/history';
+import type { Meta } from '@amnis/core/entity/index.js';
+import type { History } from '@amnis/core/history/index.js';
 
 /**
  * History collection meta data.

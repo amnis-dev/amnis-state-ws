@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
-import type { Role } from '../role';
-import type { UID, DateNumeric } from '../types';
+import type { Role } from '../role/index.js';
+import type { UID, DateNumeric } from '../types.js';
 
 /**
  * Unique identifier symbol for a token string.

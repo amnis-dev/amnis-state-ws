@@ -1,4 +1,4 @@
-import { sessionSlice } from './session';
+import { sessionSlice } from './session.js';
 
 export const reducerMap = {
   [sessionSlice.name]: sessionSlice.reducer,

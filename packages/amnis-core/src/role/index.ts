@@ -1,2 +1,2 @@
-export * from './role.types';
-export * from './role';
+export * from './role.types.js';
+export * from './role.js';

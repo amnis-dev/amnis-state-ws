@@ -1,8 +1,8 @@
 /* eslint-disable no-bitwise */
 import {
   Entity,
-} from '../entity';
-import type { DateNumeric } from '../types';
+} from '../entity/index.js';
+import type { DateNumeric } from '../types.js';
 import type {
   TokenString,
   Token,
@@ -10,8 +10,8 @@ import type {
   TokenType,
   JWTEncoded,
   JWTDecoded,
-} from './token.types';
-import type { Log } from '../log';
+} from './token.types.js';
+import type { Log } from '../log/index.js';
 
 export const tokenKey = 'token';
 

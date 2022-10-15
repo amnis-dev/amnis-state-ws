@@ -1,4 +1,4 @@
-import { cryptoKey, cryptoCreate } from './crypto';
+import { cryptoKey, cryptoCreate } from './crypto.js';
 
 /**
  * ============================================================

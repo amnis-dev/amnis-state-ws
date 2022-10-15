@@ -1,4 +1,4 @@
-import type { Config } from '@jest/types';
+import type { Config } from '@jest.types.js';
 
 const config: Config.InitialOptions = {
   verbose: true,

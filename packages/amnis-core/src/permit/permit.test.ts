@@ -1,5 +1,5 @@
-import { uid } from '../uid';
-import { permitKey, permitCreate } from './permit';
+import { uid } from '../uid.js';
+import { permitKey, permitCreate } from './permit.js';
 
 /**
  * ============================================================

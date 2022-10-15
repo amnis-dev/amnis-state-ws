@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
-import type { Entity } from '../entity';
-import type { State, StateCreate, StateQuery } from './state.types';
+import type { Entity } from '../entity/index.js';
+import type { State, StateCreate, StateQuery } from './state.types.js';
 
 function stateQueryReferenceMutate(
   stateQuery: StateQuery,

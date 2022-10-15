@@ -1,4 +1,4 @@
-import { JWTEncoded } from '@amnis/core/token';
+import { JWTEncoded } from '@amnis/core/token/index.js';
 
 /**
  * Gets a JWT token from an authorization header

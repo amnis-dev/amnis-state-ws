@@ -1,6 +1,6 @@
-import type { UID } from '../types';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types';
-import type { User } from '../user/user.types';
+import type { UID } from '../types.js';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/entity.types.js';
+import type { User } from '../user/user.types.js';
 
 /**
  * Log levels.

@@ -1,17 +1,17 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { StateCreate, StateDelete, StateUpdate } from '@amnis/core/state';
-import { apiConfig } from '../config';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react/index.js';
+import { StateCreate, StateDelete, StateUpdate } from '@amnis/core/state/index.js';
+import { apiConfig } from '../config.js';
 import {
   apiQueries,
-} from './auth.queries';
-import { ApiJSON } from '../types';
+} from './auth.queries.js';
+import { ApiJSON } from '../types.js';
 import {
   ApiAuthBodyLogin,
   ApiAuthBodyLogout,
   ApiAuthBodyPkce,
   ApiAuthBodyRenew,
   ApiAuthBodyVerify,
-} from './auth.types';
+} from './auth.types.js';
 
 const queries = apiQueries();
 

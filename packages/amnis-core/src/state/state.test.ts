@@ -1,10 +1,10 @@
-import { uid } from '../uid';
-import { roleKey } from '../role';
-import { systemCreate, systemKey } from '../system';
-import { websiteKey } from '../website';
+import { uid } from '../uid.js';
+import { roleKey } from '../role/index.js';
+import { systemCreate, systemKey } from '../system/index.js';
+import { websiteKey } from '../website/index.js';
 
-import { stateReferenceQuery, stateToCreate } from './state';
-import { StateCreate, StateQuery } from './state.types';
+import { stateReferenceQuery, stateToCreate } from './state.js';
+import { StateCreate, StateQuery } from './state.types.js';
 
 const system = systemCreate({
   name: 'Query System',

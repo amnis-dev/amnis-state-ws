@@ -1,4 +1,4 @@
-import { sha256, cryptoRandomString } from './crypto';
+import { sha256, cryptoRandomString } from './crypto.js';
 
 // Base64-urlencodes the input string
 export function base64urlencode(value: ArrayBuffer) {

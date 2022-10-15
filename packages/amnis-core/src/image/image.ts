@@ -1,6 +1,6 @@
-import type { Image, ImageBase, ImageBaseCreate } from './image.types';
-import type { Entity } from '../entity';
-import { fileCreate } from '../file';
+import type { Image, ImageBase, ImageBaseCreate } from './image.types.js';
+import type { Entity } from '../entity/index.js';
+import { fileCreate } from '../file/index.js';
 
 export const imageKey = 'image';
 

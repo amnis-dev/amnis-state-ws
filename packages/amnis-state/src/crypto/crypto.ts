@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Crypto, cryptoKey } from '@amnis/core/crypto';
-import type { CryptoMeta } from './crypto.types';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Crypto, cryptoKey } from '@amnis/core/crypto/index.js';
+import type { CryptoMeta } from './crypto.types.js';
 
 /**
  * RTK crypto adapter.

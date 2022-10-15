@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { AnyValidateFunction } from 'ajv/dist/types';
-import type { ApiOutput } from './types';
+import type { ApiOutput } from './types.js';
 
 export function apiOutput<T = any>(): ApiOutput<T> {
   return {

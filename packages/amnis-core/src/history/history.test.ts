@@ -1,9 +1,9 @@
-import { uid } from '../uid';
-import { profileKey } from '../profile';
-import type { StateUpdate } from '../state';
+import { uid } from '../uid.js';
+import { profileKey } from '../profile/index.js';
+import type { StateUpdate } from '../state/index.js';
 import {
   historyKey, historyCreate, historyBase, historyMake,
-} from './history';
+} from './history.js';
 
 /**
  * ============================================================

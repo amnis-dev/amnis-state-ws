@@ -3,13 +3,19 @@
   "compilerOptions": {
     "baseUrl": "./",
     "types": ["node", "jest"],
-    "lib": ["esnext", "dom"],
+    "lib": ["es2022", "dom"],
+    "module": "ES2022",
+    "moduleResolution": "Node16",
     "paths": {
       "@amnis/core/*": ["./packages/amnis-core/src/*"],
       "@amnis/db/*": ["./packages/amnis-db/src/*"],
       "@amnis/auth/*": ["./packages/amnis-auth/src/*"],
       "@amnis/api/*": ["./packages/amnis-api/src/*"],
-      "@amnis/state/*": ["./packages/amnis-state/src/*"]
+      "@amnis/state/*": ["./packages/amnis-state/src/*"],
+      "@reduxjs/toolkit/query": ["./node_modules/@reduxjs/toolkit/dist/query/index.d.ts"],
+      "@reduxjs/toolkit/query/*": ["./node_modules/@reduxjs/toolkit/dist/query/*"],
+      "@reduxjs/toolkit/query/react": ["./node_modules/@reduxjs/toolkit/dist/query/react/index.d.ts"],
+      "@reduxjs/toolkit/query/react/*": ["./node_modules/@reduxjs/toolkit/dist/query/react/*"],
     }
   },
   "include": ["./packages/**/*.ts*", "./test/**/*.ts*"]

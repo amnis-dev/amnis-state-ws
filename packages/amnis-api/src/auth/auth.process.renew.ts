@@ -1,16 +1,16 @@
-import { cryptConfig } from '@amnis/auth/config';
-import { sessionEncode } from '@amnis/auth/session';
-import { dateNumeric } from '@amnis/core/core';
-import { profileKey } from '@amnis/core/profile';
-import { sessionCreate, sessionKey } from '@amnis/core/session';
-import type { StateCreate } from '@amnis/core/state';
-import { userKey } from '@amnis/core/user';
-import { apiOutput } from '../api';
-import { ApiProcess } from '../types';
-import { ApiAuthIORenew } from './auth.types';
-import { profileFetch, tokenGenerate, userFindById } from './auth.utility';
-import { mwSession } from '../mw.session';
-import { mwValidate } from '../mw.validate';
+import { cryptConfig } from '@amnis/auth/config.js';
+import { sessionEncode } from '@amnis/auth/session.js';
+import { dateNumeric } from '@amnis/core/core.js';
+import { profileKey } from '@amnis/core/profile/index.js';
+import { sessionCreate, sessionKey } from '@amnis/core/session/index.js';
+import type { StateCreate } from '@amnis/core/state/index.js';
+import { userKey } from '@amnis/core/user/index.js';
+import { apiOutput } from '../api.js';
+import { ApiProcess } from '../types.js';
+import { ApiAuthIORenew } from './auth.types.js';
+import { profileFetch, tokenGenerate, userFindById } from './auth.utility.js';
+import { mwSession } from '../mw.session.js';
+import { mwValidate } from '../mw.validate.js';
 
 /**
  * Renews a session holder's session and access tokens.

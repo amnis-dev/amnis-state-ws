@@ -1,8 +1,8 @@
-import { jwtVerify } from '@amnis/auth/token';
-import { apiOutput } from '../api';
-import { mwValidate } from '../mw.validate';
-import { ApiProcess } from '../types';
-import { ApiAuthIOVerify } from './auth.types';
+import { jwtVerify } from '@amnis/auth/token.js';
+import { apiOutput } from '../api.js';
+import { mwValidate } from '../mw.validate.js';
+import { ApiProcess } from '../types.js';
+import { ApiAuthIOVerify } from './auth.types.js';
 
 /**
  * Verifies the validity of an access token.

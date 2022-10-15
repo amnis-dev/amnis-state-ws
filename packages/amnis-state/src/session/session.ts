@@ -1,13 +1,13 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
 } from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Session, sessionKey } from '@amnis/core/session';
-import { apiAuth } from '@amnis/api/auth/auth.api.browser';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Session, sessionKey } from '@amnis/core/session/index.js';
+import { apiAuth } from '@amnis/api/auth/auth.api.browser.js';
 import type {
   SessionMeta,
-} from './session.types';
+} from './session.types.js';
 
 /**
  * RTK session adapter.

@@ -1,7 +1,7 @@
-import { apiValidate } from './api';
+import { apiValidate } from './api.js';
 import type {
   ApiMiddleware,
-} from './types';
+} from './types.js';
 
 /**
  * Middleware that validates the input body with the context validator.

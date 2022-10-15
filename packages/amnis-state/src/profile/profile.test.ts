@@ -2,10 +2,10 @@ import {
   profileInitialState,
   profileSelectors,
   profileActions,
-} from './profile';
-import { profileDefault } from './profile.default';
+} from './profile.js';
+import { profileDefault } from './profile.default.js';
 
-import { profileStoreSetup } from './profile.store';
+import { profileStoreSetup } from './profile.store.js';
 
 /**
  * ============================================================

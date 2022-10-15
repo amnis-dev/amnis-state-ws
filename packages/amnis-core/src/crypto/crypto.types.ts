@@ -1,4 +1,4 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
 
 /**
  * Crypto entity

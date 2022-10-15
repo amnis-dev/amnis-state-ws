@@ -2,10 +2,10 @@ import {
   roleInitialState,
   roleSelectors,
   roleActions,
-} from './role';
-import { roleDefault } from './role.default';
+} from './role.js';
+import { roleDefault } from './role.default.js';
 
-import { roleStoreSetup } from './role.store';
+import { roleStoreSetup } from './role.store.js';
 
 /**
  * ============================================================

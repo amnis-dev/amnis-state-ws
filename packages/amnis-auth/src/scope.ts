@@ -1,5 +1,5 @@
-import { Grant, Task } from '@amnis/core/grant';
-import { AuthScope } from './types';
+import { Grant, Task } from '@amnis/core/grant/index.js';
+import { AuthScope } from './types.js';
 
 /**
  * Creates a auth scope object from an array of grants.

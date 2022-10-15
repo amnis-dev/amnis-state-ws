@@ -1,6 +1,6 @@
-import { uidTree } from '../uid';
-import { entityCreate } from '../entity';
-import type { Website, WebsiteBase, WebsiteBaseCreate } from './website.types';
+import { uidTree } from '../uid.js';
+import { entityCreate } from '../entity/index.js';
+import type { Website, WebsiteBase, WebsiteBaseCreate } from './website.types.js';
 
 export const websiteKey = 'website';
 

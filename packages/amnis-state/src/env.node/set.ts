@@ -1,7 +1,7 @@
-import { apiAuth } from '@amnis/api/auth/auth.api.node';
-import { apiCrud } from '@amnis/api/crud/crud.api.node';
+import { apiAuth } from '@amnis/api/auth/auth.api.node.js';
+import { apiCrud } from '@amnis/api/crud/crud.api.node.js';
 
-import baseSet from '../set';
+import baseSet from '../set.js';
 
 const reducers = {
   [apiAuth.reducerPath]: apiAuth.reducer,

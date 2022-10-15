@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './crypto.reducer';
+import { reducerMap, reducerMiddleware } from './crypto.reducer.js';
 
 export function cryptoStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

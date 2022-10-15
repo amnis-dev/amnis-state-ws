@@ -2,7 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import type {
   StateCreate,
   StateDelete,
-} from './state';
+} from './state/index.js';
 
 export const coreActions = {
   /**

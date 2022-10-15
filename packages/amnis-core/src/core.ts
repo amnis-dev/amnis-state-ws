@@ -4,7 +4,7 @@ import type {
   DateJSON,
   DateNumeric,
   SURL,
-} from './types';
+} from './types.js';
 
 /**
  * Function for no operation.

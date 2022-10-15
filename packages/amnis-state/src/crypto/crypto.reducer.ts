@@ -1,4 +1,4 @@
-import { cryptoSlice } from './crypto';
+import { cryptoSlice } from './crypto.js';
 
 export const reducerMap = {
   [cryptoSlice.name]: cryptoSlice.reducer,

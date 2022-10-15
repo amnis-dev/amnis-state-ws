@@ -1,8 +1,8 @@
-import { passCompare } from '@amnis/auth/pass';
-import { mwValidate } from '../mw.validate';
-import { ApiProcess } from '../types';
-import { ApiAuthIOLogin } from './auth.types';
-import { userFindByName, outputBadCredentials, loginSuccessProcess } from './auth.utility';
+import { passCompare } from '@amnis/auth/pass.js';
+import { mwValidate } from '../mw.validate.js';
+import { ApiProcess } from '../types.js';
+import { ApiAuthIOLogin } from './auth.types.js';
+import { userFindByName, outputBadCredentials, loginSuccessProcess } from './auth.utility.js';
 
 const process: ApiProcess<ApiAuthIOLogin> = (context) => (
   async (input) => {

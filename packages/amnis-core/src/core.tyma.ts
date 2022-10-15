@@ -1,6 +1,6 @@
-import {
+import type {
   StateCreate, StateUpdate, StateDelete, StateQuery,
-} from './state';
+} from './state/index.js';
 
 export interface Core {
   insert?: StateCreate,

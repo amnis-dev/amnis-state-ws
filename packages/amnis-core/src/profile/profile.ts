@@ -1,8 +1,8 @@
-import { uid } from '../uid';
-import { entityCreate } from '../entity/entity';
-import type { Entity } from '../entity/entity.types';
-import type { Profile, ProfileBase, ProfileBaseCreate } from './profile.types';
-import { userKey } from '../user/user';
+import { uid } from '../uid.js';
+import { entityCreate } from '../entity/entity.js';
+import type { Entity } from '../entity/entity.types.js';
+import type { Profile, ProfileBase, ProfileBaseCreate } from './profile.types.js';
+import { userKey } from '../user/user.js';
 
 export const profileKey = 'profile';
 

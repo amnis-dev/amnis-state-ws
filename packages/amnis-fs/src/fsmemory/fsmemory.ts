@@ -1,9 +1,9 @@
 // import { fileTypeFromBuffer } from 'file-type';
-import sizeOf from 'image-size';
-import { imageCreate } from '@amnis/core/image/index';
-import type { FileSystem } from '../types';
-import { fsConfig } from '../config';
-import { isWebp } from '../utility';
+import { imageSize } from 'image-size';
+import { imageCreate } from '@amnis/core/image/index.js';
+import type { FileSystem } from '../types.js';
+import { fsConfig } from '../config.js';
+import { isWebp } from '../utility.js';
 
 const storage: Record<string, Buffer> = {};
 
@@ -30,7 +30,7 @@ export const fsmemory: FileSystem = {
      * Get the dimensions of the image.
      * Images can be no greater than the configured amount.
      */
-    const fileDimensions = await sizeOf(buffer);
+    const fileDimensions = await imageSize(buffer);
 
     if (
       !fileDimensions.width

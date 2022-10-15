@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
 } from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Website, websiteKey } from '@amnis/core/website';
-import type { WebsiteMeta } from './website.types';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Website, websiteKey } from '@amnis/core/website/index.js';
+import type { WebsiteMeta } from './website.types.js';
 
 /**
  * RTK website adapter.
