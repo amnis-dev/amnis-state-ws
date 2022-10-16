@@ -5,7 +5,7 @@ import { selectors } from '@amnis/core/selectors.js';
 import {
   stateScopeCreate, StateCreate, StateQuery, stateReferenceQuery,
 } from '@amnis/core/state/index.js';
-import type { Database } from '@amnis/core/database.types.js';
+import type { Database } from '@amnis/core/db.types.js';
 import type { StateScope } from '@amnis/core/state/index.js';
 import type{ UID } from '@amnis/core/types.js';
 import type { ApiProcess } from '../types.js';

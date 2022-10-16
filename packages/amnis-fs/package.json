@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "@amnis/core": "0.4.3",
-    "@amnis/auth": "0.4.3",
-    "image-size": "^1.0.2"
+    "@amnis/auth": "0.4.3"
   }
 }

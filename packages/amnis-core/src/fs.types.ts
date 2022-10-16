@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Image } from '@amnis/core/image/index.js';
-import type { UID } from '@amnis/core/types.js';
+import type { Image } from './image/index.js';
+import type { UID } from './types.js';
 
 /**
  * Method for saving data.

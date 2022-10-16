@@ -4,7 +4,7 @@ import type { DateJSON } from '@amnis/core/types.js';
 import type { JWTDecoded, JWTEncoded, Token } from '@amnis/core/token/index.js';
 import type { LogBaseCreate } from '@amnis/core/log/index.js';
 
-import type { Database } from '@amnis/core/database.types.js';
+import type { Database } from '@amnis/core/db.types.js';
 import type { Store } from '@reduxjs/toolkit/index.js';
 import type { AnyValidateFunction } from 'ajv/dist/types';
 import type { Session } from '@amnis/core/session/index.js';
