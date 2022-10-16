@@ -2,10 +2,11 @@
 import { authwall } from '@amnis/auth/authwall.js';
 import { Grant, Task } from '@amnis/core/grant/index.js';
 import { selectors } from '@amnis/core/selectors.js';
-import { authScopeCreate } from '@amnis/auth/scope.js';
-import { StateCreate, StateQuery, stateReferenceQuery } from '@amnis/core/state/index.js';
-import type { Database } from '@amnis/db/types.js';
-import type { AuthScope } from '@amnis/auth/types.js';
+import {
+  stateScopeCreate, StateCreate, StateQuery, stateReferenceQuery,
+} from '@amnis/core/state/index.js';
+import type { Database } from '@amnis/core/database.types.js';
+import type { StateScope } from '@amnis/core/state/index.js';
 import type{ UID } from '@amnis/core/types.js';
 import type { ApiProcess } from '../types.js';
 import { apiOutput } from '../api.js';
@@ -20,7 +21,7 @@ async function readRecursive(
   database: Database,
   grants: Grant[],
   query: StateQuery,
-  authScope: AuthScope | undefined,
+  authScope: StateScope | undefined,
   subject: UID,
   depth: number,
 ): Promise<StateCreate> {
@@ -107,7 +108,7 @@ export const process: ApiProcess<ApiCrudIORead> = (context) => (
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Read);
+    const authScope = jwt.adm === true ? undefined : stateScopeCreate(grants, Task.Read);
 
     /**
      * Build the result based on the query depth.

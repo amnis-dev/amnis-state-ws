@@ -6,7 +6,7 @@ import { selectors } from '@amnis/core/selectors.js';
 import { coreActions } from '@amnis/core/actions.js';
 import { Task } from '@amnis/core/grant/index.js';
 import { authwall } from '@amnis/auth/authwall.js';
-import { authScopeCreate } from '@amnis/auth/scope.js';
+import { stateScopeCreate } from '@amnis/core/state/index.js';
 import type { ApiProcess } from '../types.js';
 import type { ApiCrudIODelete } from './crud.types.js';
 import { apiOutput } from '../api.js';
@@ -39,7 +39,7 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt?.adm === true ? undefined : authScopeCreate(grants, Task.Update);
+    const authScope = jwt?.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
 
     const result = await database.delete(
       stateFinal,

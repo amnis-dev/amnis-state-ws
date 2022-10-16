@@ -4,7 +4,7 @@ import { System } from '@amnis/core/system/index.js';
 import { profileCreate } from '@amnis/core/profile/index.js';
 import { userCheck, userCreate } from '@amnis/core/user/index.js';
 import { sessionEncode } from '@amnis/auth/session.js';
-import type { Database } from '@amnis/db/types.js';
+import type { Database } from '@amnis/core/database.types.js';
 import type { LogBaseCreate } from '@amnis/core/log/index.js';
 
 import { apiOutput } from '../api.js';

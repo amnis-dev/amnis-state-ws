@@ -2,7 +2,7 @@
 import { authwall } from '@amnis/auth/authwall.js';
 import { Task } from '@amnis/core/grant/index.js';
 import { selectors } from '@amnis/core/selectors.js';
-import { authScopeCreate } from '@amnis/auth/scope.js';
+import { stateScopeCreate } from '@amnis/core/state/index.js';
 import { coreActions } from '@amnis/core/actions.js';
 import { entityClean } from '@amnis/core/entity/index.js';
 import { historyKey, historyMake } from '@amnis/core/history/index.js';
@@ -57,7 +57,7 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Update);
+    const authScope = jwt.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
 
     const result = await database.update(
       stateFinal,

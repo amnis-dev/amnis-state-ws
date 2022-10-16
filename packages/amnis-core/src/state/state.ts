@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit/index.js';
 import type { Entity } from '../entity/index.js';
-import type { State, StateCreate, StateQuery } from './state.types.js';
+import type { Grant, Task } from '../grant/index.js';
+import type {
+  State, StateCreate, StateQuery, StateScope,
+} from './state.types.js';
 
 function stateQueryReferenceMutate(
   stateQuery: StateQuery,
@@ -108,4 +111,18 @@ export function stateToCreate(state: State): StateCreate {
   });
 
   return stateCreate;
+}
+
+/**
+ * Creates a auth scope object from an array of grants.
+ */
+export function stateScopeCreate(grants: Grant[], attempt: Task): StateScope {
+  const authScope: StateScope = {};
+  grants.forEach(({ key, scope, task }) => {
+    // eslint-disable-next-line no-bitwise
+    if ((task & attempt) === attempt) {
+      authScope[key] = scope;
+    }
+  });
+  return authScope;
 }

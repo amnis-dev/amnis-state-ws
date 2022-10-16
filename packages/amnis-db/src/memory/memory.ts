@@ -6,7 +6,7 @@ import type {
   StateDelete,
 } from '@amnis/core/state/index.js';
 import type { UID } from '@amnis/core/types.js';
-import type { Database } from '../types.js';
+import type { Database } from '@amnis/core/database.types.js';
 
 /**
  * Storage type.

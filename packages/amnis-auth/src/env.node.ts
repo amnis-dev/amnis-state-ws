@@ -4,6 +4,5 @@ export * from './crypto.js';
 export * from './header.js';
 export * from './pkce.node.js';
 export * from './pass.js';
-export * from './scope.js';
 export * from './token.js';
 export * from './types.js';
