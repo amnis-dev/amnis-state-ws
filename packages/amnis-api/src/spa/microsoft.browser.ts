@@ -1,6 +1,6 @@
-import {
+import type {
   AnyAction, Store,
-} from '@reduxjs/toolkit';
+} from '@reduxjs/toolkit/index.js';
 import {
   pkceSetAuthPlatform,
   pkceGetAuthPlatform,

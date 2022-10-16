@@ -2,7 +2,7 @@ import { coreActions } from '@amnis/core/actions.js';
 import { coreInitialState } from '@amnis/core/initial.js';
 import { StateCreate } from '@amnis/core/state/index.js';
 import type { Database } from '@amnis/db/index.js';
-import type { Store } from '@reduxjs/toolkit';
+import type { Store } from '@reduxjs/toolkit/index.js';
 import { System, systemActions } from '../system/index.js';
 
 /**

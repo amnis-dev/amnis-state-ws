@@ -1,6 +1,6 @@
 import {
   createHash, randomBytes,
-} from 'crypto';
+} from 'node:crypto';
 
 const AUTH_SESSION_SECRET = process.env.AMNIS_AUTH_SESSION_SECRET || createHash('sha256').update(randomBytes(256)).digest('base64').slice(0, 256);
 

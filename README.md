@@ -98,7 +98,7 @@ import { set } from '@amnis/state/env.node';
 /**
  * store.ts
  */
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@amnis/core/rtk.js';
 import { set } from '@amnis/state/env.[runtime]';
 
 /**

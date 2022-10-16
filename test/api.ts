@@ -9,7 +9,7 @@ import { apiCrudProcess } from '@amnis/api/crud/crud.process.js';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock.js';
 
 import { memory } from '@amnis/db/memory/index.js';
-import { Store } from '@reduxjs/toolkit';
+import type { Store } from '@reduxjs/toolkit/index.js';
 import { apiIO } from '@amnis/api/api.io.node.js';
 import { validatorsSetup } from '@amnis/api/validators.js';
 

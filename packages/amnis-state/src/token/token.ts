@@ -1,6 +1,6 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
-} from '@reduxjs/toolkit';
+} from '@amnis/core/rtk.js';
 import { Token, tokenKey } from '@amnis/core/token/index.js';
 import { apiAuth } from '@amnis/api/auth/auth.api.browser.js';
 

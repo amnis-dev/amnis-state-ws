@@ -30,8 +30,7 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "test": "jest"
+    "build": "tsc -p tsconfig.build.json"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"

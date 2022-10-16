@@ -13,12 +13,17 @@
     [
       "module-resolver",
       {
+        "root": ["./"],
         "alias": {
           "@amnis/core": "./packages/amnis-core/src",
           "@amnis/db": "./packages/amnis-db/src",
+          "@amnis/fs": "./packages/amnis-fs/src",
           "@amnis/auth": "./packages/amnis-auth/src",
           "@amnis/api": "./packages/amnis-api/src",
-          "@amnis/state": "./packages/amnis-state/src"
+          "@amnis/state": "./packages/amnis-state/src",
+          "@reduxjs/toolkit": ["./node_modules/@reduxjs/toolkit/dist"],
+          "@reduxjs/toolkit/query": ["./node_modules/@reduxjs/toolkit/dist/query"],
+          "@reduxjs/toolkit/query/react": ["./node_modules/@reduxjs/toolkit/dist/query/react"]
         }
       }
     ]

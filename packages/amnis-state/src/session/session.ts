@@ -1,6 +1,6 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
-} from '@reduxjs/toolkit';
+} from '@amnis/core/rtk.js';
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
 import { apiExtraReducers } from '@amnis/api/reducers.js';
 import { Session, sessionKey } from '@amnis/core/session/index.js';

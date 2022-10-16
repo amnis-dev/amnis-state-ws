@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
+import type {
   ActionReducerMapBuilder,
   EntityAdapter,
   PayloadAction,
-} from '@reduxjs/toolkit';
+} from '@reduxjs/toolkit/index.js';
 import {
   entityCreate,
 } from './entity/entity.js';

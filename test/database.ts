@@ -6,7 +6,7 @@ import {
   profileKey, roleKey, userKey,
 } from '@amnis/state/index.js';
 import { systemInitialize } from '@amnis/state/env.node/index.js';
-import { Store } from '@reduxjs/toolkit';
+import type { Store } from '@reduxjs/toolkit/index.js';
 
 export async function serviceSetup(store: Store, database: Database): Promise<StateCreate> {
   await systemInitialize(store, database, 'Amnis System');

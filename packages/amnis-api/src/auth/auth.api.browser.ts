@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/index.js';
+import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
 import { StateCreate, StateDelete, StateUpdate } from '@amnis/core/state/index.js';
 import { apiConfig } from '../config.js';
 import {

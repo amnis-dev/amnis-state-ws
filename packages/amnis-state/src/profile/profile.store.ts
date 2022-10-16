@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@amnis/core/rtk.js';
 import { reducerMap, reducerMiddleware } from './profile.reducer.js';
 
 export function profileStoreSetup() {

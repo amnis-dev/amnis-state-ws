@@ -6,7 +6,7 @@ import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token/index.js';
 import type { StateCreate } from '@amnis/core/state/index.js';
 
 import { jwtDecode } from '@amnis/auth/token.js';
-import { Store } from '@reduxjs/toolkit';
+import type { Store } from '@reduxjs/toolkit/index.js';
 import { selectors } from '@amnis/core/selectors.js';
 import { System, systemKey } from '@amnis/core/system/index.js';
 import type { ApiAuthBodyPkce } from './auth.types.js';

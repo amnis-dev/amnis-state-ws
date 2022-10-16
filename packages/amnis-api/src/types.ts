@@ -5,7 +5,7 @@ import type { JWTDecoded, JWTEncoded, Token } from '@amnis/core/token/index.js';
 import type { LogBaseCreate } from '@amnis/core/log/index.js';
 
 import type { Database } from '@amnis/db/types.js';
-import type { Store } from '@reduxjs/toolkit';
+import type { Store } from '@reduxjs/toolkit/index.js';
 import type { AnyValidateFunction } from 'ajv/dist/types';
 import type { Session } from '@amnis/core/session/index.js';
 
