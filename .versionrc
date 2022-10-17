@@ -7,32 +7,32 @@
     {
       "filename": "packages/amnis-core/package.json",
       "type": "json",
-      "updater": "scripts/standard-version-updater.js"
+      "updater": "scripts/standard-version-updater.cjs"
     },
     {
       "filename": "packages/amnis-db/package.json",
       "type": "json",
-      "updater": "scripts/standard-version-updater.js"
+      "updater": "scripts/standard-version-updater.cjs"
     },
     {
       "filename": "packages/amnis-fs/package.json",
       "type": "json",
-      "updater": "scripts/standard-version-updater.js"
+      "updater": "scripts/standard-version-updater.cjs"
     },
     {
       "filename": "packages/amnis-auth/package.json",
       "type": "json",
-      "updater": "scripts/standard-version-updater.js"
+      "updater": "scripts/standard-version-updater.cjs"
     },
     {
       "filename": "packages/amnis-api/package.json",
       "type": "json",
-      "updater": "scripts/standard-version-updater.js"
+      "updater": "scripts/standard-version-updater.cjs"
     },
     {
       "filename": "packages/amnis-state/package.json",
       "type": "json",
-      "updater": "scripts/standard-version-updater.js"
+      "updater": "scripts/standard-version-updater.cjs"
     }
   ]
 }
