@@ -9,36 +9,33 @@
     "url": "https://github.com/amnis-dev/amnis-auth"
   },
   "homepage": "https://github.com/amnis-dev/amnis-auth",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib"
-  ],
+  "files": ["dist"],
+  "main": "./dist/index.node.js",
+  "module": "./dist/index.node.mjs",
   "exports": {
+    ".": {
+      "require": "./dist/index.node.js",
+      "import": "./dist/index.node.mjs"
+    },
+    "./browser": {
+      "require": "./dist/index.browser.js",
+      "import": "./dist/index.browser.mjs"
+    },
     "./*": {
-      "default": "./lib/*.js",
-      "import": "./lib/*.js",
-      "require": "./lib/*.js"
+      "import": "./lib/*"
     }
   },
   "typesVersions": {
     ">=3.2": {
       "*": [
-        "./lib/*"
+        "./dist/*"
       ]
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "test": "jest"
+    "build": "rollup --config rollup.config.mjs"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"
-  },
-  "dependencies": {
-    "@amnis/core": "0.4.3",
-    "bcrypt": "^5.0.1",
-    "jsonwebtoken": "^8.5.1"
   }
 }

@@ -9,17 +9,16 @@
     "url": "https://github.com/amnis-dev/amnis-state"
   },
   "homepage": "https://github.com/amnis-dev/amnis-state",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib"
-  ],
+  "files": ["dist"],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
     "./*": {
-      "default": "./lib/*.js",
-      "import": "./lib/*.js",
-      "require": "./lib/*.js"
+      "import": "./lib/*"
     }
   },
   "typesVersions": {
@@ -30,7 +29,9 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json"
+    "build": "yarn build:lib && yarn build:dist",
+    "build:dist": "rollup --config rollup.config.mjs",
+    "build:lib": "tsc -p tsconfig.build.json"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"
