@@ -31,7 +31,8 @@
   "scripts": {
     "build": "yarn build:lib && yarn build:dist",
     "build:dist": "rollup --config rollup.config.mjs",
-    "build:lib": "tsc -p tsconfig.build.json"
+    "build:lib": "tsc -p tsconfig.build.json",
+    "clean": "rimraf ./.rollup.cache ./dist ./lib ./tsconfig.build.tsbuildinfo ./yarn-error.log"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"

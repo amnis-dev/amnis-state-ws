@@ -1,4 +1,3 @@
-import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 /**
@@ -17,13 +16,12 @@ const base = {
     format: 'esm',
   },
   plugins: [
-    resolve(),
     typescript({
       tsconfig: 'tsconfig.build.json',
-      declaration: true,
+      declaration: false,
+      outputToFilesystem: true,
     }),
   ],
-  external: ['@reduxjs/toolkit'],
 };
 
 /**
@@ -63,6 +61,10 @@ rollup.push({
     name: 'amnisCore',
     file: 'dist/index.umd.js',
     format: 'umd',
+    globals: {
+      '@reduxjs/toolkit': 'reduxToolkit',
+      crypto: 'crypto',
+    },
   },
 });
 
