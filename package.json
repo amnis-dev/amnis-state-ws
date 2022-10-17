@@ -14,16 +14,11 @@
     "packages/*"
   ],
   "scripts": {
-    "tsc": "tsc",
+    "build": "lerna run build",
+    "clean": "lerna run clean",
     "release": "standard-version",
     "release:pre": "standard-version --prerelease alpha",
-    "changelog": "lerna changelog",
-    "build": "lerna run build",
     "pub": "npm publish --workspaces --access public",
-    "clean": "yarn clean:dist && yarn clean:ts && yarn clean:rollup",
-    "clean:dist": "rimraf ./**/dist ./**/lib ./**/srv",
-    "clean:ts": "rimraf ./**/*.tsbuildinfo",
-    "clean:rollup": "rimraf ./**/.rollup.cache",
     "lint": "tsc --noEmit && eslint --ext .ts --ext .tsx \"./\"",
     "test": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/",
     "test:core": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-core/",
@@ -43,7 +38,6 @@
     "gen:schema": "ts-node -P scripts/tsconfig.json scripts/schema",
     "gen:validators": "ts-node -P scripts/tsconfig.json scripts/validators",
     "gen:code": "yarn gen:schema && yarn gen:validators",
-    "set:version": "ts-node -P scripts/tsconfig.json scripts/version",
     "delete-node-modules": "npx rimraf ./**/node_modules"
   },
   "devDependencies": {
@@ -53,6 +47,7 @@
     "@babel/preset-env": "^7.18.0",
     "@babel/preset-typescript": "^7.17.12",
     "@reduxjs/toolkit": "^1.8.1",
+    "@rollup/plugin-json": "^5.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-typescript": "^9.0.1",
     "@types/bcrypt": "^5.0.0",

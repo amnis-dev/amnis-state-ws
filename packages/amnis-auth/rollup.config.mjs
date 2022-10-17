@@ -1,3 +1,4 @@
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 /**
@@ -16,13 +17,19 @@ const base = {
     format: 'esm',
   },
   plugins: [
+    resolve(),
     typescript({
       tsconfig: 'tsconfig.build.json',
-      declaration: false,
       outputToFilesystem: true,
     }),
   ],
-  external: ['@reduxjs/toolkit'],
+  external: [
+    /@amnis\/.*/,
+    '@reduxjs/toolkit',
+    'node:crypto',
+    'bcrypt',
+    'jsonwebtoken',
+  ],
 };
 
 /**
@@ -74,20 +81,6 @@ rollup.push({
   output: {
     file: 'dist/index.browser.js',
     format: 'cjs',
-  },
-});
-
-/**
- * Universal Module Definition
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/index.ts',
-  output: {
-    name: 'amnisAuth',
-    file: 'dist/index.umd.js',
-    format: 'umd',
   },
 });
 

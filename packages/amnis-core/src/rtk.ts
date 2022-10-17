@@ -12,6 +12,7 @@ export const {
   isFulfilled,
   combineReducers,
   isAnyOf,
+  nanoid,
 } = rtk;
 
 export default rtk;

@@ -1,45 +1,58 @@
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 /**
- * @type {import('rollup').RollupOptions}
+ * Rollout options.
+ * @type {import('rollup').RollupOptions[]}
  */
-const configEsm = {
+const rollup = [];
+
+/**
+  * @type {import('rollup').RollupOptions}
+  */
+const base = {
   input: 'src/index.ts',
   output: {
     file: 'dist/index.mjs',
     format: 'esm',
   },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
+  plugins: [
+    resolve(),
+    typescript({
+      tsconfig: 'tsconfig.build.json',
+      outputToFilesystem: true,
+    }),
+  ],
+  external: [
+    /@amnis\/.*/,
+    '@reduxjs/toolkit',
+  ],
 };
 
 /**
+ * ECMAScript Module
  * @type {import('rollup').RollupOptions}
  */
-const configCjs = {
+rollup.push({
+  ...base,
+  input: 'src/index.ts',
+  output: {
+    file: 'dist/index.mjs',
+    format: 'esm',
+  },
+});
+
+/**
+ * CommonJS
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
   input: 'src/index.ts',
   output: {
     file: 'dist/index.js',
     format: 'cjs',
   },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
-};
+});
 
-/**
- * @type {import('rollup').RollupOptions}
- */
-const configUmd = {
-  input: 'src/index.ts',
-  output: {
-    file: 'dist/index.umd.js',
-    format: 'umd',
-  },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
-};
-
-export default [configEsm, configCjs, configUmd];
+export default rollup;

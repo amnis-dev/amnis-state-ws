@@ -1,3 +1,4 @@
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 /**
@@ -16,11 +17,15 @@ const base = {
     format: 'esm',
   },
   plugins: [
+    resolve(),
     typescript({
       tsconfig: 'tsconfig.build.json',
-      declaration: false,
       outputToFilesystem: true,
     }),
+  ],
+  external: [
+    /@amnis\/.*/,
+    '@reduxjs/toolkit',
   ],
 };
 
@@ -47,24 +52,6 @@ rollup.push({
   output: {
     file: 'dist/index.js',
     format: 'cjs',
-  },
-});
-
-/**
- * Universal Module Definition
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/index.ts',
-  output: {
-    name: 'amnisCore',
-    file: 'dist/index.umd.js',
-    format: 'umd',
-    globals: {
-      '@reduxjs/toolkit': 'reduxToolkit',
-      crypto: 'crypto',
-    },
   },
 });
 

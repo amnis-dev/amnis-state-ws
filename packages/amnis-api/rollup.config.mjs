@@ -1,73 +1,99 @@
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 /**
+ * Rollout options.
+ * @type {import('rollup').RollupOptions[]}
+ */
+const rollup = [];
+
+/**
+  * @type {import('rollup').RollupOptions}
+  */
+const base = {
+  input: 'src/index.ts',
+  output: {
+    file: 'dist/index.mjs',
+    format: 'esm',
+  },
+  plugins: [
+    resolve(),
+    typescript({
+      tsconfig: 'tsconfig.build.json',
+      outputToFilesystem: true,
+    }),
+  ],
+  external: [
+    /@amnis\/.*/,
+    '@reduxjs/toolkit',
+    'ajv',
+    'cross-fetch',
+  ],
+};
+
+/**
+ * ECMAScript Node Module
  * @type {import('rollup').RollupOptions}
  */
-const configNodeEsm = {
+rollup.push({
+  ...base,
   input: 'src/index.node.ts',
   output: {
     file: 'dist/index.node.mjs',
     format: 'esm',
   },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
-};
+});
 
 /**
+ * ECMAScript Browser Module
  * @type {import('rollup').RollupOptions}
  */
-const configBrowserEsm = {
+rollup.push({
+  ...base,
   input: 'src/index.browser.ts',
   output: {
     file: 'dist/index.browser.mjs',
     format: 'esm',
   },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
-};
+});
 
 /**
+ * ECMAScript React Module
  * @type {import('rollup').RollupOptions}
  */
-const configReactEsm = {
+rollup.push({
+  ...base,
   input: 'src/index.react.ts',
   output: {
     file: 'dist/index.react.mjs',
     format: 'esm',
   },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
-};
+});
 
 /**
+ * CommonJS Node
  * @type {import('rollup').RollupOptions}
  */
-const configCjs = {
-  input: 'src/index.ts',
+rollup.push({
+  ...base,
+  input: 'src/index.node.ts',
   output: {
-    file: 'dist/index.js',
+    file: 'dist/index.node.js',
     format: 'cjs',
   },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
-};
+});
 
 /**
+ * CommonJS Browser
  * @type {import('rollup').RollupOptions}
  */
-const configUmd = {
-  input: 'src/index.ts',
+rollup.push({
+  ...base,
+  input: 'src/index.browser.ts',
   output: {
-    file: 'dist/index.umd.js',
-    format: 'umd',
+    file: 'dist/index.browser.js',
+    format: 'cjs',
   },
-  plugins: [typescript({
-    tsconfig: 'tsconfig.build.json',
-  })],
-};
+});
 
-export default [configNodeEsm, configBrowserEsm, configReactEsm, configCjs, configUmd];
+export default rollup;

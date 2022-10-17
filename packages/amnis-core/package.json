@@ -9,7 +9,7 @@
     "url": "https://github.com/amnis-dev/amnis-state"
   },
   "homepage": "https://github.com/amnis-dev/amnis-state",
-  "files": ["dist"],
+  "files": ["lib", "dist"],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "exports": {

@@ -9,7 +9,7 @@
     "url": "https://github.com/amnis-dev/amnis-auth"
   },
   "homepage": "https://github.com/amnis-dev/amnis-auth",
-  "files": ["dist"],
+  "files": ["lib", "dist"],
   "main": "./dist/index.node.js",
   "module": "./dist/index.node.mjs",
   "exports": {
@@ -40,5 +40,10 @@
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"
+  },
+  "dependencies": {
+    "@amnis/core": "0.4.3",
+    "bcrypt": "^5.0.1",
+    "jsonwebtoken": "^8.5.1"
   }
 }

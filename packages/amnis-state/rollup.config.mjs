@@ -1,4 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
 import typescript from '@rollup/plugin-typescript';
 
 /**
@@ -8,8 +9,8 @@ import typescript from '@rollup/plugin-typescript';
 const rollup = [];
 
 /**
- * @type {import('rollup').RollupOptions}
- */
+  * @type {import('rollup').RollupOptions}
+  */
 const base = {
   input: 'src/index.ts',
   output: {
@@ -18,15 +19,21 @@ const base = {
   },
   plugins: [
     resolve(),
+    json(),
     typescript({
       tsconfig: 'tsconfig.build.json',
+      outputToFilesystem: true,
     }),
   ],
-  external: ['@reduxjs/toolkit'],
+  external: [
+    /@amnis\/.*/,
+    '@reduxjs/toolkit',
+    'bcrypt',
+  ],
 };
 
 /**
- * ESM Node
+ * ECMAScript Node Module
  * @type {import('rollup').RollupOptions}
  */
 rollup.push({
@@ -39,7 +46,7 @@ rollup.push({
 });
 
 /**
- * ESM Browser
+ * ECMAScript Browser Module
  * @type {import('rollup').RollupOptions}
  */
 rollup.push({
@@ -52,7 +59,7 @@ rollup.push({
 });
 
 /**
- * ESM React
+ * ECMAScript React Module
  * @type {import('rollup').RollupOptions}
  */
 rollup.push({
@@ -65,28 +72,41 @@ rollup.push({
 });
 
 /**
- * CommonJS
+ * CommonJS Node
  * @type {import('rollup').RollupOptions}
  */
 rollup.push({
   ...base,
-  input: 'src/index.ts',
+  input: 'src/env.node/index.ts',
   output: {
-    file: 'dist/index.js',
+    file: 'dist/index.node.js',
     format: 'cjs',
   },
 });
 
 /**
- * UMD
+ * CommonJS Browser
  * @type {import('rollup').RollupOptions}
  */
 rollup.push({
   ...base,
-  input: 'src/index.ts',
+  input: 'src/env.browser/index.ts',
   output: {
-    file: 'dist/index.umd.js',
-    format: 'umd',
+    file: 'dist/index.browser.js',
+    format: 'cjs',
+  },
+});
+
+/**
+ * CommonJS React
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/env.react/index.ts',
+  output: {
+    file: 'dist/index.react.js',
+    format: 'cjs',
   },
 });
 

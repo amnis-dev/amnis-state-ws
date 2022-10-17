@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid';
+import { nanoid } from './rtk.js';
 import { regexUuid } from './regex.js';
 import type { UID, UIDList, UIDTree } from './types.js';
 

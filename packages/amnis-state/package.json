@@ -9,19 +9,29 @@
     "url": "https://github.com/amnis-dev/amnis-state"
   },
   "homepage": "https://github.com/amnis-dev/amnis-state",
-  "files": ["dist"],
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "files": ["lib", "dist"],
+  "main": "./dist/index.node.js",
+  "module": "./dist/index.node.mjs",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.node.js",
+      "import": "./dist/index.node.mjs"
+    },
+    "./browser": {
+      "require": "./dist/index.browser.js",
+      "import": "./dist/index.browser.mjs"
+    },
+    "./react": {
+      "import": "./dist/index.react.mjs"
+    },
+    "./*": {
+      "import": "./lib/*"
     }
   },
   "typesVersions": {
     ">=3.2": {
       "*": [
-        "./dist/*"
+        "./lib/*"
       ]
     }
   },
