@@ -41,8 +41,8 @@
     "delete-node-modules": "npx rimraf ./**/node_modules"
   },
   "devDependencies": {
-    "@amnis/eslint-config-node": "^2.0.0",
-    "@amnis/tsconfig-node": "^2.0.0",
+    "@amnis/eslint-config-node": "^2.1.0",
+    "@amnis/tsconfig-node": "^2.1.0",
     "@babel/core": "^7.18.0",
     "@babel/preset-env": "^7.18.0",
     "@babel/preset-typescript": "^7.17.12",

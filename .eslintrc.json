@@ -1,9 +1,3 @@
 {
-  "extends": "@amnis/eslint-config-node",
-  "parserOptions": {
-    "ecmaVersion": 2021
-  },
-  "env": {
-    "es2021": true
-  } 
+  "extends": "@amnis/eslint-config-node"
 }
