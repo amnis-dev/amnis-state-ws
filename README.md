@@ -73,7 +73,7 @@ There are three ways to import the Redux reducers and middlewares based on your 
 Use this import if you are running your project within a browser environment.
 
 ```typescript
-import { set } from '@amnis/state/env.browser.js';
+import { set } from '@amnis/state/browser';
 ```
 
 ### Browser Runtime (with React)
@@ -81,7 +81,7 @@ import { set } from '@amnis/state/env.browser.js';
 Use this import if you are running your project within a browser environment leveraging React components.
 
 ```typescript
-import { set } from '@amnis/state/env.react';
+import { set } from '@amnis/state/react';
 ```
 
 ### Node.js Runtime
@@ -89,7 +89,7 @@ import { set } from '@amnis/state/env.react';
 Use this import if you are running your project within a Node.js environment.
 
 ```typescript
-import { set } from '@amnis/state/env.node';
+import { set } from '@amnis/state/node';
 ```
 
 ### Example: Redux Toolkit Configuration
@@ -98,8 +98,8 @@ import { set } from '@amnis/state/env.node';
 /**
  * store.ts
  */
-import { configureStore, combineReducers } from '@amnis/core/rtk.js';
-import { set } from '@amnis/state/env.[runtime]';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { set } from '@amnis/state/[runtime]';
 
 /**
  * Setup your Redux store.
@@ -120,9 +120,11 @@ export default store;
 
 ## Future Plans
 
-### Pure ESM
+### ECMAScript Modules
 
-This project will be transitioning to [Pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). I'm waiting for [Redux](https://redux.js.org/), [Redux Toolkit](https://redux-toolkit.js.org/), and [Jest](https://jestjs.io/) to fully support it.
+~~This project will be transitioning to [Pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). I'm waiting for [Redux](https://redux.js.org/), [Redux Toolkit](https://redux-toolkit.js.org/), and [Jest](https://jestjs.io/) to fully support it.~~
+
+This effort has been completed. Redux and Jest as of now still don't fully support ECMAScript Modules, but it was still possible to support for this project.
 
 ### Bun Runtime
 
