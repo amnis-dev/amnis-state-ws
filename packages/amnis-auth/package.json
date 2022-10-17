@@ -1,6 +1,6 @@
 {
   "name": "@amnis/auth",
-  "version": "0.4.4-alpha.0",
+  "version": "0.4.4-alpha.1",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -9,7 +9,10 @@
     "url": "https://github.com/amnis-dev/amnis-auth"
   },
   "homepage": "https://github.com/amnis-dev/amnis-auth",
-  "files": ["lib", "dist"],
+  "files": [
+    "lib",
+    "dist"
+  ],
   "main": "./dist/index.node.js",
   "module": "./dist/index.node.mjs",
   "exports": {
@@ -42,7 +45,7 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.4.4-alpha.0",
+    "@amnis/core": "0.4.4-alpha.1",
     "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1"
   }

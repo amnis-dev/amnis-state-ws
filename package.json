@@ -1,11 +1,10 @@
 {
   "name": "@amnis/state-workspace",
-  "version": "0.4.4",
+  "version": "0.4.4-alpha.1",
   "repository": "https://github.com/amnis-dev/amnis-state",
   "author": "Eric Crowell <admin@amnis.dev>",
   "license": "MIT",
   "private": true,
-  "type": "module",
   "exports": {
     "import": "./dist/redux-toolkit.esm.mjs",
     "require": "./dist/index.js"
@@ -17,7 +16,7 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "release": "standard-version",
-    "release:pre": "yarn node --no-warnings --experimental-vm-modules $(yarn bin standard-version --prerelease alpha --dry-run)",
+    "release:pre": "standard-version --prerelease alpha",
     "pub": "npm publish --workspaces --access public",
     "lint": "tsc --noEmit && eslint --ext .ts --ext .tsx \"./\"",
     "test": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/",
