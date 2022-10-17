@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4-alpha.0](https://github.com/amnis-dev/amnis-state/compare/v0.4.3...v0.4.4-alpha.0) (2022-10-17)
+
+
+### Features
+
+* Refactor project to ECMAScript Modules ([#3](https://github.com/amnis-dev/amnis-state/issues/3)) ([ed11b4f](https://github.com/amnis-dev/amnis-state/commit/ed11b4f92881af212281ea504df3111a3f24108a))
+
 ### [0.4.3](https://github.com/amnis-dev/amnis-state/compare/v0.4.2...v0.4.3) (2022-10-15)
 
 
