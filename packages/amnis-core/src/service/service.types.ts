@@ -1,5 +1,5 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import { DateJSON } from '../types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import { DateJSON } from '../types.js';
 
 /**
  * Service entity

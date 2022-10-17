@@ -1,5 +1,5 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import { SURL } from '../types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import { SURL } from '../types.js';
 
 /**
  * Contact entity

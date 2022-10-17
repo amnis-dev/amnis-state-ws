@@ -1,5 +1,5 @@
-import { StateCreate } from '../state';
-import { localeCreate, localeKey, tk } from './locale';
+import type { StateCreate } from '../state/index.js';
+import { localeCreate, localeKey, tk } from './locale.js';
 
 /**
  * English logs.

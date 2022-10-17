@@ -3,11 +3,11 @@ to: "<%= path ? `${path}/${name}/${name}.node.ts` : null %>"
 ---
 import fetch, { Headers, Request } from 'cross-fetch';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
-import { apiBaseUrl } from '../config';
+import { apiBaseUrl } from '../config.js';
 import {
   api<%= Name %>Queries,
 } from './<%= name %>.queries';
-import { ApiJSON, ApiBaseQueryFn } from '../types';
+import { ApiJSON, ApiBaseQueryFn } from '../types.js';
 
 global.Headers = Headers;
 global.Request = Request;

@@ -1,5 +1,5 @@
-import type { Meta } from '@amnis/core/entity';
-import type { Contact } from '@amnis/core/contact';
+import type { Meta } from '@amnis/core/entity/index.js';
+import type { Contact } from '@amnis/core/contact/index.js';
 
 /**
  * Contact collection meta data.

@@ -1,11 +1,11 @@
-import type { StateCreate, StateDelete } from '@amnis/core/state';
-import type { Token } from '@amnis/core/token';
+import type { StateCreate, StateDelete } from '@amnis/core/state/index.js';
+import type { Token } from '@amnis/core/token/index.js';
 import type {
   ApiIO,
   ApiProcess,
   ApiProcesses,
   ApiQuery,
-} from '../types';
+} from '../types.js';
 
 /**
  * Payload for a login request.

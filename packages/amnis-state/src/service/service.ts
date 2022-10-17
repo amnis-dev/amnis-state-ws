@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
-} from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Service, serviceKey } from '@amnis/core/service';
-import type { ServiceMeta } from './service.types';
+} from '@amnis/core/rtk.js';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Service, serviceKey } from '@amnis/core/service/index.js';
+import type { ServiceMeta } from './service.types.js';
 
 /**
  * RTK service adapter.

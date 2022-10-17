@@ -1,17 +1,17 @@
-import { selectors } from '@amnis/core/selectors';
+import { createApi, fetchBaseQuery } from '@amnis/core/rtkqr.js';
+import { selectors } from '@amnis/core/selectors.js';
 import type {
   StateDelete,
   StateCreate,
   StateUpdate,
   StateQuery,
   State,
-} from '@amnis/core/state';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { apiConfig } from '../config';
-import { ApiBaseQueryFn, ApiJSON } from '../types';
+} from '@amnis/core/state/index.js';
+import { apiConfig } from '../config.js';
+import { ApiBaseQueryFn, ApiJSON } from '../types.js';
 import {
   apiCrudQueries,
-} from './crud.queries';
+} from './crud.queries.js';
 
 const queries = apiCrudQueries();
 

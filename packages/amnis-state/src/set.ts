@@ -1,16 +1,16 @@
-import { auditSlice } from './audit/index';
-import { contactSlice } from './contact/index';
-import { cryptoSlice } from './crypto/index';
-import { historySlice } from './history/index';
-import { logSlice } from './log/index';
-import { profileSlice } from './profile/index';
-import { roleSlice } from './role/index';
-import { serviceSlice } from './service/index';
-import { sessionSlice } from './session/index';
-import { systemSlice } from './system/index';
-import { tokenSlice } from './token/index';
-import { userSlice } from './user/index';
-import { websiteSlice } from './website/index';
+import { auditSlice } from './audit/index.js';
+import { contactSlice } from './contact/index.js';
+import { cryptoSlice } from './crypto/index.js';
+import { historySlice } from './history/index.js';
+import { logSlice } from './log/index.js';
+import { profileSlice } from './profile/index.js';
+import { roleSlice } from './role/index.js';
+import { serviceSlice } from './service/index.js';
+import { sessionSlice } from './session/index.js';
+import { systemSlice } from './system/index.js';
+import { tokenSlice } from './token/index.js';
+import { userSlice } from './user/index.js';
+import { websiteSlice } from './website/index.js';
 
 const reducers = {
   [auditSlice.name]: auditSlice.reducer,

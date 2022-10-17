@@ -1,5 +1,5 @@
-import { Entity, entityCreate } from '../entity';
-import type { File, FileBase, FileBaseCreate } from './file.types';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { File, FileBase, FileBaseCreate } from './file.types.js';
 
 export const fileKey = 'file';
 

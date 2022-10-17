@@ -2,10 +2,10 @@ import {
   cryptoInitialState,
   cryptoSelectors,
   cryptoActions,
-} from './crypto';
-import { cryptoDefault } from './crypto.default';
+} from './crypto.js';
+import { cryptoDefault } from './crypto.default.js';
 
-import { cryptoStoreSetup } from './crypto.store';
+import { cryptoStoreSetup } from './crypto.store.js';
 
 /**
  * ============================================================

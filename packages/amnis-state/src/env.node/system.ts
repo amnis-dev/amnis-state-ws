@@ -1,9 +1,9 @@
-import { coreActions } from '@amnis/core/actions';
-import { coreInitialState } from '@amnis/core/initial';
-import { StateCreate } from '@amnis/core/state';
-import type { Database } from '@amnis/db/index';
-import type { Store } from '@reduxjs/toolkit';
-import { System, systemActions } from '../system';
+import { coreActions } from '@amnis/core/actions.js';
+import { coreInitialState } from '@amnis/core/initial.js';
+import { StateCreate } from '@amnis/core/state/index.js';
+import type { Database } from '@amnis/core/db.types.js';
+import type { Store } from '@reduxjs/toolkit/index.js';
+import { System, systemActions } from '../system/index.js';
 
 /**
  * Initializes a system by collecting configurations from a database.

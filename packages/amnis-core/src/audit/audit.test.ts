@@ -1,4 +1,4 @@
-import { auditKey, auditCreate } from './audit';
+import { auditKey, auditCreate } from './audit.js';
 
 /**
  * ============================================================

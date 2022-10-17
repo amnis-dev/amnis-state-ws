@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
-} from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Log, logKey } from '@amnis/core/log';
-import type { LogMeta } from './log.types';
+} from '@amnis/core/rtk.js';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Log, logKey } from '@amnis/core/log/index.js';
+import type { LogMeta } from './log.types.js';
 
 /**
  * RTK log adapter.

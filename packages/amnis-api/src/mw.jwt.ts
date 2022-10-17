@@ -1,10 +1,10 @@
-import { jwtVerify } from '@amnis/auth/token';
-import { selectors } from '@amnis/core/selectors';
-import { apiOutput } from './api';
-import { apiConfig } from './config';
+import { jwtVerify } from '@amnis/auth/token.js';
+import { selectors } from '@amnis/core/selectors.js';
+import { apiOutput } from './api.js';
+import { apiConfig } from './config.js';
 import type {
   ApiMiddleware,
-} from './types';
+} from './types.js';
 
 /**
  * Ensures a JWT token is set.

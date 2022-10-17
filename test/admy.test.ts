@@ -1,10 +1,10 @@
-import { coreActions } from '@amnis/core/actions';
-import { samples } from '@amnis/core/test/samples';
+import { coreActions } from '@amnis/core/actions.js';
+import { samples } from '@amnis/core/test/samples.js';
 
-import { apiAuth } from '@amnis/api/auth/auth.api.node';
-import { apiCrud } from '@amnis/api/crud/crud.api.node';
+import { apiAuth } from '@amnis/api/auth/auth.api.node.js';
+import { apiCrud } from '@amnis/api/crud/crud.api.node.js';
 
-import { storeSetup } from '@amnis/state/env.node/store';
+import { storeSetup } from '@amnis/state/env.node/store.js';
 
 import {
   selectors,
@@ -18,13 +18,13 @@ import {
   profileSelectors,
   profileKey,
   userCreate,
-} from '@amnis/state/index';
+} from '@amnis/state/index.js';
 
-import { passCreateSync } from '@amnis/auth/pass';
-import { memory } from '@amnis/db/memory';
-import { uidList } from '@amnis/core/uid';
-import { serviceSetup } from './database';
-import { apiSetup } from './api';
+import { passCreateSync } from '@amnis/auth/pass.js';
+import { memory } from '@amnis/db/memory/index.js';
+import { uidList } from '@amnis/core/uid.js';
+import { serviceSetup } from './database.js';
+import { apiSetup } from './api.js';
 
 /**
  * Create the server store.

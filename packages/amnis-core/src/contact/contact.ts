@@ -1,7 +1,7 @@
-import { entityCreate } from '../entity';
-import type { LogBaseCreate } from '../log';
-import { regexWebUrl } from '../regex';
-import type { Contact, ContactBase, ContactBaseCreate } from './contact.types';
+import { entityCreate } from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
+import { regexWebUrl } from '../regex.js';
+import type { Contact, ContactBase, ContactBaseCreate } from './contact.types.js';
 
 export const contactKey = 'contact';
 

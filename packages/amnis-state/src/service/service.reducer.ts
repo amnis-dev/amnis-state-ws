@@ -1,4 +1,4 @@
-import { serviceSlice } from './service';
+import { serviceSlice } from './service.js';
 
 export const reducerMap = {
   [serviceSlice.name]: serviceSlice.reducer,

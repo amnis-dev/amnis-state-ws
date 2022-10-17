@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
+import type {
   ActionReducerMapBuilder,
   EntityAdapter,
+} from '@reduxjs/toolkit/index.js';
+import {
   isRejectedWithValue,
   isFulfilled,
-} from '@reduxjs/toolkit';
-import type { Entity, MetaState } from '@amnis/core/entity';
-import { userKey } from '@amnis/core/user';
-import { sessionKey } from '@amnis/core/session';
-import { profileKey } from '@amnis/core/profile';
-import { LogBaseCreate, logCreate, logKey } from '@amnis/core/log';
-import type { UID } from '@amnis/core/types';
-import { apiAuth } from './auth/auth.api.browser';
-import { apiCrud } from './crud/crud.api.browser';
-import type { ApiOutput } from './types';
+} from '@amnis/core/rtk.js';
+import type { Entity, MetaState } from '@amnis/core/entity/index.js';
+import { userKey } from '@amnis/core/user/index.js';
+import { sessionKey } from '@amnis/core/session/index.js';
+import { profileKey } from '@amnis/core/profile/index.js';
+import { LogBaseCreate, logCreate, logKey } from '@amnis/core/log/index.js';
+import type { UID } from '@amnis/core/types.js';
+import { apiAuth } from './auth/auth.api.browser.js';
+import { apiCrud } from './crud/crud.api.browser.js';
+import type { ApiOutput } from './types.js';
 
 export function apiExtraReducers<E extends Entity>(
   key: string,
@@ -211,7 +213,7 @@ export function apiExtraReducers<E extends Entity>(
         state.selection.length > 0
         && result[key].some((id: UID) => state.selection.includes(id))
       ) {
-        state.selection = state.selection.filter((selectionId) => (
+        state.selection = state.selection.filter((selectionId: UID) => (
           result[key].includes(selectionId)
         ));
       }

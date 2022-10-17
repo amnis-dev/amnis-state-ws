@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
-} from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Role, roleKey } from '@amnis/core/role';
-import type { RoleMeta } from './role.types';
+} from '@amnis/core/rtk.js';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Role, roleKey } from '@amnis/core/role/index.js';
+import type { RoleMeta } from './role.types.js';
 
 /**
  * RTK role adapter.

@@ -1,2 +1,2 @@
-export * from './audit.types';
-export * from './audit';
+export * from './audit.types.js';
+export * from './audit.js';

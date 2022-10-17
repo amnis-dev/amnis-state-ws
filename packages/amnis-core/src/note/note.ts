@@ -1,6 +1,6 @@
-import { uid } from '../uid';
-import { Entity, entityCreate } from '../entity';
-import type { Note, NoteBase, NoteBaseCreate } from './note.types';
+import { uid } from '../uid.js';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { Note, NoteBase, NoteBaseCreate } from './note.types.js';
 
 export const noteKey = 'note';
 

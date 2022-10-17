@@ -1,12 +1,12 @@
-import { historyBase } from '@amnis/core/history';
+import { historyBase } from '@amnis/core/history/index.js';
 import {
   historyInitialState,
   historySelectors,
   historyActions,
-} from './history';
-import { historyDefault } from './history.default';
+} from './history.js';
+import { historyDefault } from './history.default.js';
 
-import { historyStoreSetup } from './history.store';
+import { historyStoreSetup } from './history.store.js';
 
 /**
  * ============================================================

@@ -2,10 +2,10 @@ import {
   createEntityAdapter,
   createSlice,
   configureStore,
-} from '@reduxjs/toolkit';
-import type { Entity, Meta } from '../entity';
-import { coreExtraReducers, coreReducers } from '../reducers';
-import { entityCreate } from '../entity/entity';
+} from '@amnis/core/rtk.js';
+import type { Entity, Meta } from '../entity/index.js';
+import { coreExtraReducers, coreReducers } from '../reducers.js';
+import { entityCreate } from '../entity/index.js';
 
 export interface Book extends Entity {
   title: string;

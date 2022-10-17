@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
 ---
-import { storeSetup } from '@amnis/core/test/book.store';
+import { storeSetup } from '@amnis/core/test/book.store.js';
 import { api<%= Name %>Processes } from './<%= name %>.process';
 
 const appStore = storeSetup();

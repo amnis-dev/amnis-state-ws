@@ -1,4 +1,4 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
 
 /**
  * Symbol to make a special locale type.

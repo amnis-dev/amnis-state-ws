@@ -1,11 +1,11 @@
-import { dateJSON } from '../core';
-import { uidList, uid } from '../uid';
-import { regexReference, regexUuid } from '../regex';
+import { dateJSON } from '../core.js';
+import { uidList, uid } from '../uid.js';
+import { regexReference, regexUuid } from '../regex.js';
 import type {
   Entity,
   EntityExtension,
   EntityPartial,
-} from './entity.types';
+} from './entity.types.js';
 
 /**
  * Creates an entity.

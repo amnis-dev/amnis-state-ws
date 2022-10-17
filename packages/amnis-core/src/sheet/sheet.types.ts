@@ -1,5 +1,5 @@
-import type { Entity, EntityExtension } from '../entity';
-import type { SheetDataRow } from './sheetdata.types';
+import type { Entity, EntityExtension } from '../entity/index.js';
+import type { SheetDataRow } from './sheetdata.types.js';
 
 /**
  * A data sheet for storing string or numeric data.

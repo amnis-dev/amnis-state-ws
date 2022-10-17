@@ -1,11 +1,11 @@
-import type { StateCreate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state/index.js';
 
-import type { ApiProcess } from '../types';
-import type { ApiAuthIOPkce } from './auth.types';
-import { apiOutput } from '../api';
-import { authMicrosoft } from './auth.pkce.microsoft';
-import { authTwitter } from './auth.pkce.twitter';
-import { mwValidate } from '../mw.validate';
+import type { ApiProcess } from '../types.js';
+import type { ApiAuthIOPkce } from './auth.types.js';
+import { apiOutput } from '../api.js';
+import { authMicrosoft } from './auth.pkce.microsoft.js';
+import { authTwitter } from './auth.pkce.twitter.js';
+import { mwValidate } from '../mw.validate.js';
 
 const process: ApiProcess<ApiAuthIOPkce> = (context) => (
   async (input) => {

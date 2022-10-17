@@ -1,18 +1,18 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
+import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
 import type {
   StateDelete,
   StateCreate,
   StateUpdate,
   StateQuery,
   State,
-} from '@amnis/core/state';
+} from '@amnis/core/state/index.js';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { selectors } from '@amnis/core/selectors';
-import { apiConfig } from '../config';
+import { selectors } from '@amnis/core/selectors.js';
+import { apiConfig } from '../config.js';
 import {
   apiCrudQueries,
-} from './crud.queries';
-import { ApiBaseQueryFn, ApiJSON } from '../types';
+} from './crud.queries.js';
+import { ApiBaseQueryFn, ApiJSON } from '../types.js';
 
 global.Headers = Headers;
 global.Request = Request;

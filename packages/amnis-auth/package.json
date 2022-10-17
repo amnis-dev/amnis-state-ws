@@ -3,22 +3,26 @@
   "version": "0.4.3",
   "license": "MIT",
   "private": false,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/amnis-dev/amnis-auth"
   },
   "homepage": "https://github.com/amnis-dev/amnis-auth",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib"
-  ],
+  "files": ["lib", "dist"],
+  "main": "./dist/index.node.js",
+  "module": "./dist/index.node.mjs",
   "exports": {
+    ".": {
+      "require": "./dist/index.node.js",
+      "import": "./dist/index.node.mjs"
+    },
+    "./browser": {
+      "require": "./dist/index.browser.js",
+      "import": "./dist/index.browser.mjs"
+    },
     "./*": {
-      "default": "./lib/*.js",
-      "import": "./lib/*.js",
-      "require": "./lib/*.js"
+      "import": "./lib/*"
     }
   },
   "typesVersions": {
@@ -29,8 +33,10 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "test": "jest"
+    "build": "yarn build:lib && yarn build:dist",
+    "build:dist": "rollup --config rollup.config.mjs",
+    "build:lib": "tsc -p tsconfig.build.json",
+    "clean": "rimraf ./.rollup.cache ./dist ./lib ./tsconfig.build.tsbuildinfo ./yarn-error.log"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"

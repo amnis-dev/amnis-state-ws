@@ -1,5 +1,5 @@
-import type { Meta } from '@amnis/core/entity';
-import type { Locale } from '@amnis/core/locale';
+import type { Meta } from '@amnis/core/entity/index.js';
+import type { Locale } from '@amnis/core/locale/index.js';
 
 /**
  * Locale collection meta data.

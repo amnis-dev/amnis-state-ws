@@ -6,16 +6,16 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
-import { coreActions } from '@amnis/core/actions';
-import { memory } from '@amnis/db/memory';
-import { ApiInput } from '@amnis/api/types';
-import { apiAuthProcess } from '@amnis/api/auth/auth.process';
-import { storeSetup } from '@amnis/state/env.node/store';
+import { coreActions } from '@amnis/core/actions.js';
+import { memory } from '@amnis/db/memory/index.js';
+import { ApiInput } from '@amnis/api/types.js';
+import { apiAuthProcess } from '@amnis/api/auth/auth.process.js';
+import { storeSetup } from '@amnis/state/env.node/store.js';
 
-import { validatorsSetup } from '@amnis/api/validators';
-import { apiIO } from '@amnis/api/api.io.node';
+import { validatorsSetup } from '@amnis/api/validators.js';
+import { apiIO } from '@amnis/api/api.io.node.js';
 import schemaAuth from '@amnis/api/auth/auth.schema.json';
-import { serviceSetup } from './database';
+import { serviceSetup } from './database.js';
 
 const apiInput = (): RequestHandler => (
   (req: Request, res: Response, next: NextFunction) => {

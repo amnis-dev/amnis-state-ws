@@ -1,2 +1,2 @@
-export * from './crud.types';
-export * from './crud.api.browser';
+export * from './crud.types.js';
+export * from './crud.api.browser.js';

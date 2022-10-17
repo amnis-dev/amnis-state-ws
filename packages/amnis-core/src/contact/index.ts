@@ -1,2 +1,2 @@
-export * from './contact.types';
-export * from './contact';
+export * from './contact.types.js';
+export * from './contact.js';

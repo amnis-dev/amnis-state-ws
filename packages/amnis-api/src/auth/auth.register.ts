@@ -1,15 +1,15 @@
-import type { StateCreate } from '@amnis/core/state';
-import type { Token } from '@amnis/core/token';
-import { System } from '@amnis/core/system';
-import { profileCreate } from '@amnis/core/profile';
-import { userCheck, userCreate } from '@amnis/core/user';
-import { sessionEncode } from '@amnis/auth/session';
-import type { Database } from '@amnis/db/types';
-import type { LogBaseCreate } from '@amnis/core/log';
+import type { StateCreate } from '@amnis/core/state/index.js';
+import type { Token } from '@amnis/core/token/index.js';
+import { System } from '@amnis/core/system/index.js';
+import { profileCreate } from '@amnis/core/profile/index.js';
+import { userCheck, userCreate } from '@amnis/core/user/index.js';
+import { sessionEncode } from '@amnis/auth/session.js';
+import type { Database } from '@amnis/core/db.types.js';
+import type { LogBaseCreate } from '@amnis/core/log/index.js';
 
-import { apiOutput } from '../api';
-import { ApiOutput } from '../types';
-import { sessionGenerate, tokenGenerate } from './auth.utility';
+import { apiOutput } from '../api.js';
+import { ApiOutput } from '../types.js';
+import { sessionGenerate, tokenGenerate } from './auth.utility.js';
 
 /**
  * Options when processsing a registration.

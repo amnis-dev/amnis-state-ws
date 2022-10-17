@@ -1,5 +1,5 @@
-import { EntityExtension, EntityExtensionCreate } from '../entity';
-import type { File } from '../file';
+import { EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import type { File } from '../file/file.types.js';
 
 export interface Video extends File {
   /**

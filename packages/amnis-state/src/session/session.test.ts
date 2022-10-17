@@ -2,9 +2,9 @@ import {
   sessionInitialState,
   sessionSelectors,
   sessionActions,
-} from './session';
-import { sessionDefault } from './session.default';
-import { sessionStoreSetup } from './session.store';
+} from './session.js';
+import { sessionDefault } from './session.default.js';
+import { sessionStoreSetup } from './session.store.js';
 
 /**
  * ============================================================

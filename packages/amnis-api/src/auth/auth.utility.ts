@@ -1,19 +1,19 @@
-import { cryptConfig } from '@amnis/auth/config';
-import { sessionEncode } from '@amnis/auth/session';
-import { jwtEncode } from '@amnis/auth/token';
+import { cryptConfig } from '@amnis/auth/config.js';
+import { sessionEncode } from '@amnis/auth/session.js';
+import { jwtEncode } from '@amnis/auth/token.js';
 
-import { dateNumeric } from '@amnis/core/core';
+import { dateNumeric } from '@amnis/core/core.js';
 import {
   JWTDecoded, Token, tokenCreate, TokenType,
-} from '@amnis/core/token';
-import { Profile, profileKey } from '@amnis/core/profile';
-import { Session, sessionCreate, sessionKey } from '@amnis/core/session';
-import type { Database } from '@amnis/db/types';
-import { User, userKey } from '@amnis/core/user';
-import type { StateCreate } from '@amnis/core/state';
+} from '@amnis/core/token/index.js';
+import { Profile, profileKey } from '@amnis/core/profile/index.js';
+import { Session, sessionCreate, sessionKey } from '@amnis/core/session/index.js';
+import type { Database } from '@amnis/core/db.types.js';
+import { User, userKey } from '@amnis/core/user/index.js';
+import type { StateCreate } from '@amnis/core/state/index.js';
 
-import { UID } from '@amnis/core/types';
-import { apiOutput } from '../api';
+import { UID } from '@amnis/core/types.js';
+import { apiOutput } from '../api.js';
 
 /**
  * Finds a user by name.

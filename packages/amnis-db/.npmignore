@@ -3,3 +3,6 @@ src/
 
 # TypeScript Configuration Files
 tsconfig.*
+
+# Other Configuration Files
+jest.config.ts

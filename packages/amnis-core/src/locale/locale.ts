@@ -1,8 +1,8 @@
-import { Entity, entityCreate } from '../entity';
-import type { LogBaseCreate } from '../log';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
 import type {
   Locale, LocaleBase, LocaleBaseCreate, LocaleTranslationKey, LocaleTranslation,
-} from './locale.types';
+} from './locale.types.js';
 
 export const localeKey = 'locale';
 

@@ -1,12 +1,12 @@
 import {
   createEntityAdapter, createSlice,
-} from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { System, systemKey } from '@amnis/core/system';
+} from '@amnis/core/rtk.js';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { System, systemKey } from '@amnis/core/system/index.js';
 import type {
   SystemMeta,
-} from './system.types';
+} from './system.types.js';
 
 /**
  * RTK system adapter.

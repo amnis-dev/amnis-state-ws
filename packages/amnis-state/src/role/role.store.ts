@@ -1,5 +1,5 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './role.reducer';
+import { configureStore, combineReducers } from '@amnis/core/rtk.js';
+import { reducerMap, reducerMiddleware } from './role.reducer.js';
 
 export function roleStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

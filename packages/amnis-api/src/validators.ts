@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { AnySchema, AnyValidateFunction } from 'ajv/dist/types';
 import Ajv from 'ajv';
 
-import type { Validators } from './types';
+import type { Validators } from './types.js';
 
 function compileValidators(schema: AnySchema): Validators {
   if (typeof schema === 'boolean') {
@@ -20,6 +21,7 @@ function compileValidators(schema: AnySchema): Validators {
   }
   const validatorKeys = Object.keys(definitions);
 
+  /** @ts-ignore */
   const ajv = new Ajv({ schemas: [schema] });
 
   const validators = validatorKeys.reduce<Validators>(

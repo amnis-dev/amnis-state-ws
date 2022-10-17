@@ -3,10 +3,10 @@ to: "<%= path ? `${path}/${name}/${name}.queries.ts` : null %>"
 ---
 import type {
   PayloadEntityCreate,
-} from '@amnis/core/actions';
+} from '@amnis/core/actions.js';
 import type {
   Api<%= Name %>Queries,
-} from './<%= name %>.types';
+} from './<%= name %>.types.js';
 
 export function api<%= Name %>Queries(): Api<%= Name %>Queries {
   return {

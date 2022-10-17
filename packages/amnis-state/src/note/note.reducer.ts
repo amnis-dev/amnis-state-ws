@@ -1,4 +1,4 @@
-import { noteSlice } from './note';
+import { noteSlice } from './note.js';
 
 export const reducerMap = {
   [noteSlice.name]: noteSlice.reducer,

@@ -1,12 +1,12 @@
-import type { ApiContext, Validators } from '@amnis/api/index.node';
+import type { ApiContext, Validators } from '@amnis/api/index.node.js';
 import {
   coreActions, roleKey, StateCreate, systemKey,
-} from '@amnis/core/index.node';
-import { memory } from '@amnis/db/memory';
+} from '@amnis/core/index.node.js';
+import { memory } from '@amnis/db/memory/index.js';
 
-import { entitiesInitial } from './entities';
-import { store as storeDefault } from './store';
-import { systemActions } from '../system';
+import { entitiesInitial } from './entities.js';
+import { store as storeDefault } from './store.js';
+import { systemActions } from '../system/index.js';
 
 export interface ContextOptions extends Partial<ApiContext> {
   /**

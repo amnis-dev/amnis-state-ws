@@ -1,5 +1,5 @@
-import type { Meta } from '@amnis/core/entity';
-import type { Log } from '@amnis/core/log';
+import type { Meta } from '@amnis/core/entity/index.js';
+import type { Log } from '@amnis/core/log/index.js';
 
 /**
  * Log collection meta data.

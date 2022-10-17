@@ -1,11 +1,11 @@
-import { uid } from '../uid';
-import { dateNumeric } from '../core';
+import { uid } from '../uid.js';
+import { dateNumeric } from '../core.js';
 import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { Session } from './session.types';
+} from '../entity/index.js';
+import type { Session } from './session.types.js';
 
 export const sessionKey = 'session';
 

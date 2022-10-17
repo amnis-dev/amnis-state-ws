@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { UID, UIDList } from '../types';
-import type { Entity } from '../entity';
+import type { GrantScope } from '@amnis/core/grant/index.js';
+import type { UID, UIDList } from '../types.js';
+import type { Entity } from '../entity/index.js';
 
 /**
  * An ambiguous state.
@@ -112,3 +113,8 @@ export type StateDelete = State<UIDList>;
 export type ReID = [UID, UID];
 
 export type ResultReID = State<ReID[]>;
+
+/**
+ * A stateful mapping of data access scopes.
+ */
+export type StateScope = State<GrantScope>;

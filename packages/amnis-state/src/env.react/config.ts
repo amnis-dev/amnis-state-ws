@@ -1,1 +1,1 @@
-export * from '@amnis/api/config';
+export * from '@amnis/api/config.js';

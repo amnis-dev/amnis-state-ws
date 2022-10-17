@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
+import type {
   ActionReducerMapBuilder,
   EntityAdapter,
   PayloadAction,
-} from '@reduxjs/toolkit';
+} from '@reduxjs/toolkit/index.js';
 import {
   entityCreate,
-} from './entity/entity';
-import { coreActions } from './actions';
+} from './entity/entity.js';
+import { coreActions } from './actions.js';
 import type {
   Entity,
   EntityExtension,
   EntityPartial,
   MetaState,
-} from './entity';
-import { UID } from './types';
+} from './entity/index.js';
+import type { UID } from './types.js';
 
 export interface MetaOptions {
   active?: boolean;
@@ -198,7 +198,7 @@ export function coreExtraReducers<E extends Entity>(
 
       if (
         state.selection.length > 0
-        && payload[key].some((id) => state.selection.includes(id))
+        && payload[key].some((id: UID) => state.selection.includes(id))
       ) {
         state.selection = state.selection.filter((selectionId) => (
           payload[key].includes(selectionId)

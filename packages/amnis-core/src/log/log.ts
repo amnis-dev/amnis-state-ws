@@ -1,5 +1,5 @@
-import { entityCreate } from '../entity/entity';
-import type { Log, LogBase, LogBaseCreate } from './log.types';
+import { entityCreate } from '../entity/entity.js';
+import type { Log, LogBase, LogBaseCreate } from './log.types.js';
 
 export const logKey = 'log';
 

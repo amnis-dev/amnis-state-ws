@@ -1,6 +1,6 @@
-import { contextCreate } from './context';
-import { systemSelectors } from '../system/index';
-import { roleSelectors } from '../role/index';
+import { contextCreate } from './context.js';
+import { systemSelectors } from '../system/index.js';
+import { roleSelectors } from '../role/index.js';
 
 test('should create initial node context', async () => {
   const context = await contextCreate({ initialize: true });

@@ -1,5 +1,5 @@
-import { regexIpv4v6 } from '../regex';
-import type { Device, DeviceString } from './device.types';
+import { regexIpv4v6 } from '../regex.js';
+import type { Device, DeviceString } from './device.types.js';
 
 /**
  * Verifies a device ip.

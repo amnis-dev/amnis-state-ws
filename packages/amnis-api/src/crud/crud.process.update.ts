@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { authwall } from '@amnis/auth/authwall';
-import { Task } from '@amnis/core/grant';
-import { selectors } from '@amnis/core/selectors';
-import { authScopeCreate } from '@amnis/auth/scope';
-import { coreActions } from '@amnis/core/actions';
-import { entityClean } from '@amnis/core/entity';
-import { historyKey, historyMake } from '@amnis/core/history';
-import type { State, StateUpdate } from '@amnis/core/state';
-import type { ApiProcess } from '../types';
-import { apiOutput } from '../api';
-import type { ApiCrudIOUpdate } from './crud.types';
-import { mwJwt } from '../mw.jwt';
-import { mwValidate } from '../mw.validate';
+import { authwall } from '@amnis/auth/authwall.js';
+import { Task } from '@amnis/core/grant/index.js';
+import { selectors } from '@amnis/core/selectors.js';
+import { stateScopeCreate } from '@amnis/core/state/index.js';
+import { coreActions } from '@amnis/core/actions.js';
+import { entityClean } from '@amnis/core/entity/index.js';
+import { historyKey, historyMake } from '@amnis/core/history/index.js';
+import type { State, StateUpdate } from '@amnis/core/state/index.js';
+import type { ApiProcess } from '../types.js';
+import { apiOutput } from '../api.js';
+import type { ApiCrudIOUpdate } from './crud.types.js';
+import { mwJwt } from '../mw.jwt.js';
+import { mwValidate } from '../mw.validate.js';
 
 export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
   async (input) => {
@@ -57,7 +57,7 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt.adm === true ? undefined : authScopeCreate(grants, Task.Update);
+    const authScope = jwt.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
 
     const result = await database.update(
       stateFinal,

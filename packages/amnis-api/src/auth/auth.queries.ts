@@ -1,6 +1,6 @@
 import type {
   ApiAuthQueries,
-} from './auth.types';
+} from './auth.types.js';
 
 export function apiQueries(): ApiAuthQueries {
   return {

@@ -3,8 +3,8 @@ to: "<%= path ? `${path}/${name}/${name}.process.ts` : null %>"
 ---
 import type {
   Api<%= Name %>Processes,
-} from './<%= name %>.types';
-import { apiOutput } from '../api';
+} from './<%= name %>.types.js';
+import { apiOutput } from '../api.js';
 
 export function api<%= Name %>Processes(): Api<%= Name %>Processes {
   return {

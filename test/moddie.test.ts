@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
-import { coreActions } from '@amnis/core/actions';
-import { samples } from '@amnis/core/test/samples';
+import { coreActions } from '@amnis/core/actions.js';
+import { samples } from '@amnis/core/test/samples.js';
 
-import { apiAuth } from '@amnis/api/auth/auth.api.node';
-import { apiAuthProcess } from '@amnis/api/auth/auth.process';
-import { apiCrud } from '@amnis/api/crud/crud.api.node';
-import { apiCrudProcess } from '@amnis/api/crud/crud.process';
-import { apiConfig } from '@amnis/api/config';
-import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
-import { validatorsSetup } from '@amnis/api/validators';
-import { apiIO } from '@amnis/api/api.io.node';
+import { apiAuth } from '@amnis/api/auth/auth.api.node.js';
+import { apiAuthProcess } from '@amnis/api/auth/auth.process.js';
+import { apiCrud } from '@amnis/api/crud/crud.api.node.js';
+import { apiCrudProcess } from '@amnis/api/crud/crud.process.js';
+import { apiConfig } from '@amnis/api/config.js';
+import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock.js';
+import { validatorsSetup } from '@amnis/api/validators.js';
+import { apiIO } from '@amnis/api/api.io.node.js';
 import schemaAuth from '@amnis/api/auth/auth.schema.json';
 
-import { storeSetup } from '@amnis/state/env.node/store';
+import { storeSetup } from '@amnis/state/env.node/store.js';
 
 import {
   selectors,
@@ -27,13 +27,13 @@ import {
   profileSelectors,
   profileKey,
   userCreate,
-} from '@amnis/state/index';
+} from '@amnis/state/index.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { passCreateSync } from '@amnis/auth/pass';
-import { memory } from '@amnis/db/memory';
-import { uidList } from '@amnis/core/uid';
-import { serviceSetup } from './database';
+import { passCreateSync } from '@amnis/auth/pass.js';
+import { memory } from '@amnis/db/memory/index.js';
+import { uidList } from '@amnis/core/uid.js';
+import { serviceSetup } from './database.js';
 
 /**
  * Utility functions

@@ -1,10 +1,10 @@
-import { uid } from '../uid';
+import { uid } from '../uid.js';
 import {
   EntityExtension,
   EntityExtensionCreate,
   entityCreate,
-} from '../entity';
-import type { Permit } from './permit.types';
+} from '../entity/index.js';
+import type { Permit } from './permit.types.js';
 
 export const permitKey = 'permit';
 

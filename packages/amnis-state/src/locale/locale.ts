@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
-} from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Locale, localeKey } from '@amnis/core/locale';
-import type { LocaleMeta } from './locale.types';
+} from '@amnis/core/rtk.js';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Locale, localeKey } from '@amnis/core/locale/index.js';
+import type { LocaleMeta } from './locale.types.js';
 
 /**
  * RTK locale adapter.

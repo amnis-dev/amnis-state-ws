@@ -1,5 +1,5 @@
-import { Entity, entityCreate } from '../entity';
-import type { Route, RouteBase, RouteBaseCreate } from './route.types';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { Route, RouteBase, RouteBaseCreate } from './route.types.js';
 
 export const routeKey = 'route';
 

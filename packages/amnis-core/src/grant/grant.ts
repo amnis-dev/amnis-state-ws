@@ -4,7 +4,7 @@ import {
   Grant,
   GrantString,
   Task,
-} from './grant.types';
+} from './grant.types.js';
 
 /**
  * Converts a grant to string format.

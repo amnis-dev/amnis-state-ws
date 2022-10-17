@@ -1,8 +1,12 @@
-import type { Config } from '@jest/types';
+import type { Config } from 'jest';
 
-const config: Config.InitialOptions = {
+const jestConfig: Config = {
   verbose: true,
   testEnvironment: 'node',
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+    // '^@amnis/core/(.*)$': '<rootDir>/packages/amnis-core/src/$1',
+  },
   fakeTimers: {
     enableGlobally: true,
   },
@@ -13,9 +17,16 @@ const config: Config.InitialOptions = {
     '.dist',
     '.web',
     '.out',
+    'srv',
+    'lib',
+    'pkg',
+    'dist',
+    'web',
+    'out',
   ],
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
+  extensionsToTreatAsEsm: ['.ts'],
 };
 
-export default config;
+export default jestConfig;

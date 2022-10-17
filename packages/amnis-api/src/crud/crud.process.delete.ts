@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { UID } from '@amnis/core/types';
-import type { Role } from '@amnis/core/role';
-import type { StateDelete } from '@amnis/core/state';
-import { selectors } from '@amnis/core/selectors';
-import { coreActions } from '@amnis/core/actions';
-import { Task } from '@amnis/core/grant';
-import { authwall } from '@amnis/auth/authwall';
-import { authScopeCreate } from '@amnis/auth/scope';
-import type { ApiProcess } from '../types';
-import type { ApiCrudIODelete } from './crud.types';
-import { apiOutput } from '../api';
-import { mwJwt } from '../mw.jwt';
-import { mwValidate } from '../mw.validate';
+import type { UID } from '@amnis/core/types.js';
+import type { Role } from '@amnis/core/role/index.js';
+import type { StateDelete } from '@amnis/core/state/index.js';
+import { selectors } from '@amnis/core/selectors.js';
+import { coreActions } from '@amnis/core/actions.js';
+import { Task } from '@amnis/core/grant/index.js';
+import { authwall } from '@amnis/auth/authwall.js';
+import { stateScopeCreate } from '@amnis/core/state/index.js';
+import type { ApiProcess } from '../types.js';
+import type { ApiCrudIODelete } from './crud.types.js';
+import { apiOutput } from '../api.js';
+import { mwJwt } from '../mw.jwt.js';
+import { mwValidate } from '../mw.validate.js';
 
 export const process: ApiProcess<ApiCrudIODelete> = (context) => (
   async (input) => {
@@ -39,7 +39,7 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt?.adm === true ? undefined : authScopeCreate(grants, Task.Update);
+    const authScope = jwt?.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
 
     const result = await database.delete(
       stateFinal,

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { UID } from '@amnis/core/types';
-import type { AuthScope } from '@amnis/auth/types';
+import type { UID } from '@amnis/core/types.js';
 import type {
+  StateScope,
   StateUpdate,
   StateDelete,
   StateCreate,
   StateQuery,
-} from '@amnis/core/state';
+} from '@amnis/core/state/index.js';
 
 export interface DatabaseControls {
-  scope?: AuthScope;
+  scope?: StateScope;
   subject?: UID;
 }
 

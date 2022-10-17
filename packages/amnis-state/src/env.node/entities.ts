@@ -2,7 +2,7 @@ import {
   hashSync,
 } from 'bcrypt';
 
-import type { StateCreate } from '@amnis/core/state';
+import type { StateCreate } from '@amnis/core/state/state.types.js';
 import {
   System,
   userKey,
@@ -18,7 +18,7 @@ import {
   entityCreate,
   systemKey,
   websiteKey,
-} from '@amnis/core/index.node';
+} from '@amnis/core/index.node.js';
 
 function passCreateSync(plaintext: string): string {
   return hashSync(plaintext, 8);

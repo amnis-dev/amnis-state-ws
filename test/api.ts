@@ -3,15 +3,15 @@ import coreSchema from '@amnis/core/core.schema.json';
 import stateSchema from '@amnis/state/state.schema.json';
 import schemaAuth from '@amnis/api/auth/auth.schema.json';
 
-import { apiConfig } from '@amnis/api/config';
-import { apiAuthProcess } from '@amnis/api/auth/auth.process';
-import { apiCrudProcess } from '@amnis/api/crud/crud.process';
-import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
+import { apiConfig } from '@amnis/api/config.js';
+import { apiAuthProcess } from '@amnis/api/auth/auth.process.js';
+import { apiCrudProcess } from '@amnis/api/crud/crud.process.js';
+import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock.js';
 
-import { memory } from '@amnis/db/memory';
-import { Store } from '@reduxjs/toolkit';
-import { apiIO } from '@amnis/api/api.io.node';
-import { validatorsSetup } from '@amnis/api/validators';
+import { memory } from '@amnis/db/memory/index.js';
+import type { Store } from '@reduxjs/toolkit/index.js';
+import { apiIO } from '@amnis/api/api.io.node.js';
+import { validatorsSetup } from '@amnis/api/validators.js';
 
 /**
  * Function that prepares the api mock services.

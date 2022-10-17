@@ -1,6 +1,6 @@
-import { dateJSON } from '../core';
-import { Entity, entityCreate } from '../entity';
-import type { Service, ServiceBase, ServiceBaseCreate } from './service.types';
+import { dateJSON } from '../core.js';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { Service, ServiceBase, ServiceBaseCreate } from './service.types.js';
 
 export const serviceKey = 'service';
 

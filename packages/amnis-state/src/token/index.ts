@@ -1,3 +1,3 @@
-export * from './token';
-export * from './token.types';
-export * from '@amnis/core/token';
+export * from './token.js';
+export * from './token.types.js';
+export * from '@amnis/core/token/index.js';

@@ -1,10 +1,10 @@
 import type {
   ApiCrudProcesses,
-} from './crud.types';
-import { crudProcessCreate } from './crud.process.create';
-import { crudProcessRead } from './crud.process.read';
-import { crudProcessUpdate } from './crud.process.update';
-import { crudProcessDelete } from './crud.process.delete';
+} from './crud.types.js';
+import { crudProcessCreate } from './crud.process.create.js';
+import { crudProcessRead } from './crud.process.read.js';
+import { crudProcessUpdate } from './crud.process.update.js';
+import { crudProcessDelete } from './crud.process.delete.js';
 
 export const apiCrudProcess: ApiCrudProcesses = {
   create: crudProcessCreate,

@@ -1,5 +1,5 @@
-import type { EntityExtension, EntityExtensionCreate } from '../entity';
-import type { File } from '../file';
+import type { EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import type { File } from '../file/index.js';
 
 export interface Image extends File {
   /**

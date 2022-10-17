@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import coreSchema from '@amnis/core/core.schema.json';
-import { coreActions } from '@amnis/core/actions';
+import { coreActions } from '@amnis/core/actions.js';
 
-import { apiAuthProcess } from '@amnis/api/auth/auth.process';
-import { apiCrudProcess } from '@amnis/api/crud/crud.process';
-import { apiConfig } from '@amnis/api/config';
-import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock';
-import { validatorsSetup } from '@amnis/api/validators';
-import { apiIO } from '@amnis/api/api.io.node';
+import { apiAuthProcess } from '@amnis/api/auth/auth.process.js';
+import { apiCrudProcess } from '@amnis/api/crud/crud.process.js';
+import { apiConfig } from '@amnis/api/config.js';
+import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock.js';
+import { validatorsSetup } from '@amnis/api/validators.js';
+import { apiIO } from '@amnis/api/api.io.node.js';
 import schemaAuth from '@amnis/api/auth/auth.schema.json';
 
-import { storeSetup } from '@amnis/state/env.node/store';
+import { storeSetup } from '@amnis/state/env.node/store.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { memory } from '@amnis/db/memory';
-import { serviceSetup } from './database';
+import { memory } from '@amnis/db/memory/index.js';
+import { serviceSetup } from './database.js';
 
 /**
  * Create the server store.

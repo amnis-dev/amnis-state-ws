@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { authHeader } from '@amnis/auth/header';
-import type { JWTEncoded } from '@amnis/core/token';
-import { rest, RestHandler } from 'msw';
+import { authHeader } from '@amnis/auth/header.js';
+import type { JWTEncoded } from '@amnis/core/token/index.js';
+import { rest, RequestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 import type {
   ApiInput, ApiOutput, ApiIOs,
-} from './types';
+} from './types.js';
 
 export function apiMockGenerateHandlers(
   apiIOs: ApiIOs,
   baseUrl: string,
 ) {
-  const mockHandlers: RestHandler[] = Object.keys(apiIOs).map((key) => (
+  const mockHandlers: RequestHandler[] = Object.keys(apiIOs).map((key) => (
     rest.post<ApiInput['body'], never, ApiOutput['json']>(
       `${baseUrl}${key}`,
       async (req, res, ctx) => {
@@ -74,7 +74,8 @@ export function apiMockGenerateHandlers(
 }
 
 export function apiMockServer(
-  mockHandlers: RestHandler[],
+  mockHandlers: RequestHandler[],
 ) {
+  /** @ts-ignore */
   return setupServer(...mockHandlers);
 }

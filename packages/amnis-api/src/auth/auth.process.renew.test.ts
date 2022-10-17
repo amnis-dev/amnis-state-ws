@@ -1,15 +1,15 @@
-import { passCreateSync } from '@amnis/auth/pass';
-import { sessionEncode } from '@amnis/auth/session';
-import { dateNumeric } from '@amnis/core/core';
-import { profileCreate } from '@amnis/core/profile';
-import { sessionCreate } from '@amnis/core/session';
-import { storeSetup } from '@amnis/core/test/book.store';
-import { userCreate } from '@amnis/core/user';
-import { memory } from '@amnis/db/memory';
-import { apiIO } from '../api.io.node';
-import { ApiInput } from '../types';
-import { validatorsSetup } from '../validators';
-import { apiAuthProcess } from './auth.process';
+import { passCreateSync } from '@amnis/auth/pass.js';
+import { sessionEncode } from '@amnis/auth/session.js';
+import { dateNumeric } from '@amnis/core/core.js';
+import { profileCreate } from '@amnis/core/profile/index.js';
+import { sessionCreate } from '@amnis/core/session/index.js';
+import { storeSetup } from '@amnis/core/test/book.store.js';
+import { userCreate } from '@amnis/core/user/index.js';
+import { memory } from '@amnis/db/memory/index.js';
+import { apiIO } from '../api.io.node.js';
+import { ApiInput } from '../types.js';
+import { validatorsSetup } from '../validators.js';
+import { apiAuthProcess } from './auth.process.js';
 import schemaAuth from './auth.schema.json';
 
 /**

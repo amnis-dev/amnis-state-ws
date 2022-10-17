@@ -1,3 +1,3 @@
-export * from './auth.types';
-export * from './auth.api.node';
-export * from './auth.process';
+export * from './auth.types.js';
+export * from './auth.api.node.js';
+export * from './auth.process.js';

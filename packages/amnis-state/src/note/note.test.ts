@@ -1,12 +1,12 @@
-import { noteBase } from '@amnis/core/note';
+import { noteBase } from '@amnis/core/note/index.js';
 import {
   noteInitialState,
   noteSelectors,
   noteActions,
-} from './note';
-import { noteDefault } from './note.default';
+} from './note.js';
+import { noteDefault } from './note.default.js';
 
-import { noteStoreSetup } from './note.store';
+import { noteStoreSetup } from './note.store.js';
 
 /**
  * ============================================================

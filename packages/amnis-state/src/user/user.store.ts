@@ -1,5 +1,5 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducerMap, reducerMiddleware } from './user.reducer';
+import { configureStore, combineReducers } from '@amnis/core/rtk.js';
+import { reducerMap, reducerMiddleware } from './user.reducer.js';
 
 export function userStoreSetup() {
   const rootReducer = combineReducers(reducerMap);

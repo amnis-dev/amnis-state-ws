@@ -1,5 +1,5 @@
-import { Entity, entityCreate } from '../entity';
-import type { Audit, AuditBase, AuditBaseCreate } from './audit.types';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { Audit, AuditBase, AuditBaseCreate } from './audit.types.js';
 
 export const auditKey = 'audit';
 

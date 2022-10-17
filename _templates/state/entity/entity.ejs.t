@@ -3,11 +3,11 @@ to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 ---
 import {
   createEntityAdapter, createSlice,
-} from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
+} from '@amnis/core/rtk.js';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
 import { <%= Name %>, <%= name %>Key } from '@amnis/core/<%= name %>';
-import type { <%= Name %>Meta } from './<%= name %>.types';
+import type { <%= Name %>Meta } from './<%= name %>.types.js';
 
 /**
  * RTK <%= name %> adapter.

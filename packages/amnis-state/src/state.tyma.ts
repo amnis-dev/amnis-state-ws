@@ -1,13 +1,13 @@
-import type { EntityCreate, EntityUpdate } from '@amnis/core/entity';
+import type { EntityCreate, EntityUpdate } from '@amnis/core/entity/index.js';
 
-import type { Contact } from '@amnis/core/contact/index';
-import type { Log } from '@amnis/core/log/index';
-import type { Profile } from '@amnis/core/profile/index';
-import type { Role } from '@amnis/core/role/index';
-import type { Session } from '@amnis/core/session/index';
-import type { System } from '@amnis/core/system/index';
-import type { User } from '@amnis/core/user/index';
-import type { Website } from '@amnis/core/website/index';
+import type { Contact } from '@amnis/core/contact/index.js';
+import type { Log } from '@amnis/core/log/index.js';
+import type { Profile } from '@amnis/core/profile/index.js';
+import type { Role } from '@amnis/core/role/index.js';
+import type { Session } from '@amnis/core/session/index.js';
+import type { System } from '@amnis/core/system/index.js';
+import type { User } from '@amnis/core/user/index.js';
+import type { Website } from '@amnis/core/website/index.js';
 
 export interface StateCreate {
   contact?: EntityCreate<Contact>[];

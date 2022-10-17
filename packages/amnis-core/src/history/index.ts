@@ -1,2 +1,2 @@
-export * from './history.types';
-export * from './history';
+export * from './history.types.js';
+export * from './history.js';

@@ -1,8 +1,8 @@
-import { sessionVerify } from '@amnis/auth/session';
-import { apiOutput } from './api';
+import { sessionVerify } from '@amnis/auth/session.js';
+import { apiOutput } from './api.js';
 import type {
   ApiMiddleware,
-} from './types';
+} from './types.js';
 
 /**
  * Ensures a JWT token is set.

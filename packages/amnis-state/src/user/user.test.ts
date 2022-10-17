@@ -1,11 +1,11 @@
-import { coreActions } from '@amnis/core/actions';
-import { userCreate, userKey } from '@amnis/core/user';
+import { coreActions } from '@amnis/core/actions.js';
+import { userCreate, userKey } from '@amnis/core/user/index.js';
 import {
   userInitialState,
   userSelectors,
-} from './user';
+} from './user.js';
 
-import { userStoreSetup } from './user.store';
+import { userStoreSetup } from './user.store.js';
 
 /**
  * ============================================================

@@ -1,6 +1,6 @@
-import { uid } from '../uid';
-import { userKey } from '../user';
-import { profileKey, profileCreate } from './profile';
+import { uid } from '../uid.js';
+import { userKey } from '../user/index.js';
+import { profileKey, profileCreate } from './profile.js';
 
 /**
  * ============================================================

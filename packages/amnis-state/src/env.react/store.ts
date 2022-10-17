@@ -1,5 +1,5 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import reactSet from './set';
+import { configureStore, combineReducers } from '@amnis/core/rtk.js';
+import reactSet from './set.js';
 
 export function storeSetup() {
   const rootReducer = combineReducers(reactSet.reducers);

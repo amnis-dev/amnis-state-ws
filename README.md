@@ -73,7 +73,7 @@ There are three ways to import the Redux reducers and middlewares based on your 
 Use this import if you are running your project within a browser environment.
 
 ```typescript
-import { set } from '@amnis/state/env.browser';
+import { set } from '@amnis/state/env.browser.js';
 ```
 
 ### Browser Runtime (with React)
@@ -98,7 +98,7 @@ import { set } from '@amnis/state/env.node';
 /**
  * store.ts
  */
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@amnis/core/rtk.js';
 import { set } from '@amnis/state/env.[runtime]';
 
 /**

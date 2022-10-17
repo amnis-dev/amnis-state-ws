@@ -1,7 +1,7 @@
-import { uid } from '@amnis/core/uid';
-import { dateNumeric } from '@amnis/core/core';
-import { sessionCreate } from '@amnis/core/session';
-import { userKey } from '@amnis/core/user';
+import { uid } from '@amnis/core/uid.js';
+import { dateNumeric } from '@amnis/core/core.js';
+import { sessionCreate } from '@amnis/core/session/index.js';
+import { userKey } from '@amnis/core/user/index.js';
 
 export const sessionDefault = sessionCreate({
   $subject: uid(userKey),

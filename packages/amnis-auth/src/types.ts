@@ -1,7 +1,5 @@
 /* eslint-disable no-shadow */
 import type { KeyPairSyncResult } from 'node:crypto';
-import type { GrantScope } from '@amnis/core/grant';
-import type { State } from '@amnis/core/state';
 
 /**
  * Unique identifier symbols and types for RSA
@@ -15,19 +13,6 @@ export type PublicKey = PublicKeyNominal & string;
  * Key Pair interface.
  */
 export type KeyPair = KeyPairSyncResult<string, string>;
-
-/**
- * Private Key.
- */
-
-/**
- * Public Key.
- */
-
-/**
- * A stateful mapping of data access scopes.
- */
-export type AuthScope = State<GrantScope>;
 
 /**
  * Unique identifier symbol for an SHA256 hashed string.

@@ -1,10 +1,10 @@
 import {
   createEntityAdapter, createSlice,
-} from '@reduxjs/toolkit';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers';
-import { apiExtraReducers } from '@amnis/api/reducers';
-import { Contact, contactKey } from '@amnis/core/contact';
-import type { ContactMeta } from './contact.types';
+} from '@amnis/core/rtk.js';
+import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
+import { apiExtraReducers } from '@amnis/api/reducers.js';
+import { Contact, contactKey } from '@amnis/core/contact/index.js';
+import type { ContactMeta } from './contact.types.js';
 
 /**
  * RTK contact adapter.

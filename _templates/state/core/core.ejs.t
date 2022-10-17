@@ -1,8 +1,8 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 ---
-import { Entity, entityCreate } from '../entity';
-import type { <%= Name %>, <%= Name %>Base, <%= Name %>BaseCreate } from './<%= name %>.types';
+import { Entity, entityCreate } from '../entity/index.js';
+import type { <%= Name %>, <%= Name %>Base, <%= Name %>BaseCreate } from './<%= name %>.types.js';
 
 export const <%= name %>Key = '<%= name %>';
 

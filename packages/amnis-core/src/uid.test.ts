@@ -1,8 +1,8 @@
 import {
   uid, uidList, uidListValidate, uidTree, uidTreeValidate, uidValidate,
-} from './uid';
-import { regexUuid } from './regex';
-import { UID } from './types';
+} from './uid.js';
+import { regexUuid } from './regex.js';
+import { UID } from './types.js';
 
 test('should generate a unique identifier', () => {
   const id = uid('identity');

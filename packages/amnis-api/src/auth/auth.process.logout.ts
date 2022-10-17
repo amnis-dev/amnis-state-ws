@@ -1,11 +1,11 @@
-import { uidList } from '@amnis/core/uid';
-import type { StateDelete } from '@amnis/core/state';
-import { userKey } from '@amnis/core/user';
-import { apiOutput } from '../api';
-import { mwSession } from '../mw.session';
-import { mwValidate } from '../mw.validate';
-import type { ApiProcess } from '../types';
-import type { ApiAuthIOLogout } from './auth.types';
+import { uidList } from '@amnis/core/uid.js';
+import type { StateDelete } from '@amnis/core/state/index.js';
+import { userKey } from '@amnis/core/user/index.js';
+import { apiOutput } from '../api.js';
+import { mwSession } from '../mw.session.js';
+import { mwValidate } from '../mw.validate.js';
+import type { ApiProcess } from '../types.js';
+import type { ApiAuthIOLogout } from './auth.types.js';
 
 /**
  * Renews a session holder's session and access tokens.

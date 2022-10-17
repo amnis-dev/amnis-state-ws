@@ -1,4 +1,4 @@
-import { contactKey, contactCreate } from './contact';
+import { contactKey, contactCreate } from './contact.js';
 
 /**
  * ============================================================

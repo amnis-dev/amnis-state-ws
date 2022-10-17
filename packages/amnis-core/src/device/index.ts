@@ -1,2 +1,2 @@
-export * from './device.types';
-export * from './device';
+export * from './device.types.js';
+export * from './device.js';

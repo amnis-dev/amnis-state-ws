@@ -7,9 +7,9 @@ import {
   <%= name %>Selectors,
   <%= name %>Actions,
 } from './<%= name %>';
-import { <%= name %>Default } from './<%= name %>.default';
+import { <%= name %>Default } from './<%= name %>.default.js';
 
-import { <%= name %>StoreSetup } from './<%= name %>.store';
+import { <%= name %>StoreSetup } from './<%= name %>.store.js';
 
 /**
  * ============================================================

@@ -1,8 +1,8 @@
-import { grantStringify, task } from './grant';
-import { roleCreate } from './role';
-import { StateCreate } from './state';
-import { systemCreate } from './system';
-import { websiteCreate } from './website';
+import { grantStringify, task } from './grant/index.js';
+import { roleCreate } from './role/index.js';
+import { StateCreate } from './state/index.js';
+import { systemCreate } from './system/index.js';
+import { websiteCreate } from './website/index.js';
 
 export function coreInitialState(systemName = 'New System'): StateCreate {
   const roleBasic = roleCreate({

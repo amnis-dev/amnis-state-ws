@@ -2,10 +2,10 @@ import {
   contactInitialState,
   contactSelectors,
   contactActions,
-} from './contact';
-import { contactDefault } from './contact.default';
+} from './contact.js';
+import { contactDefault } from './contact.default.js';
 
-import { contactStoreSetup } from './contact.store';
+import { contactStoreSetup } from './contact.store.js';
 
 /**
  * ============================================================

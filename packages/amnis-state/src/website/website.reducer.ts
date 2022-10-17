@@ -1,4 +1,4 @@
-import { websiteSlice } from './website';
+import { websiteSlice } from './website.js';
 
 export const reducerMap = {
   [websiteSlice.name]: websiteSlice.reducer,

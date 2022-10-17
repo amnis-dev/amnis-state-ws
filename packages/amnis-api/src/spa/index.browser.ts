@@ -1,2 +1,2 @@
-export * from './microsoft.browser';
-export * from './twitter.browser';
+export * from './microsoft.browser.js';
+export * from './twitter.browser.js';

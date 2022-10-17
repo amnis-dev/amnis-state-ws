@@ -1,6 +1,6 @@
-import type { Entity } from '../entity';
-import { fileCreate } from '../file';
-import type { Video, VideoBase, VideoBaseCreate } from './video.types';
+import type { Entity } from '../entity/index.js';
+import { fileCreate } from '../file/index.js';
+import type { Video, VideoBase, VideoBaseCreate } from './video.types.js';
 
 export const videoKey = 'video';
 

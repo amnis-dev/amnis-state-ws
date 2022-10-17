@@ -1,4 +1,4 @@
-import { historySlice } from './history';
+import { historySlice } from './history.js';
 
 export const reducerMap = {
   [historySlice.name]: historySlice.reducer,

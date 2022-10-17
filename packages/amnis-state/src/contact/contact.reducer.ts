@@ -1,4 +1,4 @@
-import { contactSlice } from './contact';
+import { contactSlice } from './contact.js';
 
 export const reducerMap = {
   [contactSlice.name]: contactSlice.reducer,

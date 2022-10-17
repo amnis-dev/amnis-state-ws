@@ -1,6 +1,6 @@
 import {
   ApiContext, ApiIOs, ApiProcesses,
-} from './types';
+} from './types.js';
 
 export function apiIO<
   P extends ApiProcesses = ApiProcesses,

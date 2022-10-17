@@ -4,20 +4,20 @@ import {
 import {
   User,
   userCreate,
-} from '../user';
-import {
+} from '../user/index.js';
+import type {
   Profile,
-} from '../profile';
+} from '../profile/index.js';
 import type {
   Role,
-} from '../role';
+} from '../role/index.js';
 import {
   grantStringify,
   task,
-} from '../grant/grant';
+} from '../grant/grant.js';
 import {
   entityCreate,
-} from '../entity/entity';
+} from '../entity/entity.js';
 
 function passCreateSync(plaintext: string): string {
   return hashSync(plaintext, 8);

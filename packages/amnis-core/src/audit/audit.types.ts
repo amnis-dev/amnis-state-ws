@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import type { UID } from '../types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import type { UID } from '../types.js';
 
 /**
  * A data structure for audit information.

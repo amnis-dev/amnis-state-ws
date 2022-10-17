@@ -1,5 +1,5 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity';
-import { UID } from '../types';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import { UID } from '../types.js';
 
 /**
  * A message to aid memory about the historic change.
