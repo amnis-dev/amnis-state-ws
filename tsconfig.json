@@ -2,6 +2,7 @@
   "extends": "@amnis/tsconfig-node",
   "compilerOptions": {
     "baseUrl": "./",
+    "lib": ["DOM", "ES2021"],
     "paths": {
       "@amnis/core/*": ["./packages/amnis-core/src/*"],
       "@amnis/db/*": ["./packages/amnis-db/src/*"],

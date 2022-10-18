@@ -1,5 +1,5 @@
 {
-  "name": "@amnis/state",
+  "name": "@amnis/process",
   "version": "0.4.4-alpha.2",
   "license": "MIT",
   "private": false,
@@ -13,19 +13,12 @@
     "lib",
     "dist"
   ],
-  "main": "./dist/index.node.js",
-  "module": "./dist/index.node.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "exports": {
     ".": {
-      "require": "./dist/index.node.js",
-      "import": "./dist/index.node.mjs"
-    },
-    "./browser": {
-      "require": "./dist/index.browser.js",
-      "import": "./dist/index.browser.mjs"
-    },
-    "./react": {
-      "import": "./dist/index.react.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./*": {
       "import": "./lib/*"
@@ -48,9 +41,9 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/api": "0.4.4-alpha.2",
-    "@amnis/auth": "0.4.4-alpha.2",
     "@amnis/core": "0.4.4-alpha.2",
-    "@amnis/db": "0.4.4-alpha.2"
+    "ajv": "^8.11.0",
+    "bcrypt": "^5.0.1",
+    "jsonwebtoken": "^8.5.1"
   }
 }

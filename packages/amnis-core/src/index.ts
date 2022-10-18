@@ -1,4 +1,6 @@
 export * from './types.js';
+export * from './db.types.js';
+export * from './fs.types.js';
 export * from './uid.js';
 export * from './core.js';
 export * from './actions.js';
@@ -14,6 +16,7 @@ export * from './file/index.js';
 export * from './grant/index.js';
 export * from './history/index.js';
 export * from './image/index.js';
+export * from './io/index.js';
 export * from './locale/index.js';
 export * from './log/index.js';
 export * from './note/index.js';

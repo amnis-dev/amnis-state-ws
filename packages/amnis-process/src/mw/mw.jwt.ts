@@ -1,19 +1,15 @@
-import { jwtVerify } from '@amnis/auth/token.js';
-import { selectors } from '@amnis/core/selectors.js';
-import { apiOutput } from './api.js';
-import { apiConfig } from './config.js';
-import type {
-  ApiMiddleware,
-} from './types.js';
+import { selectors, ioOutput, IoMiddleware } from '@amnis/core/index.js';
+import { jwtVerify } from '../crypto/index.js';
+import { processConfig } from '../config.js';
 
 /**
  * Ensures a JWT token is set.
  */
-export const mwJwt: ApiMiddleware = () => (next) => (context) => async (input) => {
+export const mwJwt: IoMiddleware = () => (next) => (context) => async (input) => {
   const { jwtEncoded } = input;
 
   if (!jwtEncoded) {
-    const output = apiOutput();
+    const output = ioOutput();
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -28,13 +24,13 @@ export const mwJwt: ApiMiddleware = () => (next) => (context) => async (input) =
    */
   const publicKey = selectors.selectPublicKey(
     context.store.getState(),
-    apiConfig.API_AUTH_CRYPTO_TAG,
+    processConfig.PROCESS_CRYPTO_TAG,
   );
 
   input.jwt = jwtVerify(jwtEncoded, publicKey);
 
   if (!input.jwt) {
-    const output = apiOutput();
+    const output = ioOutput();
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
       level: 'error',
