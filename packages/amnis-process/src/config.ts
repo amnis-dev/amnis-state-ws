@@ -13,6 +13,9 @@ const PROCESS_RSA_PRIVATE_KEY_TYPE = process.env.AMNIS_PROCESS_RSA_PRIVATE_KEY_T
 
 const PROCESS_CRYPTO_TAG = process.env.AMNIS_PROCESS_CRYPTO_TAG || 'process-crypto';
 
+const PROCESS_TWITTER_OAUTH2_URL = process.env.AMNIS_PROCESS_TWITTER_OAUTH2_URL || 'https://api.twitter.com/2/';
+const PROCESS_MICROSOFT_OAUTH2_URL = process.env.AMNIS_PROCESS_MICROSOFT_OAUTH2_URL || 'https://login.microsoftonline.com/consumers/oauth2/v2.0/';
+
 export const processConfig = {
   PROCESS_SESSION_SECRET,
   PROCESS_TOKEN_LIFE,
@@ -21,6 +24,8 @@ export const processConfig = {
   PROCESS_RSA_PUBLIC_KEY_TYPE,
   PROCESS_RSA_PRIVATE_KEY_TYPE,
   PROCESS_CRYPTO_TAG,
+  PROCESS_TWITTER_OAUTH2_URL,
+  PROCESS_MICROSOFT_OAUTH2_URL,
 };
 
 export default processConfig;

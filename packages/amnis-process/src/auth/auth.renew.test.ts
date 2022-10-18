@@ -1,15 +1,11 @@
-import { passCreateSync } from '@amnis/auth/pass.js';
-import { sessionEncode } from '@amnis/auth/session.js';
-import { dateNumeric } from '@amnis/core/core.js';
-import { profileCreate } from '@amnis/core/profile/index.js';
-import { sessionCreate } from '@amnis/core/session/index.js';
+import { memory } from '@amnis/db/index.js';
 import { storeSetup } from '@amnis/core/test/book.store.js';
-import { userCreate } from '@amnis/core/user/index.js';
-import { memory } from '@amnis/db/memory/index.js';
-import { apiIO } from '../api.io.node.js';
-import { ApiInput } from '../types.js';
-import { validatorsSetup } from '../validators.js';
-import { apiAuthProcess } from './auth.process.js';
+import {
+  ioProcess, IoInput, userCreate, profileCreate, sessionCreate, dateNumeric,
+} from '@amnis/core/index.js';
+import { sessionEncode, passCreateSync } from '../crypto/index.js';
+import { validateSetup } from '../validate.js';
+import { authProcess } from './index.js';
 import schemaAuth from './auth.schema.json';
 
 /**
@@ -53,14 +49,14 @@ memory.create({
 /**
  * Setup the io
  */
-const io = apiIO({
+const io = ioProcess({
   store: appStore,
   database: memory,
-  validators: validatorsSetup(schemaAuth),
-}, apiAuthProcess);
+  validators: validateSetup(schemaAuth),
+}, authProcess);
 
 test('Should be able to renew session and tokens', async () => {
-  const input: ApiInput = {
+  const input: IoInput = {
     sessionEncoded,
     body: {},
   };
@@ -79,7 +75,7 @@ test('Should be able to renew session and tokens', async () => {
 });
 
 test('Should be able to renew session and tokens with user and profile information', async () => {
-  const input: ApiInput = {
+  const input: IoInput = {
     sessionEncoded,
     body: {
       info: true,

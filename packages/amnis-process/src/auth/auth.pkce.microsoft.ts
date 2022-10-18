@@ -1,20 +1,24 @@
 import fetch from 'cross-fetch';
-
-import { dateNumeric } from '@amnis/core/core.js';
-import type { Database } from '@amnis/core/db.types.js';
-import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token/index.js';
-import type { StateCreate } from '@amnis/core/state/index.js';
-
-import { jwtDecode } from '@amnis/auth/token.js';
 import type { Store } from '@reduxjs/toolkit/index.js';
-import { selectors } from '@amnis/core/selectors.js';
-import { System, systemKey } from '@amnis/core/system/index.js';
-import type { ApiAuthBodyPkce } from './auth.types.js';
-import { apiConfig } from '../config.js';
-import { ApiOutput } from '../types.js';
+import {
+  AuthPkce,
+  Database,
+  dateNumeric,
+  ioOutput,
+  IoOutput,
+  JWTEncoded,
+  selectors,
+  StateCreate,
+  System,
+  systemKey,
+  Token,
+  tokenCreate,
+} from '@amnis/core/index.js';
+
+import { processConfig } from '../config.js';
 import { loginSuccessProcess, userFindByName } from './auth.utility.js';
 import { register } from './auth.register.js';
-import { apiOutput } from '../api.js';
+import { jwtDecode } from '../crypto/index.js';
 
 /**
  * OAuth2 Response.
@@ -44,12 +48,12 @@ export interface MicrosoftId {
 export async function authMicrosoft(
   store: Store,
   database: Database,
-  auth: Omit<ApiAuthBodyPkce, 'platform'>,
-): Promise<ApiOutput<StateCreate>> {
+  auth: Omit<AuthPkce, 'platform'>,
+): Promise<IoOutput<StateCreate>> {
   const tokenEndpoint = auth.tenantId
     ? `https://login.microsoftonline.${auth.gov ? 'us' : 'com'}/${auth.tenantId}/oauth2/v2.0/token`
-    : `${apiConfig.API_MICROSOFT_OAUTH2_URL}token`;
-  const output = apiOutput<StateCreate>();
+    : `${processConfig.PROCESS_MICROSOFT_OAUTH2_URL}token`;
+  const output = ioOutput<StateCreate>();
 
   /**
    * STEP 1

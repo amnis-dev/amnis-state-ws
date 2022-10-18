@@ -1,14 +1,17 @@
-import type { StateCreate } from '@amnis/core/state/index.js';
-import type { Token } from '@amnis/core/token/index.js';
-import { System } from '@amnis/core/system/index.js';
-import { profileCreate } from '@amnis/core/profile/index.js';
-import { userCheck, userCreate } from '@amnis/core/user/index.js';
-import { sessionEncode } from '@amnis/auth/session.js';
-import type { Database } from '@amnis/core/db.types.js';
-import type { LogBaseCreate } from '@amnis/core/log/index.js';
+import {
+  Database,
+  IoOutput,
+  ioOutput,
+  LogBaseCreate,
+  profileCreate,
+  StateCreate,
+  System,
+  Token,
+  userCheck,
+  userCreate,
+} from '@amnis/core/index.js';
+import { sessionEncode } from '../index.js';
 
-import { apiOutput } from '../api.js';
-import { ApiOutput } from '../types.js';
 import { sessionGenerate, tokenGenerate } from './auth.utility.js';
 
 /**
@@ -31,11 +34,11 @@ export async function register(
   system: System | undefined,
   username: string,
   options: RegisterOptions,
-): Promise<ApiOutput<StateCreate>> {
+): Promise<IoOutput<StateCreate>> {
   const {
     password, nameDisplay, createSession, withTokens, otherTokens,
   } = options;
-  const output = apiOutput<StateCreate>();
+  const output = ioOutput<StateCreate>();
   const logs: LogBaseCreate[] = [];
 
   if (!system) {

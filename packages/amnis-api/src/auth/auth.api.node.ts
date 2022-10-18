@@ -1,18 +1,20 @@
-import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { StateCreate, StateDelete, StateUpdate } from '@amnis/core/state/index.js';
+import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
+import {
+  StateCreate,
+  StateDelete,
+  StateUpdate,
+  IoOutputJson,
+  AuthLogin,
+  AuthLogout,
+  AuthPkce,
+  AuthRenew,
+  AuthVerify,
+} from '@amnis/core/index.js';
 import { apiConfig } from '../config.js';
 import {
   apiQueries,
 } from './auth.queries.js';
-import { ApiJSON } from '../types.js';
-import {
-  ApiAuthBodyLogin,
-  ApiAuthBodyLogout,
-  ApiAuthBodyPkce,
-  ApiAuthBodyRenew,
-  ApiAuthBodyVerify,
-} from './auth.types.js';
 
 global.Headers = Headers;
 global.Request = Request;
@@ -28,36 +30,36 @@ export const apiAuth = createApi({
   endpoints: (builder) => ({
 
     login: builder.query<
-    ApiJSON<StateCreate>,
-    ApiAuthBodyLogin
+    IoOutputJson<StateCreate>,
+    AuthLogin
     >({
       query: queries.login,
     }),
 
     logout: builder.query<
-    ApiJSON<StateDelete>,
-    ApiAuthBodyLogout
+    IoOutputJson<StateDelete>,
+    AuthLogout
     >({
       query: queries.logout,
     }),
 
     pkce: builder.query<
-    ApiJSON<StateCreate>,
-    ApiAuthBodyPkce
+    IoOutputJson<StateCreate>,
+    AuthPkce
     >({
       query: queries.pkce,
     }),
 
     renew: builder.query<
-    ApiJSON<StateUpdate>,
-    ApiAuthBodyRenew
+    IoOutputJson<StateUpdate>,
+    AuthRenew
     >({
       query: queries.renew,
     }),
 
     verify: builder.query<
-    ApiJSON<boolean>,
-    ApiAuthBodyVerify
+    IoOutputJson<boolean>,
+    AuthVerify
     >({
       query: queries.verify,
     }),

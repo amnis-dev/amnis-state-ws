@@ -1,19 +1,17 @@
-import { uidList } from '@amnis/core/uid.js';
-import type { StateDelete } from '@amnis/core/state/index.js';
-import { userKey } from '@amnis/core/user/index.js';
-import { apiOutput } from '../api.js';
-import { mwSession } from '../mw.session.js';
-import { mwValidate } from '../mw.validate.js';
-import type { ApiProcess } from '../types.js';
-import type { ApiAuthIOLogout } from './auth.types.js';
+import {
+  userKey, AuthLogout, Io, ioOutput, IoProcess, StateDelete, uidList,
+} from '@amnis/core/index.js';
+import { mwSession, mwValidate } from '../mw/index.js';
 
 /**
  * Renews a session holder's session and access tokens.
  */
-const process: ApiProcess<ApiAuthIOLogout> = () => (
+const process: IoProcess<
+Io<AuthLogout, StateDelete>
+> = () => (
   async (input) => {
     const { session } = input;
-    const output = apiOutput<StateDelete>();
+    const output = ioOutput<StateDelete>();
 
     /**
      * Delete the session cookie.

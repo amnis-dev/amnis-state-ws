@@ -108,7 +108,3 @@ export interface AuthQueries {
   renew: IoQuery<AuthRenew>;
   verify: IoQuery<AuthVerify>;
 }
-
-export type AuthIOLogin = Io<AuthLogin, StateCreate>;
-export type AuthIOLogout = Io<AuthLogout, StateDelete>;
-export type AuthIOPkce = Io<AuthPkce, StateCreate>;

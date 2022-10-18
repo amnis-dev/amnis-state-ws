@@ -1,10 +1,10 @@
 import { authProcessLogin } from './auth.login.js';
 import { authProcessLogout } from './auth.logout.js';
-import { authProcessPcke } from './auth.process.pkce.js';
-import { authProcessRenew } from './auth.process.renew.js';
-import { authProcessVerify } from './auth.process.verify.js';
+import { authProcessPcke } from './auth.pkce.js';
+import { authProcessRenew } from './auth.renew.js';
+import { authProcessVerify } from './auth.verify.js';
 
-export const apiAuthProcess = {
+export const authProcess = {
   login: authProcessLogin,
   logout: authProcessLogout,
   pkce: authProcessPcke,
@@ -12,4 +12,4 @@ export const apiAuthProcess = {
   verify: authProcessVerify,
 };
 
-export default apiAuthProcess;
+export default authProcess;

@@ -41,7 +41,6 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.4.4-alpha.2",
-    "@amnis/auth": "0.4.4-alpha.2"
+    "@amnis/core": "0.4.4-alpha.2"
   }
 }

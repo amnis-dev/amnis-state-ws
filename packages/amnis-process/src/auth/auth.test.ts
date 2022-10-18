@@ -1,17 +1,20 @@
-import { dateNumeric } from '@amnis/core/core.js';
-import { uid } from '@amnis/core/uid.js';
-import { userCreate, User } from '@amnis/core/user/index.js';
-import type { Session } from '@amnis/core/session/index.js';
-import { Profile, profileCreate } from '@amnis/core/profile/index.js';
-import { passCreateSync } from '@amnis/auth/pass.js';
+import {
+  dateNumeric,
+  ioProcess,
+  Profile,
+  profileCreate,
+  Session,
+  Token,
+  tokenCreate,
+  uid,
+  User,
+  userCreate,
+} from '@amnis/core/index.js';
 import { memory } from '@amnis/db/memory/index.js';
 import { storeSetup } from '@amnis/core/test/book.store.js';
-import { Token, tokenCreate } from '@amnis/core/token/index.js';
-import { jwtEncode } from '@amnis/auth/token.js';
-import { generateRsa } from '@amnis/auth/rsa.js';
-import { apiAuthProcess } from './auth.process.js';
-import { apiIO } from '../api.io.node.js';
-import { validatorsSetup } from '../validators.js';
+import { generateRsa, jwtEncode, passCreateSync } from '../crypto/index.js';
+import { authProcess } from './index.js';
+import { validateSetup } from '../validate.js';
 import schemaAuth from './auth.schema.json';
 
 /**
@@ -73,11 +76,11 @@ memory.create({
 /**
  * Setup the processes
  */
-const processes = apiIO({
+const processes = ioProcess({
   store: appStore,
   database: memory,
-  validators: validatorsSetup(schemaAuth),
-}, apiAuthProcess);
+  validators: validateSetup(schemaAuth),
+}, authProcess);
 
 /**
  * ============================================================

@@ -1,19 +1,23 @@
 import fetch from 'cross-fetch';
-
-import { dateNumeric } from '@amnis/core/core.js';
-import type { Database } from '@amnis/core/db.types.js';
-import { JWTEncoded, Token, tokenCreate } from '@amnis/core/token/index.js';
-import type { StateCreate } from '@amnis/core/state/index.js';
-
 import type { Store } from '@reduxjs/toolkit/index.js';
-import { selectors } from '@amnis/core/selectors.js';
-import { System, systemKey } from '@amnis/core/system/index.js';
-import type { ApiAuthBodyPkce } from './auth.types.js';
-import { apiConfig } from '../config.js';
-import { ApiOutput } from '../types.js';
+import {
+  AuthPkce,
+  Database,
+  dateNumeric,
+  ioOutput,
+  IoOutput,
+  JWTEncoded,
+  selectors,
+  StateCreate,
+  System,
+  systemKey,
+  Token,
+  tokenCreate,
+} from '@amnis/core/index.js';
+
+import { processConfig } from '../config.js';
 import { loginSuccessProcess, userFindByName } from './auth.utility.js';
 import { register } from './auth.register.js';
-import { apiOutput } from '../api.js';
 
 /**
  * OAuth2 Response.
@@ -37,15 +41,15 @@ export interface TwitterUser {
   username: string;
 }
 
-const tokenEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}oauth2/token`;
-const userEndpoint = `${apiConfig.API_TWITTER_OAUTH2_URL}users/me`;
+const tokenEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}oauth2/token`;
+const userEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}users/me`;
 
 export async function authTwitter(
   store: Store,
   database: Database,
-  auth: Omit<ApiAuthBodyPkce, 'platform'>,
-): Promise<ApiOutput<StateCreate>> {
-  const output = apiOutput<StateCreate>();
+  auth: Omit<AuthPkce, 'platform'>,
+): Promise<IoOutput<StateCreate>> {
+  const output = ioOutput<StateCreate>();
   /**
    * STEP 1
    * Get the access and refresh tokens.
