@@ -3,7 +3,7 @@ import {
 } from '@amnis/core/index.js';
 import { passCompare } from '../crypto/index.js';
 import { mwValidate } from '../mw/index.js';
-import { userFindByName, outputBadCredentials, loginSuccessProcess } from './auth.utility.js';
+import { userFindByName, outputBadCredentials, loginSuccessProcess } from '../utility/index.js';
 
 const process: IoProcess<
 Io<AuthLogin, StateCreate>

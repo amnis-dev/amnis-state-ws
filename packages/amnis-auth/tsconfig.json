@@ -8,7 +8,7 @@
     "sourceMap": false,
     "rootDir": "./src"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../amnis-process/src/crypto/auth.test.ts"],
   "references": [
     { "path": "../amnis-core/tsconfig.json" }
   ]

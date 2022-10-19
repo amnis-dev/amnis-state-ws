@@ -2,7 +2,7 @@ import { uid } from '@amnis/core/uid.js';
 import { Role, roleKey } from '@amnis/core/role/index.js';
 import { systemCreate } from '@amnis/core/system/index.js';
 import { memory } from '@amnis/db/memory/index.js';
-import { register } from './auth.register.js';
+import { register } from './register.js';
 
 const system = systemCreate({
   name: 'Amnis Test System',

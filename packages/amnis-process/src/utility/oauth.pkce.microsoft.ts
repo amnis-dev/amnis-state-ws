@@ -16,9 +16,9 @@ import {
 } from '@amnis/core/index.js';
 
 import { processConfig } from '../config.js';
-import { loginSuccessProcess, userFindByName } from './auth.utility.js';
-import { register } from './auth.register.js';
 import { jwtDecode } from '../crypto/index.js';
+import { loginSuccessProcess, userFindByName } from './common.js';
+import { register } from './register.js';
 
 /**
  * OAuth2 Response.
@@ -45,7 +45,7 @@ export interface MicrosoftId {
   email: string,
 }
 
-export async function authMicrosoft(
+export async function oauthMicrosoft(
   store: Store,
   database: Database,
   auth: Omit<AuthPkce, 'platform'>,
@@ -175,4 +175,4 @@ export async function authMicrosoft(
   return registrationOutput;
 }
 
-export default { authMicrosoft };
+export default oauthMicrosoft;

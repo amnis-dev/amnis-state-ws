@@ -12,7 +12,7 @@ import {
 } from '@amnis/core/index.js';
 import { sessionEncode } from '../index.js';
 
-import { sessionGenerate, tokenGenerate } from './auth.utility.js';
+import { sessionGenerate, tokenGenerate } from './common.js';
 
 /**
  * Options when processsing a registration.

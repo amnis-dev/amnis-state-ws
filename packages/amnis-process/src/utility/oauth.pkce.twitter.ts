@@ -16,8 +16,8 @@ import {
 } from '@amnis/core/index.js';
 
 import { processConfig } from '../config.js';
-import { loginSuccessProcess, userFindByName } from './auth.utility.js';
-import { register } from './auth.register.js';
+import { loginSuccessProcess, userFindByName } from './common.js';
+import { register } from './register.js';
 
 /**
  * OAuth2 Response.
@@ -44,7 +44,7 @@ export interface TwitterUser {
 const tokenEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}oauth2/token`;
 const userEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}users/me`;
 
-export async function authTwitter(
+export async function oauthTwitter(
   store: Store,
   database: Database,
   auth: Omit<AuthPkce, 'platform'>,
@@ -162,4 +162,4 @@ export async function authTwitter(
   return registrationOutput;
 }
 
-export default { authTwitter };
+export default oauthTwitter;

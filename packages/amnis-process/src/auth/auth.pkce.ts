@@ -5,8 +5,7 @@ import {
   IoProcess,
   StateCreate,
 } from '@amnis/core/index.js';
-import { authMicrosoft } from './auth.pkce.microsoft.js';
-import { authTwitter } from './auth.pkce.twitter.js';
+import { oauthTwitter, oauthMicrosoft } from '../utility/index.js';
 import { mwValidate } from '../mw/index.js';
 
 const process: IoProcess<
@@ -21,11 +20,11 @@ Io<AuthPkce, StateCreate>
 
     switch (platform) {
       case 'microsoft': {
-        const pkceOutput = await authMicrosoft(store, database, pkceAuth);
+        const pkceOutput = await oauthMicrosoft(store, database, pkceAuth);
         return pkceOutput;
       }
       case 'twitter': {
-        const pkceOutput = await authTwitter(store, database, pkceAuth);
+        const pkceOutput = await oauthTwitter(store, database, pkceAuth);
         return pkceOutput;
       }
       default:

@@ -12,7 +12,7 @@ import {
 import { processConfig } from '../config.js';
 import { sessionEncode } from '../crypto/index.js';
 import { mwSession, mwValidate } from '../mw/index.js';
-import { profileFetch, tokenGenerate, userFindById } from './auth.utility.js';
+import { profileFetch, tokenGenerate, userFindById } from '../utility/common.js';
 
 /**
  * Renews a session holder's session and access tokens.
