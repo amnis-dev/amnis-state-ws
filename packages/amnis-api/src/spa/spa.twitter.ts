@@ -10,7 +10,7 @@ import {
 } from './spa.pkce.js';
 import {
   apiAuth,
-} from '../auth/auth.api.node.js';
+} from '../auth/auth.api.js';
 
 export interface PlatformTwitterConfig {
   authorizeEp: string;

@@ -12,10 +12,10 @@ import {
 } from '@amnis/core/index.js';
 import { memory } from '@amnis/db/memory/index.js';
 import { storeSetup } from '@amnis/core/test/book.store.js';
+import { schemaAuth } from '@amnis/core/schemas/index.js';
 import { generateRsa, jwtEncode, passCreateSync } from '../crypto/index.js';
 import { authProcess } from './index.js';
 import { validateSetup } from '../validate.js';
-import schemaAuth from './auth.schema.json';
 
 /**
  * Setup the required application store.

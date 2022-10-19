@@ -13,8 +13,7 @@
     "src/**/*.json"
   ],
   "references": [
-      { "path": "../amnis-core/tsconfig.json" },
-      { "path": "../amnis-auth/tsconfig.json" },
-      { "path": "../amnis-db/tsconfig.json" }
+    { "path": "../amnis-core/tsconfig.json" },
+    { "path": "../amnis-db/tsconfig.json" }
   ]
 }

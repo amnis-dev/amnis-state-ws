@@ -6,3 +6,6 @@ lib/
 # Ignore js files
 # *.js
 validators/
+
+# Test
+test/

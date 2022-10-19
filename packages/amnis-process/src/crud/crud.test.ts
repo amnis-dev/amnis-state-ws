@@ -1,7 +1,7 @@
 import {
   storeSetup, books, bookKey,
 } from '@amnis/core/test/book.store.js';
-import coreSchema from '@amnis/core/core.schema.json';
+import { schemaState } from '@amnis/core/schemas/index.js';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import {
   dateNumeric, historyKey, IoInput, ioProcess, JWTEncoded, StateCreate, uid,
@@ -13,7 +13,7 @@ import { jwtEncode } from '../crypto/index.js';
 
 const appStore = storeSetup();
 
-const validators = validateSetup([coreSchema, bookSchema]);
+const validators = validateSetup([schemaState, bookSchema]);
 
 /**
  * Setup the crud io.

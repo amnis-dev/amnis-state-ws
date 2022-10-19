@@ -4,7 +4,7 @@ import {
 import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
 import { apiExtraReducers } from '@amnis/api/reducers.js';
 import { Session, sessionKey } from '@amnis/core/session/index.js';
-import { apiAuth } from '@amnis/api/auth/auth.api.browser.js';
+import { apiAuth } from '@amnis/api/index.js';
 import type {
   SessionMeta,
 } from './session.types.js';

@@ -1,9 +1,4 @@
 import {
-  hashSync,
-} from 'bcrypt';
-
-import type { StateCreate } from '@amnis/core/state/state.types.js';
-import {
   System,
   userKey,
   systemCreate,
@@ -18,13 +13,10 @@ import {
   entityCreate,
   systemKey,
   websiteKey,
-} from '@amnis/core/index.node.js';
+  StateCreate,
+} from '@amnis/core/index.js';
 
-function passCreateSync(plaintext: string): string {
-  return hashSync(plaintext, 8);
-}
-
-export function entitiesInitial(): StateCreate {
+export function dataInitial(): StateCreate {
   const roles: Role[] = [
     entityCreate<Role>('role', {
       name: 'Basic',
@@ -54,7 +46,8 @@ export function entitiesInitial(): StateCreate {
     userCreate({
       name: 'admin',
       email: 'example@email.address',
-      password: passCreateSync('passwd12'),
+      /** passwd12 */
+      password: '$2a$08$lSaPLJYgwo7xa8SO9eV67uefbTYJ3y3IeaYx1wAC3MqGhwnOjYScO',
       $roles: [roles[1].$id],
       $permits: [],
     }),
@@ -69,7 +62,7 @@ export function entitiesInitial(): StateCreate {
 
   const systems: System[] = [
     systemCreate({
-      name: 'Default System',
+      name: 'Main System',
       $adminRole: roles[1].$id,
       $initialRoles: [roles[0].$id],
     }),
@@ -83,4 +76,4 @@ export function entitiesInitial(): StateCreate {
   };
 }
 
-export default entitiesInitial;
+export default dataInitial;

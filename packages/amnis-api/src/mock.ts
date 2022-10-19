@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { authHeader } from '@amnis/auth/header.js';
-import type { JWTEncoded } from '@amnis/core/token/index.js';
+import {
+  IoInput, ioOutput, IoOutput, IoProcesses, JWTEncoded,
+} from '@amnis/core/index.js';
 import { rest, RequestHandler } from 'msw';
 import { setupServer } from 'msw/node';
-import type {
-  ApiInput, ApiOutput, ApiIOs,
-} from './types.js';
 
 export function apiMockGenerateHandlers(
-  apiIOs: ApiIOs,
+  apiIOs: IoProcesses,
   baseUrl: string,
 ) {
   const mockHandlers: RequestHandler[] = Object.keys(apiIOs).map((key) => (
-    rest.post<ApiInput['body'], never, ApiOutput['json']>(
+    rest.post<IoInput['body'], never, IoOutput['json']>(
       `${baseUrl}${key}`,
       async (req, res, ctx) => {
         const { body } = req;
@@ -21,7 +19,7 @@ export function apiMockGenerateHandlers(
         /**
          * Setup the process input.
          */
-        const input: ApiInput = { body };
+        const input: IoInput = { body };
 
         /**
          * Set the encoded session cookie on the input.
@@ -32,12 +30,12 @@ export function apiMockGenerateHandlers(
          * Capture the authorization token if sent with the request.
          */
         const authorization = req.headers.get('Authorization');
-        input.jwtEncoded = authHeader.authorizationParse(authorization);
+        input.jwtEncoded = authorization?.split(' ')[1] as JWTEncoded;
 
         /**
          * Call the api process.
          */
-        const output = await apiIOs[key](input);
+        const output = ioOutput();
 
         /**
          * Set the response cookies based on the output cookies array.

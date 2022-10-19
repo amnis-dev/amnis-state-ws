@@ -31,7 +31,7 @@ import {
 } from '@amnis/state/index.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { passCreateSync } from '@amnis/auth/pass.js';
+import { passCreateSync } from '@amnis/process/index.js';
 import { memory } from '@amnis/db/memory/index.js';
 import { logSelectors } from '@amnis/state/log/index.js';
 import { tokenSelectors } from '@amnis/state/token/index.js';

@@ -32,3 +32,5 @@ export * from './token/index.js';
 export * from './user/index.js';
 export * from './video/index.js';
 export * from './website/index.js';
+
+export * from './schemas/index.js';

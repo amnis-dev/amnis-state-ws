@@ -1,4 +1,4 @@
-import { storeSetup } from './env.node/store.js';
+import { storeSetup } from './store.js';
 
 test('should return state', async () => {
   const store = storeSetup();

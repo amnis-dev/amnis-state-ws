@@ -6,7 +6,7 @@
     "paths": {
       "@amnis/core/*": ["./packages/amnis-core/src/*"],
       "@amnis/db/*": ["./packages/amnis-db/src/*"],
-      "@amnis/auth/*": ["./packages/amnis-auth/src/*"],
+      "@amnis/process/*": ["./packages/amnis-process/src/*"],
       "@amnis/api/*": ["./packages/amnis-api/src/*"],
       "@amnis/state/*": ["./packages/amnis-state/src/*"],
       "@reduxjs/toolkit": ["./node_modules/@reduxjs/toolkit/dist/index.d.ts"],
@@ -17,5 +17,5 @@
       "@reduxjs/toolkit/query/react/*": ["./node_modules/@reduxjs/toolkit/dist/query/react/*"],
     }
   },
-  "include": ["./packages/**/*.ts*", "./test/**/*.ts*"]
+  "include": ["./packages/**/*.ts*"]
 }

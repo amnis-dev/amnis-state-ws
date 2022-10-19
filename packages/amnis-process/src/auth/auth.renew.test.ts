@@ -3,10 +3,10 @@ import { storeSetup } from '@amnis/core/test/book.store.js';
 import {
   ioProcess, IoInput, userCreate, profileCreate, sessionCreate, dateNumeric,
 } from '@amnis/core/index.js';
+import { schemaAuth } from '@amnis/core/schemas/index.js';
 import { sessionEncode, passCreateSync } from '../crypto/index.js';
 import { validateSetup } from '../validate.js';
 import { authProcess } from './index.js';
-import schemaAuth from './auth.schema.json';
 
 /**
  * Setup the required application store.

@@ -1,14 +1,13 @@
-import type { ApiContext, Validators } from '@amnis/api/index.node.js';
 import {
-  coreActions, roleKey, StateCreate, systemKey,
-} from '@amnis/core/index.node.js';
-import { memory } from '@amnis/db/memory/index.js';
-
-import { entitiesInitial } from './entities.js';
+  coreActions,
+  IoContext, roleKey, StateCreate, systemKey, Validators,
+} from '@amnis/core/index.js';
+import { memory } from '@amnis/db/index.js';
+import { dataInitial } from './data.js';
 import { store as storeDefault } from './store.js';
-import { systemActions } from '../system/index.js';
+import { systemActions } from './system/index.js';
 
-export interface ContextOptions extends Partial<ApiContext> {
+export interface ContextOptions extends Partial<IoContext> {
   /**
    * Initializes with default data (if not already set)
    */
@@ -17,20 +16,20 @@ export interface ContextOptions extends Partial<ApiContext> {
   /**
    * Set initial entity data.
    */
-  entities?: StateCreate;
+  data?: StateCreate;
 }
 
 /**
  * Initializes a service context with optional parameters.
  */
-export async function contextCreate(options: ContextOptions = {}): Promise<ApiContext> {
+export async function contextSetup(options: ContextOptions = {}): Promise<IoContext> {
   const {
-    store, validators, database, initialize, entities,
+    store, validators, database, initialize, data,
   } = options;
   const storeNext = store ?? storeDefault;
   const validatorsNext = (validators || []) as Validators;
   const databaseNext = database ?? memory;
-  const entitiesNext = entities ?? entitiesInitial();
+  const dataNext = data ?? dataInitial();
 
   if (initialize) {
     const readResult = await databaseNext.read({
@@ -42,7 +41,7 @@ export async function contextCreate(options: ContextOptions = {}): Promise<ApiCo
    * Initialize the system if one isn't found.
    */
     if (!readResult[systemKey]?.length) {
-      const createResult = await databaseNext.create(entitiesNext);
+      const createResult = await databaseNext.create(dataNext);
 
       if (initialize === true) {
         const system = createResult[systemKey][0];
@@ -71,4 +70,4 @@ export async function contextCreate(options: ContextOptions = {}): Promise<ApiCo
   };
 }
 
-export default contextCreate;
+export default contextSetup;
