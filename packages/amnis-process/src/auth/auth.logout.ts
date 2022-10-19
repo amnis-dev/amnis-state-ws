@@ -32,7 +32,7 @@ Io<AuthLogout, StateDelete>
 );
 
 export const authProcessLogout = mwSession()(
-  mwValidate('ApiAuthBodyLogout')(
+  mwValidate('AuthLogout')(
     process,
   ),
 );

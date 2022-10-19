@@ -39,7 +39,7 @@ Io<AuthPkce, StateCreate>
   }
 );
 
-export const authProcessPcke = mwValidate('ApiAuthBodyPkce')(
+export const authProcessPcke = mwValidate('AuthPkce')(
   process,
 );
 

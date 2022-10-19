@@ -42,7 +42,7 @@ Io<AuthLogin, StateCreate>
   }
 );
 
-export const authProcessLogin = mwValidate('ApiAuthBodyLogin')(
+export const authProcessLogin = mwValidate('AuthLogin')(
   process,
 );
 

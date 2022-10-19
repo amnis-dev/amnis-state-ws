@@ -98,6 +98,6 @@ Io<AuthRenew, StateCreate>
   }
 );
 
-export const authProcessRenew = mwSession()(mwValidate('ApiAuthBodyRenew')(process));
+export const authProcessRenew = mwSession()(mwValidate('AuthRenew')(process));
 
 export default { authProcessRenew };

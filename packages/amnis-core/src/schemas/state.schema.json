@@ -1,5 +1,5 @@
 {
-  "$id": "core",
+  "$id": "state",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "#/definitions/Core",
   "definitions": {
@@ -22,10 +22,10 @@
       "additionalProperties": false
     },
     "StateCreate": {
-      "$ref": "#/definitions/State%3Cdef-interface-1570551179-164-1041-1570551179-0-2342602488886%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cdef-interface-1570551179-176-1053-1570551179-0-2354602488886%5B%5D%3E",
       "description": "A common stateful result from creations. A state object with entities that were created."
     },
-    "State<def-interface-1570551179-164-1041-1570551179-0-2342602488886[]>": {
+    "State<def-interface-1570551179-176-1053-1570551179-0-2354602488886[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
@@ -190,9 +190,9 @@
       "description": "StateQuery range"
     },
     "StateUpdate": {
-      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1659-1845-2094046105-0-2134600678921%5B%5D%3E"
+      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1733-1919-2094046105-0-2306600678921%5B%5D%3E"
     },
-    "State<def-alias-2094046105-1659-1845-2094046105-0-2134600678921[]>": {
+    "State<def-alias-2094046105-1733-1919-2094046105-0-2306600678921[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",

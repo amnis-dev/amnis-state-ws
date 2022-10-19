@@ -24,7 +24,7 @@
     "test:core": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-core/",
     "test:db": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-db/",
     "test:fs": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-fs/",
-    "test:auth": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-auth/",
+    "test:process": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-process/",
     "test:api": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-api/",
     "test:state": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-state/",
     "test:root": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) test/*",
@@ -35,7 +35,7 @@
     "start:server": "nodemon packages/amnis-express/test/server",
     "gen:core": "hygen state core --path packages/amnis-core/src",
     "gen:entity": "hygen state entity --path packages/amnis-state/src",
-    "gen:schema": "ts-node -P scripts/tsconfig.json scripts/schema",
+    "gen:schema": "node scripts/schema.js",
     "gen:validators": "ts-node -P scripts/tsconfig.json scripts/validators",
     "gen:code": "yarn gen:schema && yarn gen:validators",
     "delete-node-modules": "npx rimraf ./**/node_modules"

@@ -31,7 +31,7 @@ Io<AuthVerify, boolean>
   }
 );
 
-export const authProcessVerify = mwValidate('ApiAuthBodyVerify')(
+export const authProcessVerify = mwValidate('AuthVerify')(
   process,
 );
 
