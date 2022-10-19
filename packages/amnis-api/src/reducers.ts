@@ -13,8 +13,8 @@ import { sessionKey } from '@amnis/core/session/index.js';
 import { profileKey } from '@amnis/core/profile/index.js';
 import { LogBaseCreate, logCreate, logKey } from '@amnis/core/log/index.js';
 import type { UID } from '@amnis/core/types.js';
-import { apiAuth } from './auth/auth.api.browser.js';
-import { apiCrud } from './crud/crud.api.browser.js';
+import { apiAuth } from './auth/auth.api.js';
+import { apiCrud } from './crud/crud.api.js';
 import type { ApiOutput } from './types.js';
 
 export function apiExtraReducers<E extends Entity>(

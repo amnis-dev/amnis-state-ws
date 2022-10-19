@@ -3,31 +3,26 @@ import {
 } from '@amnis/core/test/book.store.js';
 import coreSchema from '@amnis/core/core.schema.json';
 import bookSchema from '@amnis/core/test/book.schema.json';
-import { memory, memoryClear } from '@amnis/db/memory/index.js';
-import { dateNumeric } from '@amnis/core/core.js';
-import { uid } from '@amnis/core/uid.js';
-import type { StateCreate } from '@amnis/core/state/index.js';
-import type { JWTEncoded } from '@amnis/core/token/index.js';
-import { validatorsSetup } from '@amnis/api/validators.js';
-import { apiIO } from '@amnis/api/api.io.node.js';
-
-import { jwtEncode } from '@amnis/auth/token.js';
-import { historyKey } from '@amnis/core/history/index.js';
-import type { ApiInput } from '../types.js';
-import { apiCrudProcess } from './crud.process.js';
+import {
+  dateNumeric, historyKey, IoInput, ioProcess, JWTEncoded, StateCreate, uid,
+} from '@amnis/core/index.js';
+import { memory, memoryClear } from '@amnis/db/index.js';
+import { validateSetup } from '../validate.js';
+import { crudProcess } from './index.js';
+import { jwtEncode } from '../crypto/index.js';
 
 const appStore = storeSetup();
 
-const validators = validatorsSetup([coreSchema, bookSchema]);
+const validators = validateSetup([coreSchema, bookSchema]);
 
 /**
  * Setup the crud io.
  */
-const io = apiIO({
+const io = ioProcess({
   store: appStore,
   database: memory,
   validators,
-}, apiCrudProcess);
+}, crudProcess);
 
 const expires = dateNumeric(new Date(Date.now() + 60000));
 /**
@@ -52,7 +47,7 @@ afterEach(() => memoryClear());
  * ============================================================
  */
 test('Handler should create new entities.', async () => {
-  const input: ApiInput = {
+  const input: IoInput = {
     body: {
       [bookKey]: books,
     },
@@ -72,7 +67,7 @@ test('Handler should create new entities.', async () => {
  * ============================================================
  */
 test('Handler should fail when a jwt token is not provided.', async () => {
-  const input: ApiInput = {
+  const input: IoInput = {
     body: {
       [bookKey]: books,
     },
@@ -89,7 +84,7 @@ test('Handler should fail when a jwt token is not provided.', async () => {
  * ============================================================
  */
 test('Handler should create entities that do not validate against the schema.', async () => {
-  const input: ApiInput = {
+  const input: IoInput = {
     body: {
       [bookKey]: [
         {

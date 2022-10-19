@@ -20,7 +20,7 @@
       "updater": "scripts/standard-version-updater.cjs"
     },
     {
-      "filename": "packages/amnis-auth/package.json",
+      "filename": "packages/amnis-process/package.json",
       "type": "json",
       "updater": "scripts/standard-version-updater.cjs"
     },

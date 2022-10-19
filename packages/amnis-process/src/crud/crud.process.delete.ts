@@ -1,23 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { UID } from '@amnis/core/types.js';
-import type { Role } from '@amnis/core/role/index.js';
-import type { StateDelete } from '@amnis/core/state/index.js';
-import { selectors } from '@amnis/core/selectors.js';
-import { coreActions } from '@amnis/core/actions.js';
-import { Task } from '@amnis/core/grant/index.js';
-import { authwall } from '@amnis/auth/authwall.js';
-import { stateScopeCreate } from '@amnis/core/state/index.js';
-import type { ApiProcess } from '../types.js';
-import type { ApiCrudIODelete } from './crud.types.js';
-import { apiOutput } from '../api.js';
-import { mwJwt } from '../mw.jwt.js';
-import { mwValidate } from '../mw.validate.js';
 
-export const process: ApiProcess<ApiCrudIODelete> = (context) => (
+import {
+  coreActions,
+  Io, ioOutput, IoProcess, Role, selectors, StateDelete, stateScopeCreate, Task, UID,
+} from '@amnis/core/index.js';
+import { mwJwt, mwValidate } from '../mw/index.js';
+import { authorizeWall } from '../utility/authorize.js';
+
+export const process: IoProcess<
+Io<StateDelete, StateDelete>
+> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
-    const output = apiOutput<StateDelete>();
+    const output = ioOutput<StateDelete>();
 
     const roleRefs: UID<Role>[] = jwt?.roles || [];
 
@@ -29,7 +25,7 @@ export const process: ApiProcess<ApiCrudIODelete> = (context) => (
     /**
      * Filter non-granted slices on the body (which is a State type).
      */
-    const stateAuthwalled = authwall(body, grants, Task.Delete);
+    const stateAuthwalled = authorizeWall(body, grants, Task.Delete);
 
     /**
      * finalized state to process

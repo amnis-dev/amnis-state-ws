@@ -1,9 +1,4 @@
-import type { StateCreate, StateDelete } from '@amnis/core/state/index.js';
 import type { Token } from '@amnis/core/index.js';
-import type {
-  Io,
-  IoQuery,
-} from './io.types.js';
 
 /**
  * Payload for a login request.
@@ -97,14 +92,3 @@ export interface AuthRenew {
  * Verifies the validity of a stringified token.
  */
 export type AuthVerify = Token;
-
-/**
- * API object containing request queries.
- */
-export interface AuthQueries {
-  login: IoQuery<AuthLogin>;
-  logout: IoQuery<AuthLogout>;
-  pkce: IoQuery<AuthPkce>;
-  renew: IoQuery<AuthRenew>;
-  verify: IoQuery<AuthVerify>;
-}

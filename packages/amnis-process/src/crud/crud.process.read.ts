@@ -1,18 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { authwall } from '@amnis/auth/authwall.js';
-import { Grant, Task } from '@amnis/core/grant/index.js';
-import { selectors } from '@amnis/core/selectors.js';
+
 import {
-  stateScopeCreate, StateCreate, StateQuery, stateReferenceQuery,
-} from '@amnis/core/state/index.js';
-import type { Database } from '@amnis/core/db.types.js';
-import type { StateScope } from '@amnis/core/state/index.js';
-import type{ UID } from '@amnis/core/types.js';
-import type { ApiProcess } from '../types.js';
-import { apiOutput } from '../api.js';
-import type { ApiCrudIORead } from './crud.types.js';
-import { mwJwt } from '../mw.jwt.js';
-import { mwValidate } from '../mw.validate.js';
+  Database,
+  Grant,
+  Io,
+  ioOutput,
+  IoProcess,
+  selectors,
+  StateCreate,
+  StateQuery,
+  stateReferenceQuery,
+  StateScope,
+  stateScopeCreate,
+  Task,
+  UID,
+} from '@amnis/core/index.js';
+import { mwJwt, mwValidate } from '../mw/index.js';
+import { authorizeWall } from '../utility/authorize.js';
 
 /**
  * Performs a recursive read on the database based on the depth value of each query.
@@ -46,7 +50,7 @@ async function readRecursive(
   /**
    * Need to ensure the user has the right permissions for the next depth query.
    */
-  const queryAuthwalled: StateQuery = authwall(queryNext, grants, Task.Read);
+  const queryAuthwalled: StateQuery = authorizeWall(queryNext, grants, Task.Read);
 
   /**
    * Process the next result
@@ -74,11 +78,13 @@ async function readRecursive(
   return result;
 }
 
-export const process: ApiProcess<ApiCrudIORead> = (context) => (
+export const process: IoProcess<
+Io<StateQuery, StateCreate>
+> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
-    const output = apiOutput<StateCreate>();
+    const output = ioOutput<StateCreate>();
 
     if (!jwt) {
       output.status = 401; // 401 Unauthorized
@@ -98,7 +104,7 @@ export const process: ApiProcess<ApiCrudIORead> = (context) => (
     /**
      * Filter non-granted slices on the body (which is a State type).
      */
-    const stateAuthwalled: StateQuery = authwall(body, grants, Task.Read);
+    const stateAuthwalled: StateQuery = authorizeWall(body, grants, Task.Read);
 
     /**
      * finalized state to process

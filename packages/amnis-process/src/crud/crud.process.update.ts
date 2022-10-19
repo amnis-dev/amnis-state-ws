@@ -1,23 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { authwall } from '@amnis/auth/authwall.js';
-import { Task } from '@amnis/core/grant/index.js';
-import { selectors } from '@amnis/core/selectors.js';
-import { stateScopeCreate } from '@amnis/core/state/index.js';
-import { coreActions } from '@amnis/core/actions.js';
-import { entityClean } from '@amnis/core/entity/index.js';
-import { historyKey, historyMake } from '@amnis/core/history/index.js';
-import type { State, StateUpdate } from '@amnis/core/state/index.js';
-import type { ApiProcess } from '../types.js';
-import { apiOutput } from '../api.js';
-import type { ApiCrudIOUpdate } from './crud.types.js';
-import { mwJwt } from '../mw.jwt.js';
-import { mwValidate } from '../mw.validate.js';
 
-export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
+import {
+  coreActions,
+  entityClean,
+  historyKey,
+  historyMake,
+  Io,
+  ioOutput,
+  IoProcess,
+  selectors,
+  State,
+  StateCreate,
+  stateScopeCreate,
+  StateUpdate,
+  Task,
+} from '@amnis/core/index.js';
+import { mwJwt, mwValidate } from '../mw/index.js';
+import { authorizeWall } from '../utility/authorize.js';
+
+export const process: IoProcess<
+Io<StateUpdate, StateCreate>
+> = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, jwt } = input;
-    const output = apiOutput();
+    const output = ioOutput();
 
     if (!jwt) {
       output.status = 401; // 401 Unauthorized
@@ -37,7 +44,7 @@ export const process: ApiProcess<ApiCrudIOUpdate> = (context) => (
     /**
      * Filter non-granted slices on the body (which is a State type).
      */
-    const stateAuthwalled = authwall(body, grants, Task.Update);
+    const stateAuthwalled = authorizeWall(body, grants, Task.Update);
 
     /**
      * Clean entity properties that should not be updated.

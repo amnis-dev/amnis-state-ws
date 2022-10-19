@@ -1,67 +1,21 @@
-import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
-import type {
-  StateDelete,
-  StateCreate,
-  StateUpdate,
-  StateQuery,
-  State,
-} from '@amnis/core/state/index.js';
 import fetch, { Headers, Request } from 'cross-fetch';
-import { selectors } from '@amnis/core/selectors.js';
+import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
 import { apiConfig } from '../config.js';
-import {
-  apiCrudQueries,
-} from './crud.queries.js';
-import { ApiBaseQueryFn, ApiJSON } from '../types.js';
+import type { ApiBaseQueryFn } from '../types.js';
+import { headersAuthorizationToken } from '../util/util.headers.js';
+import { apiCrudQueries } from './crud.queries.js';
 
 global.Headers = Headers;
 global.Request = Request;
-
-const queries = apiCrudQueries();
 
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.API_CRUD_URL,
     fetchFn: fetch,
-    prepareHeaders: (headers, { getState, endpoint }) => {
-      const token = selectors.selectToken(getState() as State, 'core', 'access');
-
-      if (token && endpoint !== 'refresh') {
-        headers.set('Authorization', `Bearer ${token.jwt}`);
-      }
-      return headers;
-    },
+    prepareHeaders: headersAuthorizationToken,
   }) as ApiBaseQueryFn,
-  endpoints: (builder) => ({
-    create: builder.query<
-    ApiJSON<StateCreate>,
-    StateCreate
-    >({
-      query: queries.create,
-    }),
-
-    read: builder.query<
-    ApiJSON<StateCreate>,
-    StateQuery
-    >({
-      query: queries.read,
-    }),
-
-    update: builder.query<
-    ApiJSON<StateCreate>,
-    StateUpdate
-    >({
-      query: queries.update,
-    }),
-
-    delete: builder.query<
-    ApiJSON<StateDelete>,
-    StateDelete
-    >({
-      query: queries.delete,
-    }),
-  }),
+  endpoints: (builder) => apiCrudQueries(builder),
 });
 
 export default apiCrud;
