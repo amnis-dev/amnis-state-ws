@@ -1,0 +1,232 @@
+{
+  "$id": "state",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Core",
+  "definitions": {
+    "Core": {
+      "type": "object",
+      "properties": {
+        "insert": {
+          "$ref": "#/definitions/StateCreate"
+        },
+        "query": {
+          "$ref": "#/definitions/StateQuery"
+        },
+        "modify": {
+          "$ref": "#/definitions/StateUpdate"
+        },
+        "remove": {
+          "$ref": "#/definitions/StateDelete"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StateCreate": {
+      "$ref": "#/definitions/State%3Cdef-interface-1570551179-176-1053-1570551179-0-2354602488886%5B%5D%3E",
+      "description": "A common stateful result from creations. A state object with entities that were created."
+    },
+    "State<def-interface-1570551179-176-1053-1570551179-0-2354602488886[]>": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Entity"
+        }
+      },
+      "description": "An ambiguous state."
+    },
+    "Entity": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "UID for this entity.",
+          "default": ""
+        },
+        "created": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Creation date string.",
+          "default": ""
+        },
+        "updated": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Updated date string.",
+          "default": ""
+        },
+        "committed": {
+          "type": "boolean",
+          "description": "Flag to determine if the entity has been committed to storage.",
+          "default": false
+        },
+        "delete": {
+          "type": "boolean",
+          "description": "If this entity is marked to be deleted.",
+          "default": false
+        },
+        "$owner": {
+          "$ref": "#/definitions/UID",
+          "description": "Entity that owns this data."
+        },
+        "$creator": {
+          "$ref": "#/definitions/UID",
+          "description": "Possible user id creator of the entity."
+        },
+        "$readers": {
+          "$ref": "#/definitions/UIDList",
+          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
+        }
+      },
+      "required": [
+        "$id",
+        "created",
+        "updated",
+        "committed",
+        "delete",
+        "$owner",
+        "$creator",
+        "$readers"
+      ],
+      "additionalProperties": false,
+      "description": "A common entity object. Entity's are serializable (JSON) objects that can be committed to NoSQL Databases."
+    },
+    "UID": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date."
+    },
+    "UIDList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UID%3Cunknown%3E"
+      },
+      "description": "An array of identifiers."
+    },
+    "UID<unknown>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
+    "StateQuery": {
+      "$ref": "#/definitions/State%3CQuery%3E",
+      "description": "A query object to search for entities."
+    },
+    "State<Query>": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Query"
+      },
+      "description": "An ambiguous state."
+    },
+    "Query": {
+      "type": "object",
+      "properties": {
+        "$query": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Filter"
+          },
+          "description": "Query of keys."
+        },
+        "$range": {
+          "$ref": "#/definitions/Range",
+          "description": "Range of query."
+        },
+        "$depth": {
+          "type": "number",
+          "description": "Depth to query for other referenced entities.",
+          "default": 0,
+          "minimum": 0,
+          "multipleOf": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "Filter": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "description": "Matches values that are equal to a specified value."
+        },
+        "$gt": {
+          "type": "number",
+          "description": "Matches values that are greater than a specified value."
+        },
+        "$gte": {
+          "type": "number",
+          "description": "Matches values that are greater than or equal to a specified value."
+        },
+        "$lt": {
+          "type": "number",
+          "description": "Matches values that are less than a specified value."
+        },
+        "$lte": {
+          "type": "number",
+          "description": "Matches values that are less than or equal to a specified value."
+        },
+        "$in": {
+          "type": "array",
+          "items": {},
+          "description": "Matches any of the values specified in an array."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Filter object for a query."
+    },
+    "Range": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "number",
+          "description": "Start query at record value."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Limit results of the query."
+        }
+      },
+      "additionalProperties": false,
+      "description": "StateQuery range"
+    },
+    "StateUpdate": {
+      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1733-1919-2094046105-0-2306600678921%5B%5D%3E"
+    },
+    "State<def-alias-2094046105-1733-1919-2094046105-0-2306600678921[]>": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/StateUpdateEntity"
+        }
+      },
+      "description": "An ambiguous state."
+    },
+    "StateUpdateEntity": {
+      "type": "object",
+      "additionalProperties": {},
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "UID for this entity.",
+          "default": ""
+        }
+      },
+      "required": [
+        "$id"
+      ],
+      "description": "A common stateful result from updates. A state object with parial entities to update."
+    },
+    "StateDelete": {
+      "$ref": "#/definitions/State%3CUIDList%3E",
+      "description": "A common stateful result from deletions. A state object with delete ids."
+    },
+    "State<UIDList>": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/UIDList"
+      },
+      "description": "An ambiguous state."
+    }
+  }
+}

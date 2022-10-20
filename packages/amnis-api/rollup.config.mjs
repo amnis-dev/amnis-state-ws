@@ -32,40 +32,14 @@ const base = {
 };
 
 /**
- * ECMAScript Node Module
+ * ECMAScript Module
  * @type {import('rollup').RollupOptions}
  */
 rollup.push({
   ...base,
-  input: 'src/index.node.ts',
+  input: 'src/index.ts',
   output: {
-    file: 'dist/index.node.mjs',
-    format: 'esm',
-  },
-});
-
-/**
- * ECMAScript Browser Module
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/index.browser.ts',
-  output: {
-    file: 'dist/index.browser.mjs',
-    format: 'esm',
-  },
-});
-
-/**
- * ECMAScript React Module
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/index.react.ts',
-  output: {
-    file: 'dist/index.react.mjs',
+    file: 'dist/index.mjs',
     format: 'esm',
   },
 });
@@ -76,22 +50,9 @@ rollup.push({
  */
 rollup.push({
   ...base,
-  input: 'src/index.node.ts',
+  input: 'src/index.ts',
   output: {
-    file: 'dist/index.node.js',
-    format: 'cjs',
-  },
-});
-
-/**
- * CommonJS Browser
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/index.browser.ts',
-  output: {
-    file: 'dist/index.browser.js',
+    file: 'dist/index.js',
     format: 'cjs',
   },
 });

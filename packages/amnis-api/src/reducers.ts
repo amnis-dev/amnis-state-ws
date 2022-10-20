@@ -7,15 +7,20 @@ import {
   isRejectedWithValue,
   isFulfilled,
 } from '@amnis/core/rtk.js';
-import type { Entity, MetaState } from '@amnis/core/entity/index.js';
-import { userKey } from '@amnis/core/user/index.js';
-import { sessionKey } from '@amnis/core/session/index.js';
-import { profileKey } from '@amnis/core/profile/index.js';
-import { LogBaseCreate, logCreate, logKey } from '@amnis/core/log/index.js';
-import type { UID } from '@amnis/core/types.js';
-import { apiAuth } from './auth/auth.api.browser.js';
-import { apiCrud } from './crud/crud.api.browser.js';
-import type { ApiOutput } from './types.js';
+import {
+  Entity,
+  IoOutput,
+  LogBaseCreate,
+  logCreate,
+  logKey,
+  MetaState,
+  profileKey,
+  sessionKey,
+  UID,
+  userKey,
+} from '@amnis/core/index.js';
+import { apiAuth } from './auth/index.js';
+import { apiCrud } from './crud/index.js';
 
 export function apiExtraReducers<E extends Entity>(
   key: string,
@@ -28,7 +33,7 @@ export function apiExtraReducers<E extends Entity>(
    * ------------------------------------------------------------
    */
   builder.addMatcher(isFulfilled, (state, action) => {
-    const payload = action.payload as ApiOutput['json'];
+    const payload = action.payload as IoOutput['json'];
     const logs = payload.logs as LogBaseCreate[];
 
     /**
@@ -47,7 +52,7 @@ export function apiExtraReducers<E extends Entity>(
    * ------------------------------------------------------------
    */
   builder.addMatcher(isRejectedWithValue, (state, action) => {
-    const payload = action.payload as { data: ApiOutput['json'] } | undefined;
+    const payload = action.payload as { data: IoOutput['json'] } | undefined;
 
     if (!payload) {
       return;

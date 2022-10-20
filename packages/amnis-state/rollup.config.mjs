@@ -23,6 +23,8 @@ const base = {
     typescript({
       tsconfig: 'tsconfig.build.json',
       outputToFilesystem: true,
+      declaration: true,
+      declarationDir: './dist',
     }),
   ],
   external: [
@@ -38,35 +40,9 @@ const base = {
  */
 rollup.push({
   ...base,
-  input: 'src/env.node/index.ts',
+  input: 'src/index.ts',
   output: {
-    file: 'dist/index.node.mjs',
-    format: 'esm',
-  },
-});
-
-/**
- * ECMAScript Browser Module
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/env.browser/index.ts',
-  output: {
-    file: 'dist/index.browser.mjs',
-    format: 'esm',
-  },
-});
-
-/**
- * ECMAScript React Module
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/env.react/index.ts',
-  output: {
-    file: 'dist/index.react.mjs',
+    file: 'dist/index.mjs',
     format: 'esm',
   },
 });
@@ -77,35 +53,9 @@ rollup.push({
  */
 rollup.push({
   ...base,
-  input: 'src/env.node/index.ts',
+  input: 'src/index.ts',
   output: {
-    file: 'dist/index.node.js',
-    format: 'cjs',
-  },
-});
-
-/**
- * CommonJS Browser
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/env.browser/index.ts',
-  output: {
-    file: 'dist/index.browser.js',
-    format: 'cjs',
-  },
-});
-
-/**
- * CommonJS React
- * @type {import('rollup').RollupOptions}
- */
-rollup.push({
-  ...base,
-  input: 'src/env.react/index.ts',
-  output: {
-    file: 'dist/index.react.js',
+    file: 'dist/index.js',
     format: 'cjs',
   },
 });

@@ -2,7 +2,7 @@ import {
   createEntityAdapter, createSlice, isAnyOf,
 } from '@amnis/core/rtk.js';
 import { Token, tokenKey } from '@amnis/core/token/index.js';
-import { apiAuth } from '@amnis/api/auth/auth.api.browser.js';
+import { apiAuth } from '@amnis/api/index.js';
 
 import type { TokenMeta } from './token.types.js';
 

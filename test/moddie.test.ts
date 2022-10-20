@@ -30,7 +30,7 @@ import {
 } from '@amnis/state/index.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { passCreateSync } from '@amnis/auth/pass.js';
+import { passCreateSync } from '@amnis/process/index.js';
 import { memory } from '@amnis/db/memory/index.js';
 import { uidList } from '@amnis/core/uid.js';
 import { serviceSetup } from './database.js';

@@ -13,19 +13,13 @@
     "lib",
     "dist"
   ],
-  "main": "./dist/index.node.js",
-  "module": "./dist/index.node.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.node.js",
-      "import": "./dist/index.node.mjs"
-    },
-    "./browser": {
-      "require": "./dist/index.browser.js",
-      "import": "./dist/index.browser.mjs"
-    },
-    "./react": {
-      "import": "./dist/index.react.mjs"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     },
     "./*": {
       "import": "./lib/*"
@@ -44,13 +38,30 @@
     "build:lib": "tsc -p tsconfig.build.json",
     "clean": "rimraf ./.rollup.cache ./dist ./lib ./tsconfig.build.tsbuildinfo ./yarn-error.log"
   },
-  "peerDependencies": {
-    "@reduxjs/toolkit": "^1.8.1"
-  },
   "dependencies": {
-    "@amnis/core": "0.4.4-alpha.2",
-    "@amnis/auth": "0.4.4-alpha.2",
     "@amnis/api": "0.4.4-alpha.2",
-    "@amnis/db": "0.4.4-alpha.2"
-  }
+    "@amnis/core": "0.4.4-alpha.2"
+  },
+  "peerDependencies": {
+    "@amnis/db": "0.4.4-alpha.2",
+    "@amnis/fs": "0.4.4-alpha.2",
+    "@reduxjs/toolkit": "^1.8.0",
+    "react": "^18.0.0",
+    "react-redux": "^8.0.2"
+  },
+  "peerDependenciesMeta": {
+    "@amnis/db": {
+      "optional": true
+    },
+    "@amnis/fs": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-redux": {
+      "optional": true
+    }
+  },
+  "sideEffects": false
 }

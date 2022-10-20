@@ -1,33 +1,56 @@
-import type {
-  StateDelete, StateQuery, StateCreate, StateUpdate,
-} from '@amnis/core/state/index.js';
-import type {
-  ApiCrudQueries,
-} from './crud.types.js';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { EndpointBuilder } from '@reduxjs/toolkit/query/endpointDefinitions.js';
+import {
+  IoOutputJson,
+  StateCreate,
+  StateDelete,
+  StateQuery,
+  StateUpdate,
+} from '@amnis/core/index.js';
 
-export function apiCrudQueries(): ApiCrudQueries {
-  return {
-    create: (payload: StateCreate) => ({
+export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
+  create: builder.query<
+  IoOutputJson<StateCreate>,
+  StateCreate
+  >({
+    query: (payload: StateCreate) => ({
       url: 'create',
       method: 'post',
       body: payload,
     }),
-    read: (payload: StateQuery) => ({
+  }),
+
+  read: builder.query<
+  IoOutputJson<StateCreate>,
+  StateQuery
+  >({
+    query: (payload: StateQuery) => ({
       url: 'read',
       method: 'post',
       body: payload,
     }),
-    update: (payload: StateUpdate) => ({
+  }),
+
+  update: builder.query<
+  IoOutputJson<StateCreate>,
+  StateUpdate
+  >({
+    query: (payload: StateUpdate) => ({
       url: 'update',
       method: 'post',
       body: payload,
     }),
-    delete: (payload: StateDelete) => ({
+  }),
+
+  delete: builder.query<
+  IoOutputJson<StateDelete>,
+  StateDelete
+  >({
+    query: (payload: StateDelete) => ({
       url: 'delete',
       method: 'post',
       body: payload,
     }),
-  };
-}
-
+  }),
+});
 export default apiCrudQueries;

@@ -1,0 +1,189 @@
+{
+  "$id": "auth",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/AuthSchema",
+  "definitions": {
+    "AuthSchema": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "$ref": "#/definitions/AuthLogin"
+        },
+        "logout": {
+          "$ref": "#/definitions/AuthLogout"
+        },
+        "pkce": {
+          "$ref": "#/definitions/AuthPkce"
+        },
+        "renew": {
+          "$ref": "#/definitions/AuthRenew"
+        },
+        "verify": {
+          "$ref": "#/definitions/AuthVerify"
+        }
+      },
+      "additionalProperties": false
+    },
+    "AuthLogin": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 24,
+          "pattern": "^[a-zA-Z0-9-_]+$",
+          "description": "Unique name for login credentials"
+        },
+        "password": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 64,
+          "description": "Secret phrase associated with the username."
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ],
+      "additionalProperties": false,
+      "description": "Payload for a login request."
+    },
+    "AuthLogout": {
+      "type": "object",
+      "additionalProperties": {
+        "not": {}
+      },
+      "description": "Payload that destroys the user session and connection."
+    },
+    "AuthPkce": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": [
+            "microsoft",
+            "twitter"
+          ],
+          "description": "Supported PKCE login methods."
+        },
+        "clientId": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9-_]+$"
+        },
+        "code": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 1024,
+          "pattern": "^[a-zA-Z0-9-_.]+$"
+        },
+        "codeVerifier": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 256,
+          "pattern": "^[a-zA-Z0-9-_]+$"
+        },
+        "redirectUri": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 512,
+          "pattern": "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?"
+        },
+        "tenantId": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9-_]+$"
+        },
+        "gov": {
+          "type": "boolean",
+          "description": "True or false value."
+        }
+      },
+      "required": [
+        "platform",
+        "clientId",
+        "code",
+        "codeVerifier",
+        "redirectUri"
+      ],
+      "additionalProperties": false,
+      "description": "Logs in from a third-party using the data from OpenID PKCE Authorization."
+    },
+    "AuthRenew": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "boolean",
+          "description": "Include user and profile data with the response."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Payload for a session and token renewal. Should not have any data in the body."
+    },
+    "AuthVerify": {
+      "$ref": "#/definitions/Token",
+      "description": "Verifies the validity of a stringified token."
+    },
+    "Token": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Token identifier."
+        },
+        "api": {
+          "$ref": "#/definitions/TokenApi",
+          "description": "Name of the API E.g. Twitter, MSGraph, Amnis, etc..."
+        },
+        "exp": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Expiration date."
+        },
+        "jwt": {
+          "$ref": "#/definitions/JWTEncoded",
+          "description": "Encoded value of the encoded jwt token."
+        },
+        "type": {
+          "$ref": "#/definitions/TokenType",
+          "description": "Type of token."
+        }
+      },
+      "required": [
+        "id",
+        "api",
+        "exp",
+        "jwt",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "An interface for a token."
+    },
+    "TokenApi": {
+      "type": "string",
+      "enum": [
+        "core",
+        "microsoft",
+        "twitter"
+      ],
+      "description": "Token issuers Core is used to identify self-owned tokens."
+    },
+    "DateNumeric": {
+      "type": "number",
+      "description": "A string that represents a JSON Date."
+    },
+    "JWTEncoded": {
+      "type": "string",
+      "description": "String representation of a jwt encoded token."
+    },
+    "TokenType": {
+      "type": "string",
+      "enum": [
+        "access",
+        "refresh"
+      ],
+      "description": "Token types."
+    }
+  }
+}
