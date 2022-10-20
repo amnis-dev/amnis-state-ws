@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4](https://github.com/amnis-dev/amnis-state/compare/v0.4.4-alpha.5...v0.4.4) (2022-10-20)
+
+
+### Features
+
+* Allow imports from index.js paths. ([03e4e91](https://github.com/amnis-dev/amnis-state/commit/03e4e91842be881e7b8941bb9ca771d5f3cae592))
+
 ### [0.4.4-alpha.5](https://github.com/amnis-dev/amnis-state/compare/v0.4.4-alpha.4...v0.4.4-alpha.5) (2022-10-20)
 
 
