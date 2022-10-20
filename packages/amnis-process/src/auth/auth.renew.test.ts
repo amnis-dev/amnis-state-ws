@@ -63,8 +63,6 @@ test('Should be able to renew session and tokens', async () => {
 
   const output = await io.renew(input);
 
-  console.log(JSON.stringify(output, null, 2));
-
   /**
    * Should see the new session cookie in the output.
    */
