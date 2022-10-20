@@ -65,7 +65,7 @@ function validateCompile(schema: AnySchema): Validators {
   const validatorKeys = Object.keys(definitions);
 
   /** @ts-ignore */
-  const ajv = new Ajv({ schemas: [schema] });
+  const ajv = new Ajv({ schemas: [schema], code: { esm: true } });
 
   const validators = validatorKeys.reduce<Validators>(
     (record, key) => {

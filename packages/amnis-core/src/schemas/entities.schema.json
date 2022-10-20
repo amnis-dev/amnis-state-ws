@@ -1,20 +1,56 @@
 {
-  "$id": "state",
+  "$id": "entities",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "StateCreate": {
       "type": "object",
       "properties": {
+        "audit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CAudit%3E"
+          }
+        },
         "contact": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityCreate%3CContact%3E"
           }
         },
+        "crypto": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CCrypto%3E"
+          }
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CHistory%3E"
+          }
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CImage%3E"
+          }
+        },
+        "locale": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CLocale%3E"
+          }
+        },
         "log": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityCreate%3CLog%3E"
+          }
+        },
+        "note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CNote%3E"
           }
         },
         "profile": {
@@ -27,6 +63,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityCreate%3CRole%3E"
+          }
+        },
+        "service": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CService%3E"
           }
         },
         "system": {
@@ -47,6 +89,12 @@
             "$ref": "#/definitions/EntityCreate%3CSession%3E"
           }
         },
+        "video": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityCreate%3CVideo%3E"
+          }
+        },
         "website": {
           "type": "array",
           "items": {
@@ -55,6 +103,81 @@
         }
       },
       "additionalProperties": false
+    },
+    "EntityCreate<Audit>": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Action attempted"
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "If the action was completed."
+        },
+        "inputBody": {
+          "description": "Input body data."
+        },
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject id of the audit."
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP address of the subject."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the subject."
+        }
+      },
+      "required": [
+        "action",
+        "completed"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Audit>": {
+      "$ref": "#/definitions/EntityOmit%3CAudit%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Audit>": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Action attempted"
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "If the action was completed."
+        },
+        "inputBody": {
+          "description": "Input body data."
+        },
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject id of the audit."
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP address of the subject."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the subject."
+        }
+      },
+      "required": [
+        "action",
+        "completed"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "UID": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
     "EntityCreate<Contact>": {
       "type": "object",
@@ -153,9 +276,395 @@
       "type": "string",
       "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
     },
-    "UID": {
+    "EntityCreate<Crypto>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human friendly name of the cyptographic key"
+        },
+        "tag": {
+          "type": "string",
+          "description": "A unique tag name that identifies this public key."
+        },
+        "type": {
+          "type": "string",
+          "const": "rsa",
+          "description": "Type of cyptographic key."
+        },
+        "pair": {
+          "type": "string",
+          "const": "public",
+          "description": "Always the public side of the key pair."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the cyptographic key"
+        }
+      },
+      "required": [
+        "name",
+        "pair",
+        "tag",
+        "type",
+        "value"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Crypto>": {
+      "$ref": "#/definitions/EntityOmit%3CCrypto%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Crypto>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human friendly name of the cyptographic key"
+        },
+        "tag": {
+          "type": "string",
+          "description": "A unique tag name that identifies this public key."
+        },
+        "type": {
+          "type": "string",
+          "const": "rsa",
+          "description": "Type of cyptographic key."
+        },
+        "pair": {
+          "type": "string",
+          "const": "public",
+          "description": "Always the public side of the key pair."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the cyptographic key"
+        }
+      },
+      "required": [
+        "name",
+        "tag",
+        "type",
+        "pair",
+        "value"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "EntityCreate<History>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "The subject that was updated."
+        },
+        "update": {
+          "$ref": "#/definitions/StateUpdateEntity",
+          "description": "The state update record that was performed."
+        }
+      },
+      "required": [
+        "$subject",
+        "update"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<History>": {
+      "$ref": "#/definitions/EntityOmit%3CHistory%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<History>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "The subject that was updated."
+        },
+        "update": {
+          "$ref": "#/definitions/StateUpdateEntity",
+          "description": "The state update record that was performed."
+        }
+      },
+      "required": [
+        "$subject",
+        "update"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "StateUpdateEntity": {
+      "type": "object",
+      "additionalProperties": {},
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "UID for this entity.",
+          "default": ""
+        }
+      },
+      "required": [
+        "$id"
+      ],
+      "description": "A common stateful result from updates. A state object with parial entities to update."
+    },
+    "EntityCreate<Image>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webp",
+            "jpeg",
+            "png",
+            "bmp",
+            "tiff"
+          ],
+          "description": "image extention type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
+        }
+      },
+      "required": [
+        "aspect",
+        "extension",
+        "height",
+        "mimetype",
+        "size",
+        "slug",
+        "title",
+        "width"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Image>": {
+      "$ref": "#/definitions/EntityOmit%3CImage%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Image>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webp",
+            "jpeg",
+            "png",
+            "bmp",
+            "tiff"
+          ],
+          "description": "image extention type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
+        }
+      },
+      "required": [
+        "extension",
+        "width",
+        "height",
+        "aspect",
+        "title",
+        "slug",
+        "mimetype",
+        "size"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "UID<Profile>": {
       "type": "string",
       "description": "A id identifier to another document."
+    },
+    "EntityCreate<Locale>": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Two-character language code.",
+          "minLength": 2,
+          "maxLength": 2
+        },
+        "set": {
+          "type": "string",
+          "description": "Name of the translation set for organization.",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "t": {
+          "$ref": "#/definitions/LocaleTranslation",
+          "description": "The language key value translations."
+        },
+        "v": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Variables that can be inserted into translation text."
+        }
+      },
+      "required": [
+        "code",
+        "set",
+        "t",
+        "v"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Locale>": {
+      "$ref": "#/definitions/EntityOmit%3CLocale%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Locale>": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Two-character language code.",
+          "minLength": 2,
+          "maxLength": 2
+        },
+        "set": {
+          "type": "string",
+          "description": "Name of the translation set for organization.",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "t": {
+          "$ref": "#/definitions/LocaleTranslation",
+          "description": "The language key value translations."
+        },
+        "v": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Variables that can be inserted into translation text."
+        }
+      },
+      "required": [
+        "code",
+        "set",
+        "t",
+        "v"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
+    "LocaleTranslation": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Record of locale translations."
     },
     "EntityCreate<Log>": {
       "type": "object",
@@ -241,6 +750,47 @@
     "UID<User>": {
       "type": "string",
       "description": "A id identifier to another document."
+    },
+    "EntityCreate<Note>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject this note is attached to."
+        },
+        "text": {
+          "type": "string",
+          "description": "Textual content of the note."
+        }
+      },
+      "required": [
+        "$subject",
+        "text"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Note>": {
+      "$ref": "#/definitions/EntityOmit%3CNote%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Note>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject this note is attached to."
+        },
+        "text": {
+          "type": "string",
+          "description": "Textual content of the note."
+        }
+      },
+      "required": [
+        "$subject",
+        "text"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
     },
     "EntityCreate<Profile>": {
       "type": "object",
@@ -417,6 +967,73 @@
     "GrantString": {
       "type": "string",
       "description": "Role grant string."
+    },
+    "EntityCreate<Service>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the service."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "offline",
+            "running",
+            "restarting"
+          ],
+          "description": "Status of the service."
+        },
+        "dateChecked": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Last checked datetime"
+        }
+      },
+      "required": [
+        "dateChecked",
+        "name",
+        "status"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Service>": {
+      "$ref": "#/definitions/EntityOmit%3CService%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Service>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the service."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "offline",
+            "running",
+            "restarting"
+          ],
+          "description": "Status of the service."
+        },
+        "dateChecked": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Last checked datetime"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "dateChecked"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
     },
     "EntityCreate<System>": {
       "type": "object",
@@ -769,6 +1386,189 @@
       "type": "number",
       "description": "A string that represents a JSON Date."
     },
+    "EntityCreate<Video>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webm",
+            "mp4",
+            "mpeg",
+            "mov"
+          ],
+          "description": "Video format type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration length of the video in seconds."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
+        }
+      },
+      "required": [
+        "aspect",
+        "duration",
+        "extension",
+        "height",
+        "mimetype",
+        "size",
+        "slug",
+        "title",
+        "width"
+      ],
+      "description": "Type for an entity create object."
+    },
+    "EntityExtension<Video>": {
+      "$ref": "#/definitions/EntityOmit%3CVideo%3E",
+      "description": "Type for creation method"
+    },
+    "EntityOmit<Video>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webm",
+            "mp4",
+            "mpeg",
+            "mov"
+          ],
+          "description": "Video format type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration length of the video in seconds."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
+        }
+      },
+      "required": [
+        "extension",
+        "width",
+        "height",
+        "aspect",
+        "duration",
+        "title",
+        "slug",
+        "mimetype",
+        "size"
+      ],
+      "additionalProperties": false,
+      "description": "Omitted types of the core Entity interface."
+    },
     "EntityCreate<Website>": {
       "type": "object",
       "properties": {
@@ -919,16 +1719,52 @@
     "StateUpdate": {
       "type": "object",
       "properties": {
+        "audit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CAudit%3E"
+          }
+        },
         "contact": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityUpdate%3CContact%3E"
           }
         },
+        "crypto": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CCrypto%3E"
+          }
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CHistory%3E"
+          }
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CImage%3E"
+          }
+        },
+        "locale": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CLocale%3E"
+          }
+        },
         "log": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityUpdate%3CLog%3E"
+          }
+        },
+        "note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CNote%3E"
           }
         },
         "profile": {
@@ -941,6 +1777,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityUpdate%3CRole%3E"
+          }
+        },
+        "service": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CService%3E"
           }
         },
         "system": {
@@ -961,6 +1803,12 @@
             "$ref": "#/definitions/EntityUpdate%3CSession%3E"
           }
         },
+        "video": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdate%3CVideo%3E"
+          }
+        },
         "website": {
           "type": "array",
           "items": {
@@ -969,6 +1817,65 @@
         }
       },
       "additionalProperties": false
+    },
+    "EntityUpdate<Audit>": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Action attempted"
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "If the action was completed."
+        },
+        "inputBody": {
+          "description": "Input body data."
+        },
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject id of the audit."
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP address of the subject."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the subject."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Audit>": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Action attempted"
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "If the action was completed."
+        },
+        "inputBody": {
+          "description": "Input body data."
+        },
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject id of the audit."
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP address of the subject."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the subject."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
     },
     "EntityUpdate<Contact>": {
       "type": "object",
@@ -1047,6 +1954,302 @@
       "additionalProperties": false,
       "description": "Type for an partial method."
     },
+    "EntityUpdate<Crypto>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human friendly name of the cyptographic key"
+        },
+        "tag": {
+          "type": "string",
+          "description": "A unique tag name that identifies this public key."
+        },
+        "type": {
+          "type": "string",
+          "const": "rsa",
+          "description": "Type of cyptographic key."
+        },
+        "pair": {
+          "type": "string",
+          "const": "public",
+          "description": "Always the public side of the key pair."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the cyptographic key"
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Crypto>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human friendly name of the cyptographic key"
+        },
+        "tag": {
+          "type": "string",
+          "description": "A unique tag name that identifies this public key."
+        },
+        "type": {
+          "type": "string",
+          "const": "rsa",
+          "description": "Type of cyptographic key."
+        },
+        "pair": {
+          "type": "string",
+          "const": "public",
+          "description": "Always the public side of the key pair."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the cyptographic key"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<History>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "The subject that was updated."
+        },
+        "update": {
+          "$ref": "#/definitions/StateUpdateEntity",
+          "description": "The state update record that was performed."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<History>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "The subject that was updated."
+        },
+        "update": {
+          "$ref": "#/definitions/StateUpdateEntity",
+          "description": "The state update record that was performed."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Image>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webp",
+            "jpeg",
+            "png",
+            "bmp",
+            "tiff"
+          ],
+          "description": "image extention type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Image>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webp",
+            "jpeg",
+            "png",
+            "bmp",
+            "tiff"
+          ],
+          "description": "image extention type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Locale>": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Two-character language code.",
+          "minLength": 2,
+          "maxLength": 2
+        },
+        "set": {
+          "type": "string",
+          "description": "Name of the translation set for organization.",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "t": {
+          "$ref": "#/definitions/LocaleTranslation",
+          "description": "The language key value translations."
+        },
+        "v": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Variables that can be inserted into translation text."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Locale>": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Two-character language code.",
+          "minLength": 2,
+          "maxLength": 2
+        },
+        "set": {
+          "type": "string",
+          "description": "Name of the translation set for organization.",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "t": {
+          "$ref": "#/definitions/LocaleTranslation",
+          "description": "The language key value translations."
+        },
+        "v": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Variables that can be inserted into translation text."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
     "EntityUpdate<Log>": {
       "type": "object",
       "properties": {
@@ -1095,6 +2298,35 @@
         "$invoker": {
           "$ref": "#/definitions/UID%3CUser%3E",
           "description": "UID to a user that invoked the log."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Note>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject this note is attached to."
+        },
+        "text": {
+          "type": "string",
+          "description": "Textual content of the note."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Note>": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject this note is attached to."
+        },
+        "text": {
+          "type": "string",
+          "description": "Textual content of the note."
         }
       },
       "additionalProperties": false,
@@ -1231,6 +2463,59 @@
             "$ref": "#/definitions/GrantString"
           },
           "description": "Permissions this license grants."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Service>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the service."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "offline",
+            "running",
+            "restarting"
+          ],
+          "description": "Status of the service."
+        },
+        "dateChecked": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Last checked datetime"
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Service>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the service."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "offline",
+            "running",
+            "restarting"
+          ],
+          "description": "Status of the service."
+        },
+        "dateChecked": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Last checked datetime"
         }
       },
       "additionalProperties": false,
@@ -1508,6 +2793,163 @@
             }
           ],
           "description": "Avatar image url."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Type for an partial method."
+    },
+    "EntityUpdate<Video>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webm",
+            "mp4",
+            "mpeg",
+            "mov"
+          ],
+          "description": "Video format type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration length of the video in seconds."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
+        }
+      },
+      "description": "Type for an entity update object."
+    },
+    "EntityPartial<Video>": {
+      "type": "object",
+      "properties": {
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webm",
+            "mp4",
+            "mpeg",
+            "mov"
+          ],
+          "description": "Video format type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration length of the video in seconds."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the image."
+        },
+        "slug": {
+          "type": "string",
+          "description": "The slug for referencing the image."
+        },
+        "mimetype": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/gif",
+            "image/png",
+            "image/bmp",
+            "image/svg+xml",
+            "image/webp",
+            "image/tiff",
+            "video/mp4",
+            "video/mpeg",
+            "video/webm",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/webm",
+            "application/pdf",
+            "text/plain"
+          ],
+          "description": "Mime type of the file"
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the media on disk in bytes."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the image."
+        },
+        "author": {
+          "type": "string",
+          "description": "String name of the media author."
+        },
+        "$author": {
+          "$ref": "#/definitions/UID%3CProfile%3E",
+          "description": "Profile identifier to the author."
         }
       },
       "additionalProperties": false,

@@ -26,6 +26,10 @@ const base = {
   external: [
     /@amnis\/.*/,
     '@reduxjs/toolkit',
+    'ajv',
+    'bcrypt',
+    'jsonwebtoken',
+    'cross-fetch',
   ],
 };
 
