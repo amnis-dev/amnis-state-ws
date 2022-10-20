@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4-alpha.5](https://github.com/amnis-dev/amnis-state/compare/v0.4.4-alpha.4...v0.4.4-alpha.5) (2022-10-20)
+
+
+### Bug Fixes
+
+* Added missing types folder in packages ([529dc07](https://github.com/amnis-dev/amnis-state/commit/529dc07d7d56dbfc5c46edd89fbe1b4be976fe9c))
+
 ### [0.4.4-alpha.4](https://github.com/amnis-dev/amnis-state/compare/v0.4.4-alpha.3...v0.4.4-alpha.4) (2022-10-20)
 
 
