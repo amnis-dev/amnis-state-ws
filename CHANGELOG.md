@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4-alpha.4](https://github.com/amnis-dev/amnis-state/compare/v0.4.4-alpha.3...v0.4.4-alpha.4) (2022-10-20)
+
+
+### Features
+
+* Updated output location for library and type files for the Amnis Core package. ([6e06ac9](https://github.com/amnis-dev/amnis-state/commit/6e06ac95477e29d75256b8d08a1e2d11ef76f847))
+
+
+### Bug Fixes
+
+* Fixed unresolved typings for ESM imports. ([a533e6a](https://github.com/amnis-dev/amnis-state/commit/a533e6aa8315ce6cbe58d5c4d0458a5e9d34b8ba))
+
 ### [0.4.4-alpha.3](https://github.com/amnis-dev/amnis-state/compare/v0.4.4-alpha.2...v0.4.4-alpha.3) (2022-10-20)
 
 
