@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "lib": ["DOM", "ES2021"],
+    "esModuleInterop": true,
     "paths": {
       "@amnis/core/*": ["./packages/amnis-core/src/*"],
       "@amnis/db/*": ["./packages/amnis-db/src/*"],

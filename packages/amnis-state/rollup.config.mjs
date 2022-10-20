@@ -24,7 +24,7 @@ const base = {
       tsconfig: 'tsconfig.build.json',
       outputToFilesystem: true,
       declaration: true,
-      declarationDir: './dist',
+      declarationDir: './types',
     }),
   ],
   external: [

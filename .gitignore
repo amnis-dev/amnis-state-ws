@@ -25,12 +25,14 @@ lib-cov
 .out/
 .out-storybook/
 .dist/
+.types/
 lib/
 build/
 app/
 out/
 out-storybook/
 dist/
+types/
 
 # Coverage directory used by tools like istanbul
 coverage
