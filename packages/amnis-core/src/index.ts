@@ -7,10 +7,6 @@ export * from './actions.js';
 export * from './reducers.js';
 export * from './selectors.js';
 
-export * from './rtk.js';
-export * from './rtkq.js';
-export * from './rtkqr.js';
-
 export * from './audit/index.js';
 export * from './contact/index.js';
 export * from './crypto/index.js';
