@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.5](https://github.com/amnis-dev/amnis-state/compare/v0.4.4...v0.4.5) (2022-10-20)
+
+
+### Features
+
+* Included additional exports for Amnis Process and Amnis Core ([cc0e57a](https://github.com/amnis-dev/amnis-state/commit/cc0e57a5c59b9c10b5526a5326dec6be984f13f1))
+
 ### [0.4.4](https://github.com/amnis-dev/amnis-state/compare/v0.4.4-alpha.5...v0.4.4) (2022-10-20)
 
 
