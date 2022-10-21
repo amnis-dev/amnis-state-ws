@@ -1,13 +1,13 @@
 import { configureStore, combineReducers } from '@amnis/core/rtk.js';
-import { set } from './set.js';
+import { stateSet } from './set.js';
 
 export function storeSetup() {
-  const rootReducer = combineReducers(set.reducers);
+  const rootReducer = combineReducers(stateSet.reducers);
 
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
-      getDefaultMiddleware().concat(set.middleware)
+      getDefaultMiddleware().concat(stateSet.middleware)
     ),
   });
 

@@ -31,9 +31,9 @@ const reducers = {
 
 const middleware: Middleware[] = [];
 
-export const set = {
+export const stateSet = {
   reducers,
   middleware,
 };
 
-export default set;
+export default stateSet;

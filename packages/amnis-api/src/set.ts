@@ -12,9 +12,9 @@ const middleware: Middleware[] = [
   apiCrud.middleware,
 ];
 
-export const set = {
+export const apiSet = {
   reducers,
   middleware,
 };
 
-export default set;
+export default apiSet;
