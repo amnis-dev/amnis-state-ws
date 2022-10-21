@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.6](https://github.com/amnis-dev/amnis-state/compare/v0.4.5...v0.4.6) (2022-10-21)
+
+
+### Features
+
+* Added more organization to the project packages and fixed builds by remove exports from Core and Api from Amnis State ([4d90d41](https://github.com/amnis-dev/amnis-state/commit/4d90d41767ea5e1db69d2d62550a117c66eff712))
+* renamed sets to convey which package they're from ([f3a3429](https://github.com/amnis-dev/amnis-state/commit/f3a3429860bba48c049314d4366e2fa197b85a0a))
+
+
+### Bug Fixes
+
+* Fixed broken build from exporting redux toolkit exports ([e187596](https://github.com/amnis-dev/amnis-state/commit/e187596f5750f8c72618d2cbd69180b7ba428ee5))
+
 ### [0.4.5](https://github.com/amnis-dev/amnis-state/compare/v0.4.4...v0.4.5) (2022-10-20)
 
 
