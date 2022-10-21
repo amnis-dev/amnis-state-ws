@@ -1,4 +1,4 @@
-import { apiAuth, apiCrud } from '@amnis/api/index.js';
+import type { Middleware } from '@reduxjs/toolkit';
 import { auditSlice } from './audit/index.js';
 import { contactSlice } from './contact/index.js';
 import { cryptoSlice } from './crypto/index.js';
@@ -14,8 +14,6 @@ import { userSlice } from './user/index.js';
 import { websiteSlice } from './website/index.js';
 
 const reducers = {
-  [apiAuth.reducerPath]: apiAuth.reducer,
-  [apiCrud.reducerPath]: apiCrud.reducer,
   [auditSlice.name]: auditSlice.reducer,
   [contactSlice.name]: contactSlice.reducer,
   [cryptoSlice.name]: cryptoSlice.reducer,
@@ -31,10 +29,7 @@ const reducers = {
   [websiteSlice.name]: websiteSlice.reducer,
 };
 
-const middleware = [
-  apiAuth.middleware,
-  apiCrud.middleware,
-];
+const middleware: Middleware[] = [];
 
 export const set = {
   reducers,
