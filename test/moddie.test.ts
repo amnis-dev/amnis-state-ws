@@ -32,7 +32,7 @@ import {
 import stateSchema from '@amnis/state/state.schema.json';
 import { passCreateSync } from '@amnis/process/index.js';
 import { memory } from '@amnis/db/memory/index.js';
-import { uidList } from '@amnis/core/uid.js';
+import { uidList } from '@amnis/core/index.js';
 import { serviceSetup } from './database.js';
 
 /**

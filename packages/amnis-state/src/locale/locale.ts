@@ -1,9 +1,13 @@
 import {
   createEntityAdapter, createSlice,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
-import { apiExtraReducers } from '@amnis/api/reducers.js';
-import { Locale, localeKey } from '@amnis/core/locale/index.js';
+import {
+  coreReducers,
+  coreExtraReducers,
+  Locale,
+  localeKey,
+} from '@amnis/core/index.js';
+import { apiExtraReducers } from '@amnis/api/index.js';
 import type { LocaleMeta } from './locale.types.js';
 
 /**

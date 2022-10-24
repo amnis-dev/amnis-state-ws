@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { UID } from '@amnis/core/types.js';
 import type {
+  UID,
   StateScope,
   StateUpdate,
   StateDelete,
   StateCreate,
   StateQuery,
-} from '@amnis/core/state/index.js';
+} from '@amnis/core/index.js';
 
 export interface DatabaseControls {
   scope?: StateScope;

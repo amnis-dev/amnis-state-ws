@@ -1,4 +1,4 @@
-import { uid } from '@amnis/core/uid.js';
+import { uid } from '@amnis/core/index.js';
 import { Role, roleKey } from '@amnis/core/role/index.js';
 import { systemCreate } from '@amnis/core/system/index.js';
 import { memory } from '@amnis/db/memory/index.js';

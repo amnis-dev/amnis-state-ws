@@ -1,10 +1,13 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
-import { apiExtraReducers } from '@amnis/api/reducers.js';
-import { Session, sessionKey } from '@amnis/core/session/index.js';
-import { apiAuth } from '@amnis/api/index.js';
+import {
+  coreReducers,
+  coreExtraReducers,
+  Session,
+  sessionKey,
+} from '@amnis/core/index.js';
+import { apiExtraReducers, apiAuth } from '@amnis/api/index.js';
 import type {
   SessionMeta,
 } from './session.types.js';

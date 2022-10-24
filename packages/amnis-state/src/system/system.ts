@@ -1,9 +1,13 @@
 import {
   createEntityAdapter, createSlice,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
-import { apiExtraReducers } from '@amnis/api/reducers.js';
-import { System, systemKey } from '@amnis/core/system/index.js';
+import {
+  coreReducers,
+  coreExtraReducers,
+  System,
+  systemKey,
+} from '@amnis/core/index.js';
+import { apiExtraReducers } from '@amnis/api/index.js';
 import type {
   SystemMeta,
 } from './system.types.js';

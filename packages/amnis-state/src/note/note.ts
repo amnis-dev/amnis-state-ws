@@ -1,9 +1,13 @@
 import {
   createEntityAdapter, createSlice,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
-import { apiExtraReducers } from '@amnis/api/reducers.js';
-import { Note, noteKey } from '@amnis/core/note/index.js';
+import {
+  coreReducers,
+  coreExtraReducers,
+  Note,
+  noteKey,
+} from '@amnis/core/index.js';
+import { apiExtraReducers } from '@amnis/api/index.js';
 import type { NoteMeta } from './note.types.js';
 
 /**

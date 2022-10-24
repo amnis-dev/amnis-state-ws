@@ -1,9 +1,13 @@
 import {
   createEntityAdapter, createSlice,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
-import { apiExtraReducers } from '@amnis/api/reducers.js';
-import { Crypto, cryptoKey } from '@amnis/core/crypto/index.js';
+import {
+  coreReducers,
+  coreExtraReducers,
+  Crypto,
+  cryptoKey,
+} from '@amnis/core/index.js';
+import { apiExtraReducers } from '@amnis/api/index.js';
 import type { CryptoMeta } from './crypto.types.js';
 
 /**

@@ -1,9 +1,13 @@
 import {
   createEntityAdapter, createSlice,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
-import { apiExtraReducers } from '@amnis/api/reducers.js';
-import { History, historyKey } from '@amnis/core/history/index.js';
+import {
+  coreReducers,
+  coreExtraReducers,
+  History,
+  historyKey,
+} from '@amnis/core/index.js';
+import { apiExtraReducers } from '@amnis/api/index.js';
 import type { HistoryMeta } from './history.types.js';
 
 /**

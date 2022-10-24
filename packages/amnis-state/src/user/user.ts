@@ -1,9 +1,13 @@
 import {
   createEntityAdapter, createSlice,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers } from '@amnis/core/reducers.js';
-import { apiExtraReducers } from '@amnis/api/reducers.js';
-import { User, userKey } from '@amnis/core/user/index.js';
+import {
+  coreReducers,
+  coreExtraReducers,
+  User,
+  userKey,
+} from '@amnis/core/index.js';
+import { apiExtraReducers } from '@amnis/api/index.js';
 import type { UserMeta } from './user.types.js';
 
 /**
