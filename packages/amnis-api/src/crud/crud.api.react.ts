@@ -1,15 +1,19 @@
-import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
+import fetch, { Headers, Request } from 'cross-fetch';
+import { createApiReact, fetchBaseQueryReact } from '@amnis/core/rtkqr.js';
 import { apiConfig } from '../config.js';
-import type { ApiBaseQueryFn } from '../types.js';
 import { headersAuthorizationToken } from '../util/util.headers.js';
 import { apiCrudQueries } from './crud.queries.js';
 
-export const apiCrud = createApi({
+global.Headers = Headers;
+global.Request = Request;
+
+export const apiCrud = createApiReact({
   reducerPath: 'apiCrud',
-  baseQuery: fetchBaseQuery({
+  baseQuery: fetchBaseQueryReact({
     baseUrl: apiConfig.API_CRUD_URL,
+    fetchFn: fetch,
     prepareHeaders: headersAuthorizationToken,
-  }) as ApiBaseQueryFn,
+  }),
   endpoints: (builder) => apiCrudQueries(builder),
 });
 

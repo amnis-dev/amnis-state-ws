@@ -27,6 +27,21 @@
       "types": "./types/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./rtk.js": {
+      "types": "./types/rtk.d.ts",
+      "import": "./dist/rtk.mjs",
+      "require": "./dist/rtk.js"
+    },
+    "./rtkq.js": {
+      "types": "./types/rtkq.d.ts",
+      "import": "./dist/rtkq.mjs",
+      "require": "./dist/rtkq.js"
+    },
+    "./rtkqr.js": {
+      "types": "./types/rtkqr.d.ts",
+      "import": "./dist/rtkqr.mjs",
+      "require": "./dist/rtkqr.js"
     }
   },
   "scripts": {

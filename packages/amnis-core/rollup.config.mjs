@@ -47,6 +47,45 @@ rollup.push({
 });
 
 /**
+ * ECMAScript Module (Redux Toolkit Wrapper)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/rtk.ts',
+  output: {
+    file: 'dist/rtk.mjs',
+    format: 'esm',
+  },
+});
+
+/**
+ * ECMAScript Module (Redux Toolkit Wrapper)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/rtkq.ts',
+  output: {
+    file: 'dist/rtkq.mjs',
+    format: 'esm',
+  },
+});
+
+/**
+ * ECMAScript Module (Redux Toolkit Wrapper)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/rtkqr.ts',
+  output: {
+    file: 'dist/rtkqr.mjs',
+    format: 'esm',
+  },
+});
+
+/**
  * CommonJS
  * @type {import('rollup').RollupOptions}
  */

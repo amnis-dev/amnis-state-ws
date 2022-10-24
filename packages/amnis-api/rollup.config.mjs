@@ -47,6 +47,19 @@ rollup.push({
 });
 
 /**
+ * ECMAScript Module (React)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/index.react.ts',
+  output: {
+    file: 'dist/react.mjs',
+    format: 'esm',
+  },
+});
+
+/**
  * CommonJS Node
  * @type {import('rollup').RollupOptions}
  */
@@ -55,6 +68,19 @@ rollup.push({
   input: 'src/index.ts',
   output: {
     file: 'dist/index.js',
+    format: 'cjs',
+  },
+});
+
+/**
+ * CommonJS Node (React)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/index.react.ts',
+  output: {
+    file: 'dist/react.js',
     format: 'cjs',
   },
 });
