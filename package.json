@@ -18,6 +18,8 @@
     "clean": "lerna run clean",
     "release": "standard-version",
     "release:pre": "standard-version --prerelease alpha",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
     "pub": "npm publish --workspaces --access public",
     "lint": "tsc --noEmit && eslint --ext .ts --ext .tsx \"./\"",
     "test": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/",
