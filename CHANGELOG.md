@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/amnis-dev/amnis-state/compare/v0.4.10...v0.5.0) (2022-10-25)
+
+
+### Features
+
+* Added minor and major release scripts ([195a099](https://github.com/amnis-dev/amnis-state/commit/195a099702560326675a5e3a24c09687d8169e33))
+
+
+### Bug Fixes
+
+* Fixed broken jest tests when importing redux-toolkit ESM modules ([b34d6b5](https://github.com/amnis-dev/amnis-state/commit/b34d6b545d2c0ceb13454ca3c39b73445432e58b))
+* Imports ESM modules of Redux Toolkit. ([5175fb5](https://github.com/amnis-dev/amnis-state/commit/5175fb5fb5bb56ffc6df99f7492f8dabc891b5a7))
+
 ### [0.4.10](https://github.com/amnis-dev/amnis-state/compare/v0.4.9...v0.4.10) (2022-10-25)
 
 
