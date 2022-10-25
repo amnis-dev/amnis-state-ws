@@ -1,6 +1,4 @@
-import {
-  hashSync,
-} from 'bcrypt';
+import bcrypt from 'bcrypt';
 import {
   User,
   userCreate,
@@ -20,7 +18,7 @@ import {
 } from '../entity/entity.js';
 
 function passCreateSync(plaintext: string): string {
-  return hashSync(plaintext, 8);
+  return bcrypt.hashSync(plaintext, 8);
 }
 
 const roles: Role[] = [
