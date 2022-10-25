@@ -1,6 +1,6 @@
 {
   "name": "@amnis/state",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -35,12 +35,12 @@
     "clean": "rimraf ./.rollup.cache ./dist ./lib ./types ./tsconfig.build.tsbuildinfo ./yarn-error.log"
   },
   "dependencies": {
-    "@amnis/api": "0.4.9",
-    "@amnis/core": "0.4.9"
+    "@amnis/api": "0.4.10",
+    "@amnis/core": "0.4.10"
   },
   "peerDependencies": {
-    "@amnis/db": "0.4.9",
-    "@amnis/fs": "0.4.9",
+    "@amnis/db": "0.4.10",
+    "@amnis/fs": "0.4.10",
     "@reduxjs/toolkit": "^1.8.0",
     "react": "^18.0.0",
     "react-redux": "^8.0.2"

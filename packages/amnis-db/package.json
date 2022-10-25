@@ -1,6 +1,6 @@
 {
   "name": "@amnis/db",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -38,7 +38,7 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.4.9"
+    "@amnis/core": "0.4.10"
   },
   "sideEffects": false
 }

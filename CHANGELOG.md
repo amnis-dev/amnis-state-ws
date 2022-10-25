@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.10](https://github.com/amnis-dev/amnis-state/compare/v0.4.9...v0.4.10) (2022-10-25)
+
+
+### Features
+
+* Enforced index imports for all projects to resolve mistakes in builds ([0cef5ce](https://github.com/amnis-dev/amnis-state/commit/0cef5ce7873ae0e42bb1ca1fab8e95fd12919066))
+
 ### [0.4.9](https://github.com/amnis-dev/amnis-state/compare/v0.4.8...v0.4.9) (2022-10-25)
 
 
