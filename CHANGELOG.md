@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.9](https://github.com/amnis-dev/amnis-state/compare/v0.4.8...v0.4.9) (2022-10-25)
+
+
+### Features
+
+* Combined type definitions with ESM library output ([0a40bc1](https://github.com/amnis-dev/amnis-state/commit/0a40bc14101005a2fabbc8a80a21d3d7508792b3))
+
 ### [0.4.8](https://github.com/amnis-dev/amnis-state/compare/v0.4.7...v0.4.8) (2022-10-25)
 
 
