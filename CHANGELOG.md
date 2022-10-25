@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/amnis-dev/amnis-state/compare/v0.5.0...v0.5.1) (2022-10-25)
+
+
+### Features
+
+* Updated bundled outputs to transform commonjs to ES6 ([16d13f3](https://github.com/amnis-dev/amnis-state/commit/16d13f3148bbc3589a48a9fac28e1b9b75e9eaee))
+
 ## [0.5.0](https://github.com/amnis-dev/amnis-state/compare/v0.4.10...v0.5.0) (2022-10-25)
 
 
