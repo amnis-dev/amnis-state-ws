@@ -1,5 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 
 /**
  * Rollout options.
@@ -17,7 +19,11 @@ const base = {
     format: 'esm',
   },
   plugins: [
-    resolve(),
+    resolve({
+      browser: false,
+    }),
+    json(),
+    commonjs(),
     typescript({
       tsconfig: 'tsconfig.build.json',
       outputToFilesystem: true,
@@ -26,11 +32,6 @@ const base = {
   ],
   external: [
     /@amnis\/.*/,
-    '@reduxjs/toolkit',
-    'ajv',
-    'bcrypt',
-    'jsonwebtoken',
-    'cross-fetch',
   ],
 };
 
