@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/amnis-dev/amnis-state/compare/v0.5.1...v0.5.2) (2022-10-25)
+
+
+### Features
+
+* Updated dependency imports for bcypt ([1cecac8](https://github.com/amnis-dev/amnis-state/commit/1cecac88ea6c74cdfeada99b4ece86cec8d7df46))
+
 ### [0.5.1](https://github.com/amnis-dev/amnis-state/compare/v0.5.0...v0.5.1) (2022-10-25)
 
 
