@@ -6,8 +6,8 @@ import {
   coreExtraReducers,
   Service,
   serviceKey,
-} from '@amnis/core/index.js';
-import { apiExtraReducers } from '@amnis/api/index.js';
+} from '@amnis/core';
+import { apiExtraReducers } from '@amnis/api';
 import type { ServiceMeta } from './service.types.js';
 
 /**

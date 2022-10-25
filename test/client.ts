@@ -6,15 +6,9 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
-import { coreActions } from '@amnis/core/actions.js';
-import { memory } from '@amnis/db/memory/index.js';
-import { ApiInput } from '@amnis/api/types.js';
-import { apiAuthProcess } from '@amnis/api/auth/auth.process.js';
-import { storeSetup } from '@amnis/state/env.node/store.js';
+import { coreActions, IoInput } from '@amnis/core';
+import { memory } from '@amnis/db';
 
-import { validatorsSetup } from '@amnis/api/validators.js';
-import { apiIO } from '@amnis/api/api.io.node.js';
-import schemaAuth from '@amnis/api/auth/auth.schema.json';
 import { serviceSetup } from './database.js';
 
 const apiInput = (): RequestHandler => (
@@ -24,7 +18,7 @@ const apiInput = (): RequestHandler => (
     /**
      * Setup the process input.
      */
-    const input: ApiInput = { body };
+    const input: IoInput = { body };
 
     req.body = input;
 
@@ -97,7 +91,7 @@ app.get('*', (req, res) => {
  * Listen for auth login requests.
  */
 app.post('/auth/login', async (req, res) => {
-  const input: ApiInput = req.body;
+  const input: IoInput = req.body;
   const output = await authProcesses.login(input);
 
   res.json(output.json);
@@ -107,7 +101,7 @@ app.post('/auth/login', async (req, res) => {
  * Listen for auth platform requests.
  */
 app.post('/auth/platform', async (req, res) => {
-  const input: ApiInput = req.body;
+  const input: IoInput = req.body;
   const output = await authProcesses.platform(input);
 
   res.json(output.json);
@@ -117,7 +111,7 @@ app.post('/auth/platform', async (req, res) => {
  * Destination for Twitter oAuth PKCE redirect
  */
 app.post('/auth/pkce', async (req, res) => {
-  const input: ApiInput = req.body;
+  const input: IoInput = req.body;
   const output = await authProcesses.pkce(input);
 
   res.json(output.json);

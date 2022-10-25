@@ -1,4 +1,4 @@
-import { historyBase } from '@amnis/core/history/index.js';
+import { historyBase } from '@amnis/core';
 import {
   historyInitialState,
   historySelectors,

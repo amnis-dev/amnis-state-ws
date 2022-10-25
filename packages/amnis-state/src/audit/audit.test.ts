@@ -1,4 +1,4 @@
-import { auditBase } from '@amnis/core/audit/index.js';
+import { auditBase } from '@amnis/core';
 import {
   auditInitialState,
   auditSelectors,

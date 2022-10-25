@@ -1,4 +1,4 @@
-import { localeBase } from '@amnis/core/locale/index.js';
+import { localeBase } from '@amnis/core';
 import {
   localeInitialState,
   localeSelectors,

@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { Audit } from '@amnis/core/audit/index.js';
+import type { Meta, Audit } from '@amnis/core';
 
 /**
  * Audit collection meta data.

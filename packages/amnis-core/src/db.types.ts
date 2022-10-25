@@ -6,7 +6,7 @@ import type {
   StateDelete,
   StateCreate,
   StateQuery,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 export interface DatabaseControls {
   scope?: StateScope;

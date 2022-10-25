@@ -6,8 +6,8 @@ import {
   coreExtraReducers,
   Profile,
   profileKey,
-} from '@amnis/core/index.js';
-import { apiExtraReducers } from '@amnis/api/index.js';
+} from '@amnis/core';
+import { apiExtraReducers } from '@amnis/api';
 import type { ProfileMeta } from './profile.types.js';
 
 /**

@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { System } from '@amnis/core/system/index.js';
+import type { Meta, System } from '@amnis/core';
 
 /**
  * System collection meta data.

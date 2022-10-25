@@ -1,4 +1,4 @@
-import type { JWTDecoded, JWTEncoded } from '@amnis/core/token/index.js';
+import type { JWTDecoded, JWTEncoded } from '@amnis/core';
 import jwt from 'jsonwebtoken';
 import { getRsaPrivateKey, getRsaPublicKey } from './rsa.js';
 

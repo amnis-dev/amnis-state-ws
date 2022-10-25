@@ -1,5 +1,4 @@
-import type { Session } from '@amnis/core/session/index.js';
-import type { JWTEncoded } from '@amnis/core/token/index.js';
+import type { Session, JWTEncoded } from '@amnis/core';
 import jwt from 'jsonwebtoken';
 import { processConfig } from '../config.js';
 

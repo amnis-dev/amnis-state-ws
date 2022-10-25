@@ -13,7 +13,7 @@ import {
   systemKey,
   Token,
   tokenCreate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 import { processConfig } from '../config.js';
 import { jwtDecode } from '../crypto/index.js';

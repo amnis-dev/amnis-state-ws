@@ -5,7 +5,7 @@ import {
   JWTDecoded,
   Session,
   entityCreate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 import { passCompare, passCreate } from './pass.js';
 import { sessionEncode, sessionVerify } from './session.js';

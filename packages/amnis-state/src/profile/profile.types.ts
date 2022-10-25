@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { Profile } from '@amnis/core/profile/index.js';
+import type { Meta, Profile } from '@amnis/core';
 
 /**
  * Profile collection meta data.

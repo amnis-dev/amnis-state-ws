@@ -4,8 +4,8 @@ to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 import {
   createEntityAdapter, createSlice,
 } from '@amnis/core/rtk.js';
-import { coreReducers, coreExtraReducers, <%= Name %>, <%= name %>Key } from '@amnis/core/index.js';
-import { apiExtraReducers } from '@amnis/api/index.js';
+import { coreReducers, coreExtraReducers, <%= Name %>, <%= name %>Key } from '@amnis/core';
+import { apiExtraReducers } from '@amnis/api';
 import type { <%= Name %>Meta } from './<%= name %>.types.js';
 
 /**

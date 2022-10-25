@@ -6,8 +6,8 @@ import {
   coreExtraReducers,
   Role,
   roleKey,
-} from '@amnis/core/index.js';
-import { apiExtraReducers } from '@amnis/api/index.js';
+} from '@amnis/core';
+import { apiExtraReducers } from '@amnis/api';
 import type { RoleMeta } from './role.types.js';
 
 /**

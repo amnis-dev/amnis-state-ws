@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { GrantScope } from '@amnis/core/grant/index.js';
+import type { GrantScope } from '@amnis/core';
 import type { UID, UIDList } from '../types.js';
 import type { Entity } from '../entity/index.js';
 

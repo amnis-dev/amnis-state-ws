@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import { Result } from '@amnis/core/index.js';
+import { Result } from '@amnis/core';
 import type {
   ApiProcess,
   ApiProcesses,

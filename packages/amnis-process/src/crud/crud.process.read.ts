@@ -14,7 +14,7 @@ import {
   stateScopeCreate,
   Task,
   UID,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { mwJwt, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 

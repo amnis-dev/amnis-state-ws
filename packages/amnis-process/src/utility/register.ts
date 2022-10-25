@@ -9,7 +9,7 @@ import {
   Token,
   userCheck,
   userCreate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { sessionEncode } from '../crypto/index.js';
 import { sessionGenerate, tokenGenerate } from './common.js';
 

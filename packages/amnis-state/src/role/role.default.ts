@@ -1,4 +1,4 @@
-import { roleCreate } from '@amnis/core/role/index.js';
+import { roleCreate } from '@amnis/core';
 
 export const roleDefault = roleCreate({
   name: 'Base',

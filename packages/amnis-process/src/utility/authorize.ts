@@ -1,4 +1,4 @@
-import type { State, Grant, Task } from '@amnis/core/index.js';
+import type { State, Grant, Task } from '@amnis/core';
 
 /**
  * Authorization wall that filters out state slices based on grants.

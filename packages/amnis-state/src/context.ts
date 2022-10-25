@@ -1,8 +1,8 @@
 import {
   coreActions,
   IoContext, roleKey, StateCreate, systemKey, Validators,
-} from '@amnis/core/index.js';
-import { memory } from '@amnis/db/index.js';
+} from '@amnis/core';
+import { memory } from '@amnis/db';
 import { dataInitial } from './data.js';
 import { store as storeDefault } from './store.js';
 import { systemActions } from './system/index.js';

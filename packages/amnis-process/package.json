@@ -11,8 +11,7 @@
   "homepage": "https://github.com/amnis-dev/amnis-state",
   "files": [
     "lib",
-    "dist",
-    "types"
+    "dist"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

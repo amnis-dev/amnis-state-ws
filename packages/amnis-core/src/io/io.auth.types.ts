@@ -1,4 +1,4 @@
-import type { Token } from '@amnis/core/index.js';
+import type { Token } from '@amnis/core';
 
 /**
  * Payload for a login request.

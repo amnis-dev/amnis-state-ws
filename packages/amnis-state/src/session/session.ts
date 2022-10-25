@@ -6,8 +6,8 @@ import {
   coreExtraReducers,
   Session,
   sessionKey,
-} from '@amnis/core/index.js';
-import { apiExtraReducers, apiAuth } from '@amnis/api/index.js';
+} from '@amnis/core';
+import { apiExtraReducers, apiAuth } from '@amnis/api';
 import type {
   SessionMeta,
 } from './session.types.js';

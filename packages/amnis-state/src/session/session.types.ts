@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { Session } from '@amnis/core/session/index.js';
+import type { Meta, Session } from '@amnis/core';
 
 /**
  * Session collection meta data.

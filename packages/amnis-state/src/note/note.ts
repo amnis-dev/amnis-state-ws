@@ -6,8 +6,8 @@ import {
   coreExtraReducers,
   Note,
   noteKey,
-} from '@amnis/core/index.js';
-import { apiExtraReducers } from '@amnis/api/index.js';
+} from '@amnis/core';
+import { apiExtraReducers } from '@amnis/api';
 import type { NoteMeta } from './note.types.js';
 
 /**

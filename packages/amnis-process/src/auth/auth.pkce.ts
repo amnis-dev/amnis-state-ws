@@ -4,7 +4,7 @@ import {
   ioOutput,
   IoProcess,
   StateCreate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { oauthTwitter, oauthMicrosoft } from '../utility/index.js';
 import { mwValidate } from '../mw/index.js';
 

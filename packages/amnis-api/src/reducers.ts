@@ -18,7 +18,7 @@ import {
   sessionKey,
   UID,
   userKey,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { apiAuth } from './auth/index.js';
 import { apiCrud } from './crud/index.js';
 

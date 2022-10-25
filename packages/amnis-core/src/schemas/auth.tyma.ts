@@ -4,7 +4,7 @@ import type {
   AuthPkce,
   AuthRenew,
   AuthVerify,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 export interface AuthSchema {
   login?: AuthLogin;

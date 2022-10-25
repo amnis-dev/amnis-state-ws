@@ -1,8 +1,8 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
 } from '@amnis/core/rtk.js';
-import { Token, tokenKey } from '@amnis/core/token/index.js';
-import { apiAuth } from '@amnis/api/index.js';
+import { Token, tokenKey } from '@amnis/core';
+import { apiAuth } from '@amnis/api';
 
 import type { TokenMeta } from './token.types.js';
 

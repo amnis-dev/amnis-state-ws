@@ -20,9 +20,9 @@ import {
   userCreate,
 } from '@amnis/state/index.js';
 
-import { passCreateSync } from '@amnis/process/index.js';
+import { passCreateSync } from '@amnis/process';
 import { memory } from '@amnis/db/memory/index.js';
-import { uidList } from '@amnis/core/index.js';
+import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
 import { apiSetup } from './api.js';
 

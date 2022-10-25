@@ -1,4 +1,4 @@
-import { ioOutput, IoMiddleware } from '@amnis/core/index.js';
+import { ioOutput, IoMiddleware } from '@amnis/core';
 import { sessionVerify } from '../crypto/index.js';
 
 /**

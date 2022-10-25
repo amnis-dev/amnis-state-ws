@@ -1,4 +1,4 @@
-import { websiteCreate } from '@amnis/core/website/index.js';
+import { websiteCreate } from '@amnis/core';
 
 export const websiteDefault = websiteCreate({
   name: 'Unnamed Website',

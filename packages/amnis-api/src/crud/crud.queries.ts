@@ -6,7 +6,7 @@ import {
   StateDelete,
   StateQuery,
   StateUpdate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
   create: builder.query<

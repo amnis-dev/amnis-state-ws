@@ -8,7 +8,7 @@ import {
   IoProcess,
   Io,
   ioOutput,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { processConfig } from '../config.js';
 import { sessionEncode } from '../crypto/index.js';
 import { mwSession, mwValidate } from '../mw/index.js';

@@ -6,7 +6,7 @@ import {
   StateDelete,
   uidList,
   Database,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 /**
  * Storage type.

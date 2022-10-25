@@ -1,4 +1,4 @@
-import { contactCreate } from '@amnis/core/contact/index.js';
+import { contactCreate } from '@amnis/core';
 
 export const contactDefault = contactCreate({
   name: 'Unnamed Contact',

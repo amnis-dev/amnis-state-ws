@@ -1,4 +1,4 @@
-import { selectors, State } from '@amnis/core/index.js';
+import { selectors, State } from '@amnis/core';
 import type { ApiPrepareHeaders } from '../types.js';
 
 export const headersAuthorizationToken: ApiPrepareHeaders = (headers, { getState, endpoint }) => {

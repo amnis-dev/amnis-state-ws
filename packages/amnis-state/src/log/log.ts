@@ -6,8 +6,8 @@ import {
   coreExtraReducers,
   Log,
   logKey,
-} from '@amnis/core/index.js';
-import { apiExtraReducers } from '@amnis/api/index.js';
+} from '@amnis/core';
+import { apiExtraReducers } from '@amnis/api';
 import type { LogMeta } from './log.types.js';
 
 /**

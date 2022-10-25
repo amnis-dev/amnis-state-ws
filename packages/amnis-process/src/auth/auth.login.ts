@@ -1,6 +1,6 @@
 import {
   Io, IoProcess, AuthLogin, StateCreate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { passCompare } from '../crypto/index.js';
 import { mwValidate } from '../mw/index.js';
 import { userFindByName, outputBadCredentials, loginSuccessProcess } from '../utility/index.js';

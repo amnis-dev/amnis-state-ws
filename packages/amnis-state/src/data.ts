@@ -14,7 +14,7 @@ import {
   systemKey,
   websiteKey,
   StateCreate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 export function dataInitial(): StateCreate {
   const roles: Role[] = [

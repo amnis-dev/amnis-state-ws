@@ -1,4 +1,4 @@
-import type { IoMiddleware } from '@amnis/core/index.js';
+import type { IoMiddleware } from '@amnis/core';
 import { validate } from '../validate.js';
 
 /**

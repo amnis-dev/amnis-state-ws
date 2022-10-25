@@ -1,4 +1,4 @@
-import { logCreate } from '@amnis/core/log/index.js';
+import { logCreate } from '@amnis/core';
 
 export const logDefault = logCreate({
   level: 'debug',

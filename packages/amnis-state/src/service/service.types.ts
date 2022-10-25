@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { Service } from '@amnis/core/service/index.js';
+import type { Meta, Service } from '@amnis/core';
 
 /**
  * Service collection meta data.

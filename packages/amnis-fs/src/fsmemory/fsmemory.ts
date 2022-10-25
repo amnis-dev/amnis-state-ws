@@ -1,5 +1,4 @@
-import { imageCreate } from '@amnis/core/image/index.js';
-import type { FileSystem } from '@amnis/core/fs.types.js';
+import { imageCreate, FileSystem } from '@amnis/core';
 import { fsConfig } from '../config.js';
 import { isWebp, WEBP } from '../utility.js';
 

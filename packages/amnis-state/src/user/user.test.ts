@@ -1,4 +1,4 @@
-import { coreActions, userCreate, userKey } from '@amnis/core/index.js';
+import { coreActions, userCreate, userKey } from '@amnis/core';
 import {
   userInitialState,
   userSelectors,

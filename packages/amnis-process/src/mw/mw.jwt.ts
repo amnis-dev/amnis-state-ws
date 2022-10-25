@@ -1,4 +1,4 @@
-import { selectors, ioOutput, IoMiddleware } from '@amnis/core/index.js';
+import { selectors, ioOutput, IoMiddleware } from '@amnis/core';
 import { jwtVerify } from '../crypto/index.js';
 import { processConfig } from '../config.js';
 

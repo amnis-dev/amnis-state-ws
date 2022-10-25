@@ -1,4 +1,4 @@
-import { noteBase } from '@amnis/core/note/index.js';
+import { noteBase } from '@amnis/core';
 import {
   noteInitialState,
   noteSelectors,

@@ -10,7 +10,7 @@ import {
   StateCreate,
   StateDelete,
   StateUpdate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
 

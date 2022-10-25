@@ -13,7 +13,7 @@ import {
   systemKey,
   Token,
   tokenCreate,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 
 import { processConfig } from '../config.js';
 import { loginSuccessProcess, userFindByName } from './common.js';

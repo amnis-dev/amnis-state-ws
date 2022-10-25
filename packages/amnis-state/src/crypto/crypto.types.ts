@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { Crypto } from '@amnis/core/crypto/index.js';
+import type { Meta, Crypto } from '@amnis/core';
 
 /**
  * Crypto collection meta data.

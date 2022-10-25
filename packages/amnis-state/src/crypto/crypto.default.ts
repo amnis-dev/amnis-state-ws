@@ -1,4 +1,4 @@
-import { cryptoCreate } from '@amnis/core/crypto/index.js';
+import { cryptoCreate } from '@amnis/core';
 
 export const cryptoDefault = cryptoCreate({
   name: 'Unknown Crypto Key',

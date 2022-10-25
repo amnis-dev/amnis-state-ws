@@ -1,4 +1,4 @@
-import { serviceCreate } from '@amnis/core/service/index.js';
+import { serviceCreate } from '@amnis/core';
 
 export const serviceDefault = serviceCreate({
   name: 'Unknown Service',

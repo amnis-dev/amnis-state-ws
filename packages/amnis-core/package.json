@@ -11,8 +11,7 @@
   "homepage": "https://github.com/amnis-dev/amnis-state",
   "files": [
     "lib",
-    "dist",
-    "types"
+    "dist"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -29,17 +28,17 @@
       "require": "./dist/index.js"
     },
     "./rtk.js": {
-      "types": "./types/rtk.d.ts",
+      "types": "./lib/rtk.d.ts",
       "import": "./dist/rtk.mjs",
       "require": "./dist/rtk.js"
     },
     "./rtkq.js": {
-      "types": "./types/rtkq.d.ts",
+      "types": "./lib/rtkq.d.ts",
       "import": "./dist/rtkq.mjs",
       "require": "./dist/rtkq.js"
     },
     "./rtkqr.js": {
-      "types": "./types/rtkqr.d.ts",
+      "types": "./lib/rtkqr.d.ts",
       "import": "./dist/rtkqr.mjs",
       "require": "./dist/rtkqr.js"
     }

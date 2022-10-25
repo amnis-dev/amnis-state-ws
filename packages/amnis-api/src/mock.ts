@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   IoInput, ioOutput, IoOutput, IoProcesses, JWTEncoded,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { rest, RequestHandler } from 'msw';
 import { setupServer } from 'msw/node';
 

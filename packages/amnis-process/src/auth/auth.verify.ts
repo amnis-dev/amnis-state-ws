@@ -1,6 +1,6 @@
 import {
   Io, ioOutput, IoProcess, AuthVerify,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { jwtVerify } from '../crypto/index.js';
 import { mwValidate } from '../mw/index.js';
 

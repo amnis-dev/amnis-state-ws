@@ -1,4 +1,4 @@
-import { localeCreate, localeBase } from '@amnis/core/locale/index.js';
+import { localeCreate, localeBase } from '@amnis/core';
 
 export const localeDefault = localeCreate(localeBase);
 

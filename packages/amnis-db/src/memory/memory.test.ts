@@ -1,4 +1,4 @@
-import { uidList } from '@amnis/core/index.js';
+import { uidList } from '@amnis/core';
 import {
   books, bookKey,
 } from '@amnis/core/test/book.store.js';

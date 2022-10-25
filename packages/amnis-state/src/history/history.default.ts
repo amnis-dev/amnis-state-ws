@@ -1,4 +1,4 @@
-import { historyCreate, historyBase } from '@amnis/core/history/index.js';
+import { historyCreate, historyBase } from '@amnis/core';
 
 export const historyDefault = historyCreate(historyBase);
 

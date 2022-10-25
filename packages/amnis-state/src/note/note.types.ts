@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { Note } from '@amnis/core/note/index.js';
+import type { Meta, Note } from '@amnis/core';
 
 /**
  * Note collection meta data.

@@ -1,6 +1,6 @@
 import {
   userKey, AuthLogout, Io, ioOutput, IoProcess, StateDelete, uidList,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { mwSession, mwValidate } from '../mw/index.js';
 
 /**

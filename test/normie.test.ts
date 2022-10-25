@@ -31,11 +31,11 @@ import {
 } from '@amnis/state/index.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { passCreateSync } from '@amnis/process/index.js';
+import { passCreateSync } from '@amnis/process';
 import { memory } from '@amnis/db/memory/index.js';
 import { logSelectors } from '@amnis/state/log/index.js';
 import { tokenSelectors } from '@amnis/state/token/index.js';
-import { uidList } from '@amnis/core/index.js';
+import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
 
 /**

@@ -1,5 +1,4 @@
-import type { Meta } from '@amnis/core/entity/index.js';
-import type { Website } from '@amnis/core/website/index.js';
+import type { Meta, Website } from '@amnis/core';
 
 /**
  * Website collection meta data.

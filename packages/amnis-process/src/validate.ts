@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   IoOutput, ioOutput, Validator, Validators,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import type { AnySchema, AnyValidateFunction } from 'ajv/dist/types';
 import Ajv from 'ajv';
 

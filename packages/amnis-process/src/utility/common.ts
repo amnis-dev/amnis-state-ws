@@ -15,7 +15,7 @@ import {
   Database,
   User,
   userKey,
-} from '@amnis/core/index.js';
+} from '@amnis/core';
 import { sessionEncode, jwtEncode } from '../crypto/index.js';
 import { processConfig } from '../config.js';
 
