@@ -21,8 +21,7 @@ const base = {
     typescript({
       tsconfig: 'tsconfig.build.json',
       outputToFilesystem: true,
-      declaration: true,
-      declarationDir: './types',
+      declaration: false,
     }),
   ],
   external: [
@@ -54,7 +53,7 @@ rollup.push({
   ...base,
   input: 'src/index.react.ts',
   output: {
-    file: 'dist/react.mjs',
+    file: 'dist/index.react.mjs',
     format: 'esm',
   },
 });
@@ -80,7 +79,7 @@ rollup.push({
   ...base,
   input: 'src/index.react.ts',
   output: {
-    file: 'dist/react.js',
+    file: 'dist/index.react.js',
     format: 'cjs',
   },
 });

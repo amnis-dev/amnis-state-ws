@@ -21,8 +21,7 @@ const base = {
     typescript({
       tsconfig: 'tsconfig.build.json',
       outputToFilesystem: true,
-      declaration: true,
-      declarationDir: './types',
+      declaration: false,
     }),
   ],
   external: [
