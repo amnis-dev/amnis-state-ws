@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as rtkQuery from '@reduxjs/toolkit/dist/query/index.js';
+/* eslint-disable import/extensions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/** @ts-ignore */
+import * as rtkqRaw from '@reduxjs/toolkit/dist/query/rtk-query.esm.js';
 
-const rtkq = ((rtkQuery as any).default ?? rtkQuery) as typeof rtkQuery;
+const rtkq = rtkqRaw as typeof import('@reduxjs/toolkit/dist/query/index.d.js');
 
 export const {
   createApi,

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
-import type { Store } from '@reduxjs/toolkit/index.js';
+import type { Store } from '@reduxjs/toolkit';
 
 import type { DateJSON } from '../types.js';
 import type { JWTDecoded, JWTEncoded, Token } from '../token/index.js';

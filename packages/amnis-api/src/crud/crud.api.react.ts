@@ -1,5 +1,5 @@
 import fetch, { Headers, Request } from 'cross-fetch';
-import { createApiReact, fetchBaseQueryReact } from '@amnis/core/rtkqr.js';
+import { createApi, fetchBaseQuery } from '@amnis/core/rtkqr.js';
 import { apiConfig } from '../config.js';
 import { headersAuthorizationToken } from '../util/util.headers.js';
 import { apiCrudQueries } from './crud.queries.js';
@@ -7,9 +7,9 @@ import { apiCrudQueries } from './crud.queries.js';
 global.Headers = Headers;
 global.Request = Request;
 
-export const apiCrud = createApiReact({
+export const apiCrud = createApi({
   reducerPath: 'apiCrud',
-  baseQuery: fetchBaseQueryReact({
+  baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.API_CRUD_URL,
     fetchFn: fetch,
     prepareHeaders: headersAuthorizationToken,

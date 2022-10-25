@@ -2,7 +2,7 @@
 import type {
   ActionReducerMapBuilder,
   EntityAdapter,
-} from '@reduxjs/toolkit/index.js';
+} from '@reduxjs/toolkit';
 import {
   isRejectedWithValue,
   isFulfilled,

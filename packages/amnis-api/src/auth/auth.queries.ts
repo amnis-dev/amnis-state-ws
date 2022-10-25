@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { EndpointBuilder } from '@reduxjs/toolkit/query/endpointDefinitions.js';
+import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions.js';
 import {
   AuthLogin,
   AuthLogout,

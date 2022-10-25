@@ -3,7 +3,7 @@ import type {
   ActionReducerMapBuilder,
   EntityAdapter,
   PayloadAction,
-} from '@reduxjs/toolkit/index.js';
+} from '@reduxjs/toolkit';
 import {
   entityCreate,
 } from './entity/entity.js';

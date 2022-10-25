@@ -1,4 +1,4 @@
-import type { EntityState } from '@reduxjs/toolkit/index.js';
+import type { EntityState } from '@reduxjs/toolkit';
 import {
   Token, TokenApi, tokenKey, TokenType,
 } from './token/index.js';

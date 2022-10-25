@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import type { Store } from '@reduxjs/toolkit/index.js';
+import type { Store } from '@reduxjs/toolkit';
 import {
   AuthPkce,
   Database,

@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as toolkitRaw from '@reduxjs/toolkit';
+/* eslint-disable import/extensions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/** @ts-ignore */
+import * as rtkRaw from '@reduxjs/toolkit/dist/redux-toolkit.esm.js';
 
-const rtk = ((toolkitRaw as any).default ?? toolkitRaw) as typeof toolkitRaw;
+const rtk = rtkRaw as typeof import('@reduxjs/toolkit/dist/index.d.js');
 
 export const {
   createAction,

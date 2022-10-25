@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as rtkQueryReact from '@reduxjs/toolkit/dist/query/react/index.js';
+/* eslint-disable import/extensions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/** @ts-ignore */
+import * as rtkqrRaw from '@reduxjs/toolkit/dist/query/react/rtk-query-react.esm.js';
 
-const rtkqr = ((rtkQueryReact as any).default ?? rtkQueryReact) as typeof rtkQueryReact;
+const rtkqr = rtkqrRaw as typeof import('@reduxjs/toolkit/dist/query/index.d.js');
 
 export const {
-  createApi: createApiReact,
-  fetchBaseQuery: fetchBaseQueryReact,
+  createApi,
+  fetchBaseQuery,
 } = rtkqr;
 
 export default rtkqr;
