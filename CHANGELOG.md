@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.8](https://github.com/amnis-dev/amnis-state/compare/v0.4.7...v0.4.8) (2022-10-25)
+
+
+### Bug Fixes
+
+* Fixed missing import issue when compiling with NCC or with any kind of resolved bundling. ([40aab13](https://github.com/amnis-dev/amnis-state/commit/40aab13ed03642c4ba4692dcc2468823ca7a0594))
+
 ### [0.4.7](https://github.com/amnis-dev/amnis-state/compare/v0.4.6...v0.4.7) (2022-10-24)
 
 
