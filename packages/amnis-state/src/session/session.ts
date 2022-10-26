@@ -1,6 +1,6 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
-} from '@amnis/core/rtk.js';
+} from '@amnis/core/rtk';
 import {
   coreReducers,
   coreExtraReducers,

@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk.js';
+import { configureStore, combineReducers } from '@amnis/core/rtk';
 import { reducerMap, reducerMiddleware } from './history.reducer.js';
 
 export function historyStoreSetup() {

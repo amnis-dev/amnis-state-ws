@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.store.ts` : null %>"
 ---
-import { configureStore, combineReducers } from '@amnis/core/rtk.js';
+import { configureStore, combineReducers } from '@amnis/core/rtk';
 import { reducerMap, reducerMiddleware } from './<%= name %>.reducer.js';
 
 export function <%= name %>StoreSetup() {

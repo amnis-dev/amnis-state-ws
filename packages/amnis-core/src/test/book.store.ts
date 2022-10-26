@@ -2,7 +2,7 @@ import {
   createEntityAdapter,
   createSlice,
   configureStore,
-} from '@amnis/core/rtk.js';
+} from '@amnis/core/rtk';
 import type { Entity, Meta } from '../entity/index.js';
 import { coreExtraReducers, coreReducers } from '../reducers.js';
 import { entityCreate } from '../entity/index.js';

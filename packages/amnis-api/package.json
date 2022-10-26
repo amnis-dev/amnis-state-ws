@@ -27,7 +27,7 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./react.js": {
+    "./react": {
       "types": "./lib/index.react.d.ts",
       "import": "./dist/index.react.mjs",
       "require": "./dist/index.react.js"

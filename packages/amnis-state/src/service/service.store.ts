@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk.js';
+import { configureStore, combineReducers } from '@amnis/core/rtk';
 import { reducerMap, reducerMiddleware } from './service.reducer.js';
 
 export function serviceStoreSetup() {

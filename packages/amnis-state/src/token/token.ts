@@ -1,6 +1,6 @@
 import {
   createEntityAdapter, createSlice, isAnyOf,
-} from '@amnis/core/rtk.js';
+} from '@amnis/core/rtk';
 import { Token, tokenKey } from '@amnis/core';
 import { apiAuth } from '@amnis/api';
 

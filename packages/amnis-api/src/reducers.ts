@@ -6,7 +6,7 @@ import type {
 import {
   isRejectedWithValue,
   isFulfilled,
-} from '@amnis/core/rtk.js';
+} from '@amnis/core/rtk';
 import {
   Entity,
   IoOutput,

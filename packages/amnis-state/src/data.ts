@@ -47,7 +47,7 @@ export function dataInitial(): StateCreate {
       name: 'admin',
       email: 'example@email.address',
       /** passwd12 */
-      password: '$2a$08$lSaPLJYgwo7xa8SO9eV67uefbTYJ3y3IeaYx1wAC3MqGhwnOjYScO',
+      password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0',
       $roles: [roles[1].$id],
       $permits: [],
     }),

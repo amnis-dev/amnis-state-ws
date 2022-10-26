@@ -1,19 +1,10 @@
-import fetch, { Headers, Request } from 'cross-fetch';
-import { createApi, fetchBaseQuery } from '@amnis/core/rtkq.js';
-import { apiConfig } from '../config.js';
-import { headersAuthorizationToken } from '../util/util.headers.js';
+import { createApi } from '@amnis/core/rtkq';
+import { dynamicBaseQueryCrud } from '../util/index.js';
 import { apiCrudQueries } from './crud.queries.js';
-
-global.Headers = Headers;
-global.Request = Request;
 
 export const apiCrud = createApi({
   reducerPath: 'apiCrud',
-  baseQuery: fetchBaseQuery({
-    baseUrl: apiConfig.API_CRUD_URL,
-    fetchFn: fetch,
-    prepareHeaders: headersAuthorizationToken,
-  }),
+  baseQuery: dynamicBaseQueryCrud,
   endpoints: (builder) => apiCrudQueries(builder),
 });
 

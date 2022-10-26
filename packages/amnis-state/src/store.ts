@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk.js';
+import { configureStore, combineReducers } from '@amnis/core/rtk';
 import { stateSet } from './set.js';
 
 export function storeSetup() {

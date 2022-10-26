@@ -96,4 +96,43 @@ rollup.push({
   },
 });
 
+/**
+ * CommonJS (Redux Toolkit Wrapper)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/rtk.ts',
+  output: {
+    file: 'dist/rtk.js',
+    format: 'cjs',
+  },
+});
+
+/**
+ * CommonJS (Redux Toolkit Wrapper)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/rtkq.ts',
+  output: {
+    file: 'dist/rtkq.js',
+    format: 'cjs',
+  },
+});
+
+/**
+ * CommonJS (Redux Toolkit Wrapper)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/rtkqr.ts',
+  output: {
+    file: 'dist/rtkqr.js',
+    format: 'cjs',
+  },
+});
+
 export default rollup;

@@ -1,17 +1,10 @@
-import fetch, { Headers, Request } from 'cross-fetch';
-import { createApi, fetchBaseQuery } from '@amnis/core/rtkqr.js';
-import { apiConfig } from '../config.js';
+import { createApi } from '@amnis/core/rtkqr';
+import { dynamicBaseQueryAuth } from '../util/index.js';
 import { apiAuthQueries } from './auth.queries.js';
-
-global.Headers = Headers;
-global.Request = Request;
 
 export const apiAuth = createApi({
   reducerPath: 'apiAuth',
-  baseQuery: fetchBaseQuery({
-    baseUrl: apiConfig.API_AUTH_URL,
-    fetchFn: fetch,
-  }),
+  baseQuery: dynamicBaseQueryAuth,
   endpoints: (builder) => apiAuthQueries(builder),
 });
 

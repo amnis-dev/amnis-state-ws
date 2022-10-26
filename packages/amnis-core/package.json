@@ -27,17 +27,20 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./rtk.js": {
+    "./rtk": {
       "types": "./lib/rtk.d.ts",
-      "import": "./dist/rtk.mjs"
+      "import": "./dist/rtk.mjs",
+      "require": "./dist/rtk.js"
     },
-    "./rtkq.js": {
+    "./rtkq": {
       "types": "./lib/rtkq.d.ts",
-      "import": "./dist/rtkq.mjs"
+      "import": "./dist/rtkq.mjs",
+      "require": "./dist/rtkq.js"
     },
-    "./rtkqr.js": {
+    "./rtkqr": {
       "types": "./lib/rtkqr.d.ts",
-      "import": "./dist/rtkqr.mjs"
+      "import": "./dist/rtkqr.mjs",
+      "require": "./dist/rtkqr.js"
     }
   },
   "scripts": {
