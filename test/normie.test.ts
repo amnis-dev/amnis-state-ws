@@ -31,7 +31,7 @@ import {
 } from '@amnis/state/index.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { passCreateSync } from '@amnis/process';
+import { passCreate } from '@amnis/process';
 import { memory } from '@amnis/db/memory/index.js';
 import { logSelectors } from '@amnis/state/log/index.js';
 import { tokenSelectors } from '@amnis/state/token/index.js';
@@ -211,7 +211,7 @@ test('user create global should be -DENIED- as Normie via API', async () => {
         userCreate({
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
-          password: passCreateSync('passwd0'),
+          password: passCreate('passwd0'),
         }),
       ],
     }),

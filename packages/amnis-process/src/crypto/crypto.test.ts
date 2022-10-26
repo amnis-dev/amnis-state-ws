@@ -120,7 +120,7 @@ test('expired token should fail verification.', () => {
  */
 test('pass should become hashed.', async () => {
   const plaintext = 'myPlainPassword';
-  const hashed = await passCreate(plaintext);
+  const hashed = passCreate(plaintext);
 
   expect(hashed).not.toEqual(plaintext);
 });
@@ -130,9 +130,9 @@ test('pass should become hashed.', async () => {
  */
 test('pass should match with same hashed plaintext.', async () => {
   const plaintext = 'myPlainPassword';
-  const hashed = await passCreate(plaintext);
+  const hashed = passCreate(plaintext);
 
-  const same = await passCompare(plaintext, hashed);
+  const same = passCompare(plaintext, hashed);
 
   expect(same).toEqual(true);
 });
@@ -142,9 +142,9 @@ test('pass should match with same hashed plaintext.', async () => {
  */
 test('pass should NOT match with mismatched hashed plaintext.', async () => {
   const plaintext = 'myPlainPassword';
-  const hashed = await passCreate(plaintext);
+  const hashed = passCreate(plaintext);
 
-  const same = await passCompare('notMyPlainPassword', hashed);
+  const same = passCompare('notMyPlainPassword', hashed);
 
   expect(same).toEqual(false);
 });

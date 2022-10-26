@@ -4,7 +4,7 @@ import {
   ioProcess, IoInput, userCreate, profileCreate, sessionCreate, dateNumeric,
   schemaAuth,
 } from '@amnis/core';
-import { sessionEncode, passCreateSync } from '../crypto/index.js';
+import { sessionEncode, passCreate } from '../crypto/index.js';
 import { validateSetup } from '../validate.js';
 import { authProcess } from './index.js';
 
@@ -19,7 +19,7 @@ const appStore = storeSetup();
 const user = userCreate({
   name: 'ExampleUser',
   email: 'user.example@amnis.dev',
-  password: passCreateSync('passwd1'),
+  password: passCreate('passwd1'),
 });
 
 const profile = profileCreate({

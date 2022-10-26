@@ -1,19 +1,15 @@
-import bcrypt from 'bcrypt';
+import { scryptSync, randomBytes } from 'node:crypto';
 
-export async function passCreate(plaintext: string): Promise<string> {
-  const hashtext = await bcrypt.hash(plaintext, 8);
-  return hashtext;
+const passEncrypt = (password: string, salt: string) => scryptSync(password, salt, 32).toString('hex');
+
+export function passCreate(plaintext: string): string {
+  const salt = randomBytes(16).toString('hex');
+  return passEncrypt(plaintext, salt) + salt;
 }
 
-export async function passCompare(plaintext: string, hashtext: string): Promise<boolean> {
-  const same = await bcrypt.compare(plaintext, hashtext);
-  return same;
-}
-
-export function passCreateSync(plaintext: string): string {
-  return bcrypt.hashSync(plaintext, 8);
-}
-
-export function passCompareSync(plaintext: string, hashtext: string): boolean {
-  return bcrypt.compareSync(plaintext, hashtext);
+export function passCompare(plaintext: string, hashtext: string): boolean {
+  const salt = hashtext.slice(64);
+  const originalPassHash = hashtext.slice(0, 64);
+  const currentPassHash = passEncrypt(plaintext, salt);
+  return originalPassHash === currentPassHash;
 }

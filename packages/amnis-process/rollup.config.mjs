@@ -33,7 +33,6 @@ const base = {
   external: [
     /@amnis\/.*/,
     'ajv',
-    'bcrypt',
     'jsonwebtoken',
     'cross-fetch',
   ],

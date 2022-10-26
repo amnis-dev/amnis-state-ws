@@ -13,7 +13,7 @@ import {
 } from '@amnis/core';
 import { memory } from '@amnis/db';
 import { storeSetup } from '@amnis/core/test/book.store.js';
-import { generateRsa, jwtEncode, passCreateSync } from '../crypto/index.js';
+import { generateRsa, jwtEncode, passCreate } from '../crypto/index.js';
 import { authProcess } from './index.js';
 import { validateSetup } from '../validate.js';
 
@@ -29,7 +29,7 @@ const users: User[] = [
   userCreate({
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
-    password: passCreateSync('passwd1'),
+    password: passCreate('passwd1'),
   }),
 ];
 

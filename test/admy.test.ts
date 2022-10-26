@@ -20,7 +20,7 @@ import {
   userCreate,
 } from '@amnis/state/index.js';
 
-import { passCreateSync } from '@amnis/process';
+import { passCreate } from '@amnis/process';
 import { memory } from '@amnis/db/memory/index.js';
 import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
@@ -161,7 +161,7 @@ test('user create global should be +ALLOWED+ as Admy via API', async () => {
         userCreate({
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
-          password: passCreateSync('passwd0'),
+          password: passCreate('passwd0'),
         }),
       ],
     }),
