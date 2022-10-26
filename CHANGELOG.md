@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/amnis-dev/amnis-state/compare/v0.5.2...v0.5.3) (2022-10-26)
+
+
+### Features
+
+* Removed outdated bcrypt package in favor of native node functions ([9bae451](https://github.com/amnis-dev/amnis-state/commit/9bae451d94b84a716a9e8d0f6d50978553318eba))
+
 ### [0.5.2](https://github.com/amnis-dev/amnis-state/compare/v0.5.1...v0.5.2) (2022-10-25)
 
 
