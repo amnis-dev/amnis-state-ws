@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.4](https://github.com/amnis-dev/amnis-state/compare/v0.5.3...v0.5.4) (2022-10-27)
+
+
+### Features
+
+* Implemented dynamic api urls. ([6314097](https://github.com/amnis-dev/amnis-state/commit/63140974cfdbd0303f9ccb3b42b7dc3aa1920ad3))
+
 ### [0.5.3](https://github.com/amnis-dev/amnis-state/compare/v0.5.2...v0.5.3) (2022-10-26)
 
 
