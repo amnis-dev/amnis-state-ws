@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.6](https://github.com/amnis-dev/amnis-state/compare/v0.5.5...v0.5.6) (2022-10-28)
+
+
+### Features
+
+* Added tests for Amnis Process processes and added more meaninging for initial data ([dd43cb3](https://github.com/amnis-dev/amnis-state/commit/dd43cb3e283e665d526945433706e5e418b57cb3))
+
+
+### Bug Fixes
+
+* Fixed system tests with newly added executive role ([8d484b3](https://github.com/amnis-dev/amnis-state/commit/8d484b3157f4abd2473dacc1ac38c772b41b40a3))
+* Removed outdated data model for initial database setup ([1fe5ca1](https://github.com/amnis-dev/amnis-state/commit/1fe5ca1cd1ef733843ff3ded77a1b13980a51b0c))
+* Resolved type issue in registration unit tests ([8a1a342](https://github.com/amnis-dev/amnis-state/commit/8a1a34255ba4d50cfbe78ea4fa1d33077e26dc7a))
+
 ### [0.5.5](https://github.com/amnis-dev/amnis-state/compare/v0.5.4...v0.5.5) (2022-10-27)
 
 ### [0.5.4](https://github.com/amnis-dev/amnis-state/compare/v0.5.3...v0.5.4) (2022-10-27)
