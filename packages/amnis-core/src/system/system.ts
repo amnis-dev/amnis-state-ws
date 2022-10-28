@@ -1,23 +1,21 @@
 import { uid } from '../uid.js';
 import { durationCalc } from '../core.js';
-import {
-  EntityExtension,
-  EntityExtensionCreate,
-  entityCreate,
-} from '../entity/index.js';
+import { entityCreate, Entity } from '../entity/index.js';
 import type { LogBaseCreate } from '../log/index.js';
 import { roleKey } from '../role/index.js';
 import { websiteKey } from '../website/index.js';
-import type { System } from './system.types.js';
+import type { System, SystemBase, SystemBaseCreate } from './system.types.js';
 
 export const systemKey = 'system';
 
-export const systemBase: EntityExtension<System> = {
+export const systemBase: SystemBase = {
   name: '',
   sessionExpires: durationCalc('1h'),
   $website: uid(websiteKey),
   $adminRole: uid(roleKey),
+  $execRole: uid(roleKey),
   $initialRoles: [],
+  $anonymousRoles: [],
 };
 
 /**
@@ -34,24 +32,17 @@ export function systemCheck(system: System): LogBaseCreate[] {
     });
   }
 
-  if (system.$initialRoles.length < 1) {
-    logs.push({
-      title: 'Missing Default Roles',
-      description: 'New accounts will have same access as anonymous users.',
-      level: 'warn',
-    });
-  }
-
   return logs;
 }
 
 export function systemCreate(
-  system: EntityExtensionCreate<System, 'name' | '$adminRole'>,
+  system: SystemBaseCreate,
+  entity: Partial<Entity> = {},
 ): System {
   const systemEntity = entityCreate<System>(systemKey, {
     ...systemBase,
     ...system,
-  });
+  }, entity);
 
   return systemEntity;
 }

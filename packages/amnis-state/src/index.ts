@@ -1,6 +1,5 @@
 export * from './set.js';
 
-export * from './data.js';
 export * from './store.js';
 export * from './context.js';
 

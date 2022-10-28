@@ -15,6 +15,7 @@ test('should create a system', () => {
   const system = systemCreate({
     name: 'Amnis System',
     $adminRole: uid('role'),
+    $execRole: uid('role'),
     $initialRoles: [uid('role')],
   });
 

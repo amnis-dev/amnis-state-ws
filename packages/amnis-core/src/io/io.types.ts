@@ -154,4 +154,5 @@ unknown,
 /**
  * A middlware function.
  */
-export type IoMiddleware<P = void> = (params: P) => (next: IoProcess) => IoProcess;
+export type IoMiddleware<P = void, IP extends IoProcess = IoProcess> =
+  (params: P) => (next: IP) => IP;

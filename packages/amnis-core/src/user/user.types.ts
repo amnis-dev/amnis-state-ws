@@ -1,5 +1,5 @@
-import type { UID } from '../types.js';
-import type { Entity } from '../entity/index.js';
+import type { UID, UIDList } from '../types.js';
+import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
 import type { Permit } from '../permit/index.js';
 import type { DeviceString } from '../device/index.js';
 import type { Role } from '../role/index.js';
@@ -63,11 +63,21 @@ export interface User extends Entity {
    * Roles this user has been given.
    * @default []
    */
-  readonly $roles: UID<Role>[];
+  readonly $roles: UIDList<Role>;
 
   /**
    * Special-case permits this user has been bestowed.
    * @default []
    */
-  readonly $permits: UID<Permit>[];
+  readonly $permits: UIDList<Permit>;
 }
+
+/**
+ * User properties excluding the extended entity properties.
+ */
+export type UserBase = EntityExtension<User>;
+
+/**
+  * User base properties for creation.
+  */
+export type UserBaseCreate = EntityExtensionCreate<User, 'name'>;

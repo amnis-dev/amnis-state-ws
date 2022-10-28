@@ -14,7 +14,10 @@ import {
   stateScopeCreate,
   StateUpdate,
   Task,
+  User,
+  userKey,
 } from '@amnis/core';
+import { passCreate } from '../crypto/pass.js';
 import { mwJwt, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
@@ -55,6 +58,17 @@ Io<StateUpdate, StateCreate>
       ).filter((entity: any) => entity !== undefined);
       return state;
     }, {});
+
+    /**
+     * Ensure all user passwords are hashed.
+     */
+    if (stateUpdateSanatizd[userKey]) {
+      stateUpdateSanatizd[userKey].forEach((entity: User) => {
+        if (entity.password) {
+          entity.password = passCreate(entity.password);
+        }
+      });
+    }
 
     /**
      * finalized state to process

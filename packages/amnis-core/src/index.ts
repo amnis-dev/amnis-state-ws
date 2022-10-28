@@ -1,6 +1,8 @@
 export * from './types.js';
 export * from './db.types.js';
 export * from './fs.types.js';
+
+export * from './data.js';
 export * from './uid.js';
 export * from './core.js';
 export * from './actions.js';

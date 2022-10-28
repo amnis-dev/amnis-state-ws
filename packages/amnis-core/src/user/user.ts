@@ -1,15 +1,14 @@
 import { deviceParse } from '../device/index.js';
-import { entityCreate } from '../entity/index.js';
+import { entityCreate, Entity } from '../entity/index.js';
 import { LogBaseCreate } from '../log/index.js';
 import { regexAlphanumeric, regexEmail } from '../regex.js';
 import type { DeviceString } from '../device/index.js';
-import type { EntityExtension, EntityExtensionCreate } from '../entity/entity.types.js';
-import type { User } from './user.types.js';
+import type { User, UserBase, UserBaseCreate } from './user.types.js';
 import { coreConfig } from '../config.js';
 
 export const userKey = 'user';
 
-export const userBase: EntityExtension<User> = {
+export const userBase: UserBase = {
   name: 'Unknown User',
   password: null,
   devices: [],
@@ -74,12 +73,13 @@ export function userCheck(user: User): LogBaseCreate[] {
  * User creation.
  */
 export function userCreate(
-  user: EntityExtensionCreate<User, 'name'>,
+  user: UserBaseCreate,
+  entity: Partial<Entity> = {},
 ): User {
   const userEntity = entityCreate<User>(userKey, {
     ...userBase,
     ...user,
-  });
+  }, entity);
 
   return userEntity;
 }
