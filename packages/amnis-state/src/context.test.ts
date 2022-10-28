@@ -9,7 +9,7 @@ test('should create initial node context', async () => {
   const roles = roleSelectors.selectAll(context.store.getState());
 
   expect(systems).toHaveLength(1);
-  expect(roles).toHaveLength(2);
+  expect(roles).toHaveLength(4);
 
   const [system] = systems;
 

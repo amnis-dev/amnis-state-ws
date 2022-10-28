@@ -176,7 +176,7 @@ test('should login as user with updated credentials and update own profile displ
 
   const outputUpdate = await io.update(inputUpdate);
 
-  console.log(JSON.stringify(outputUpdate, null, 2));
+  // console.log(JSON.stringify(outputUpdate, null, 2));
   expect(outputUpdate.status).toBe(200);
   expect(ioOutputErrored(outputUpdate)).toBe(false);
 
@@ -193,4 +193,39 @@ test('should login as user with updated credentials and update own profile displ
       nameDisplay: nameNew,
     },
   });
+});
+
+test('should login as user and be denied updating another profile', async () => {
+  const inputLogin: IoInput<AuthLogin> = {
+    body: {
+      username: 'userupdated',
+      password: 'newpass34',
+    },
+  };
+
+  const outputLogin = await io.login(inputLogin);
+  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+
+  const nameNew = 'New Profile Name';
+  const inputUpdate: IoInput<StateUpdate> = {
+    jwtEncoded: tokenAccess.jwt,
+    body: {
+      [profileKey]: [
+        {
+          // Admin Profile ID
+          $id: data[profileKey][0].$id,
+          nameDisplay: nameNew,
+        },
+      ],
+    },
+  };
+
+  const outputUpdate = await io.update(inputUpdate);
+
+  // console.log(JSON.stringify(outputUpdate, null, 2));
+  expect(outputUpdate.status).toBe(200);
+  expect(ioOutputErrored(outputUpdate)).toBe(true);
+
+  expect(outputUpdate.json.logs).toHaveLength(1);
+  expect(outputUpdate.json.logs[0].title).toBe('Updates Disallowed');
 });

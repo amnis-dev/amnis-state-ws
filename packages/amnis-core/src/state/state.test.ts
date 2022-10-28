@@ -9,6 +9,7 @@ import { StateCreate, StateQuery } from './state.types.js';
 const system = systemCreate({
   name: 'Query System',
   $adminRole: uid(roleKey),
+  $execRole: uid(roleKey),
   $initialRoles: [uid(roleKey), uid(roleKey)],
   $website: uid(websiteKey),
 });
@@ -58,6 +59,7 @@ test('should generate a proper identifier query', () => {
         $id: {
           $in: [
             ...system.$initialRoles,
+            system.$execRole,
             system.$adminRole,
           ],
         },
