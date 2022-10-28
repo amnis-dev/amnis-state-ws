@@ -1,4 +1,4 @@
-import type { UID, UIDList } from '../types.js';
+import type { UIDList } from '../types.js';
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
 import type { Permit } from '../permit/index.js';
 import type { DeviceString } from '../device/index.js';

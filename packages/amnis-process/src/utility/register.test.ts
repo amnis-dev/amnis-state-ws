@@ -7,6 +7,7 @@ import { register } from './register.js';
 const system = systemCreate({
   name: 'Amnis Test System',
   $adminRole: uid<Role>(roleKey),
+  $execRole: uid<Role>(roleKey),
   $initialRoles: [uid<Role>(roleKey), uid<Role>(roleKey)],
 });
 
