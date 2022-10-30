@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import type { Meta } from '@amnis/core/entity/index.js';
+import type { Meta } from '@amnis/core';
 import type { <%= Name %> } from '@amnis/core/<%= name %>';
 
 /**

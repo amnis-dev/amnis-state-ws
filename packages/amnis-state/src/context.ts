@@ -38,8 +38,8 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
     });
 
     /**
-   * Initialize the system if one isn't found.
-   */
+     * Initialize the system if one isn't found.
+     */
     if (!readResult[systemKey]?.length) {
       const createResult = await databaseNext.create(dataNext);
 

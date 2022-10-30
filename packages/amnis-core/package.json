@@ -22,11 +22,6 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./index.js": {
-      "types": "./lib/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
     "./rtk": {
       "types": "./lib/rtk.d.ts",
       "import": "./dist/rtk.mjs",

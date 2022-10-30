@@ -102,6 +102,52 @@ test('should login as administrator and update user password', async () => {
   });
 });
 
+test('should login as administrator and update profile display name', async () => {
+  const inputLogin: IoInput<AuthLogin> = {
+    body: {
+      username: 'admin',
+      password: 'passwd12',
+    },
+  };
+
+  const outputLogin = await io.login(inputLogin);
+  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+
+  const nameNew = 'The New Administrator';
+  const inputUpdate: IoInput<StateUpdate> = {
+    jwtEncoded: tokenAccess.jwt,
+    body: {
+      [profileKey]: [
+        {
+          // User ID
+          $id: data[profileKey][0].$id,
+          nameDisplay: nameNew,
+        },
+      ],
+    },
+  };
+
+  const outputUpdate = await io.update(inputUpdate);
+
+  // console.log(JSON.stringify(outputUpdate, null, 2));
+  expect(outputUpdate.status).toBe(200);
+  expect(ioOutputErrored(outputUpdate)).toBe(false);
+
+  expect(outputUpdate.json.result?.[profileKey]).toHaveLength(1);
+  expect(outputUpdate.json.result?.[profileKey][0]).toMatchObject({
+    $id: data[profileKey][0].$id,
+    nameDisplay: nameNew,
+  });
+
+  expect(outputUpdate.json.result?.[historyKey]).toHaveLength(1);
+  expect(outputUpdate.json.result?.[historyKey][0]).toMatchObject({
+    update: {
+      $id: data[profileKey][0].$id,
+      nameDisplay: nameNew,
+    },
+  });
+});
+
 test('should login as executive and update user name', async () => {
   const inputLogin: IoInput<AuthLogin> = {
     body: {
