@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.7](https://github.com/amnis-dev/amnis-state/compare/v0.5.6...v0.5.7) (2022-10-30)
+
+
+### Features
+
+* All services and packages function with rollup builds ([1d48ba0](https://github.com/amnis-dev/amnis-state/commit/1d48ba0f4040766383f9f08eade4bb4a19dcd91e))
+
 ### [0.5.6](https://github.com/amnis-dev/amnis-state/compare/v0.5.5...v0.5.6) (2022-10-28)
 
 
