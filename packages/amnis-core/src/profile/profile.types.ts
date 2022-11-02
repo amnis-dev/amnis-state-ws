@@ -45,7 +45,7 @@ export interface Profile extends Entity {
   /**
    * Organization profile is a part of.
    */
-  organiation?: string;
+  organization?: string;
 
   /**
    * Avatar string url to an image.

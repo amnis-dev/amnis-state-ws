@@ -823,7 +823,7 @@
           "$ref": "#/definitions/UID%3CContact%3E",
           "description": "Profile Contact."
         },
-        "organiation": {
+        "organization": {
           "type": "string",
           "description": "Organization profile is a part of."
         },
@@ -873,7 +873,7 @@
           "$ref": "#/definitions/UID%3CContact%3E",
           "description": "Profile Contact."
         },
-        "organiation": {
+        "organization": {
           "type": "string",
           "description": "Organization profile is a part of."
         },
@@ -1053,19 +1053,27 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator."
+          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
+        },
+        "$execRole": {
+          "$ref": "#/definitions/UID%3CRole%3E",
+          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
         },
         "$initialRoles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        },
+        "$anonymousRoles": {
+          "$ref": "#/definitions/UIDList%3CRole%3E",
+          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
           "default": []
         }
       },
       "required": [
         "$adminRole",
+        "$anonymousRoles",
+        "$execRole",
         "$initialRoles",
         "$website",
         "name",
@@ -1095,14 +1103,20 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator."
+          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
+        },
+        "$execRole": {
+          "$ref": "#/definitions/UID%3CRole%3E",
+          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
         },
         "$initialRoles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        },
+        "$anonymousRoles": {
+          "$ref": "#/definitions/UIDList%3CRole%3E",
+          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
           "default": []
         }
       },
@@ -1111,7 +1125,9 @@
         "sessionExpires",
         "$website",
         "$adminRole",
-        "$initialRoles"
+        "$execRole",
+        "$initialRoles",
+        "$anonymousRoles"
       ],
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
@@ -1123,6 +1139,13 @@
     "UID<Role>": {
       "type": "string",
       "description": "A id identifier to another document."
+    },
+    "UIDList<Role>": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UID%3CRole%3E"
+      },
+      "description": "An array of identifiers."
     },
     "EntityCreate<User>": {
       "type": "object",
@@ -1175,18 +1198,12 @@
           "default": []
         },
         "$roles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "Roles this user has been given.",
           "default": []
         },
         "$permits": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CPermit%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CPermit%3E",
           "description": "Special-case permits this user has been bestowed.",
           "default": []
         }
@@ -1255,18 +1272,12 @@
           "default": []
         },
         "$roles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "Roles this user has been given.",
           "default": []
         },
         "$permits": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CPermit%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CPermit%3E",
           "description": "Special-case permits this user has been bestowed.",
           "default": []
         }
@@ -1284,6 +1295,13 @@
     "DeviceString": {
       "type": "string",
       "description": "A string that represents a device."
+    },
+    "UIDList<Permit>": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UID%3CPermit%3E"
+      },
+      "description": "An array of identifiers."
     },
     "UID<Permit>": {
       "type": "string",
@@ -2363,7 +2381,7 @@
           "$ref": "#/definitions/UID%3CContact%3E",
           "description": "Profile Contact."
         },
-        "organiation": {
+        "organization": {
           "type": "string",
           "description": "Organization profile is a part of."
         },
@@ -2405,7 +2423,7 @@
           "$ref": "#/definitions/UID%3CContact%3E",
           "description": "Profile Contact."
         },
-        "organiation": {
+        "organization": {
           "type": "string",
           "description": "Organization profile is a part of."
         },
@@ -2539,14 +2557,20 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator."
+          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
+        },
+        "$execRole": {
+          "$ref": "#/definitions/UID%3CRole%3E",
+          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
         },
         "$initialRoles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        },
+        "$anonymousRoles": {
+          "$ref": "#/definitions/UIDList%3CRole%3E",
+          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
           "default": []
         }
       },
@@ -2570,14 +2594,20 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator."
+          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
+        },
+        "$execRole": {
+          "$ref": "#/definitions/UID%3CRole%3E",
+          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
         },
         "$initialRoles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "The initial roles to assign to a user when a new account is created.",
+          "default": []
+        },
+        "$anonymousRoles": {
+          "$ref": "#/definitions/UIDList%3CRole%3E",
+          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
           "default": []
         }
       },
@@ -2635,18 +2665,12 @@
           "default": []
         },
         "$roles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "Roles this user has been given.",
           "default": []
         },
         "$permits": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CPermit%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CPermit%3E",
           "description": "Special-case permits this user has been bestowed.",
           "default": []
         }
@@ -2704,18 +2728,12 @@
           "default": []
         },
         "$roles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CRole%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "Roles this user has been given.",
           "default": []
         },
         "$permits": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CPermit%3E"
-          },
+          "$ref": "#/definitions/UIDList%3CPermit%3E",
           "description": "Special-case permits this user has been bestowed.",
           "default": []
         }

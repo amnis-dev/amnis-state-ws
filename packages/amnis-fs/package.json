@@ -21,7 +21,7 @@
       "types": "./lib/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
-    },
+    }
   },
   "scripts": {
     "build": "yarn build:lib && yarn build:dist",
