@@ -31,9 +31,11 @@ test('should return registration output successfully.', async () => {
   expect(output.json.result).toEqual({
     user: expect.any(Array),
     profile: expect.any(Array),
+    contact: expect.any(Array),
   });
   expect(output.json.result?.user).toHaveLength(1);
   expect(output.json.result?.profile).toHaveLength(1);
+  expect(output.json.result?.contact).toHaveLength(1);
   expect(output.json.tokens).not.toBeDefined();
 });
 
@@ -58,9 +60,11 @@ test('should return registration output successfully with access tokens.', async
   expect(output.json.result).toEqual({
     user: expect.any(Array),
     profile: expect.any(Array),
+    contact: expect.any(Array),
   });
   expect(output.json.result?.user).toHaveLength(1);
   expect(output.json.result?.profile).toHaveLength(1);
+  expect(output.json.result?.contact).toHaveLength(1);
   expect(output.json.tokens).toHaveLength(1);
 });
 
@@ -100,9 +104,11 @@ test('should return registration output successfully using oAuth username.', asy
   expect(output.json.result).toEqual({
     user: expect.any(Array),
     profile: expect.any(Array),
+    contact: expect.any(Array),
   });
   expect(output.json.result?.user).toHaveLength(1);
   expect(output.json.result?.profile).toHaveLength(1);
+  expect(output.json.result?.contact).toHaveLength(1);
   expect(output.json.tokens).not.toBeDefined();
 });
 

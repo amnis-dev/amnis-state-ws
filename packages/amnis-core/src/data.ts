@@ -1,4 +1,5 @@
 import { grantStringify, task } from './grant/index.js';
+import { Contact, contactCreate, contactKey } from './contact/index.js';
 import { Profile, profileCreate, profileKey } from './profile/index.js';
 import { Role, roleCreate, roleKey } from './role/index.js';
 import { StateCreate } from './state/index.js';
@@ -22,6 +23,7 @@ export function dataInitial(): StateCreate {
         grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
       ],
     }),
     roleCreate({
@@ -33,6 +35,7 @@ export function dataInitial(): StateCreate {
         grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
       ],
     }),
     roleCreate({
@@ -44,6 +47,8 @@ export function dataInitial(): StateCreate {
         grantStringify({ key: userKey, scope: 'owned', task: task(0, 1, 0, 0) }),
         grantStringify({ key: profileKey, scope: 'owned', task: task(0, 1, 1, 0) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(0, 1, 0, 0) }),
+        grantStringify({ key: contactKey, scope: 'owned', task: task(0, 1, 1, 0) }),
+        grantStringify({ key: contactKey, scope: 'global', task: task(0, 1, 0, 0) }),
       ],
     }),
     roleCreate({
@@ -90,19 +95,41 @@ export function dataInitial(): StateCreate {
 
   /**
    * ================================================================================
+   * User contacts.
+   */
+  const contacts: Contact[] = [
+    contactCreate({
+      name: 'Administrator Contact',
+      emails: [users[0].email as string],
+    }, { $owner: users[0].$id }),
+    contactCreate({
+      name: 'Executive Contact',
+      emails: [users[1].email as string],
+    }, { $owner: users[1].$id }),
+    contactCreate({
+      name: 'User Contact',
+      emails: [users[2].email as string],
+    }, { $owner: users[2].$id }),
+  ];
+
+  /**
+   * ================================================================================
    * User profiles.
    */
   const profiles: Profile[] = [
     profileCreate({
       $user: users[0].$id,
+      $contact: contacts[0].$id,
       nameDisplay: 'Administrator',
     }, { $owner: users[0].$id }),
     profileCreate({
       $user: users[1].$id,
+      $contact: contacts[1].$id,
       nameDisplay: 'Executive',
     }, { $owner: users[1].$id }),
     profileCreate({
       $user: users[2].$id,
+      $contact: contacts[2].$id,
       nameDisplay: 'User',
     }, { $owner: users[2].$id }),
   ];
@@ -124,6 +151,7 @@ export function dataInitial(): StateCreate {
   return {
     [roleKey]: roles,
     [userKey]: users,
+    [contactKey]: contacts,
     [profileKey]: profiles,
     [systemKey]: systems,
   };

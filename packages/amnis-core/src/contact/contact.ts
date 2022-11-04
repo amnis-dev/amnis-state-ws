@@ -1,4 +1,4 @@
-import { entityCreate } from '../entity/index.js';
+import { Entity, entityCreate } from '../entity/index.js';
 import type { LogBaseCreate } from '../log/index.js';
 import { regexWebUrl } from '../regex.js';
 import type { Contact, ContactBase, ContactBaseCreate } from './contact.types.js';
@@ -33,11 +33,12 @@ export function contactCheck(contact: Contact): LogBaseCreate[] {
 
 export function contactCreate(
   contact: ContactBaseCreate,
+  entity: Partial<Entity> = {},
 ): Contact {
   const contactEntity = entityCreate<Contact>(contactKey, {
     ...contactBase,
     ...contact,
-  });
+  }, entity);
 
   return contactEntity;
 }

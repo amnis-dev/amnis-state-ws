@@ -1,4 +1,5 @@
 import {
+  contactCreate,
   Database,
   IoOutput,
   ioOutput,
@@ -64,8 +65,15 @@ export async function register(
   const profile = profileCreate({
     $user: user.$id,
     nameDisplay: nameDisplay || username,
-  });
-  profile.$owner = user.$id;
+  }, { $owner: user.$id });
+
+  const contact = contactCreate({
+    name: profile.nameDisplay,
+  }, { $owner: user.$id });
+  profile.$contact = contact.$id;
+  if (user.email) {
+    contact.emails.push(user.email);
+  }
 
   /**
    * If there were issues with the creations, there'll be logs.
@@ -79,6 +87,7 @@ export async function register(
   const insertion: StateCreate = {
     user: [user],
     profile: [profile],
+    contact: [contact],
   };
 
   /**
