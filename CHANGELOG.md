@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.8](https://github.com/amnis-dev/amnis-state/compare/v0.5.7...v0.5.8) (2022-11-04)
+
+
+### Features
+
+* Added contact data to profiles on registration and for default data ([fdb6d34](https://github.com/amnis-dev/amnis-state/commit/fdb6d34d72af082af462cd58fbd56190b586b70a))
+* Amnis DB and Amnis FS are now included with Amnis State package ([4b87203](https://github.com/amnis-dev/amnis-state/commit/4b8720344c8b3f3bbbacbb18dc8b8e6857d5042f))
+
+
+### Bug Fixes
+
+* Fixed typo in profile data type ([7b84a8d](https://github.com/amnis-dev/amnis-state/commit/7b84a8d7dff8126eea66600d0c588a9c8f47ddf8))
+
 ### [0.5.7](https://github.com/amnis-dev/amnis-state/compare/v0.5.6...v0.5.7) (2022-10-30)
 
 
