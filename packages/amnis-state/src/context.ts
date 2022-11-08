@@ -3,7 +3,7 @@ import {
   dataInitial,
   IoContext, roleKey, StateCreate, systemKey, Validators,
 } from '@amnis/core';
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { store as storeDefault } from './store.js';
 import { systemActions } from './system/index.js';
@@ -29,7 +29,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
   } = options;
   const storeNext = store ?? storeDefault;
   const validatorsNext = (validators || []) as Validators;
-  const databaseNext = database ?? memory;
+  const databaseNext = database ?? dbmemory;
   const filesystemNext = filesystem ?? fsmemory;
   const dataNext = data ?? dataInitial();
 

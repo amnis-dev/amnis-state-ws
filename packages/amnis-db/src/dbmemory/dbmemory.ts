@@ -36,7 +36,7 @@ export function memoryClear() {
  * This database is simply an interface for a JSON object.
  * Use this database interface for testing and mocking APIs.
  */
-export const memory: Database = {
+export const dbmemory: Database = {
   initialize: (initialStorage: MemoryStorage = {}) => {
     storage = initialStorage;
   },
@@ -270,4 +270,4 @@ export const memory: Database = {
   },
 };
 
-export default memory;
+export default dbmemory;

@@ -31,7 +31,7 @@ import {
 
 import stateSchema from '@amnis/state/state.schema.json';
 import { passCreate } from '@amnis/process';
-import { memory } from '@amnis/db/memory/index.js';
+import { dbmemory } from '@amnis/db/memory/index.js';
 import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
 
@@ -74,7 +74,7 @@ const validators = validatorsSetup([coreSchema, schemaAuth, stateSchema]);
   */
 const authHandlers = apiIO({
   store: serverStore,
-  database: memory,
+  database: dbmemory,
   validators,
 }, apiAuthProcess);
 
@@ -83,7 +83,7 @@ const authHandlers = apiIO({
   */
 const crudHanders = apiIO({
   store: serverStore,
-  database: memory,
+  database: dbmemory,
   validators,
 }, apiCrudProcess);
 
@@ -117,7 +117,7 @@ beforeAll(async () => {
   /**
     * Fetch roles from the database and populate the server store.
     */
-  serverStore.dispatch(coreActions.create(await memory.read({
+  serverStore.dispatch(coreActions.create(await dbmemory.read({
     role: {},
   }, { scope: { role: 'global' } })));
 

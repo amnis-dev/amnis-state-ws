@@ -32,7 +32,7 @@ import {
 
 import stateSchema from '@amnis/state/state.schema.json';
 import { passCreate } from '@amnis/process';
-import { memory } from '@amnis/db/memory/index.js';
+import { dbmemory } from '@amnis/db/memory/index.js';
 import { logSelectors } from '@amnis/state/log/index.js';
 import { tokenSelectors } from '@amnis/state/token/index.js';
 import { uidList } from '@amnis/core';
@@ -77,7 +77,7 @@ const validators = validatorsSetup([coreSchema, schemaAuth, stateSchema]);
    */
 const authHandlers = apiIO({
   store: serverStore,
-  database: memory,
+  database: dbmemory,
   validators,
 }, apiAuthProcess);
 
@@ -86,7 +86,7 @@ const authHandlers = apiIO({
    */
 const crudHanders = apiIO({
   store: serverStore,
-  database: memory,
+  database: dbmemory,
   validators,
 }, apiCrudProcess);
 

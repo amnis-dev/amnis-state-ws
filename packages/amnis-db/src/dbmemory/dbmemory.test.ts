@@ -2,7 +2,7 @@ import { uidList } from '@amnis/core';
 import {
   books, bookKey,
 } from '@amnis/core/test/book.store.js';
-import { memory, memoryClear } from './memory.js';
+import { dbmemory, memoryClear } from './dbmemory.js';
 
 /**
  * Clear memory storage after each run.
@@ -13,7 +13,7 @@ afterEach(() => memoryClear());
  * ============================================================
  */
 test('memory db should create and store new book entity.', async () => {
-  const result = await memory.create({ [bookKey]: [books[0]] });
+  const result = await dbmemory.create({ [bookKey]: [books[0]] });
 
   expect(
     result,
@@ -26,7 +26,7 @@ test('memory db should create and store new book entity.', async () => {
  * ============================================================
  */
 test('memory db should update existing book entity.', async () => {
-  const result = await memory.create({ [bookKey]: books });
+  const result = await dbmemory.create({ [bookKey]: books });
 
   expect(
     result,
@@ -34,7 +34,7 @@ test('memory db should update existing book entity.', async () => {
     [bookKey]: books,
   });
 
-  const updateResult = await memory.update({
+  const updateResult = await dbmemory.update({
     [bookKey]: [
       {
         $id: books[0].$id,
@@ -54,9 +54,9 @@ test('memory db should update existing book entity.', async () => {
  * ============================================================
  */
 test('memory db should NOT select book with mismatching title.', async () => {
-  await memory.create({ [bookKey]: books });
+  await dbmemory.create({ [bookKey]: books });
 
-  const result = await memory.read({
+  const result = await dbmemory.read({
     [bookKey]: {
       $query: {
         title: {
@@ -79,9 +79,9 @@ test('memory db should NOT select book with mismatching title.', async () => {
  * ============================================================
  */
 test('memory db should select book with matching title.', async () => {
-  await memory.create({ [bookKey]: books });
+  await dbmemory.create({ [bookKey]: books });
 
-  const result = await memory.read({
+  const result = await dbmemory.read({
     [bookKey]: {
       $query: {
         title: {
@@ -104,9 +104,9 @@ test('memory db should select book with matching title.', async () => {
  * ============================================================
  */
 test('memory db should delete a book entity by id.', async () => {
-  await memory.create({ [bookKey]: books });
+  await dbmemory.create({ [bookKey]: books });
 
-  const resultRead = await memory.read({
+  const resultRead = await dbmemory.read({
     [bookKey]: {
       $query: {
         $id: {
@@ -124,7 +124,7 @@ test('memory db should delete a book entity by id.', async () => {
     [bookKey]: [books[0]],
   });
 
-  const result = await memory.delete({
+  const result = await dbmemory.delete({
     [bookKey]: uidList([books[0].$id]),
   });
 
@@ -134,7 +134,7 @@ test('memory db should delete a book entity by id.', async () => {
     [bookKey]: [books[0].$id],
   });
 
-  const resultRead2 = await memory.read({
+  const resultRead2 = await dbmemory.read({
     [bookKey]: {
       $query: {
         $id: {

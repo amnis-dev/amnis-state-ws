@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 
 import { coreActions, IoInput } from '@amnis/core';
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 
 import { serviceSetup } from './database.js';
 
@@ -37,7 +37,7 @@ const serverStore = storeSetup();
  */
 const authProcesses = apiIO({
   store: serverStore,
-  database: memory,
+  database: dbmemory,
   validators: validatorsSetup(schemaAuth),
 }, apiAuthProcess);
 
@@ -128,7 +128,7 @@ async function init() {
    * The auth API assigns grants based on roles in the server store; which should
    * be loaded in at startup.
    */
-  serverStore.dispatch(coreActions.create(await memory.read({
+  serverStore.dispatch(coreActions.create(await dbmemory.read({
     role: {},
   }, { scope: { role: 'global' } })));
 

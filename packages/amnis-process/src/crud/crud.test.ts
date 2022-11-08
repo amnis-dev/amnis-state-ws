@@ -6,7 +6,7 @@ import {
   dateNumeric, historyKey, IoInput, ioProcess, JWTEncoded, StateCreate, uid,
 } from '@amnis/core';
 import bookSchema from '@amnis/core/test/book.schema.json';
-import { memory, memoryClear } from '@amnis/db';
+import { dbmemory, memoryClear } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { validateSetup } from '../validate.js';
 import { crudProcess } from './index.js';
@@ -21,7 +21,7 @@ const validators = validateSetup([schemaState, bookSchema]);
  */
 const io = ioProcess({
   store: appStore,
-  database: memory,
+  database: dbmemory,
   filesystem: fsmemory,
   validators,
 }, crudProcess);

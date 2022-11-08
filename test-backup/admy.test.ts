@@ -13,7 +13,7 @@ import {
 } from '@amnis/state';
 
 import { passCreate } from '@amnis/process';
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
 import { apiSetup } from './api.js';
@@ -44,7 +44,7 @@ beforeAll(async () => {
   /**
    * Fetch roles from the database and populate the server store.
    */
-  serverStore.dispatch(coreActions.create(await memory.read({
+  serverStore.dispatch(coreActions.create(await dbmemory.read({
     role: {},
   }, { scope: { role: 'global' } })));
 

@@ -1,4 +1,4 @@
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
 import {
@@ -42,7 +42,7 @@ const sessionEncoded = sessionEncode(session);
 /**
   * Create test data in the memory database.
   */
-memory.create({
+dbmemory.create({
   user: [user],
   profile: [profile],
 });
@@ -52,7 +52,7 @@ memory.create({
  */
 const io = ioProcess({
   store: appStore,
-  database: memory,
+  database: dbmemory,
   validators: validateSetup(schemaAuth),
   filesystem: fsmemory,
 }, authProcess);

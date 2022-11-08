@@ -1,7 +1,7 @@
 import {
   uid, Role, roleKey, systemCreate,
 } from '@amnis/core';
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import { register } from './register.js';
 
 const system = systemCreate({
@@ -16,7 +16,7 @@ const system = systemCreate({
  */
 test('should return registration output successfully.', async () => {
   const output = await register(
-    memory,
+    dbmemory,
     system,
     'MyNewUser',
     {
@@ -44,7 +44,7 @@ test('should return registration output successfully.', async () => {
  */
 test('should return registration output successfully with access tokens.', async () => {
   const output = await register(
-    memory,
+    dbmemory,
     system,
     'MyNewUser',
     {
@@ -73,7 +73,7 @@ test('should return registration output successfully with access tokens.', async
  */
 test('should return registration output errored without a password.', async () => {
   const output = await register(
-    memory,
+    dbmemory,
     system,
     'MyNewUser',
     {},
@@ -91,7 +91,7 @@ test('should return registration output errored without a password.', async () =
  */
 test('should return registration output successfully using oAuth username.', async () => {
   const output = await register(
-    memory,
+    dbmemory,
     system,
     'TW#MyNewUser',
     {},
@@ -117,7 +117,7 @@ test('should return registration output successfully using oAuth username.', asy
  */
 test('should return registration output errored using oAuth username with password.', async () => {
   const output = await register(
-    memory,
+    dbmemory,
     system,
     'TW#MyNewUser',
     {

@@ -11,7 +11,7 @@ import {
   userCreate,
   schemaAuth,
 } from '@amnis/core';
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
 import { generateRsa, jwtEncode, passCreate } from '../crypto/index.js';
@@ -69,7 +69,7 @@ const jwtEncodedInvalid = jwtEncode({
 /**
  * Create test data in the memory database.
  */
-memory.create({
+dbmemory.create({
   user: users,
   profile: profiles,
 });
@@ -79,7 +79,7 @@ memory.create({
  */
 const processes = ioProcess({
   store: appStore,
-  database: memory,
+  database: dbmemory,
   filesystem: fsmemory,
   validators: validateSetup(schemaAuth),
 }, authProcess);

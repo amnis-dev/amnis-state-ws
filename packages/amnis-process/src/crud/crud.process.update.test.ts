@@ -1,4 +1,4 @@
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import {
   AuthLogin,
@@ -29,7 +29,7 @@ const io = ioProcess(
   {
     store,
     validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
-    database: memory,
+    database: dbmemory,
     filesystem: fsmemory,
   },
   {
@@ -40,7 +40,7 @@ const io = ioProcess(
 
 beforeAll(async () => {
   store.dispatch(coreActions.create(data));
-  await memory.create(data);
+  await dbmemory.create(data);
 });
 
 test('should not update without token', async () => {

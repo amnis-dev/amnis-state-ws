@@ -1,4 +1,4 @@
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import {
   AuthLogin,
@@ -20,7 +20,7 @@ const io = ioProcess(
   {
     store: storeSetup(),
     validators: validateSetup([schemaAuth]),
-    database: memory,
+    database: dbmemory,
     filesystem: fsmemory,
   },
   {
@@ -29,7 +29,7 @@ const io = ioProcess(
 );
 
 beforeAll(async () => {
-  await memory.create(dataInitial());
+  await dbmemory.create(dataInitial());
 });
 
 test('should login as administrator', async () => {

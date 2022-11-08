@@ -8,7 +8,7 @@ import { apiAuthProcess } from '@amnis/api/auth/auth.process.js';
 import { apiCrudProcess } from '@amnis/api/crud/crud.process.js';
 import { apiMockGenerateHandlers, apiMockServer } from '@amnis/api/mock.js';
 
-import { memory } from '@amnis/db';
+import { dbmemory } from '@amnis/db';
 import type { Store } from '@reduxjs/toolkit';
 import { apiIO } from '@amnis/api';
 import { validatorsSetup } from '@amnis/api/validators.js';
@@ -27,7 +27,7 @@ export function apiSetup(serverStore: Store) {
   */
   const authHandlers = apiIO({
     store: serverStore,
-    database: memory,
+    database: dbmemory,
     validators,
   }, apiAuthProcess);
 
@@ -36,7 +36,7 @@ export function apiSetup(serverStore: Store) {
    */
   const crudHanders = apiIO({
     store: serverStore,
-    database: memory,
+    database: dbmemory,
     validators,
   }, apiCrudProcess);
 
