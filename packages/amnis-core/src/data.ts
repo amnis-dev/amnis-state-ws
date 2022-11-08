@@ -25,7 +25,7 @@ export function dataInitial(): StateCreate {
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
       ],
-    }),
+    }, { committed: true }),
     roleCreate({
       name: 'Executive',
       description: 'Authoritative role for application configuration and maintenance.',
@@ -37,7 +37,7 @@ export function dataInitial(): StateCreate {
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
       ],
-    }),
+    }, { committed: true }),
     roleCreate({
       name: 'Base',
       description: 'Basis for standard authenticated use of the application.',
@@ -50,7 +50,7 @@ export function dataInitial(): StateCreate {
         grantStringify({ key: contactKey, scope: 'owned', task: task(0, 1, 1, 0) }),
         grantStringify({ key: contactKey, scope: 'global', task: task(0, 1, 0, 0) }),
       ],
-    }),
+    }, { committed: true }),
     roleCreate({
       name: 'Anonymous',
       description: 'Permissions for accessing the application without authentication.',
@@ -59,7 +59,7 @@ export function dataInitial(): StateCreate {
         grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(0, 1, 0, 0) }),
       ],
-    }),
+    }, { committed: true }),
   ];
 
   /**
@@ -74,7 +74,7 @@ export function dataInitial(): StateCreate {
       password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0',
       $roles: [roles[0].$id],
       $permits: [],
-    }),
+    }, { committed: true }),
     userCreate({
       name: 'exec',
       email: 'exec@email.address',
@@ -82,7 +82,7 @@ export function dataInitial(): StateCreate {
       password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0',
       $roles: [roles[1].$id],
       $permits: [],
-    }),
+    }, { committed: true }),
     userCreate({
       name: 'user',
       email: 'user@email.address',
@@ -90,7 +90,7 @@ export function dataInitial(): StateCreate {
       password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0',
       $roles: [roles[2].$id],
       $permits: [],
-    }),
+    }, { committed: true }),
   ];
 
   /**
@@ -101,15 +101,15 @@ export function dataInitial(): StateCreate {
     contactCreate({
       name: 'Administrator Contact',
       emails: [users[0].email as string],
-    }, { $owner: users[0].$id }),
+    }, { $owner: users[0].$id, committed: true }),
     contactCreate({
       name: 'Executive Contact',
       emails: [users[1].email as string],
-    }, { $owner: users[1].$id }),
+    }, { $owner: users[1].$id, committed: true }),
     contactCreate({
       name: 'User Contact',
       emails: [users[2].email as string],
-    }, { $owner: users[2].$id }),
+    }, { $owner: users[2].$id, committed: true }),
   ];
 
   /**
@@ -121,17 +121,17 @@ export function dataInitial(): StateCreate {
       $user: users[0].$id,
       $contact: contacts[0].$id,
       nameDisplay: 'Administrator',
-    }, { $owner: users[0].$id }),
+    }, { $owner: users[0].$id, committed: true }),
     profileCreate({
       $user: users[1].$id,
       $contact: contacts[1].$id,
       nameDisplay: 'Executive',
-    }, { $owner: users[1].$id }),
+    }, { $owner: users[1].$id, committed: true }),
     profileCreate({
       $user: users[2].$id,
       $contact: contacts[2].$id,
       nameDisplay: 'User',
-    }, { $owner: users[2].$id }),
+    }, { $owner: users[2].$id, committed: true }),
   ];
 
   /**
@@ -145,7 +145,7 @@ export function dataInitial(): StateCreate {
       $execRole: roles[1].$id,
       $initialRoles: [roles[2].$id],
       $anonymousRoles: [roles[3].$id],
-    }),
+    }, { committed: true }),
   ];
 
   return {

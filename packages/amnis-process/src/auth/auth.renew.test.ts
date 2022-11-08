@@ -1,4 +1,5 @@
 import { memory } from '@amnis/db';
+import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
 import {
   ioProcess, IoInput, userCreate, profileCreate, sessionCreate, dateNumeric,
@@ -53,6 +54,7 @@ const io = ioProcess({
   store: appStore,
   database: memory,
   validators: validateSetup(schemaAuth),
+  filesystem: fsmemory,
 }, authProcess);
 
 test('Should be able to renew session and tokens', async () => {

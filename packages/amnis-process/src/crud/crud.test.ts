@@ -7,6 +7,7 @@ import {
 } from '@amnis/core';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { memory, memoryClear } from '@amnis/db';
+import { fsmemory } from '@amnis/fs';
 import { validateSetup } from '../validate.js';
 import { crudProcess } from './index.js';
 import { jwtEncode } from '../crypto/index.js';
@@ -21,6 +22,7 @@ const validators = validateSetup([schemaState, bookSchema]);
 const io = ioProcess({
   store: appStore,
   database: memory,
+  filesystem: fsmemory,
   validators,
 }, crudProcess);
 
@@ -193,7 +195,7 @@ test('Handler should be able to update existing entities.', async () => {
 
   expect(
     result.json.result[bookKey],
-  ).toEqual([{ ...books[1], title: 'Magic Tree House' }]);
+  ).toEqual([{ ...books[1], title: 'Magic Tree House', committed: true }]);
 
   expect(
     result.json.logs,

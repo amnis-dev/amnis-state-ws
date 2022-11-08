@@ -48,7 +48,7 @@ Io<StateCreate, StateCreate>
             return entityCreate(
               key,
               cleaned,
-              { $owner: jwt?.sub, $creator: jwt?.sub },
+              { $owner: jwt?.sub, $creator: jwt?.sub, committed: true },
             );
           }
           entityIssue = true;

@@ -88,6 +88,18 @@ Io<StateUpdate, StateCreate>
       },
     );
 
+    /**
+     * Flag result entities as committed
+     */
+    Object.values(result).forEach((slice) => {
+      slice.forEach((entity) => {
+        entity.committed = true;
+      });
+    });
+
+    /**
+     * Output the result.
+     */
     output.json.result = result;
 
     /**
@@ -111,7 +123,7 @@ Io<StateUpdate, StateCreate>
     /**
      * Create historic records of the updates.
      */
-    const stateCreateHistory = historyMake(stateFinal, jwt.sub, deniedKeys);
+    const stateCreateHistory = historyMake(stateFinal, jwt.sub, deniedKeys, true);
     const resultHistory = await database.create(stateCreateHistory);
     output.json.result[historyKey] = resultHistory[historyKey];
 

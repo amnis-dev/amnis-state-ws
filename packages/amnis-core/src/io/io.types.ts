@@ -7,6 +7,7 @@ import type { JWTDecoded, JWTEncoded, Token } from '../token/index.js';
 import type { LogBaseCreate } from '../log/index.js';
 
 import type { Database } from '../db.types.js';
+import type { FileSystem } from '../fs.types.js';
 import type { Session } from '../session/index.js';
 
 /**
@@ -28,6 +29,7 @@ export type Validators = Record<string, Validator>;
 export interface IoContext {
   store: Store;
   database: Database;
+  filesystem: FileSystem;
   validators: Validators;
 }
 

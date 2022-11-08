@@ -11,7 +11,7 @@ import { coreActions } from './actions.js';
 import type {
   Entity,
   EntityExtension,
-  EntityPartial,
+  EntityUpdate,
   MetaState,
 } from './entity/index.js';
 import type { UID } from './types.js';
@@ -84,15 +84,29 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
     update: {
       reducer: (
         state: MetaState<E>,
-        action: PayloadAction<{ $id: string } & EntityPartial<E>>,
+        action: PayloadAction<EntityUpdate<E>>,
       ) => {
         const { $id, ...changes } = action.payload;
         adapter.updateOne(state, {
           id: $id,
-          changes: changes as Partial<E>,
+          changes: { ...changes as Partial<E>, committed: false },
         });
       },
-      prepare: (entityUpdate: { $id: string } & EntityPartial<E>) => ({ payload: entityUpdate }),
+      prepare: (entityUpdate: EntityUpdate<E>) => ({ payload: entityUpdate }),
+    },
+
+    /**
+     * Delete and entity from the state.
+     */
+    delete: {
+      reducer: (
+        state: MetaState<E>,
+        action: PayloadAction<UID<E>>,
+      ) => {
+        const id = action.payload;
+        adapter.removeOne(state, id);
+      },
+      prepare: (entityId: UID<E>) => ({ payload: entityId }),
     },
 
     /**

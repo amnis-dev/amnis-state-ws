@@ -11,6 +11,7 @@ export * from './selectors.js';
 
 export * from './audit/index.js';
 export * from './contact/index.js';
+export * from './chrono/index.js';
 export * from './crypto/index.js';
 export * from './device/index.js';
 export * from './entity/index.js';

@@ -1,4 +1,5 @@
 import { memory, memoryStorage } from '@amnis/db';
+import { fsmemory } from '@amnis/fs';
 import {
   AuthLogin,
   dataInitial,
@@ -28,6 +29,7 @@ const io = ioProcess(
     store,
     validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
     database: memory,
+    filesystem: fsmemory,
   },
   {
     login: authProcessLogin,
@@ -67,13 +69,17 @@ test('should login as administrator and create user', async () => {
   const outputLogin = await io.login(inputLogin);
   const tokenAccess = outputLogin.json.tokens?.[0] as Token;
 
+  const userEntity = userCreate({
+    name: 'Admin\'s New User',
+  });
+
+  expect(userEntity.committed).toBe(false);
+
   const inputCreate: IoInput<StateCreate> = {
     jwtEncoded: tokenAccess.jwt,
     body: {
       [userKey]: [
-        userCreate({
-          name: 'Admin\'s New User',
-        }),
+        userEntity,
       ],
     },
   };
@@ -81,6 +87,7 @@ test('should login as administrator and create user', async () => {
   const outputCreate = await io.create(inputCreate);
 
   expect(outputCreate.status).toBe(200);
+  expect(outputCreate.json.result?.user[0]?.committed).toBe(true);
   expect(ioOutputErrored(outputCreate)).toBe(false);
 
   const storage = memoryStorage();

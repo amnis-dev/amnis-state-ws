@@ -4,6 +4,7 @@ import {
   IoContext, roleKey, StateCreate, systemKey, Validators,
 } from '@amnis/core';
 import { memory } from '@amnis/db';
+import { fsmemory } from '@amnis/fs';
 import { store as storeDefault } from './store.js';
 import { systemActions } from './system/index.js';
 
@@ -24,11 +25,12 @@ export interface ContextOptions extends Partial<IoContext> {
  */
 export async function contextSetup(options: ContextOptions = {}): Promise<IoContext> {
   const {
-    store, validators, database, initialize, data,
+    store, validators, database, filesystem, initialize, data,
   } = options;
   const storeNext = store ?? storeDefault;
   const validatorsNext = (validators || []) as Validators;
   const databaseNext = database ?? memory;
+  const filesystemNext = filesystem ?? fsmemory;
   const dataNext = data ?? dataInitial();
 
   if (initialize) {
@@ -67,6 +69,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
     store: storeNext,
     validators: validatorsNext,
     database: databaseNext,
+    filesystem: filesystemNext,
   };
 }
 

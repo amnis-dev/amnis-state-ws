@@ -12,6 +12,7 @@ import {
   schemaAuth,
 } from '@amnis/core';
 import { memory } from '@amnis/db';
+import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
 import { generateRsa, jwtEncode, passCreate } from '../crypto/index.js';
 import { authProcess } from './index.js';
@@ -79,6 +80,7 @@ memory.create({
 const processes = ioProcess({
   store: appStore,
   database: memory,
+  filesystem: fsmemory,
   validators: validateSetup(schemaAuth),
 }, authProcess);
 

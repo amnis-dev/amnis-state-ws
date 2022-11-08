@@ -31,6 +31,7 @@ export function historyMake(
   stateUpdate: StateUpdate,
   creator?: UID,
   deniedKeys?: string[],
+  committed = false,
 ): StateCreate {
   const stateCreateHistory: StateCreate = {
     [historyKey]: [],
@@ -53,7 +54,7 @@ export function historyMake(
             $subject: entity.$id, // The entity being updates is the subject.
             update: entity, // The update object.
           },
-          (creator ? { $creator: creator } : {}),
+          (creator ? { $creator: creator, committed } : { committed }),
         ),
       );
     });

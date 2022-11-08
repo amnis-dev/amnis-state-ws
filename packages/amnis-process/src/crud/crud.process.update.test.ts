@@ -1,4 +1,5 @@
 import { memory } from '@amnis/db';
+import { fsmemory } from '@amnis/fs';
 import {
   AuthLogin,
   dataInitial,
@@ -29,6 +30,7 @@ const io = ioProcess(
     store,
     validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
     database: memory,
+    filesystem: fsmemory,
   },
   {
     login: authProcessLogin,
