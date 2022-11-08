@@ -11,6 +11,7 @@
       "@amnis/core/rtkqr": ["./packages/amnis-core/src/rtkqr.ts"],
       "@amnis/core/test/*": ["./packages/amnis-core/src/test/*"],
       "@amnis/db": ["./packages/amnis-db/src/index.ts"],
+      "@amnis/fs": ["./packages/amnis-fs/src/index.ts"],
       "@amnis/process": ["./packages/amnis-process/src/index.ts"],
       "@amnis/api": ["./packages/amnis-api/src/index.ts"],
       "@amnis/state": ["./packages/amnis-state/src/index.ts"],
