@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   History,
   historyKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { HistoryMeta } from './history.types.js';
@@ -29,11 +30,9 @@ export const historyAdapter = createEntityAdapter<History>({
 /**
  * Initialized history state with meta information.
  */
-export const historyInitialState = historyAdapter.getInitialState<HistoryMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const historyInitialState = historyAdapter.getInitialState<HistoryMeta>(
+  metaInitial<History>(),
+);
 
 /**
  * RTK History Slice

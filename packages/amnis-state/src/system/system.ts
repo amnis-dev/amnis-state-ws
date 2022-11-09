@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   System,
   systemKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type {
@@ -31,11 +32,9 @@ export const systemAdapter = createEntityAdapter<System>({
 /**
  * Initialized system state with meta information.
  */
-export const systemInitialState = systemAdapter.getInitialState<SystemMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const systemInitialState = systemAdapter.getInitialState<SystemMeta>(
+  metaInitial<System>(),
+);
 
 /**
  * RTK System Slice

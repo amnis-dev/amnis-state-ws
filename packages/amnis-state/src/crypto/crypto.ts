@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Crypto,
   cryptoKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { CryptoMeta } from './crypto.types.js';
@@ -29,11 +30,9 @@ export const cryptoAdapter = createEntityAdapter<Crypto>({
 /**
  * Initialized crypto state with meta information.
  */
-export const cryptoInitialState = cryptoAdapter.getInitialState<CryptoMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const cryptoInitialState = cryptoAdapter.getInitialState<CryptoMeta>(
+  metaInitial<Crypto>(),
+);
 
 /**
  * RTK Crypto Slice

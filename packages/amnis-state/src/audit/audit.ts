@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Audit,
   auditKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { AuditMeta } from './audit.types.js';
@@ -29,11 +30,9 @@ export const auditAdapter = createEntityAdapter<Audit>({
 /**
  * Initialized audit state with meta information.
  */
-export const auditInitialState = auditAdapter.getInitialState<AuditMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const auditInitialState = auditAdapter.getInitialState<AuditMeta>(
+  metaInitial<Audit>(),
+);
 
 /**
  * RTK Audit Slice

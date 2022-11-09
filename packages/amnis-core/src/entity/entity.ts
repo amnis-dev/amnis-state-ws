@@ -5,6 +5,7 @@ import type {
   Entity,
   EntityExtension,
   EntityPartial,
+  Meta,
 } from './entity.types.js';
 
 /**
@@ -117,4 +118,16 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
   }, {});
 
   return errored ? undefined : cleaned;
+}
+
+/**
+ * Create meta information for an entity meta information.
+ */
+export function metaInitial<E extends Entity = Entity>(meta: Partial<Meta<E>> = {}): Meta<E> {
+  return {
+    active: null,
+    focused: null,
+    selection: [],
+    ...meta,
+  };
 }

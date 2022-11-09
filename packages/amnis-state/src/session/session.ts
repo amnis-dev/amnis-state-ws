@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Session,
   sessionKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers, apiAuth } from '@amnis/api';
 import type {
@@ -31,11 +32,9 @@ export const sessionAdapter = createEntityAdapter<Session>({
 /**
  * Initialized session state with meta information.
  */
-export const sessionInitialState = sessionAdapter.getInitialState<SessionMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const sessionInitialState = sessionAdapter.getInitialState<SessionMeta>(
+  metaInitial<Session>(),
+);
 
 /**
  * RTK Session Slice

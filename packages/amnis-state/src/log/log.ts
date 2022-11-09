@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Log,
   logKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { LogMeta } from './log.types.js';
@@ -29,11 +30,9 @@ export const logAdapter = createEntityAdapter<Log>({
 /**
  * Initialized log state with meta information.
  */
-export const logInitialState = logAdapter.getInitialState<LogMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const logInitialState = logAdapter.getInitialState<LogMeta>(
+  metaInitial<Log>(),
+);
 
 /**
  * RTK Log Slice

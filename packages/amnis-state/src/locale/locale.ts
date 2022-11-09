@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Locale,
   localeKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { LocaleMeta } from './locale.types.js';
@@ -29,11 +30,9 @@ export const localeAdapter = createEntityAdapter<Locale>({
 /**
  * Initialized locale state with meta information.
  */
-export const localeInitialState = localeAdapter.getInitialState<LocaleMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const localeInitialState = localeAdapter.getInitialState<LocaleMeta>(
+  metaInitial<Locale>(),
+);
 
 /**
  * RTK Locale Slice

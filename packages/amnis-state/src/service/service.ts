@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Service,
   serviceKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ServiceMeta } from './service.types.js';
@@ -29,11 +30,9 @@ export const serviceAdapter = createEntityAdapter<Service>({
 /**
  * Initialized service state with meta information.
  */
-export const serviceInitialState = serviceAdapter.getInitialState<ServiceMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const serviceInitialState = serviceAdapter.getInitialState<ServiceMeta>(
+  metaInitial<Service>(),
+);
 
 /**
  * RTK Service Slice

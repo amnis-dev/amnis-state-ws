@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   User,
   userKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { UserMeta } from './user.types.js';
@@ -29,11 +30,9 @@ export const userAdapter = createEntityAdapter<User>({
 /**
  * Initialized user state with meta information.
  */
-export const userInitialState = userAdapter.getInitialState<UserMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const userInitialState = userAdapter.getInitialState<UserMeta>(
+  metaInitial<User>(),
+);
 
 /**
  * RTK User Slice

@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Contact,
   contactKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ContactMeta } from './contact.types.js';
@@ -29,11 +30,9 @@ export const contactAdapter = createEntityAdapter<Contact>({
 /**
  * Initialized contact state with meta information.
  */
-export const contactInitialState = contactAdapter.getInitialState<ContactMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const contactInitialState = contactAdapter.getInitialState<ContactMeta>(
+  metaInitial<Contact>(),
+);
 
 /**
  * RTK Contact Slice

@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Website,
   websiteKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { WebsiteMeta } from './website.types.js';
@@ -29,11 +30,9 @@ export const websiteAdapter = createEntityAdapter<Website>({
 /**
  * Initialized website state with meta information.
  */
-export const websiteInitialState = websiteAdapter.getInitialState<WebsiteMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const websiteInitialState = websiteAdapter.getInitialState<WebsiteMeta>(
+  metaInitial<Website>(),
+);
 
 /**
  * RTK Website Slice

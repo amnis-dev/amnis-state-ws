@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Note,
   noteKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { NoteMeta } from './note.types.js';
@@ -29,11 +30,9 @@ export const noteAdapter = createEntityAdapter<Note>({
 /**
  * Initialized note state with meta information.
  */
-export const noteInitialState = noteAdapter.getInitialState<NoteMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const noteInitialState = noteAdapter.getInitialState<NoteMeta>(
+  metaInitial<Note>(),
+);
 
 /**
  * RTK Note Slice

@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Profile,
   profileKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ProfileMeta } from './profile.types.js';
@@ -29,11 +30,9 @@ export const profileAdapter = createEntityAdapter<Profile>({
 /**
  * Initialized profile state with meta information.
  */
-export const profileInitialState = profileAdapter.getInitialState<ProfileMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const profileInitialState = profileAdapter.getInitialState<ProfileMeta>(
+  metaInitial<Profile>(),
+);
 
 /**
  * RTK Profile Slice

@@ -6,6 +6,7 @@ import {
   coreExtraReducers,
   Role,
   roleKey,
+  metaInitial,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { RoleMeta } from './role.types.js';
@@ -29,11 +30,9 @@ export const roleAdapter = createEntityAdapter<Role>({
 /**
  * Initialized role state with meta information.
  */
-export const roleInitialState = roleAdapter.getInitialState<RoleMeta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const roleInitialState = roleAdapter.getInitialState<RoleMeta>(
+  metaInitial<Role>(),
+);
 
 /**
  * RTK Role Slice
