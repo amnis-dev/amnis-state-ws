@@ -76,6 +76,15 @@ Io<StateUpdate, StateCreate>
     const stateFinal = jwt.adm === true ? body : stateUpdateSanatizd as StateUpdate;
 
     /**
+     * Flag final state entities as committed
+     */
+    Object.values(stateFinal).forEach((slice) => {
+      slice.forEach((entity) => {
+        entity.committed = true;
+      });
+    });
+
+    /**
      * Create an authentication scope object from the array of grant objects.
      */
     const authScope = jwt.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
@@ -87,15 +96,6 @@ Io<StateUpdate, StateCreate>
         subject: jwt.sub,
       },
     );
-
-    /**
-     * Flag result entities as committed
-     */
-    Object.values(result).forEach((slice) => {
-      slice.forEach((entity) => {
-        entity.committed = true;
-      });
-    });
 
     /**
      * Output the result.

@@ -89,7 +89,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
         const { $id, ...changes } = action.payload;
         adapter.updateOne(state, {
           id: $id,
-          changes: { ...changes as Partial<E>, committed: false },
+          changes: changes as Partial<E>,
         });
       },
       prepare: (entityUpdate: EntityUpdate<E>) => ({ payload: entityUpdate }),
