@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/amnis-dev/amnis-state/compare/v0.6.0...v0.7.0) (2022-11-10)
+
+
+### Features
+
+* Committed entities are flagged true when saved to the database through an api call ([242ed6a](https://github.com/amnis-dev/amnis-state/commit/242ed6a7070f97a7c9c455dcca4dc2d224554fda))
+* Initial meta state for reducers are now built with a common method ([5881a47](https://github.com/amnis-dev/amnis-state/commit/5881a473bffd561cc7e847c49d2dab0dc8279492))
+
+
+### Bug Fixes
+
+* Fixed type issue with react api query hooks ([3740fae](https://github.com/amnis-dev/amnis-state/commit/3740fae8e3a4c49ffe1706c36201ab35fb7e8ec1))
+
 ## [0.6.0](https://github.com/amnis-dev/amnis-state/compare/v0.5.8...v0.6.0) (2022-11-08)
 
 
