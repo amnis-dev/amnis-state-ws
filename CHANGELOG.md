@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.4](https://github.com/amnis-dev/amnis-state/compare/v0.7.3...v0.7.4) (2022-11-11)
+
+
+### Features
+
+* Amnis API now exports utility methods ([4c1f299](https://github.com/amnis-dev/amnis-state/commit/4c1f2991c3efc0616c410ee2d461e9f2df068c55))
+* Updated api calls to properly use mutations vs queries ([7835182](https://github.com/amnis-dev/amnis-state/commit/7835182e101940ae47163da569a37eafa7f91992))
+
 ### [0.7.3](https://github.com/amnis-dev/amnis-state/compare/v0.7.2...v0.7.3) (2022-11-11)
 
 
