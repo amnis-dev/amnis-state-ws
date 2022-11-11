@@ -4,15 +4,14 @@ import {
   noteSelectors,
   noteActions,
 } from './note.js';
-import { noteDefault } from './note.default.js';
 
-import { noteStoreSetup } from './note.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('note should return the initial state', () => {
-  const store = noteStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().note,
@@ -23,9 +22,9 @@ test('note should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new note', () => {
-  const store = noteStoreSetup();
+  const store = storeSetup();
 
-  const action = noteActions.create({ ...noteDefault });
+  const action = noteActions.create({ ...noteBase });
 
   store.dispatch(action);
   const entities = noteSelectors.selectAll(store.getState());

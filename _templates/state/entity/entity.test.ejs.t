@@ -9,7 +9,7 @@ import {
 } from './<%= name %>';
 import { <%= name %>Default } from './<%= name %>.default.js';
 
-import { <%= name %>StoreSetup } from './<%= name %>.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================

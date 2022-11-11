@@ -3,7 +3,9 @@ import { auditSlice } from './audit/index.js';
 import { contactSlice } from './contact/index.js';
 import { cryptoSlice } from './crypto/index.js';
 import { historySlice } from './history/index.js';
+import { localeSlice } from './locale/index.js';
 import { logSlice } from './log/index.js';
+import { noteSlice } from './note/index.js';
 import { profileSlice } from './profile/index.js';
 import { roleSlice } from './role/index.js';
 import { serviceSlice } from './service/index.js';
@@ -18,7 +20,9 @@ const reducers = {
   [contactSlice.name]: contactSlice.reducer,
   [cryptoSlice.name]: cryptoSlice.reducer,
   [historySlice.name]: historySlice.reducer,
+  [localeSlice.name]: localeSlice.reducer,
   [logSlice.name]: logSlice.reducer,
+  [noteSlice.name]: noteSlice.reducer,
   [profileSlice.name]: profileSlice.reducer,
   [roleSlice.name]: roleSlice.reducer,
   [serviceSlice.name]: serviceSlice.reducer,

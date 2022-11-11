@@ -4,15 +4,14 @@ import {
   auditSelectors,
   auditActions,
 } from './audit.js';
-import { auditDefault } from './audit.default.js';
 
-import { auditStoreSetup } from './audit.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('audit should return the initial state', () => {
-  const store = auditStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().audit,
@@ -23,9 +22,9 @@ test('audit should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new audit', () => {
-  const store = auditStoreSetup();
+  const store = storeSetup();
 
-  const action = auditActions.create({ ...auditDefault });
+  const action = auditActions.create({ ...auditBase });
 
   store.dispatch(action);
   const entities = auditSelectors.selectAll(store.getState());

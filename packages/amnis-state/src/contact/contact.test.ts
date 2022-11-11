@@ -1,17 +1,17 @@
+import { contactBase } from '@amnis/core';
 import {
   contactInitialState,
   contactSelectors,
   contactActions,
 } from './contact.js';
-import { contactDefault } from './contact.default.js';
 
-import { contactStoreSetup } from './contact.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('contact should return the initial state', () => {
-  const store = contactStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().contact,
@@ -22,9 +22,9 @@ test('contact should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new contact', () => {
-  const store = contactStoreSetup();
+  const store = storeSetup();
 
-  const action = contactActions.create({ ...contactDefault });
+  const action = contactActions.create({ ...contactBase });
 
   store.dispatch(action);
   const entities = contactSelectors.selectAll(store.getState());

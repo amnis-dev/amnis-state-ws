@@ -1,17 +1,17 @@
+import { websiteBase } from '@amnis/core';
 import {
   websiteInitialState,
   websiteSelectors,
   websiteActions,
 } from './website.js';
-import { websiteDefault } from './website.default.js';
 
-import { websiteStoreSetup } from './website.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('website should return the initial state', () => {
-  const store = websiteStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().website,
@@ -22,9 +22,9 @@ test('website should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new website', () => {
-  const store = websiteStoreSetup();
+  const store = storeSetup();
 
-  const action = websiteActions.create({ ...websiteDefault });
+  const action = websiteActions.create({ ...websiteBase });
 
   store.dispatch(action);
   const entities = websiteSelectors.selectAll(store.getState());

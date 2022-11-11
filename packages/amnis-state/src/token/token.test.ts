@@ -2,13 +2,13 @@ import {
   tokenInitialState,
 } from './token.js';
 
-import { tokenStoreSetup } from './token.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('token should return the initial state', () => {
-  const store = tokenStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().token,

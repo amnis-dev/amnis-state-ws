@@ -1,9 +1,10 @@
 import {
   rtk,
 } from '@amnis/core';
-import type { Entity, Meta } from '../entity/index.js';
+import {
+  Entity, Meta, metaInitial, entityCreate,
+} from '../entity/index.js';
 import { coreExtraReducers, coreReducers } from '../reducers.js';
-import { entityCreate } from '../entity/index.js';
 
 export interface Book extends Entity {
   title: string;
@@ -23,11 +24,7 @@ const booksAdapter = rtk.createEntityAdapter<Book>({
 
 export const booksSlice = rtk.createSlice({
   name: bookKey,
-  initialState: booksAdapter.getInitialState<BookMeta>({
-    active: null,
-    focused: null,
-    selection: [],
-  }),
+  initialState: booksAdapter.getInitialState<BookMeta>(metaInitial()),
   reducers: {
     ...coreReducers(bookKey, booksAdapter),
   },

@@ -4,13 +4,13 @@ import {
   userSelectors,
 } from './user.js';
 
-import { userStoreSetup } from './user.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('user should return the initial state', () => {
-  const store = userStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().user,
@@ -21,7 +21,7 @@ test('user should return the initial state', () => {
  * ============================================================
  */
 test('should not generically create a new user with mismatched keys', () => {
-  const store = userStoreSetup();
+  const store = storeSetup();
 
   const action = coreActions.create({
     [`not_${userKey}`]: [
@@ -41,7 +41,7 @@ test('should not generically create a new user with mismatched keys', () => {
  * ============================================================
  */
 test('should handle generically creating a new user', () => {
-  const store = userStoreSetup();
+  const store = storeSetup();
 
   const action = coreActions.create({
     [userKey]: [

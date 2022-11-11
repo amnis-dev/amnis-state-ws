@@ -1,16 +1,16 @@
+import { sessionBase } from '@amnis/core';
 import {
   sessionInitialState,
   sessionSelectors,
   sessionActions,
 } from './session.js';
-import { sessionDefault } from './session.default.js';
-import { sessionStoreSetup } from './session.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('session should return the initial state', () => {
-  const store = sessionStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().session,
@@ -21,9 +21,9 @@ test('session should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new session', () => {
-  const store = sessionStoreSetup();
+  const store = storeSetup();
 
-  const action = sessionActions.create({ ...sessionDefault });
+  const action = sessionActions.create({ ...sessionBase });
 
   store.dispatch(action);
   const entities = sessionSelectors.selectAll(store.getState());

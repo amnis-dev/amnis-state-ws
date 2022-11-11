@@ -4,15 +4,14 @@ import {
   localeSelectors,
   localeActions,
 } from './locale.js';
-import { localeDefault } from './locale.default.js';
 
-import { localeStoreSetup } from './locale.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('locale should return the initial state', () => {
-  const store = localeStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().locale,
@@ -23,9 +22,9 @@ test('locale should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new locale', () => {
-  const store = localeStoreSetup();
+  const store = storeSetup();
 
-  const action = localeActions.create({ ...localeDefault });
+  const action = localeActions.create({ ...localeBase });
 
   store.dispatch(action);
   const entities = localeSelectors.selectAll(store.getState());

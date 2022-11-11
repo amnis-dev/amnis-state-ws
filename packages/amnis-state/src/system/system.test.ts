@@ -1,17 +1,17 @@
+import { systemBase } from '@amnis/core';
 import {
   systemInitialState,
   systemSelectors,
   systemActions,
 } from './system.js';
-import { systemDefault } from './system.default.js';
 
-import { systemStoreSetup } from './system.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('system should return the initial state', () => {
-  const store = systemStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().system,
@@ -22,9 +22,9 @@ test('system should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new system', () => {
-  const store = systemStoreSetup();
+  const store = storeSetup();
 
-  const action = systemActions.create({ ...systemDefault });
+  const action = systemActions.create({ ...systemBase });
 
   store.dispatch(action);
   const entities = systemSelectors.selectAll(store.getState());

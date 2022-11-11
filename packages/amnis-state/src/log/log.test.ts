@@ -1,17 +1,17 @@
+import { logBase } from '@amnis/core';
 import {
   logInitialState,
   logSelectors,
   logActions,
 } from './log.js';
-import { logDefault } from './log.default.js';
 
-import { logStoreSetup } from './log.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('log should return the initial state', () => {
-  const store = logStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().log,
@@ -22,9 +22,9 @@ test('log should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new log', () => {
-  const store = logStoreSetup();
+  const store = storeSetup();
 
-  const action = logActions.create({ ...logDefault });
+  const action = logActions.create({ ...logBase });
 
   store.dispatch(action);
   const entities = logSelectors.selectAll(store.getState());

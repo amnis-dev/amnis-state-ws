@@ -4,15 +4,14 @@ import {
   historySelectors,
   historyActions,
 } from './history.js';
-import { historyDefault } from './history.default.js';
 
-import { historyStoreSetup } from './history.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('history should return the initial state', () => {
-  const store = historyStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().history,
@@ -23,9 +22,9 @@ test('history should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new history', () => {
-  const store = historyStoreSetup();
+  const store = storeSetup();
 
-  const action = historyActions.create({ ...historyDefault });
+  const action = historyActions.create({ ...historyBase });
 
   store.dispatch(action);
   const entities = historySelectors.selectAll(store.getState());

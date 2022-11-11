@@ -1,17 +1,17 @@
+import { serviceBase } from '@amnis/core';
 import {
   serviceInitialState,
   serviceSelectors,
   serviceActions,
 } from './service.js';
-import { serviceDefault } from './service.default.js';
 
-import { serviceStoreSetup } from './service.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('service should return the initial state', () => {
-  const store = serviceStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().service,
@@ -22,9 +22,9 @@ test('service should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new service', () => {
-  const store = serviceStoreSetup();
+  const store = storeSetup();
 
-  const action = serviceActions.create({ ...serviceDefault });
+  const action = serviceActions.create({ ...serviceBase });
 
   store.dispatch(action);
   const entities = serviceSelectors.selectAll(store.getState());

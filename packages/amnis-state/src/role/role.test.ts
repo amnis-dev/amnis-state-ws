@@ -1,17 +1,17 @@
+import { roleBase } from '@amnis/core';
 import {
   roleInitialState,
   roleSelectors,
   roleActions,
 } from './role.js';
-import { roleDefault } from './role.default.js';
 
-import { roleStoreSetup } from './role.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('role should return the initial state', () => {
-  const store = roleStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().role,
@@ -22,9 +22,9 @@ test('role should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new role', () => {
-  const store = roleStoreSetup();
+  const store = storeSetup();
 
-  const action = roleActions.create({ ...roleDefault });
+  const action = roleActions.create({ ...roleBase });
 
   store.dispatch(action);
   const entities = roleSelectors.selectAll(store.getState());

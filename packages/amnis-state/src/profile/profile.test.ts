@@ -1,17 +1,17 @@
+import { profileBase } from '@amnis/core';
 import {
   profileInitialState,
   profileSelectors,
   profileActions,
 } from './profile.js';
-import { profileDefault } from './profile.default.js';
 
-import { profileStoreSetup } from './profile.store.js';
+import { storeSetup } from '../store.js';
 
 /**
  * ============================================================
  */
 test('profile should return the initial state', () => {
-  const store = profileStoreSetup();
+  const store = storeSetup();
 
   expect(
     store.getState().profile,
@@ -22,9 +22,9 @@ test('profile should return the initial state', () => {
  * ============================================================
  */
 test('should handle creating a new profile', () => {
-  const store = profileStoreSetup();
+  const store = storeSetup();
 
-  const action = profileActions.create({ ...profileDefault });
+  const action = profileActions.create({ ...profileBase });
 
   store.dispatch(action);
   const entities = profileSelectors.selectAll(store.getState());
