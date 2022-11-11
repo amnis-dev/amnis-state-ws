@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/amnis-dev/amnis-state/compare/v0.7.1...v0.7.2) (2022-11-11)
+
+
+### Bug Fixes
+
+* Resolve issue with type glitch when file names name too many stop characters ([5a38202](https://github.com/amnis-dev/amnis-state/commit/5a38202fc46767b2f9f9f6fe9a82ef527ac5a58d))
+
 ### [0.7.1](https://github.com/amnis-dev/amnis-state/compare/v0.7.0...v0.7.1) (2022-11-11)
 
 
