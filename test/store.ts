@@ -1,16 +1,16 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk';
+import { rtk } from '@amnis/core';
 import { stateSet } from '@amnis/state';
 import { apiSet } from '@amnis/api';
 
 /**
  * Setup your Redux store.
  */
-const rootReducer = combineReducers({
+const rootReducer = rtk.combineReducers({
   ...stateSet.reducers,
   ...apiSet.reducers,
 });
 
-export const store = configureStore({
+export const store = rtk.configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => (
     getDefaultMiddleware().concat(apiSet.middleware)

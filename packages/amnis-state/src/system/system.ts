@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   System,
@@ -17,7 +15,7 @@ import type {
  * RTK system adapter.
  * Manages the normalized entities.
  */
-export const systemAdapter = createEntityAdapter<System>({
+export const systemAdapter = rtk.createEntityAdapter<System>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -39,7 +37,7 @@ export const systemInitialState = systemAdapter.getInitialState<SystemMeta>(
 /**
  * RTK System Slice
  */
-export const systemSlice = createSlice({
+export const systemSlice = rtk.createSlice({
   name: systemKey,
   initialState: systemInitialState,
   reducers: {

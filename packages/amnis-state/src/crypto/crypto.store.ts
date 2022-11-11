@@ -1,10 +1,10 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk';
+import { rtk } from '@amnis/core';
 import { reducerMap, reducerMiddleware } from './crypto.reducer.js';
 
 export function cryptoStoreSetup() {
-  const rootReducer = combineReducers(reducerMap);
+  const rootReducer = rtk.combineReducers(reducerMap);
 
-  const cryptoStore = configureStore({
+  const cryptoStore = rtk.configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
       getDefaultMiddleware().concat(reducerMiddleware)

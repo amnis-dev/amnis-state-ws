@@ -1,4 +1,4 @@
-import { createAction } from './rtk.js';
+import { rtk } from './rtk.js';
 import type {
   StateCreate,
   StateDelete,
@@ -8,22 +8,22 @@ export const coreActions = {
   /**
    * Batch creates entities.
    */
-  create: createAction<StateCreate>('@core/create'),
+  create: rtk.createAction<StateCreate>('@core/create'),
 
   /**
    * Batch updates entities.
    */
-  update: createAction<StateCreate>('@core/update'),
+  update: rtk.createAction<StateCreate>('@core/update'),
 
   /**
    * Batch deletes entities.
    */
-  delete: createAction<StateDelete>('@core/delete'),
+  delete: rtk.createAction<StateDelete>('@core/delete'),
 
   /**
    * Wipes all entities from the state.
    */
-  wipe: createAction('@core/wipe'),
+  wipe: rtk.createAction('@core/wipe'),
 };
 
 export default { coreActions };

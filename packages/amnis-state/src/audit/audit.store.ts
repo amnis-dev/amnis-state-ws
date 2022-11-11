@@ -1,10 +1,10 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk';
+import { rtk } from '@amnis/core';
 import { reducerMap, reducerMiddleware } from './audit.reducer.js';
 
 export function auditStoreSetup() {
-  const rootReducer = combineReducers(reducerMap);
+  const rootReducer = rtk.combineReducers(reducerMap);
 
-  const auditStore = configureStore({
+  const auditStore = rtk.configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
       getDefaultMiddleware().concat(reducerMiddleware)

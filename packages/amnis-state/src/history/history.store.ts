@@ -1,10 +1,10 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk';
+import { rtk } from '@amnis/core';
 import { reducerMap, reducerMiddleware } from './history.reducer.js';
 
 export function historyStoreSetup() {
-  const rootReducer = combineReducers(reducerMap);
+  const rootReducer = rtk.combineReducers(reducerMap);
 
-  const historyStore = configureStore({
+  const historyStore = rtk.configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
       getDefaultMiddleware().concat(reducerMiddleware)

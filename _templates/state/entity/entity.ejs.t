@@ -1,10 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 ---
-import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import { coreReducers, coreExtraReducers, <%= Name %>, <%= name %>Key } from '@amnis/core';
+import { rtk, coreReducers, coreExtraReducers, <%= Name %>, <%= name %>Key } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { <%= Name %>Meta } from './<%= name %>.types.js';
 
@@ -12,7 +9,7 @@ import type { <%= Name %>Meta } from './<%= name %>.types.js';
  * RTK <%= name %> adapter.
  * Manages the normalized entities.
  */
-export const <%= name %>Adapter = createEntityAdapter<<%= Name %>>({
+export const <%= name %>Adapter = rtk.createEntityAdapter<<%= Name %>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -36,7 +33,7 @@ export const <%= name %>InitialState = <%= name %>Adapter.getInitialState<<%= Na
 /**
  * RTK <%= Name %> Slice
  */
-export const <%= name %>Slice = createSlice({
+export const <%= name %>Slice = rtk.createSlice({
   name: <%= name %>Key,
   initialState: <%= name %>InitialState,
   reducers: {

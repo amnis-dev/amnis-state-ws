@@ -1,11 +1,11 @@
-import { nanoid } from './rtk.js';
+import { rtk } from './rtk.js';
 import { regexUuid } from './regex.js';
 import type { UID, UIDList, UIDTree } from './types.js';
 
 /**
  * Create a identifier to another type.
  */
-export const uid = <T>(key: string, id = nanoid()) => `${key}:${id}` as UID<T>;
+export const uid = <T>(key: string, id = rtk.nanoid()) => `${key}:${id}` as UID<T>;
 
 /**
  * Validates a unique idenifier.

@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Profile,
@@ -15,7 +13,7 @@ import type { ProfileMeta } from './profile.types.js';
  * RTK profile adapter.
  * Manages the normalized entities.
  */
-export const profileAdapter = createEntityAdapter<Profile>({
+export const profileAdapter = rtk.createEntityAdapter<Profile>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const profileInitialState = profileAdapter.getInitialState<ProfileMeta>(
 /**
  * RTK Profile Slice
  */
-export const profileSlice = createSlice({
+export const profileSlice = rtk.createSlice({
   name: profileKey,
   initialState: profileInitialState,
   reducers: {

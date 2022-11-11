@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Note,
@@ -15,7 +13,7 @@ import type { NoteMeta } from './note.types.js';
  * RTK note adapter.
  * Manages the normalized entities.
  */
-export const noteAdapter = createEntityAdapter<Note>({
+export const noteAdapter = rtk.createEntityAdapter<Note>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const noteInitialState = noteAdapter.getInitialState<NoteMeta>(
 /**
  * RTK Note Slice
  */
-export const noteSlice = createSlice({
+export const noteSlice = rtk.createSlice({
   name: noteKey,
   initialState: noteInitialState,
   reducers: {

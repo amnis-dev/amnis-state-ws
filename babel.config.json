@@ -16,8 +16,6 @@
         "root": ["./"],
         "alias": {
           "@amnis/core": "./packages/amnis-core/src",
-          "@amnis/core/rtk": "./packages/amnis-core/src/rtk.ts",
-          "@amnis/core/rtkq": "./packages/amnis-core/src/rtkq.ts",
           "@amnis/db": "./packages/amnis-db/src",
           "@amnis/fs": "./packages/amnis-fs/src",
           "@amnis/process": "./packages/amnis-process/src",

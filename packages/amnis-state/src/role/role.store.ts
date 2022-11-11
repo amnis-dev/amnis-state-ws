@@ -1,10 +1,10 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk';
+import { rtk } from '@amnis/core';
 import { reducerMap, reducerMiddleware } from './role.reducer.js';
 
 export function roleStoreSetup() {
-  const rootReducer = combineReducers(reducerMap);
+  const rootReducer = rtk.combineReducers(reducerMap);
 
-  const roleStore = configureStore({
+  const roleStore = rtk.configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
       getDefaultMiddleware().concat(reducerMiddleware)

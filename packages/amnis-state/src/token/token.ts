@@ -1,7 +1,4 @@
-import {
-  createEntityAdapter, createSlice, isAnyOf,
-} from '@amnis/core/rtk';
-import { Token, tokenKey } from '@amnis/core';
+import { rtk, Token, tokenKey } from '@amnis/core';
 import { apiAuth } from '@amnis/api';
 
 import type { TokenMeta } from './token.types.js';
@@ -10,7 +7,7 @@ import type { TokenMeta } from './token.types.js';
  * RTK token adapter.
  * Manages the normalized entities.
  */
-export const tokenAdapter = createEntityAdapter<Token>({
+export const tokenAdapter = rtk.createEntityAdapter<Token>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -30,7 +27,7 @@ export const tokenInitialState = tokenAdapter.getInitialState<TokenMeta>({});
 /**
  * RTK Token Slice
  */
-export const tokenSlice = createSlice({
+export const tokenSlice = rtk.createSlice({
   name: tokenKey,
   initialState: tokenInitialState,
   reducers: {},
@@ -74,7 +71,7 @@ export const tokenSlice = createSlice({
     /**
      * Remove all tokens from the state.
      */
-    builder.addMatcher(isAnyOf(
+    builder.addMatcher(rtk.isAnyOf(
       apiAuth.endpoints.logout.matchFulfilled,
       apiAuth.endpoints.logout.matchRejected,
     ), (state) => {

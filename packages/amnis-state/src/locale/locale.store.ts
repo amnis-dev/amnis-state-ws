@@ -1,10 +1,10 @@
-import { configureStore, combineReducers } from '@amnis/core/rtk';
+import { rtk } from '@amnis/core';
 import { reducerMap, reducerMiddleware } from './locale.reducer.js';
 
 export function localeStoreSetup() {
-  const rootReducer = combineReducers(reducerMap);
+  const rootReducer = rtk.combineReducers(reducerMap);
 
-  const localeStore = configureStore({
+  const localeStore = rtk.configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
       getDefaultMiddleware().concat(reducerMiddleware)

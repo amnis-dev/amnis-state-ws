@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice, isAnyOf,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Session,
@@ -17,7 +15,7 @@ import type {
  * RTK session adapter.
  * Manages the normalized entities.
  */
-export const sessionAdapter = createEntityAdapter<Session>({
+export const sessionAdapter = rtk.createEntityAdapter<Session>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -39,7 +37,7 @@ export const sessionInitialState = sessionAdapter.getInitialState<SessionMeta>(
 /**
  * RTK Session Slice
  */
-export const sessionSlice = createSlice({
+export const sessionSlice = rtk.createSlice({
   name: sessionKey,
   initialState: sessionInitialState,
   reducers: {
@@ -63,7 +61,7 @@ export const sessionSlice = createSlice({
      * Delete the active session on a logout response.
      * Fulfilment or rejection, the client data is still cleared.
      */
-    builder.addMatcher(isAnyOf(
+    builder.addMatcher(rtk.isAnyOf(
       apiAuth.endpoints.logout.matchFulfilled,
       apiAuth.endpoints.logout.matchRejected,
     ), (state) => {

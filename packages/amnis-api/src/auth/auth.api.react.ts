@@ -1,8 +1,8 @@
-import { createApi } from '@amnis/core/rtkqr';
+import { rtkqr } from '@amnis/core';
 import { dynamicBaseQueryAuth } from '../util/index.js';
 import { apiAuthQueries } from './auth.queries.js';
 
-export const apiAuth = createApi({
+export const apiAuth = rtkqr.createApi({
   reducerPath: 'apiAuth',
   baseQuery: dynamicBaseQueryAuth,
   endpoints: (builder) => apiAuthQueries(builder),

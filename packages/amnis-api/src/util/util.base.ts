@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetch, { Headers, Request } from 'cross-fetch';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/index.js';
-import { fetchBaseQuery } from '@amnis/core/rtkq';
+import { rtkq } from '@amnis/core';
 
 global.Headers = Headers;
 global.Request = Request;
@@ -15,7 +15,7 @@ type DynamicBaseQuery = BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryE
  */
 export const dynamicBaseQuery: DynamicBaseQuery = async (args, store, extraOptions) => {
   const { baseUrl } = (store.getState() as any).app;
-  const rawBaseQuery = fetchBaseQuery({
+  const rawBaseQuery = rtkq.fetchBaseQuery({
     baseUrl,
     fetchFn: fetch,
   });

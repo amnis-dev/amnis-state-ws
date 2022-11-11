@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Website,
@@ -15,7 +13,7 @@ import type { WebsiteMeta } from './website.types.js';
  * RTK website adapter.
  * Manages the normalized entities.
  */
-export const websiteAdapter = createEntityAdapter<Website>({
+export const websiteAdapter = rtk.createEntityAdapter<Website>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const websiteInitialState = websiteAdapter.getInitialState<WebsiteMeta>(
 /**
  * RTK Website Slice
  */
-export const websiteSlice = createSlice({
+export const websiteSlice = rtk.createSlice({
   name: websiteKey,
   initialState: websiteInitialState,
   reducers: {

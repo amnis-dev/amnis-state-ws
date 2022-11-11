@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Locale,
@@ -15,7 +13,7 @@ import type { LocaleMeta } from './locale.types.js';
  * RTK locale adapter.
  * Manages the normalized entities.
  */
-export const localeAdapter = createEntityAdapter<Locale>({
+export const localeAdapter = rtk.createEntityAdapter<Locale>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const localeInitialState = localeAdapter.getInitialState<LocaleMeta>(
 /**
  * RTK Locale Slice
  */
-export const localeSlice = createSlice({
+export const localeSlice = rtk.createSlice({
   name: localeKey,
   initialState: localeInitialState,
   reducers: {

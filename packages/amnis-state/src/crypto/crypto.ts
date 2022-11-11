@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Crypto,
@@ -15,7 +13,7 @@ import type { CryptoMeta } from './crypto.types.js';
  * RTK crypto adapter.
  * Manages the normalized entities.
  */
-export const cryptoAdapter = createEntityAdapter<Crypto>({
+export const cryptoAdapter = rtk.createEntityAdapter<Crypto>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const cryptoInitialState = cryptoAdapter.getInitialState<CryptoMeta>(
 /**
  * RTK Crypto Slice
  */
-export const cryptoSlice = createSlice({
+export const cryptoSlice = rtk.createSlice({
   name: cryptoKey,
   initialState: cryptoInitialState,
   reducers: {

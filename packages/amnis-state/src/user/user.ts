@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   User,
@@ -15,7 +13,7 @@ import type { UserMeta } from './user.types.js';
  * RTK user adapter.
  * Manages the normalized entities.
  */
-export const userAdapter = createEntityAdapter<User>({
+export const userAdapter = rtk.createEntityAdapter<User>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const userInitialState = userAdapter.getInitialState<UserMeta>(
 /**
  * RTK User Slice
  */
-export const userSlice = createSlice({
+export const userSlice = rtk.createSlice({
   name: userKey,
   initialState: userInitialState,
   reducers: {

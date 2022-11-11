@@ -98,15 +98,15 @@ import { set } from '@amnis/state/node';
 /**
  * store.ts
  */
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, rtk.combineReducers } from '@reduxjs/toolkit';
 import { set } from '@amnis/state/[runtime]';
 
 /**
  * Setup your Redux store.
  */
-const rootReducer = combineReducers(set.reducers);
+const rootReducer = rtk.combineReducers(set.reducers);
 
-const store = configureStore({
+const store = rtk.configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => (
     getDefaultMiddleware().concat(set.middleware)

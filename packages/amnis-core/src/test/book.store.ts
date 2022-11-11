@@ -1,8 +1,6 @@
 import {
-  createEntityAdapter,
-  createSlice,
-  configureStore,
-} from '@amnis/core/rtk';
+  rtk,
+} from '@amnis/core';
 import type { Entity, Meta } from '../entity/index.js';
 import { coreExtraReducers, coreReducers } from '../reducers.js';
 import { entityCreate } from '../entity/index.js';
@@ -16,14 +14,14 @@ export type BookMeta = Meta<Book>;
 
 export const bookKey = 'book';
 
-const booksAdapter = createEntityAdapter<Book>({
+const booksAdapter = rtk.createEntityAdapter<Book>({
   // Assume IDs are stored in a field other than `book.id`
   selectId: (book) => book.$id,
   // Keep the "all IDs" array sorted based on book titles
   sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
-export const booksSlice = createSlice({
+export const booksSlice = rtk.createSlice({
   name: bookKey,
   initialState: booksAdapter.getInitialState<BookMeta>({
     active: null,
@@ -38,7 +36,7 @@ export const booksSlice = createSlice({
   },
 });
 
-export const storeSetup = () => configureStore({
+export const storeSetup = () => rtk.configureStore({
   reducer: {
     [booksSlice.name]: booksSlice.reducer,
   },

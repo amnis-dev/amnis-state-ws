@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Role,
@@ -15,7 +13,7 @@ import type { RoleMeta } from './role.types.js';
  * RTK role adapter.
  * Manages the normalized entities.
  */
-export const roleAdapter = createEntityAdapter<Role>({
+export const roleAdapter = rtk.createEntityAdapter<Role>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const roleInitialState = roleAdapter.getInitialState<RoleMeta>(
 /**
  * RTK Role Slice
  */
-export const roleSlice = createSlice({
+export const roleSlice = rtk.createSlice({
   name: roleKey,
   initialState: roleInitialState,
   reducers: {

@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Service,
@@ -15,7 +13,7 @@ import type { ServiceMeta } from './service.types.js';
  * RTK service adapter.
  * Manages the normalized entities.
  */
-export const serviceAdapter = createEntityAdapter<Service>({
+export const serviceAdapter = rtk.createEntityAdapter<Service>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const serviceInitialState = serviceAdapter.getInitialState<ServiceMeta>(
 /**
  * RTK Service Slice
  */
-export const serviceSlice = createSlice({
+export const serviceSlice = rtk.createSlice({
   name: serviceKey,
   initialState: serviceInitialState,
   reducers: {

@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   History,
@@ -15,7 +13,7 @@ import type { HistoryMeta } from './history.types.js';
  * RTK history adapter.
  * Manages the normalized entities.
  */
-export const historyAdapter = createEntityAdapter<History>({
+export const historyAdapter = rtk.createEntityAdapter<History>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const historyInitialState = historyAdapter.getInitialState<HistoryMeta>(
 /**
  * RTK History Slice
  */
-export const historySlice = createSlice({
+export const historySlice = rtk.createSlice({
   name: historyKey,
   initialState: historyInitialState,
   reducers: {

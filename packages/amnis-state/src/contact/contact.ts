@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Contact,
@@ -15,7 +13,7 @@ import type { ContactMeta } from './contact.types.js';
  * RTK contact adapter.
  * Manages the normalized entities.
  */
-export const contactAdapter = createEntityAdapter<Contact>({
+export const contactAdapter = rtk.createEntityAdapter<Contact>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const contactInitialState = contactAdapter.getInitialState<ContactMeta>(
 /**
  * RTK Contact Slice
  */
-export const contactSlice = createSlice({
+export const contactSlice = rtk.createSlice({
   name: contactKey,
   initialState: contactInitialState,
   reducers: {

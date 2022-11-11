@@ -1,7 +1,5 @@
 import {
-  createEntityAdapter, createSlice,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   coreReducers,
   coreExtraReducers,
   Log,
@@ -15,7 +13,7 @@ import type { LogMeta } from './log.types.js';
  * RTK log adapter.
  * Manages the normalized entities.
  */
-export const logAdapter = createEntityAdapter<Log>({
+export const logAdapter = rtk.createEntityAdapter<Log>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +35,7 @@ export const logInitialState = logAdapter.getInitialState<LogMeta>(
 /**
  * RTK Log Slice
  */
-export const logSlice = createSlice({
+export const logSlice = rtk.createSlice({
   name: logKey,
   initialState: logInitialState,
   reducers: {

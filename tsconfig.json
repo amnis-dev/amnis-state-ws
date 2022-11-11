@@ -6,9 +6,6 @@
     "esModuleInterop": true,
     "paths": {
       "@amnis/core": ["./packages/amnis-core/src/index.ts"],
-      "@amnis/core/rtk": ["./packages/amnis-core/src/rtk.ts"],
-      "@amnis/core/rtkq": ["./packages/amnis-core/src/rtkq.ts"],
-      "@amnis/core/rtkqr": ["./packages/amnis-core/src/rtkqr.ts"],
       "@amnis/core/test/*": ["./packages/amnis-core/src/test/*"],
       "@amnis/db": ["./packages/amnis-db/src/index.ts"],
       "@amnis/fs": ["./packages/amnis-fs/src/index.ts"],

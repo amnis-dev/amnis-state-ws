@@ -1,8 +1,8 @@
-import { createApi } from '@amnis/core/rtkqr';
+import { rtkqr } from '@amnis/core';
 import { dynamicBaseQueryCrud } from '../util/index.js';
 import { apiCrudQueries } from './crud.queries.js';
 
-export const apiCrud = createApi({
+export const apiCrud = rtkqr.createApi({
   reducerPath: 'apiCrud',
   baseQuery: dynamicBaseQueryCrud,
   endpoints: (builder) => apiCrudQueries(builder),

@@ -4,10 +4,7 @@ import type {
   EntityAdapter,
 } from '@reduxjs/toolkit';
 import {
-  isRejectedWithValue,
-  isFulfilled,
-} from '@amnis/core/rtk';
-import {
+  rtk,
   Entity,
   IoOutput,
   LogBaseCreate,
@@ -32,7 +29,7 @@ export function apiExtraReducers<E extends Entity>(
    * Matches ANY fulfillment.
    * ------------------------------------------------------------
    */
-  builder.addMatcher(isFulfilled, (state, action) => {
+  builder.addMatcher(rtk.isFulfilled, (state, action) => {
     const payload = action.payload as IoOutput['json'];
     const logs = payload.logs as LogBaseCreate[];
 
@@ -51,7 +48,7 @@ export function apiExtraReducers<E extends Entity>(
    * Matches ANY rejection that has a payload.
    * ------------------------------------------------------------
    */
-  builder.addMatcher(isRejectedWithValue, (state, action) => {
+  builder.addMatcher(rtk.isRejectedWithValue, (state, action) => {
     const payload = action.payload as { data: IoOutput['json'] } | undefined;
 
     if (!payload) {
