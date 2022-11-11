@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/amnis-dev/amnis-state/compare/v0.7.0...v0.7.1) (2022-11-11)
+
+
+### Bug Fixes
+
+* Fixed typing issues with react api ([0b7ff9b](https://github.com/amnis-dev/amnis-state/commit/0b7ff9b660d57abe7efd0a6e18d99f1054366244))
+
 ## [0.7.0](https://github.com/amnis-dev/amnis-state/compare/v0.6.0...v0.7.0) (2022-11-10)
 
 
