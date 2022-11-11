@@ -87,6 +87,17 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
         action: PayloadAction<EntityUpdate<E>>,
       ) => {
         const { $id, ...changes } = action.payload;
+
+        /**
+         * Store the original object if it doesn't exist on state.
+         */
+        if (state.original[$id] === undefined && state.entities[$id] !== undefined) {
+          Object.assign(state.original[$id], { ...state.entities[$id] });
+        }
+
+        /**
+         * Update the entity.
+         */
         adapter.updateOne(state, {
           id: $id,
           changes: changes as Partial<E>,

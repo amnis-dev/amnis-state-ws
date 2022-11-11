@@ -69,9 +69,14 @@ export interface Meta<E extends Entity> {
   focused: UID<E> | null;
 
   /**
-    * List of ids considered to be selected.
-    */
+   * List of ids considered to be selected.
+   */
   selection: UID<E>[];
+
+  /**
+   * Record of original entity data since last updated from the api.
+   */
+  original: Record<UID<E>, E>;
 }
 
 /**

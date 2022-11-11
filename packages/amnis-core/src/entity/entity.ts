@@ -1,12 +1,13 @@
-import { dateJSON } from '../core.js';
-import { uidList, uid } from '../uid.js';
-import { regexReference, regexUuid } from '../regex.js';
+import type { UID } from '../types.js';
 import type {
   Entity,
   EntityExtension,
   EntityPartial,
   Meta,
 } from './entity.types.js';
+import { dateJSON } from '../core.js';
+import { uidList, uid } from '../uid.js';
+import { regexReference, regexUuid } from '../regex.js';
 
 /**
  * Creates an entity.
@@ -128,6 +129,7 @@ export function metaInitial<E extends Entity = Entity>(meta: Partial<Meta<E>> = 
     active: null,
     focused: null,
     selection: [],
+    original: {} as Record<UID<E>, E>,
     ...meta,
   };
 }
