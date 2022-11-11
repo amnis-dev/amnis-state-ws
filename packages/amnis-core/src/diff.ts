@@ -1,0 +1,50 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+type SameRecord<T> = { [N in keyof T]: T[N] }
+
+/**
+ * Compares two of the same type of object and returns the keys that are different.
+ */
+export function diffCompare<R1 extends { [key: string]: any }>(
+  record1: R1,
+  record2: SameRecord<R1>,
+): (keyof R1)[] {
+  const result: (keyof R1)[] = [];
+  Object.keys(record1).forEach((key: keyof R1) => {
+    /**
+     * Compare equality of an array.
+     */
+    if (Array.isArray(record1[key])) {
+      const arr1 = record1[key] as Array<any>;
+      const arr2 = record2[key] as Array<any>;
+      if (!arr1.every((e, i) => e === arr2[i])) {
+        result.push(key);
+      }
+      return;
+    }
+
+    /**
+     * Compare equality of object (shallow).
+     */
+    if (typeof record1[key] === 'object' && record1[key] !== null) {
+      const obj1 = record1[key] as Record<string, unknown>;
+      const obj2 = record2[key] as Record<string, unknown>;
+      if (!Object.keys(obj1).every(
+        (keyObj: keyof typeof obj1) => (obj1[keyObj] === obj2[keyObj]),
+      )) {
+        result.push(key);
+      }
+      return;
+    }
+
+    /**
+     * Compare any other type.
+     */
+    if (record1[key] !== record2[key]) {
+      result.push(key);
+    }
+  });
+  return result;
+}
+
+export default diffCompare;

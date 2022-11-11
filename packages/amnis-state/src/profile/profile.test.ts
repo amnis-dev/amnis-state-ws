@@ -35,3 +35,36 @@ test('should handle creating a new profile', () => {
     nameDisplay: expect.any(String),
   }));
 });
+
+/**
+ * ============================================================
+ */
+test('should handle updating a profile', () => {
+  const store = storeSetup();
+
+  const actionCreate = profileActions.create({ ...profileBase });
+
+  store.dispatch(actionCreate);
+  const entities1 = profileSelectors.selectAll(store.getState());
+  const profileId = entities1[0].$id;
+
+  const actionUpdate = profileActions.update({
+    $id: profileId,
+    nameDisplay: 'New Profile Name',
+  });
+
+  store.dispatch(actionUpdate);
+  const entities2 = profileSelectors.selectAll(store.getState());
+
+  expect(entities2[0]).toEqual(expect.objectContaining({
+    nameDisplay: 'New Profile Name',
+  }));
+
+  console.log(JSON.stringify(store.getState().profile.differences, null, 2));
+
+  const original = store.getState().profile.original[profileId];
+  const differences = store.getState().profile.differences[profileId];
+  expect(original).toMatchObject(entities1[0]);
+  expect(differences).toHaveLength(1);
+  expect(differences).toEqual(expect.arrayContaining(['nameDisplay']));
+});

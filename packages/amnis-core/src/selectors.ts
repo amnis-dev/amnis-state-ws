@@ -30,7 +30,7 @@ function getSlice<
 /**
  * Selects the focused entity on a slice (if one is active).
  */
-function selectActive<E extends Entity = Entity>(
+export function selectActive<E extends Entity = Entity>(
   state: State,
   sliceKey: string,
 ): E | undefined {
@@ -60,7 +60,7 @@ function selectActive<E extends Entity = Entity>(
 /**
  * Selects the focused entity on a slice (if one is focused).
  */
-function selectFocused<E extends Entity = Entity>(
+export function selectFocused<E extends Entity = Entity>(
   state: State,
   sliceKey: string,
 ): E | undefined {
@@ -90,7 +90,7 @@ function selectFocused<E extends Entity = Entity>(
 /**
  * Selects the selected entity on a slice.
  */
-function selectSelection<E extends Entity = Entity>(
+export function selectSelection<E extends Entity = Entity>(
   state: State,
   sliceKey: string,
 ): E[] {
@@ -116,7 +116,7 @@ function selectSelection<E extends Entity = Entity>(
 /**
  * Selects a type of token of a session.
  */
-function selectToken(state: State, api: TokenApi, type: TokenType): Token | undefined {
+export function selectToken(state: State, api: TokenApi, type: TokenType): Token | undefined {
   const tokenSlice = state[tokenKey] as EntityState<Token>;
 
   if (!tokenSlice) {
@@ -137,7 +137,7 @@ function selectToken(state: State, api: TokenApi, type: TokenType): Token | unde
 /**
  * Selects a public key from the crypto slice.
  */
-function selectPublicKey(state: State, tag: string): string | undefined {
+export function selectPublicKey(state: State, tag: string): string | undefined {
   const slice = getSlice<Crypto>(state, cryptoKey);
 
   if (!slice) {
@@ -154,7 +154,7 @@ function selectPublicKey(state: State, tag: string): string | undefined {
 /**
  * Selects a list of Grants based on an array of role references.
  */
-function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
+export function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
   const grants: Grant[] = [];
 
   const roleSlice = getSlice<Role>(state, 'role');

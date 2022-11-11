@@ -76,7 +76,12 @@ export interface Meta<E extends Entity> {
   /**
    * Record of original entity data since last updated from the api.
    */
-  original: Record<UID<E>, E>;
+  original: Record<UID<E>, E | undefined>;
+
+  /**
+   * Property differences between current and original entities.
+   */
+  differences: Record<UID<E>, (keyof E)[] | undefined>
 }
 
 /**

@@ -8,6 +8,7 @@ export * from './core.js';
 export * from './actions.js';
 export * from './reducers.js';
 export * from './selectors.js';
+export * from './diff.js';
 
 export * from './rtk.js';
 export * from './rtkq.js';

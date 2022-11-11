@@ -5,7 +5,7 @@ import type {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import {
-  entityCreate,
+  entityCreate, metaInitial,
 } from './entity/entity.js';
 import { coreActions } from './actions.js';
 import type {
@@ -15,6 +15,7 @@ import type {
   MetaState,
 } from './entity/index.js';
 import type { UID } from './types.js';
+import { diffCompare } from './diff.js';
 
 export interface MetaOptions {
   active?: boolean;
@@ -86,13 +87,44 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
         state: MetaState<E>,
         action: PayloadAction<EntityUpdate<E>>,
       ) => {
-        const { $id, ...changes } = action.payload;
+        const { $id, ...other } = action.payload;
+        const changes = other as Partial<E>;
+
+        const entity = adapter.getSelectors().selectById(state, $id) as E;
+
+        if (!entity) {
+          return;
+        }
 
         /**
          * Store the original object if it doesn't exist on state.
          */
-        if (state.original[$id] === undefined && state.entities[$id] !== undefined) {
-          Object.assign(state.original[$id], { ...state.entities[$id] });
+        if (state.original[$id] === undefined) {
+          state.original[$id] = entity;
+        }
+
+        /**
+         * Perform a diff compare.
+         */
+        const diffResult = diffCompare<E>(
+          { ...entity, ...changes },
+          state.original[$id] as E,
+        );
+
+        if (!diffResult.length && !entity.committed) {
+          changes.committed = true;
+        }
+
+        if (!!diffResult.length && entity.committed) {
+          changes.committed = false;
+        }
+
+        if (diffResult.length) {
+          state.differences[$id] = diffResult;
+        }
+
+        if (!diffResult.length && state.differences[$id]) {
+          delete state.differences[$id];
         }
 
         /**
@@ -100,7 +132,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
          */
         adapter.updateOne(state, {
           id: $id,
-          changes: changes as Partial<E>,
+          changes,
         });
       },
       prepare: (entityUpdate: EntityUpdate<E>) => ({ payload: entityUpdate }),
@@ -233,9 +265,18 @@ export function coreExtraReducers<E extends Entity>(
   });
 
   builder.addCase(coreActions.wipe, (state) => {
-    state.active = null;
-    state.focused = null;
-    state.selection = [];
+    const metaDefault = metaInitial<E>();
+
+    state.active = metaDefault.active;
+    state.focused = metaDefault.focused;
+    state.selection = metaDefault.selection;
+
+    Object.keys(state.original).forEach((k) => {
+      delete state.original[k as keyof typeof state.original];
+    });
+    Object.keys(state.differences).forEach((k) => {
+      delete state.differences[k as keyof typeof state.differences];
+    });
     /** @ts-ignore */
     adapter.removeAll(state);
   });

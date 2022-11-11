@@ -130,6 +130,7 @@ export function metaInitial<E extends Entity = Entity>(meta: Partial<Meta<E>> = 
     focused: null,
     selection: [],
     original: {} as Record<UID<E>, E>,
+    differences: {} as Record<UID<E>, (keyof E)[]>,
     ...meta,
   };
 }
