@@ -14,7 +14,7 @@ import {
 
 export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
 
-  login: builder.query<
+  login: builder.mutation<
   IoOutputJson<StateCreate>,
   AuthLogin
   >({
@@ -26,7 +26,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
     }),
   }),
 
-  logout: builder.query<
+  logout: builder.mutation<
   IoOutputJson<StateDelete>,
   AuthLogout
   >({
@@ -38,7 +38,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
     }),
   }),
 
-  pkce: builder.query<
+  pkce: builder.mutation<
   IoOutputJson<StateCreate>,
   AuthPkce
   >({

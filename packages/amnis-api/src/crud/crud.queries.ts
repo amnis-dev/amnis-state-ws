@@ -9,7 +9,7 @@ import {
 } from '@amnis/core';
 
 export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
-  create: builder.query<
+  create: builder.mutation<
   IoOutputJson<StateCreate>,
   StateCreate
   >({
@@ -31,7 +31,7 @@ export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder
     }),
   }),
 
-  update: builder.query<
+  update: builder.mutation<
   IoOutputJson<StateCreate>,
   StateUpdate
   >({
@@ -42,7 +42,7 @@ export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder
     }),
   }),
 
-  delete: builder.query<
+  delete: builder.mutation<
   IoOutputJson<StateDelete>,
   StateDelete
   >({
