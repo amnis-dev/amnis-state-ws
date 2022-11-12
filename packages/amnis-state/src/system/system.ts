@@ -5,6 +5,7 @@ import {
   System,
   systemKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type {
@@ -78,6 +79,10 @@ export const systemSelectors = {
   ...systemAdapter.getSelectors<{
     [systemKey]: typeof systemInitialState;
   }>((state) => state[systemKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<System>(systemKey),
 };
 
 /**

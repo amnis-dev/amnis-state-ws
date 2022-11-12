@@ -1,4 +1,4 @@
-import { selectors, ioOutput, IoMiddleware } from '@amnis/core';
+import { ioOutput, IoMiddleware, selectPublicKey } from '@amnis/core';
 import { jwtVerify } from '../crypto/index.js';
 import { processConfig } from '../config.js';
 
@@ -22,7 +22,7 @@ export const mwJwt: IoMiddleware = () => (next) => (context) => async (input) =>
   /**
    * Fetch the auth service public key from the store.
    */
-  const publicKey = selectors.selectPublicKey(
+  const publicKey = selectPublicKey(
     context.store.getState(),
     processConfig.PROCESS_CRYPTO_TAG,
   );

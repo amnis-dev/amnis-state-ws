@@ -1,13 +1,32 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { EntityState } from '@reduxjs/toolkit';
+import { rtk } from './rtk.js';
 import {
   Token, TokenApi, tokenKey, TokenType,
 } from './token/index.js';
-import type { Entity, Meta } from './entity/index.js';
+import type {
+  Entity, EntityExtension, EntityUpdate, Meta,
+} from './entity/index.js';
 import type { State } from './state/index.js';
 import type { UID } from './types.js';
 import type { Role } from './role/index.js';
 import { Crypto, cryptoKey } from './crypto/index.js';
 import { grantParse, Grant } from './grant/index.js';
+
+/**
+ * Creates a slice selector.
+ */
+const createSelectSlice = <E extends Entity>(
+  sliceKey: string,
+) => (state: State) => {
+  const slice = state[sliceKey] as Meta<E> & EntityState<E>;
+
+  if (!slice?.entities) {
+    return undefined;
+  }
+
+  return slice;
+};
 
 /**
  * Helper function to get a slice.
@@ -114,6 +133,82 @@ export function selectSelection<E extends Entity = Entity>(
 }
 
 /**
+ * Selects an object to differentiate local updates.
+ */
+export function selectDifference<E extends Entity>(
+  state: State,
+  sliceKey: string,
+  id: UID<E>,
+): {
+    original: E | undefined,
+    current: E | undefined,
+    changes: EntityExtension<E>,
+    update: EntityUpdate<E>,
+    keys: (keyof E)[]
+  } {
+  const slice = getSlice(state, sliceKey);
+
+  if (!slice) {
+    return {
+      original: undefined,
+      current: undefined,
+      changes: {} as EntityExtension<E>,
+      update: { $id: id } as EntityUpdate<E>,
+      keys: [],
+    };
+  }
+
+  const current = { ...slice.entities[id] } as E;
+
+  if (!current) {
+    return {
+      original: undefined,
+      current: undefined,
+      changes: {} as EntityExtension<E>,
+      update: { $id: id } as EntityUpdate<E>,
+      keys: [],
+    };
+  }
+
+  if (!slice.original[id]) {
+    return {
+      original: current,
+      current,
+      changes: {} as EntityExtension<E>,
+      update: { $id: id } as EntityUpdate<E>,
+      keys: [],
+    };
+  }
+
+  if (!slice.differences[id]) {
+    return {
+      original: undefined,
+      current: undefined,
+      changes: {} as EntityExtension<E>,
+      update: { $id: id } as EntityUpdate<E>,
+      keys: [],
+    };
+  }
+
+  const original = { ...slice.original[id] } as E;
+  const keys = [...slice.differences[id] as (keyof E)[]];
+  const changes = keys.reduce<EntityExtension<E>>((acc, k) => {
+    /** @ts-ignore */
+    acc[k] = current[k];
+    return acc;
+  }, {} as EntityExtension<E>);
+  const update = { $id: id, ...changes };
+
+  return {
+    original,
+    current,
+    changes,
+    update,
+    keys,
+  };
+}
+
+/**
  * Selects a type of token of a session.
  */
 export function selectToken(state: State, api: TokenApi, type: TokenType): Token | undefined {
@@ -182,13 +277,11 @@ export function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
 /**
  * Create the selector utility object.
  */
-export const selectors = {
-  selectActive,
-  selectFocused,
-  selectSelection,
-  selectToken,
-  selectPublicKey,
-  selectRoleGrants,
-};
-
-export default { selectors };
+export function coreSelectors<E extends Entity>(sliceKey: string) {
+  return {
+    selectActive: (state: State) => selectActive<E>(state, sliceKey),
+    selectFocused: (state: State) => selectFocused<E>(state, sliceKey),
+    selectSelection: (state: State) => selectSelection<E>(state, sliceKey),
+    selectDifference: (state: State, id: UID<E>) => selectDifference<E>(state, sliceKey, id),
+  };
+}

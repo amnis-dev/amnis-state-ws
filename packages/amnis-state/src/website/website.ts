@@ -5,6 +5,7 @@ import {
   Website,
   websiteKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { WebsiteMeta } from './website.types.js';
@@ -76,6 +77,10 @@ export const websiteSelectors = {
   ...websiteAdapter.getSelectors<{
     [websiteKey]: typeof websiteInitialState;
   }>((state) => state[websiteKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Website>(websiteKey),
 };
 
 /**

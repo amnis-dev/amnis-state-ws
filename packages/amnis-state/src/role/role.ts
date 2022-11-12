@@ -5,6 +5,7 @@ import {
   Role,
   roleKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { RoleMeta } from './role.types.js';
@@ -76,6 +77,10 @@ export const roleSelectors = {
   ...roleAdapter.getSelectors<{
     [roleKey]: typeof roleInitialState;
   }>((state) => state[roleKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Role>(roleKey),
 };
 
 /**

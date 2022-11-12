@@ -7,7 +7,7 @@ import {
   ioOutput,
   IoOutput,
   JWTEncoded,
-  selectors,
+  selectActive,
   StateCreate,
   System,
   systemKey,
@@ -146,7 +146,7 @@ export async function oauthTwitter(
   /**
    * Set system settings from the store.
    */
-  const system = selectors.selectActive<System>(store.getState(), systemKey);
+  const system = selectActive<System>(store.getState(), systemKey);
 
   const registrationOutput = await register(
     database,

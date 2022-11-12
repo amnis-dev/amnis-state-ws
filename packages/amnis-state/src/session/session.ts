@@ -5,6 +5,7 @@ import {
   Session,
   sessionKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers, apiAuth } from '@amnis/api';
 import type {
@@ -95,6 +96,10 @@ export const sessionSelectors = {
   ...sessionAdapter.getSelectors<{
     [sessionKey]: typeof sessionInitialState;
   }>((state) => state[sessionKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Session>(sessionKey),
 };
 
 /**

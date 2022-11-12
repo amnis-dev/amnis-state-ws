@@ -5,6 +5,7 @@ import {
   Contact,
   contactKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ContactMeta } from './contact.types.js';
@@ -76,6 +77,10 @@ export const contactSelectors = {
   ...contactAdapter.getSelectors<{
     [contactKey]: typeof contactInitialState;
   }>((state) => state[contactKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Contact>(contactKey),
 };
 
 /**

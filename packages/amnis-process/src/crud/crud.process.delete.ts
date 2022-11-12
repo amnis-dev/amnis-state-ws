@@ -2,7 +2,7 @@
 
 import {
   coreActions,
-  Io, ioOutput, IoProcess, Role, selectors, StateDelete, stateScopeCreate, Task, UID,
+  Io, ioOutput, IoProcess, Role, selectRoleGrants, StateDelete, stateScopeCreate, Task, UID,
 } from '@amnis/core';
 import { mwJwt, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
@@ -20,7 +20,7 @@ Io<StateDelete, StateDelete>
     /**
      * Get array of grants from roles in the service store.
      */
-    const grants = selectors.selectRoleGrants(store.getState(), roleRefs);
+    const grants = selectRoleGrants(store.getState(), roleRefs);
 
     /**
      * Filter non-granted slices on the body (which is a State type).

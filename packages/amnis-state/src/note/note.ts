@@ -5,6 +5,7 @@ import {
   Note,
   noteKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { NoteMeta } from './note.types.js';
@@ -76,6 +77,10 @@ export const noteSelectors = {
   ...noteAdapter.getSelectors<{
     [noteKey]: typeof noteInitialState;
   }>((state) => state[noteKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Note>(noteKey),
 };
 
 /**

@@ -7,7 +7,7 @@ import {
   ioOutput,
   IoProcess,
   Role,
-  selectors,
+  selectRoleGrants,
   State,
   StateCreate,
   Task,
@@ -29,7 +29,7 @@ Io<StateCreate, StateCreate>
     /**
      * Get array of grants from roles in the service store.
      */
-    const grants = selectors.selectRoleGrants(store.getState(), roleRefs);
+    const grants = selectRoleGrants(store.getState(), roleRefs);
 
     /**
    * Filter non-granted slices on the body (which is a State type).

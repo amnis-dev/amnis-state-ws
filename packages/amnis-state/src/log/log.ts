@@ -5,6 +5,7 @@ import {
   Log,
   logKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { LogMeta } from './log.types.js';
@@ -76,6 +77,10 @@ export const logSelectors = {
   ...logAdapter.getSelectors<{
     [logKey]: typeof logInitialState;
   }>((state) => state[logKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Log>(logKey),
 };
 
 /**

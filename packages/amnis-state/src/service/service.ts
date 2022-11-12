@@ -5,6 +5,7 @@ import {
   Service,
   serviceKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ServiceMeta } from './service.types.js';
@@ -76,6 +77,10 @@ export const serviceSelectors = {
   ...serviceAdapter.getSelectors<{
     [serviceKey]: typeof serviceInitialState;
   }>((state) => state[serviceKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Service>(serviceKey),
 };
 
 /**

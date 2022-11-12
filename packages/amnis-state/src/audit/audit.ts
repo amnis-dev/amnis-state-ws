@@ -5,6 +5,7 @@ import {
   Audit,
   auditKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { AuditMeta } from './audit.types.js';
@@ -76,6 +77,10 @@ export const auditSelectors = {
   ...auditAdapter.getSelectors<{
     [auditKey]: typeof auditInitialState;
   }>((state) => state[auditKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Audit>(auditKey),
 };
 
 /**

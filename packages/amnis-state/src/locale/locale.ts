@@ -5,6 +5,7 @@ import {
   Locale,
   localeKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { LocaleMeta } from './locale.types.js';
@@ -76,6 +77,10 @@ export const localeSelectors = {
   ...localeAdapter.getSelectors<{
     [localeKey]: typeof localeInitialState;
   }>((state) => state[localeKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Locale>(localeKey),
 };
 
 /**

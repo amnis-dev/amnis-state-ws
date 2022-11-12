@@ -5,6 +5,7 @@ import {
   Profile,
   profileKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ProfileMeta } from './profile.types.js';
@@ -76,6 +77,10 @@ export const profileSelectors = {
   ...profileAdapter.getSelectors<{
     [profileKey]: typeof profileInitialState;
   }>((state) => state[profileKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Profile>(profileKey),
 };
 
 /**

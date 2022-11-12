@@ -5,6 +5,7 @@ import {
   History,
   historyKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { HistoryMeta } from './history.types.js';
@@ -76,6 +77,10 @@ export const historySelectors = {
   ...historyAdapter.getSelectors<{
     [historyKey]: typeof historyInitialState;
   }>((state) => state[historyKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<History>(historyKey),
 };
 
 /**

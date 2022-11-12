@@ -5,6 +5,7 @@ import {
   Crypto,
   cryptoKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { CryptoMeta } from './crypto.types.js';
@@ -76,6 +77,10 @@ export const cryptoSelectors = {
   ...cryptoAdapter.getSelectors<{
     [cryptoKey]: typeof cryptoInitialState;
   }>((state) => state[cryptoKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<Crypto>(cryptoKey),
 };
 
 /**

@@ -48,23 +48,29 @@ test('should handle updating a profile', () => {
   const entities1 = profileSelectors.selectAll(store.getState());
   const profileId = entities1[0].$id;
 
+  const newName = 'New Profile Name';
   const actionUpdate = profileActions.update({
     $id: profileId,
-    nameDisplay: 'New Profile Name',
+    nameDisplay: newName,
   });
 
   store.dispatch(actionUpdate);
   const entities2 = profileSelectors.selectAll(store.getState());
 
   expect(entities2[0]).toEqual(expect.objectContaining({
-    nameDisplay: 'New Profile Name',
+    nameDisplay: newName,
   }));
 
-  console.log(JSON.stringify(store.getState().profile.differences, null, 2));
+  const diff = profileSelectors.selectDifference(store.getState(), profileId);
 
-  const original = store.getState().profile.original[profileId];
-  const differences = store.getState().profile.differences[profileId];
-  expect(original).toMatchObject(entities1[0]);
-  expect(differences).toHaveLength(1);
-  expect(differences).toEqual(expect.arrayContaining(['nameDisplay']));
+  expect(diff.original).toMatchObject(entities1[0]);
+  expect(diff.keys).toHaveLength(1);
+  expect(diff.keys).toEqual(expect.arrayContaining(['nameDisplay']));
+
+  expect(Object.keys(diff.changes)).toHaveLength(1);
+  expect(diff.changes?.nameDisplay).toEqual(newName);
+
+  expect(Object.keys(diff.update)).toHaveLength(2);
+  expect(diff.update.$id).toEqual(profileId);
+  expect(diff.update?.nameDisplay).toEqual(newName);
 });

@@ -5,6 +5,7 @@ import {
   User,
   userKey,
   metaInitial,
+  coreSelectors,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { UserMeta } from './user.types.js';
@@ -76,6 +77,10 @@ export const userSelectors = {
   ...userAdapter.getSelectors<{
     [userKey]: typeof userInitialState;
   }>((state) => state[userKey]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<User>(userKey),
 };
 
 /**

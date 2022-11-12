@@ -8,7 +8,7 @@ import {
   Io,
   ioOutput,
   IoProcess,
-  selectors,
+  selectRoleGrants,
   State,
   StateCreate,
   stateScopeCreate,
@@ -42,7 +42,7 @@ Io<StateUpdate, StateCreate>
     /**
      * Get array of grants from roles in the service store.
      */
-    const grants = selectors.selectRoleGrants(store.getState(), jwt.roles);
+    const grants = selectRoleGrants(store.getState(), jwt.roles);
 
     /**
      * Filter non-granted slices on the body (which is a State type).
