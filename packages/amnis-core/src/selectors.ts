@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { EntityState } from '@reduxjs/toolkit';
+import type { Dictionary, EntityState } from '@reduxjs/toolkit';
 import { rtk } from './rtk.js';
 import {
   Token, TokenApi, tokenKey, TokenType,
@@ -9,16 +9,14 @@ import type {
 } from './entity/index.js';
 import type { State } from './state/index.js';
 import type { UID } from './types.js';
-import type { Role } from './role/index.js';
+import { Role, roleKey } from './role/index.js';
 import { Crypto, cryptoKey } from './crypto/index.js';
 import { grantParse, Grant } from './grant/index.js';
 
 /**
  * Creates a slice selector.
  */
-const createSelectSlice = <E extends Entity>(
-  sliceKey: string,
-) => (state: State) => {
+const genSelectSlice = <E extends Entity>(sliceKey: string) => (state: State) => {
   const slice = state[sliceKey] as Meta<E> & EntityState<E>;
 
   if (!slice?.entities) {
@@ -29,184 +27,179 @@ const createSelectSlice = <E extends Entity>(
 };
 
 /**
- * Helper function to get a slice.
+ * Creates an entity dictionary selector.
  */
-function getSlice<
-  E extends Entity = Entity
->(
-  state: State,
-  key: string,
-): Meta<E> & EntityState<E> | undefined {
-  const slice = state[key] as Meta<E> & EntityState<E>;
+const genSelectEntities = <E extends Entity>(sliceKey: string) => (state: State) => (
+  genSelectSlice<E>(sliceKey)(state)?.entities ?? ({} as Dictionary<E>)
+);
 
-  if (!slice?.entities) {
-    return undefined;
-  }
+/**
+ * Creates an original entity dictionary selector.
+ */
+const genSelectOriginals = <E extends Entity>(sliceKey: string) => (state: State) => (
+  genSelectSlice<E>(sliceKey)(state)?.original ?? ({} as Record<UID<E>, E>)
+);
 
-  return slice;
-}
+/**
+ * Creates an original entity dictionary selector.
+ */
+const genSelectDifferences = <E extends Entity>(sliceKey: string) => (state: State) => (
+  genSelectSlice<E>(sliceKey)(state)?.differences ?? ({} as Record<UID<E>, (keyof E)[]>)
+);
+
+/**
+ * Creates an active id selector.
+ */
+const genSelectActiveId = <E extends Entity>(sliceKey: string) => (state: State) => (
+  genSelectSlice<E>(sliceKey)(state)?.active ?? null
+);
+
+/**
+ * Creates a focused id selector.
+ */
+const genSelectFocusedId = <E extends Entity>(sliceKey: string) => (state: State) => (
+  genSelectSlice<E>(sliceKey)(state)?.focused ?? null
+);
+
+/**
+ * Creates a selected ids selector.
+ */
+const genSelectSelectionIds = <E extends Entity>(sliceKey: string) => (state: State) => (
+  genSelectSlice<E>(sliceKey)(state)?.selection ?? []
+);
 
 /**
  * Selects the focused entity on a slice (if one is active).
  */
-export function selectActive<E extends Entity = Entity>(
-  state: State,
-  sliceKey: string,
-): E | undefined {
-  const slice = getSlice(state, sliceKey);
+const genSelectActive = <E extends Entity = Entity>(sliceKey: string) => rtk.createSelector(
+  genSelectActiveId<E>(sliceKey),
+  genSelectEntities<E>(sliceKey),
+  (activeId, entities): E | undefined => {
+    if (!activeId) {
+      return undefined;
+    }
 
-  if (!slice) {
-    return undefined;
-  }
+    const entity = entities?.[activeId] as E;
 
-  if (!slice.active) {
-    return undefined;
-  }
+    if (!entity) {
+      return undefined;
+    }
 
-  if (!slice.entities) {
-    return undefined;
-  }
+    return entity;
+  },
+);
 
-  const entity = slice.entities[slice.active] as E;
-
-  if (!entity) {
-    return undefined;
-  }
-
-  return entity;
-}
+export const selectActive = <E extends Entity>(
+  state: State, sliceKey: string,
+) => genSelectActive<E>(sliceKey)(state);
 
 /**
- * Selects the focused entity on a slice (if one is focused).
+ * Selects the focused entity on a slice (if one is active).
  */
-export function selectFocused<E extends Entity = Entity>(
-  state: State,
-  sliceKey: string,
-): E | undefined {
-  const slice = getSlice(state, sliceKey);
+const genSelectFocused = <E extends Entity = Entity>(sliceKey: string) => rtk.createSelector(
+  genSelectFocusedId<E>(sliceKey),
+  genSelectEntities<E>(sliceKey),
+  (focusedId, entities): E | undefined => {
+    if (!focusedId) {
+      return undefined;
+    }
 
-  if (!slice) {
-    return undefined;
-  }
+    const entity = entities?.[focusedId] as E;
 
-  if (!slice.focused) {
-    return undefined;
-  }
+    if (!entity) {
+      return undefined;
+    }
 
-  if (!slice.entities) {
-    return undefined;
-  }
+    return entity;
+  },
+);
 
-  const entity = slice.entities[slice.focused] as E;
-
-  if (!entity) {
-    return undefined;
-  }
-
-  return entity;
-}
+export const selectFocused = <E extends Entity>(
+  state: State, sliceKey: string,
+) => genSelectFocused<E>(sliceKey)(state);
 
 /**
- * Selects the selected entity on a slice.
+ * Selects the focused entity on a slice (if one is active).
  */
-export function selectSelection<E extends Entity = Entity>(
-  state: State,
+const genSelectSelection = <E extends Entity = Entity>(
   sliceKey: string,
-): E[] {
-  const slice = getSlice(state, sliceKey);
+) => rtk.createSelector(
+  genSelectSelectionIds<E>(sliceKey),
+  genSelectEntities<E>(sliceKey),
+  (selectionIds, entities) => {
+    const selections = selectionIds.map((selected) => entities[selected]) as E[];
 
-  if (!slice) {
-    return [];
-  }
+    return selections;
+  },
+);
 
-  if (!slice.selection) {
-    return [];
-  }
-
-  if (!slice.entities) {
-    return [];
-  }
-
-  const entities = slice.selection.map((selected) => slice.entities[selected]) as E[];
-
-  return entities;
-}
+export const selectSelection = <E extends Entity>(
+  state: State, sliceKey: string,
+) => genSelectSelection<E>(sliceKey)(state);
 
 /**
  * Selects an object to differentiate local updates.
  */
-export function selectDifference<E extends Entity>(
-  state: State,
+const genSelectDifference = <E extends Entity = Entity>(
   sliceKey: string,
-  id: UID<E>,
-): {
-    original: E | undefined,
-    current: E | undefined,
-    changes: EntityExtension<E>,
-    update: EntityUpdate<E>,
-    keys: (keyof E)[]
-  } {
-  const slice = getSlice(state, sliceKey);
+) => rtk.createSelector(
+  [
+    (state, id: UID<E>) => id,
+    genSelectDifferences<E>(sliceKey),
+    genSelectOriginals<E>(sliceKey),
+    genSelectEntities<E>(sliceKey),
+  ],
+  (id, diffRecords, originalRecords, entities) => {
+    const current = { ...entities[id] } as E;
+    const original = { ...originalRecords[id] } as E;
+    const keys = diffRecords[id] ? [...diffRecords[id] as (keyof E)[]] : [] as (keyof E)[];
 
-  if (!slice) {
+    if (!current) {
+      return {
+        original: undefined,
+        current: undefined,
+        changes: {} as EntityExtension<E>,
+        update: { $id: id } as EntityUpdate<E>,
+        keys: [],
+      };
+    }
+
+    if (original) {
+      return {
+        original: current,
+        current,
+        changes: {} as EntityExtension<E>,
+        update: { $id: id } as EntityUpdate<E>,
+        keys: [],
+      };
+    }
+
+    if (!keys) {
+      return {
+        original: undefined,
+        current: undefined,
+        changes: {} as EntityExtension<E>,
+        update: { $id: id } as EntityUpdate<E>,
+        keys: [],
+      };
+    }
+
+    const changes = keys.reduce<EntityExtension<E>>((acc, k) => {
+      /** @ts-ignore */
+      acc[k] = current[k];
+      return acc;
+    }, {} as EntityExtension<E>);
+    const update = { $id: id, ...changes };
+
     return {
-      original: undefined,
-      current: undefined,
-      changes: {} as EntityExtension<E>,
-      update: { $id: id } as EntityUpdate<E>,
-      keys: [],
-    };
-  }
-
-  const current = { ...slice.entities[id] } as E;
-
-  if (!current) {
-    return {
-      original: undefined,
-      current: undefined,
-      changes: {} as EntityExtension<E>,
-      update: { $id: id } as EntityUpdate<E>,
-      keys: [],
-    };
-  }
-
-  if (!slice.original[id]) {
-    return {
-      original: current,
+      original,
       current,
-      changes: {} as EntityExtension<E>,
-      update: { $id: id } as EntityUpdate<E>,
-      keys: [],
+      changes,
+      update,
+      keys,
     };
-  }
-
-  if (!slice.differences[id]) {
-    return {
-      original: undefined,
-      current: undefined,
-      changes: {} as EntityExtension<E>,
-      update: { $id: id } as EntityUpdate<E>,
-      keys: [],
-    };
-  }
-
-  const original = { ...slice.original[id] } as E;
-  const keys = [...slice.differences[id] as (keyof E)[]];
-  const changes = keys.reduce<EntityExtension<E>>((acc, k) => {
-    /** @ts-ignore */
-    acc[k] = current[k];
-    return acc;
-  }, {} as EntityExtension<E>);
-  const update = { $id: id, ...changes };
-
-  return {
-    original,
-    current,
-    changes,
-    update,
-    keys,
-  };
-}
+  },
+);
 
 /**
  * Selects a type of token of a session.
@@ -233,7 +226,7 @@ export function selectToken(state: State, api: TokenApi, type: TokenType): Token
  * Selects a public key from the crypto slice.
  */
 export function selectPublicKey(state: State, tag: string): string | undefined {
-  const slice = getSlice<Crypto>(state, cryptoKey);
+  const slice = genSelectSlice<Crypto>(cryptoKey)(state);
 
   if (!slice) {
     return undefined;
@@ -252,7 +245,7 @@ export function selectPublicKey(state: State, tag: string): string | undefined {
 export function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
   const grants: Grant[] = [];
 
-  const roleSlice = getSlice<Role>(state, 'role');
+  const roleSlice = genSelectSlice<Role>(roleKey)(state);
 
   if (!roleSlice) {
     return grants;
@@ -279,9 +272,9 @@ export function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
  */
 export function coreSelectors<E extends Entity>(sliceKey: string) {
   return {
-    selectActive: (state: State) => selectActive<E>(state, sliceKey),
-    selectFocused: (state: State) => selectFocused<E>(state, sliceKey),
-    selectSelection: (state: State) => selectSelection<E>(state, sliceKey),
-    selectDifference: (state: State, id: UID<E>) => selectDifference<E>(state, sliceKey, id),
+    selectActive: genSelectActive<E>(sliceKey),
+    selectFocused: genSelectFocused<E>(sliceKey),
+    selectSelection: genSelectSelection<E>(sliceKey),
+    selectDifference: genSelectDifference<E>(sliceKey),
   };
 }
