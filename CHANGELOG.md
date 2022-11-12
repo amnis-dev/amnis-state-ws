@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.5](https://github.com/amnis-dev/amnis-state/compare/v0.7.4...v0.7.5) (2022-11-12)
+
+
+### Features
+
+* Added meta information for comparing entity changes ([239590b](https://github.com/amnis-dev/amnis-state/commit/239590b8ec34638a7fc30781f57120e8b25f4094))
+* Added new diff comparison method ([0c5ecf5](https://github.com/amnis-dev/amnis-state/commit/0c5ecf5a9302fdcc8e33baa85f8816c66510d1ec))
+* Added record for storing original local data copies ([0f9a124](https://github.com/amnis-dev/amnis-state/commit/0f9a124a277ae0646a595ea7a00b3ce70e567ab4))
+* API updated responses will clear comparison data when committed ([8973951](https://github.com/amnis-dev/amnis-state/commit/8973951b1ca512096766f5cc11feaeed08ddad5b))
+* Core selectors now added to each redux slice ([88f301e](https://github.com/amnis-dev/amnis-state/commit/88f301ec25ab1e821c6287d5af051f57ca222afb))
+* Optimized selector functions with caching ([21edec6](https://github.com/amnis-dev/amnis-state/commit/21edec6816ce72a83059ace32253b9db9ae0b345))
+* Removed dead code in Amnis State package ([f35d821](https://github.com/amnis-dev/amnis-state/commit/f35d821942af2b1c930c50e7e3e7369041853a8c))
+
 ### [0.7.4](https://github.com/amnis-dev/amnis-state/compare/v0.7.3...v0.7.4) (2022-11-11)
 
 
