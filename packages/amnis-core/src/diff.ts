@@ -47,4 +47,26 @@ export function diffCompare<R1 extends { [key: string]: any }>(
   return result;
 }
 
+/**
+ * Returns an object containing only the changed differences.
+ */
+export function diffChanges<R1 extends { [key: string]: any }>(
+  original: R1,
+  current: SameRecord<R1>,
+): { original: Partial<R1>, current: Partial<R1> } {
+  const diffKeys = diffCompare(original, current);
+
+  const originalResult = diffKeys.reduce<Partial<R1>>((acc, key) => {
+    acc[key] = original[key];
+    return acc;
+  }, {} as Partial<R1>);
+
+  const currentResult = diffKeys.reduce<Partial<R1>>((acc, key) => {
+    acc[key] = current[key];
+    return acc;
+  }, {} as Partial<R1>);
+
+  return { original: originalResult, current: currentResult };
+}
+
 export default diffCompare;

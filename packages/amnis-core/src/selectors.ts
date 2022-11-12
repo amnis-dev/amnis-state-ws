@@ -164,7 +164,7 @@ const genSelectDifference = <E extends Entity = Entity>(
       };
     }
 
-    if (original) {
+    if (!original) {
       return {
         original: current,
         current,

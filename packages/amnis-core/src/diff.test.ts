@@ -1,4 +1,4 @@
-import { diffCompare } from './diff.js';
+import { diffChanges, diffCompare } from './diff.js';
 
 test('should have no differences between equal objects', () => {
   const obj1 = {
@@ -135,4 +135,29 @@ test('should show difference in multiple properties', () => {
   const diffResult = diffCompare(obj1, obj2);
   expect(diffResult).toHaveLength(5);
   expect(diffResult).toEqual(expect.arrayContaining(Object.keys(obj1)));
+});
+
+test('should create a comparison object with differenced properties', () => {
+  const obj1 = {
+    string: 'string',
+    number: 4,
+    boolean: true,
+    array: ['a', 1, true],
+    object: { a: 'a', b: 2, c: true },
+  };
+
+  const obj2 = {
+    ...obj1,
+    number: 7,
+    string: 'new',
+    array: ['b', 2, true],
+    object: { ...obj1.object },
+  };
+
+  const diffResult = diffChanges(obj1, obj2);
+  expect(Object.keys(diffResult)).toHaveLength(2);
+  expect(Object.keys(diffResult.original)).toHaveLength(3);
+  expect(Object.keys(diffResult.current)).toHaveLength(3);
+  expect(Object.keys(diffResult.original)).toEqual(expect.arrayContaining(['number', 'string', 'array']));
+  expect(Object.keys(diffResult.current)).toEqual(expect.arrayContaining(['number', 'string', 'array']));
 });
