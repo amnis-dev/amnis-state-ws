@@ -187,6 +187,23 @@ export function apiExtraReducers<E extends Entity>(
     if (result && result[key] && Array.isArray(result[key])) {
       /** @ts-ignore */
       adapter.upsertMany<MetaState<E>>(state, result[key]);
+
+      /**
+       * Clear comparison data since the results are fresh from the service.
+       */
+      result[key].forEach((entity) => {
+        // Skip if the server indicates that this entity wasn't committed.
+        if (!entity.committed) {
+          return;
+        }
+        // Clean up data.
+        if (state.original[entity.$id]) {
+          delete state.original[entity.$id];
+        }
+        if (state.differences[entity.$id]) {
+          delete state.differences[entity.$id];
+        }
+      });
     }
   });
 

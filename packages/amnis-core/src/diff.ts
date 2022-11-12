@@ -68,5 +68,3 @@ export function diffChanges<R1 extends { [key: string]: any }>(
 
   return { original: originalResult, current: currentResult };
 }
-
-export default diffCompare;
