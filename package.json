@@ -10,6 +10,7 @@
     "import": "./dist/redux-toolkit.esm.mjs",
     "require": "./dist/index.js"
   },
+  "packageManager": "yarn@3.2.4",
   "workspaces": [
     "packages/*"
   ],
