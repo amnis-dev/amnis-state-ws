@@ -61,6 +61,8 @@ test('should handle updating a profile', () => {
     nameDisplay: newName,
   }));
 
+  expect(entities2[0]?.committed).toBe(false);
+
   const diff = profileSelectors.selectDifference(store.getState(), profileId);
 
   expect(diff.original).toMatchObject(entities1[0]);
@@ -73,4 +75,21 @@ test('should handle updating a profile', () => {
   expect(Object.keys(diff.update)).toHaveLength(2);
   expect(diff.update.$id).toEqual(profileId);
   expect(diff.update?.nameDisplay).toEqual(newName);
+
+  const newName2 = 'Even Newer Profile Name';
+  const actionUpdate2 = profileActions.update({
+    $id: profileId,
+    nameDisplay: newName2,
+  });
+
+  store.dispatch(actionUpdate2);
+  const entities3 = profileSelectors.selectAll(store.getState());
+
+  expect(entities3[0]?.committed).toBe(false);
+
+  const diff2 = profileSelectors.selectDifference(store.getState(), profileId);
+
+  expect(diff2.original).toMatchObject(entities1[0]);
+  expect(diff2.keys).toHaveLength(1);
+  expect(diff2.keys).toEqual(expect.arrayContaining(['nameDisplay']));
 });

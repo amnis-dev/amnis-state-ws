@@ -111,11 +111,11 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
           state.original[$id] as E,
         );
 
-        if (!diffResult.length && !entity.committed) {
+        if (diffResult.length === 0 && !entity.committed) {
           changes.committed = true;
         }
 
-        if (!!diffResult.length && entity.committed) {
+        if (diffResult.length > 0 && entity.committed) {
           changes.committed = false;
         }
 
