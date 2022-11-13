@@ -86,7 +86,7 @@
     "jsonwebtoken": "^8.5.1",
     "lerna": "^6.0.0",
     "morgan": "^1.10.0",
-    "msw": "^0.47.4",
+    "msw": "latest",
     "nanoid": "^3.3.4",
     "nodemon": "^2.0.16",
     "rimraf": "^3.0.2",
