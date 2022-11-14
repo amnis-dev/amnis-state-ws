@@ -1,5 +1,5 @@
-let API_AUTH_URL = 'http://localhost:4000/';
-let API_CRUD_URL = 'http://localhost:4001/';
+let API_AUTH_URL = '/api/auth/';
+let API_CRUD_URL = '/api/crud/';
 
 let API_TWITTER_OAUTH2_URL = 'https://api.twitter.com/2/';
 let API_MICROSOFT_OAUTH2_URL = 'https://login.microsoftonline.com/consumers/oauth2/v2.0/';
