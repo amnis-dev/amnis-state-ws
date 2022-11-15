@@ -1,18 +1,17 @@
 import fetch from 'cross-fetch';
-import type { Store } from '@reduxjs/toolkit';
 import {
   AuthPkce,
-  Database,
   dateNumeric,
   ioOutput,
   IoOutput,
-  JWTEncoded,
+  CryptoEncoded,
   selectActive,
   StateCreate,
   System,
   systemKey,
-  Token,
-  tokenCreate,
+  Bearer,
+  bearerCreate,
+  IoContext,
 } from '@amnis/core';
 
 import { processConfig } from '../config.js';
@@ -23,11 +22,11 @@ import { register } from './register.js';
  * OAuth2 Response.
  */
 interface OAuth2TokenData {
-  token_type: string;
+  bearer_type: string;
   expires_in: number,
-  access_token: JWTEncoded;
+  access_token: CryptoEncoded;
   scope: string;
-  refresh_token?: JWTEncoded;
+  refresh_token?: CryptoEncoded;
   error?: string,
   error_description?: string;
 }
@@ -41,18 +40,17 @@ export interface TwitterUser {
   username: string;
 }
 
-const tokenEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}oauth2/token`;
+const bearerEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}oauth2/bearer`;
 const userEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}users/me`;
 
 export async function oauthTwitter(
-  store: Store,
-  database: Database,
+  context: IoContext,
   auth: Omit<AuthPkce, 'platform'>,
 ): Promise<IoOutput<StateCreate>> {
   const output = ioOutput<StateCreate>();
   /**
    * STEP 1
-   * Get the access and refresh tokens.
+   * Get the access and refresh bearers.
    */
   const params = new URLSearchParams();
   params.append('grant_type', 'authorization_code');
@@ -61,7 +59,7 @@ export async function oauthTwitter(
   params.append('redirect_uri', auth.redirectUri);
   params.append('code_verifier', auth.codeVerifier);
 
-  const tokenResponse = await fetch(tokenEndpoint, {
+  const bearerResponse = await fetch(bearerEndpoint, {
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -69,14 +67,14 @@ export async function oauthTwitter(
     body: params.toString(),
   });
 
-  const tokenData = await tokenResponse.json() as OAuth2TokenData;
+  const bearerData = await bearerResponse.json() as OAuth2TokenData;
 
-  if (tokenData.error || typeof tokenData?.access_token !== 'string') {
+  if (bearerData.error || typeof bearerData?.access_token !== 'string') {
     output.status = 401; // Unauthorized
     output.json.logs.push({
       level: 'error',
       title: 'Invaid Request',
-      description: tokenData?.error_description || 'Could not verify OAuth 2.0 authentication.',
+      description: bearerData?.error_description || 'Could not verify OAuth 2.0 authentication.',
     });
     return output;
   }
@@ -88,7 +86,7 @@ export async function oauthTwitter(
   const userResponse = await fetch(userEndpoint, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${tokenData.access_token}`,
+      Authorization: `Bearer ${bearerData.access_token}`,
     },
   });
 
@@ -100,7 +98,7 @@ export async function oauthTwitter(
     output.json.logs.push({
       level: 'error',
       title: 'Invaid Request',
-      description: tokenData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
+      description: bearerData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
     });
     return output;
   }
@@ -110,50 +108,49 @@ export async function oauthTwitter(
    * Find the user or register a new one.
    */
   const username = `TR#${userData.id}`;
-  const userSearch = await userFindByName(database, username);
+  const userSearch = await userFindByName(context.database, username);
 
   /**
    * If the user already exists, return the login success.
    */
   if (userSearch) {
-    const successOutput = await loginSuccessProcess(database, userSearch);
+    const successOutput = await loginSuccessProcess(context, userSearch);
     return successOutput;
   }
 
   /**
    * If a user didn't exist, register a new account.
    */
-  const tokens: Token[] = [];
+  const bearers: Bearer[] = [];
 
-  const tokenAccess = tokenCreate({
-    api: 'twitter',
-    type: 'access',
-    exp: dateNumeric(`${tokenData.expires_in}s`),
-    jwt: tokenData.access_token as JWTEncoded,
+  const bearerAccess = bearerCreate({
+    id: 'twitter',
+    exp: dateNumeric(`${bearerData.expires_in}s`),
+    access: bearerData.access_token as CryptoEncoded,
   });
-  tokens.push(tokenAccess);
+  bearers.push(bearerAccess);
 
-  if (tokenData.refresh_token) {
-    const tokenRefresh = tokenCreate({
-      api: 'twitter',
-      type: 'refresh',
-      exp: dateNumeric('200d'),
-      jwt: tokenData.refresh_token as JWTEncoded,
-    });
-    tokens.push(tokenRefresh);
-  }
+  // if (bearerData.refresh_token) {
+  //   const bearerRefresh = bearerCreate({
+  //     api: 'twitter',
+  //     type: 'refresh',
+  //     exp: dateNumeric('200d'),
+  //     jwt: bearerData.refresh_token as CryptoEncoded,
+  //   });
+  //   bearers.push(bearerRefresh);
+  // }
 
   /**
    * Set system settings from the store.
    */
-  const system = selectActive<System>(store.getState(), systemKey);
+  const system = selectActive<System>(context.store.getState(), systemKey);
 
   const registrationOutput = await register(
-    database,
+    context,
     system,
     username,
     {
-      otherTokens: tokens,
+      otherTokens: bearers,
       nameDisplay: userData?.name || '',
       createSession: true,
     },

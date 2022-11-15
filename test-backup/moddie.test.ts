@@ -54,7 +54,7 @@ function expectDenied(action: any, key: string, errorTitle: string) {
 
 /**
  * Create the server store.
- * The server store contains a cache of roles and tokens needed by the server.
+ * The server store contains a cache of roles and bearers needed by the server.
  */
 const serverStore = storeSetup();
 

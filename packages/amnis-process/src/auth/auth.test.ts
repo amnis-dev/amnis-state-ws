@@ -4,8 +4,8 @@ import {
   Profile,
   profileCreate,
   Session,
-  Token,
-  tokenCreate,
+  Bearer,
+  bearerCreate,
   uid,
   User,
   userCreate,
@@ -14,7 +14,7 @@ import {
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
-import { generateRsa, jwtEncode, passCreate } from '../crypto/index.js';
+import { cryptoNode } from '@amnis/crypto';
 import { authProcess } from './index.js';
 import { validateSetup } from '../validate.js';
 
@@ -23,56 +23,35 @@ import { validateSetup } from '../validate.js';
  */
 const appStore = storeSetup();
 
+beforeAll(async () => {
 /**
  * Add a test user and profile to the database.
  */
-const users: User[] = [
-  userCreate({
-    name: 'ExampleUser',
-    email: 'user.example@amnis.dev',
-    password: passCreate('passwd1'),
-  }),
-];
+  const users: User[] = [
+    userCreate({
+      name: 'ExampleUser',
+      email: 'user.example@amnis.dev',
+      password: await cryptoNode.passHash('passwd1'),
+    }),
+  ];
 
-const profiles: Profile[] = [
-  profileCreate({
-    nameDisplay: 'Example User',
-    $user: users[0].$id,
-  }),
-];
+  const profiles: Profile[] = [
+    profileCreate({
+      nameDisplay: 'Example User',
+      $user: users[0].$id,
+    }),
+  ];
 
-const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
-
-/**
- * Create a JWT token in order to execute processes.
- */
-const jwtEncoded = jwtEncode({
-  iss: 'core',
-  sub: uid('user'),
-  exp: dateNumeric('30m'),
-  typ: 'access',
-  adm: true,
-  roles: [],
-});
-
-const rsaKeyPairAnother = generateRsa();
-
-const jwtEncodedInvalid = jwtEncode({
-  iss: 'core',
-  sub: uid('user'),
-  exp: dateNumeric('30m'),
-  typ: 'access',
-  adm: true,
-  roles: [],
-}, rsaKeyPairAnother.privateKey);
-
-/**
+  /**
  * Create test data in the memory database.
  */
-dbmemory.create({
-  user: users,
-  profile: profiles,
+  dbmemory.create({
+    user: users,
+    profile: profiles,
+  });
 });
+
+const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
 
 /**
  * Setup the processes
@@ -81,6 +60,7 @@ const processes = ioProcess({
   store: appStore,
   database: dbmemory,
   filesystem: fsmemory,
+  crypto: cryptoNode,
   validators: validateSetup(schemaAuth),
 }, authProcess);
 
@@ -95,7 +75,7 @@ test('auth should successfully login with valid credentials.', async () => {
     },
   });
 
-  // const token = output.json.result?.token[0] as Profile;
+  // const bearer = output.json.result?.bearer[0] as Profile;
 
   expect(output.json.result).toEqual({
     user: expect.any(Array),
@@ -103,12 +83,12 @@ test('auth should successfully login with valid credentials.', async () => {
     profile: expect.any(Array),
   });
 
-  expect(output.json.tokens?.length).toBeGreaterThan(0);
+  expect(output.json.bearers?.length).toBeGreaterThan(0);
 
   const user = output.json.result?.user[0] as User;
   const session = output.json.result?.session[0] as Session;
   const profile = output.json.result?.profile[0] as Profile;
-  const token = output.json.tokens?.[0] as Token;
+  const bearer = output.json.bearers?.[0] as Bearer;
 
   expect(user).toEqual(
     expect.objectContaining({
@@ -133,7 +113,7 @@ test('auth should successfully login with valid credentials.', async () => {
     }),
   );
 
-  expect(token).toEqual(
+  expect(bearer).toEqual(
     expect.objectContaining({
       api: 'core',
       type: 'access',
@@ -164,16 +144,24 @@ test('auth should fail login with invalid credentials.', async () => {
 /**
  * ============================================================
  */
-test('auth should verify valid token.', async () => {
-  const token = tokenCreate({
-    api: 'core',
-    type: 'access',
+test('auth should verify valid bearer.', async () => {
+  const accessEncoded = await cryptoNode.accessEncode({
+    iss: 'core',
+    sub: uid('user'),
     exp: dateNumeric('30m'),
-    jwt: jwtEncoded,
+    typ: 'access',
+    adm: true,
+    roles: [],
+  });
+
+  const bearer = bearerCreate({
+    id: 'core',
+    exp: dateNumeric('30m'),
+    access: accessEncoded,
   });
 
   const output = await processes.verify({
-    body: token,
+    body: bearer,
   });
 
   expect(output.json.result).toEqual(true);
@@ -183,16 +171,26 @@ test('auth should verify valid token.', async () => {
 /**
  * ============================================================
  */
-test('auth should not verify an invalid token.', async () => {
-  const token = tokenCreate({
-    api: 'core',
-    type: 'access',
+test('auth should not verify an invalid bearer.', async () => {
+  const rsaKeyPairAnother = await cryptoNode.encryptRsa();
+
+  const jwtEncodedInvalid = await cryptoNode.accessEncode({
+    iss: 'core',
+    sub: uid('user'),
     exp: dateNumeric('30m'),
-    jwt: jwtEncodedInvalid,
+    typ: 'access',
+    adm: true,
+    roles: [],
+  }, rsaKeyPairAnother.privateKey);
+
+  const bearer = bearerCreate({
+    id: 'core',
+    exp: dateNumeric('30m'),
+    access: jwtEncodedInvalid,
   });
 
   const output = await processes.verify({
-    body: token,
+    body: bearer,
   });
 
   expect(output.json.result).toEqual(false);

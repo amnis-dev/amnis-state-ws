@@ -31,6 +31,7 @@
   "dependencies": {
     "@amnis/api": "0.7.5",
     "@amnis/core": "0.7.5",
+    "@amnis/crypto": "0.7.5",
     "@amnis/db": "0.7.5",
     "@amnis/fs": "0.7.5"
   },

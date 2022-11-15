@@ -34,7 +34,7 @@ import stateSchema from '@amnis/state/state.schema.json';
 import { passCreate } from '@amnis/process';
 import { dbmemory } from '@amnis/db/memory/index.js';
 import { logSelectors } from '@amnis/state/log/index.js';
-import { tokenSelectors } from '@amnis/state/token/index.js';
+import { bearerSelectors } from '@amnis/state/bearer/index.js';
 import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
 
@@ -57,7 +57,7 @@ function expectDenied(action: any, key: string, errorTitle: string) {
 
 /**
  * Create the server store.
- * The server store contains a cache of roles and tokens needed by the server.
+ * The server store contains a cache of roles and bearers needed by the server.
  */
 const serverStore = storeSetup();
 
@@ -421,10 +421,10 @@ test('client state should have updated profile', () => {
   );
 });
 
-test('client state should have a core access token', () => {
-  const token = tokenSelectors.selectById(clientStore.getState(), 'core:access');
+test('client state should have a core access bearer', () => {
+  const bearer = bearerSelectors.selectById(clientStore.getState(), 'core:access');
 
-  expect(token).toEqual(
+  expect(bearer).toEqual(
     expect.objectContaining({
       api: 'core',
       type: 'access',

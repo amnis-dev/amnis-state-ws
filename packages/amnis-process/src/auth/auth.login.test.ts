@@ -13,6 +13,7 @@ import {
   userKey,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
+import { cryptoNode } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from './auth.login.js';
 
@@ -22,6 +23,7 @@ const io = ioProcess(
     validators: validateSetup([schemaAuth]),
     database: dbmemory,
     filesystem: fsmemory,
+    crypto: cryptoNode,
   },
   {
     login: authProcessLogin,
@@ -44,7 +46,7 @@ test('should login as administrator', async () => {
 
   expect(output.status).toBe(200);
   expect(output.cookies?.authSession).toBeDefined();
-  expect(output.json.tokens).toHaveLength(1);
+  expect(output.json.bearers).toHaveLength(1);
   expect(output.json.result?.[userKey]).toHaveLength(1);
   expect(output.json.result?.[profileKey]).toHaveLength(1);
   expect(output.json.result?.[sessionKey]).toHaveLength(1);
@@ -83,7 +85,7 @@ test('should login as executive', async () => {
 
   expect(output.status).toBe(200);
   expect(output.cookies?.authSession).toBeDefined();
-  expect(output.json.tokens).toHaveLength(1);
+  expect(output.json.bearers).toHaveLength(1);
   expect(output.json.result?.[userKey]).toHaveLength(1);
   expect(output.json.result?.[profileKey]).toHaveLength(1);
   expect(output.json.result?.[sessionKey]).toHaveLength(1);
@@ -122,7 +124,7 @@ test('should login as user', async () => {
 
   expect(output.status).toBe(200);
   expect(output.cookies?.authSession).toBeDefined();
-  expect(output.json.tokens).toHaveLength(1);
+  expect(output.json.bearers).toHaveLength(1);
   expect(output.json.result?.[userKey]).toHaveLength(1);
   expect(output.json.result?.[profileKey]).toHaveLength(1);
   expect(output.json.result?.[sessionKey]).toHaveLength(1);

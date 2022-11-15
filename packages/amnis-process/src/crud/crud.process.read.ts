@@ -15,7 +15,7 @@ import {
   Task,
   UID,
 } from '@amnis/core';
-import { mwJwt, mwValidate } from '../mw/index.js';
+import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 /**
@@ -83,15 +83,15 @@ Io<StateQuery, StateCreate>
 > = (context) => (
   async (input) => {
     const { store, database } = context;
-    const { body, jwt } = input;
+    const { body, access } = input;
     const output = ioOutput<StateCreate>();
 
-    if (!jwt) {
+    if (!access) {
       output.status = 401; // 401 Unauthorized
       output.json.logs.push({
         level: 'error',
         title: 'Unauthorized',
-        description: 'Access token is invalid.',
+        description: 'Access bearer is invalid.',
       });
       return output;
     }
@@ -99,7 +99,7 @@ Io<StateQuery, StateCreate>
     /**
      * Get array of grants from roles in the service store.
      */
-    const grants = selectRoleGrants(store.getState(), jwt.roles);
+    const grants = selectRoleGrants(store.getState(), access.roles);
 
     /**
      * Filter non-granted slices on the body (which is a State type).
@@ -109,18 +109,18 @@ Io<StateQuery, StateCreate>
     /**
      * finalized state to process
      */
-    const stateFinal: StateQuery = jwt.adm === true ? body : stateAuthwalled;
+    const stateFinal: StateQuery = access.adm === true ? body : stateAuthwalled;
 
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt.adm === true ? undefined : stateScopeCreate(grants, Task.Read);
+    const authScope = access.adm === true ? undefined : stateScopeCreate(grants, Task.Read);
 
     /**
      * Build the result based on the query depth.
      */
     const resultPromises = Object.values(stateFinal).map((slice) => (
-      readRecursive(database, grants, stateFinal, authScope, jwt.sub, slice.$depth || 0)
+      readRecursive(database, grants, stateFinal, authScope, access.sub, slice.$depth || 0)
     ));
     const results = await Promise.all(resultPromises);
     const result = results.reduce<StateCreate>((prev, next) => {
@@ -135,7 +135,7 @@ Io<StateQuery, StateCreate>
       return prev;
     }, {});
 
-    // const result = await database.read(stateFinal, authScope, jwt.sub);
+    // const result = await database.read(stateFinal, authScope, access.sub);
 
     /**
      * Add errors for denied keys.
@@ -161,7 +161,7 @@ Io<StateQuery, StateCreate>
   }
 );
 
-export const crudProcessRead = mwJwt()(
+export const crudProcessRead = mwAccess()(
   mwValidate('StateQuery')(
     process,
   ),

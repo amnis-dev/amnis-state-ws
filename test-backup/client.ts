@@ -28,7 +28,7 @@ const apiInput = (): RequestHandler => (
 
 /**
  * Create the server store.
- * The server store contains a cache of roles and tokens needed by the API server.
+ * The server store contains a cache of roles and bearers needed by the API server.
  */
 const serverStore = storeSetup();
 

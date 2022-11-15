@@ -45,6 +45,19 @@ rollup.push({
 });
 
 /**
+ * ECMAScript Module (Browser)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/index.browser.ts',
+  output: {
+    file: 'dist/index.browser.mjs',
+    format: 'esm',
+  },
+});
+
+/**
  * CommonJS
  * @type {import('rollup').RollupOptions}
  */
@@ -53,6 +66,19 @@ rollup.push({
   input: 'src/index.ts',
   output: {
     file: 'dist/index.js',
+    format: 'cjs',
+  },
+});
+
+/**
+ * CommonJS (Browser)
+ * @type {import('rollup').RollupOptions}
+ */
+rollup.push({
+  ...base,
+  input: 'src/index.browser.ts',
+  output: {
+    file: 'dist/index.browser.js',
     format: 'cjs',
   },
 });

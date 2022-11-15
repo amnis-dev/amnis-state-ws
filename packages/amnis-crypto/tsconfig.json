@@ -11,5 +11,8 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.json"
+  ],
+  "references": [
+    { "path": "../amnis-core/tsconfig.json" }
   ]
 }

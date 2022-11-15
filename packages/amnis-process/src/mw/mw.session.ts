@@ -1,8 +1,7 @@
 import { ioOutput, IoMiddleware } from '@amnis/core';
-import { sessionVerify } from '../crypto/index.js';
 
 /**
- * Ensures a JWT token is set.
+ * Ensures a JWT bearer is set.
  */
 export const mwSession: IoMiddleware = () => (next) => (context) => async (input) => {
   const { sessionEncoded } = input;
@@ -18,7 +17,7 @@ export const mwSession: IoMiddleware = () => (next) => (context) => async (input
     return output;
   }
 
-  input.session = sessionVerify(sessionEncoded);
+  input.session = await context.crypto.sessionVerify(sessionEncoded);
 
   if (!input.session) {
     const output = ioOutput();

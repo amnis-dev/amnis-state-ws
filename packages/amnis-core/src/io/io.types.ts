@@ -3,12 +3,14 @@ import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { Store } from '@reduxjs/toolkit';
 
 import type { DateJSON } from '../types.js';
-import type { JWTDecoded, JWTEncoded, Token } from '../token/index.js';
+import type { Bearer } from '../bearer/index.js';
 import type { LogBaseCreate } from '../log/index.js';
 
 import type { Database } from '../db.types.js';
 import type { FileSystem } from '../fs.types.js';
 import type { Session } from '../session/index.js';
+import { Crypto, CryptoEncoded } from '../crypto.types.js';
+import { JWTAccess } from '../jwt.types.js';
 
 /**
  * Validator
@@ -27,16 +29,36 @@ export type Validators = Record<string, Validator>;
  * API Context for accessing the server store, database, and storage system.
  */
 export interface IoContext {
+  /**
+   * Predicable application state.
+   */
   store: Store;
+
+  /**
+   * Interface for storing structured data.
+   */
   database: Database;
+
+  /**
+   * Interface for managing unstructured file data.
+   */
   filesystem: FileSystem;
+
+  /**
+   * Interface for cryptographic functions.
+   */
+  crypto: Crypto;
+
+  /**
+   * Schemas for validating input structures.
+   */
   validators: Validators;
 }
 
 /**
  * Input interface.
  */
-export interface IoInput<T = any> {
+export interface IoInput<T = any, J = JWTAccess> {
   /**
    * The input body.
    */
@@ -45,17 +67,17 @@ export interface IoInput<T = any> {
   /**
    * Encoded JWT data.
    */
-  jwtEncoded?: JWTEncoded;
+  accessEncoded?: CryptoEncoded;
 
   /**
-   * Verified decoded token data.
+   * Verified decoded token.
    */
-  jwt?: JWTDecoded;
+  access?: J;
 
   /**
    * Encoded Session
    */
-  sessionEncoded?: JWTEncoded;
+  sessionEncoded?: CryptoEncoded;
 
   /**
    * Verified decoded session data.
@@ -83,9 +105,9 @@ export interface IoOutputJson<T = any> {
   expire?: DateJSON;
 
   /**
-   * Possible tokens.
+   * Possible bearers.
    */
-  tokens?: Token[];
+  bearers?: Bearer[];
 }
 
 /**
@@ -125,8 +147,8 @@ export interface IoQueries {
 /**
  * Primary input and output type for processing
  */
-export type Io<Body = any, Result = any> = (
-  input: IoInput<Body>,
+export type Io<Body = any, Result = any, Token = JWTAccess> = (
+  input: IoInput<Body, Token>,
 ) => Promise<IoOutput<Result>>;
 
 /**

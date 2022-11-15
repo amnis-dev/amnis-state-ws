@@ -1,18 +1,17 @@
 import {
   contactCreate,
-  Database,
   IoOutput,
   ioOutput,
   LogBaseCreate,
   profileCreate,
   StateCreate,
   System,
-  Token,
+  Bearer,
   userCheck,
   userCreate,
+  IoContext,
 } from '@amnis/core';
-import { sessionEncode } from '../crypto/index.js';
-import { sessionGenerate, tokenGenerate } from './common.js';
+import { sessionGenerate, bearerGenerate } from './common.js';
 
 /**
  * Options when processsing a registration.
@@ -23,14 +22,14 @@ interface RegisterOptions {
   password?: string;
   createSession?: boolean;
   withTokens?: boolean;
-  otherTokens?: Token[];
+  otherTokens?: Bearer[];
 }
 
 /**
  * Create an API Outputs registering an account.
  */
 export async function register(
-  database: Database,
+  context: IoContext,
   system: System | undefined,
   username: string,
   options: RegisterOptions,
@@ -53,7 +52,7 @@ export async function register(
 
   const user = userCreate({
     name: username,
-    password: password || null,
+    password: password ? await context.crypto.passHash(password) : null,
     email: options.email,
     $roles: [...system.$initialRoles],
   });
@@ -93,7 +92,7 @@ export async function register(
   /**
    * StateCreate newly created user and profile into the database.
    */
-  const resultDbCreate = await database.create(insertion, {
+  const resultDbCreate = await context.database.create(insertion, {
     scope: { user: 'global', profile: 'global' },
   });
   output.json.result = resultDbCreate;
@@ -105,17 +104,17 @@ export async function register(
     const session = sessionGenerate(user, profile);
     session.$owner = user.$id;
     output.json.result.session = [session];
-    output.cookies.authSession = sessionEncode(session);
+    output.cookies.authSession = await context.crypto.sessionEncode(session);
   }
 
   /**
-   * Return tokens
+   * Return bearers
    */
   if (withTokens === true) {
-    output.json.tokens = [tokenGenerate(user)];
+    output.json.bearers = [await bearerGenerate(user, context)];
 
     if (otherTokens?.length) {
-      output.json.tokens.push(...otherTokens);
+      output.json.bearers.push(...otherTokens);
     }
   }
 

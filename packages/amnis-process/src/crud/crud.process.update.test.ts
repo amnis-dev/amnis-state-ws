@@ -8,7 +8,7 @@ import {
   schemaAuth,
   schemaState,
   schemaEntity,
-  Token,
+  Bearer,
   userKey,
   ioOutputErrored,
   coreActions,
@@ -18,6 +18,7 @@ import {
   Profile,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
+import { cryptoNode } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from '../auth/auth.login.js';
 import { crudProcessUpdate } from './crud.process.update.js';
@@ -31,6 +32,7 @@ const io = ioProcess(
     validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
     database: dbmemory,
     filesystem: fsmemory,
+    crypto: cryptoNode,
   },
   {
     login: authProcessLogin,
@@ -43,7 +45,7 @@ beforeAll(async () => {
   await dbmemory.create(data);
 });
 
-test('should not update without token', async () => {
+test('should not update without bearer', async () => {
   const inputUpdate: IoInput<StateUpdate> = {
     body: {
       [userKey]: [
@@ -69,10 +71,10 @@ test('should login as administrator and update user password', async () => {
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const inputUpdate: IoInput<StateUpdate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
         {
@@ -113,11 +115,11 @@ test('should login as administrator and update profile display name', async () =
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const nameNew = 'The New Administrator';
   const inputUpdate: IoInput<StateUpdate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [profileKey]: [
         {
@@ -159,11 +161,11 @@ test('should login as executive and update user name', async () => {
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const nameNew = 'userupdated';
   const inputUpdate: IoInput<StateUpdate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
         {
@@ -204,13 +206,13 @@ test('should login as user with updated credentials and update own profile displ
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const profile = outputLogin.json.result?.[profileKey][0] as Profile;
 
   const nameNew = 'The New User Me';
   const inputUpdate: IoInput<StateUpdate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [profileKey]: [
         {
@@ -252,11 +254,11 @@ test('should login as user and be denied updating another profile', async () => 
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const nameNew = 'New Profile Name';
   const inputUpdate: IoInput<StateUpdate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [profileKey]: [
         {

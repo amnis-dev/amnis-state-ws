@@ -1,4 +1,4 @@
-import type { Token } from '@amnis/core';
+import type { Bearer } from '@amnis/core';
 
 /**
  * Payload for a login request.
@@ -78,7 +78,7 @@ export interface AuthPkce {
 }
 
 /**
- * Payload for a session and token renewal.
+ * Payload for a session and bearer renewal.
  * Should not have any data in the body.
  */
 export interface AuthRenew {
@@ -89,6 +89,6 @@ export interface AuthRenew {
 }
 
 /**
- * Verifies the validity of a stringified token.
+ * Verifies the validity of a stringified bearer.
  */
-export type AuthVerify = Token;
+export type AuthVerify = Bearer;

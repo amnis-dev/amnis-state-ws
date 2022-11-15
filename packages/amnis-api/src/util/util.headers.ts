@@ -1,11 +1,15 @@
-import { selectToken, State } from '@amnis/core';
+import { selectBearer, State } from '@amnis/core';
 import type { ApiPrepareHeaders } from '../types.js';
 
-export const headersAuthorizationToken: ApiPrepareHeaders = (headers, { getState, endpoint }) => {
-  const token = selectToken(getState() as State, 'core', 'access');
+type headersAuthorizationToken = (bearerId: string) => ApiPrepareHeaders;
 
-  if (token && endpoint !== 'refresh') {
-    headers.set('Authorization', `Bearer ${token.jwt}`);
+export const headersAuthorizationToken: headersAuthorizationToken = (
+  bearerId,
+) => (headers, { getState }) => {
+  const bearer = selectBearer(getState() as State, bearerId);
+
+  if (bearer) {
+    headers.set('Authorization', `Bearer ${bearer.access}`);
   }
   return headers;
 };

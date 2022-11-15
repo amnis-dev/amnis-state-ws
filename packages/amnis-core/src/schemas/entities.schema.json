@@ -17,10 +17,10 @@
             "$ref": "#/definitions/EntityCreate%3CContact%3E"
           }
         },
-        "crypto": {
+        "encryption": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CCrypto%3E"
+            "$ref": "#/definitions/EntityCreate%3CEncryption%3E"
           }
         },
         "history": {
@@ -106,7 +106,11 @@
     },
     "EntityCreate<Audit>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CAudit%3E"
+        },
         "action": {
           "type": "string",
           "description": "Action attempted"
@@ -132,6 +136,7 @@
         }
       },
       "required": [
+        "$id",
         "action",
         "completed"
       ],
@@ -179,9 +184,17 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
+    "UID<Audit>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Contact>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CContact%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name (or title) of the contact",
@@ -216,6 +229,7 @@
         }
       },
       "required": [
+        "$id",
         "emails",
         "name",
         "phones",
@@ -276,46 +290,52 @@
       "type": "string",
       "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
     },
-    "EntityCreate<Crypto>": {
+    "UID<Contact>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
+    "EntityCreate<Encryption>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CEncryption%3E"
+        },
         "name": {
           "type": "string",
           "description": "Human friendly name of the cyptographic key"
         },
         "tag": {
           "type": "string",
-          "description": "A unique tag name that identifies this public key."
+          "description": "A unique tag name that identifies this encryption."
         },
         "type": {
           "type": "string",
-          "const": "rsa",
-          "description": "Type of cyptographic key."
-        },
-        "pair": {
-          "type": "string",
-          "const": "public",
-          "description": "Always the public side of the key pair."
+          "enum": [
+            "rsa",
+            "aes"
+          ],
+          "description": "Type of encryption used."
         },
         "value": {
           "type": "string",
-          "description": "Value of the cyptographic key"
+          "description": "Value of the encryption"
         }
       },
       "required": [
+        "$id",
         "name",
-        "pair",
         "tag",
         "type",
         "value"
       ],
       "description": "Type for an entity create object."
     },
-    "EntityExtension<Crypto>": {
-      "$ref": "#/definitions/EntityOmit%3CCrypto%3E",
+    "EntityExtension<Encryption>": {
+      "$ref": "#/definitions/EntityOmit%3CEncryption%3E",
       "description": "Type for creation method"
     },
-    "EntityOmit<Crypto>": {
+    "EntityOmit<Encryption>": {
       "type": "object",
       "properties": {
         "name": {
@@ -324,36 +344,41 @@
         },
         "tag": {
           "type": "string",
-          "description": "A unique tag name that identifies this public key."
+          "description": "A unique tag name that identifies this encryption."
         },
         "type": {
           "type": "string",
-          "const": "rsa",
-          "description": "Type of cyptographic key."
-        },
-        "pair": {
-          "type": "string",
-          "const": "public",
-          "description": "Always the public side of the key pair."
+          "enum": [
+            "rsa",
+            "aes"
+          ],
+          "description": "Type of encryption used."
         },
         "value": {
           "type": "string",
-          "description": "Value of the cyptographic key"
+          "description": "Value of the encryption"
         }
       },
       "required": [
         "name",
         "tag",
         "type",
-        "pair",
         "value"
       ],
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
+    "UID<Encryption>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<History>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CHistory%3E"
+        },
         "$subject": {
           "$ref": "#/definitions/UID",
           "description": "The subject that was updated."
@@ -364,6 +389,7 @@
         }
       },
       "required": [
+        "$id",
         "$subject",
         "update"
       ],
@@ -407,9 +433,17 @@
       ],
       "description": "A common stateful result from updates. A state object with parial entities to update."
     },
+    "UID<History>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Image>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CImage%3E"
+        },
         "extension": {
           "type": "string",
           "enum": [
@@ -481,6 +515,7 @@
         }
       },
       "required": [
+        "$id",
         "aspect",
         "extension",
         "height",
@@ -586,9 +621,17 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
+    "UID<Image>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Locale>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CLocale%3E"
+        },
         "code": {
           "type": "string",
           "description": "Two-character language code.",
@@ -614,6 +657,7 @@
         }
       },
       "required": [
+        "$id",
         "code",
         "set",
         "t",
@@ -666,9 +710,17 @@
       "additionalProperties": false,
       "description": "Record of locale translations."
     },
+    "UID<Locale>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Log>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CLog%3E"
+        },
         "level": {
           "$ref": "#/definitions/LogLevel",
           "description": "Level of the log."
@@ -691,6 +743,7 @@
         }
       },
       "required": [
+        "$id",
         "description",
         "level",
         "system",
@@ -751,9 +804,17 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
+    "UID<Log>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Note>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CNote%3E"
+        },
         "$subject": {
           "$ref": "#/definitions/UID",
           "description": "Subject this note is attached to."
@@ -764,6 +825,7 @@
         }
       },
       "required": [
+        "$id",
         "$subject",
         "text"
       ],
@@ -792,9 +854,17 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
+    "UID<Note>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Profile>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CProfile%3E"
+        },
         "$user": {
           "$ref": "#/definitions/UID%3CUser%3E",
           "description": "User this profile is associated with."
@@ -833,6 +903,7 @@
         }
       },
       "required": [
+        "$id",
         "$user",
         "nameDisplay"
       ],
@@ -893,13 +964,13 @@
       "type": "string",
       "description": "A string that represents a JSON Date."
     },
-    "UID<Contact>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
     "EntityCreate<Role>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CRole%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name of the license."
@@ -921,6 +992,7 @@
         }
       },
       "required": [
+        "$id",
         "color",
         "description",
         "grants",
@@ -968,9 +1040,17 @@
       "type": "string",
       "description": "Role grant string."
     },
+    "UID<Role>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Service>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CService%3E"
+        },
         "name": {
           "description": "Name of the service."
         },
@@ -993,6 +1073,7 @@
         }
       },
       "required": [
+        "$id",
         "dateChecked",
         "name",
         "status"
@@ -1035,9 +1116,17 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
+    "UID<Service>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<System>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CSystem%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name of the system."
@@ -1074,6 +1163,7 @@
         "$adminRole",
         "$anonymousRoles",
         "$execRole",
+        "$id",
         "$initialRoles",
         "$website",
         "name",
@@ -1136,10 +1226,6 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "UID<Role>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
     "UIDList<Role>": {
       "type": "array",
       "items": {
@@ -1147,9 +1233,17 @@
       },
       "description": "An array of identifiers."
     },
+    "UID<System>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<User>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CUser%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name for the user.",
@@ -1176,9 +1270,13 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CryptoPassword"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
@@ -1209,6 +1307,7 @@
         }
       },
       "required": [
+        "$id",
         "$permits",
         "$roles",
         "devices",
@@ -1250,9 +1349,13 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CryptoPassword"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
@@ -1292,6 +1395,9 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
+    "CryptoPassword": {
+      "type": "string"
+    },
     "DeviceString": {
       "type": "string",
       "description": "A string that represents a device."
@@ -1309,7 +1415,11 @@
     },
     "EntityCreate<Session>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CSession%3E"
+        },
         "$subject": {
           "$ref": "#/definitions/UID",
           "description": "Subject of the session. Typically a user id."
@@ -1343,6 +1453,7 @@
         }
       },
       "required": [
+        "$id",
         "$subject",
         "admin",
         "avatar",
@@ -1404,9 +1515,17 @@
       "type": "number",
       "description": "A string that represents a JSON Date."
     },
+    "UID<Session>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Video>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CVideo%3E"
+        },
         "extension": {
           "type": "string",
           "enum": [
@@ -1481,6 +1600,7 @@
         }
       },
       "required": [
+        "$id",
         "aspect",
         "duration",
         "extension",
@@ -1587,9 +1707,17 @@
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
     },
+    "UID<Video>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "EntityCreate<Website>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CWebsite%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name of the website."
@@ -1635,6 +1763,7 @@
       },
       "required": [
         "$contacts",
+        "$id",
         "$navigation",
         "name",
         "socials",
@@ -1730,10 +1859,6 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "UID<Image>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
     "StateUpdate": {
       "type": "object",
       "properties": {
@@ -1749,10 +1874,10 @@
             "$ref": "#/definitions/EntityUpdate%3CContact%3E"
           }
         },
-        "crypto": {
+        "encryption": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CCrypto%3E"
+            "$ref": "#/definitions/EntityUpdate%3CEncryption%3E"
           }
         },
         "history": {
@@ -1838,7 +1963,11 @@
     },
     "EntityUpdate<Audit>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CAudit%3E"
+        },
         "action": {
           "type": "string",
           "description": "Action attempted"
@@ -1863,6 +1992,9 @@
           "description": "Location of the subject."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Audit>": {
@@ -1897,7 +2029,11 @@
     },
     "EntityUpdate<Contact>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CContact%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name (or title) of the contact",
@@ -1931,6 +2067,9 @@
           "description": "Contact's social urls."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Contact>": {
@@ -1972,35 +2111,40 @@
       "additionalProperties": false,
       "description": "Type for an partial method."
     },
-    "EntityUpdate<Crypto>": {
+    "EntityUpdate<Encryption>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CEncryption%3E"
+        },
         "name": {
           "type": "string",
           "description": "Human friendly name of the cyptographic key"
         },
         "tag": {
           "type": "string",
-          "description": "A unique tag name that identifies this public key."
+          "description": "A unique tag name that identifies this encryption."
         },
         "type": {
           "type": "string",
-          "const": "rsa",
-          "description": "Type of cyptographic key."
-        },
-        "pair": {
-          "type": "string",
-          "const": "public",
-          "description": "Always the public side of the key pair."
+          "enum": [
+            "rsa",
+            "aes"
+          ],
+          "description": "Type of encryption used."
         },
         "value": {
           "type": "string",
-          "description": "Value of the cyptographic key"
+          "description": "Value of the encryption"
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
-    "EntityPartial<Crypto>": {
+    "EntityPartial<Encryption>": {
       "type": "object",
       "properties": {
         "name": {
@@ -2009,21 +2153,19 @@
         },
         "tag": {
           "type": "string",
-          "description": "A unique tag name that identifies this public key."
+          "description": "A unique tag name that identifies this encryption."
         },
         "type": {
           "type": "string",
-          "const": "rsa",
-          "description": "Type of cyptographic key."
-        },
-        "pair": {
-          "type": "string",
-          "const": "public",
-          "description": "Always the public side of the key pair."
+          "enum": [
+            "rsa",
+            "aes"
+          ],
+          "description": "Type of encryption used."
         },
         "value": {
           "type": "string",
-          "description": "Value of the cyptographic key"
+          "description": "Value of the encryption"
         }
       },
       "additionalProperties": false,
@@ -2031,7 +2173,11 @@
     },
     "EntityUpdate<History>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CHistory%3E"
+        },
         "$subject": {
           "$ref": "#/definitions/UID",
           "description": "The subject that was updated."
@@ -2041,6 +2187,9 @@
           "description": "The state update record that was performed."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<History>": {
@@ -2060,7 +2209,11 @@
     },
     "EntityUpdate<Image>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CImage%3E"
+        },
         "extension": {
           "type": "string",
           "enum": [
@@ -2131,6 +2284,9 @@
           "description": "Profile identifier to the author."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Image>": {
@@ -2211,7 +2367,11 @@
     },
     "EntityUpdate<Locale>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CLocale%3E"
+        },
         "code": {
           "type": "string",
           "description": "Two-character language code.",
@@ -2236,6 +2396,9 @@
           "description": "Variables that can be inserted into translation text."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Locale>": {
@@ -2270,7 +2433,11 @@
     },
     "EntityUpdate<Log>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CLog%3E"
+        },
         "level": {
           "$ref": "#/definitions/LogLevel",
           "description": "Level of the log."
@@ -2292,6 +2459,9 @@
           "description": "UID to a user that invoked the log."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Log>": {
@@ -2323,7 +2493,11 @@
     },
     "EntityUpdate<Note>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CNote%3E"
+        },
         "$subject": {
           "$ref": "#/definitions/UID",
           "description": "Subject this note is attached to."
@@ -2333,6 +2507,9 @@
           "description": "Textual content of the note."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Note>": {
@@ -2352,7 +2529,11 @@
     },
     "EntityUpdate<Profile>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CProfile%3E"
+        },
         "$user": {
           "$ref": "#/definitions/UID%3CUser%3E",
           "description": "User this profile is associated with."
@@ -2390,6 +2571,9 @@
           "description": "Avatar string url to an image."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Profile>": {
@@ -2437,7 +2621,11 @@
     },
     "EntityUpdate<Role>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CRole%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name of the license."
@@ -2458,6 +2646,9 @@
           "description": "Permissions this license grants."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Role>": {
@@ -2488,7 +2679,11 @@
     },
     "EntityUpdate<Service>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CService%3E"
+        },
         "name": {
           "description": "Name of the service."
         },
@@ -2510,6 +2705,9 @@
           "description": "Last checked datetime"
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Service>": {
@@ -2541,7 +2739,11 @@
     },
     "EntityUpdate<System>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CSystem%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name of the system."
@@ -2574,6 +2776,9 @@
           "default": []
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<System>": {
@@ -2616,7 +2821,11 @@
     },
     "EntityUpdate<User>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CUser%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name for the user.",
@@ -2643,9 +2852,13 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CryptoPassword"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
@@ -2675,6 +2888,9 @@
           "default": []
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<User>": {
@@ -2706,9 +2922,13 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CryptoPassword"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
@@ -2743,7 +2963,11 @@
     },
     "EntityUpdate<Session>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CSession%3E"
+        },
         "$subject": {
           "$ref": "#/definitions/UID",
           "description": "Subject of the session. Typically a user id."
@@ -2776,6 +3000,9 @@
           "description": "Avatar image url."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Session>": {
@@ -2818,7 +3045,11 @@
     },
     "EntityUpdate<Video>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CVideo%3E"
+        },
         "extension": {
           "type": "string",
           "enum": [
@@ -2892,6 +3123,9 @@
           "description": "Profile identifier to the author."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Video>": {
@@ -2975,7 +3209,11 @@
     },
     "EntityUpdate<Website>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CWebsite%3E"
+        },
         "name": {
           "type": "string",
           "description": "Name of the website."
@@ -3019,6 +3257,9 @@
           "description": "List of the social network links."
         }
       },
+      "required": [
+        "$id"
+      ],
       "description": "Type for an entity update object."
     },
     "EntityPartial<Website>": {

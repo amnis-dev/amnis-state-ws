@@ -3,14 +3,14 @@ import {
 } from '@amnis/core/test/book.store.js';
 import {
   schemaState,
-  dateNumeric, historyKey, IoInput, ioProcess, JWTEncoded, StateCreate, uid,
+  dateNumeric, historyKey, IoInput, ioProcess, CryptoEncoded, StateCreate, uid,
 } from '@amnis/core';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { dbmemory, memoryClear } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
+import { cryptoNode } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { crudProcess } from './index.js';
-import { jwtEncode } from '../crypto/index.js';
 
 const appStore = storeSetup();
 
@@ -23,14 +23,16 @@ const io = ioProcess({
   store: appStore,
   database: dbmemory,
   filesystem: fsmemory,
+  crypto: cryptoNode,
   validators,
 }, crudProcess);
 
 const expires = dateNumeric(new Date(Date.now() + 60000));
+
 /**
- * Create a JWT token in order to execute io.
+ * Create a JWT bearer in order to execute io.
  */
-const jwtEncoded: JWTEncoded = jwtEncode({
+const accessEncoded: CryptoEncoded = await cryptoNode.accessEncode({
   iss: 'core',
   sub: uid('user', 'system'),
   exp: expires,
@@ -53,7 +55,7 @@ test('Handler should create new entities.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwtEncoded,
+    accessEncoded,
   };
 
   const output = await io.create(input);
@@ -68,7 +70,7 @@ test('Handler should create new entities.', async () => {
 /**
  * ============================================================
  */
-test('Handler should fail when a jwt token is not provided.', async () => {
+test('Handler should fail when a jwt bearer is not provided.', async () => {
   const input: IoInput = {
     body: {
       [bookKey]: books,
@@ -95,7 +97,7 @@ test('Handler should create entities that do not validate against the schema.', 
         },
       ],
     },
-    jwtEncoded,
+    accessEncoded,
   };
 
   const output = await io.create(input);
@@ -113,7 +115,7 @@ test('Handler should read entities.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwtEncoded,
+    accessEncoded,
   });
 
   const output = await io.read({
@@ -126,7 +128,7 @@ test('Handler should read entities.', async () => {
         },
       },
     },
-    jwtEncoded,
+    accessEncoded,
   });
 
   expect(
@@ -146,7 +148,7 @@ test('Handler should NOT read entities that do not exist.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwtEncoded,
+    accessEncoded,
   });
 
   const output = await io.read({
@@ -159,7 +161,7 @@ test('Handler should NOT read entities that do not exist.', async () => {
         },
       },
     },
-    jwtEncoded,
+    accessEncoded,
   });
 
   expect(
@@ -178,7 +180,7 @@ test('Handler should be able to update existing entities.', async () => {
     body: {
       [bookKey]: books,
     },
-    jwtEncoded,
+    accessEncoded,
   });
 
   const updateObject = {
@@ -190,7 +192,7 @@ test('Handler should be able to update existing entities.', async () => {
     body: {
       [bookKey]: [updateObject],
     },
-    jwtEncoded,
+    accessEncoded,
   });
 
   expect(

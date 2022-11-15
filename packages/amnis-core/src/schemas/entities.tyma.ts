@@ -2,7 +2,7 @@ import type { EntityCreate, EntityUpdate } from '../entity/index.js';
 
 import type { Audit } from '../audit/index.js';
 import type { Contact } from '../contact/index.js';
-import type { Crypto } from '../crypto/index.js';
+import type { Encryption } from '../encryption/index.js';
 import type { History } from '../history/index.js';
 import type { Image } from '../image/index.js';
 import type { Locale } from '../locale/index.js';
@@ -20,7 +20,7 @@ import type { Website } from '../website/index.js';
 export interface StateCreate {
   audit?: EntityCreate<Audit>[];
   contact?: EntityCreate<Contact>[];
-  crypto?: EntityCreate<Crypto>[];
+  encryption?: EntityCreate<Encryption>[];
   history?: EntityCreate<History>[];
   image?: EntityCreate<Image>[];
   locale?: EntityCreate<Locale>[];
@@ -39,7 +39,7 @@ export interface StateCreate {
 export interface StateUpdate {
   audit?: EntityUpdate<Audit>[];
   contact?: EntityUpdate<Contact>[];
-  crypto?: EntityUpdate<Crypto>[];
+  encryption?: EntityUpdate<Encryption>[];
   history?: EntityUpdate<History>[];
   image?: EntityUpdate<Image>[];
   locale?: EntityUpdate<Locale>[];

@@ -2,10 +2,12 @@ import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
 import {
-  ioProcess, IoInput, userCreate, profileCreate, sessionCreate, dateNumeric,
+  ioProcess, IoInput, userCreate, profileCreate,
   schemaAuth,
+  CryptoEncoded,
+  AuthLogin,
 } from '@amnis/core';
-import { sessionEncode, passCreate } from '../crypto/index.js';
+import { cryptoNode } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcess } from './index.js';
 
@@ -14,37 +16,28 @@ import { authProcess } from './index.js';
  */
 const appStore = storeSetup();
 
-/**
+beforeAll(async () => {
+  /**
  * Add a test user and profile to the database.
  */
-const user = userCreate({
-  name: 'ExampleUser',
-  email: 'user.example@amnis.dev',
-  password: passCreate('passwd1'),
-});
+  const user = userCreate({
+    name: 'ExampleUser',
+    email: 'user.example@amnis.dev',
+    password: await cryptoNode.passHash('passwd1'),
+  });
 
-const profile = profileCreate({
-  nameDisplay: 'Example User',
-  $user: user.$id,
-});
+  const profile = profileCreate({
+    nameDisplay: 'Example User',
+    $user: user.$id,
+  });
 
-/**
- * Create a test session.
- */
-const session = sessionCreate({
-  name: profile.nameDisplay,
-  $subject: user.$id,
-  exp: dateNumeric('1m'),
-});
-
-const sessionEncoded = sessionEncode(session);
-
-/**
+  /**
   * Create test data in the memory database.
   */
-dbmemory.create({
-  user: [user],
-  profile: [profile],
+  dbmemory.create({
+    user: [user],
+    profile: [profile],
+  });
 });
 
 /**
@@ -55,11 +48,21 @@ const io = ioProcess({
   database: dbmemory,
   validators: validateSetup(schemaAuth),
   filesystem: fsmemory,
+  crypto: cryptoNode,
 }, authProcess);
 
-test('Should be able to renew session and tokens', async () => {
+test('Should be able to renew session and bearers', async () => {
+  const inputLogin: IoInput<AuthLogin> = {
+    body: {
+      username: 'ExampleUser',
+      password: 'passwd1',
+    },
+  };
+
+  const outputLogin = await io.login(inputLogin);
+
   const input: IoInput = {
-    sessionEncoded,
+    sessionEncoded: outputLogin.cookies?.authSession as CryptoEncoded,
     body: {},
   };
 
@@ -73,12 +76,21 @@ test('Should be able to renew session and tokens', async () => {
   expect(output.json.result).toBeDefined();
   expect(Object.keys(output.json.result || {})).toHaveLength(1);
   expect(output.json.result?.session).toHaveLength(1);
-  expect(output.json.tokens).toHaveLength(1);
+  expect(output.json.bearers).toHaveLength(1);
 });
 
-test('Should be able to renew session and tokens with user and profile information', async () => {
+test('Should be able to renew session and bearers with user and profile information', async () => {
+  const inputLogin: IoInput<AuthLogin> = {
+    body: {
+      username: 'ExampleUser',
+      password: 'passwd1',
+    },
+  };
+
+  const outputLogin = await io.login(inputLogin);
+
   const input: IoInput = {
-    sessionEncoded,
+    sessionEncoded: outputLogin.cookies?.authSession as CryptoEncoded,
     body: {
       info: true,
     },
@@ -95,5 +107,5 @@ test('Should be able to renew session and tokens with user and profile informati
   expect(output.json.result?.session).toHaveLength(1);
   expect(output.json.result?.user).toHaveLength(1);
   expect(output.json.result?.profile).toHaveLength(1);
-  expect(output.json.tokens).toHaveLength(1);
+  expect(output.json.bearers).toHaveLength(1);
 });

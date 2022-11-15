@@ -14,27 +14,25 @@ import {
   stateScopeCreate,
   StateUpdate,
   Task,
-  User,
   userKey,
 } from '@amnis/core';
-import { passCreate } from '../crypto/pass.js';
-import { mwJwt, mwValidate } from '../mw/index.js';
+import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 export const process: IoProcess<
 Io<StateUpdate, StateCreate>
 > = (context) => (
   async (input) => {
-    const { store, database } = context;
-    const { body, jwt } = input;
+    const { store, database, crypto } = context;
+    const { body, access } = input;
     const output = ioOutput();
 
-    if (!jwt) {
+    if (!access) {
       output.status = 401; // 401 Unauthorized
       output.json.logs.push({
         level: 'error',
         title: 'Unauthorized',
-        description: 'Access token is invalid.',
+        description: 'Access bearer is invalid.',
       });
       return output;
     }
@@ -42,7 +40,7 @@ Io<StateUpdate, StateCreate>
     /**
      * Get array of grants from roles in the service store.
      */
-    const grants = selectRoleGrants(store.getState(), jwt.roles);
+    const grants = selectRoleGrants(store.getState(), access.roles);
 
     /**
      * Filter non-granted slices on the body (which is a State type).
@@ -63,17 +61,18 @@ Io<StateUpdate, StateCreate>
      * Ensure all user passwords are hashed.
      */
     if (stateUpdateSanatizd[userKey]) {
-      stateUpdateSanatizd[userKey].forEach((entity: User) => {
+      // eslint-disable-next-line no-restricted-syntax
+      for await (const entity of stateUpdateSanatizd[userKey]) {
         if (entity.password) {
-          entity.password = passCreate(entity.password);
+          entity.password = await crypto.passHash(entity.password);
         }
-      });
+      }
     }
 
     /**
      * finalized state to process
      */
-    const stateFinal = jwt.adm === true ? body : stateUpdateSanatizd as StateUpdate;
+    const stateFinal = access.adm === true ? body : stateUpdateSanatizd as StateUpdate;
 
     /**
      * Flag final state entities as committed
@@ -87,13 +86,13 @@ Io<StateUpdate, StateCreate>
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
+    const authScope = access.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
 
     const result = await database.update(
       stateFinal,
       {
         scope: authScope,
-        subject: jwt.sub,
+        subject: access.sub,
       },
     );
 
@@ -123,7 +122,7 @@ Io<StateUpdate, StateCreate>
     /**
      * Create historic records of the updates.
      */
-    const stateCreateHistory = historyMake(stateFinal, jwt.sub, deniedKeys, true);
+    const stateCreateHistory = historyMake(stateFinal, access.sub, deniedKeys, true);
     const resultHistory = await database.create(stateCreateHistory);
     output.json.result[historyKey] = resultHistory[historyKey];
 
@@ -136,7 +135,7 @@ Io<StateUpdate, StateCreate>
   }
 );
 
-export const crudProcessUpdate = mwJwt()(
+export const crudProcessUpdate = mwAccess()(
   mwValidate('StateUpdate')(
     process,
   ),

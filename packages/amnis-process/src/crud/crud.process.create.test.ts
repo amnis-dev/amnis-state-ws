@@ -9,7 +9,7 @@ import {
   schemaState,
   schemaEntity,
   StateCreate,
-  Token,
+  Bearer,
   userCreate,
   userKey,
   ioOutputErrored,
@@ -17,6 +17,7 @@ import {
   User,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
+import { cryptoNode } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from '../auth/auth.login.js';
 import { crudProcessCreate } from './crud.process.create.js';
@@ -30,6 +31,7 @@ const io = ioProcess(
     validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
     database: dbmemory,
     filesystem: fsmemory,
+    crypto: cryptoNode,
   },
   {
     login: authProcessLogin,
@@ -42,7 +44,7 @@ beforeAll(async () => {
   await dbmemory.create(data);
 });
 
-test('should not create without token', async () => {
+test('should not create without bearer', async () => {
   const inputCreate: IoInput<StateCreate> = {
     body: {
       [userKey]: [
@@ -67,7 +69,7 @@ test('should login as administrator and create user', async () => {
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const userEntity = userCreate({
     name: 'Admin\'s New User',
@@ -76,7 +78,7 @@ test('should login as administrator and create user', async () => {
   expect(userEntity.committed).toBe(false);
 
   const inputCreate: IoInput<StateCreate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
         userEntity,
@@ -105,10 +107,10 @@ test('should login as executive and create user', async () => {
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const inputCreate: IoInput<StateCreate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
         userCreate({
@@ -138,10 +140,10 @@ test('should login as user and cannot create user', async () => {
   };
 
   const outputLogin = await io.login(inputLogin);
-  const tokenAccess = outputLogin.json.tokens?.[0] as Token;
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const inputCreate: IoInput<StateCreate> = {
-    jwtEncoded: tokenAccess.jwt,
+    accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
         userCreate({

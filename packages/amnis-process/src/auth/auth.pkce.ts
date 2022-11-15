@@ -12,7 +12,6 @@ const process: IoProcess<
 Io<AuthPkce, StateCreate>
 > = (context) => (
   async (input) => {
-    const { store, database } = context;
     const { body } = input;
 
     const output = ioOutput<StateCreate>();
@@ -20,11 +19,11 @@ Io<AuthPkce, StateCreate>
 
     switch (platform) {
       case 'microsoft': {
-        const pkceOutput = await oauthMicrosoft(store, database, pkceAuth);
+        const pkceOutput = await oauthMicrosoft(context, pkceAuth);
         return pkceOutput;
       }
       case 'twitter': {
-        const pkceOutput = await oauthTwitter(store, database, pkceAuth);
+        const pkceOutput = await oauthTwitter(context, pkceAuth);
         return pkceOutput;
       }
       default:

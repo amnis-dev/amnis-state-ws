@@ -24,7 +24,7 @@ export const dateJSON = (date?: Date) => (
 );
 
 /**
- * Create a numeric date value. Needed typically for tokens.
+ * Create a numeric date value. Needed typically for bearers.
  */
 export const dateNumeric = (date?: Date | string): DateNumeric => {
   if (typeof date === 'string') {

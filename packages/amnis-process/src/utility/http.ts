@@ -1,20 +1,20 @@
-import { JWTEncoded } from '@amnis/core';
+import { CryptoEncoded } from '@amnis/core';
 
 /**
- * Gets a JWT token from an authorization header
+ * Gets a JWT bearer from an authorization header
  */
-export function httpAuthorizationParse(authorization?: string | null): JWTEncoded | undefined {
+export function httpAuthorizationParse(authorization?: string | null): CryptoEncoded | undefined {
   if (!authorization) {
     return undefined;
   }
 
-  const [type, jwtEncoded] = authorization.split(' ');
+  const [type, accessEncoded] = authorization.split(' ');
 
-  if (type !== 'Bearer' || !jwtEncoded) {
+  if (type !== 'Bearer' || !accessEncoded) {
     return undefined;
   }
 
-  return jwtEncoded as JWTEncoded;
+  return accessEncoded as CryptoEncoded;
 }
 
 export default { httpAuthorizationParse };

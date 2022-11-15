@@ -13,7 +13,7 @@ import {
   Task,
   UID,
 } from '@amnis/core';
-import { mwJwt, mwValidate } from '../mw/index.js';
+import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 const process: IoProcess<
@@ -21,10 +21,10 @@ Io<StateCreate, StateCreate>
 > = (context) => (
   async (input) => {
     const { store, database } = context;
-    const { body, jwt } = input;
+    const { body, access } = input;
     const output = ioOutput<StateCreate>();
 
-    const roleRefs: UID<Role>[] = jwt?.roles || [];
+    const roleRefs: UID<Role>[] = access?.roles || [];
 
     /**
      * Get array of grants from roles in the service store.
@@ -48,7 +48,7 @@ Io<StateCreate, StateCreate>
             return entityCreate(
               key,
               cleaned,
-              { $owner: jwt?.sub, $creator: jwt?.sub, committed: true },
+              { $owner: access?.sub, $creator: access?.sub, committed: true },
             );
           }
           entityIssue = true;
@@ -71,7 +71,7 @@ Io<StateCreate, StateCreate>
     /**
      * finalized state to process
      */
-    const stateFinal = jwt?.adm === true ? body : stateUpdateSanatizd;
+    const stateFinal = access?.adm === true ? body : stateUpdateSanatizd;
 
     const result = await database.create(stateFinal);
 
@@ -99,7 +99,7 @@ Io<StateCreate, StateCreate>
   }
 );
 
-export const crudProcessCreate = mwJwt()(
+export const crudProcessCreate = mwAccess()(
   mwValidate('StateCreate')(
     process,
   ),

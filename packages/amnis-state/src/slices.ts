@@ -1,6 +1,7 @@
 import { auditSlice } from './audit/index.js';
+import { bearerSlice } from './bearer/index.js';
 import { contactSlice } from './contact/index.js';
-import { cryptoSlice } from './crypto/index.js';
+import { encryptionSlice } from './encryption/index.js';
 import { historySlice } from './history/index.js';
 import { localeSlice } from './locale/index.js';
 import { logSlice } from './log/index.js';
@@ -10,14 +11,14 @@ import { roleSlice } from './role/index.js';
 import { serviceSlice } from './service/index.js';
 import { sessionSlice } from './session/index.js';
 import { systemSlice } from './system/index.js';
-import { tokenSlice } from './token/index.js';
 import { userSlice } from './user/index.js';
 import { websiteSlice } from './website/index.js';
 
 export const slices = {
   [auditSlice.name]: auditSlice,
+  [bearerSlice.name]: bearerSlice,
   [contactSlice.name]: contactSlice,
-  [cryptoSlice.name]: cryptoSlice,
+  [encryptionSlice.name]: encryptionSlice,
   [historySlice.name]: historySlice,
   [localeSlice.name]: localeSlice,
   [logSlice.name]: logSlice,
@@ -27,7 +28,6 @@ export const slices = {
   [serviceSlice.name]: serviceSlice,
   [sessionSlice.name]: sessionSlice,
   [systemSlice.name]: systemSlice,
-  [tokenSlice.name]: tokenSlice,
   [userSlice.name]: userSlice,
   [websiteSlice.name]: websiteSlice,
 };

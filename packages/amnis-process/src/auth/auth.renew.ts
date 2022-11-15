@@ -10,18 +10,17 @@ import {
   ioOutput,
 } from '@amnis/core';
 import { processConfig } from '../config.js';
-import { sessionEncode } from '../crypto/index.js';
 import { mwSession, mwValidate } from '../mw/index.js';
-import { profileFetch, tokenGenerate, userFindById } from '../utility/common.js';
+import { profileFetch, bearerGenerate, userFindById } from '../utility/common.js';
 
 /**
- * Renews a session holder's session and access tokens.
+ * Renews a session holder's session and access bearers.
  */
 const process: IoProcess<
 Io<AuthRenew, StateCreate>
 > = (context) => (
   async (input) => {
-    const { database } = context;
+    const { database, crypto } = context;
     const { session, body } = input;
     const { info } = body;
     const output = ioOutput<StateCreate>();
@@ -73,9 +72,9 @@ Io<AuthRenew, StateCreate>
     }
 
     /**
-     * Create new tokens for access.
+     * Create a new bearer for access.
      */
-    const token = tokenGenerate(user, 'access');
+    const bearer = await bearerGenerate(user, context);
 
     /**
      * Create a new session.
@@ -88,11 +87,11 @@ Io<AuthRenew, StateCreate>
       admin: session.admin,
     });
 
-    output.cookies.authSession = sessionEncode(sessionNew);
+    output.cookies.authSession = await crypto.sessionEncode(sessionNew);
 
     output.json.result[sessionKey] = [sessionNew];
 
-    output.json.tokens = [token];
+    output.json.bearers = [bearer];
 
     return output;
   }

@@ -20,6 +20,11 @@
       "types": "./lib/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./lib/index.browser.d.ts",
+      "import": "./dist/index.browser.mjs",
+      "require": "./dist/index.browser.js"
     }
   },
   "scripts": {

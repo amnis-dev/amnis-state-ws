@@ -2,15 +2,15 @@
 import type { Dictionary, EntityState } from '@reduxjs/toolkit';
 import { rtk } from './rtk.js';
 import {
-  Token, TokenApi, tokenKey, TokenType,
-} from './token/index.js';
+  Bearer, bearerKey,
+} from './bearer/index.js';
 import type {
   Entity, EntityExtension, EntityUpdate, Meta,
 } from './entity/index.js';
 import type { State } from './state/index.js';
 import type { UID } from './types.js';
 import { Role, roleKey } from './role/index.js';
-import { Crypto, cryptoKey } from './crypto/index.js';
+import { Encryption, encryptionKey } from './encryption/index.js';
 import { grantParse, Grant } from './grant/index.js';
 
 /**
@@ -202,41 +202,35 @@ const genSelectDifference = <E extends Entity = Entity>(
 );
 
 /**
- * Selects a type of token of a session.
+ * Selects a bearer for a given api reducer name.
  */
-export function selectToken(state: State, api: TokenApi, type: TokenType): Token | undefined {
-  const tokenSlice = state[tokenKey] as EntityState<Token>;
+export function selectBearer(state: State, id: string): Bearer | undefined {
+  const bearerSlice = state[bearerKey] as EntityState<Bearer>;
 
-  if (!tokenSlice) {
+  if (bearerSlice === undefined) {
     return undefined;
   }
 
-  const tokenId = `${api}:${type}`;
-  const tokenEntities = tokenSlice.entities;
-  const tokenEntity = tokenEntities[tokenId];
+  const bearerEntity = bearerSlice.entities[id];
 
-  if (!tokenEntity) {
-    return undefined;
-  }
-
-  return tokenEntity;
+  return bearerEntity;
 }
 
 /**
  * Selects a public key from the crypto slice.
  */
 export function selectPublicKey(state: State, tag: string): string | undefined {
-  const slice = genSelectSlice<Crypto>(cryptoKey)(state);
+  const slice = genSelectSlice<Encryption>(encryptionKey)(state);
 
   if (!slice) {
     return undefined;
   }
 
-  const cryptoPub = Object.values(slice.entities).find(
-    (entity) => (entity?.tag === tag && entity.pair === 'public'),
+  const encryptionObject = Object.values(slice.entities).find(
+    (entity) => (entity?.tag === tag),
   );
 
-  return cryptoPub?.value;
+  return encryptionObject?.value;
 }
 
 /**

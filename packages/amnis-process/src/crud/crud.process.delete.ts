@@ -4,7 +4,7 @@ import {
   coreActions,
   Io, ioOutput, IoProcess, Role, selectRoleGrants, StateDelete, stateScopeCreate, Task, UID,
 } from '@amnis/core';
-import { mwJwt, mwValidate } from '../mw/index.js';
+import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 export const process: IoProcess<
@@ -12,10 +12,10 @@ Io<StateDelete, StateDelete>
 > = (context) => (
   async (input) => {
     const { store, database } = context;
-    const { body, jwt } = input;
+    const { body, access } = input;
     const output = ioOutput<StateDelete>();
 
-    const roleRefs: UID<Role>[] = jwt?.roles || [];
+    const roleRefs: UID<Role>[] = access?.roles || [];
 
     /**
      * Get array of grants from roles in the service store.
@@ -30,18 +30,18 @@ Io<StateDelete, StateDelete>
     /**
      * finalized state to process
      */
-    const stateFinal = jwt?.adm === true ? body : stateAuthwalled as StateDelete;
+    const stateFinal = access?.adm === true ? body : stateAuthwalled as StateDelete;
 
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = jwt?.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
+    const authScope = access?.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
 
     const result = await database.delete(
       stateFinal,
       {
         scope: authScope,
-        subject: jwt?.sub,
+        subject: access?.sub,
       },
     );
 
@@ -85,7 +85,7 @@ Io<StateDelete, StateDelete>
     //   return true;
     // });
 
-    // const stateCreateHistory = historyMake(stateUpdateHistory, jwt?.sub);
+    // const stateCreateHistory = historyMake(stateUpdateHistory, access?.sub);
     // await database.create(stateCreateHistory);
 
     output.json.result = result;
@@ -99,7 +99,7 @@ Io<StateDelete, StateDelete>
   }
 );
 
-export const crudProcessDelete = mwJwt()(
+export const crudProcessDelete = mwAccess()(
   mwValidate('StateDelete')(
     process,
   ),

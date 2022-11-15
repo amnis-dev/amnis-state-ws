@@ -1,9 +1,8 @@
 import {
   dateNumeric,
-  JWTDecoded,
-  Token,
-  tokenCreate,
-  TokenType,
+  JWTAccess,
+  Bearer,
+  bearerCreate,
   StateCreate,
   Profile,
   profileKey,
@@ -15,8 +14,8 @@ import {
   Database,
   User,
   userKey,
+  IoContext,
 } from '@amnis/core';
-import { sessionEncode, jwtEncode } from '../crypto/index.js';
 import { processConfig } from '../config.js';
 
 /**
@@ -95,37 +94,36 @@ export function sessionGenerate(
 }
 
 /**
- * Generates a new set of tokens
+ * Generates a new set of bearers
  */
-export function tokenGenerate(
+export async function bearerGenerate(
   user: User,
-  type: TokenType = 'access',
-): Token {
-  const tokenExpires = dateNumeric(type === 'access' ? processConfig.PROCESS_TOKEN_LIFE : '200d');
+  context: IoContext,
+): Promise<Bearer> {
+  const bearerExpires = dateNumeric(processConfig.PROCESS_TOKEN_LIFE);
 
   /**
    * Create the JWT data.
    */
-  const jwtDecoded: JWTDecoded = {
+  const jwtAccess: JWTAccess = {
     iss: '',
     sub: user.$id,
-    exp: tokenExpires,
-    typ: type,
+    exp: bearerExpires,
+    typ: 'access',
     roles: user.$roles,
   };
 
   /**
-   * Create the token container.
+   * Create the bearer container.
    * This is so we have ensured data about our JWT.
    */
-  const tokenAccess = tokenCreate({
-    api: 'core',
-    exp: tokenExpires,
-    jwt: jwtEncode(jwtDecoded),
-    type,
+  const bearerAccess = bearerCreate({
+    id: 'core',
+    exp: bearerExpires,
+    access: await context.crypto.accessEncode(jwtAccess),
   });
 
-  return tokenAccess;
+  return bearerAccess;
 }
 
 /**
@@ -189,10 +187,13 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
 /**
  * Processes a successful login with a return result.
  */
-export async function loginSuccessProcess(database: Database, user: User) {
+export async function loginSuccessProcess(
+  context: IoContext,
+  user: User,
+) {
   const output = ioOutput<StateCreate>();
 
-  const profile = await profileFetch(database, user);
+  const profile = await profileFetch(context.database, user);
 
   if (!profile) {
     output.status = 500; // Internal Server Error
@@ -206,7 +207,7 @@ export async function loginSuccessProcess(database: Database, user: User) {
 
   const session = sessionGenerate(user, profile);
 
-  const tokenAccess = tokenGenerate(user, 'access');
+  const bearerAccess = await bearerGenerate(user, context);
 
   user.password = null;
 
@@ -216,9 +217,9 @@ export async function loginSuccessProcess(database: Database, user: User) {
     [sessionKey]: [session],
   };
 
-  output.json.tokens = [tokenAccess];
+  output.json.bearers = [bearerAccess];
 
-  output.cookies.authSession = sessionEncode(session);
+  output.cookies.authSession = await context.crypto.sessionEncode(session);
 
   return output;
 }

@@ -3,6 +3,7 @@ import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/i
 import type { Permit } from '../permit/index.js';
 import type { DeviceString } from '../device/index.js';
 import type { Role } from '../role/index.js';
+import { CryptoPassword } from '../crypto.types.js';
 
 /**
  * Data associated to a User.
@@ -46,7 +47,7 @@ export interface User extends Entity {
    * @maxLength 64
    * @default null
    */
-  password: string | null;
+  password: CryptoPassword | null;
 
   /**
    * If this is an administrative account.

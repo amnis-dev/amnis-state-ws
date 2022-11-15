@@ -6,6 +6,7 @@ import { StateCreate } from './state/index.js';
 import { System, systemCreate, systemKey } from './system/index.js';
 import { User, userCreate, userKey } from './user/index.js';
 import { websiteKey } from './website/index.js';
+import { CryptoPassword } from './crypto.types.js';
 
 export function dataInitial(): StateCreate {
   /**
@@ -71,7 +72,7 @@ export function dataInitial(): StateCreate {
       name: 'admin',
       email: 'admin@email.address',
       /** passwd12 */
-      password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0',
+      password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0' as CryptoPassword,
       $roles: [roles[0].$id],
       $permits: [],
     }, { committed: true }),
@@ -79,7 +80,7 @@ export function dataInitial(): StateCreate {
       name: 'exec',
       email: 'exec@email.address',
       /** passwd12 */
-      password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0',
+      password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0' as CryptoPassword,
       $roles: [roles[1].$id],
       $permits: [],
     }, { committed: true }),
@@ -87,7 +88,7 @@ export function dataInitial(): StateCreate {
       name: 'user',
       email: 'user@email.address',
       /** passwd12 */
-      password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0',
+      password: '5cdfaa9ecce0125bd8a2bbe4243c099114e0620caa9795407c6e7a61a8b2fef439045d78c7a295c69651e037981e94d0' as CryptoPassword,
       $roles: [roles[2].$id],
       $permits: [],
     }, { committed: true }),

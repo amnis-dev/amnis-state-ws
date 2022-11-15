@@ -4,7 +4,7 @@ import {
 import { mwSession, mwValidate } from '../mw/index.js';
 
 /**
- * Renews a session holder's session and access tokens.
+ * Renews a session holder's session and access bearers.
  */
 const process: IoProcess<
 Io<AuthLogout, StateDelete>

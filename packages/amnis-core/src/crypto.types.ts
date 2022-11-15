@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-shadow */
 
+import { JWTAccess } from './index.js';
 import { Session } from './session/index.js';
 
 /**
@@ -90,23 +91,23 @@ export type CryptoSessionVerify = (
 /**
  * Encodes a bearer instance.
  */
-export type CryptoBearerEncode = (
-  bearer: Record<string, any>,
+export type CryptoAccessEncode = (
+  access: JWTAccess,
   secret?: string
 ) => Promise<CryptoEncoded>;
 
 /**
  * Verifies an encoded session.
  */
-export type CryptoBearerVerify = (
+export type CryptoAccessVerify = (
   encoded: CryptoEncoded,
   secret?: string
-) => Promise<Record<string, any>>;
+) => Promise<JWTAccess>;
 
 /**
  * Decodes an encoded value without verifying.
  */
-export type CryptoDecode = <T = Record<string, any>>(encoded: CryptoEncoded) => Promise<T>;
+export type CryptoTokenDecode = <T = Record<string, any>>(encoded: CryptoEncoded) => Promise<T>;
 
 /**
  * Core interface for cryptographic methods.
@@ -163,12 +164,17 @@ export interface Crypto {
   sessionVerify: CryptoSessionVerify;
 
   /**
-   * Encodes a bearer object.
+   * Encodes an access token object.
    */
-  bearerEncode: CryptoBearerEncode;
+  accessEncode: CryptoAccessEncode;
 
   /**
-   * Verifies a bearer encoding.
+   * Verifies an access encoding.
    */
-  bearerVerify: CryptoBearerVerify;
+  accessVerify: CryptoAccessVerify;
+
+  /**
+   * Decodes any type of token.
+   */
+  tokenDecode: CryptoTokenDecode;
 }

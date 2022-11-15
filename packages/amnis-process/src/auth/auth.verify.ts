@@ -1,26 +1,25 @@
 import {
   Io, ioOutput, IoProcess, AuthVerify,
 } from '@amnis/core';
-import { jwtVerify } from '../crypto/index.js';
 import { mwValidate } from '../mw/index.js';
 
 /**
- * Verifies the validity of an access token.
+ * Verifies the validity of an access bearer.
  */
 export const process: IoProcess<
 Io<AuthVerify, boolean>
-> = () => (
+> = (context) => (
   async (input) => {
-    const { body: token } = input;
+    const { body: bearer } = input;
     const output = ioOutput<boolean>();
 
     output.json.result = false;
 
-    if (!token) {
+    if (!bearer) {
       return output;
     }
 
-    const jwt = jwtVerify(token.jwt);
+    const jwt = await context.crypto.accessVerify(bearer.access);
 
     if (!jwt) {
       return output;

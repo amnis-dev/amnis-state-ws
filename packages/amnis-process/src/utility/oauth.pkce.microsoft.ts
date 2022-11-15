@@ -1,22 +1,20 @@
 import fetch from 'cross-fetch';
-import type { Store } from '@reduxjs/toolkit';
 import {
   AuthPkce,
-  Database,
   dateNumeric,
   ioOutput,
   IoOutput,
-  JWTEncoded,
+  CryptoEncoded,
   selectActive,
   StateCreate,
   System,
   systemKey,
-  Token,
-  tokenCreate,
+  Bearer,
+  bearerCreate,
+  IoContext,
 } from '@amnis/core';
 
 import { processConfig } from '../config.js';
-import { jwtDecode } from '../crypto/index.js';
 import { loginSuccessProcess, userFindByName } from './common.js';
 import { register } from './register.js';
 
@@ -24,13 +22,13 @@ import { register } from './register.js';
  * OAuth2 Response.
  */
 interface OAuth2TokenData {
-  token_type: string;
+  bearer_type: string;
   expires_in: number,
   ext_expires_in: number;
-  access_token: JWTEncoded;
-  id_token: JWTEncoded;
+  access_token: CryptoEncoded;
+  id_token: CryptoEncoded;
   scope: string;
-  refresh_token?: JWTEncoded;
+  refresh_token?: CryptoEncoded;
   error?: string;
   error_description?: string;
 }
@@ -46,18 +44,17 @@ export interface MicrosoftId {
 }
 
 export async function oauthMicrosoft(
-  store: Store,
-  database: Database,
+  context: IoContext,
   auth: Omit<AuthPkce, 'platform'>,
 ): Promise<IoOutput<StateCreate>> {
-  const tokenEndpoint = auth.tenantId
-    ? `https://login.microsoftonline.${auth.gov ? 'us' : 'com'}/${auth.tenantId}/oauth2/v2.0/token`
-    : `${processConfig.PROCESS_MICROSOFT_OAUTH2_URL}token`;
+  const bearerEndpoint = auth.tenantId
+    ? `https://login.microsoftonline.${auth.gov ? 'us' : 'com'}/${auth.tenantId}/oauth2/v2.0/bearer`
+    : `${processConfig.PROCESS_MICROSOFT_OAUTH2_URL}bearer`;
   const output = ioOutput<StateCreate>();
 
   /**
    * STEP 1
-   * Get the access and refresh tokens.
+   * Get the access and refresh bearers.
    */
   const params = new URLSearchParams();
   params.append('grant_type', 'authorization_code');
@@ -66,7 +63,7 @@ export async function oauthMicrosoft(
   params.append('redirect_uri', auth.redirectUri);
   params.append('code_verifier', auth.codeVerifier);
 
-  const tokenResponse = await fetch(tokenEndpoint, {
+  const bearerResponse = await fetch(bearerEndpoint, {
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -74,26 +71,26 @@ export async function oauthMicrosoft(
     body: params.toString(),
   });
 
-  const tokenData = await tokenResponse.json() as OAuth2TokenData;
+  const bearerData = await bearerResponse.json() as OAuth2TokenData;
 
-  if (typeof tokenData?.access_token !== 'string' || typeof tokenData?.id_token !== 'string') {
+  if (typeof bearerData?.access_token !== 'string' || typeof bearerData?.id_token !== 'string') {
     output.status = 401; // Unauthorized
     output.json.logs.push({
       level: 'error',
       title: 'Invaid Request',
-      description: tokenData?.error_description || 'Could not verify OAuth 2.0 authentication.',
+      description: bearerData?.error_description || 'Could not verify OAuth 2.0 authentication.',
     });
     return output;
   }
 
-  const microsoftId = jwtDecode(tokenData.id_token) as MicrosoftId;
+  const microsoftId = await context.crypto.tokenDecode<MicrosoftId>(bearerData.id_token);
 
   if (!microsoftId) {
     output.status = 401; // Unauthorized
     output.json.logs.push({
       level: 'error',
-      title: 'ID Token Failure',
-      description: 'The Microsoft ID token could not be decoded.',
+      title: 'ID Bearer Failure',
+      description: 'The Microsoft ID bearer could not be decoded.',
     });
     return output;
   }
@@ -111,7 +108,7 @@ export async function oauthMicrosoft(
     output.json.logs.push({
       level: 'error',
       title: 'Invaid Request',
-      description: tokenData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
+      description: bearerData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
     });
     return output;
   }
@@ -121,51 +118,50 @@ export async function oauthMicrosoft(
    * Find the user or register a new one.
    */
   const username = `MS#${microsoftId.oid}`;
-  const userSearch = await userFindByName(database, username);
+  const userSearch = await userFindByName(context.database, username);
 
   /**
    * If the user already exists, return the login success.
    */
   if (userSearch !== undefined) {
-    const successOutput = await loginSuccessProcess(database, userSearch);
+    const successOutput = await loginSuccessProcess(context, userSearch);
     return successOutput;
   }
 
   /**
    * If a user didn't exist, register a new account.
    */
-  const tokens: Token[] = [];
+  const bearers: Bearer[] = [];
 
-  const tokenAccess = tokenCreate({
-    api: 'microsoft',
-    type: 'access',
-    exp: dateNumeric(`${tokenData.expires_in}s`),
-    jwt: tokenData.access_token,
+  const bearerAccess = bearerCreate({
+    id: 'microsoft',
+    exp: dateNumeric(`${bearerData.expires_in}s`),
+    access: bearerData.access_token,
   });
-  tokens.push(tokenAccess);
+  bearers.push(bearerAccess);
 
-  if (tokenData.refresh_token) {
-    const tokenRefresh = tokenCreate({
-      api: 'microsoft',
-      type: 'refresh',
-      exp: dateNumeric('200d'),
-      jwt: tokenData.refresh_token,
-    });
-    tokens.push(tokenRefresh);
-  }
+  // if (bearerData.refresh_token) {
+  //   const bearerRefresh = bearerCreate({
+  //     api: 'microsoft',
+  //     type: 'refresh',
+  //     exp: dateNumeric('200d'),
+  //     jwt: bearerData.refresh_token,
+  //   });
+  //   bearers.push(bearerRefresh);
+  // }
 
   /**
    * Set system settings from the store.
    */
-  const system = selectActive<System>(store.getState(), systemKey);
+  const system = selectActive<System>(context.store.getState(), systemKey);
 
   const registrationOutput = await register(
-    database,
+    context,
     system,
     username,
     {
       withTokens: true,
-      otherTokens: tokens,
+      otherTokens: bearers,
       nameDisplay: microsoftId.name || '',
       email: microsoftId.email,
       createSession: true,
