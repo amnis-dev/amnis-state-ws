@@ -15,6 +15,7 @@ import {
   sessionKey,
   UID,
   userKey,
+  entityCreate,
 } from '@amnis/core';
 import { apiAuth } from './auth/index.js';
 import { apiCrud } from './crud/index.js';
@@ -37,7 +38,7 @@ export function apiExtraReducers<E extends Entity>(
      * StateCreator log entities from the fulfillment.
      */
     if (key === logKey && logs?.length > 0) {
-      const logEntities = logs.map((logBase) => logCreator(logBase));
+      const logEntities = logs.map((logBase) => entityCreate(logKey, logCreator(logBase)));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }
@@ -60,7 +61,7 @@ export function apiExtraReducers<E extends Entity>(
      */
     if (key === logKey && payload?.data?.logs?.length > 0) {
       const logs = payload.data.logs as LogBaseCreate[];
-      const logEntities = logs.map((logBase) => logCreator(logBase));
+      const logEntities = logs.map((logBase) => entityCreate(logKey, logCreator(logBase)));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }

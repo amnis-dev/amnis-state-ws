@@ -223,11 +223,21 @@ export function coreExtraReducers<E extends Entity>(
   adapter: EntityAdapter<E>,
   builder: ActionReducerMapBuilder<MetaState<E>>,
 ) {
-  builder.addCase(coreActions.create, (state, action) => {
+  builder.addCase(coreActions.insert, (state, action) => {
     const { payload } = action;
     if (payload[key] && Array.isArray(payload[key])) {
       /** @ts-ignore */
-      adapter.addMany<MetaState<E>>(state, payload[key]);
+      adapter.upsertMany<MetaState<E>>(state, payload[key]);
+    }
+  });
+
+  builder.addCase(coreActions.create, (state, action) => {
+    const { payload } = action;
+    if (payload[key] && Array.isArray(payload[key])) {
+      const entityCreators = payload[key];
+      const entities = entityCreators.map((entityCreator) => entityCreate(key, entityCreator));
+      /** @ts-ignore */
+      adapter.addMany<MetaState<E>>(state, entities);
     }
   });
 
@@ -235,7 +245,7 @@ export function coreExtraReducers<E extends Entity>(
     const { payload } = action;
     if (payload[key] && Array.isArray(payload[key])) {
       /** @ts-ignore */
-      adapter.upsertMany<MetaState<E>>(state, payload[key]);
+      adapter.updateMany<MetaState<E>>(state, payload[key]);
     }
   });
 

@@ -1,10 +1,16 @@
 import { rtk } from './rtk.js';
-import type {
+import {
   StateCreator,
   StateDeleter,
+  StateEntities,
 } from './state/index.js';
 
 export const coreActions = {
+  /**
+   * Directly inserts a state object of complete entities.
+   */
+  insert: rtk.createAction<StateEntities>('@core/insert'),
+
   /**
    * Batch creates entities.
    */

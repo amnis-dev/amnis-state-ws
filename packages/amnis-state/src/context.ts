@@ -60,7 +60,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
           [systemKey]: createResult[systemKey],
           [roleKey]: createResult[roleKey],
         };
-        storeNext.dispatch(coreActions.create(serviceResult));
+        storeNext.dispatch(coreActions.insert(serviceResult));
         storeNext.dispatch(systemActions.activeSet(system.$id));
       }
     } else if (initialize === true) {
@@ -69,7 +69,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
         [systemKey]: readResult[systemKey],
         [roleKey]: readResult[roleKey],
       };
-      storeNext.dispatch(coreActions.create(serviceResult));
+      storeNext.dispatch(coreActions.insert(serviceResult));
       storeNext.dispatch(systemActions.activeSet(system.$id));
     }
   }

@@ -43,7 +43,7 @@ const io = ioProcess(
 
 beforeAll(async () => {
   const stateEntities = stateEntitiesCreate(data);
-  store.dispatch(coreActions.create(stateEntities));
+  store.dispatch(coreActions.insert(stateEntities));
   await dbmemory.create(stateEntities);
 });
 

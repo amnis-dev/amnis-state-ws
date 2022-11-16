@@ -129,7 +129,7 @@ Io<StateUpdater, StateCreator>
     /**
      * Update the server store with possible changes.
      */
-    store.dispatch(coreActions.update(result));
+    store.dispatch(coreActions.insert(result));
 
     return output;
   }

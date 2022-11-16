@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions.js';
 import {
-  Entity,
-  EntityCreator,
-  entityKeys,
   IoOutputJson,
   StateCreator,
   StateDeleter,
@@ -20,20 +17,7 @@ export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder
     query: (payload) => ({
       url: 'create',
       method: 'post',
-      body: Object.keys(payload).reduce<StateCreator>((acc, key) => {
-        payload[key].forEach((entity) => {
-          const entityNew = Object.keys(entity).reduce<EntityCreator<Entity>>((accE, keyE) => {
-            if (keyE === '$id' && !entityKeys.includes(keyE)) {
-              accE[keyE] = entity[keyE];
-            }
-            return accE;
-          }, {} as EntityCreator<Entity>);
-
-          if (!acc[key]) { acc[key] = []; }
-          acc[key].push(entityNew);
-        });
-        return acc;
-      }, {}),
+      body: payload,
     }),
   }),
 
