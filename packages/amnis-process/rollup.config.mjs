@@ -33,7 +33,6 @@ const base = {
   external: [
     /@amnis\/.*/,
     'ajv',
-    'jsonwebtoken',
     'cross-fetch',
   ],
 };
