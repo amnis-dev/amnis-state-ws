@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { GrantScope } from '@amnis/core';
 import type { UID, UIDList } from '../types.js';
-import type { Entity } from '../entity/index.js';
+import type { Entity, EntityCreate } from '../entity/index.js';
 
 /**
  * An ambiguous state.
@@ -84,10 +84,15 @@ export type Query = {
 export type Result = any;
 
 /**
-  * A common stateful result from creations.
-  * A state object with entities that were created.
+  * A common stateful result of compelete entities.
   */
-export type StateCreate = State<Entity[]>;
+export type StateEntities = State<Entity[]>;
+
+/**
+  * A common stateful result from creations.
+  * A state object with entities to be created
+  */
+export type StateCreate = State<EntityCreate<Entity>[]>;
 
 /**
   * A query object to search for entities.

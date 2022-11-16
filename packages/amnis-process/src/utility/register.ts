@@ -52,10 +52,12 @@ export async function register(
 
   const user = userCreate({
     name: username,
-    password: password ? await context.crypto.passHash(password) : null,
     email: options.email,
     $roles: [...system.$initialRoles],
   });
+  if (password) {
+    user.password = await context.crypto.passHash(password);
+  }
 
   user.$owner = user.$id;
 

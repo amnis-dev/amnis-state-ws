@@ -10,7 +10,6 @@ export const userKey = 'user';
 
 export const userBase: UserBase = {
   name: 'Unknown User',
-  password: null,
   devices: [],
   $roles: [],
   $permits: [],
@@ -26,7 +25,7 @@ export function userCheckDevices(devices: DeviceString[]): boolean {
 export function userCheck(user: User): LogBaseCreate[] {
   const logs: LogBaseCreate[] = [];
 
-  if (user.password !== null && !regexAlphanumeric.test(user.name)) {
+  if (user.password && !regexAlphanumeric.test(user.name)) {
     logs.push({
       title: 'Invalid Username',
       description: 'The username must be alphanumeric.',
@@ -42,7 +41,7 @@ export function userCheck(user: User): LogBaseCreate[] {
     }
   }
 
-  if (user.password === null && user.name.charAt(2) !== '#') {
+  if (!user.password && user.name.charAt(2) !== '#') {
     logs.push({
       title: 'Invalid Username',
       description: 'Username of passwordless accounts must have a hash character.',

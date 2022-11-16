@@ -35,10 +35,21 @@ export function validate(
     output.status = 400; // 400 Bad Request
 
     ajvValidator.errors.forEach((verror) => {
+      const details = [];
+      if (verror.instancePath) {
+        details.push(`[${verror.instancePath}]`);
+      }
+      if (verror.message) {
+        details.push(`${verror.message}.`);
+      }
+      if (verror.params) {
+        const paramString = Object.keys(verror.params).map((k) => `${k}: ${verror.params[k]}`).join(', ');
+        details.push(`(${paramString})`);
+      }
       output.json.logs.push({
         level: 'error',
         title: 'Validation Failed',
-        description: `${verror.instancePath} ${verror.message}` || 'The request is not valid.',
+        description: details.join(' ') || 'The request is not valid.',
       });
     });
     return output;

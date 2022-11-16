@@ -95,7 +95,6 @@ test('auth should successfully login with valid credentials.', async () => {
       $id: expect.any(String),
       email: expect.any(String),
       name: 'ExampleUser',
-      password: null,
     }),
   );
 
@@ -115,8 +114,9 @@ test('auth should successfully login with valid credentials.', async () => {
 
   expect(bearer).toEqual(
     expect.objectContaining({
-      api: 'core',
-      type: 'access',
+      id: 'core',
+      exp: expect.any(Number),
+      access: expect.any(String),
     }),
   );
 
@@ -172,7 +172,7 @@ test('auth should verify valid bearer.', async () => {
  * ============================================================
  */
 test('auth should not verify an invalid bearer.', async () => {
-  const rsaKeyPairAnother = await cryptoNode.encryptRsa();
+  const rsaKeyPairAnother = await cryptoNode.rsaGenerate();
 
   const jwtEncodedInvalid = await cryptoNode.accessEncode({
     iss: 'core',

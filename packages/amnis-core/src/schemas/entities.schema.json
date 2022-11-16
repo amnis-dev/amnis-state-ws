@@ -1270,18 +1270,10 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/CryptoPassword"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "type": "string",
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
-          "maxLength": 64,
-          "default": null
+          "maxLength": 64
         },
         "admin": {
           "type": "boolean",
@@ -1311,8 +1303,7 @@
         "$permits",
         "$roles",
         "devices",
-        "name",
-        "password"
+        "name"
       ],
       "description": "Type for an entity create object."
     },
@@ -1349,18 +1340,10 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/CryptoPassword"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "type": "string",
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
-          "maxLength": 64,
-          "default": null
+          "maxLength": 64
         },
         "admin": {
           "type": "boolean",
@@ -1387,16 +1370,12 @@
       },
       "required": [
         "name",
-        "password",
         "devices",
         "$roles",
         "$permits"
       ],
       "additionalProperties": false,
       "description": "Omitted types of the core Entity interface."
-    },
-    "CryptoPassword": {
-      "type": "string"
     },
     "DeviceString": {
       "type": "string",
@@ -2852,18 +2831,10 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/CryptoPassword"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "type": "string",
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
-          "maxLength": 64,
-          "default": null
+          "maxLength": 64
         },
         "admin": {
           "type": "boolean",
@@ -2922,18 +2893,10 @@
           "description": "If the user phone number is verified."
         },
         "password": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/CryptoPassword"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "type": "string",
           "description": "User password. A null password means another form of auth must be used.",
           "minLength": 6,
-          "maxLength": 64,
-          "default": null
+          "maxLength": 64
         },
         "admin": {
           "type": "boolean",

@@ -1,6 +1,7 @@
 import type { UID } from '../types.js';
 import type {
   Entity,
+  EntityCreate,
   EntityExtension,
   EntityPartial,
   Meta,
@@ -60,15 +61,17 @@ export const entityUpdate = <E extends Entity>(
 /**
  * Array of entity prop keys.
  */
-const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((key) => key);
+export const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((key) => key);
 
 /**
  * Cleans and validates base entity keys and references for further processing.
  * TODO: This method can most certainly be made more efficient.
  */
-export function entityClean(key: string, entity: Record<string, unknown>) {
+export function entityClean(key: string, entity: Entity): EntityCreate<Entity> | undefined {
   let errored = false;
-  const cleaned = Object.keys(entity).reduce<Record<string, unknown>>((value, prop) => {
+  const cleaned = Object.keys(entity)
+    .reduce<Record<string, unknown>>((value, p) => {
+    const prop = p as keyof Entity;
     if (prop === '$id' || !entityKeys.includes(prop)) {
       if (prop === '$id') {
         const [sKey, id] = (entity[prop] as string).split(':');
@@ -77,7 +80,7 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
         } else {
           errored = true;
         }
-      /**
+        /**
        * Only references/identifier arrays begin with a '$' character.
        * Also enure they have valid ids.
        */
@@ -103,7 +106,7 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
             }
             return true;
           });
-        /**
+          /**
          * If the property value is not an array, it must sinply be an
          * identifier string.
          */
@@ -118,7 +121,7 @@ export function entityClean(key: string, entity: Record<string, unknown>) {
     return value;
   }, {});
 
-  return errored ? undefined : cleaned;
+  return errored ? undefined : cleaned as EntityCreate<Entity>;
 }
 
 /**

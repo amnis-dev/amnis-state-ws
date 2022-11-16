@@ -209,7 +209,7 @@ export async function loginSuccessProcess(
 
   const bearerAccess = await bearerGenerate(user, context);
 
-  user.password = null;
+  user.password = undefined;
 
   output.json.result = {
     [userKey]: [user],

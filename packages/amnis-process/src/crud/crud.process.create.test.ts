@@ -6,7 +6,6 @@ import {
   IoInput,
   ioProcess,
   schemaAuth,
-  schemaState,
   schemaEntity,
   StateCreate,
   Bearer,
@@ -15,6 +14,8 @@ import {
   ioOutputErrored,
   coreActions,
   User,
+  userBase,
+  uid,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
 import { cryptoNode } from '@amnis/crypto';
@@ -28,7 +29,7 @@ const store = storeSetup();
 const io = ioProcess(
   {
     store,
-    validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
+    validators: validateSetup([schemaAuth, schemaEntity]),
     database: dbmemory,
     filesystem: fsmemory,
     crypto: cryptoNode,
@@ -71,11 +72,13 @@ test('should login as administrator and create user', async () => {
   const outputLogin = await io.login(inputLogin);
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
-  const userEntity = userCreate({
+  const userEntity = {
+    ...userBase,
+    $id: uid(userKey),
     name: 'Admin\'s New User',
-  });
+  };
 
-  expect(userEntity.committed).toBe(false);
+  // expect(userEntity.committed).toBe(false);
 
   const inputCreate: IoInput<StateCreate> = {
     accessEncoded: bearerAccess.access,
@@ -109,14 +112,16 @@ test('should login as executive and create user', async () => {
   const outputLogin = await io.login(inputLogin);
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
+  const userNew = {
+    ...userBase,
+    $id: uid(userKey),
+    name: 'Exec\'s New User',
+  };
+
   const inputCreate: IoInput<StateCreate> = {
     accessEncoded: bearerAccess.access,
     body: {
-      [userKey]: [
-        userCreate({
-          name: 'Exec\'s New User',
-        }),
-      ],
+      [userKey]: [userNew],
     },
   };
 
@@ -142,18 +147,22 @@ test('should login as user and cannot create user', async () => {
   const outputLogin = await io.login(inputLogin);
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
+  const userNew = {
+    ...userBase,
+    $id: uid(userKey),
+    name: 'User\'s New User',
+  };
+
   const inputCreate: IoInput<StateCreate> = {
     accessEncoded: bearerAccess.access,
     body: {
-      [userKey]: [
-        userCreate({
-          name: 'User\'s New User',
-        }),
-      ],
+      [userKey]: [userNew],
     },
   };
 
   const outputCreate = await io.create(inputCreate);
+
+  console.log(JSON.stringify(outputCreate, null, 2));
 
   expect(outputCreate.status).toBe(200);
   expect(ioOutputErrored(outputCreate)).toBe(true);

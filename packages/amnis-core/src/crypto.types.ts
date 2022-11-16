@@ -52,14 +52,19 @@ export type CryptoRandomString = (length?: number) => Promise<string>;
 export type CryptoHashSHA256 = (plain: string) => Promise<string>;
 
 /**
- * Generates an AES encrypted string.
+ * Generates AES encrypted text.
  */
-export type CryptoEncryptAES = () => Promise<CryptoAES>;
+export type CryptoAESEncrypt = (plaintext: string, key: string) => Promise<CryptoAES>;
+
+/**
+ * Decrypts an AES encrypted string.
+ */
+export type CryptoAESDecrypt = (encryption: CryptoAES, key: string) => Promise<string>;
 
 /**
  * Generates an RSA encrypted key pair.
  */
-export type CryptoEncryptRSA = () => Promise<CryptoRSAKeyPair>;
+export type CryptoRSAGenerate = () => Promise<CryptoRSAKeyPair>;
 
 /**
  * Hashes a plaintext password.
@@ -86,7 +91,7 @@ export type CryptoSessionEncode = (
 export type CryptoSessionVerify = (
   encoded: CryptoEncoded,
   secret?: string
-) => Promise<Session>;
+) => Promise<Session | undefined>;
 
 /**
  * Encodes a bearer instance.
@@ -102,12 +107,12 @@ export type CryptoAccessEncode = (
 export type CryptoAccessVerify = (
   encoded: CryptoEncoded,
   secret?: string
-) => Promise<JWTAccess>;
+) => Promise<JWTAccess | undefined>;
 
 /**
  * Decodes an encoded value without verifying.
  */
-export type CryptoTokenDecode = <T = Record<string, any>>(encoded: CryptoEncoded) => Promise<T>;
+export type CryptoTokenDecode = <T = any>(encoded: CryptoEncoded) => Promise<T>;
 
 /**
  * Core interface for cryptographic methods.
@@ -126,22 +131,22 @@ export interface Crypto {
   /**
    * Generates a new AES Encryption.
    */
-  encryptAes: CryptoEncryptAES;
+  aesEncrypt: CryptoAESEncrypt;
 
   /**
-    * Gets a singleton AES encrypted key pair.
-    */
-  encryptAesSingleton: CryptoEncryptAES;
+   * Gets a singleton AES encrypted key pair.
+   */
+  aesDecrypt: CryptoAESDecrypt;
 
   /**
    * Generates a new RSA Encryption keypair.
    */
-  encryptRsa: CryptoEncryptRSA;
+  rsaGenerate: CryptoRSAGenerate;
 
   /**
    * Gets a singleton RSA encrypted key pair.
    */
-  encryptRsaSingleton: CryptoEncryptRSA;
+  rsaSingleton: CryptoRSAGenerate;
 
   /**
    * Hashes a password.

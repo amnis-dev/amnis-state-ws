@@ -7,16 +7,16 @@ export const cryptoBrowser: Crypto = {
   hashSha256: async (plain) => {
     throw new Error('Function not implemented.');
   },
-  encryptAes: async () => {
+  aesEncrypt: async () => {
     throw new Error('Function not implemented.');
   },
-  encryptAesSingleton: async () => {
+  aesDecrypt: async () => {
     throw new Error('Function not implemented.');
   },
-  encryptRsa: async () => {
+  rsaGenerate: async () => {
     throw new Error('Function not implemented.');
   },
-  encryptRsaSingleton: async () => {
+  rsaSingleton: async () => {
     throw new Error('Function not implemented.');
   },
   passHash: async (plaintext) => {
