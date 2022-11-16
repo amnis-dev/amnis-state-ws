@@ -1,6 +1,6 @@
 import { uid } from '../uid.js';
 import { dateNumeric } from '../core.js';
-import { sessionKey, sessionCreate } from './session.js';
+import { sessionKey, sessionCreator } from './session.js';
 
 /**
  * ============================================================
@@ -13,7 +13,7 @@ test('session key should be is properly set', () => {
  * ============================================================
  */
 test('should create a session', () => {
-  const session = sessionCreate({
+  const session = sessionCreator({
     $subject: uid('user'),
     name: 'Newbie',
     exp: dateNumeric(),

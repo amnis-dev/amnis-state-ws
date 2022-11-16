@@ -1,4 +1,4 @@
-import { auditKey, auditCreate } from './audit.js';
+import { auditKey, auditCreator } from './audit.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('audit key should be is properly set', () => {
  * ============================================================
  */
 test('should create a audit', () => {
-  const audit = auditCreate({
+  const audit = auditCreator({
     action: 'Testing',
     completed: true,
   });

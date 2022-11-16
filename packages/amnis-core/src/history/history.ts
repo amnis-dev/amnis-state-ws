@@ -1,6 +1,6 @@
 import { uid } from '../uid.js';
-import { Entity, entityCreate } from '../entity/index.js';
-import { StateCreate, StateUpdate } from '../state/index.js';
+import { EntityCreator, entityCreate } from '../entity/index.js';
+import { StateEntities, StateUpdater } from '../state/index.js';
 import { UID } from '../types.js';
 import type { History, HistoryBase, HistoryBaseCreate } from './history.types.js';
 
@@ -13,27 +13,25 @@ export const historyBase: HistoryBase = {
   },
 };
 
-export function historyCreate(
+export function historyCreator(
   history: HistoryBaseCreate,
-  entity: Partial<Entity> = {},
-): History {
-  const historyEntity = entityCreate<History>(historyKey, {
+): EntityCreator<History> {
+  return {
     ...historyBase,
     ...history,
-  }, entity);
-
-  return historyEntity;
+    $id: uid(historyKey),
+  };
 }
 /**
  * Create historic records of the updates.
  */
 export function historyMake(
-  stateUpdate: StateUpdate,
+  stateUpdate: StateUpdater,
   creator?: UID,
   deniedKeys?: string[],
   committed = false,
-): StateCreate {
-  const stateCreateHistory: StateCreate = {
+): StateEntities {
+  const stateCreateHistory: StateEntities = {
     [historyKey]: [],
   };
   Object.keys(stateUpdate).every((sliceKey) => {
@@ -49,11 +47,12 @@ export function historyMake(
     const updateEntities = stateUpdate[sliceKey];
     updateEntities.forEach((entity) => {
       stateCreateHistory[historyKey].push(
-        historyCreate(
-          {
+        entityCreate<History>(
+          historyKey,
+          historyCreator({
             $subject: entity.$id, // The entity being updates is the subject.
             update: entity, // The update object.
-          },
+          }),
           (creator ? { $creator: creator, committed } : { committed }),
         ),
       );

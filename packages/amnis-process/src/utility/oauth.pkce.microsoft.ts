@@ -6,7 +6,7 @@ import {
   IoOutput,
   CryptoEncoded,
   selectActive,
-  StateCreate,
+  StateEntities,
   System,
   systemKey,
   Bearer,
@@ -46,11 +46,11 @@ export interface MicrosoftId {
 export async function oauthMicrosoft(
   context: IoContext,
   auth: Omit<AuthPkce, 'platform'>,
-): Promise<IoOutput<StateCreate>> {
+): Promise<IoOutput<StateEntities>> {
   const bearerEndpoint = auth.tenantId
     ? `https://login.microsoftonline.${auth.gov ? 'us' : 'com'}/${auth.tenantId}/oauth2/v2.0/bearer`
     : `${processConfig.PROCESS_MICROSOFT_OAUTH2_URL}bearer`;
-  const output = ioOutput<StateCreate>();
+  const output = ioOutput<StateEntities>();
 
   /**
    * STEP 1

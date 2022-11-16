@@ -2,10 +2,10 @@
 import type {
   UID,
   StateScope,
-  StateUpdate,
-  StateDelete,
-  StateCreate,
+  StateUpdater,
+  StateDeleter,
   StateQuery,
+  StateEntities,
 } from '@amnis/core';
 
 export interface DatabaseControls {
@@ -14,24 +14,24 @@ export interface DatabaseControls {
 }
 
 export type DatabaseCreateMethod = (
-  state: StateCreate,
+  state: StateEntities,
   controls?: DatabaseControls
-) => Promise<StateCreate>;
+) => Promise<StateEntities>;
 
 export type DatabaseReadMethod = (
   select: StateQuery,
   controls?: DatabaseControls
-) => Promise<StateCreate>;
+) => Promise<StateEntities>;
 
 export type DatabaseUpdateMethod = (
-  state: StateUpdate,
+  state: StateUpdater,
   controls?: DatabaseControls
-) => Promise<StateCreate>;
+) => Promise<StateEntities>;
 
 export type DatabaseDeleteMethod = (
-  references: StateDelete,
+  references: StateDeleter,
   controls?: DatabaseControls
-) => Promise<StateDelete>;
+) => Promise<StateDeleter>;
 
 /**
  * Core interface for database methods.

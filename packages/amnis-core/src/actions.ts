@@ -1,24 +1,24 @@
 import { rtk } from './rtk.js';
 import type {
-  StateCreate,
-  StateDelete,
+  StateCreator,
+  StateDeleter,
 } from './state/index.js';
 
 export const coreActions = {
   /**
    * Batch creates entities.
    */
-  create: rtk.createAction<StateCreate>('@core/create'),
+  create: rtk.createAction<StateCreator>('@core/create'),
 
   /**
    * Batch updates entities.
    */
-  update: rtk.createAction<StateCreate>('@core/update'),
+  update: rtk.createAction<StateCreator>('@core/update'),
 
   /**
    * Batch deletes entities.
    */
-  delete: rtk.createAction<StateDelete>('@core/delete'),
+  delete: rtk.createAction<StateDeleter>('@core/delete'),
 
   /**
    * Wipes all entities from the state.

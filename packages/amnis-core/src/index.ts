@@ -19,7 +19,6 @@ export * from './rtkqr.js';
 export * from './audit/index.js';
 export * from './bearer/index.js';
 export * from './contact/index.js';
-export * from './chrono/index.js';
 export * from './encryption/index.js';
 export * from './device/index.js';
 export * from './entity/index.js';

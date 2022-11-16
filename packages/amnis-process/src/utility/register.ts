@@ -1,15 +1,18 @@
 import {
-  contactCreate,
+  contactCreator,
   IoOutput,
   ioOutput,
   LogBaseCreate,
-  profileCreate,
-  StateCreate,
+  profileCreator,
   System,
   Bearer,
   userCheck,
-  userCreate,
+  userCreator,
   IoContext,
+  stateEntitiesCreate,
+  StateEntities,
+  entityCreate,
+  sessionKey,
 } from '@amnis/core';
 import { sessionGenerate, bearerGenerate } from './common.js';
 
@@ -33,11 +36,11 @@ export async function register(
   system: System | undefined,
   username: string,
   options: RegisterOptions,
-): Promise<IoOutput<StateCreate>> {
+): Promise<IoOutput<StateEntities>> {
   const {
     password, nameDisplay, createSession, withTokens, otherTokens,
   } = options;
-  const output = ioOutput<StateCreate>();
+  const output = ioOutput<StateEntities>();
   const logs: LogBaseCreate[] = [];
 
   if (!system) {
@@ -50,7 +53,7 @@ export async function register(
     return output;
   }
 
-  const user = userCreate({
+  const user = userCreator({
     name: username,
     email: options.email,
     $roles: [...system.$initialRoles],
@@ -59,18 +62,16 @@ export async function register(
     user.password = await context.crypto.passHash(password);
   }
 
-  user.$owner = user.$id;
-
   logs.push(...userCheck(user));
 
-  const profile = profileCreate({
+  const profile = profileCreator({
     $user: user.$id,
     nameDisplay: nameDisplay || username,
-  }, { $owner: user.$id });
+  });
 
-  const contact = contactCreate({
+  const contact = contactCreator({
     name: profile.nameDisplay,
-  }, { $owner: user.$id });
+  });
   profile.$contact = contact.$id;
   if (user.email) {
     contact.emails.push(user.email);
@@ -85,14 +86,14 @@ export async function register(
     return output;
   }
 
-  const insertion: StateCreate = {
+  const insertion = stateEntitiesCreate({
     user: [user],
     profile: [profile],
     contact: [contact],
-  };
+  }, { $owner: user.$id });
 
   /**
-   * StateCreate newly created user and profile into the database.
+   * StateCreator newly created user and profile into the database.
    */
   const resultDbCreate = await context.database.create(insertion, {
     scope: { user: 'global', profile: 'global' },
@@ -104,8 +105,7 @@ export async function register(
    */
   if (createSession === true) {
     const session = sessionGenerate(user, profile);
-    session.$owner = user.$id;
-    output.json.result.session = [session];
+    output.json.result.session = [entityCreate(sessionKey, session)];
     output.cookies.authSession = await context.crypto.sessionEncode(session);
   }
 

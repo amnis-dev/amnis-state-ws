@@ -1,10 +1,10 @@
-import type { StateCreate } from '../state/index.js';
-import { localeCreate, localeKey, tk } from './locale.js';
+import type { StateCreator } from '../state/index.js';
+import { localeCreator, localeKey, tk } from './locale.js';
 
 /**
  * English logs.
  */
-export const localeDataEnLogs = localeCreate({
+export const localeDataEnLogs = localeCreator({
   code: 'en',
   set: 'logs',
   t: {
@@ -17,7 +17,7 @@ export const localeDataEnLogs = localeCreate({
 /**
  * Initial data for locale state.
  */
-export const localeDataEnCreate: StateCreate = {
+export const localeDataEnCreate: StateCreator = {
   [localeKey]: [
     localeDataEnLogs,
   ],

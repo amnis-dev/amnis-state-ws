@@ -1,4 +1,5 @@
-import { Entity, entityCreate } from '../entity/index.js';
+import { uid } from '../uid.js';
+import { EntityCreator } from '../entity/index.js';
 import type { Encryption, EncryptionBase, EncryptionBaseCreate } from './encryption.types.js';
 
 export const encryptionKey = 'encryption';
@@ -10,14 +11,12 @@ export const encryptionBase: EncryptionBase = {
   value: '',
 };
 
-export function encryptionCreate(
+export function encryptionCreator(
   encryption: EncryptionBaseCreate,
-  entity: Partial<Entity> = {},
-): Encryption {
-  const cryptoEntity = entityCreate<Encryption>(encryptionKey, {
+): EntityCreator<Encryption> {
+  return {
     ...encryptionBase,
     ...encryption,
-  }, entity);
-
-  return cryptoEntity;
+    $id: uid(encryptionKey),
+  };
 }

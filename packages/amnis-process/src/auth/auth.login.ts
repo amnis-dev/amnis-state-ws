@@ -1,11 +1,11 @@
 import {
-  Io, IoProcess, AuthLogin, StateCreate, CryptoPassword,
+  Io, IoProcess, AuthLogin, StateEntities, CryptoPassword,
 } from '@amnis/core';
 import { mwValidate } from '../mw/index.js';
 import { userFindByName, outputBadCredentials, loginSuccessProcess } from '../utility/index.js';
 
 const process: IoProcess<
-Io<AuthLogin, StateCreate>
+Io<AuthLogin, StateEntities>
 > = (context) => (
   async (input) => {
     const { database, crypto } = context;

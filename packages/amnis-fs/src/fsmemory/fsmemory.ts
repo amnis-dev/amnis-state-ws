@@ -1,4 +1,6 @@
-import { imageCreate, FileSystem } from '@amnis/core';
+import {
+  imageCreator, FileSystem, entityCreate, imageKey, Image,
+} from '@amnis/core';
 import { fsConfig } from '../config.js';
 import { isWebp, WEBP } from '../utility.js';
 
@@ -35,7 +37,7 @@ export const fsmemory: FileSystem = {
       /**
      * Create an image entity.
      */
-      const imageEntity = imageCreate({
+      const imageEntity = entityCreate<Image>(imageKey, imageCreator({
         extension: 'webp',
         mimetype: 'image/webp',
         title: 'Unknown Image',
@@ -43,7 +45,7 @@ export const fsmemory: FileSystem = {
         width: fileDimensions.width,
         size: Buffer.byteLength(buffer),
         ...imageProps,
-      });
+      }));
 
       /**
        * Save the file to dbmemory.

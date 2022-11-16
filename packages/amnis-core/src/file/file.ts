@@ -1,4 +1,5 @@
-import { Entity, entityCreate } from '../entity/index.js';
+import { EntityCreator } from '../entity/index.js';
+import { uid } from '../uid.js';
 import type { File, FileBase, FileBaseCreate } from './file.types.js';
 
 export const fileKey = 'file';
@@ -10,16 +11,13 @@ export const fileBase: FileBase = {
   size: 0,
 };
 
-export function fileCreate<F extends File>(
-  key: string,
-  file: FileBaseCreate<F>,
-  entity: Partial<Entity> = {},
-): F {
-  const fileEntity = entityCreate<File>(key, {
+export function fileCreator(
+  file: FileBaseCreate,
+): EntityCreator<File> {
+  return {
     ...fileBase,
     ...file,
     slug: file.slug?.length ? file.slug : file.title.replace(/ /g, '-').replace(/[-]+/g, '-').replace(/[^\w-]+/g, '').toLowerCase(),
-  }, entity);
-
-  return fileEntity as F;
+    $id: uid(fileKey),
+  };
 }

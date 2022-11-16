@@ -1,4 +1,4 @@
-import { videoKey, videoCreate } from './video.js';
+import { videoKey, videoCreator } from './video.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('video key should be is properly set', () => {
  * ============================================================
  */
 test('should create a video', () => {
-  const video = videoCreate({
+  const video = videoCreator({
     title: 'Introduction to Amnis State',
     extension: 'webm',
     width: 0,

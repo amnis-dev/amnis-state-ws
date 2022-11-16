@@ -2,14 +2,15 @@ import {
   dateNumeric,
   ioProcess,
   Profile,
-  profileCreate,
+  profileCreator,
   Session,
   Bearer,
   bearerCreate,
   uid,
   User,
-  userCreate,
+  userCreator,
   schemaAuth,
+  stateEntitiesCreate,
 } from '@amnis/core';
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
@@ -27,16 +28,16 @@ beforeAll(async () => {
 /**
  * Add a test user and profile to the database.
  */
-  const users: User[] = [
-    userCreate({
+  const users = [
+    userCreator({
       name: 'ExampleUser',
       email: 'user.example@amnis.dev',
       password: await cryptoNode.passHash('passwd1'),
     }),
   ];
 
-  const profiles: Profile[] = [
-    profileCreate({
+  const profiles = [
+    profileCreator({
       nameDisplay: 'Example User',
       $user: users[0].$id,
     }),
@@ -45,10 +46,10 @@ beforeAll(async () => {
   /**
  * Create test data in the memory database.
  */
-  dbmemory.create({
+  dbmemory.create(stateEntitiesCreate({
     user: users,
     profile: profiles,
-  });
+  }));
 });
 
 const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;

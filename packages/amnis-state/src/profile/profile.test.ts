@@ -42,9 +42,9 @@ test('should handle creating a new profile', () => {
 test('should handle updating a profile', () => {
   const store = storeSetup();
 
-  const actionCreate = profileActions.create({ ...profileBase });
+  const actionCreator = profileActions.create({ ...profileBase });
 
-  store.dispatch(actionCreate);
+  store.dispatch(actionCreator);
   const entities1 = profileSelectors.selectAll(store.getState());
   const profileId = entities1[0].$id;
 

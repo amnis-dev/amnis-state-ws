@@ -1,4 +1,4 @@
-import { contactKey, contactCreate } from './contact.js';
+import { contactKey, contactCreator } from './contact.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('contact key should be is properly set', () => {
  * ============================================================
  */
 test('should create a contact', () => {
-  const contact = contactCreate({
+  const contact = contactCreator({
     name: 'Amnis Contact',
   });
 

@@ -1,4 +1,5 @@
-import { Entity, entityCreate } from '../entity/index.js';
+import { EntityCreator } from '../entity/index.js';
+import { uid } from '../uid.js';
 import type { Audit, AuditBase, AuditBaseCreate } from './audit.types.js';
 
 export const auditKey = 'audit';
@@ -8,14 +9,12 @@ export const auditBase: AuditBase = {
   completed: false,
 };
 
-export function auditCreate(
+export function auditCreator(
   audit: AuditBaseCreate,
-  entity: Partial<Entity> = {},
-): Audit {
-  const auditEntity = entityCreate<Audit>(auditKey, {
+): EntityCreator<Audit> {
+  return {
     ...auditBase,
     ...audit,
-  }, entity);
-
-  return auditEntity;
+    $id: uid(auditKey),
+  };
 }

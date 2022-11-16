@@ -2,31 +2,32 @@
 import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions.js';
 import {
   Entity,
-  EntityCreate,
+  EntityCreator,
   entityKeys,
   IoOutputJson,
-  StateCreate,
-  StateDelete,
+  StateCreator,
+  StateDeleter,
+  StateEntities,
   StateQuery,
-  StateUpdate,
+  StateUpdater,
 } from '@amnis/core';
 
 export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
   create: builder.mutation<
-  IoOutputJson<StateCreate>,
-  StateCreate
+  IoOutputJson<StateEntities>,
+  StateCreator
   >({
-    query: (payload: StateCreate) => ({
+    query: (payload) => ({
       url: 'create',
       method: 'post',
-      body: Object.keys(payload).reduce<StateCreate>((acc, key) => {
+      body: Object.keys(payload).reduce<StateCreator>((acc, key) => {
         payload[key].forEach((entity) => {
-          const entityNew = Object.keys(entity).reduce<EntityCreate<Entity>>((accE, keyE) => {
+          const entityNew = Object.keys(entity).reduce<EntityCreator<Entity>>((accE, keyE) => {
             if (keyE === '$id' && !entityKeys.includes(keyE)) {
               accE[keyE] = entity[keyE];
             }
             return accE;
-          }, {} as EntityCreate<Entity>);
+          }, {} as EntityCreator<Entity>);
 
           if (!acc[key]) { acc[key] = []; }
           acc[key].push(entityNew);
@@ -37,10 +38,10 @@ export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder
   }),
 
   read: builder.query<
-  IoOutputJson<StateCreate>,
+  IoOutputJson<StateEntities>,
   StateQuery
   >({
-    query: (payload: StateQuery) => ({
+    query: (payload) => ({
       url: 'read',
       method: 'post',
       body: payload,
@@ -48,10 +49,10 @@ export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder
   }),
 
   update: builder.mutation<
-  IoOutputJson<StateCreate>,
-  StateUpdate
+  IoOutputJson<StateEntities>,
+  StateUpdater
   >({
-    query: (payload: StateUpdate) => ({
+    query: (payload) => ({
       url: 'update',
       method: 'post',
       body: payload,
@@ -59,10 +60,10 @@ export const apiCrudQueries = <T extends EndpointBuilder<any, any, any>>(builder
   }),
 
   delete: builder.mutation<
-  IoOutputJson<StateDelete>,
-  StateDelete
+  IoOutputJson<StateDeleter>,
+  StateDeleter
   >({
-    query: (payload: StateDelete) => ({
+    query: (payload) => ({
       url: 'delete',
       method: 'post',
       body: payload,

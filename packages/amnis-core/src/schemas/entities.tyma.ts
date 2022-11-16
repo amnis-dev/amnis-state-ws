@@ -1,4 +1,4 @@
-import type { EntityCreate, EntityUpdate } from '../entity/index.js';
+import type { EntityCreator, EntityUpdate } from '../entity/index.js';
 
 import type { Audit } from '../audit/index.js';
 import type { Contact } from '../contact/index.js';
@@ -17,26 +17,26 @@ import type { User } from '../user/index.js';
 import type { Video } from '../video/index.js';
 import type { Website } from '../website/index.js';
 
-export interface StateCreate {
-  audit?: EntityCreate<Audit>[];
-  contact?: EntityCreate<Contact>[];
-  encryption?: EntityCreate<Encryption>[];
-  history?: EntityCreate<History>[];
-  image?: EntityCreate<Image>[];
-  locale?: EntityCreate<Locale>[];
-  log?: EntityCreate<Log>[];
-  note?: EntityCreate<Note>[];
-  profile?: EntityCreate<Profile>[];
-  role?: EntityCreate<Role>[];
-  service?: EntityCreate<Service>[];
-  system?: EntityCreate<System>[];
-  user?: EntityCreate<User>[];
-  session?: EntityCreate<Session>[];
-  video?: EntityCreate<Video>[];
-  website?: EntityCreate<Website>[];
+export interface StateCreator {
+  audit?: EntityCreator<Audit>[];
+  contact?: EntityCreator<Contact>[];
+  encryption?: EntityCreator<Encryption>[];
+  history?: EntityCreator<History>[];
+  image?: EntityCreator<Image>[];
+  locale?: EntityCreator<Locale>[];
+  log?: EntityCreator<Log>[];
+  note?: EntityCreator<Note>[];
+  profile?: EntityCreator<Profile>[];
+  role?: EntityCreator<Role>[];
+  service?: EntityCreator<Service>[];
+  system?: EntityCreator<System>[];
+  user?: EntityCreator<User>[];
+  session?: EntityCreator<Session>[];
+  video?: EntityCreator<Video>[];
+  website?: EntityCreator<Website>[];
 }
 
-export interface StateUpdate {
+export interface StateUpdater {
   audit?: EntityUpdate<Audit>[];
   contact?: EntityUpdate<Contact>[];
   encryption?: EntityUpdate<Encryption>[];

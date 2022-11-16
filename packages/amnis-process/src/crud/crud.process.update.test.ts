@@ -12,10 +12,11 @@ import {
   userKey,
   ioOutputErrored,
   coreActions,
-  StateUpdate,
+  StateUpdater,
   historyKey,
   profileKey,
   Profile,
+  stateEntitiesCreate,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
 import { cryptoNode } from '@amnis/crypto';
@@ -41,12 +42,13 @@ const io = ioProcess(
 );
 
 beforeAll(async () => {
-  store.dispatch(coreActions.create(data));
-  await dbmemory.create(data);
+  const stateEntities = stateEntitiesCreate(data);
+  store.dispatch(coreActions.create(stateEntities));
+  await dbmemory.create(stateEntities);
 });
 
 test('should not update without bearer', async () => {
-  const inputUpdate: IoInput<StateUpdate> = {
+  const inputUpdate: IoInput<StateUpdater> = {
     body: {
       [userKey]: [
         {
@@ -73,7 +75,7 @@ test('should login as administrator and update user password', async () => {
   const outputLogin = await io.login(inputLogin);
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
-  const inputUpdate: IoInput<StateUpdate> = {
+  const inputUpdate: IoInput<StateUpdater> = {
     accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
@@ -118,7 +120,7 @@ test('should login as administrator and update profile display name', async () =
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const nameNew = 'The New Administrator';
-  const inputUpdate: IoInput<StateUpdate> = {
+  const inputUpdate: IoInput<StateUpdater> = {
     accessEncoded: bearerAccess.access,
     body: {
       [profileKey]: [
@@ -164,7 +166,7 @@ test('should login as executive and update user name', async () => {
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const nameNew = 'userupdated';
-  const inputUpdate: IoInput<StateUpdate> = {
+  const inputUpdate: IoInput<StateUpdater> = {
     accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
@@ -211,7 +213,7 @@ test('should login as user with updated credentials and update own profile displ
   const profile = outputLogin.json.result?.[profileKey][0] as Profile;
 
   const nameNew = 'The New User Me';
-  const inputUpdate: IoInput<StateUpdate> = {
+  const inputUpdate: IoInput<StateUpdater> = {
     accessEncoded: bearerAccess.access,
     body: {
       [profileKey]: [
@@ -257,7 +259,7 @@ test('should login as user and be denied updating another profile', async () => 
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const nameNew = 'New Profile Name';
-  const inputUpdate: IoInput<StateUpdate> = {
+  const inputUpdate: IoInput<StateUpdater> = {
     accessEncoded: bearerAccess.access,
     body: {
       [profileKey]: [

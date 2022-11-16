@@ -1,4 +1,4 @@
-import { roleKey, roleCreate } from './role.js';
+import { roleKey, roleCreator } from './role.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('role key should be is properly set', () => {
  * ============================================================
  */
 test('should create a role', () => {
-  const role = roleCreate({
+  const role = roleCreator({
     name: 'Base Role',
   });
 

@@ -1,4 +1,4 @@
-import { noteKey, noteCreate, noteBase } from './note.js';
+import { noteKey, noteCreator, noteBase } from './note.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('note key should be is properly set', () => {
  * ============================================================
  */
 test('should create a note', () => {
-  const note = noteCreate(noteBase);
+  const note = noteCreator(noteBase);
 
   expect(note).toEqual(
     expect.objectContaining(noteBase),

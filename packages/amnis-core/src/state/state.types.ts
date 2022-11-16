@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { GrantScope } from '@amnis/core';
 import type { UID, UIDList } from '../types.js';
-import type { Entity, EntityCreate } from '../entity/index.js';
+import type { Entity, EntityCreator } from '../entity/index.js';
 
 /**
  * An ambiguous state.
@@ -92,7 +92,7 @@ export type StateEntities = State<Entity[]>;
   * A common stateful result from creations.
   * A state object with entities to be created
   */
-export type StateCreate = State<EntityCreate<Entity>[]>;
+export type StateCreator = State<EntityCreator<Entity>[]>;
 
 /**
   * A query object to search for entities.
@@ -104,13 +104,13 @@ export type StateQuery = State<Query>;
   * A state object with parial entities to update.
   */
 export type StateUpdateEntity = { $id: Entity['$id'] } & Record<string, unknown>;
-export type StateUpdate = State<StateUpdateEntity[]>;
+export type StateUpdater = State<StateUpdateEntity[]>;
 
 /**
   * A common stateful result from deletions.
   * A state object with delete ids.
   */
-export type StateDelete = State<UIDList>;
+export type StateDeleter = State<UIDList>;
 
 /**
   * ID Remappings.

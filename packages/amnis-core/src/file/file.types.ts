@@ -85,4 +85,4 @@ export type FileBase = EntityExtension<File>;
 /**
   * Base properties in order to create a file.
   */
-export type FileBaseCreate<F extends File> = EntityExtensionCreate<F, 'title' | 'mimetype' | 'size'>;
+export type FileBaseCreate = EntityExtensionCreate<File, 'title' | 'mimetype' | 'size'>;

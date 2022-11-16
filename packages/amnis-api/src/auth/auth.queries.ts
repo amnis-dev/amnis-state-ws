@@ -7,15 +7,14 @@ import {
   AuthRenew,
   AuthVerify,
   IoOutputJson,
-  StateCreate,
-  StateDelete,
-  StateUpdate,
+  StateDeleter,
+  StateEntities,
 } from '@amnis/core';
 
 export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
 
   login: builder.mutation<
-  IoOutputJson<StateCreate>,
+  IoOutputJson<StateEntities>,
   AuthLogin
   >({
     query: (payload) => ({
@@ -27,7 +26,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
   }),
 
   logout: builder.mutation<
-  IoOutputJson<StateDelete>,
+  IoOutputJson<StateDeleter>,
   AuthLogout
   >({
     query: (payload) => ({
@@ -39,7 +38,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
   }),
 
   pkce: builder.mutation<
-  IoOutputJson<StateCreate>,
+  IoOutputJson<StateEntities>,
   AuthPkce
   >({
     query: (payload) => ({
@@ -51,7 +50,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
   }),
 
   renew: builder.query<
-  IoOutputJson<StateUpdate>,
+  IoOutputJson<StateEntities>,
   AuthRenew
   >({
     query: (payload) => ({

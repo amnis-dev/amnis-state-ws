@@ -1,8 +1,8 @@
 import { uid } from '../uid.js';
-import {
+import type {
   EntityExtension,
   EntityExtensionCreate,
-  entityCreate,
+  EntityCreator,
 } from '../entity/index.js';
 import type { Permit } from './permit.types.js';
 
@@ -15,13 +15,12 @@ export const permitBase: EntityExtension<Permit> = {
   grants: [],
 };
 
-export function permitCreate(
+export function permitCreator(
   permit: EntityExtensionCreate<Permit, '$issuer' | '$holder' | '$target'>,
-): Permit {
-  const permitEntity = entityCreate<Permit>(permitKey, {
+): EntityCreator<Permit> {
+  return {
     ...permitBase,
     ...permit,
-  });
-
-  return permitEntity;
+    $id: uid(permitKey),
+  };
 }

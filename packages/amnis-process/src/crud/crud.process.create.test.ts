@@ -7,15 +7,16 @@ import {
   ioProcess,
   schemaAuth,
   schemaEntity,
-  StateCreate,
+  StateCreator,
   Bearer,
-  userCreate,
+  userCreator,
   userKey,
   ioOutputErrored,
   coreActions,
   User,
   userBase,
   uid,
+  stateEntitiesCreate,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
 import { cryptoNode } from '@amnis/crypto';
@@ -41,24 +42,25 @@ const io = ioProcess(
 );
 
 beforeAll(async () => {
-  store.dispatch(coreActions.create(data));
-  await dbmemory.create(data);
+  const stateEntities = stateEntitiesCreate(data);
+  store.dispatch(coreActions.create(stateEntities));
+  await dbmemory.create(stateEntities);
 });
 
 test('should not create without bearer', async () => {
-  const inputCreate: IoInput<StateCreate> = {
+  const inputCreator: IoInput<StateCreator> = {
     body: {
       [userKey]: [
-        userCreate({
+        userCreator({
           name: 'New User',
         }),
       ],
     },
   };
 
-  const outputCreate = await io.create(inputCreate);
+  const outputCreator = await io.create(inputCreator);
 
-  expect(outputCreate.status).toBe(401);
+  expect(outputCreator.status).toBe(401);
 });
 
 test('should login as administrator and create user', async () => {
@@ -80,7 +82,7 @@ test('should login as administrator and create user', async () => {
 
   // expect(userEntity.committed).toBe(false);
 
-  const inputCreate: IoInput<StateCreate> = {
+  const inputCreator: IoInput<StateCreator> = {
     accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
@@ -89,11 +91,11 @@ test('should login as administrator and create user', async () => {
     },
   };
 
-  const outputCreate = await io.create(inputCreate);
+  const outputCreator = await io.create(inputCreator);
 
-  expect(outputCreate.status).toBe(200);
-  expect(outputCreate.json.result?.user[0]?.committed).toBe(true);
-  expect(ioOutputErrored(outputCreate)).toBe(false);
+  expect(outputCreator.status).toBe(200);
+  expect(outputCreator.json.result?.user[0]?.committed).toBe(true);
+  expect(ioOutputErrored(outputCreator)).toBe(false);
 
   const storage = memoryStorage();
 
@@ -118,17 +120,17 @@ test('should login as executive and create user', async () => {
     name: 'Exec\'s New User',
   };
 
-  const inputCreate: IoInput<StateCreate> = {
+  const inputCreator: IoInput<StateCreator> = {
     accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [userNew],
     },
   };
 
-  const outputCreate = await io.create(inputCreate);
+  const outputCreator = await io.create(inputCreator);
 
-  expect(outputCreate.status).toBe(200);
-  expect(ioOutputErrored(outputCreate)).toBe(false);
+  expect(outputCreator.status).toBe(200);
+  expect(ioOutputErrored(outputCreator)).toBe(false);
 
   const storage = memoryStorage();
 
@@ -153,19 +155,17 @@ test('should login as user and cannot create user', async () => {
     name: 'User\'s New User',
   };
 
-  const inputCreate: IoInput<StateCreate> = {
+  const inputCreator: IoInput<StateCreator> = {
     accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [userNew],
     },
   };
 
-  const outputCreate = await io.create(inputCreate);
+  const outputCreator = await io.create(inputCreator);
 
-  console.log(JSON.stringify(outputCreate, null, 2));
-
-  expect(outputCreate.status).toBe(200);
-  expect(ioOutputErrored(outputCreate)).toBe(true);
+  expect(outputCreator.status).toBe(200);
+  expect(ioOutputErrored(outputCreator)).toBe(true);
 
   const storage = memoryStorage();
 

@@ -2,12 +2,15 @@ import {
   AuthRenew,
   dateNumeric,
   profileKey,
-  sessionCreate,
-  sessionKey, StateCreate,
+  sessionCreator,
+  sessionKey,
   userKey,
   IoProcess,
   Io,
   ioOutput,
+  StateEntities,
+  entityCreate,
+  Session,
 } from '@amnis/core';
 import { processConfig } from '../config.js';
 import { mwSession, mwValidate } from '../mw/index.js';
@@ -17,13 +20,13 @@ import { profileFetch, bearerGenerate, userFindById } from '../utility/common.js
  * Renews a session holder's session and access bearers.
  */
 const process: IoProcess<
-Io<AuthRenew, StateCreate>
+Io<AuthRenew, StateEntities>
 > = (context) => (
   async (input) => {
     const { database, crypto } = context;
     const { session, body } = input;
     const { info } = body;
-    const output = ioOutput<StateCreate>();
+    const output = ioOutput<StateEntities>();
     output.json.result = {};
 
     if (!session) {
@@ -79,7 +82,7 @@ Io<AuthRenew, StateCreate>
     /**
      * Create a new session.
      */
-    const sessionNew = sessionCreate({
+    const sessionNew = sessionCreator({
       $subject: session.$subject,
       exp: dateNumeric(processConfig.PROCESS_SESSION_LIFE),
       name: session.name,
@@ -89,7 +92,11 @@ Io<AuthRenew, StateCreate>
 
     output.cookies.authSession = await crypto.sessionEncode(sessionNew);
 
-    output.json.result[sessionKey] = [sessionNew];
+    output.json.result[sessionKey] = [entityCreate<Session>(
+      sessionKey,
+      sessionNew,
+      { $owner: session.$subject, $creator: session.$subject },
+    )];
 
     output.json.bearers = [bearer];
 

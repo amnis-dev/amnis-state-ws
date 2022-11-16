@@ -1,18 +1,19 @@
 import { uid } from '../uid.js';
 import { roleKey } from '../role/index.js';
-import { systemCreate, systemKey } from '../system/index.js';
+import { System, systemCreator, systemKey } from '../system/index.js';
 import { websiteKey } from '../website/index.js';
 
 import { stateReferenceQuery, stateToCreate } from './state.js';
-import { StateCreate, StateQuery } from './state.types.js';
+import { StateCreator, StateQuery } from './state.types.js';
+import { entityCreate } from '../entity/entity.js';
 
-const system = systemCreate({
+const system = entityCreate<System>(systemKey, systemCreator({
   name: 'Query System',
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),
   $initialRoles: [uid(roleKey), uid(roleKey)],
   $website: uid(websiteKey),
-});
+}));
 
 system.$creator = system.$id;
 system.$owner = system.$id;
@@ -43,7 +44,7 @@ const stateBasic = {
   },
 };
 
-const stateArray: StateCreate = {
+const stateArray: StateCreator = {
   [systemKey]: [system],
 };
 
@@ -83,9 +84,9 @@ test('should generate a proper identifier query', () => {
  * ============================================================
  */
 test('should convert state to create state object', () => {
-  const stateCreate = stateToCreate(stateBasic);
+  const stateCreator = stateToCreate(stateBasic);
 
-  const values = Object.values(stateCreate);
+  const values = Object.values(stateCreator);
   expect(values).toHaveLength(2);
   values.forEach((entities) => {
     expect(Array.isArray(entities)).toEqual(true);

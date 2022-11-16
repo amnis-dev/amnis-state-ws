@@ -1,4 +1,5 @@
-import { Entity, entityCreate } from '../entity/index.js';
+import type { EntityCreator } from '../entity/index.js';
+import { uid } from '../uid.js';
 import type { Role, RoleBase, RoleBaseCreate } from './role.types.js';
 
 export const roleKey = 'role';
@@ -10,14 +11,12 @@ export const roleBase: RoleBase = {
   grants: [],
 };
 
-export function roleCreate(
+export function roleCreator(
   role: RoleBaseCreate,
-  entity: Partial<Entity> = {},
-): Role {
-  const roleEntity = entityCreate<Role>(roleKey, {
+): EntityCreator<Role> {
+  return {
     ...roleBase,
     ...role,
-  }, entity);
-
-  return roleEntity;
+    $id: uid(roleKey),
+  };
 }

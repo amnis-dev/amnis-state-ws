@@ -1,5 +1,5 @@
 import { uid } from '../uid.js';
-import { permitKey, permitCreate } from './permit.js';
+import { permitKey, permitCreator } from './permit.js';
 
 /**
  * ============================================================
@@ -12,7 +12,7 @@ test('permit key should be is properly set', () => {
  * ============================================================
  */
 test('should create a permit', () => {
-  const permit = permitCreate({
+  const permit = permitCreator({
     $issuer: uid('user'),
     $holder: uid('user'),
     $target: uid('entity'),

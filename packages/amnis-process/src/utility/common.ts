@@ -3,11 +3,11 @@ import {
   JWTAccess,
   Bearer,
   bearerCreate,
-  StateCreate,
+  StateEntities,
   Profile,
   profileKey,
   Session,
-  sessionCreate,
+  sessionCreator,
   sessionKey,
   ioOutput,
   UID,
@@ -15,6 +15,8 @@ import {
   User,
   userKey,
   IoContext,
+  EntityCreator,
+  stateEntitiesCreate,
 } from '@amnis/core';
 import { processConfig } from '../config.js';
 
@@ -74,15 +76,15 @@ export async function userFindById(
  * Creates a session with user and profile data.
  */
 export function sessionGenerate(
-  user: User,
-  profile: Profile,
-): Session {
+  user: EntityCreator<User>,
+  profile: EntityCreator<Profile>,
+): EntityCreator<Session> {
   const sessionExpires = dateNumeric(processConfig.PROCESS_SESSION_LIFE);
 
   /**
    * Create the new user session.
    */
-  const session = sessionCreate({
+  const session = sessionCreator({
     $subject: user.$id,
     exp: sessionExpires,
     admin: false,
@@ -97,7 +99,7 @@ export function sessionGenerate(
  * Generates a new set of bearers
  */
 export async function bearerGenerate(
-  user: User,
+  user: EntityCreator<User>,
   context: IoContext,
 ): Promise<Bearer> {
   const bearerExpires = dateNumeric(processConfig.PROCESS_TOKEN_LIFE);
@@ -167,7 +169,7 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
      * The profile should have been created upon registration...
      * but a user can exist without a profile.
      */
-    // const profile = profileCreate({
+    // const profile = profileCreator({
     //   $user: user.$id,
     //   nameDisplay: user.name,
     // });
@@ -191,7 +193,7 @@ export async function loginSuccessProcess(
   context: IoContext,
   user: User,
 ) {
-  const output = ioOutput<StateCreate>();
+  const output = ioOutput<StateEntities>();
 
   const profile = await profileFetch(context.database, user);
 
@@ -211,11 +213,11 @@ export async function loginSuccessProcess(
 
   user.password = undefined;
 
-  output.json.result = {
+  output.json.result = stateEntitiesCreate({
     [userKey]: [user],
     [profileKey]: [profile],
     [sessionKey]: [session],
-  };
+  }, { $creator: user.$id });
 
   output.json.bearers = [bearerAccess];
 

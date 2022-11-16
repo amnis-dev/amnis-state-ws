@@ -1,6 +1,7 @@
-import { Entity, entityCreate } from '../entity/index.js';
+import { EntityCreator } from '../entity/index.js';
 import type { LogBaseCreate } from '../log/index.js';
 import { regexWebUrl } from '../regex.js';
+import { uid } from '../uid.js';
 import type { Contact, ContactBase, ContactBaseCreate } from './contact.types.js';
 
 export const contactKey = 'contact';
@@ -31,14 +32,12 @@ export function contactCheck(contact: Contact): LogBaseCreate[] {
   return logs;
 }
 
-export function contactCreate(
+export function contactCreator(
   contact: ContactBaseCreate,
-  entity: Partial<Entity> = {},
-): Contact {
-  const contactEntity = entityCreate<Contact>(contactKey, {
+): EntityCreator<Contact> {
+  return {
     ...contactBase,
     ...contact,
-  }, entity);
-
-  return contactEntity;
+    $id: uid(contactKey),
+  };
 }

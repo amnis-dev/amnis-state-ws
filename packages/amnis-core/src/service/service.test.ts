@@ -1,4 +1,4 @@
-import { serviceKey, serviceCreate } from './service.js';
+import { serviceKey, serviceCreator } from './service.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('service key should be is properly set', () => {
  * ============================================================
  */
 test('should create a service', () => {
-  const service = serviceCreate({
+  const service = serviceCreator({
     name: 'My Test Service',
   });
 

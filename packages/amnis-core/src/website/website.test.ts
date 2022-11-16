@@ -1,4 +1,4 @@
-import { websiteKey, websiteCreate } from './website.js';
+import { websiteKey, websiteCreator } from './website.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('website key should be is properly set', () => {
  * ============================================================
  */
 test('should create a website', () => {
-  const website = websiteCreate({
+  const website = websiteCreator({
     name: 'Amnis',
     url: 'https://amnis.dev',
   });

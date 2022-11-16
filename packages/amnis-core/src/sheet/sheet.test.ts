@@ -1,4 +1,4 @@
-import { sheetKey, sheetCreate } from './sheet.js';
+import { sheetKey, sheetCreator } from './sheet.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('sheet key should be is properly set', () => {
  * ============================================================
  */
 test('should create a sheet', () => {
-  const sheet = sheetCreate({
+  const sheet = sheetCreator({
     data: {},
   });
 

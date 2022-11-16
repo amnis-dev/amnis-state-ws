@@ -1,9 +1,9 @@
 import { uid } from '../uid.js';
 import { dateNumeric } from '../core.js';
-import {
+import type {
   EntityExtension,
   EntityExtensionCreate,
-  entityCreate,
+  EntityCreator,
 } from '../entity/index.js';
 import type { Session } from './session.types.js';
 
@@ -17,13 +17,12 @@ export const sessionBase: EntityExtension<Session> = {
   avatar: null,
 };
 
-export function sessionCreate(
+export function sessionCreator(
   session: EntityExtensionCreate<Session, '$subject' | 'exp' | 'name'>,
-): Session {
-  const sessionEntity = entityCreate<Session>(sessionKey, {
+): EntityCreator<Session> {
+  return {
     ...sessionBase,
     ...session,
-  });
-
-  return sessionEntity;
+    $id: uid(sessionKey),
+  };
 }

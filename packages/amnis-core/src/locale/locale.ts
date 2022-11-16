@@ -1,5 +1,6 @@
-import { Entity, entityCreate } from '../entity/index.js';
+import { EntityCreator } from '../entity/index.js';
 import type { LogBaseCreate } from '../log/index.js';
+import { uid } from '../uid.js';
 import type {
   Locale, LocaleBase, LocaleBaseCreate, LocaleTranslationKey, LocaleTranslation,
 } from './locale.types.js';
@@ -59,14 +60,12 @@ export function localeCheck(locale: Locale): LogBaseCreate[] {
   return logs;
 }
 
-export function localeCreate(
+export function localeCreator(
   locale: LocaleBaseCreate,
-  entity: Partial<Entity> = {},
-): Locale {
-  const localeEntity = entityCreate<Locale>(localeKey, {
+): EntityCreator<Locale> {
+  return {
     ...localeBase,
     ...locale,
-  }, entity);
-
-  return localeEntity;
+    $id: uid(localeKey),
+  };
 }

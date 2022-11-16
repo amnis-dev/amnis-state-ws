@@ -3,18 +3,18 @@ import {
   Io,
   ioOutput,
   IoProcess,
-  StateCreate,
+  StateEntities,
 } from '@amnis/core';
 import { oauthTwitter, oauthMicrosoft } from '../utility/index.js';
 import { mwValidate } from '../mw/index.js';
 
 const process: IoProcess<
-Io<AuthPkce, StateCreate>
+Io<AuthPkce, StateEntities>
 > = (context) => (
   async (input) => {
     const { body } = input;
 
-    const output = ioOutput<StateCreate>();
+    const output = ioOutput<StateEntities>();
     const { platform, ...pkceAuth } = body;
 
     switch (platform) {

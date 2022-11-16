@@ -1,10 +1,11 @@
 import { deviceParse } from '../device/index.js';
-import { entityCreate, Entity } from '../entity/index.js';
-import { LogBaseCreate } from '../log/index.js';
+import type { EntityCreator } from '../entity/index.js';
+import type { LogBaseCreate } from '../log/index.js';
 import { regexAlphanumeric, regexEmail } from '../regex.js';
 import type { DeviceString } from '../device/index.js';
 import type { User, UserBase, UserBaseCreate } from './user.types.js';
 import { coreConfig } from '../config.js';
+import { uid } from '../uid.js';
 
 export const userKey = 'user';
 
@@ -22,7 +23,7 @@ export function userCheckDevices(devices: DeviceString[]): boolean {
 /**
  * User validation method.
  */
-export function userCheck(user: User): LogBaseCreate[] {
+export function userCheck(user: EntityCreator<User>): LogBaseCreate[] {
   const logs: LogBaseCreate[] = [];
 
   if (user.password && !regexAlphanumeric.test(user.name)) {
@@ -71,14 +72,12 @@ export function userCheck(user: User): LogBaseCreate[] {
 /**
  * User creation.
  */
-export function userCreate(
+export function userCreator(
   user: UserBaseCreate,
-  entity: Partial<Entity> = {},
-): User {
-  const userEntity = entityCreate<User>(userKey, {
+): EntityCreator<User> {
+  return {
     ...userBase,
     ...user,
-  }, entity);
-
-  return userEntity;
+    $id: uid(userKey),
+  };
 }

@@ -1,8 +1,8 @@
 import { uid } from '../uid.js';
 import { profileKey } from '../profile/index.js';
-import type { StateUpdate } from '../state/index.js';
+import type { StateUpdater } from '../state/index.js';
 import {
-  historyKey, historyCreate, historyBase, historyMake,
+  historyKey, historyCreator, historyBase, historyMake,
 } from './history.js';
 
 /**
@@ -16,7 +16,7 @@ test('history key should be is properly set', () => {
  * ============================================================
  */
 test('should create a history', () => {
-  const history = historyCreate(historyBase);
+  const history = historyCreator(historyBase);
 
   expect(history).toEqual(
     expect.objectContaining(historyBase),
@@ -28,7 +28,7 @@ test('should create a history', () => {
  */
 test('should make history', () => {
   const profileId = uid('profile');
-  const stateUpdate: StateUpdate = {
+  const stateUpdate: StateUpdater = {
     profile: [{
       $id: profileId,
       nameDisplay: 'New Name',
@@ -53,7 +53,7 @@ test('should make history', () => {
  */
 test('should not make history with denied key', () => {
   const profileId = uid('profile');
-  const stateUpdate: StateUpdate = {
+  const stateUpdate: StateUpdater = {
     profile: [{
       $id: profileId,
       nameDisplay: 'New Name',

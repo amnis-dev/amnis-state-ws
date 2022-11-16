@@ -26,11 +26,11 @@ import {
   Profile,
   profileSelectors,
   profileKey,
-  userCreate,
+  userCreator,
 } from '@amnis/state/index.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { passCreate } from '@amnis/process';
+import { passCreator } from '@amnis/process';
 import { dbmemory } from '@amnis/db/memory/index.js';
 import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
@@ -197,10 +197,10 @@ test('user create global should be -DENIED- as Moddie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       [userKey]: [
-        userCreate({
+        userCreator({
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
-          password: passCreate('passwd0'),
+          password: passCreator('passwd0'),
         }),
       ],
     }),

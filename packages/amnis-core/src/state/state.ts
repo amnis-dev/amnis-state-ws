@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
-import type { Entity } from '../entity/index.js';
+import { Entity, entityCreate } from '../entity/index.js';
 import type { Grant, Task } from '../grant/index.js';
 import type {
-  State, StateCreate, StateQuery, StateScope,
+  State, StateCreator, StateEntities, StateQuery, StateScope,
 } from './state.types.js';
 
 function stateQueryReferenceMutate(
@@ -49,7 +49,7 @@ function stateQueryReferenceMutate(
  * Creates a new state query based on the references in a state.
  * The new query will NOT include any references that already exist.
  */
-export function stateReferenceQuery(stateCreate: StateCreate): StateQuery {
+export function stateReferenceQuery(stateCreator: StateCreator): StateQuery {
   const stateQuery: StateQuery = {};
 
   const entityRefs: string[] = [];
@@ -58,7 +58,7 @@ export function stateReferenceQuery(stateCreate: StateCreate): StateQuery {
   /**
    * Loop through each of the slice keys.
    */
-  Object.values(stateCreate).forEach((slice) => {
+  Object.values(stateCreator).forEach((slice) => {
     /**
      * Check each entity on the slices.
      */
@@ -95,8 +95,8 @@ export function stateReferenceQuery(stateCreate: StateCreate): StateQuery {
 /**
  * Converts a redux state tree to a state create object type.
  */
-export function stateToCreate(state: State): StateCreate {
-  const stateCreate: StateCreate = {};
+export function stateToCreate(state: State): StateCreator {
+  const stateCreator: StateCreator = {};
 
   Object.keys(state).every((sliceKey) => {
     const slice = state[sliceKey] as EntityState<Entity>;
@@ -105,12 +105,12 @@ export function stateToCreate(state: State): StateCreate {
       return true;
     }
 
-    stateCreate[sliceKey] = Object.values(slice.entities) as Entity[];
+    stateCreator[sliceKey] = Object.values(slice.entities) as Entity[];
 
     return true;
   });
 
-  return stateCreate;
+  return stateCreator;
 }
 
 /**
@@ -125,4 +125,19 @@ export function stateScopeCreate(grants: Grant[], attempt: Task): StateScope {
     }
   });
   return authScope;
+}
+
+/**
+ * Creates a state of new complete entities from a creator state.
+ */
+export function stateEntitiesCreate(
+  stateCreator: StateCreator,
+  entityProps: Partial<Entity> = {},
+): StateEntities {
+  return Object.keys(stateCreator).reduce<StateEntities>((acc, sliceKey) => {
+    acc[sliceKey] = stateCreator[sliceKey].map(
+      (entityCreator) => entityCreate(sliceKey, entityCreator, entityProps),
+    );
+    return acc;
+  }, {});
 }

@@ -1,4 +1,5 @@
-import { entityCreate } from '../entity/index.js';
+import type { EntityCreator } from '../entity/index.js';
+import { uid } from '../uid.js';
 import type { Sheet, SheetBase, SheetBaseCreate } from './sheet.types.js';
 
 export const sheetKey = 'sheet';
@@ -7,13 +8,12 @@ export const sheetBase: SheetBase = {
   data: {},
 };
 
-export function sheetCreate(
+export function sheetCreator(
   sheet: SheetBaseCreate,
-): Sheet {
-  const sheetEntity = entityCreate<Sheet>(sheetKey, {
+): EntityCreator<Sheet> {
+  return {
     ...sheetBase,
     ...sheet,
-  });
-
-  return sheetEntity;
+    $id: uid(sheetKey),
+  };
 }

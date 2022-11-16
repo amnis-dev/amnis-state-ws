@@ -1,6 +1,6 @@
 import { uid } from '../uid.js';
 import { userKey } from '../user/index.js';
-import { profileKey, profileCreate } from './profile.js';
+import { profileKey, profileCreator } from './profile.js';
 
 /**
  * ============================================================
@@ -13,7 +13,7 @@ test('profile key should be is properly set', () => {
  * ============================================================
  */
 test('should create a profile', () => {
-  const profile = profileCreate({
+  const profile = profileCreator({
     nameDisplay: 'Newbie',
     $user: uid(userKey),
   });

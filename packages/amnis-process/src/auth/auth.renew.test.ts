@@ -2,10 +2,11 @@ import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
 import {
-  ioProcess, IoInput, userCreate, profileCreate,
+  ioProcess, IoInput, userCreator, profileCreator,
   schemaAuth,
   CryptoEncoded,
   AuthLogin,
+  stateEntitiesCreate,
 } from '@amnis/core';
 import { cryptoNode } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
@@ -20,13 +21,13 @@ beforeAll(async () => {
   /**
  * Add a test user and profile to the database.
  */
-  const user = userCreate({
+  const user = userCreator({
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
     password: await cryptoNode.passHash('passwd1'),
   });
 
-  const profile = profileCreate({
+  const profile = profileCreator({
     nameDisplay: 'Example User',
     $user: user.$id,
   });
@@ -34,10 +35,10 @@ beforeAll(async () => {
   /**
   * Create test data in the memory database.
   */
-  dbmemory.create({
+  dbmemory.create(stateEntitiesCreate({
     user: [user],
     profile: [profile],
-  });
+  }));
 });
 
 /**

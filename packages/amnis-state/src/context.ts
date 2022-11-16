@@ -1,7 +1,7 @@
 import {
   coreActions,
   dataInitial,
-  IoContext, roleKey, StateCreate, systemKey, Validators,
+  IoContext, roleKey, StateEntities, systemKey, Validators,
 } from '@amnis/core';
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
@@ -17,7 +17,7 @@ export interface ContextOptions extends Partial<IoContext> {
   /**
    * Set initial entity data.
    */
-  data?: StateCreate;
+  data?: StateEntities;
 }
 
 /**
@@ -56,7 +56,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
 
       if (initialize === true) {
         const system = createResult[systemKey][0];
-        const serviceResult: StateCreate = {
+        const serviceResult: StateEntities = {
           [systemKey]: createResult[systemKey],
           [roleKey]: createResult[roleKey],
         };
@@ -65,7 +65,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
       }
     } else if (initialize === true) {
       const system = readResult[systemKey][0];
-      const serviceResult: StateCreate = {
+      const serviceResult: StateEntities = {
         [systemKey]: readResult[systemKey],
         [roleKey]: readResult[roleKey],
       };

@@ -1,4 +1,5 @@
-import { Entity, entityCreate } from '../entity/index.js';
+import type { EntityCreator } from '../entity/index.js';
+import { uid } from '../uid.js';
 import type { Route, RouteBase, RouteBaseCreate } from './route.types.js';
 
 export const routeKey = 'route';
@@ -8,14 +9,12 @@ export const routeBase: RouteBase = {
   path: '/',
 };
 
-export function routeCreate(
+export function routeCreator(
   route: RouteBaseCreate,
-  entity: Partial<Entity> = {},
-): Route {
-  const routeEntity = entityCreate<Route>(routeKey, {
+): EntityCreator<Route> {
+  return {
     ...routeBase,
     ...route,
-  }, entity);
-
-  return routeEntity;
+    $id: uid(routeKey),
+  };
 }

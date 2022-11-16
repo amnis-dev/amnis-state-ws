@@ -2,18 +2,18 @@
 
 import {
   coreActions,
-  Io, ioOutput, IoProcess, Role, selectRoleGrants, StateDelete, stateScopeCreate, Task, UID,
+  Io, ioOutput, IoProcess, Role, selectRoleGrants, StateDeleter, stateScopeCreate, Task, UID,
 } from '@amnis/core';
 import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 export const process: IoProcess<
-Io<StateDelete, StateDelete>
+Io<StateDeleter, StateDeleter>
 > = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, access } = input;
-    const output = ioOutput<StateDelete>();
+    const output = ioOutput<StateDeleter>();
 
     const roleRefs: UID<Role>[] = access?.roles || [];
 
@@ -30,7 +30,7 @@ Io<StateDelete, StateDelete>
     /**
      * finalized state to process
      */
-    const stateFinal = access?.adm === true ? body : stateAuthwalled as StateDelete;
+    const stateFinal = access?.adm === true ? body : stateAuthwalled as StateDeleter;
 
     /**
      * Create an authentication scope object from the array of grant objects.
@@ -67,7 +67,7 @@ Io<StateDelete, StateDelete>
      * Create historic records of the delete.
      * TODO: Determine if necessary.
      */
-    // const stateUpdateHistory: StateUpdate = {
+    // const stateUpdateHistory: StateUpdater = {
     //   [historyKey]: [],
     // };
     // Object.keys(stateFinal).every((sliceKey) => {
@@ -91,7 +91,7 @@ Io<StateDelete, StateDelete>
     output.json.result = result;
 
     /**
-     * StateDelete possible entities from the server store.
+     * StateDeleter possible entities from the server store.
      */
     store.dispatch(coreActions.delete(result));
 
@@ -100,7 +100,7 @@ Io<StateDelete, StateDelete>
 );
 
 export const crudProcessDelete = mwAccess()(
-  mwValidate('StateDelete')(
+  mwValidate('StateDeleter')(
     process,
   ),
 );

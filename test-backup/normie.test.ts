@@ -26,12 +26,12 @@ import {
   Profile,
   profileSelectors,
   profileKey,
-  userCreate,
-  profileCreate,
+  userCreator,
+  profileCreator,
 } from '@amnis/state/index.js';
 
 import stateSchema from '@amnis/state/state.schema.json';
-import { passCreate } from '@amnis/process';
+import { passCreator } from '@amnis/process';
 import { dbmemory } from '@amnis/db/memory/index.js';
 import { logSelectors } from '@amnis/state/log/index.js';
 import { bearerSelectors } from '@amnis/state/bearer/index.js';
@@ -208,10 +208,10 @@ test('user create global should be -DENIED- as Normie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       [userKey]: [
-        userCreate({
+        userCreator({
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
-          password: passCreate('passwd0'),
+          password: passCreator('passwd0'),
         }),
       ],
     }),
@@ -341,7 +341,7 @@ test('profile create global should be -DENIED- as Normie via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       [profileKey]: [
-        profileCreate({
+        profileCreator({
           $user: userActive.$id,
           nameDisplay: 'MyNormieProfile',
         }),

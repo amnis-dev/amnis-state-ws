@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-shadow */
 
-import { JWTAccess } from './index.js';
+import { JWTAccess } from './jwt.types.js';
+import { EntityCreator } from './entity/index.js';
 import { Session } from './session/index.js';
 
 /**
@@ -81,7 +82,7 @@ export type CryptoPassCompare = (plaintext: string, hashtext: CryptoPassword) =>
  * Encodes a session instance.
  */
 export type CryptoSessionEncode = (
-  session: Session,
+  session: EntityCreator<Session>,
   secret?: string
 ) => Promise<CryptoEncoded>;
 

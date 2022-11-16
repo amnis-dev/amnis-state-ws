@@ -7,7 +7,7 @@ import {
   ioOutput,
   IoProcess,
   selectRoleGrants,
-  StateCreate,
+  StateEntities,
   StateQuery,
   stateReferenceQuery,
   StateScope,
@@ -28,7 +28,7 @@ async function readRecursive(
   authScope: StateScope | undefined,
   subject: UID,
   depth: number,
-): Promise<StateCreate> {
+): Promise<StateEntities> {
   /**
    * Query for the initial result.
    */
@@ -79,12 +79,12 @@ async function readRecursive(
 }
 
 export const process: IoProcess<
-Io<StateQuery, StateCreate>
+Io<StateQuery, StateEntities>
 > = (context) => (
   async (input) => {
     const { store, database } = context;
     const { body, access } = input;
-    const output = ioOutput<StateCreate>();
+    const output = ioOutput<StateEntities>();
 
     if (!access) {
       output.status = 401; // 401 Unauthorized
@@ -123,7 +123,7 @@ Io<StateQuery, StateCreate>
       readRecursive(database, grants, stateFinal, authScope, access.sub, slice.$depth || 0)
     ));
     const results = await Promise.all(resultPromises);
-    const result = results.reduce<StateCreate>((prev, next) => {
+    const result = results.reduce<StateEntities>((prev, next) => {
       Object.keys(next).forEach((nextKey) => {
         if (Array.isArray(prev[nextKey])) {
           prev[nextKey].push(...next[nextKey]);

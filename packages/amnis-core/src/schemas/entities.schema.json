@@ -2,109 +2,109 @@
   "$id": "entities",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "StateCreate": {
+    "StateCreator": {
       "type": "object",
       "properties": {
         "audit": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CAudit%3E"
+            "$ref": "#/definitions/EntityCreator%3CAudit%3E"
           }
         },
         "contact": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CContact%3E"
+            "$ref": "#/definitions/EntityCreator%3CContact%3E"
           }
         },
         "encryption": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CEncryption%3E"
+            "$ref": "#/definitions/EntityCreator%3CEncryption%3E"
           }
         },
         "history": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CHistory%3E"
+            "$ref": "#/definitions/EntityCreator%3CHistory%3E"
           }
         },
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CImage%3E"
+            "$ref": "#/definitions/EntityCreator%3CImage%3E"
           }
         },
         "locale": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CLocale%3E"
+            "$ref": "#/definitions/EntityCreator%3CLocale%3E"
           }
         },
         "log": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CLog%3E"
+            "$ref": "#/definitions/EntityCreator%3CLog%3E"
           }
         },
         "note": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CNote%3E"
+            "$ref": "#/definitions/EntityCreator%3CNote%3E"
           }
         },
         "profile": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CProfile%3E"
+            "$ref": "#/definitions/EntityCreator%3CProfile%3E"
           }
         },
         "role": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CRole%3E"
+            "$ref": "#/definitions/EntityCreator%3CRole%3E"
           }
         },
         "service": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CService%3E"
+            "$ref": "#/definitions/EntityCreator%3CService%3E"
           }
         },
         "system": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CSystem%3E"
+            "$ref": "#/definitions/EntityCreator%3CSystem%3E"
           }
         },
         "user": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CUser%3E"
+            "$ref": "#/definitions/EntityCreator%3CUser%3E"
           }
         },
         "session": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CSession%3E"
+            "$ref": "#/definitions/EntityCreator%3CSession%3E"
           }
         },
         "video": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CVideo%3E"
+            "$ref": "#/definitions/EntityCreator%3CVideo%3E"
           }
         },
         "website": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreate%3CWebsite%3E"
+            "$ref": "#/definitions/EntityCreator%3CWebsite%3E"
           }
         }
       },
       "additionalProperties": false
     },
-    "EntityCreate<Audit>": {
+    "EntityCreator<Audit>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -188,7 +188,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Contact>": {
+    "EntityCreator<Contact>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -294,7 +294,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Encryption>": {
+    "EntityCreator<Encryption>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -372,7 +372,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<History>": {
+    "EntityCreator<History>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -437,7 +437,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Image>": {
+    "EntityCreator<Image>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -625,7 +625,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Locale>": {
+    "EntityCreator<Locale>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -714,7 +714,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Log>": {
+    "EntityCreator<Log>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -808,7 +808,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Note>": {
+    "EntityCreator<Note>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -858,7 +858,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Profile>": {
+    "EntityCreator<Profile>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -964,7 +964,7 @@
       "type": "string",
       "description": "A string that represents a JSON Date."
     },
-    "EntityCreate<Role>": {
+    "EntityCreator<Role>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1044,7 +1044,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Service>": {
+    "EntityCreator<Service>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1120,7 +1120,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<System>": {
+    "EntityCreator<System>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1237,7 +1237,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<User>": {
+    "EntityCreator<User>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1392,7 +1392,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Session>": {
+    "EntityCreator<Session>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1498,7 +1498,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Video>": {
+    "EntityCreator<Video>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1690,7 +1690,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreate<Website>": {
+    "EntityCreator<Website>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1838,7 +1838,7 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "StateUpdate": {
+    "StateUpdater": {
       "type": "object",
       "properties": {
         "audit": {

@@ -1,10 +1,10 @@
 import type {
-  StateCreate, StateUpdate, StateDelete, StateQuery,
+  StateCreator, StateUpdater, StateDeleter, StateQuery,
 } from '../state/index.js';
 
 export interface Core {
-  insert?: StateCreate,
+  insert?: StateCreator,
   query?: StateQuery,
-  modify?: StateUpdate,
-  remove?: StateDelete,
+  modify?: StateUpdater,
+  remove?: StateDeleter,
 }

@@ -1,4 +1,4 @@
-import { coreActions, userCreate, userKey } from '@amnis/core';
+import { coreActions, userCreator, userKey } from '@amnis/core';
 import {
   userInitialState,
   userSelectors,
@@ -25,7 +25,7 @@ test('should not generically create a new user with mismatched keys', () => {
 
   const action = coreActions.create({
     [`not_${userKey}`]: [
-      userCreate({
+      userCreator({
         name: 'eCrow',
         $roles: [],
       }),
@@ -45,7 +45,7 @@ test('should handle generically creating a new user', () => {
 
   const action = coreActions.create({
     [userKey]: [
-      userCreate({
+      userCreator({
         name: 'eCrow',
         $roles: [],
       }),

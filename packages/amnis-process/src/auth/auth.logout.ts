@@ -1,5 +1,5 @@
 import {
-  userKey, AuthLogout, Io, ioOutput, IoProcess, StateDelete, uidList,
+  userKey, AuthLogout, Io, ioOutput, IoProcess, StateDeleter, uidList,
 } from '@amnis/core';
 import { mwSession, mwValidate } from '../mw/index.js';
 
@@ -7,11 +7,11 @@ import { mwSession, mwValidate } from '../mw/index.js';
  * Renews a session holder's session and access bearers.
  */
 const process: IoProcess<
-Io<AuthLogout, StateDelete>
+Io<AuthLogout, StateDeleter>
 > = () => (
   async (input) => {
     const { session } = input;
-    const output = ioOutput<StateDelete>();
+    const output = ioOutput<StateDeleter>();
 
     /**
      * Delete the session cookie.

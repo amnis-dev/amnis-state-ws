@@ -1,6 +1,5 @@
 import { uid } from '../uid.js';
-import { entityCreate } from '../entity/entity.js';
-import type { Entity } from '../entity/entity.types.js';
+import type { EntityCreator } from '../entity/entity.types.js';
 import type { Profile, ProfileBase, ProfileBaseCreate } from './profile.types.js';
 import { userKey } from '../user/user.js';
 
@@ -11,14 +10,12 @@ export const profileBase: ProfileBase = {
   $user: uid(userKey),
 };
 
-export function profileCreate(
+export function profileCreator(
   profile: ProfileBaseCreate,
-  entity: Partial<Entity> = {},
-): Profile {
-  const profileEntity = entityCreate<Profile>(profileKey, {
+): EntityCreator<Profile> {
+  return {
     ...profileBase,
     ...profile,
-  }, entity);
-
-  return profileEntity;
+    $id: uid(profileKey),
+  };
 }

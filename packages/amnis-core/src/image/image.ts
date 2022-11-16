@@ -1,6 +1,7 @@
 import type { Image, ImageBase, ImageBaseCreate } from './image.types.js';
-import type { Entity } from '../entity/index.js';
-import { fileCreate } from '../file/index.js';
+import type { EntityCreator } from '../entity/index.js';
+import { uid } from '../uid.js';
+import { fileCreator } from '../file/file.js';
 
 export const imageKey = 'image';
 
@@ -15,15 +16,13 @@ export const imageBase: ImageBase = {
   size: 0,
 };
 
-export function imageCreate(
+export function imageCreator(
   image: ImageBaseCreate,
-  entity: Partial<Entity> = {},
-): Image {
-  const imageEntity = fileCreate<Image>(imageKey, {
+): EntityCreator<Image> {
+  return {
     ...imageBase,
-    ...image,
+    ...fileCreator(image),
     aspect: image.aspect ?? (image.width / image.height),
-  }, entity);
-
-  return imageEntity;
+    $id: uid(imageKey),
+  };
 }

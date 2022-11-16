@@ -10,9 +10,9 @@ import {
   IoProcess,
   selectRoleGrants,
   State,
-  StateCreate,
+  StateCreator,
   stateScopeCreate,
-  StateUpdate,
+  StateUpdater,
   Task,
   userKey,
 } from '@amnis/core';
@@ -20,7 +20,7 @@ import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 export const process: IoProcess<
-Io<StateUpdate, StateCreate>
+Io<StateUpdater, StateCreator>
 > = (context) => (
   async (input) => {
     const { store, database, crypto } = context;
@@ -72,7 +72,7 @@ Io<StateUpdate, StateCreate>
     /**
      * finalized state to process
      */
-    const stateFinal = access.adm === true ? body : stateUpdateSanatizd as StateUpdate;
+    const stateFinal = access.adm === true ? body : stateUpdateSanatizd as StateUpdater;
 
     /**
      * Flag final state entities as committed
@@ -136,7 +136,7 @@ Io<StateUpdate, StateCreate>
 );
 
 export const crudProcessUpdate = mwAccess()(
-  mwValidate('StateUpdate')(
+  mwValidate('StateUpdater')(
     process,
   ),
 );

@@ -8,7 +8,7 @@ import {
   Entity,
   IoOutput,
   LogBaseCreate,
-  logCreate,
+  logCreator,
   logKey,
   MetaState,
   profileKey,
@@ -34,10 +34,10 @@ export function apiExtraReducers<E extends Entity>(
     const logs = payload.logs as LogBaseCreate[];
 
     /**
-     * StateCreate log entities from the fulfillment.
+     * StateCreator log entities from the fulfillment.
      */
     if (key === logKey && logs?.length > 0) {
-      const logEntities = logs.map((logBase) => logCreate(logBase));
+      const logEntities = logs.map((logBase) => logCreator(logBase));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }
@@ -56,11 +56,11 @@ export function apiExtraReducers<E extends Entity>(
     }
 
     /**
-     * StateCreate log entities from the fulfillment.
+     * StateCreator log entities from the fulfillment.
      */
     if (key === logKey && payload?.data?.logs?.length > 0) {
       const logs = payload.data.logs as LogBaseCreate[];
-      const logEntities = logs.map((logBase) => logCreate(logBase));
+      const logEntities = logs.map((logBase) => logCreator(logBase));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }
@@ -129,7 +129,7 @@ export function apiExtraReducers<E extends Entity>(
         state.active = result[key][0].$id;
 
         /**
-         * StateDelete the previously active session if it existed.
+         * StateDeleter the previously active session if it existed.
          */
         if (sessionIdPrev) {
           /** @ts-ignore */

@@ -2,8 +2,8 @@ import {
   UID,
   Entity,
   State,
-  StateCreate,
-  StateDelete,
+  StateEntities,
+  StateDeleter,
   uidList,
   Database,
 } from '@amnis/core';
@@ -46,7 +46,7 @@ export const dbmemory: Database = {
    * ----------------------------------------
    */
   create: async (state) => {
-    const result: StateCreate = {};
+    const result: StateEntities = {};
 
     Object.keys(state).every((sliceKey) => {
       const col: Entity[] = state[sliceKey];
@@ -86,7 +86,7 @@ export const dbmemory: Database = {
    */
   read: async (select, controls = {}) => {
     const { scope, subject } = controls;
-    const result: StateCreate = {};
+    const result: StateEntities = {};
 
     Object.keys(select).every((selectKey) => {
       const storageKey = selectKey;
@@ -167,7 +167,7 @@ export const dbmemory: Database = {
    */
   update: async (state, controls = {}) => {
     const { scope, subject } = controls;
-    const result: StateCreate = {};
+    const result: StateEntities = {};
 
     Object.keys(state).every((sliceKey) => {
       const storageKey = sliceKey;
@@ -225,7 +225,7 @@ export const dbmemory: Database = {
    */
   delete: async (state, controls = {}) => {
     const { scope, subject } = controls;
-    const result: StateDelete = {};
+    const result: StateDeleter = {};
 
     Object.keys(state).every((sliceKey) => {
       const storageKey = sliceKey;

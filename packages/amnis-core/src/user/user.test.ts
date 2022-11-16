@@ -1,6 +1,6 @@
 import { CryptoPassword } from '../crypto.types.js';
 import { deviceStringify } from '../device/index.js';
-import { userKey, userCreate } from './user.js';
+import { userKey, userCreator } from './user.js';
 
 /**
  * ============================================================
@@ -13,7 +13,7 @@ test('user key should be is properly set', () => {
  * ============================================================
  */
 test('should create a user', async () => {
-  const user = userCreate({
+  const user = userCreator({
     name: 'Newbie',
     password: 'passwd0' as CryptoPassword,
     email: 'newbie@amnis.dev',

@@ -3,7 +3,7 @@ import {
 } from '@amnis/core/test/book.store.js';
 import {
   schemaState,
-  dateNumeric, historyKey, IoInput, ioProcess, CryptoEncoded, StateCreate, uid,
+  dateNumeric, historyKey, IoInput, ioProcess, CryptoEncoded, StateCreator, uid,
 } from '@amnis/core';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { dbmemory, memoryClear } from '@amnis/db';
@@ -62,7 +62,7 @@ test('Handler should create new entities.', async () => {
 
   expect(output.json.result).toBeDefined();
 
-  const result = output.json.result as StateCreate;
+  const result = output.json.result as StateCreator;
 
   expect(result).toEqual({ [bookKey]: books });
 });

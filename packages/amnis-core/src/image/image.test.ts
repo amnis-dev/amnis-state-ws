@@ -1,4 +1,4 @@
-import { imageKey, imageCreate } from './image.js';
+import { imageKey, imageCreator } from './image.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('image key should be is properly set', () => {
  * ============================================================
  */
 test('should create a image', () => {
-  const image = imageCreate({
+  const image = imageCreator({
     title: 'Amnis Logo',
     extension: 'webp',
     width: 0,

@@ -1,6 +1,6 @@
 import { uid } from '../uid.js';
 import { durationCalc } from '../core.js';
-import { entityCreate, Entity } from '../entity/index.js';
+import type { EntityCreator } from '../entity/index.js';
 import type { LogBaseCreate } from '../log/index.js';
 import { roleKey } from '../role/index.js';
 import { websiteKey } from '../website/index.js';
@@ -35,14 +35,12 @@ export function systemCheck(system: System): LogBaseCreate[] {
   return logs;
 }
 
-export function systemCreate(
+export function systemCreator(
   system: SystemBaseCreate,
-  entity: Partial<Entity> = {},
-): System {
-  const systemEntity = entityCreate<System>(systemKey, {
+): EntityCreator<System> {
+  return {
     ...systemBase,
     ...system,
-  }, entity);
-
-  return systemEntity;
+    $id: uid(systemKey),
+  };
 }

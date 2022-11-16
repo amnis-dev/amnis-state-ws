@@ -109,7 +109,7 @@ export type EntityPartial<E extends Entity> = Partial<EntityExtension<E>>;
 /**
  * Type for an entity create object.
  */
-export type EntityCreate<E extends Entity> = EntityExtension<E> & { $id: UID<E> };
+export type EntityCreator<E extends Entity> = EntityExtension<E> & { $id: UID<E> };
 
 /**
  * Type for an entity update object.

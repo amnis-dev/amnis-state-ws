@@ -1,5 +1,5 @@
 import { uid } from '../uid.js';
-import { Entity, entityCreate } from '../entity/index.js';
+import type { EntityCreator } from '../entity/index.js';
 import type { Note, NoteBase, NoteBaseCreate } from './note.types.js';
 
 export const noteKey = 'note';
@@ -9,14 +9,12 @@ export const noteBase: NoteBase = {
   text: '',
 };
 
-export function noteCreate(
+export function noteCreator(
   note: NoteBaseCreate,
-  entity: Partial<Entity> = {},
-): Note {
-  const noteEntity = entityCreate<Note>(noteKey, {
+): EntityCreator<Note> {
+  return {
     ...noteBase,
     ...note,
-  }, entity);
-
-  return noteEntity;
+    $id: uid(noteKey),
+  };
 }

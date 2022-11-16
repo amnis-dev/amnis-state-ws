@@ -1,4 +1,5 @@
-import { entityCreate } from '../entity/entity.js';
+import type { EntityCreator } from '../entity/entity.types.js';
+import { uid } from '../uid.js';
 import type { Log, LogBase, LogBaseCreate } from './log.types.js';
 
 export const logKey = 'log';
@@ -13,9 +14,10 @@ export const logBase: LogBase = {
 /**
  * Creates a log entry.
  */
-export function logCreate(log: LogBaseCreate): Log {
-  return entityCreate<Log>(logKey, {
+export function logCreator(log: LogBaseCreate): EntityCreator<Log> {
+  return {
     ...logBase,
     ...log,
-  });
+    $id: uid(logKey),
+  };
 }

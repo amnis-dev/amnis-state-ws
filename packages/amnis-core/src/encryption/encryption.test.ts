@@ -1,4 +1,4 @@
-import { encryptionKey, encryptionCreate } from './encryption.js';
+import { encryptionKey, encryptionCreator } from './encryption.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('crypto key should be is properly set', () => {
  * ============================================================
  */
 test('should create a crypto', () => {
-  const crypto = encryptionCreate({
+  const crypto = encryptionCreator({
     name: 'Test Encryption',
     tag: 'test',
     value: '',

@@ -1,5 +1,6 @@
 import { dateJSON } from '../core.js';
-import { Entity, entityCreate } from '../entity/index.js';
+import type { EntityCreator } from '../entity/index.js';
+import { uid } from '../uid.js';
 import type { Service, ServiceBase, ServiceBaseCreate } from './service.types.js';
 
 export const serviceKey = 'service';
@@ -10,15 +11,13 @@ export const serviceBase: ServiceBase = {
   dateChecked: dateJSON(),
 };
 
-export function serviceCreate(
+export function serviceCreator(
   service: ServiceBaseCreate,
-  entity: Partial<Entity> = {},
-): Service {
-  const serviceEntity = entityCreate<Service>(serviceKey, {
+): EntityCreator<Service> {
+  return {
     ...serviceBase,
     dateChecked: dateJSON(),
     ...service,
-  }, entity);
-
-  return serviceEntity;
+    $id: uid(serviceKey),
+  };
 }

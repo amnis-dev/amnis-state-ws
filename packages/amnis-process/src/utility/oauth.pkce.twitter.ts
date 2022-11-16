@@ -6,7 +6,7 @@ import {
   IoOutput,
   CryptoEncoded,
   selectActive,
-  StateCreate,
+  StateEntities,
   System,
   systemKey,
   Bearer,
@@ -46,8 +46,8 @@ const userEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}users/me`;
 export async function oauthTwitter(
   context: IoContext,
   auth: Omit<AuthPkce, 'platform'>,
-): Promise<IoOutput<StateCreate>> {
-  const output = ioOutput<StateCreate>();
+): Promise<IoOutput<StateEntities>> {
+  const output = ioOutput<StateEntities>();
   /**
    * STEP 1
    * Get the access and refresh bearers.

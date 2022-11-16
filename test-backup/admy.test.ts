@@ -12,7 +12,7 @@ import {
   profileSelectors,
 } from '@amnis/state';
 
-import { passCreate } from '@amnis/process';
+import { passCreator } from '@amnis/process';
 import { dbmemory } from '@amnis/db';
 import { uidList } from '@amnis/core';
 import { serviceSetup } from './database.js';
@@ -150,10 +150,10 @@ test('user create global should be +ALLOWED+ as Admy via API', async () => {
   const action = await clientStore.dispatch(
     apiCrud.endpoints.create.initiate({
       user: [
-        userCreate({
+        userCreator({
           name: 'Newbie',
           email: 'newbie@ecrow.dev',
-          password: passCreate('passwd0'),
+          password: passCreator('passwd0'),
         }),
       ],
     }),

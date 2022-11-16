@@ -1,5 +1,6 @@
-import type { Entity } from '../entity/index.js';
-import { fileCreate } from '../file/index.js';
+import type { EntityCreator } from '../entity/index.js';
+import { fileCreator } from '../file/file.js';
+import { uid } from '../uid.js';
 import type { Video, VideoBase, VideoBaseCreate } from './video.types.js';
 
 export const videoKey = 'video';
@@ -16,15 +17,13 @@ export const videoBase: VideoBase = {
   size: 0,
 };
 
-export function videoCreate(
+export function videoCreator(
   video: VideoBaseCreate,
-  entity: Partial<Entity> = {},
-): Video {
-  const videoEntity = fileCreate<Video>(videoKey, {
+): EntityCreator<Video> {
+  return {
     ...videoBase,
-    ...video,
+    ...fileCreator(video),
     aspect: video.aspect ?? (video.width / video.height),
-  }, entity);
-
-  return videoEntity;
+    $id: uid(videoKey),
+  };
 }

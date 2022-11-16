@@ -7,104 +7,48 @@
       "type": "object",
       "properties": {
         "insert": {
-          "$ref": "#/definitions/StateCreate"
+          "$ref": "#/definitions/StateCreator"
         },
         "query": {
           "$ref": "#/definitions/StateQuery"
         },
         "modify": {
-          "$ref": "#/definitions/StateUpdate"
+          "$ref": "#/definitions/StateUpdater"
         },
         "remove": {
-          "$ref": "#/definitions/StateDelete"
+          "$ref": "#/definitions/StateDeleter"
         }
       },
       "additionalProperties": false
     },
-    "StateCreate": {
-      "$ref": "#/definitions/State%3Cdef-interface-1570551179-167-1044-1570551179-0-2615602488886%5B%5D%3E",
-      "description": "A common stateful result from creations. A state object with entities that were created."
+    "StateCreator": {
+      "$ref": "#/definitions/State%3Cdef-alias-1570551179-2097-2227-1570551179-0-2616%3Cdef-interface-1570551179-167-1044-1570551179-0-2616602488886%3E1302493527%5B%5D%3E",
+      "description": "A common stateful result from creations. A state object with entities to be created"
     },
-    "State<def-interface-1570551179-167-1044-1570551179-0-2615602488886[]>": {
+    "State<def-alias-1570551179-2097-2227-1570551179-0-2616<def-interface-1570551179-167-1044-1570551179-0-2616602488886>1302493527[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
         "items": {
-          "$ref": "#/definitions/Entity"
+          "$ref": "#/definitions/EntityCreator%3CEntity%3E"
         }
       },
       "description": "An ambiguous state."
     },
-    "Entity": {
+    "EntityCreator<Entity>": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID",
-          "description": "UID for this entity.",
-          "default": ""
-        },
-        "created": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Creation date string.",
-          "default": ""
-        },
-        "updated": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Updated date string.",
-          "default": ""
-        },
-        "committed": {
-          "type": "boolean",
-          "description": "Flag to determine if the entity has been committed to storage.",
-          "default": false
-        },
-        "delete": {
-          "type": "boolean",
-          "description": "If this entity is marked to be deleted.",
-          "default": false
-        },
-        "$owner": {
-          "$ref": "#/definitions/UID",
-          "description": "Entity that owns this data."
-        },
-        "$creator": {
-          "$ref": "#/definitions/UID",
-          "description": "Possible user id creator of the entity."
-        },
-        "$readers": {
-          "$ref": "#/definitions/UIDList",
-          "description": "Entities that can observe this data. Pseudo-owners of this data, but only as a reader."
+          "$ref": "#/definitions/UID%3CEntity%3E"
         }
       },
       "required": [
-        "$id",
-        "created",
-        "updated",
-        "committed",
-        "delete",
-        "$owner",
-        "$creator",
-        "$readers"
+        "$id"
       ],
-      "additionalProperties": false,
-      "description": "A common entity object. Entity's are serializable (JSON) objects that can be committed to NoSQL Databases."
+      "description": "Type for an entity create object."
     },
-    "UID": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "DateJSON": {
-      "type": "string",
-      "description": "A string that represents a JSON Date."
-    },
-    "UIDList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/UID%3Cunknown%3E"
-      },
-      "description": "An array of identifiers."
-    },
-    "UID<unknown>": {
+    "UID<Entity>": {
       "type": "string",
       "description": "A id identifier to another document."
     },
@@ -189,10 +133,10 @@
       "additionalProperties": false,
       "description": "StateQuery range"
     },
-    "StateUpdate": {
-      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1718-1904-2094046105-0-2291600678921%5B%5D%3E"
+    "StateUpdater": {
+      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1851-2037-2094046105-0-2426600678921%5B%5D%3E"
     },
-    "State<def-alias-2094046105-1718-1904-2094046105-0-2291600678921[]>": {
+    "State<def-alias-2094046105-1851-2037-2094046105-0-2426600678921[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
@@ -217,7 +161,11 @@
       ],
       "description": "A common stateful result from updates. A state object with parial entities to update."
     },
-    "StateDelete": {
+    "UID": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
+    "StateDeleter": {
       "$ref": "#/definitions/State%3CUIDList%3E",
       "description": "A common stateful result from deletions. A state object with delete ids."
     },
@@ -227,6 +175,17 @@
         "$ref": "#/definitions/UIDList"
       },
       "description": "An ambiguous state."
+    },
+    "UIDList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UID%3Cunknown%3E"
+      },
+      "description": "An array of identifiers."
+    },
+    "UID<unknown>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     }
   }
 }

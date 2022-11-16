@@ -1,7 +1,7 @@
 import type { UID } from '../types.js';
 import type {
   Entity,
-  EntityCreate,
+  EntityCreator,
   EntityExtension,
   EntityPartial,
   Meta,
@@ -67,7 +67,7 @@ export const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((k
  * Cleans and validates base entity keys and references for further processing.
  * TODO: This method can most certainly be made more efficient.
  */
-export function entityClean(key: string, entity: Entity): EntityCreate<Entity> | undefined {
+export function entityClean(key: string, entity: Entity): EntityCreator<Entity> | undefined {
   let errored = false;
   const cleaned = Object.keys(entity)
     .reduce<Record<string, unknown>>((value, p) => {
@@ -121,7 +121,7 @@ export function entityClean(key: string, entity: Entity): EntityCreate<Entity> |
     return value;
   }, {});
 
-  return errored ? undefined : cleaned as EntityCreate<Entity>;
+  return errored ? undefined : cleaned as EntityCreator<Entity>;
 }
 
 /**

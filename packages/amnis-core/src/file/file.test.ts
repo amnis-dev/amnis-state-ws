@@ -1,4 +1,4 @@
-import { fileKey, fileCreate } from './file.js';
+import { fileKey, fileCreator } from './file.js';
 
 /**
  * ============================================================
@@ -11,7 +11,7 @@ test('file key should be is properly set', () => {
  * ============================================================
  */
 test('should create a file', () => {
-  const file = fileCreate(fileKey, {
+  const file = fileCreator({
     title: 'Amnis File',
     mimetype: 'text/plain',
     size: 0,

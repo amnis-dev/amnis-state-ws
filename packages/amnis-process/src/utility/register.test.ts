@@ -1,5 +1,5 @@
 import {
-  uid, Role, roleKey, systemCreate, IoContext,
+  uid, Role, roleKey, systemCreator, IoContext, entityCreate, systemKey, System,
 } from '@amnis/core';
 import { cryptoNode } from '@amnis/crypto';
 import { dbmemory } from '@amnis/db';
@@ -18,12 +18,12 @@ const context: IoContext = {
   validators: validateSetup([]),
 };
 
-const system = systemCreate({
+const system = entityCreate<System>(systemKey, systemCreator({
   name: 'Amnis Test System',
   $adminRole: uid<Role>(roleKey),
   $execRole: uid<Role>(roleKey),
   $initialRoles: [uid<Role>(roleKey), uid<Role>(roleKey)],
-});
+}));
 
 /**
  * Registration is successful with proper input.
