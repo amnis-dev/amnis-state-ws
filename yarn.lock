@@ -35,6 +35,8 @@ __metadata:
 "@amnis/crypto@0.7.5, @amnis/crypto@workspace:packages/amnis-crypto":
   version: 0.0.0-use.local
   resolution: "@amnis/crypto@workspace:packages/amnis-crypto"
+  dependencies:
+    jsonwebtoken: ^8.5.1
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.1
   languageName: unknown
@@ -90,7 +92,6 @@ __metadata:
     "@amnis/core": 0.7.5
     ajv: ^8.11.0
     cross-fetch: ^3.1.0
-    jsonwebtoken: ^8.5.1
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.1
   languageName: unknown
