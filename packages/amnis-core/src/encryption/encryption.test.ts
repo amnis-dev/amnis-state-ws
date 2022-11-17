@@ -20,7 +20,7 @@ test('should create a crypto', () => {
   expect(crypto).toEqual(
     expect.objectContaining({
       name: 'Test Encryption',
-      type: 'rsa',
+      type: 'asym',
       value: '',
     }),
   );

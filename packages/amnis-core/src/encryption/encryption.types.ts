@@ -15,9 +15,9 @@ export interface Encryption extends Entity {
   tag: string;
 
   /**
-   * Type of encryption used.
+   * Type of encryption method used.
    */
-  type: 'rsa' | 'aes';
+  type: 'asym' | 'sym';
 
   /**
    * Value of the encryption

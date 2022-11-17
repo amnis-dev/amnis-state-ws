@@ -1,5 +1,5 @@
 import type {
-  CryptoRSAGenerate, CryptoRSAKeyPair, CryptoRSAPrivateKey, CryptoRSAPublicKey,
+  CryptoAsymGenerate, CryptoAsymKeyPair, CryptoAsymPrivateKey, CryptoAsymPublicKey,
 } from '@amnis/core';
 import {
   RSAKeyPairOptions, generateKeyPairSync, publicEncrypt, privateDecrypt, constants, sign, verify,
@@ -8,12 +8,12 @@ import {
 /**
  * Singleton RSA instance.
  */
-let rsaKeyPair: CryptoRSAKeyPair | null = null;
+let asymKeyPair: CryptoAsymKeyPair | null = null;
 
 /**
  * Configurations
  */
-const rsaConfig = {
+const asymConfig = {
   modulusLength: 4096,
   publicKeyType: 'spki',
   privateKeyType: 'pkcs8',
@@ -22,46 +22,46 @@ const rsaConfig = {
 /**
  * Generate a new RSA Key Pair
  */
-export const rsaGenerate: CryptoRSAGenerate = async () => {
-  const rsaOptions: RSAKeyPairOptions<'pem', 'pem'> = {
-    modulusLength: rsaConfig.modulusLength,
+export const asymGenerate: CryptoAsymGenerate = async () => {
+  const asymOptions: RSAKeyPairOptions<'pem', 'pem'> = {
+    modulusLength: asymConfig.modulusLength,
     publicKeyEncoding: {
-      type: rsaConfig.publicKeyType as 'spki' | 'pkcs1' || 'spki',
+      type: asymConfig.publicKeyType as 'spki' | 'pkcs1' || 'spki',
       format: 'pem',
     },
     privateKeyEncoding: {
-      type: rsaConfig.privateKeyType as 'pkcs1' | 'pkcs8' || 'pkcs8',
+      type: asymConfig.privateKeyType as 'pkcs1' | 'pkcs8' || 'pkcs8',
       format: 'pem',
     },
   };
 
-  const keyPairGen = generateKeyPairSync('rsa', rsaOptions);
+  const keyPairGen = generateKeyPairSync('rsa', asymOptions);
 
   return {
-    privateKey: keyPairGen.privateKey as CryptoRSAPrivateKey,
-    publicKey: keyPairGen.publicKey as CryptoRSAPublicKey,
+    privateKey: keyPairGen.privateKey as CryptoAsymPrivateKey,
+    publicKey: keyPairGen.publicKey as CryptoAsymPublicKey,
   };
 };
 
 /**
  * Gets the singlton an RSA Key Pair.
  */
-export const rsaSingleton: CryptoRSAGenerate = async () => {
-  if (rsaKeyPair === null) {
-    rsaKeyPair = await rsaGenerate();
+export const asymSingleton: CryptoAsymGenerate = async () => {
+  if (asymKeyPair === null) {
+    asymKeyPair = await asymGenerate();
   }
 
-  return rsaKeyPair;
+  return asymKeyPair;
 };
 
 /**
  * Encrypts data with RSA keys
  */
-export const rsaEncrypt = async (
+export const asymEncrypt = async (
   data: string,
-  publicKey?: CryptoRSAPublicKey,
+  publicKey?: CryptoAsymPublicKey,
 ): Promise<Buffer> => {
-  const key = publicKey || (await rsaSingleton()).publicKey;
+  const key = publicKey || (await asymSingleton()).publicKey;
   const buffer = Buffer.from(data);
   return publicEncrypt({
     key,
@@ -73,11 +73,11 @@ export const rsaEncrypt = async (
 /**
  * Decrypts data with RSA keys
  */
-export const rsaDecrypt = async (
+export const asymDecrypt = async (
   encryption: Buffer,
-  privateKey?: CryptoRSAPublicKey,
+  privateKey?: CryptoAsymPublicKey,
 ): Promise<string> => {
-  const key = privateKey || (await rsaSingleton()).privateKey;
+  const key = privateKey || (await asymSingleton()).privateKey;
   return privateDecrypt({
     key,
     padding: constants.RSA_PKCS1_OAEP_PADDING,
@@ -88,11 +88,11 @@ export const rsaDecrypt = async (
 /**
  * Signs data with RSA keys
  */
-export const rsaSign = async (
+export const asymSign = async (
   data: string,
-  privateKey?: CryptoRSAPublicKey,
+  privateKey?: CryptoAsymPublicKey,
 ): Promise<Buffer> => {
-  const key = privateKey || (await rsaSingleton()).privateKey;
+  const key = privateKey || (await asymSingleton()).privateKey;
   const buffer = Buffer.from(data);
   return sign('sha256', buffer, {
     key,
@@ -103,12 +103,12 @@ export const rsaSign = async (
 /**
  * Signs data with RSA keys
  */
-export const rsaVerify = async (
+export const asymVerify = async (
   data: string,
   signature: Buffer,
-  privateKey?: CryptoRSAPublicKey,
+  privateKey?: CryptoAsymPublicKey,
 ): Promise<boolean> => {
-  const key = privateKey || (await rsaSingleton()).privateKey;
+  const key = privateKey || (await asymSingleton()).privateKey;
   const buffer = Buffer.from(data);
   return verify('sha256', buffer, {
     key,

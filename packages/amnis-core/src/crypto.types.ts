@@ -14,16 +14,24 @@ export type CryptoSHA256 = CryptoSHA256Nominal & string;
 /**
  * String representation of a AES cipher encryption string.
  */
-export enum CryptoAESNominal { _ = '' }
-export type CryptoAES = CryptoAESNominal & string;
+export enum CryptoSymNominal { _ = '' }
+export type CryptoSym = CryptoSymNominal & string;
+
+/**
+ * String representation of an RSA cipher encryption string.
+ */
+export enum CryptoAsymNominal { _ = '' }
+export enum CryptoAsymSignatureNominal { _ = '' }
+export type CryptoAsym = CryptoAsymNominal & Buffer;
+export type CryptoAsymSignature = CryptoAsymSignatureNominal & Buffer;
 
 /**
  * String representation of RSA public and private encryption strings.
  */
-export enum CryptoRSAPrivateKeyNominal { _ = '' }
-export type CryptoRSAPrivateKey = CryptoRSAPrivateKeyNominal & string;
-export enum CryptoRSAPublicKeyNominal { _ = '' }
-export type CryptoRSAPublicKey = CryptoRSAPublicKeyNominal & string;
+export enum CryptoAsymPrivateKeyNominal { _ = '' }
+export type CryptoAsymPrivateKey = CryptoAsymPrivateKeyNominal & string;
+export enum CryptoAsymPublicKeyNominal { _ = '' }
+export type CryptoAsymPublicKey = CryptoAsymPublicKeyNominal & string;
 
 /**
  * String representation of a hashed password.
@@ -40,7 +48,10 @@ export type CryptoEncoded = CryptoEncodedNominal & string;
 /**
  * An RSA assymetric key pair type.
  */
-export type CryptoRSAKeyPair = { privateKey: CryptoRSAPrivateKey, publicKey: CryptoRSAPublicKey };
+export type CryptoAsymKeyPair = {
+  privateKey: CryptoAsymPrivateKey,
+  publicKey: CryptoAsymPublicKey
+};
 
 /**
  * Random String method.
@@ -53,19 +64,52 @@ export type CryptoRandomString = (length?: number) => Promise<string>;
 export type CryptoHashSHA256 = (plain: string) => Promise<string>;
 
 /**
- * Generates AES encrypted text.
+ * Encrypts with Symmetric AES encrypted text.
  */
-export type CryptoAESEncrypt = (plaintext: string, key: string) => Promise<CryptoAES>;
+export type CryptoSymEncrypt = (plaintext: string, key: string) => Promise<CryptoSym>;
 
 /**
- * Decrypts an AES encrypted string.
+ * Decrypts a Symmetric AES encrypted string.
  */
-export type CryptoAESDecrypt = (encryption: CryptoAES, key: string) => Promise<string>;
+export type CryptoSymDecrypt = (encryption: CryptoSym, key: string) => Promise<string>;
 
 /**
- * Generates an RSA encrypted key pair.
+ * Generates an Asymmetric RSA encrypted key pair.
  */
-export type CryptoRSAGenerate = () => Promise<CryptoRSAKeyPair>;
+export type CryptoAsymGenerate = () => Promise<CryptoAsymKeyPair>;
+
+/**
+ * Encrypts with an Asymmetric RSA encrypted public key.
+ */
+export type CryptoAsymEncrypt = (
+  data: string,
+  publicKey?: CryptoAsymKeyPair['publicKey']
+) => Promise<CryptoAsym>;
+
+/**
+ * Decrypts with an Asymmetric RSA encrypted private key.
+ */
+export type CryptoAsymDecrypt = (
+  encryption: CryptoAsym,
+  privateKey?: CryptoAsymKeyPair['privateKey']
+) => Promise<string>;
+
+/**
+ * Signs with an Asymmetric RSA encrypted private key.
+ */
+export type CryptoAsymSign = (
+  data: string,
+  privateKey?: CryptoAsymKeyPair['privateKey']
+) => Promise<CryptoAsymSignature>;
+
+/**
+ * Verifies with an Asymmetric RSA encrypted private key.
+ */
+export type CryptoAsymVerify = (
+  data: string,
+  signature: CryptoAsymSignature,
+  privateKey?: CryptoAsymKeyPair['privateKey']
+) => Promise<boolean>;
 
 /**
  * Hashes a plaintext password.
@@ -132,22 +176,22 @@ export interface Crypto {
   /**
    * Generates a new AES Encryption.
    */
-  aesEncrypt: CryptoAESEncrypt;
+  symEncrypt: CryptoSymEncrypt;
 
   /**
    * Gets a singleton AES encrypted key pair.
    */
-  aesDecrypt: CryptoAESDecrypt;
+  symDecrypt: CryptoSymDecrypt;
 
   /**
    * Generates a new RSA Encryption keypair.
    */
-  rsaGenerate: CryptoRSAGenerate;
+  asymGenerate: CryptoAsymGenerate;
 
   /**
    * Gets a singleton RSA encrypted key pair.
    */
-  rsaSingleton: CryptoRSAGenerate;
+  asymSingleton: CryptoAsymGenerate;
 
   /**
    * Hashes a password.

@@ -173,7 +173,7 @@ test('auth should verify valid bearer.', async () => {
  * ============================================================
  */
 test('auth should not verify an invalid bearer.', async () => {
-  const rsaKeyPairAnother = await cryptoNode.rsaGenerate();
+  const asymKeyPairAnother = await cryptoNode.asymGenerate();
 
   const jwtEncodedInvalid = await cryptoNode.accessEncode({
     iss: 'core',
@@ -182,7 +182,7 @@ test('auth should not verify an invalid bearer.', async () => {
     typ: 'access',
     adm: true,
     roles: [],
-  }, rsaKeyPairAnother.privateKey);
+  }, asymKeyPairAnother.privateKey);
 
   const bearer = bearerCreate({
     id: 'core',

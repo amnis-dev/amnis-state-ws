@@ -7,7 +7,7 @@ export const encryptionKey = 'encryption';
 export const encryptionBase: EncryptionBase = {
   name: 'Unknown Key',
   tag: 'unknown',
-  type: 'rsa',
+  type: 'asym',
   value: '',
 };
 

@@ -2,7 +2,7 @@ import type {
   JWTAccess, CryptoEncoded, CryptoAccessEncode, CryptoAccessVerify,
 } from '@amnis/core';
 import jwt from 'jsonwebtoken';
-import { rsaSingleton } from './rsa.js';
+import { asymSingleton } from './asym.js';
 
 /**
  * Encodes an Amnis-structured Bearer.
@@ -16,11 +16,13 @@ export const accessEncode: CryptoAccessEncode = async (
     exp: Math.floor(access.exp / 1000), // Seconds Since the Epoch
   };
 
+  const pk = privateKey || (await asymSingleton()).privateKey;
+
   if (privateKey) {
     return jwt.sign(jwtPrep, privateKey, { algorithm: 'RS256' }) as CryptoEncoded;
   }
-  const rsaKeyPair = await rsaSingleton();
-  return jwt.sign(jwtPrep, rsaKeyPair.privateKey, { algorithm: 'RS256' }) as CryptoEncoded;
+  const asymKeyPair = await asymSingleton();
+  return jwt.sign(jwtPrep, asymKeyPair.privateKey, { algorithm: 'RS256' }) as CryptoEncoded;
 };
 
 /**
@@ -31,14 +33,8 @@ export const accessVerify: CryptoAccessVerify = async (
   publicKey,
 ) => {
   try {
-    let decoded: JWTAccess | undefined;
-
-    if (publicKey) {
-      decoded = jwt.verify(encoded, publicKey) as JWTAccess;
-    } else {
-      const rsaKeyPair = await rsaSingleton();
-      decoded = jwt.verify(encoded, rsaKeyPair.publicKey) as JWTAccess;
-    }
+    const pk = publicKey || (await asymSingleton()).publicKey;
+    const decoded = jwt.verify(encoded, pk) as JWTAccess;
 
     const jwtDecoded = {
       ...decoded,
