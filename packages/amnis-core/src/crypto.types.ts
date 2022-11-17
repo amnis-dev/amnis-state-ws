@@ -22,7 +22,7 @@ export type CryptoSym = CryptoSymNominal & string;
  */
 export enum CryptoAsymNominal { _ = '' }
 export enum CryptoAsymSignatureNominal { _ = '' }
-export type CryptoAsym = CryptoAsymNominal & Buffer;
+export type CryptoAsymEncryption = CryptoAsymNominal & Buffer;
 export type CryptoAsymSignature = CryptoAsymSignatureNominal & Buffer;
 
 /**
@@ -84,13 +84,13 @@ export type CryptoAsymGenerate = () => Promise<CryptoAsymKeyPair>;
 export type CryptoAsymEncrypt = (
   data: string,
   publicKey?: CryptoAsymKeyPair['publicKey']
-) => Promise<CryptoAsym>;
+) => Promise<CryptoAsymEncryption>;
 
 /**
  * Decrypts with an Asymmetric RSA encrypted private key.
  */
 export type CryptoAsymDecrypt = (
-  encryption: CryptoAsym,
+  encryption: CryptoAsymEncryption,
   privateKey?: CryptoAsymKeyPair['privateKey']
 ) => Promise<string>;
 

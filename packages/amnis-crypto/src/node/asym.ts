@@ -1,5 +1,7 @@
 import type {
-  CryptoAsymGenerate, CryptoAsymKeyPair, CryptoAsymPrivateKey, CryptoAsymPublicKey,
+  CryptoAsymEncryption,
+  CryptoAsymEncrypt,
+  CryptoAsymGenerate, CryptoAsymKeyPair, CryptoAsymPrivateKey, CryptoAsymPublicKey, CryptoAsymDecrypt, CryptoAsymSign, CryptoAsymSignature, CryptoAsymVerify,
 } from '@amnis/core';
 import {
   RSAKeyPairOptions, generateKeyPairSync, publicEncrypt, privateDecrypt, constants, sign, verify,
@@ -57,25 +59,25 @@ export const asymSingleton: CryptoAsymGenerate = async () => {
 /**
  * Encrypts data with RSA keys
  */
-export const asymEncrypt = async (
-  data: string,
-  publicKey?: CryptoAsymPublicKey,
-): Promise<Buffer> => {
+export const asymEncrypt: CryptoAsymEncrypt = async (
+  data,
+  publicKey,
+) => {
   const key = publicKey || (await asymSingleton()).publicKey;
   const buffer = Buffer.from(data);
   return publicEncrypt({
     key,
     padding: constants.RSA_PKCS1_OAEP_PADDING,
     oaepHash: 'sha256',
-  }, buffer);
+  }, buffer) as CryptoAsymEncryption;
 };
 
 /**
  * Decrypts data with RSA keys
  */
-export const asymDecrypt = async (
-  encryption: Buffer,
-  privateKey?: CryptoAsymPublicKey,
+export const asymDecrypt: CryptoAsymDecrypt = async (
+  encryption,
+  privateKey,
 ): Promise<string> => {
   const key = privateKey || (await asymSingleton()).privateKey;
   return privateDecrypt({
@@ -88,26 +90,26 @@ export const asymDecrypt = async (
 /**
  * Signs data with RSA keys
  */
-export const asymSign = async (
-  data: string,
-  privateKey?: CryptoAsymPublicKey,
-): Promise<Buffer> => {
+export const asymSign: CryptoAsymSign = async (
+  data,
+  privateKey,
+) => {
   const key = privateKey || (await asymSingleton()).privateKey;
   const buffer = Buffer.from(data);
   return sign('sha256', buffer, {
     key,
     padding: constants.RSA_PKCS1_PSS_PADDING,
-  });
+  }) as CryptoAsymSignature;
 };
 
 /**
- * Signs data with RSA keys
+ * Verifies data with RSA keys
  */
-export const asymVerify = async (
-  data: string,
-  signature: Buffer,
-  privateKey?: CryptoAsymPublicKey,
-): Promise<boolean> => {
+export const asymVerify: CryptoAsymVerify = async (
+  data,
+  signature,
+  privateKey,
+) => {
   const key = privateKey || (await asymSingleton()).privateKey;
   const buffer = Buffer.from(data);
   return verify('sha256', buffer, {

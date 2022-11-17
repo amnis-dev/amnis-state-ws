@@ -36,6 +36,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@amnis/crypto@workspace:packages/amnis-crypto"
   dependencies:
+    "@amnis/core": 0.7.5
     jsonwebtoken: ^8.5.1
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.1
@@ -80,12 +81,20 @@ __metadata:
 "@amnis/mocks@workspace:packages/amnis-mocks":
   version: 0.0.0-use.local
   resolution: "@amnis/mocks@workspace:packages/amnis-mocks"
+  dependencies:
+    "@amnis/api": 0.7.5
+    "@amnis/core": 0.7.5
+    "@amnis/crypto": 0.7.5
+    "@amnis/db": 0.7.5
+    "@amnis/fs": 0.7.5
+    "@amnis/process": 0.7.5
+    "@amnis/state": 0.7.5
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.1
   languageName: unknown
   linkType: soft
 
-"@amnis/process@workspace:packages/amnis-process":
+"@amnis/process@0.7.5, @amnis/process@workspace:packages/amnis-process":
   version: 0.0.0-use.local
   resolution: "@amnis/process@workspace:packages/amnis-process"
   dependencies:
@@ -157,7 +166,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/state@workspace:packages/amnis-state":
+"@amnis/state@0.7.5, @amnis/state@workspace:packages/amnis-state":
   version: 0.0.0-use.local
   resolution: "@amnis/state@workspace:packages/amnis-state"
   dependencies:

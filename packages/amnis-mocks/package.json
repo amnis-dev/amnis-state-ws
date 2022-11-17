@@ -32,11 +32,11 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.7.5",
     "@amnis/api": "0.7.5",
+    "@amnis/core": "0.7.5",
+    "@amnis/crypto": "0.7.5",
     "@amnis/db": "0.7.5",
     "@amnis/fs": "0.7.5",
-    "@amnis/crypto": "0.7.5",
     "@amnis/process": "0.7.5",
     "@amnis/state": "0.7.5"
   },
