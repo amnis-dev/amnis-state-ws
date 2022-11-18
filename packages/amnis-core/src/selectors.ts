@@ -12,6 +12,7 @@ import type { UID } from './types.js';
 import { Role, roleKey } from './role/index.js';
 import { Encryption, encryptionKey } from './encryption/index.js';
 import { grantParse, Grant } from './grant/index.js';
+import { CryptoAsymPublicKey } from './crypto.types.js';
 
 /**
  * Creates a slice selector.
@@ -219,7 +220,7 @@ export function selectBearer(state: State, id: string): Bearer | undefined {
 /**
  * Selects a public key from the crypto slice.
  */
-export function selectPublicKey(state: State, tag: string): string | undefined {
+export function selectPublicKey(state: State, tag: string): CryptoAsymPublicKey | undefined {
   const slice = genSelectSlice<Encryption>(encryptionKey)(state);
 
   if (!slice) {
@@ -230,7 +231,7 @@ export function selectPublicKey(state: State, tag: string): string | undefined {
     (entity) => (entity?.tag === tag),
   );
 
-  return encryptionObject?.value;
+  return encryptionObject?.value as CryptoAsymPublicKey;
 }
 
 /**

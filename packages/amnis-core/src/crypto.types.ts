@@ -4,6 +4,7 @@
 import { JWTAccess } from './jwt.types.js';
 import { EntityCreator } from './entity/index.js';
 import { Session } from './session/index.js';
+import { LogBaseCreate } from './index.js';
 
 /**
  * String representation of a SHA256 encoded string.
@@ -66,12 +67,12 @@ export type CryptoHashSHA256 = (plain: string) => Promise<string>;
 /**
  * Encrypts with Symmetric AES encrypted text.
  */
-export type CryptoSymEncrypt = (plaintext: string, key: string) => Promise<CryptoSym>;
+export type CryptoSymEncrypt = (plaintext: string, key?: string) => Promise<CryptoSym>;
 
 /**
  * Decrypts a Symmetric AES encrypted string.
  */
-export type CryptoSymDecrypt = (encryption: CryptoSym, key: string) => Promise<string>;
+export type CryptoSymDecrypt = (encryption: CryptoSym, key?: string) => Promise<string>;
 
 /**
  * Generates an Asymmetric RSA encrypted key pair.
@@ -83,7 +84,7 @@ export type CryptoAsymGenerate = () => Promise<CryptoAsymKeyPair>;
  */
 export type CryptoAsymEncrypt = (
   data: string,
-  publicKey?: CryptoAsymKeyPair['publicKey']
+  publicKey?: CryptoAsymPublicKey
 ) => Promise<CryptoAsymEncryption>;
 
 /**
@@ -91,24 +92,24 @@ export type CryptoAsymEncrypt = (
  */
 export type CryptoAsymDecrypt = (
   encryption: CryptoAsymEncryption,
-  privateKey?: CryptoAsymKeyPair['privateKey']
-) => Promise<string>;
+  privateKey?: CryptoAsymPrivateKey
+) => Promise<string | undefined>;
 
 /**
  * Signs with an Asymmetric RSA encrypted private key.
  */
 export type CryptoAsymSign = (
   data: string,
-  privateKey?: CryptoAsymKeyPair['privateKey']
+  privateKey?: CryptoAsymPrivateKey
 ) => Promise<CryptoAsymSignature>;
 
 /**
- * Verifies with an Asymmetric RSA encrypted private key.
+ * Verifies with an Asymmetric RSA encrypted public key.
  */
 export type CryptoAsymVerify = (
   data: string,
   signature: CryptoAsymSignature,
-  privateKey?: CryptoAsymKeyPair['privateKey']
+  publicKey?: CryptoAsymPublicKey
 ) => Promise<boolean>;
 
 /**
@@ -143,7 +144,7 @@ export type CryptoSessionVerify = (
  */
 export type CryptoAccessEncode = (
   access: JWTAccess,
-  secret?: string
+  privateKey?: CryptoAsymPrivateKey
 ) => Promise<CryptoEncoded>;
 
 /**
@@ -151,8 +152,8 @@ export type CryptoAccessEncode = (
  */
 export type CryptoAccessVerify = (
   encoded: CryptoEncoded,
-  secret?: string
-) => Promise<JWTAccess | undefined>;
+  publicKey?: CryptoAsymPublicKey
+) => Promise<JWTAccess | LogBaseCreate>;
 
 /**
  * Decodes an encoded value without verifying.
@@ -192,6 +193,26 @@ export interface Crypto {
    * Gets a singleton RSA encrypted key pair.
    */
   asymSingleton: CryptoAsymGenerate;
+
+  /**
+   * Encrypts data using an RSA public key.
+   */
+  asymEncrypt: CryptoAsymEncrypt;
+
+  /**
+   * Decrypts data using an RSA private key.
+   */
+  asymDecrypt: CryptoAsymDecrypt;
+
+  /**
+   * Signs data using an RSA private key.
+   */
+  asymSign: CryptoAsymSign;
+
+  /**
+   * Verifies data using an RSA private key.
+   */
+  asymVerify: CryptoAsymVerify;
 
   /**
    * Hashes a password.

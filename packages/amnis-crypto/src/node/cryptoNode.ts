@@ -2,7 +2,11 @@ import type { Crypto } from '@amnis/core';
 import { randomString } from './random.js';
 import { hashSha256 } from './hash.js';
 import { symEncrypt, symDecrypt } from './sym.js';
-import { asymGenerate, asymSingleton } from './asym.js';
+import {
+  asymDecrypt, asymEncrypt,
+  asymGenerate, asymSingleton,
+  asymVerify, asymSign,
+} from './asym.js';
 import { passCompare, passHash } from './pass.js';
 import { sessionEncode, sessionVerify } from './session.js';
 import { accessEncode, accessVerify } from './access.js';
@@ -15,6 +19,10 @@ export const cryptoNode: Crypto = {
   symDecrypt,
   asymGenerate,
   asymSingleton,
+  asymEncrypt,
+  asymDecrypt,
+  asymSign,
+  asymVerify,
   passHash,
   passCompare,
   sessionEncode,

@@ -1,4 +1,10 @@
-import type { Crypto } from '@amnis/core';
+import type {
+  Crypto,
+  CryptoAsymEncryption,
+  CryptoAsymPrivateKey,
+  CryptoAsymPublicKey,
+  CryptoAsymSignature,
+} from '@amnis/core';
 
 export const cryptoBrowser: Crypto = {
   randomString: async (length = 126) => {
@@ -17,6 +23,31 @@ export const cryptoBrowser: Crypto = {
     throw new Error('Function not implemented.');
   },
   asymSingleton: async () => {
+    throw new Error('Function not implemented.');
+  },
+  asymEncrypt(
+    data: string,
+    publicKey?: CryptoAsymPublicKey,
+  ): Promise<CryptoAsymEncryption> {
+    throw new Error('Function not implemented.');
+  },
+  asymDecrypt(
+    encryption: CryptoAsymEncryption,
+    privateKey?: CryptoAsymPrivateKey,
+  ): Promise<string> {
+    throw new Error('Function not implemented.');
+  },
+  asymSign(
+    data: string,
+    privateKey?: CryptoAsymPrivateKey,
+  ): Promise<CryptoAsymSignature> {
+    throw new Error('Function not implemented.');
+  },
+  asymVerify(
+    data: string,
+    signature: CryptoAsymSignature,
+    publicKey?: CryptoAsymPublicKey,
+  ): Promise<boolean> {
     throw new Error('Function not implemented.');
   },
   passHash: async (plaintext) => {

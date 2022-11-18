@@ -21,11 +21,14 @@ Io<AuthVerify, boolean>
 
     const jwt = await context.crypto.accessVerify(bearer.access);
 
-    if (!jwt) {
+    if ('level' in jwt) {
+      output.json.logs.push(jwt);
       return output;
     }
 
-    output.json.result = true;
+    if ('exp' in jwt) {
+      output.json.result = true;
+    }
     return output;
   }
 );

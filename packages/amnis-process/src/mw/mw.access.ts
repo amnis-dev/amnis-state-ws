@@ -26,9 +26,9 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input)
     processConfig.PROCESS_CRYPTO_TAG,
   );
 
-  input.access = await context.crypto.accessVerify(accessEncoded, publicKey);
+  const access = await context.crypto.accessVerify(accessEncoded, publicKey);
 
-  if (!input.access) {
+  if ('level' in access) {
     const output = ioOutput();
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
@@ -36,8 +36,11 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input)
       title: 'Unauthorized',
       description: 'Access bearer is invalid.',
     });
+    output.json.logs.push(access);
     return output;
   }
+
+  input.access = access;
 
   return next(context)(input);
 };

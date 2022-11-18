@@ -85,17 +85,13 @@ export const asymEncrypt: CryptoAsymEncrypt = async (
 export const asymDecrypt: CryptoAsymDecrypt = async (
   encryption,
   privateKey,
-) => {
+): Promise<string> => {
   const key = privateKey || (await asymSingleton()).privateKey;
-  try {
-    return privateDecrypt({
-      key,
-      padding: constants.RSA_PKCS1_OAEP_PADDING,
-      oaepHash: 'sha256',
-    }, encryption).toString();
-  } catch (error) {
-    return undefined;
-  }
+  return privateDecrypt({
+    key,
+    padding: constants.RSA_PKCS1_OAEP_PADDING,
+    oaepHash: 'sha256',
+  }, encryption).toString();
 };
 
 /**

@@ -195,5 +195,5 @@ test('auth should not verify an invalid bearer.', async () => {
   });
 
   expect(output.json.result).toEqual(false);
-  expect(output.json.logs).toHaveLength(0);
+  expect(output.json.logs).toHaveLength(1);
 });
