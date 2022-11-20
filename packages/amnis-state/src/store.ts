@@ -1,6 +1,9 @@
 import { rtk } from '@amnis/core';
 import { stateSet } from './set.js';
 
+/**
+ * Configures a default store.
+ */
 export function storeSetup() {
   const rootReducer = rtk.combineReducers(stateSet.reducers);
 
