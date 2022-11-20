@@ -3,7 +3,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import { UID, uid, Image } from '@amnis/core';
 import { fsmemory } from './fsmemory.js';
 
-function imageLoad(path: string): Promise<Buffer> {
+function imageLoad(path: string): Promise<Uint8Array> {
   return new Promise((resolve, reject) => {
     const bufferStream = new stream.PassThrough();
 
@@ -22,7 +22,7 @@ function imageLoad(path: string): Promise<Buffer> {
     });
     bufferStream.on('end', () => {
       const bufferOut = Buffer.concat(buffers);
-      resolve(bufferOut);
+      resolve(new Uint8Array(bufferOut));
     });
   });
 }
@@ -44,8 +44,8 @@ test('file system should save file.', async () => {
     title: 'IGA Logo',
     slug: 'iga-logo',
     mimetype: 'image/webp',
-    width: 64,
-    height: 64,
+    width: 0,
+    height: 0,
     size: expect.any(Number),
   });
 });

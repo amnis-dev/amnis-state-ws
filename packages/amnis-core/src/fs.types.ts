@@ -6,7 +6,7 @@ import type { UID } from './types.js';
  * Method for saving data.
  */
 export type FileSystemImageWriteMethod = (
-  buffer: Buffer,
+  buffer: Uint8Array,
   imageProps: Partial<Image>
 ) => Promise<Image | undefined>;
 
@@ -15,7 +15,7 @@ export type FileSystemImageWriteMethod = (
  */
 export type FileSystemImageReadMethod = (
   imageId: UID<Image>
-) => Promise<Buffer | undefined>;
+) => Promise<Uint8Array | undefined>;
 
 /**
  * Core interface for database methods.

@@ -15,7 +15,7 @@ import {
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/core/test/book.store.js';
-import { cryptoNode } from '@amnis/crypto';
+import { cryptoWeb } from '@amnis/crypto';
 import { authProcess } from './index.js';
 import { validateSetup } from '../validate.js';
 
@@ -32,7 +32,7 @@ beforeAll(async () => {
     userCreator({
       name: 'ExampleUser',
       email: 'user.example@amnis.dev',
-      password: await cryptoNode.passHash('passwd1'),
+      password: await cryptoWeb.passHash('passwd1'),
     }),
   ];
 
@@ -61,7 +61,7 @@ const processes = ioProcess({
   store: appStore,
   database: dbmemory,
   filesystem: fsmemory,
-  crypto: cryptoNode,
+  crypto: cryptoWeb,
   validators: validateSetup(schemaAuth),
 }, authProcess);
 
@@ -146,7 +146,7 @@ test('auth should fail login with invalid credentials.', async () => {
  * ============================================================
  */
 test('auth should verify valid bearer.', async () => {
-  const accessEncoded = await cryptoNode.accessEncode({
+  const accessEncoded = await cryptoWeb.accessEncode({
     iss: 'core',
     sub: uid('user'),
     exp: dateNumeric('30m'),
@@ -173,9 +173,9 @@ test('auth should verify valid bearer.', async () => {
  * ============================================================
  */
 test('auth should not verify an invalid bearer.', async () => {
-  const asymKeyPairAnother = await cryptoNode.asymGenerate();
+  const asymKeyPairAnother = await cryptoWeb.asymGenerate();
 
-  const jwtEncodedInvalid = await cryptoNode.accessEncode({
+  const jwtEncodedInvalid = await cryptoWeb.accessEncode({
     iss: 'core',
     sub: uid('user'),
     exp: dateNumeric('30m'),

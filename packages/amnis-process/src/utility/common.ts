@@ -221,7 +221,7 @@ export async function loginSuccessProcess(
 
   output.json.bearers = [bearerAccess];
 
-  output.cookies.authSession = await context.crypto.sessionEncode(session);
+  output.cookies.authSession = await context.crypto.sessionEncrypt(session);
 
   return output;
 }

@@ -13,7 +13,7 @@ import {
   userKey,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
-import { cryptoNode } from '@amnis/crypto';
+import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from './auth.login.js';
 
@@ -23,7 +23,7 @@ const io = ioProcess(
     validators: validateSetup([schemaAuth]),
     database: dbmemory,
     filesystem: fsmemory,
-    crypto: cryptoNode,
+    crypto: cryptoWeb,
   },
   {
     login: authProcessLogin,

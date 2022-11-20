@@ -5,6 +5,7 @@ import {
 } from '@amnis/core';
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
+import { cryptoWeb } from '@amnis/crypto';
 import { store as storeDefault } from './store.js';
 import { systemActions } from './system/index.js';
 
@@ -33,14 +34,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
   const filesystemNext = filesystem ?? fsmemory;
   const dataNext = data ?? dataInitial();
 
-  const cryptoNext = crypto ?? await (async () => {
-    if (typeof process === 'object') {
-      const result = await import('@amnis/crypto');
-      return result.cryptoNode;
-    }
-    const result = await import('@amnis/crypto/browser');
-    return result.cryptoBrowser;
-  })();
+  const cryptoNext = crypto ?? cryptoWeb;
 
   if (initialize) {
     const readResult = await databaseNext.read({

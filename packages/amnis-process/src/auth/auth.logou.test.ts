@@ -11,7 +11,7 @@ import {
   sessionKey,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
-import { cryptoNode } from '@amnis/crypto';
+import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from './auth.login.js';
 import { authProcessLogout } from './auth.logout.js';
@@ -22,7 +22,7 @@ const io = ioProcess(
     validators: validateSetup([schemaAuth]),
     database: dbmemory,
     filesystem: fsmemory,
-    crypto: cryptoNode,
+    crypto: cryptoWeb,
   },
   {
     login: authProcessLogin,
@@ -49,7 +49,7 @@ test('should login and then logout as administrator', async () => {
 
   const session = outputLogin.json.result?.[sessionKey][0] as Session;
 
-  const sessionEncoded = await cryptoNode.sessionEncode(session);
+  const sessionEncoded = await cryptoWeb.sessionEncrypt(session);
 
   const inputLogout: IoInput<AuthLogout> = {
     sessionEncoded,

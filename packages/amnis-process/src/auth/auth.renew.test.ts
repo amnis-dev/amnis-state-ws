@@ -8,7 +8,7 @@ import {
   AuthLogin,
   stateEntitiesCreate,
 } from '@amnis/core';
-import { cryptoNode } from '@amnis/crypto';
+import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcess } from './index.js';
 
@@ -24,7 +24,7 @@ beforeAll(async () => {
   const user = userCreator({
     name: 'ExampleUser',
     email: 'user.example@amnis.dev',
-    password: await cryptoNode.passHash('passwd1'),
+    password: await cryptoWeb.passHash('passwd1'),
   });
 
   const profile = profileCreator({
@@ -49,7 +49,7 @@ const io = ioProcess({
   database: dbmemory,
   validators: validateSetup(schemaAuth),
   filesystem: fsmemory,
-  crypto: cryptoNode,
+  crypto: cryptoWeb,
 }, authProcess);
 
 test('Should be able to renew session and bearers', async () => {

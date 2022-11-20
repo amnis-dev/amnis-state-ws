@@ -1,7 +1,7 @@
 import {
   uid, Role, roleKey, systemCreator, IoContext, entityCreate, systemKey, System,
 } from '@amnis/core';
-import { cryptoNode } from '@amnis/crypto';
+import { cryptoWeb } from '@amnis/crypto';
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/state';
@@ -14,7 +14,7 @@ const context: IoContext = {
   store: appStore,
   database: dbmemory,
   filesystem: fsmemory,
-  crypto: cryptoNode,
+  crypto: cryptoWeb,
   validators: validateSetup([]),
 };
 

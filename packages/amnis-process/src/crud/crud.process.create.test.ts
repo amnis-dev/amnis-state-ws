@@ -19,7 +19,7 @@ import {
   stateEntitiesCreate,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
-import { cryptoNode } from '@amnis/crypto';
+import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from '../auth/auth.login.js';
 import { crudProcessCreate } from './crud.process.create.js';
@@ -33,7 +33,7 @@ const io = ioProcess(
     validators: validateSetup([schemaAuth, schemaEntity]),
     database: dbmemory,
     filesystem: fsmemory,
-    crypto: cryptoNode,
+    crypto: cryptoWeb,
   },
   {
     login: authProcessLogin,

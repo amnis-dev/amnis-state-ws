@@ -6,7 +6,7 @@ const magicWebp = [87, 69, 66, 80];
 /**
  * Returns true if a buffer is webp data.
  */
-export function isWebp(buffer: Buffer) {
+export function isWebp(buffer: Uint8Array) {
   if (!buffer || buffer.length < 12) {
     return false;
   }

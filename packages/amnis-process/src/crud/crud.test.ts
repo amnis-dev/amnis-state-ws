@@ -8,7 +8,7 @@ import {
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { dbmemory, memoryClear } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
-import { cryptoNode } from '@amnis/crypto';
+import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { crudProcess } from './index.js';
 
@@ -23,7 +23,7 @@ const io = ioProcess({
   store: appStore,
   database: dbmemory,
   filesystem: fsmemory,
-  crypto: cryptoNode,
+  crypto: cryptoWeb,
   validators,
 }, crudProcess);
 
@@ -32,7 +32,7 @@ const expires = dateNumeric(new Date(Date.now() + 60000));
 /**
  * Create a JWT bearer in order to execute io.
  */
-const accessEncoded: CryptoEncoded = await cryptoNode.accessEncode({
+const accessEncoded: CryptoEncoded = await cryptoWeb.accessEncode({
   iss: 'core',
   sub: uid('user', 'system'),
   exp: expires,

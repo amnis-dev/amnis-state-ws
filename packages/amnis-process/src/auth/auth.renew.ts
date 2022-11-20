@@ -90,7 +90,7 @@ Io<AuthRenew, StateEntities>
       admin: session.admin,
     });
 
-    output.cookies.authSession = await crypto.sessionEncode(sessionNew);
+    output.cookies.authSession = await crypto.sessionEncrypt(sessionNew);
 
     output.json.result[sessionKey] = [entityCreate<Session>(
       sessionKey,

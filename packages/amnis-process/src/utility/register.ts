@@ -106,7 +106,7 @@ export async function register(
   if (createSession === true) {
     const session = sessionGenerate(user, profile);
     output.json.result.session = [entityCreate(sessionKey, session)];
-    output.cookies.authSession = await context.crypto.sessionEncode(session);
+    output.cookies.authSession = await context.crypto.sessionEncrypt(session);
   }
 
   /**

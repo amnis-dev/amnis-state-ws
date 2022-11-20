@@ -17,7 +17,7 @@ export const mwSession: IoMiddleware = () => (next) => (context) => async (input
     return output;
   }
 
-  input.session = await context.crypto.sessionVerify(sessionEncoded);
+  input.session = await context.crypto.sessionDecrypt(sessionEncoded);
 
   if (!input.session) {
     const output = ioOutput();

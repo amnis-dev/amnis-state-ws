@@ -3,6 +3,7 @@ import type { Config } from 'jest';
 const jestConfig: Config = {
   verbose: true,
   testEnvironment: 'node',
+  // setupFiles: ['<rootDir>/jest.setup.cjs'],
   // transform: {
   //   '^.+\\.[t|j]sx?$': 'jest-esm-transformer',
   // },
@@ -18,13 +19,11 @@ const jestConfig: Config = {
     '.lib',
     '.pkg',
     '.dist',
-    '.web',
     '.out',
     'srv',
     'lib',
     'pkg',
     'dist',
-    'web',
     'out',
   ],
   collectCoverage: true,
