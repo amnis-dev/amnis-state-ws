@@ -52,8 +52,6 @@ beforeAll(async () => {
   }));
 });
 
-const jwtTokenRegex = /^(?:[\w-]*\.){2}[\w-]*$/;
-
 /**
  * Setup the processes
  */
@@ -120,8 +118,6 @@ test('auth should successfully login with valid credentials.', async () => {
       access: expect.any(String),
     }),
   );
-
-  expect(output.cookies?.authSession).toMatch(jwtTokenRegex);
 });
 
 /**
@@ -173,7 +169,7 @@ test('auth should verify valid bearer.', async () => {
  * ============================================================
  */
 test('auth should not verify an invalid bearer.', async () => {
-  const asymKeyPairAnother = await cryptoWeb.asymGenerate();
+  const asymKeyPairAnother = await cryptoWeb.asymGenerate('signer');
 
   const jwtEncodedInvalid = await cryptoWeb.accessEncode({
     iss: 'core',

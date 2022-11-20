@@ -3,7 +3,7 @@ import {
 } from '@amnis/core/test/book.store.js';
 import {
   schemaState,
-  dateNumeric, historyKey, IoInput, ioProcess, CryptoEncoded, StateCreator, uid,
+  dateNumeric, historyKey, IoInput, ioProcess, CryptoToken, StateCreator, uid,
 } from '@amnis/core';
 import bookSchema from '@amnis/core/test/book.schema.json';
 import { dbmemory, memoryClear } from '@amnis/db';
@@ -32,7 +32,7 @@ const expires = dateNumeric(new Date(Date.now() + 60000));
 /**
  * Create a JWT bearer in order to execute io.
  */
-const accessEncoded: CryptoEncoded = await cryptoWeb.accessEncode({
+const accessEncoded: CryptoToken = await cryptoWeb.accessEncode({
   iss: 'core',
   sub: uid('user', 'system'),
   exp: expires,

@@ -312,10 +312,10 @@
         "type": {
           "type": "string",
           "enum": [
-            "rsa",
-            "aes"
+            "asym",
+            "sym"
           ],
-          "description": "Type of encryption used."
+          "description": "Type of encryption method used."
         },
         "value": {
           "type": "string",
@@ -349,10 +349,10 @@
         "type": {
           "type": "string",
           "enum": [
-            "rsa",
-            "aes"
+            "asym",
+            "sym"
           ],
-          "description": "Type of encryption used."
+          "description": "Type of encryption method used."
         },
         "value": {
           "type": "string",
@@ -2108,10 +2108,10 @@
         "type": {
           "type": "string",
           "enum": [
-            "rsa",
-            "aes"
+            "asym",
+            "sym"
           ],
-          "description": "Type of encryption used."
+          "description": "Type of encryption method used."
         },
         "value": {
           "type": "string",
@@ -2137,10 +2137,10 @@
         "type": {
           "type": "string",
           "enum": [
-            "rsa",
-            "aes"
+            "asym",
+            "sym"
           ],
-          "description": "Type of encryption used."
+          "description": "Type of encryption method used."
         },
         "value": {
           "type": "string",

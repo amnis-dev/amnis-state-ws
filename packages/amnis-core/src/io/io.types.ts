@@ -9,7 +9,7 @@ import type { LogBaseCreate } from '../log/index.js';
 import type { Database } from '../db.types.js';
 import type { FileSystem } from '../fs.types.js';
 import type { Session } from '../session/index.js';
-import { Crypto, CryptoEncoded } from '../crypto.types.js';
+import { Crypto, CryptoSymEncryption, CryptoToken } from '../crypto.types.js';
 import { JWTAccess } from '../jwt.types.js';
 
 /**
@@ -67,7 +67,7 @@ export interface IoInput<T = any, J = JWTAccess> {
   /**
    * Encoded JWT data.
    */
-  accessEncoded?: CryptoEncoded;
+  accessEncoded?: CryptoToken;
 
   /**
    * Verified decoded token.
@@ -75,12 +75,12 @@ export interface IoInput<T = any, J = JWTAccess> {
   access?: J;
 
   /**
-   * Encoded Session
+   * Ecrypted Session
    */
-  sessionEncoded?: CryptoEncoded;
+  sessionEncryption?: CryptoSymEncryption;
 
   /**
-   * Verified decoded session data.
+   * Decrypted session data.
    */
   session?: Session;
 }

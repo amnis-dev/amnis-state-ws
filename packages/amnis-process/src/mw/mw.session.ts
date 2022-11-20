@@ -4,9 +4,9 @@ import { ioOutput, IoMiddleware } from '@amnis/core';
  * Ensures a JWT bearer is set.
  */
 export const mwSession: IoMiddleware = () => (next) => (context) => async (input) => {
-  const { sessionEncoded } = input;
+  const { sessionEncryption } = input;
 
-  if (!sessionEncoded) {
+  if (!sessionEncryption) {
     const output = ioOutput();
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
@@ -17,7 +17,7 @@ export const mwSession: IoMiddleware = () => (next) => (context) => async (input
     return output;
   }
 
-  input.session = await context.crypto.sessionDecrypt(sessionEncoded);
+  input.session = await context.crypto.sessionDecrypt(sessionEncryption);
 
   if (!input.session) {
     const output = ioOutput();

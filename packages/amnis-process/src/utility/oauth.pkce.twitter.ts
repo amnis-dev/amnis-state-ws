@@ -4,7 +4,7 @@ import {
   dateNumeric,
   ioOutput,
   IoOutput,
-  CryptoEncoded,
+  CryptoToken,
   selectActive,
   StateEntities,
   System,
@@ -24,9 +24,9 @@ import { register } from './register.js';
 interface OAuth2TokenData {
   bearer_type: string;
   expires_in: number,
-  access_token: CryptoEncoded;
+  access_token: CryptoToken;
   scope: string;
-  refresh_token?: CryptoEncoded;
+  refresh_token?: CryptoToken;
   error?: string,
   error_description?: string;
 }
@@ -126,7 +126,7 @@ export async function oauthTwitter(
   const bearerAccess = bearerCreate({
     id: 'twitter',
     exp: dateNumeric(`${bearerData.expires_in}s`),
-    access: bearerData.access_token as CryptoEncoded,
+    access: bearerData.access_token as CryptoToken,
   });
   bearers.push(bearerAccess);
 
@@ -135,7 +135,7 @@ export async function oauthTwitter(
   //     api: 'twitter',
   //     type: 'refresh',
   //     exp: dateNumeric('200d'),
-  //     jwt: bearerData.refresh_token as CryptoEncoded,
+  //     jwt: bearerData.refresh_token as CryptoToken,
   //   });
   //   bearers.push(bearerRefresh);
   // }

@@ -1,4 +1,5 @@
 import { CryptoPassCompare, CryptoPassHash, CryptoPassword } from '@amnis/core';
+import { base64Decode, base64Encode } from '../utility.js';
 import { webcrypto } from '../webcrypto.js';
 
 const passEncrypt = async (password: string, salt: Uint8Array) => {
@@ -17,11 +18,13 @@ const passEncrypt = async (password: string, salt: Uint8Array) => {
     256,
   );
 
-  const saltArray = Array.from(new Uint8Array(salt));
-  const derivedArray = Array.from(new Uint8Array(derivedBits));
-  const composite = saltArray.concat(derivedArray).map((byte) => String.fromCharCode(byte)).join('');
+  const derived = new Uint8Array(derivedBits);
+  const combined = new Uint8Array(salt.length + derived.length);
+  combined.set(salt);
+  combined.set(derived, salt.length);
+  const base64 = base64Encode(combined, true);
 
-  return composite;
+  return base64;
 };
 
 export const passHash: CryptoPassHash = async (plaintext) => {
@@ -32,8 +35,8 @@ export const passHash: CryptoPassHash = async (plaintext) => {
 };
 
 export const passCompare: CryptoPassCompare = async (plaintext, hashtext) => {
-  const salt = hashtext.slice(0, 16);
-  const saltUint8 = new Uint8Array([...salt].map((char) => char.charCodeAt(0)));
-  const currentPassHash = await passEncrypt(plaintext, saltUint8);
+  const uint8 = base64Decode(hashtext);
+  const salt = uint8.slice(0, 16);
+  const currentPassHash = await passEncrypt(plaintext, salt);
   return hashtext === currentPassHash;
 };

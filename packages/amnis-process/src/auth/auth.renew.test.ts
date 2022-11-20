@@ -4,9 +4,9 @@ import { storeSetup } from '@amnis/core/test/book.store.js';
 import {
   ioProcess, IoInput, userCreator, profileCreator,
   schemaAuth,
-  CryptoEncoded,
   AuthLogin,
   stateEntitiesCreate,
+  CryptoSymEncryption,
 } from '@amnis/core';
 import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
@@ -63,7 +63,7 @@ test('Should be able to renew session and bearers', async () => {
   const outputLogin = await io.login(inputLogin);
 
   const input: IoInput = {
-    sessionEncoded: outputLogin.cookies?.authSession as CryptoEncoded,
+    sessionEncryption: outputLogin.cookies?.authSession as CryptoSymEncryption,
     body: {},
   };
 
@@ -91,7 +91,7 @@ test('Should be able to renew session and bearers with user and profile informat
   const outputLogin = await io.login(inputLogin);
 
   const input: IoInput = {
-    sessionEncoded: outputLogin.cookies?.authSession as CryptoEncoded,
+    sessionEncryption: outputLogin.cookies?.authSession as CryptoSymEncryption,
     body: {
       info: true,
     },

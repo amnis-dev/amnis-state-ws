@@ -51,10 +51,9 @@ test('should sign data and not verify different data', async () => {
   expect(verification).toBe(false);
 });
 
-test('should sign data and not verify different secret', async () => {
+test('should sign data and not verify different signature', async () => {
   const keyPair = await asymGenerate('signer');
-  const signature = await asymSign(data);
   const signatureAnother = await asymSign(data, keyPair.privateKey);
-  const verification = await asymVerify(data, signature, signatureAnother);
+  const verification = await asymVerify(data, signatureAnother);
   expect(verification).toBe(false);
 });

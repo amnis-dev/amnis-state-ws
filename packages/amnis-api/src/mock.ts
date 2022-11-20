@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
-  IoInput, ioOutput, IoOutput, IoProcesses, CryptoEncoded,
+  IoInput, ioOutput, IoOutput, IoProcesses, CryptoToken, CryptoSymEncryption,
 } from '@amnis/core';
 import { rest, RequestHandler } from 'msw';
 import { setupServer } from 'msw/node';
@@ -24,13 +24,13 @@ export function apiMockGenerateHandlers(
         /**
          * Set the encoded session cookie on the input.
          */
-        input.sessionEncoded = authSession as CryptoEncoded;
+        input.sessionEncryption = authSession as CryptoSymEncryption;
 
         /**
          * Capture the authorization bearer if sent with the request.
          */
         const authorization = req.headers.get('Authorization');
-        input.accessEncoded = authorization?.split(' ')[1] as CryptoEncoded;
+        input.accessEncoded = authorization?.split(' ')[1] as CryptoToken;
 
         /**
          * Call the api process.

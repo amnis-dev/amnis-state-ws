@@ -138,7 +138,7 @@
           "description": "Expiration date."
         },
         "access": {
-          "$ref": "#/definitions/CryptoEncoded",
+          "$ref": "#/definitions/CryptoToken",
           "description": "Encoded access token."
         }
       },
@@ -154,7 +154,7 @@
       "type": "number",
       "description": "A string that represents a JSON Date."
     },
-    "CryptoEncoded": {
+    "CryptoToken": {
       "type": "string"
     }
   }

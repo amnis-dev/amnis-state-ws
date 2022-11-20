@@ -49,10 +49,10 @@ test('should login and then logout as administrator', async () => {
 
   const session = outputLogin.json.result?.[sessionKey][0] as Session;
 
-  const sessionEncoded = await cryptoWeb.sessionEncrypt(session);
+  const sessionEncryption = await cryptoWeb.sessionEncrypt(session);
 
   const inputLogout: IoInput<AuthLogout> = {
-    sessionEncoded,
+    sessionEncryption,
     body: {},
   };
 
