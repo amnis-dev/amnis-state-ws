@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/amnis-dev/amnis-state/compare/v0.7.5...v0.8.0) (2022-11-21)
+
+
+### Features
+
+* Added mocks for amnis core endpoints ([ed66dad](https://github.com/amnis-dev/amnis-state/commit/ed66dad371d3570f9993a489c8747de4d3894390))
+* Added more options to configure api mocking ([f3e6419](https://github.com/amnis-dev/amnis-state/commit/f3e64196e70a0115e7cc543070ef810c6ca76fc2))
+* Added more RSA methods ([c4481ba](https://github.com/amnis-dev/amnis-state/commit/c4481ba6d4b81881ffbbf9dcead4e60b44eaf217))
+* Added new package for mocking api calls ([54c53ae](https://github.com/amnis-dev/amnis-state/commit/54c53aed88ef15b88b18986f9cf7aac886040120))
+* Added tests for some crypto methods ([6294b79](https://github.com/amnis-dev/amnis-state/commit/6294b79862b1a4af96188cacfec086fd9d9b4076))
+* Added yarn cache files for faster installs ([b2a2db5](https://github.com/amnis-dev/amnis-state/commit/b2a2db5f280b981c58a8a488d7ef1ee612ec1610))
+* API settings can be configured dynamically using the api reducer ([5fadce3](https://github.com/amnis-dev/amnis-state/commit/5fadce3ca2ab77c9cf296509bb80bb7c643bb083))
+* Completed new crypto interface for processor context ([03e4374](https://github.com/amnis-dev/amnis-state/commit/03e437489a6d704a9dd156266e076d9b2828a423))
+* Completed refactor with unimplemented crypto interface for environment-base cryptography ([d12259a](https://github.com/amnis-dev/amnis-state/commit/d12259a7ec377747f01774c986cc8af8caca7c28))
+* Created common interface type for cryptographic logic ([42876ee](https://github.com/amnis-dev/amnis-state/commit/42876ee6320ee71d1fa40831593b30e77114837c))
+* Major refactor in creating state entities ([694c0c5](https://github.com/amnis-dev/amnis-state/commit/694c0c5c0c4ac3f800f89a9bfe4877ed731d2434))
+* Minor refactoring of api reducers and matcher ([07d0252](https://github.com/amnis-dev/amnis-state/commit/07d02528189147cfad98ac599fcfb9f5b96f4a33))
+* Refactored crypto package to utilize webcrypto ([af3e070](https://github.com/amnis-dev/amnis-state/commit/af3e070d40b6f7df1188bd2db43764cf6a7fd944))
+* Removed jsonwebtoken as a dependency ([bdd65f8](https://github.com/amnis-dev/amnis-state/commit/bdd65f83678e1368da47cb30a819aff6063b2048))
+* Renamed Amnis Mocks to Amnis Mock ([efcd9c4](https://github.com/amnis-dev/amnis-state/commit/efcd9c4c645dc1c7f8a9b79b7e253efcfc369c74))
+* updated api configurations to be more generic ([66b9102](https://github.com/amnis-dev/amnis-state/commit/66b910245da0bbec4d38ecd4f61617596dbda6b9))
+* upgraded to yarn 2 berry version ([0947358](https://github.com/amnis-dev/amnis-state/commit/0947358c321954f3a71ccc46e47c5b7e441a4aa8))
+
+
+### Bug Fixes
+
+* Fixed build orders and refactored crypto. ([8817810](https://github.com/amnis-dev/amnis-state/commit/8817810d2e0cea025ee0bdd6bbd239cdb5f7b776))
+* Fixed issue with committed flag switching on and off ([1bbf430](https://github.com/amnis-dev/amnis-state/commit/1bbf4306ba28f0d68c9df71d498253c1f2b9adff))
+* Fixed issue with the word logout included with a test name not running ([312d409](https://github.com/amnis-dev/amnis-state/commit/312d4095124002a72533e7135d5b939ca2878a4f))
+* Fixed issues with linting ([d861d39](https://github.com/amnis-dev/amnis-state/commit/d861d39af586a13a57cfbd3938d3347d4a27a007))
+* Fixed linting issues with new asym crypto methods ([ac4cb35](https://github.com/amnis-dev/amnis-state/commit/ac4cb3534b11a9cb57ca166d1a9ad2c1e0713f5f))
+* Fixed password hashing method to encode into base64 ([67f8b06](https://github.com/amnis-dev/amnis-state/commit/67f8b06fb9253061f2c43ee38ac9b8002b5d4352))
+* Resolved build errors with Crypto package ([8e78804](https://github.com/amnis-dev/amnis-state/commit/8e788040fe7692dd08b26c59116cc5d12d5d6aba))
+* Set MSW as an external package during build ([102e434](https://github.com/amnis-dev/amnis-state/commit/102e43449af47f8d995b93ca647a58078dd67082))
+* Updated yarn lock file ([69ad917](https://github.com/amnis-dev/amnis-state/commit/69ad917b07982d9b28962e0ac182b46e55612e32))
+* Updated yarn lock with new workspace dependencies ([9d83f7f](https://github.com/amnis-dev/amnis-state/commit/9d83f7fe370577121b67e34a5d32add3bdc36706))
+
 ### [0.7.5](https://github.com/amnis-dev/amnis-state/compare/v0.7.4...v0.7.5) (2022-11-12)
 
 
