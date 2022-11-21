@@ -10,6 +10,11 @@
       "updater": "scripts/standard-version-updater.cjs"
     },
     {
+      "filename": "packages/amnis-crypto/package.json",
+      "type": "json",
+      "updater": "scripts/standard-version-updater.cjs"
+    },
+    {
       "filename": "packages/amnis-db/package.json",
       "type": "json",
       "updater": "scripts/standard-version-updater.cjs"
@@ -31,6 +36,11 @@
     },
     {
       "filename": "packages/amnis-state/package.json",
+      "type": "json",
+      "updater": "scripts/standard-version-updater.cjs"
+    },
+    {
+      "filename": "packages/amnis-mock/package.json",
       "type": "json",
       "updater": "scripts/standard-version-updater.cjs"
     }
