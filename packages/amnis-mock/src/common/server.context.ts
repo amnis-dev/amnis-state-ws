@@ -1,10 +1,10 @@
 import { schemaAuth, schemaEntity } from '@amnis/core';
 import { validateSetup } from '@amnis/process';
-import { contextSetup } from '@amnis/state';
+import { ContextOptions } from '@amnis/state';
 
-export const serverContext = async () => contextSetup({
+export const serverContextOptions: ContextOptions = {
   initialize: true,
   validators: validateSetup([schemaAuth, schemaEntity]),
-});
+};
 
-export default serverContext;
+export default serverContextOptions;

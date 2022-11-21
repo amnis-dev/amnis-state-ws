@@ -77,9 +77,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/mocks@workspace:packages/amnis-mocks":
+"@amnis/mock@workspace:packages/amnis-mock":
   version: 0.0.0-use.local
-  resolution: "@amnis/mocks@workspace:packages/amnis-mocks"
+  resolution: "@amnis/mock@workspace:packages/amnis-mock"
   peerDependencies:
     "@amnis/api": 0.7.5
     "@amnis/process": 0.7.5
