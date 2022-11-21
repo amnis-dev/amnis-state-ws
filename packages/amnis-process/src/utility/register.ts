@@ -90,7 +90,7 @@ export async function register(
     user: [user],
     profile: [profile],
     contact: [contact],
-  }, { $owner: user.$id });
+  }, { $owner: user.$id, $creator: user.$id });
 
   /**
    * StateCreator newly created user and profile into the database.

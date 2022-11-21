@@ -16,6 +16,7 @@ export * from './rtk.js';
 export * from './rtkq.js';
 export * from './rtkqr.js';
 
+export * from './api/index.js';
 export * from './audit/index.js';
 export * from './bearer/index.js';
 export * from './contact/index.js';

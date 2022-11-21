@@ -1,10 +1,9 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import type { Meta } from '@amnis/core';
-import type { <%= Name %> } from '@amnis/core/<%= name %>';
+import type { Meta, <%= Name % } from '@amnis/core';
 
 /**
- * <%= Name %> collection meta data.
+ * <%= Name % collection meta data.
  */
-export type <%= Name %>Meta = Meta<<%= Name %>>;
+export type <%= Name %Meta = Meta<<%= Name %>;

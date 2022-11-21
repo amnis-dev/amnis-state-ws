@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.test.ts` : null %>"
 ---
-import { <%= name %>Key, <%= name %>Create, <%= name %>Base } from './<%= name %>';
+import { <%= name %>Key, <%= name %>Creator, <%= name %>Base } from './<%= name %>.js';
 
 /**
  * ============================================================
@@ -14,7 +14,7 @@ test('<%= name %> key should be is properly set', () => {
  * ============================================================
  */
 test('should create a <%= name %>', () => {
-  const <%= name %> = <%= name %>Create(<%= name %>Base);
+  const <%= name %> = <%= name %>Creator(<%= name %>Base);
 
   expect(<%= name %>).toEqual(
     expect.objectContaining(<%= name %>Base),

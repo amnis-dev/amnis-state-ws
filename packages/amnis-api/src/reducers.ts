@@ -16,6 +16,7 @@ import {
   UID,
   userKey,
   entityCreate,
+  contactKey,
 } from '@amnis/core';
 import { apiAuth } from './auth/index.js';
 import { apiCrud } from './crud/index.js';
@@ -82,7 +83,14 @@ export function apiExtraReducers<E extends Entity>(
       /**
        * Set the active session/user.
        */
-      if ([userKey, sessionKey, profileKey].includes(key) && !!result[key].length) {
+      if (
+        [
+          userKey,
+          sessionKey,
+          profileKey,
+          contactKey,
+        ].includes(key) && !!result[key].length
+      ) {
         state.active = result[key][0].$id;
       }
     }

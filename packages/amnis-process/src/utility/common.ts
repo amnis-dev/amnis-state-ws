@@ -17,6 +17,11 @@ import {
   IoContext,
   EntityCreator,
   stateEntitiesCreate,
+  profileCreator,
+  entityCreate,
+  Contact,
+  contactKey,
+  contactCreator,
 } from '@amnis/core';
 import { processConfig } from '../config.js';
 
@@ -163,27 +168,76 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
    * Create a new profile and store it if no results were found.
    */
   if (!results[profileKey] || results[profileKey].length < 1) {
-    /**
-     * TODO: Find out if creating a new profile if not found
-     * is a good choice.
-     * The profile should have been created upon registration...
-     * but a user can exist without a profile.
-     */
-    // const profile = profileCreator({
-    //   $user: user.$id,
-    //   nameDisplay: user.name,
-    // });
+    const profile = entityCreate(profileKey, profileCreator({
+      $user: user.$id,
+      nameDisplay: user.name,
+    }), { $owner: user.$id, $creator: user.$id });
 
-    // const resultDb = await database.create({
-    //   [profileKey]: [profile],
-    // });
+    const resultDb = await database.create({
+      [profileKey]: [profile],
+    });
 
-    // const profileResult = resultDb[profileKey]?.[0] as Profile | undefined;
+    const profileResult = resultDb[profileKey]?.[0];
 
-    return undefined;
+    if (!profileResult) {
+      return undefined;
+    }
+
+    return profileResult as Profile;
   }
 
   return results[profileKey][0] as Profile;
+}
+
+/**
+ * Fetch a profile contact. Create a new one if it doesn't exist.
+ */
+export async function contactFetch(
+  database: Database,
+  profile: Profile,
+): Promise<Contact | undefined> {
+  const results = await database.read({
+    [contactKey]: {
+      $query: {
+        $id: {
+          $eq: profile.$contact,
+        },
+      },
+    },
+  });
+
+  /**
+   * Create a new profile contact and store it if no results were found.
+   */
+  if (!results[contactKey] || results[contactKey].length < 1) {
+    const contact = entityCreate(contactKey, contactCreator({
+      name: `${profile.nameDisplay} Contact`,
+    }), { $owner: profile.$user, $creator: profile.$user });
+
+    const resultDb = await database.create({
+      [contactKey]: [contact],
+    });
+
+    const contactResult = resultDb[contactKey]?.[0];
+
+    if (!contactResult) {
+      return undefined;
+    }
+
+    // No need to await for this update.
+    database.update({
+      [profileKey]: [
+        {
+          $id: profile.$id,
+          $contact: contactResult.$id,
+        },
+      ],
+    });
+
+    return contactResult as Contact;
+  }
+
+  return results[contactKey][0] as Contact;
 }
 
 /**
@@ -207,6 +261,18 @@ export async function loginSuccessProcess(
     return output;
   }
 
+  const contact = await contactFetch(context.database, profile);
+
+  if (!contact) {
+    output.status = 500; // Internal Server Error
+    output.json.logs.push({
+      level: 'error',
+      title: 'Contact Information Missing',
+      description: 'Could not find the account contact record.',
+    });
+    return output;
+  }
+
   const session = sessionGenerate(user, profile);
 
   const bearerAccess = await bearerGenerate(user, context);
@@ -217,6 +283,7 @@ export async function loginSuccessProcess(
     [userKey]: [user],
     [profileKey]: [profile],
     [sessionKey]: [session],
+    [contactKey]: [contact],
   }, { $creator: user.$id });
 
   output.json.bearers = [bearerAccess];

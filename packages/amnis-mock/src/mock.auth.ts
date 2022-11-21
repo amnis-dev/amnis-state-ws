@@ -4,15 +4,15 @@ import { authProcess } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
 import { serverContextOptions } from './common/server.context.js';
 import { setupInput } from './setup.js';
-import { MockHandlers, MockOptions } from './mock.types.js';
+import { MockHandlers } from './mock.types.js';
 
-const defaultMockOptions: MockOptions = {
+const defaultMockOptions = {
   baseUrl: '',
   context: serverContextOptions,
 };
 
 export const authHandlers: MockHandlers = (options) => {
-  const opt: MockOptions = { ...options, ...defaultMockOptions };
+  const opt = { ...defaultMockOptions, ...options };
 
   return [
     rest.post(`${opt.baseUrl}/api/auth/:processer`, async (req, res, ctx) => {
@@ -39,6 +39,7 @@ export const authHandlers: MockHandlers = (options) => {
         }
         ctxCookies.push(ctx.cookie(cookieName, cookieValue || '', cookieOptions));
       });
+
       return res(
         ctx.status(200),
         ctx.json(output.json),

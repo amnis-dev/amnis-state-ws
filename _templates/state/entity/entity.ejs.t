@@ -1,7 +1,15 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.ts` : null %>"
 ---
-import { rtk, coreReducers, coreExtraReducers, <%= Name %>, <%= name %>Key } from '@amnis/core';
+import {
+  rtk,
+  coreReducers,
+  coreExtraReducers,
+  <%= Name %>,
+  <%= name %>Key,
+  metaInitial,
+  coreSelectors,
+} from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { <%= Name %>Meta } from './<%= name %>.types.js';
 
@@ -24,11 +32,9 @@ export const <%= name %>Adapter = rtk.createEntityAdapter<<%= Name %>>({
 /**
  * Initialized <%= name %> state with meta information.
  */
-export const <%= name %>InitialState = <%= name %>Adapter.getInitialState<<%= Name %>Meta>({
-  active: null,
-  focused: null,
-  selection: [],
-});
+export const <%= name %>InitialState = <%= name %>Adapter.getInitialState<<%= Name %>Meta>(
+  metaInitial<<%= Name %>>(),
+);
 
 /**
  * RTK <%= Name %> Slice
@@ -74,6 +80,10 @@ export const <%= name %>Selectors = {
   ...<%= name %>Adapter.getSelectors<{
     [<%= name %>Key]: typeof <%= name %>InitialState;
   }>((state) => state[<%= name %>Key]),
+  /**
+   * Gets core selectors.
+   */
+  ...coreSelectors<<%= Name %>>(<%= name %>Key),
 };
 
 /**

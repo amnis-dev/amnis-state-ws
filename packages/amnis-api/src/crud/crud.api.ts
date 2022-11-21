@@ -6,7 +6,7 @@ const reducerPath = 'apiCrud';
 
 export const apiCrud = rtkq.createApi({
   reducerPath,
-  baseQuery: dynamicBaseQuery('core'),
+  baseQuery: dynamicBaseQuery(reducerPath),
   endpoints: (builder) => apiCrudQueries(builder),
 });
 

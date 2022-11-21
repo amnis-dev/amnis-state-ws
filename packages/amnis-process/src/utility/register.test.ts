@@ -38,6 +38,10 @@ test('should return registration output successfully.', async () => {
     },
   );
 
+  const user = output.json.result?.user?.[0];
+  const profile = output.json.result?.profile?.[0];
+  const contact = output.json.result?.contact?.[0];
+
   expect(output).toBeDefined();
   expect(output.status).toEqual(200);
   expect(output.json.logs).toHaveLength(1);
@@ -47,9 +51,21 @@ test('should return registration output successfully.', async () => {
     profile: expect.any(Array),
     contact: expect.any(Array),
   });
-  expect(output.json.result?.user).toHaveLength(1);
-  expect(output.json.result?.profile).toHaveLength(1);
-  expect(output.json.result?.contact).toHaveLength(1);
+  expect(user).toBeDefined();
+  expect(user).toMatchObject({
+    $owner: user?.$id,
+  });
+  expect(profile).toBeDefined();
+  expect(profile).toMatchObject({
+    $owner: user?.$id,
+    $creator: user?.$id,
+  });
+  expect(contact).toBeDefined();
+  expect(contact).toMatchObject({
+    $owner: user?.$id,
+    $creator: user?.$id,
+  });
+
   expect(output.json.bearers).not.toBeDefined();
 });
 

@@ -3,6 +3,7 @@ import fetch, { Headers, Request } from 'cross-fetch';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/index.js';
 import { rtkq } from '@amnis/core';
 import { headersAuthorizationToken } from './util.headers.js';
+import { apiSelectors } from '../api/api.js';
 
 global.Headers = Headers;
 global.Request = Request;
@@ -17,13 +18,12 @@ type DynamicBaseQuerySetup = (reducerPath: string, bearerId?: string) => Dynamic
  */
 export const dynamicBaseQuery: DynamicBaseQuerySetup = (
   reducerPath,
-  bearerId,
 ) => async (args, store, extraOptions) => {
-  const baseUrl = (store.getState() as any).api?.[reducerPath] as string || 'https://amnis.dev/api/auth';
+  const apiMeta = apiSelectors.selectById((store.getState() as any), reducerPath);
   const rawBaseQuery = rtkq.fetchBaseQuery({
-    baseUrl,
+    baseUrl: apiMeta ? apiMeta.baseUrl : '',
     fetchFn: fetch,
-    prepareHeaders: bearerId ? headersAuthorizationToken(bearerId) : undefined,
+    prepareHeaders: apiMeta?.bearerId ? headersAuthorizationToken(apiMeta.bearerId) : undefined,
   });
   return rawBaseQuery(args, store, extraOptions);
 };

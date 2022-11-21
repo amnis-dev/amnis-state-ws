@@ -80,6 +80,7 @@ test('auth should successfully login with valid credentials.', async () => {
     user: expect.any(Array),
     session: expect.any(Array),
     profile: expect.any(Array),
+    contact: expect.any(Array),
   });
 
   expect(output.json.bearers?.length).toBeGreaterThan(0);
