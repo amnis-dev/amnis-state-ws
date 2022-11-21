@@ -6,7 +6,7 @@ const reducerPath = 'apiAuth';
 
 export const apiAuth = rtkq.createApi({
   reducerPath,
-  baseQuery: dynamicBaseQuery(),
+  baseQuery: dynamicBaseQuery(reducerPath),
   endpoints: (builder) => apiAuthQueries(builder),
 });
 
