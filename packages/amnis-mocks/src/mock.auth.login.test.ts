@@ -13,9 +13,9 @@ import {
 } from '@amnis/state';
 import { setupServer } from 'msw/node';
 import { authHandlers } from './mock.auth.js';
-import { clientStore } from './test/client.store.js';
+import { clientStore } from './common/client.store.js';
 
-const server = setupServer(...authHandlers('https://amnis.dev'));
+const server = setupServer(...authHandlers({ baseUrl: 'https://amnis.dev' }));
 
 beforeAll(() => {
   server.listen();
