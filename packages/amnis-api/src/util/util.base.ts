@@ -8,7 +8,7 @@ global.Headers = Headers;
 global.Request = Request;
 
 type DynamicBaseQuery = BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>;
-type DynamicBaseQuerySetup = (bearerId?: string) => DynamicBaseQuery;
+type DynamicBaseQuerySetup = (reducerPath: string, bearerId?: string) => DynamicBaseQuery;
 
 /**
  * Gets the baseURL based on configuration.
@@ -16,9 +16,10 @@ type DynamicBaseQuerySetup = (bearerId?: string) => DynamicBaseQuery;
  * store is the complete redux store.
  */
 export const dynamicBaseQuery: DynamicBaseQuerySetup = (
+  reducerPath,
   bearerId,
 ) => async (args, store, extraOptions) => {
-  const { baseUrl } = (store.getState() as any).app;
+  const baseUrl = (store.getState() as any).api?.[reducerPath] as string || 'https://amnis.dev/api/auth';
   const rawBaseQuery = rtkq.fetchBaseQuery({
     baseUrl,
     fetchFn: fetch,
