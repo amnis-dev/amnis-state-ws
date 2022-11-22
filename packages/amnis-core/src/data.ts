@@ -73,7 +73,7 @@ export function dataInitial(): StateEntities {
       name: 'admin',
       email: 'admin@email.address',
       /** passwd12 */
-      password: 'Zj4PfwAzwqJ2wqPCqR0oeGIgTsKnWBNiw7FWYGXDpmVKwoTCh8OiD8OOb8OEHMK2X3XCncOXwo7Cv8OVCkrCjsKtQQ' as CryptoPassword,
+      password: 'rY2ezF3xDQdUZ6rIVk_R0nwrV1kTbN8Q7P9SY0TG0D0b6VzDCYwUgPPyTto0TVot' as CryptoPassword,
       $roles: [roles[0].$id],
       $permits: [],
     }), { committed: true }),
@@ -81,7 +81,7 @@ export function dataInitial(): StateEntities {
       name: 'exec',
       email: 'exec@email.address',
       /** passwd12 */
-      password: 'Zj4PfwAzwqJ2wqPCqR0oeGIgTsKnWBNiw7FWYGXDpmVKwoTCh8OiD8OOb8OEHMK2X3XCncOXwo7Cv8OVCkrCjsKtQQ' as CryptoPassword,
+      password: 'rY2ezF3xDQdUZ6rIVk_R0nwrV1kTbN8Q7P9SY0TG0D0b6VzDCYwUgPPyTto0TVot' as CryptoPassword,
       $roles: [roles[1].$id],
       $permits: [],
     }), { committed: true }),
@@ -89,7 +89,7 @@ export function dataInitial(): StateEntities {
       name: 'user',
       email: 'user@email.address',
       /** passwd12 */
-      password: 'Zj4PfwAzwqJ2wqPCqR0oeGIgTsKnWBNiw7FWYGXDpmVKwoTCh8OiD8OOb8OEHMK2X3XCncOXwo7Cv8OVCkrCjsKtQQ' as CryptoPassword,
+      password: 'rY2ezF3xDQdUZ6rIVk_R0nwrV1kTbN8Q7P9SY0TG0D0b6VzDCYwUgPPyTto0TVot' as CryptoPassword,
       $roles: [roles[2].$id],
       $permits: [],
     }), { committed: true }),

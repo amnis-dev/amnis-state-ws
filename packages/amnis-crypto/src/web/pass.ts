@@ -5,7 +5,13 @@ import { webcrypto } from '../webcrypto.js';
 const passEncrypt = async (password: string, salt: Uint8Array) => {
   const wc = await webcrypto();
   const passEncoded = new TextEncoder().encode(password);
-  const passKey = await wc.subtle.importKey('raw', passEncoded, 'PBKDF2', false, ['deriveBits']);
+  const passKey = await wc.subtle.importKey(
+    'raw',
+    passEncoded,
+    'PBKDF2',
+    false,
+    ['deriveBits', 'deriveKey'],
+  );
 
   const derivedBits = await wc.subtle.deriveBits(
     {
@@ -22,7 +28,7 @@ const passEncrypt = async (password: string, salt: Uint8Array) => {
   const combined = new Uint8Array(salt.length + derived.length);
   combined.set(salt);
   combined.set(derived, salt.length);
-  const base64 = base64Encode(combined, true);
+  const base64 = base64Encode(combined);
 
   return base64;
 };
