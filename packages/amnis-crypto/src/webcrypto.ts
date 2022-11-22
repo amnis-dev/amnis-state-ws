@@ -1,14 +1,12 @@
-import type { webcrypto as wc } from 'node:crypto';
+let webcryptoInstance: Crypto | undefined;
 
-let webcryptoInstance: wc.Crypto | undefined;
-
-export const webcrypto = async (): Promise<wc.Crypto> => {
+export const webcrypto = async (): Promise<Crypto> => {
   if (!webcryptoInstance) {
     if (typeof window === 'undefined') {
       const c = await import('node:crypto');
-      webcryptoInstance = c.webcrypto;
+      webcryptoInstance = c.webcrypto as Crypto;
     } else {
-      webcryptoInstance = window.crypto as wc.Crypto;
+      webcryptoInstance = window.crypto as Crypto;
     }
   }
 
