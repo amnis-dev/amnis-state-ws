@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/amnis-dev/amnis-state/compare/v0.8.0...v0.8.1) (2022-11-22)
+
+
+### Bug Fixes
+
+* Appended missing api slice to the react module ([a1e2565](https://github.com/amnis-dev/amnis-state/commit/a1e256587cc0e498cb521f1459753c90ee1366b1))
+* Fixed import of node:crypto by default ([b142767](https://github.com/amnis-dev/amnis-state/commit/b142767bcd4c2c1756c0086d5d9994cbd5dbb767))
+* Fixed node: prefix on import causing webpack to fail ([84d72d3](https://github.com/amnis-dev/amnis-state/commit/84d72d33778feb3a78ffc522f3dfd890981d7345))
+
 ## [0.8.0](https://github.com/amnis-dev/amnis-state/compare/v0.7.5...v0.8.0) (2022-11-21)
 
 
