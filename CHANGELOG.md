@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.2](https://github.com/amnis-dev/amnis-state/compare/v0.8.1...v0.8.2) (2022-11-23)
+
+
+### Features
+
+* Added precommit script to install newly updated workspace versions on release ([9d327e3](https://github.com/amnis-dev/amnis-state/commit/9d327e338de2d09a51568c46496ebaa43f2b0ae7))
+* Added step to commit files after install during a release ([510b35e](https://github.com/amnis-dev/amnis-state/commit/510b35ee19d8fa7a98da959dc0b9e7ea7b2b4076))
+
+
+### Bug Fixes
+
+* Fixed issue with different password encodings on node and browser ([d4f5388](https://github.com/amnis-dev/amnis-state/commit/d4f538884d0094ede1d4c7f174950ed83cc04a3d))
+* Fixed missing flag for committing new changes on release ([699ee9c](https://github.com/amnis-dev/amnis-state/commit/699ee9c9ae298277bed8a8e36693ccd5fb4346b7))
+
 ### [0.8.1](https://github.com/amnis-dev/amnis-state/compare/v0.8.0...v0.8.1) (2022-11-22)
 
 
