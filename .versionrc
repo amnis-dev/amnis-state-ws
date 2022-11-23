@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "precommit": "yarn install"
+  },
   "bumpFiles": [
     {
       "filename": "package.json",
