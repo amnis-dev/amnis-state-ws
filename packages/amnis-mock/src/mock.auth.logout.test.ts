@@ -1,17 +1,12 @@
 import { apiActions, apiAuth } from '@amnis/api';
 import {
-  contactKey,
-  profileKey,
-  sessionKey,
-  userKey,
-} from '@amnis/core';
-import {
   contactSelectors,
   profileSelectors,
   sessionSelectors,
   userSelectors,
 } from '@amnis/state';
 import { setupServer } from 'msw/node';
+import { selectBearer } from '@amnis/core';
 import { authHandlers } from './mock.auth.js';
 import { clientStore } from './common/client.store.js';
 
@@ -58,8 +53,11 @@ test('should be able to login and logout', async () => {
   const profileActive = profileSelectors.selectActive(state);
   const contactActive = contactSelectors.selectActive(state);
 
+  const bearerToken = selectBearer(state, 'core');
+
   expect(sessionActive).toBeUndefined();
   expect(userActive).toBeUndefined();
   expect(profileActive).toBeUndefined();
   expect(contactActive).toBeUndefined();
+  expect(bearerToken).toBeUndefined();
 });

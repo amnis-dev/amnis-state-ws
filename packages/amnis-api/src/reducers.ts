@@ -98,7 +98,7 @@ export function apiExtraReducers<E extends Entity>(
 
   /**
    * ================================================================================
-   * Auth Login
+   * Auth Logout
    * Matches when a logout request is fulfilled.
    * ------------------------------------------------------------
    */

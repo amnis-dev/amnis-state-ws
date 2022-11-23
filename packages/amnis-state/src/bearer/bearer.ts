@@ -45,6 +45,16 @@ export const bearerSlice = rtk.createSlice({
     });
 
     /**
+     * Remove core bearer on logout.
+     */
+    builder.addMatcher(rtk.isAnyOf(
+      apiAuth.endpoints.logout.matchFulfilled,
+      apiAuth.endpoints.logout.matchRejected,
+    ), (state) => {
+      bearerAdapter.removeOne(state, 'core');
+    });
+
+    /**
      * Get bearers from a successful pkce auth flow.
      */
     builder.addMatcher(apiAuth.endpoints.pkce.matchFulfilled, (state, action) => {
