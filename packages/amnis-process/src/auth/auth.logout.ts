@@ -1,5 +1,5 @@
 import {
-  userKey, AuthLogout, Io, ioOutput, IoProcess, StateDeleter, uidList,
+  AuthLogout, Io, ioOutput, IoProcess, StateDeleter, uidList, sessionKey,
 } from '@amnis/core';
 import { mwSession, mwValidate } from '../mw/index.js';
 
@@ -23,7 +23,7 @@ Io<AuthLogout, StateDeleter>
      */
     if (session) {
       output.json.result = {
-        [userKey]: uidList([session.$subject]),
+        [sessionKey]: uidList([session.$id]),
       };
     }
 

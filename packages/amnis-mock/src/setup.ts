@@ -18,7 +18,7 @@ export const setupInput = async (req: Request): Promise<IoInput> => {
    * Build the input object.
    */
   const input: IoInput = {
-    body,
+    body: body ?? {},
     sessionEncryption: authSession as CryptoSymEncryption,
   };
 

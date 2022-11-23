@@ -98,6 +98,35 @@ export function apiExtraReducers<E extends Entity>(
 
   /**
    * ================================================================================
+   * Auth Login
+   * Matches when a logout request is fulfilled.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(apiAuth.endpoints.logout.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.removeMany<MetaState<E>>(state, result[key]);
+    }
+
+    /**
+     * De-activates login entities.
+     */
+    if (
+      [
+        userKey,
+        sessionKey,
+        profileKey,
+        contactKey,
+      ].includes(key)
+    ) {
+      state.active = null;
+    }
+  });
+
+  /**
+   * ================================================================================
    * Auth PKCE
    * Matches when a PKCE login request is fulfilled.
    * ------------------------------------------------------------
