@@ -63,3 +63,21 @@ test('should be able to login', async () => {
   expect(contactActive?.$id).toBe(data.result?.[contactKey][0].$id);
   expect(contactActive?.$id).toBe(profileActive?.$contact);
 });
+
+test('should NOT be able to login with a bad password', async () => {
+  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
+    username: 'user',
+    password: 'passwd1',
+  }));
+
+  if ('error' in result) {
+    expect(result.error).toBeUndefined();
+    return;
+  }
+
+  const { data } = result;
+  const { logs } = data;
+
+  expect(logs).toHaveLength(1);
+  expect(logs?.[0]?.title).toBe('Bad Credentials');
+});
