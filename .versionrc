@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "precommit": "yarn install"
+    "precommit": "yarn install && git add ."
   },
   "bumpFiles": [
     {
