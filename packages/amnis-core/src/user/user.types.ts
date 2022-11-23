@@ -16,6 +16,11 @@ export interface User extends Entity {
   name: string;
 
   /**
+   * User's public key for verifying signatures.
+   */
+  publicKey?: JsonWebKey;
+
+  /**
    * Email address
    * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
    * @maxLength 64
