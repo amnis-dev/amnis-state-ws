@@ -1,7 +1,7 @@
 /**
  * Converts a Uint8Array Buffer to a Base64 String.
  */
-export const stringEncoder = (u8: Uint8Array, unpad = false) => {
+const stringEncoder = (u8: Uint8Array, unpad = false) => {
   if (typeof window === 'undefined') {
     const value = Buffer.from(u8).toString('base64');
     const replaced = value.replaceAll('+', '-').replaceAll('/', '_');
@@ -22,7 +22,7 @@ export const stringEncoder = (u8: Uint8Array, unpad = false) => {
 /**
  * Converts a Base64 String to a Uint8Array buffer.
  */
-export const stringDecoder = (str: string) => {
+const stringDecoder = (str: string) => {
   if (typeof window === 'undefined') {
     const replaced = str.replaceAll('-', '+').replaceAll('_', '/');
     const value = Buffer.from(replaced, 'base64');
