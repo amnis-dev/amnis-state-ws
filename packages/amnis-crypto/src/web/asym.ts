@@ -23,15 +23,33 @@ let asymKeyPairSigner: CryptoAsymKeyPair | undefined;
  */
 export const asymGenerate: CryptoAsymGenerate = async (type) => {
   const wc = await webcrypto();
+
+  if (type === 'encryptor') {
+    const keyPairGen = await wc.subtle.generateKey(
+      {
+        name: 'RSA-OAEP',
+        modulusLength: 4096,
+        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+        hash: 'SHA-256',
+      },
+      true,
+      ['encrypt', 'decrypt'],
+    );
+
+    return {
+      privateKey: keyPairGen.privateKey as CryptoAsymPrivateKey,
+      publicKey: keyPairGen.publicKey as CryptoAsymPublicKey,
+    };
+  }
+
   const keyPairGen = await wc.subtle.generateKey(
     {
-      name: type === 'encryptor' ? 'RSA-OAEP' : 'RSASSA-PKCS1-v1_5',
-      modulusLength: type === 'encryptor' ? 4096 : 2048,
-      publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-      hash: 'SHA-256',
+      name: 'ECDSA',
+      namedCurve: 'P-256',
+      hash: { name: 'SHA-256' },
     },
     true,
-    type === 'encryptor' ? ['encrypt', 'decrypt'] : ['sign', 'verify'],
+    ['sign', 'verify'],
   );
 
   return {
@@ -108,7 +126,7 @@ export const asymSign: CryptoAsymSign = async (
   const key = privateKey || (await asymSingleton('signer')).privateKey;
   const uint8 = new TextEncoder().encode(data);
   const signature = await wc.subtle.sign(
-    { name: 'RSASSA-PKCS1-v1_5' },
+    { name: 'ECDSA', hash: { name: 'SHA-256' } },
     key,
     uint8,
   ) as CryptoAsymSignature;
@@ -128,7 +146,7 @@ export const asymVerify: CryptoAsymVerify = async (
   const unit8 = new TextEncoder().encode(data);
   try {
     const result = await wc.subtle.verify(
-      { name: 'RSASSA-PKCS1-v1_5' },
+      { name: 'ECDSA', hash: { name: 'SHA-256' } },
       key,
       signature,
       unit8,

@@ -9,7 +9,7 @@ import { asymSign, asymVerify } from './asym.js';
 
 export const tokenSign: CryptoTokenEncode = async (json, privateKey) => {
   const header = {
-    alg: 'RSA256',
+    alg: 'ES256',
     typ: 'JWT',
   };
 
@@ -51,7 +51,7 @@ export const tokenVerify: CryptoTokenVerify = async (encoded, publicKey) => {
 
     const signatureUnpadded = base64Decode(signatureB64);
     // const padding = new Uint8Array([187]);
-    const signature = new Uint8Array(256);
+    const signature = new Uint8Array(64);
     signature.set(signatureUnpadded);
     const verified = await asymVerify(
       `${headerB64}.${payloadB64}`,
@@ -59,7 +59,7 @@ export const tokenVerify: CryptoTokenVerify = async (encoded, publicKey) => {
       publicKey,
     );
 
-    if (header.alg !== 'RSA256' || header.typ !== 'JWT') {
+    if (header.typ !== 'JWT') {
       // console.warn('Header is not formatted correctly');
       return undefined;
     }
