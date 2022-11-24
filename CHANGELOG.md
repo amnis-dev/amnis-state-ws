@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.3](https://github.com/amnis-dev/amnis-state/compare/v0.8.2...v0.8.3) (2022-11-24)
+
+
+### Features
+
+* Added new reducer matcher for logout events ([bedf297](https://github.com/amnis-dev/amnis-state/commit/bedf297f5e4b200d9139b48223c4c5645c656477))
+* Added public key property to user entities ([63011af](https://github.com/amnis-dev/amnis-state/commit/63011af3ba6920c75b07a0999a38025bcb226589))
+* Asymmetric signatures now use elliptic curve algorithms for signing ([d00b9d7](https://github.com/amnis-dev/amnis-state/commit/d00b9d7ac2f6d288ec7a7e7dcfeaf8151726d9f8))
+* Core bearer token removes itself from state on logout ([59472c0](https://github.com/amnis-dev/amnis-state/commit/59472c0d07b6e72e9af2cad07a86bda105300db0))
+* Crypto package now exports utility methods ([38ca7e5](https://github.com/amnis-dev/amnis-state/commit/38ca7e587726f1be12e9280aaf059638ab6c87d9))
+* Improvement on mocked unit tests ([2e40c23](https://github.com/amnis-dev/amnis-state/commit/2e40c236618a50c94cbe4c9e66ef736b4bcec706))
+
 ### [0.8.2](https://github.com/amnis-dev/amnis-state/compare/v0.8.1...v0.8.2) (2022-11-23)
 
 
