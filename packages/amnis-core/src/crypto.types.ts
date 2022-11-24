@@ -219,7 +219,7 @@ export interface Crypto {
   symDecrypt: CryptoSymDecrypt;
 
   /**
-   * Generates a new RSA Encryption keypair.
+   * Generates a new RSA encryption keypair.
    */
   asymGenerate: CryptoAsymGenerate;
 
@@ -229,22 +229,22 @@ export interface Crypto {
   asymSingleton: CryptoAsymGenerate;
 
   /**
-   * Encrypts data using an RSA public key.
+   * Encrypts data using a public key.
    */
   asymEncrypt: CryptoAsymEncrypt;
 
   /**
-   * Decrypts data using an RSA private key.
+   * Decrypts data using a private key.
    */
   asymDecrypt: CryptoAsymDecrypt;
 
   /**
-   * Signs data using an RSA private key.
+   * Signs data using a private key.
    */
   asymSign: CryptoAsymSign;
 
   /**
-   * Verifies data using an RSA private key.
+   * Verifies data using a private key.
    */
   asymVerify: CryptoAsymVerify;
 

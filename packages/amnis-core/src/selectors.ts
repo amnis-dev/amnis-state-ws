@@ -10,7 +10,7 @@ import type {
 import type { State } from './state/index.js';
 import type { UID } from './types.js';
 import { Role, roleKey } from './role/index.js';
-import { Encryption, encryptionKey } from './encryption/index.js';
+import { Key, keyKey } from './key/index.js';
 import { grantParse, Grant } from './grant/index.js';
 import { CryptoAsymPublicKey } from './crypto.types.js';
 
@@ -153,7 +153,8 @@ const genSelectDifference = <E extends Entity = Entity>(
   (id, diffRecords, originalRecords, entities) => {
     const current = { ...entities[id] } as E;
     const original = { ...originalRecords[id] } as E;
-    const keys = diffRecords[id] ? [...diffRecords[id] as (keyof E)[]] : [] as (keyof E)[];
+    const diffRecord = diffRecords[id];
+    const keys = diffRecord ? [...diffRecord as (keyof E)[]] : [] as (keyof E)[];
 
     if (!current) {
       return {
@@ -220,18 +221,22 @@ export function selectBearer(state: State, id: string): Bearer | undefined {
 /**
  * Selects a public key from the crypto slice.
  */
-export function selectPublicKey(state: State, tag: string): CryptoAsymPublicKey | undefined {
-  const slice = genSelectSlice<Encryption>(encryptionKey)(state);
+export function selectKey(state: State, id: string): CryptoAsymPublicKey | undefined {
+  const slice = state[keyKey] as EntityState<Key>;
+
+  if (!slice?.entities) {
+    return undefined;
+  }
 
   if (!slice) {
     return undefined;
   }
 
-  const encryptionObject = Object.values(slice.entities).find(
-    (entity) => (entity?.tag === tag),
+  const keyObject = Object.values(slice.entities).find(
+    (entity) => (entity?.id === id),
   );
 
-  return encryptionObject?.value as CryptoAsymPublicKey;
+  return keyObject?.value as CryptoAsymPublicKey;
 }
 
 /**

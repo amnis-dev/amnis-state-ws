@@ -4,7 +4,7 @@ export * from './store.js';
 export * from './context.js';
 
 export * from './audit/index.js';
-export * from './encryption/index.js';
+export * from './key/index.js';
 export * from './contact/index.js';
 export * from './history/index.js';
 export * from './locale/index.js';

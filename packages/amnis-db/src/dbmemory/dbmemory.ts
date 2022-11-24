@@ -84,21 +84,21 @@ export const dbmemory: Database = {
    * READ
    * ----------------------------------------
    */
-  read: async (select, controls = {}) => {
+  read: async (queryState, controls = {}) => {
     const { scope, subject } = controls;
     const result: StateEntities = {};
 
-    Object.keys(select).every((selectKey) => {
-      const storageKey = selectKey;
+    Object.keys(queryState).every((queryStateKey) => {
+      const storageKey = queryStateKey;
 
       /**
-       * Ensure this selection is within auth scope.
+       * Ensure this queryStateion is within auth scope.
        */
-      if (scope && !scope[selectKey]) {
+      if (scope && !scope[queryStateKey]) {
         return true;
       }
 
-      const query = select[selectKey]?.$query || {};
+      const query = queryState[queryStateKey]?.$query || {};
 
       /**
        * Skip if the query is undefined or key doesn't exist on storage.
@@ -108,13 +108,13 @@ export const dbmemory: Database = {
       }
 
       /**
-       * Ensure delete-marked entities are not selected by default.
+       * Ensure delete-marked entities are not queryStateed by default.
        */
       if (query.delete === undefined) {
         query.delete = { $eq: false };
       }
 
-      result[selectKey] = Object.values(storage[storageKey]);
+      result[queryStateKey] = Object.values(storage[storageKey]);
 
       /**
        * Loop through the query properties.
@@ -124,14 +124,14 @@ export const dbmemory: Database = {
         const filter = query[queryKey];
         const limit = 20;
 
-        result[selectKey] = result[selectKey].filter((entity) => {
+        result[queryStateKey] = result[queryStateKey].filter((entity) => {
           /**
            * Check to ensure this entity is within the scope.
            * If the scope is owner only, the entity must have the owner id match the subject.
            */
           if (
             scope
-            && scope[selectKey] === 'owned'
+            && scope[queryStateKey] === 'owned'
             && subject
             && (entity.$owner !== subject
               && !entity.$readers.includes(subject))

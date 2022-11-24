@@ -1,26 +1,30 @@
-import { encryptionKey, encryptionCreator } from './encryption.js';
+import { keyKey, keyCreate } from './key.js';
 
 /**
  * ============================================================
  */
 test('crypto key should be is properly set', () => {
-  expect(encryptionKey).toEqual('encryption');
+  expect(keyKey).toEqual('key');
 });
 
 /**
  * ============================================================
  */
 test('should create a crypto', () => {
-  const crypto = encryptionCreator({
-    name: 'Test Encryption',
-    tag: 'test',
+  const crypto = keyCreate({
+    id: 'test',
+    name: 'Test Key',
+    format: 'raw',
+    wrapped: false,
     value: '',
   });
 
   expect(crypto).toEqual(
     expect.objectContaining({
-      name: 'Test Encryption',
-      type: 'asym',
+      id: 'test',
+      name: 'Test Key',
+      format: 'raw',
+      wrapped: false,
       value: '',
     }),
   );

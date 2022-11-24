@@ -1,4 +1,4 @@
-import { ioOutput, IoMiddleware, selectPublicKey } from '@amnis/core';
+import { ioOutput, IoMiddleware, selectKey } from '@amnis/core';
 import { processConfig } from '../config.js';
 
 /**
@@ -21,7 +21,7 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input)
   /**
    * Fetch the auth service public key from the store.
    */
-  const publicKey = selectPublicKey(
+  const publicKey = selectKey(
     context.store.getState(),
     processConfig.PROCESS_CRYPTO_TAG,
   );

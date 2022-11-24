@@ -1,7 +1,7 @@
 import { auditSlice } from './audit/index.js';
 import { bearerSlice } from './bearer/index.js';
 import { contactSlice } from './contact/index.js';
-import { encryptionSlice } from './encryption/index.js';
+import { keySlice } from './key/index.js';
 import { historySlice } from './history/index.js';
 import { localeSlice } from './locale/index.js';
 import { logSlice } from './log/index.js';
@@ -18,7 +18,7 @@ export const slices = {
   [auditSlice.name]: auditSlice,
   [bearerSlice.name]: bearerSlice,
   [contactSlice.name]: contactSlice,
-  [encryptionSlice.name]: encryptionSlice,
+  [keySlice.name]: keySlice,
   [historySlice.name]: historySlice,
   [localeSlice.name]: localeSlice,
   [logSlice.name]: logSlice,
