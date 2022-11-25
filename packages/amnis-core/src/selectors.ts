@@ -151,8 +151,8 @@ const genSelectDifference = <E extends Entity = Entity>(
     genSelectEntities<E>(sliceKey),
   ],
   (id, diffRecords, originalRecords, entities) => {
-    const current = { ...entities[id] } as E;
-    const original = { ...originalRecords[id] } as E;
+    const current = entities[id] as E | undefined;
+    const original = originalRecords[id] as E | undefined;
     const diffRecord = diffRecords[id];
     const keys = diffRecord ? [...diffRecord as (keyof E)[]] : [] as (keyof E)[];
 
@@ -168,7 +168,7 @@ const genSelectDifference = <E extends Entity = Entity>(
 
     if (!original) {
       return {
-        original: current,
+        original,
         current,
         changes: {} as EntityExtension<E>,
         update: { $id: id } as EntityUpdate<E>,
@@ -194,8 +194,8 @@ const genSelectDifference = <E extends Entity = Entity>(
     const update = { $id: id, ...changes };
 
     return {
-      original,
-      current,
+      original: { ...original },
+      current: { ...current },
       changes,
       update,
       keys,

@@ -1,23 +1,17 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
-  contactCreator,
   contactKey,
+  entityStripToCreator,
 } from '@amnis/core';
-import { contactSelectors, userSelectors } from '@amnis/state';
+import { contactActions, contactSelectors, userSelectors } from '@amnis/state';
 import { clientStore } from './common/client.store.js';
 import { mockService } from './mock.service.js';
 
 const baseUrl = 'https://amnis.dev';
 
 clientStore.dispatch(apiActions.upsertMany([
-  {
-    id: 'apiAuth',
-    baseUrl: `${baseUrl}/api/auth`,
-  },
-  {
-    id: 'apiCrud',
-    baseUrl: `${baseUrl}/api/crud`,
-  },
+  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth` },
+  { id: 'apiCrud', baseUrl: `${baseUrl}/api/crud` },
 ]));
 
 beforeAll(async () => {
@@ -36,13 +30,32 @@ test('should be able to create a new contact', async () => {
     password: 'passwd12',
   }));
 
+  const contactCreatorAction = contactActions.create({
+    name: 'New Contact',
+    emails: ['new@email.com'],
+    phones: [],
+    socials: [],
+  });
+  const contactActionEntityId = contactCreatorAction.payload.entity.$id;
+
+  /**
+   * Locally create the entity.
+   */
+  clientStore.dispatch(contactCreatorAction);
+
+  /**
+   * Select the newly created entity.
+   */
+  const contactLocal = contactSelectors.selectById(clientStore.getState(), contactActionEntityId);
+  if (!contactLocal) {
+    expect(contactLocal).toBeDefined();
+    return;
+  }
+  expect(contactLocal.committed).toBe(false);
+
+  const contactCreator = entityStripToCreator(contactLocal);
   const result = await clientStore.dispatch(apiCrud.endpoints.create.initiate({
-    [contactKey]: [
-      contactCreator({
-        name: 'New Contact',
-        emails: ['new@email.com'],
-      }),
-    ],
+    [contactKey]: [contactCreator],
   }));
 
   if ('error' in result) {

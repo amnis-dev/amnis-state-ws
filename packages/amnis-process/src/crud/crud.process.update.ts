@@ -2,6 +2,7 @@
 
 import {
   coreActions,
+  dateJSON,
   entityClean,
   historyKey,
   historyMake,
@@ -75,13 +76,17 @@ Io<StateUpdater, StateCreator>
     const stateFinal = access.adm === true ? body : stateUpdateSanatizd as StateUpdater;
 
     /**
-     * Flag final state entities as committed
+     * Flag final state entities as committed and update the updated date.
+     * This object is for the database update.
      */
-    Object.values(stateFinal).forEach((slice) => {
-      slice.forEach((entity) => {
-        entity.committed = true;
-      });
-    });
+    const stateUpdateObject = Object.keys(stateFinal).reduce<StateUpdater>((acc, key) => {
+      acc[key] = stateFinal[key].map((entity) => ({
+        ...entity,
+        committed: true,
+        updated: dateJSON(),
+      }));
+      return acc;
+    }, {});
 
     /**
      * Create an authentication scope object from the array of grant objects.
@@ -89,7 +94,7 @@ Io<StateUpdater, StateCreator>
     const authScope = access.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
 
     const result = await database.update(
-      stateFinal,
+      stateUpdateObject,
       {
         scope: authScope,
         subject: access.sub,

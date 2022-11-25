@@ -1,5 +1,4 @@
 import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
-import type { StateUpdateEntity } from '../state/index.js';
 import { UID } from '../types.js';
 
 /**
@@ -14,7 +13,7 @@ export interface History extends Entity {
   /**
    * The state update record that was performed.
    */
-  update: StateUpdateEntity;
+  changes: Partial<EntityExtension<Entity>>;
 }
 
 /**
@@ -25,4 +24,4 @@ export type HistoryBase = EntityExtension<History>;
 /**
  * Base properties in order to create a log.
  */
-export type HistoryBaseCreate = EntityExtensionCreate<History, '$subject' | 'update'>;
+export type HistoryBaseCreate = EntityExtensionCreate<History, '$subject' | 'changes'>;

@@ -42,7 +42,7 @@ test('should make history', () => {
   expect(stateCreateHistory[historyKey][0]).toEqual(
     expect.objectContaining({
       $subject: profileId,
-      update: stateUpdate.profile[0],
+      changes: { nameDisplay: stateUpdate.profile[0].nameDisplay },
       $creator: creatorId,
     }),
   );

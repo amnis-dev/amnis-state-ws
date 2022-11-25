@@ -125,6 +125,38 @@ export function entityClean(key: string, entity: Entity): EntityCreator<Entity> 
 }
 
 /**
+ * Strips entity properties.
+ */
+export const entityStrip = <E extends Entity>(entity: E): EntityExtension<E> => {
+  const result = Object.keys(entity).reduce<EntityExtension<E>>((entityNew, key) => {
+    const k = key as keyof EntityExtension<E>;
+    if (!entityKeys.includes(key)) {
+      entityNew[k] = entity[k];
+    }
+    return entityNew;
+  }, {} as EntityExtension<E>);
+
+  return result;
+};
+
+/**
+ * Strips an entity to a creator object.
+ */
+export const entityStripToCreator = <E extends Entity>(entity: E): EntityCreator<E> => {
+  const result = Object.keys(entity).reduce<EntityCreator<E>>((entityNew, key) => {
+    const k = key as keyof EntityCreator<E>;
+    if (key === '$id' || !entityKeys.includes(key)) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      /** @ts-ignore */
+      entityNew[k] = entity[k];
+    }
+    return entityNew;
+  }, { $id: '' } as EntityCreator<E>);
+
+  return result;
+};
+
+/**
  * Create meta information for an entity meta information.
  */
 export function metaInitial<E extends Entity = Entity>(meta: Partial<Meta<E>> = {}): Meta<E> {

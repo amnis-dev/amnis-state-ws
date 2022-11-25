@@ -230,10 +230,6 @@ export function apiExtraReducers<E extends Entity>(
        * Clear comparison data since the results are fresh from the service.
        */
       result[key].forEach((entity) => {
-        // Skip if the server indicates that this entity wasn't committed.
-        if (!entity.committed) {
-          return;
-        }
         // Clean up data.
         if (state.original[entity.$id]) {
           delete state.original[entity.$id];

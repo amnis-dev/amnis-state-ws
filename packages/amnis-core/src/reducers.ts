@@ -109,6 +109,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
         const diffResult = diffCompare<E>(
           { ...entity, ...changes },
           state.original[$id] as E,
+          { includeEntityKeys: false },
         );
 
         if (diffResult.length === 0 && !entity.committed) {
@@ -125,6 +126,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
 
         if (!diffResult.length && state.differences[$id]) {
           delete state.differences[$id];
+          delete state.original[$id];
         }
 
         /**

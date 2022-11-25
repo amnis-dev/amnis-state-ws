@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { entityKeys } from './index.js';
+
 type SameRecord<T> = { [N in keyof T]: T[N] }
+
+interface DiffCompareOptions {
+  includeEntityKeys?: boolean;
+}
 
 /**
  * Compares two of the same type of object and returns the keys that are different.
@@ -8,9 +14,17 @@ type SameRecord<T> = { [N in keyof T]: T[N] }
 export function diffCompare<R1 extends { [key: string]: any }>(
   record1: R1,
   record2: SameRecord<R1>,
+  options?: DiffCompareOptions,
 ): (keyof R1)[] {
+  const { includeEntityKeys = true } = { ...options };
   const result: (keyof R1)[] = [];
   Object.keys(record1).forEach((key: keyof R1) => {
+    /**
+     * Ignore entity keys.
+     */
+    if (!includeEntityKeys && entityKeys.includes(key as string)) {
+      return;
+    }
     /**
      * Compare equality of an array.
      */

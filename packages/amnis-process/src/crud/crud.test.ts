@@ -207,6 +207,8 @@ test('Handler should be able to update existing entities.', async () => {
     result.json.result[historyKey][0],
   ).toEqual(expect.objectContaining({
     $subject: books[1].$id,
-    update: updateObject,
+    changes: {
+      title: updateObject.title,
+    },
   }));
 });
