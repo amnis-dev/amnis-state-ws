@@ -5,11 +5,11 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@amnis/api@0.8.3, @amnis/api@workspace:packages/amnis-api":
+"@amnis/api@0.9.0, @amnis/api@workspace:packages/amnis-api":
   version: 0.0.0-use.local
   resolution: "@amnis/api@workspace:packages/amnis-api"
   dependencies:
-    "@amnis/core": 0.8.3
+    "@amnis/core": 0.9.0
     cross-fetch: ^3.1.0
     msw: ^0.40.1
   peerDependencies:
@@ -24,7 +24,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/core@0.8.3, @amnis/core@workspace:packages/amnis-core":
+"@amnis/core@0.9.0, @amnis/core@workspace:packages/amnis-core":
   version: 0.0.0-use.local
   resolution: "@amnis/core@workspace:packages/amnis-core"
   peerDependencies:
@@ -32,21 +32,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/crypto@0.8.3, @amnis/crypto@workspace:packages/amnis-crypto":
+"@amnis/crypto@0.9.0, @amnis/crypto@workspace:packages/amnis-crypto":
   version: 0.0.0-use.local
   resolution: "@amnis/crypto@workspace:packages/amnis-crypto"
   dependencies:
-    "@amnis/core": 0.8.3
+    "@amnis/core": 0.9.0
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.1
   languageName: unknown
   linkType: soft
 
-"@amnis/db@0.8.3, @amnis/db@workspace:packages/amnis-db":
+"@amnis/db@0.9.0, @amnis/db@workspace:packages/amnis-db":
   version: 0.0.0-use.local
   resolution: "@amnis/db@workspace:packages/amnis-db"
   dependencies:
-    "@amnis/core": 0.8.3
+    "@amnis/core": 0.9.0
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.1
   languageName: unknown
@@ -67,11 +67,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@amnis/fs@0.8.3, @amnis/fs@workspace:packages/amnis-fs":
+"@amnis/fs@0.9.0, @amnis/fs@workspace:packages/amnis-fs":
   version: 0.0.0-use.local
   resolution: "@amnis/fs@workspace:packages/amnis-fs"
   dependencies:
-    "@amnis/core": 0.8.3
+    "@amnis/core": 0.9.0
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.1
   languageName: unknown
@@ -81,9 +81,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@amnis/mock@workspace:packages/amnis-mock"
   peerDependencies:
-    "@amnis/api": 0.8.3
-    "@amnis/process": 0.8.3
-    "@amnis/state": 0.8.3
+    "@amnis/api": 0.9.0
+    "@amnis/process": 0.9.0
+    "@amnis/state": 0.9.0
     "@reduxjs/toolkit": ^1.8.1
     msw: ^0.49.0
   languageName: unknown
@@ -93,7 +93,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@amnis/process@workspace:packages/amnis-process"
   dependencies:
-    "@amnis/core": 0.8.3
+    "@amnis/core": 0.9.0
     ajv: ^8.11.0
     cross-fetch: ^3.1.0
   peerDependencies:
@@ -164,11 +164,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@amnis/state@workspace:packages/amnis-state"
   dependencies:
-    "@amnis/api": 0.8.3
-    "@amnis/core": 0.8.3
-    "@amnis/crypto": 0.8.3
-    "@amnis/db": 0.8.3
-    "@amnis/fs": 0.8.3
+    "@amnis/api": 0.9.0
+    "@amnis/core": 0.9.0
+    "@amnis/crypto": 0.9.0
+    "@amnis/db": 0.9.0
+    "@amnis/fs": 0.9.0
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.0
     react: ^18.0.0

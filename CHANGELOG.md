@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/amnis-dev/amnis-state/compare/v0.8.3...v0.9.0) (2022-11-25)
+
+
+### Features
+
+* Renamed and refactored encryption slice to key slice ([8738740](https://github.com/amnis-dev/amnis-state/commit/8738740fb66622d595bd71c355f17dc1394d9fa2))
+* Simplified mock services setup with new mock service interface ([e7fbe2d](https://github.com/amnis-dev/amnis-state/commit/e7fbe2d395e71bd49ceca2d8d8a015b3e0c42062))
+
+
+### Bug Fixes
+
+* Refined history and diff comparison logic on reducers and selectors ([97a6c1b](https://github.com/amnis-dev/amnis-state/commit/97a6c1b5eb8cbbbcf0e8a3c08c00b83eb913266b))
+* Resolve build issue with importing msw/node ([d1293c8](https://github.com/amnis-dev/amnis-state/commit/d1293c8846afb54a1cb35ed71af5fb9b861589d8))
+
 ### [0.8.3](https://github.com/amnis-dev/amnis-state/compare/v0.8.2...v0.8.3) (2022-11-24)
 
 
