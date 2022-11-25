@@ -2,10 +2,10 @@ import { schemaAuth, schemaEntity, schemaState } from '@amnis/core';
 import { validateSetup } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
 import { setupWorker, SetupWorkerApi } from 'msw';
-import { setupServer, SetupServerApi } from 'msw/node';
+import type { SetupServerApi } from 'msw/node';
 import { authSetupHandlers } from './mock.auth.js';
 import { crudSetupHandlers } from './mock.crud.js';
-import { MockService } from './mock.types.js';
+import type { MockService } from './mock.types.js';
 
 let service: SetupServerApi | SetupWorkerApi | undefined;
 
@@ -34,7 +34,8 @@ export const mockService: MockService = {
 
     // On NodeJS
     if (typeof window === 'undefined') {
-      service = setupServer(...handlers);
+      const msw = await import('msw/node');
+      service = msw.setupServer(...handlers);
     // On Browser
     } else {
       service = setupWorker(...handlers);
