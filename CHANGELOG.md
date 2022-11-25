@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.1](https://github.com/amnis-dev/amnis-state/compare/v0.9.0...v0.9.1) (2022-11-25)
+
+
+### Bug Fixes
+
+* Fixed issue with browser importing the node version of msw ([66ea5a7](https://github.com/amnis-dev/amnis-state/commit/66ea5a73b77275b24ad4150f7b8a1eac0e727d88))
+
 ## [0.9.0](https://github.com/amnis-dev/amnis-state/compare/v0.8.3...v0.9.0) (2022-11-25)
 
 
