@@ -7,7 +7,7 @@ import { System, systemCreator, systemKey } from './system/index.js';
 import { User, userCreator, userKey } from './user/index.js';
 import { websiteKey } from './website/index.js';
 import { CryptoPassword } from './crypto.types.js';
-import { entityCreate } from './index.js';
+import { auditKey, entityCreate, historyKey } from './index.js';
 
 export function dataInitial(): StateEntities {
   /**
@@ -22,6 +22,8 @@ export function dataInitial(): StateEntities {
       grants: [
         grantStringify({ key: systemKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: websiteKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        grantStringify({ key: auditKey, scope: 'global', task: task(0, 1, 1, 1) }),
+        grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 1, 1) }),
         grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
@@ -34,6 +36,8 @@ export function dataInitial(): StateEntities {
       color: '#3e3ee6',
       grants: [
         grantStringify({ key: websiteKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        grantStringify({ key: auditKey, scope: 'global', task: task(0, 1, 0, 0) }),
+        grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
@@ -46,6 +50,7 @@ export function dataInitial(): StateEntities {
       color: '#000000',
       grants: [
         grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
+        grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: userKey, scope: 'owned', task: task(0, 1, 0, 0) }),
         grantStringify({ key: profileKey, scope: 'owned', task: task(0, 1, 1, 0) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(0, 1, 0, 0) }),

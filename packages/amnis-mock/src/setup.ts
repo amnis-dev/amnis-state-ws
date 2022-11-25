@@ -1,4 +1,6 @@
-import type { CryptoSymEncryption, IoInput } from '@amnis/core';
+import {
+  auditCreator, auditKey, CryptoSymEncryption, entityCreate, IoContext, IoInput, IoOutput,
+} from '@amnis/core';
 import { httpAuthorizationParse } from '@amnis/process';
 import type { DefaultBodyType, PathParams, RestRequest } from 'msw';
 
@@ -29,4 +31,55 @@ export const setupInput = async (req: Request): Promise<IoInput> => {
   input.accessEncoded = httpAuthorizationParse(authorization);
 
   return input;
+};
+
+/**
+ * Generates audits from api access.
+ */
+export const setupAudit = async (
+  req: Request,
+  context: IoContext,
+  input: IoInput,
+  output: IoOutput,
+): Promise<void> => {
+  /**
+   * Mock a local ip.
+   */
+  const ip = '127.0.0.1';
+
+  const body = { ...input.body };
+
+  /**
+   * Hide passwords.
+   */
+  if (body.password) {
+    body.password = '****';
+  }
+
+  /**
+   * Create the audit.
+   */
+  const audit = auditCreator({
+    action: `${req.method}:${req.url}`,
+    completed: output.status === 200,
+    inputBody: body,
+    ip,
+  });
+
+  /**
+   * Get the subject if there is one.
+   */
+  if (input.accessEncoded) {
+    const access = await context.crypto.tokenDecode(input.accessEncoded);
+    if (access) {
+      audit.$subject = access.sub;
+    }
+  }
+
+  /**
+   * Create the record in the database.
+   */
+  context.database.create({
+    [auditKey]: [entityCreate(auditKey, audit)],
+  });
 };

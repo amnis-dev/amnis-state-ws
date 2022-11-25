@@ -3,11 +3,9 @@ import {
   contactCreator,
   contactKey,
 } from '@amnis/core';
-import { setupServer } from 'msw/node';
 import { contactSelectors, userSelectors } from '@amnis/state';
-import { authHandlers } from './mock.auth.js';
-import { crudHandlers } from './mock.crud.js';
 import { clientStore } from './common/client.store.js';
+import { mockService } from './mock.service.js';
 
 const baseUrl = 'https://amnis.dev';
 
@@ -22,17 +20,13 @@ clientStore.dispatch(apiActions.upsertMany([
   },
 ]));
 
-const server = setupServer(
-  ...authHandlers({ baseUrl }),
-  ...crudHandlers({ baseUrl }),
-);
-
-beforeAll(() => {
-  server.listen();
+beforeAll(async () => {
+  await mockService.setup({ baseUrl });
+  mockService.start();
 });
 
 afterAll(() => {
-  server.close();
+  mockService.stop();
 });
 
 test('should be able to create a new contact', async () => {

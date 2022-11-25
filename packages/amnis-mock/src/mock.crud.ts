@@ -2,20 +2,21 @@
 import { ResponseTransformer, rest } from 'msw';
 import { crudProcess } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
-import { serverContextOptions } from './common/server.context.js';
 import { setupInput } from './setup.js';
 import { MockHandlers, MockOptions } from './mock.types.js';
 
 const defaultMockOptions: MockOptions = {
   baseUrl: '',
-  context: serverContextOptions,
 };
 
-export const crudHandlers: MockHandlers = (options) => {
-  const opt: MockOptions = { ...defaultMockOptions, ...options };
+export const crudSetupHandlers: MockHandlers = async (options) => {
+  const {
+    baseUrl,
+    context = await contextSetup(),
+  } = { ...defaultMockOptions, ...options };
 
   return [
-    rest.post(`${opt.baseUrl}/api/crud/:processer`, async (req, res, ctx) => {
+    rest.post(`${baseUrl}/api/crud/:processer`, async (req, res, ctx) => {
       const { processer } = req.params;
       const processKey = processer as keyof typeof crudProcess;
 
@@ -25,7 +26,6 @@ export const crudHandlers: MockHandlers = (options) => {
         );
       }
 
-      const context = await contextSetup(opt.context);
       const input = await setupInput(req);
 
       const output = await crudProcess[processKey](context)(input);
@@ -59,4 +59,4 @@ export const crudHandlers: MockHandlers = (options) => {
   ];
 };
 
-export default crudHandlers;
+export default crudSetupHandlers;

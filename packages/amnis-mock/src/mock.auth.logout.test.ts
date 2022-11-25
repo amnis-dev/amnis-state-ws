@@ -5,28 +5,30 @@ import {
   sessionSelectors,
   userSelectors,
 } from '@amnis/state';
-import { setupServer } from 'msw/node';
 import { selectBearer } from '@amnis/core';
-import { authHandlers } from './mock.auth.js';
 import { clientStore } from './common/client.store.js';
+import { mockService } from './mock.service.js';
 
 const baseUrl = 'https://amnis.dev';
 
-clientStore.dispatch(apiActions.upsert({
-  id: 'apiAuth',
-  baseUrl: `${baseUrl}/api/auth`,
-}));
+clientStore.dispatch(apiActions.upsertMany([
+  {
+    id: 'apiAuth',
+    baseUrl: `${baseUrl}/api/auth`,
+  },
+  {
+    id: 'apiCrud',
+    baseUrl: `${baseUrl}/api/crud`,
+  },
+]));
 
-const server = setupServer(...authHandlers({
-  baseUrl,
-}));
-
-beforeAll(() => {
-  server.listen();
+beforeAll(async () => {
+  await mockService.setup({ baseUrl });
+  mockService.start();
 });
 
 afterAll(() => {
-  server.close();
+  mockService.stop();
 });
 
 test('should be able to login and logout', async () => {

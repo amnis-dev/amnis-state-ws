@@ -2,20 +2,21 @@
 import { ResponseTransformer, rest } from 'msw';
 import { authProcess } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
-import { serverContextOptions } from './common/server.context.js';
-import { setupInput } from './setup.js';
+import { setupAudit, setupInput } from './setup.js';
 import { MockHandlers } from './mock.types.js';
 
 const defaultMockOptions = {
   baseUrl: '',
-  context: serverContextOptions,
 };
 
-export const authHandlers: MockHandlers = (options) => {
-  const opt = { ...defaultMockOptions, ...options };
+export const authSetupHandlers: MockHandlers = async (options) => {
+  const {
+    baseUrl,
+    context = await contextSetup(),
+  } = { ...defaultMockOptions, ...options };
 
   return [
-    rest.post(`${opt.baseUrl}/api/auth/:processer`, async (req, res, ctx) => {
+    rest.post(`${baseUrl}/api/auth/:processer`, async (req, res, ctx) => {
       const { processer } = req.params;
       const processKey = processer as keyof typeof authProcess;
 
@@ -25,7 +26,6 @@ export const authHandlers: MockHandlers = (options) => {
         );
       }
 
-      const context = await contextSetup(opt.context);
       const input = await setupInput(req);
 
       const output = await authProcess[processKey](context)(input);
@@ -40,6 +40,8 @@ export const authHandlers: MockHandlers = (options) => {
         ctxCookies.push(ctx.cookie(cookieName, cookieValue || '', cookieOptions));
       });
 
+      setupAudit(req, context, input, output);
+
       return res(
         ctx.status(200),
         ctx.json(output.json),
@@ -49,4 +51,4 @@ export const authHandlers: MockHandlers = (options) => {
   ];
 };
 
-export default authHandlers;
+export default authSetupHandlers;
