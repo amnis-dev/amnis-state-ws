@@ -42,16 +42,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/db@0.9.1, @amnis/db@workspace:packages/amnis-db":
-  version: 0.0.0-use.local
-  resolution: "@amnis/db@workspace:packages/amnis-db"
-  dependencies:
-    "@amnis/core": 0.9.1
-  peerDependencies:
-    "@reduxjs/toolkit": ^1.8.1
-  languageName: unknown
-  linkType: soft
-
 "@amnis/eslint-config-node@npm:^2.1.0":
   version: 2.1.0
   resolution: "@amnis/eslint-config-node@npm:2.1.0"
@@ -66,16 +56,6 @@ __metadata:
   checksum: b56b6c0e4685ddaf1e09986f2915c1eb9d0ffb404fa90de3a7606423420e02e64118938e9f2964b5ed4e5661470139b7b416a2017f69b088f75061c0742ce5e9
   languageName: node
   linkType: hard
-
-"@amnis/fs@0.9.1, @amnis/fs@workspace:packages/amnis-fs":
-  version: 0.0.0-use.local
-  resolution: "@amnis/fs@workspace:packages/amnis-fs"
-  dependencies:
-    "@amnis/core": 0.9.1
-  peerDependencies:
-    "@reduxjs/toolkit": ^1.8.1
-  languageName: unknown
-  linkType: soft
 
 "@amnis/mock@workspace:packages/amnis-mock":
   version: 0.0.0-use.local
@@ -167,8 +147,6 @@ __metadata:
     "@amnis/api": 0.9.1
     "@amnis/core": 0.9.1
     "@amnis/crypto": 0.9.1
-    "@amnis/db": 0.9.1
-    "@amnis/fs": 0.9.1
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.0
     react: ^18.0.0
