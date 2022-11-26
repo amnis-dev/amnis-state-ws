@@ -1,5 +1,4 @@
-import type { CryptoRandomString } from '@amnis/core';
-import { base64Encode } from '../utility.js';
+import { CryptoRandomString, base64Encode } from '@amnis/core';
 import { webcrypto } from '../webcrypto.js';
 /**
  * Generate a random verifier string.

@@ -1,5 +1,10 @@
-import { CryptoPassCompare, CryptoPassHash, CryptoPassword } from '@amnis/core';
-import { base64Decode, base64Encode } from '../utility.js';
+import {
+  CryptoPassCompare,
+  CryptoPassHash,
+  CryptoPassword,
+  base64Decode,
+  base64Encode,
+} from '@amnis/core';
 import { webcrypto } from '../webcrypto.js';
 
 const passEncrypt = async (password: string, salt: Uint8Array) => {

@@ -1,2 +1,2 @@
-export * from './utility.js';
+export * from './webcrypto.js';
 export * from './web/index.js';
