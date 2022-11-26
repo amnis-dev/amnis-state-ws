@@ -14,7 +14,7 @@ import {
 } from '@amnis/core';
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
-import { storeSetup } from '@amnis/core/test/book.store.js';
+import { storeSetup } from '@amnis/state';
 import { cryptoWeb } from '@amnis/crypto';
 import { authProcess } from './index.js';
 import { validateSetup } from '../validate.js';

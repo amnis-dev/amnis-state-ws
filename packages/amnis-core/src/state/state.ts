@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
 import { Entity, entityCreate } from '../entity/index.js';
-import type { Grant, Task } from '../grant/index.js';
+import type { Grant, Task } from './grant/index.js';
 import type {
   State, StateCreator, StateEntities, StateQuery, StateScope,
 } from './state.types.js';

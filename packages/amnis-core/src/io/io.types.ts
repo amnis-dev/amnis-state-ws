@@ -3,13 +3,12 @@ import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { Store } from '@reduxjs/toolkit';
 
 import type { DateJSON } from '../types.js';
-import type { Bearer } from '../bearer/index.js';
-import type { LogBaseCreate } from '../log/index.js';
+import type { Bearer } from '../state/index.js';
+import type { LogBaseCreate, Session } from '../entity/index.js';
 
-import type { Database } from '../db.types.js';
-import type { FileSystem } from '../fs.types.js';
-import type { Session } from '../session/index.js';
-import { Crypto, CryptoSymEncryption, CryptoToken } from '../crypto.types.js';
+import type { Database } from './database/database.types.js';
+import type { FileSystem } from './filesystem/filesystem.types.js';
+import { Crypto, CryptoSymEncryption, CryptoToken } from './crypto/crypto.types.js';
 import { JWTAccess } from '../jwt.types.js';
 
 /**

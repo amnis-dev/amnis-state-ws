@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { LogLevel } from '../log/log.types.js';
+import type { LogLevel } from '../entity/index.js';
 import type {
   IoMap, IoOutput, IoProcesses, IoContext,
 } from './io.types.js';

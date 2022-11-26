@@ -1,6 +1,6 @@
 import { dbmemory } from '@amnis/db';
 import { fsmemory } from '@amnis/fs';
-import { storeSetup } from '@amnis/core/test/book.store.js';
+import { storeSetup } from '@amnis/state';
 import {
   ioProcess, IoInput, userCreator, profileCreator,
   schemaAuth,

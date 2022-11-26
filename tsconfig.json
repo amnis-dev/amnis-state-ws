@@ -6,7 +6,6 @@
     "esModuleInterop": true,
     "paths": {
       "@amnis/core": ["./packages/amnis-core/src/index.ts"],
-      "@amnis/core/test/*": ["./packages/amnis-core/src/test/*"],
       "@amnis/crypto": ["./packages/amnis-crypto/src/index.ts"],
       "@amnis/crypto/browser": ["./packages/amnis-crypto/src/index.browser.ts"],
       "@amnis/db": ["./packages/amnis-db/src/index.ts"],

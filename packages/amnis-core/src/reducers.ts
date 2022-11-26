@@ -5,15 +5,14 @@ import type {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import {
-  entityCreate, metaInitial,
-} from './entity/entity.js';
-import { coreActions } from './actions.js';
-import type {
   Entity,
   EntityExtension,
   EntityUpdate,
   MetaState,
+  entityCreate,
+  metaInitial,
 } from './entity/index.js';
+import { coreActions } from './actions.js';
 import type { UID } from './types.js';
 import { diffCompare } from './diff.js';
 

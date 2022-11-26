@@ -1,4 +1,4 @@
-import type { Role } from './role/index.js';
+import type { Role } from './entity/index.js';
 import type { DateNumeric, UID } from './types.js';
 
 /**

@@ -1,11 +1,14 @@
 import { uid } from '../uid.js';
-import { roleKey } from '../role/index.js';
-import { System, systemCreator, systemKey } from '../system/index.js';
-import { websiteKey } from '../website/index.js';
-
+import {
+  entityCreate,
+  roleKey,
+  System,
+  systemCreator,
+  systemKey,
+  websiteKey,
+} from '../entity/index.js';
 import { stateReferenceQuery, stateToCreate } from './state.js';
 import { StateCreator, StateQuery } from './state.types.js';
-import { entityCreate } from '../entity/entity.js';
 
 const system = entityCreate<System>(systemKey, systemCreator({
   name: 'Query System',
