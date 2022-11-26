@@ -6,14 +6,14 @@ import type { DateNumeric, UID } from './types.js';
  */
 export interface JWTAccess {
   /**
-    * Issuer of the bearer.
+    * Issuer of the access token.
     */
   iss: string;
 
   /**
-    * Subject identifier.
-    * (typically a user id)
-    */
+   * Subject identifier.
+   * (typically a user id)
+   */
   sub: UID;
 
   /**
