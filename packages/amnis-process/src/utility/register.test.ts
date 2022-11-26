@@ -1,9 +1,16 @@
 import {
-  uid, Role, roleKey, systemCreator, IoContext, entityCreate, systemKey, System,
+  uid,
+  Role,
+  roleKey,
+  systemCreator,
+  IoContext,
+  entityCreate,
+  systemKey,
+  System,
+  databaseMemory,
+  filesystemMemory,
 } from '@amnis/core';
 import { cryptoWeb } from '@amnis/crypto';
-import { dbmemory } from '@amnis/db';
-import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
 import { register } from './register.js';
@@ -12,8 +19,8 @@ const appStore = storeSetup();
 
 const context: IoContext = {
   store: appStore,
-  database: dbmemory,
-  filesystem: fsmemory,
+  database: databaseMemory,
+  filesystem: filesystemMemory,
   crypto: cryptoWeb,
   validators: validateSetup([]),
 };

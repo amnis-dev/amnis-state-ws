@@ -27,7 +27,7 @@ export const filesystemMemory: FileSystem = {
       }));
 
       /**
-       * Save the file to dbmemory.
+       * Save the file to databaseMemory.
        */
       storage[imageEntity.$id] = buffer;
 

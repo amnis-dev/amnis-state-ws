@@ -1,9 +1,9 @@
-import { dbmemory } from '@amnis/db';
-import { fsmemory } from '@amnis/fs';
 import {
   AuthLogin,
   AuthLogout,
+  databaseMemory,
   dataInitial,
+  filesystemMemory,
   IoInput,
   ioProcess,
   schemaAuth,
@@ -20,8 +20,8 @@ const io = ioProcess(
   {
     store: storeSetup(),
     validators: validateSetup([schemaAuth]),
-    database: dbmemory,
-    filesystem: fsmemory,
+    database: databaseMemory,
+    filesystem: filesystemMemory,
     crypto: cryptoWeb,
   },
   {
@@ -31,7 +31,7 @@ const io = ioProcess(
 );
 
 beforeAll(async () => {
-  await dbmemory.create(dataInitial());
+  await databaseMemory.create(dataInitial());
 });
 
 test('should login and then logout as administrator', async () => {

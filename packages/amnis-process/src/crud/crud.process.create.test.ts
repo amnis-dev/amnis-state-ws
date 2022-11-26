@@ -1,5 +1,3 @@
-import { dbmemory, memoryStorage } from '@amnis/db';
-import { fsmemory } from '@amnis/fs';
 import {
   AuthLogin,
   dataInitial,
@@ -17,6 +15,9 @@ import {
   userBase,
   uid,
   stateEntitiesCreate,
+  databaseMemory,
+  filesystemMemory,
+  databaseMemoryStorage,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
 import { cryptoWeb } from '@amnis/crypto';
@@ -31,8 +32,8 @@ const io = ioProcess(
   {
     store,
     validators: validateSetup([schemaAuth, schemaEntity]),
-    database: dbmemory,
-    filesystem: fsmemory,
+    database: databaseMemory,
+    filesystem: filesystemMemory,
     crypto: cryptoWeb,
   },
   {
@@ -44,7 +45,7 @@ const io = ioProcess(
 beforeAll(async () => {
   const stateEntities = stateEntitiesCreate(data);
   store.dispatch(coreActions.insert(stateEntities));
-  await dbmemory.create(stateEntities);
+  await databaseMemory.create(stateEntities);
 });
 
 test('should not create without bearer', async () => {
@@ -97,7 +98,7 @@ test('should login as administrator and create user', async () => {
   expect(outputCreator.json.result?.user[0]?.committed).toBe(true);
   expect(ioOutputErrored(outputCreator)).toBe(false);
 
-  const storage = memoryStorage();
+  const storage = databaseMemoryStorage();
 
   expect(Object.values(storage.user)).toHaveLength(4);
   expect((Object.values(storage.user)[3] as User)?.name).toBe('Admin\'s New User');
@@ -132,7 +133,7 @@ test('should login as executive and create user', async () => {
   expect(outputCreator.status).toBe(200);
   expect(ioOutputErrored(outputCreator)).toBe(false);
 
-  const storage = memoryStorage();
+  const storage = databaseMemoryStorage();
 
   expect(Object.values(storage.user)).toHaveLength(5);
   expect((Object.values(storage.user)[4] as User)?.name).toBe('Exec\'s New User');
@@ -167,7 +168,7 @@ test('should login as user and cannot create user', async () => {
   expect(outputCreator.status).toBe(200);
   expect(ioOutputErrored(outputCreator)).toBe(true);
 
-  const storage = memoryStorage();
+  const storage = databaseMemoryStorage();
 
   expect(Object.values(storage.user)).toHaveLength(5);
 });

@@ -1,5 +1,3 @@
-import { dbmemory } from '@amnis/db';
-import { fsmemory } from '@amnis/fs';
 import {
   AuthLogin,
   dataInitial,
@@ -17,6 +15,8 @@ import {
   profileKey,
   Profile,
   stateEntitiesCreate,
+  databaseMemory,
+  filesystemMemory,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
 import { cryptoWeb } from '@amnis/crypto';
@@ -31,8 +31,8 @@ const io = ioProcess(
   {
     store,
     validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
-    database: dbmemory,
-    filesystem: fsmemory,
+    database: databaseMemory,
+    filesystem: filesystemMemory,
     crypto: cryptoWeb,
   },
   {
@@ -44,7 +44,7 @@ const io = ioProcess(
 beforeAll(async () => {
   const stateEntities = stateEntitiesCreate(data);
   store.dispatch(coreActions.create(stateEntities));
-  await dbmemory.create(stateEntities);
+  await databaseMemory.create(stateEntities);
 });
 
 test('should not update without bearer', async () => {

@@ -1,10 +1,14 @@
 import {
   coreActions,
+  databaseMemory,
   dataInitial,
-  IoContext, roleKey, StateEntities, systemKey, Validators,
+  filesystemMemory,
+  IoContext,
+  roleKey,
+  StateEntities,
+  systemKey,
+  Validators,
 } from '@amnis/core';
-import { dbmemory } from '@amnis/db';
-import { fsmemory } from '@amnis/fs';
 import { cryptoWeb } from '@amnis/crypto';
 import { store as storeDefault } from './store.js';
 import { systemActions } from './system/index.js';
@@ -30,8 +34,8 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
   } = options;
   const storeNext = store ?? storeDefault;
   const validatorsNext = (validators || []) as Validators;
-  const databaseNext = database ?? dbmemory;
-  const filesystemNext = filesystem ?? fsmemory;
+  const databaseNext = database ?? databaseMemory;
+  const filesystemNext = filesystem ?? filesystemMemory;
   const dataNext = data ?? dataInitial();
 
   const cryptoNext = crypto ?? cryptoWeb;

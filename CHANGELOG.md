@@ -156,7 +156,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * Fixed missing fs package from build process ([e5e19a0](https://github.com/amnis-dev/amnis-state/commit/e5e19a05a0dbc3f181401120f4341786fc95b8dc))
-* Renamed memory to dbmemory for more clarity on the adapter type ([bd8b7cf](https://github.com/amnis-dev/amnis-state/commit/bd8b7cf211692b19ea0139efea7442cb597268b7))
+* Renamed memory to databaseMemory for more clarity on the adapter type ([bd8b7cf](https://github.com/amnis-dev/amnis-state/commit/bd8b7cf211692b19ea0139efea7442cb597268b7))
 * Updated IO Context to include a file system adapter ([9d0ccea](https://github.com/amnis-dev/amnis-state/commit/9d0ccea0876e5f41cbb5d0b6a31ba296c663b0bc))
 
 

@@ -11,9 +11,9 @@ import {
   userCreator,
   schemaAuth,
   stateEntitiesCreate,
+  databaseMemory,
+  filesystemMemory,
 } from '@amnis/core';
-import { dbmemory } from '@amnis/db';
-import { fsmemory } from '@amnis/fs';
 import { storeSetup } from '@amnis/state';
 import { cryptoWeb } from '@amnis/crypto';
 import { authProcess } from './index.js';
@@ -46,7 +46,7 @@ beforeAll(async () => {
   /**
  * Create test data in the memory database.
  */
-  dbmemory.create(stateEntitiesCreate({
+  databaseMemory.create(stateEntitiesCreate({
     user: users,
     profile: profiles,
   }));
@@ -57,8 +57,8 @@ beforeAll(async () => {
  */
 const processes = ioProcess({
   store: appStore,
-  database: dbmemory,
-  filesystem: fsmemory,
+  database: databaseMemory,
+  filesystem: filesystemMemory,
   crypto: cryptoWeb,
   validators: validateSetup(schemaAuth),
 }, authProcess);

@@ -31,9 +31,7 @@
   "dependencies": {
     "@amnis/api": "0.9.1",
     "@amnis/core": "0.9.1",
-    "@amnis/crypto": "0.9.1",
-    "@amnis/db": "0.9.1",
-    "@amnis/fs": "0.9.1"
+    "@amnis/crypto": "0.9.1"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.0",
