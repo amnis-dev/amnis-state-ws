@@ -27,8 +27,6 @@
     "t": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest)",
     "test": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/",
     "test:core": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-core/",
-    "test:db": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-db/",
-    "test:fs": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-fs/",
     "test:process": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-process/",
     "test:api": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-api/",
     "test:crypto": "yarn node --no-warnings --experimental-vm-modules $(yarn bin jest) packages/amnis-crypto/",
