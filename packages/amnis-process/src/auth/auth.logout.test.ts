@@ -1,6 +1,7 @@
 import {
   AuthLogin,
   AuthLogout,
+  cryptoWeb,
   databaseMemory,
   dataInitial,
   filesystemMemory,
@@ -11,7 +12,6 @@ import {
   sessionKey,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
-import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from './auth.login.js';
 import { authProcessLogout } from './auth.logout.js';

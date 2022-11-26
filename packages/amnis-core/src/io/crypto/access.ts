@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  JWTAccess,
-  CryptoAccessEncode,
-  CryptoAccessVerify,
-  logCreator,
-} from '@amnis/core';
+import { logCreator } from '../../entity/index.js';
+import { JWTAccess } from '../../jwt.types.js';
+import { CryptoAccessEncode, CryptoAccessVerify } from './crypto.types.js';
 import { tokenSign, tokenVerify } from './token.js';
 
 /**

@@ -1,13 +1,12 @@
+import { base64Decode, base64Encode } from './crypto.encode.js';
 import {
   CryptoSymDecrypt,
   CryptoSymEncrypt,
   CryptoSymEncryption,
   CryptoSymGenerate,
   CryptoSymKey,
-  base64Decode,
-  base64Encode,
-} from '@amnis/core';
-import { webcrypto } from '../webcrypto.js';
+} from './crypto.types.js';
+import { webcrypto } from './webcrypto.js';
 
 export const symGenerate: CryptoSymGenerate = async () => {
   const wc = await webcrypto();

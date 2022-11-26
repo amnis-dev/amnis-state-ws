@@ -13,11 +13,6 @@
       "updater": "scripts/standard-version-updater.cjs"
     },
     {
-      "filename": "packages/amnis-crypto/package.json",
-      "type": "json",
-      "updater": "scripts/standard-version-updater.cjs"
-    },
-    {
       "filename": "packages/amnis-process/package.json",
       "type": "json",
       "updater": "scripts/standard-version-updater.cjs"

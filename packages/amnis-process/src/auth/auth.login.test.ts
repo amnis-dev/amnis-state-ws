@@ -11,9 +11,9 @@ import {
   sessionKey,
   User,
   userKey,
+  cryptoWeb,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
-import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from './auth.login.js';
 

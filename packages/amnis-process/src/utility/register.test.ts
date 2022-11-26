@@ -9,8 +9,8 @@ import {
   System,
   databaseMemory,
   filesystemMemory,
+  cryptoWeb,
 } from '@amnis/core';
-import { cryptoWeb } from '@amnis/crypto';
 import { storeSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
 import { register } from './register.js';

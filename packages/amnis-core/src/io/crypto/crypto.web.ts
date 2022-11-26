@@ -1,4 +1,4 @@
-import type { Crypto } from '@amnis/core';
+import type { Crypto } from './crypto.types.js';
 import { randomString } from './random.js';
 import { hashData } from './hash.js';
 import { symGenerate, symEncrypt, symDecrypt } from './sym.js';

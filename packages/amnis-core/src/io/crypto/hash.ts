@@ -1,5 +1,6 @@
-import { CryptoHash, CryptoHashData, base64Encode } from '@amnis/core';
-import { webcrypto } from '../webcrypto.js';
+import { base64Encode } from './crypto.encode.js';
+import { CryptoHash, CryptoHashData } from './crypto.types.js';
+import { webcrypto } from './webcrypto.js';
 
 /**
  * Hash data with SHA-256.

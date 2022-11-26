@@ -7,8 +7,8 @@ import {
   CryptoSymEncryption,
   databaseMemory,
   filesystemMemory,
+  cryptoWeb,
 } from '@amnis/core';
-import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcess } from './index.js';
 

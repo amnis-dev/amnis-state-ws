@@ -16,8 +16,6 @@
         "root": ["./"],
         "alias": {
           "@amnis/core": "./packages/amnis-core/src",
-          "@amnis/crypto": "./packages/amnis-crypto/src",
-          "@amnis/crypto/browser": "./packages/amnis-crypto/src/index.browser.ts",
           "@amnis/process": "./packages/amnis-process/src",
           "@amnis/api": "./packages/amnis-api/src",
           "@amnis/state": "./packages/amnis-state/src",

@@ -11,7 +11,6 @@
   ],
   "references": [
     { "path": "../amnis-core/tsconfig.build.json" },
-    { "path": "../amnis-api/tsconfig.build.json" },
-    { "path": "../amnis-crypto/tsconfig.json" }
+    { "path": "../amnis-api/tsconfig.build.json" }
   ]
 }

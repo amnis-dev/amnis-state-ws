@@ -1,4 +1,4 @@
-import { dateNumeric } from '@amnis/core';
+import { dateNumeric } from '../../core.js';
 import { asymGenerate } from './asym.js';
 import { tokenSign, tokenVerify } from './token.js';
 

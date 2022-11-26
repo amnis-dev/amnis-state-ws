@@ -13,9 +13,9 @@ import {
   stateEntitiesCreate,
   databaseMemory,
   filesystemMemory,
+  cryptoWeb,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
-import { cryptoWeb } from '@amnis/crypto';
 import { authProcess } from './index.js';
 import { validateSetup } from '../validate.js';
 

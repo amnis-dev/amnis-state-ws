@@ -1,5 +1,6 @@
 import {
   coreActions,
+  cryptoWeb,
   databaseMemory,
   dataInitial,
   filesystemMemory,
@@ -9,7 +10,6 @@ import {
   systemKey,
   Validators,
 } from '@amnis/core';
-import { cryptoWeb } from '@amnis/crypto';
 import { store as storeDefault } from './store.js';
 import { systemActions } from './system/index.js';
 

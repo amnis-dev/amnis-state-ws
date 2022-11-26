@@ -18,9 +18,9 @@ import {
   databaseMemory,
   filesystemMemory,
   databaseMemoryStorage,
+  cryptoWeb,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
-import { cryptoWeb } from '@amnis/crypto';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from '../auth/auth.login.js';
 import { crudProcessCreate } from './crud.process.create.js';
