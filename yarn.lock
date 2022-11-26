@@ -32,16 +32,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/crypto@0.9.1, @amnis/crypto@workspace:packages/amnis-crypto":
-  version: 0.0.0-use.local
-  resolution: "@amnis/crypto@workspace:packages/amnis-crypto"
-  dependencies:
-    "@amnis/core": 0.9.1
-  peerDependencies:
-    "@reduxjs/toolkit": ^1.8.1
-  languageName: unknown
-  linkType: soft
-
 "@amnis/eslint-config-node@npm:^2.1.0":
   version: 2.1.0
   resolution: "@amnis/eslint-config-node@npm:2.1.0"
@@ -146,7 +136,6 @@ __metadata:
   dependencies:
     "@amnis/api": 0.9.1
     "@amnis/core": 0.9.1
-    "@amnis/crypto": 0.9.1
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.0
     react: ^18.0.0
