@@ -84,4 +84,4 @@ export type UserBase = EntityExtension<User>;
 /**
   * User base properties for creation.
   */
-export type UserBaseCreate = EntityExtensionCreate<User, 'name'>;
+export type UserCreator = EntityExtensionCreate<User, 'name'>;

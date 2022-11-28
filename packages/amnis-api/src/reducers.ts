@@ -7,7 +7,7 @@ import {
   rtk,
   Entity,
   IoOutput,
-  LogBaseCreate,
+  LogCreator,
   logCreator,
   logKey,
   MetaState,
@@ -33,7 +33,7 @@ export function apiExtraReducers<E extends Entity>(
    */
   builder.addMatcher(rtk.isFulfilled, (state, action) => {
     const payload = action.payload as IoOutput['json'];
-    const logs = payload.logs as LogBaseCreate[];
+    const logs = payload.logs as LogCreator[];
 
     /**
      * StateCreator log entities from the fulfillment.
@@ -61,7 +61,7 @@ export function apiExtraReducers<E extends Entity>(
      * StateCreator log entities from the fulfillment.
      */
     if (key === logKey && payload?.data?.logs?.length > 0) {
-      const logs = payload.data.logs as LogBaseCreate[];
+      const logs = payload.data.logs as LogCreator[];
       const logEntities = logs.map((logBase) => entityCreate(logKey, logCreator(logBase)));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);

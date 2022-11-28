@@ -66,4 +66,4 @@ export type WebsiteBase = EntityExtension<Website>;
 /**
  * Base properties in order to create a log.
  */
-export type WebsiteBaseCreate = EntityExtensionCreate<Website, 'name' | 'url'>;
+export type WebsiteCreator = EntityExtensionCreate<Website, 'name' | 'url'>;

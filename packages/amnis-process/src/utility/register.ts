@@ -2,7 +2,7 @@ import {
   contactCreator,
   IoOutput,
   ioOutput,
-  LogBaseCreate,
+  LogCreator,
   profileCreator,
   System,
   Bearer,
@@ -41,7 +41,7 @@ export async function register(
     password, nameDisplay, createSession, withTokens, otherTokens,
   } = options;
   const output = ioOutput<StateEntities>();
-  const logs: LogBaseCreate[] = [];
+  const logs: LogCreator[] = [];
 
   if (!system) {
     output.status = 503; // Service Unavailable

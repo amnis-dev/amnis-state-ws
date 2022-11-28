@@ -20,4 +20,4 @@ export type SheetBase = EntityExtension<Sheet>;
 /**
  * Base properties in order to create a log.
  */
-export type SheetBaseCreate = SheetBase;
+export type SheetCreator = SheetBase;

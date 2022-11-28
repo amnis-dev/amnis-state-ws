@@ -1,4 +1,4 @@
-import type { Image, ImageBase, ImageBaseCreate } from './image.types.js';
+import type { Image, ImageBase, ImageCreator } from './image.types.js';
 import type { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
 import { fileCreator } from '../file/file.js';
@@ -17,7 +17,7 @@ export const imageBase: ImageBase = {
 };
 
 export function imageCreator(
-  image: ImageBaseCreate,
+  image: ImageCreator,
 ): EntityCreator<Image> {
   return {
     ...imageBase,

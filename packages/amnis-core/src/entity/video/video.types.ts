@@ -36,4 +36,4 @@ export type VideoBase = EntityExtension<Video>;
 /**
     * Base properties in order to create an image.
     */
-export type VideoBaseCreate = EntityExtensionCreate<Video, 'title' | 'mimetype' | 'size' | 'extension' | 'width' | 'height' | 'duration'>;
+export type VideoCreator = EntityExtensionCreate<Video, 'title' | 'mimetype' | 'size' | 'extension' | 'width' | 'height' | 'duration'>;

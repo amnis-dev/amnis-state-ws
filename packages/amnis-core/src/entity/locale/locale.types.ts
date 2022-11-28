@@ -52,4 +52,4 @@ export type LocaleBase = EntityExtension<Locale>;
 /**
  * Base properties in order to create a log.
  */
-export type LocaleBaseCreate = EntityExtensionCreate<Locale, 'code' | 'set'>;
+export type LocaleCreator = EntityExtensionCreate<Locale, 'code' | 'set'>;

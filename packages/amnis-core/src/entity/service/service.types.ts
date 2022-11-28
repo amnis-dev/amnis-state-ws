@@ -34,4 +34,4 @@ export type ServiceBase = EntityExtension<Service>;
 /**
  * Base properties in order to create a log.
  */
-export type ServiceBaseCreate = EntityExtensionCreate<Service, 'name'>;
+export type ServiceCreator = EntityExtensionCreate<Service, 'name'>;

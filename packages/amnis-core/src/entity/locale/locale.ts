@@ -1,8 +1,8 @@
 import { EntityCreator } from '../entity.types.js';
-import type { LogBaseCreate } from '../log/index.js';
+import type { LogCreator } from '../log/index.js';
 import { uid } from '../../uid.js';
 import type {
-  Locale, LocaleBase, LocaleBaseCreate, LocaleTranslationKey, LocaleTranslation,
+  Locale, LocaleBase, LocaleCreator, LocaleTranslationKey, LocaleTranslation,
 } from './locale.types.js';
 
 export const localeKey = 'locale';
@@ -46,8 +46,8 @@ export function t(
 /**
  * Locale check method.
  */
-export function localeCheck(locale: Locale): LogBaseCreate[] {
-  const logs: LogBaseCreate[] = [];
+export function localeCheck(locale: Locale): LogCreator[] {
+  const logs: LogCreator[] = [];
 
   if (locale.code.length !== 2) {
     logs.push({
@@ -61,7 +61,7 @@ export function localeCheck(locale: Locale): LogBaseCreate[] {
 }
 
 export function localeCreator(
-  locale: LocaleBaseCreate,
+  locale: LocaleCreator,
 ): EntityCreator<Locale> {
   return {
     ...localeBase,

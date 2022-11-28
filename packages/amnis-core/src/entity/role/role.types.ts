@@ -34,4 +34,4 @@ export type RoleBase = EntityExtension<Role>;
 /**
    * Base properties.
    */
-export type RoleBaseCreate = EntityExtensionCreate<Role, 'name'>;
+export type RoleCreator = EntityExtensionCreate<Role, 'name'>;

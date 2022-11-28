@@ -42,4 +42,4 @@ export type ContactBase = EntityExtension<Contact>;
 /**
  * Base properties in order to create a log.
  */
-export type ContactBaseCreate = EntityExtensionCreate<Contact, 'name'>;
+export type ContactCreator = EntityExtensionCreate<Contact, 'name'>;

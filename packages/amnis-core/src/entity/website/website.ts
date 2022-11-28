@@ -1,6 +1,6 @@
 import { uid, uidTree } from '../../uid.js';
 import { EntityCreator } from '../entity.types.js';
-import type { Website, WebsiteBase, WebsiteBaseCreate } from './website.types.js';
+import type { Website, WebsiteBase, WebsiteCreator } from './website.types.js';
 
 export const websiteKey = 'website';
 
@@ -13,7 +13,7 @@ export const websiteBase: WebsiteBase = {
 };
 
 export function websiteCreator(
-  website: WebsiteBaseCreate,
+  website: WebsiteCreator,
 ): EntityCreator<Website> {
   return {
     ...websiteBase,

@@ -24,4 +24,4 @@ export type NoteBase = EntityExtension<Note>;
 /**
  * Base properties in order to create a log.
  */
-export type NoteBaseCreate = EntityExtensionCreate<Note, '$subject' | 'text'>;
+export type NoteCreator = EntityExtensionCreate<Note, '$subject' | 'text'>;

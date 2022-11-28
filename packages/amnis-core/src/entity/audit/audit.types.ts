@@ -45,4 +45,4 @@ export type AuditBase = EntityExtension<Audit>;
 /**
  * Base properties in order to create a log.
  */
-export type AuditBaseCreate = EntityExtensionCreate<Audit, 'action' | 'completed'>;
+export type AuditCreator = EntityExtensionCreate<Audit, 'action' | 'completed'>;

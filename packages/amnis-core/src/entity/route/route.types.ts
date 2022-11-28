@@ -34,4 +34,4 @@ export type RouteBase = EntityExtension<Route>;
 /**
  * Base properties in order to create a log.
  */
-export type RouteBaseCreate = EntityExtensionCreate<Route, 'label' | 'path'>;
+export type RouteCreator = EntityExtensionCreate<Route, 'label' | 'path'>;

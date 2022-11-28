@@ -61,4 +61,4 @@ export type ProfileBase = EntityExtension<Profile>;
 /**
   * Base properties.
   */
-export type ProfileBaseCreate = EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>;
+export type ProfileCreator = EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>;

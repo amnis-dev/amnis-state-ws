@@ -1,6 +1,6 @@
 import type { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
-import type { Sheet, SheetBase, SheetBaseCreate } from './sheet.types.js';
+import type { Sheet, SheetBase, SheetCreator } from './sheet.types.js';
 
 export const sheetKey = 'sheet';
 
@@ -9,7 +9,7 @@ export const sheetBase: SheetBase = {
 };
 
 export function sheetCreator(
-  sheet: SheetBaseCreate,
+  sheet: SheetCreator,
 ): EntityCreator<Sheet> {
   return {
     ...sheetBase,

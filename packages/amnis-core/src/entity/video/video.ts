@@ -1,7 +1,7 @@
 import type { EntityCreator } from '../entity.types.js';
 import { fileCreator } from '../file/file.js';
 import { uid } from '../../uid.js';
-import type { Video, VideoBase, VideoBaseCreate } from './video.types.js';
+import type { Video, VideoBase, VideoCreator } from './video.types.js';
 
 export const videoKey = 'video';
 
@@ -18,7 +18,7 @@ export const videoBase: VideoBase = {
 };
 
 export function videoCreator(
-  video: VideoBaseCreate,
+  video: VideoCreator,
 ): EntityCreator<Video> {
   return {
     ...videoBase,

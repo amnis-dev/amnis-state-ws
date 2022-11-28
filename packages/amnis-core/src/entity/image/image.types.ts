@@ -31,4 +31,4 @@ export type ImageBase = EntityExtension<Image>;
 /**
    * Base properties in order to create an image.
    */
-export type ImageBaseCreate = EntityExtensionCreate<Image, 'title' | 'mimetype' | 'size' | 'extension' | 'width' | 'height'>;
+export type ImageCreator = EntityExtensionCreate<Image, 'title' | 'mimetype' | 'size' | 'extension' | 'width' | 'height'>;

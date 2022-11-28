@@ -24,4 +24,4 @@ export type HistoryBase = EntityExtension<History>;
 /**
  * Base properties in order to create a log.
  */
-export type HistoryBaseCreate = EntityExtensionCreate<History, '$subject' | 'changes'>;
+export type HistoryCreator = EntityExtensionCreate<History, '$subject' | 'changes'>;

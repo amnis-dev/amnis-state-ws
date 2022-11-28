@@ -45,4 +45,4 @@ export type LogBase = EntityExtension<Log>;
 /**
  * Base properties in order to create a log.
  */
-export type LogBaseCreate = EntityExtensionCreate<Log, 'title' | 'description' | 'level'>;
+export type LogCreator = EntityExtensionCreate<Log, 'title' | 'description' | 'level'>;

@@ -1,6 +1,6 @@
 import { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
-import type { File, FileBase, FileBaseCreate } from './file.types.js';
+import type { File, FileBase, FileCreator } from './file.types.js';
 
 export const fileKey = 'file';
 
@@ -12,7 +12,7 @@ export const fileBase: FileBase = {
 };
 
 export function fileCreator(
-  file: FileBaseCreate,
+  file: FileCreator,
 ): EntityCreator<File> {
   return {
     ...fileBase,

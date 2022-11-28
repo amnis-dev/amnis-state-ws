@@ -1,10 +1,10 @@
 import { uid } from '../../uid.js';
 import { durationCalc } from '../../core.js';
 import type { EntityCreator } from '../entity.types.js';
-import type { LogBaseCreate } from '../log/index.js';
+import type { LogCreator } from '../log/index.js';
 import { roleKey } from '../role/index.js';
 import { websiteKey } from '../website/index.js';
-import type { System, SystemBase, SystemBaseCreate } from './system.types.js';
+import type { System, SystemBase, SystemCreator } from './system.types.js';
 
 export const systemKey = 'system';
 
@@ -21,8 +21,8 @@ export const systemBase: SystemBase = {
 /**
  * System check method.
  */
-export function systemCheck(system: System): LogBaseCreate[] {
-  const logs: LogBaseCreate[] = [];
+export function systemCheck(system: System): LogCreator[] {
+  const logs: LogCreator[] = [];
 
   if (system.name.length < 1) {
     logs.push({
@@ -36,7 +36,7 @@ export function systemCheck(system: System): LogBaseCreate[] {
 }
 
 export function systemCreator(
-  system: SystemBaseCreate,
+  system: SystemCreator,
 ): EntityCreator<System> {
   return {
     ...systemBase,

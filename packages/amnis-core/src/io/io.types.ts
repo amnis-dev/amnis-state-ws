@@ -4,7 +4,7 @@ import type { Store } from '@reduxjs/toolkit';
 
 import type { DateJSON } from '../types.js';
 import type { Bearer } from '../state/index.js';
-import type { LogBaseCreate, Session } from '../entity/index.js';
+import type { LogCreator, Session } from '../entity/index.js';
 
 import type { Database } from './database/database.types.js';
 import type { FileSystem } from './filesystem/filesystem.types.js';
@@ -91,7 +91,7 @@ export interface IoOutputJson<T = any> {
   /**
    * Return logs.
    */
-  logs: LogBaseCreate[];
+  logs: LogCreator[];
 
   /**
    * Result data.

@@ -4,7 +4,7 @@ import {
 } from '../entity.types.js';
 import { StateEntities, StateUpdater } from '../../state/index.js';
 import { UID } from '../../types.js';
-import type { History, HistoryBase, HistoryBaseCreate } from './history.types.js';
+import type { History, HistoryBase, HistoryCreator } from './history.types.js';
 import { entityCreate } from '../entity.js';
 
 export const historyKey = 'history';
@@ -15,7 +15,7 @@ export const historyBase: HistoryBase = {
 };
 
 export function historyCreator(
-  history: HistoryBaseCreate,
+  history: HistoryCreator,
 ): EntityCreator<History> {
   return {
     ...historyBase,

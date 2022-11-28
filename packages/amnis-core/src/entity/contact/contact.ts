@@ -1,8 +1,8 @@
 import { EntityCreator } from '../entity.types.js';
-import type { LogBaseCreate } from '../log/index.js';
+import type { LogCreator } from '../log/index.js';
 import { regexWebUrl } from '../../regex.js';
 import { uid } from '../../uid.js';
-import type { Contact, ContactBase, ContactBaseCreate } from './contact.types.js';
+import type { Contact, ContactBase, ContactCreator } from './contact.types.js';
 
 export const contactKey = 'contact';
 
@@ -16,8 +16,8 @@ export const contactBase: ContactBase = {
 /**
  * Contact check method.
  */
-export function contactCheck(contact: Contact): LogBaseCreate[] {
-  const logs: LogBaseCreate[] = [];
+export function contactCheck(contact: Contact): LogCreator[] {
+  const logs: LogCreator[] = [];
 
   const invalidSocials = contact.socials.filter((social) => !regexWebUrl.test(social));
 
@@ -33,7 +33,7 @@ export function contactCheck(contact: Contact): LogBaseCreate[] {
 }
 
 export function contactCreator(
-  contact: ContactBaseCreate,
+  contact: ContactCreator,
 ): EntityCreator<Contact> {
   return {
     ...contactBase,

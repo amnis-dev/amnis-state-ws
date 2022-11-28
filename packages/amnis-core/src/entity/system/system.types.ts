@@ -54,4 +54,4 @@ export type SystemBase = EntityExtension<System>;
 /**
  * System base properties for creation.
  */
-export type SystemBaseCreate = EntityExtensionCreate<System, 'name' | '$adminRole' | '$execRole'>;
+export type SystemCreator = EntityExtensionCreate<System, 'name' | '$adminRole' | '$execRole'>;
