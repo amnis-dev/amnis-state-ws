@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.2](https://github.com/amnis-dev/amnis-state/compare/v0.9.1...v0.9.2) (2022-11-28)
+
+
+### Features
+
+* Added basic memory interfaces to core package ([e8d81c8](https://github.com/amnis-dev/amnis-state/commit/e8d81c8aea04297124bde9138bee8e821c3a25e4))
+* Added ffmpeg install step for integrity workflow ([9292fda](https://github.com/amnis-dev/amnis-state/commit/9292fdacc66b7dccfca424a5c4f765749b2d620c))
+* Added new send interface for emails and texts ([61f5e34](https://github.com/amnis-dev/amnis-state/commit/61f5e34e12c8dfd8dabf3332317190cc6b473cbb))
+* Amnis Crypto is now part of the Amnis Core package ([3cafbd9](https://github.com/amnis-dev/amnis-state/commit/3cafbd9ae3119719e9d942259ed8978c87e1da76))
+* Amnis DB and Amnis FS are now included with the Amnis Core package ([dc72caf](https://github.com/amnis-dev/amnis-state/commit/dc72caf8dba4ff4f6e9fbe4d926df7dc64926d48))
+* Bearer reducer now has it's own wipe action ([79b4135](https://github.com/amnis-dev/amnis-state/commit/79b413558bbe4b5aac7a3f38e33107700d060b8d))
+* Bearer state is also wiped from the core wipe action ([c60f3c2](https://github.com/amnis-dev/amnis-state/commit/c60f3c2a70f76d7ed159f19349a9274661d2bcbc))
+* Large reorganization of amnis/core package ([0948fb8](https://github.com/amnis-dev/amnis-state/commit/0948fb8876b27fa0d6028b58c57414b26765dea5))
+
+
+### Bug Fixes
+
+* Fixed broken unit testing flow in integrity check ([b2bc3c0](https://github.com/amnis-dev/amnis-state/commit/b2bc3c0023bf40bdc1a24a9bf79fd556fa92e4ec))
+* Fixed circular dependency issue in amnis core ([4af8672](https://github.com/amnis-dev/amnis-state/commit/4af86723544386101550bd037ebb6f67bc397ceb))
+
 ### [0.9.1](https://github.com/amnis-dev/amnis-state/compare/v0.9.0...v0.9.1) (2022-11-25)
 
 
