@@ -32,15 +32,12 @@ export const bearerInitialState = bearerAdapter.getInitialState<BearerMeta>({});
 export const bearerSlice = rtk.createSlice({
   name: bearerKey,
   initialState: bearerInitialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    /**
-     * Match core wipe action.
-     */
-    builder.addCase(coreActions.wipe, (state) => {
+  reducers: {
+    wipe(state) {
       bearerAdapter.removeAll(state);
-    });
-
+    },
+  },
+  extraReducers: (builder) => {
     /**
      * Get bearers from a successful login.
      */
