@@ -1,4 +1,6 @@
-import { rtk, Bearer, bearerKey } from '@amnis/core';
+import {
+  rtk, Bearer, bearerKey, coreActions,
+} from '@amnis/core';
 import { apiAuth } from '@amnis/api';
 
 import type { BearerMeta } from './bearer.types.js';
@@ -33,6 +35,13 @@ export const bearerSlice = rtk.createSlice({
   reducers: {},
   extraReducers: (builder) => {
     /**
+     * Match core wipe action.
+     */
+    builder.addCase(coreActions.wipe, (state) => {
+      bearerAdapter.removeAll(state);
+    });
+
+    /**
      * Get bearers from a successful login.
      */
     builder.addMatcher(apiAuth.endpoints.login.matchFulfilled, (state, action) => {
@@ -45,13 +54,10 @@ export const bearerSlice = rtk.createSlice({
     });
 
     /**
-     * Remove core bearer on logout.
+     * Remove core bearer on logout. Wipes the token when the logout is triggered.
      */
-    builder.addMatcher(rtk.isAnyOf(
-      apiAuth.endpoints.logout.matchFulfilled,
-      apiAuth.endpoints.logout.matchRejected,
-    ), (state) => {
-      bearerAdapter.removeOne(state, 'core');
+    builder.addMatcher(apiAuth.endpoints.logout.matchPending, (state) => {
+      bearerAdapter.removeAll(state);
     });
 
     /**
@@ -76,17 +82,6 @@ export const bearerSlice = rtk.createSlice({
       if (bearers?.length) {
         bearerAdapter.upsertMany(state, bearers);
       }
-    });
-
-    /**
-     * Remove all bearers from the state.
-     */
-    builder.addMatcher(rtk.isAnyOf(
-      apiAuth.endpoints.logout.matchFulfilled,
-      apiAuth.endpoints.logout.matchRejected,
-    ), (state) => {
-      const bearerIds = state.ids;
-      bearerAdapter.removeMany(state, bearerIds);
     });
   },
 });
