@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.3](https://github.com/amnis-dev/amnis-state/compare/v0.9.2...v0.9.3) (2022-11-30)
+
+
+### Bug Fixes
+
+* Fixed issue with diff comparison bugging when arrays are of zero length. ([5c89053](https://github.com/amnis-dev/amnis-state/commit/5c89053c3188f6b68be71d8b09a281787a05cfc5))
+
 ### [0.9.2](https://github.com/amnis-dev/amnis-state/compare/v0.9.1...v0.9.2) (2022-11-28)
 
 
