@@ -31,7 +31,9 @@ export function diffCompare<R1 extends { [key: string]: any }>(
     if (Array.isArray(record1[key])) {
       const arr1 = record1[key] as Array<any>;
       const arr2 = record2[key] as Array<any>;
-      if (!arr1.every((e, i) => e === arr2[i])) {
+      if (arr1.length !== arr2.length) {
+        result.push(key);
+      } else if (!arr1.every((e, i) => e === arr2[i])) {
         result.push(key);
       }
       return;
@@ -43,7 +45,9 @@ export function diffCompare<R1 extends { [key: string]: any }>(
     if (typeof record1[key] === 'object' && record1[key] !== null) {
       const obj1 = record1[key] as Record<string, unknown>;
       const obj2 = record2[key] as Record<string, unknown>;
-      if (!Object.keys(obj1).every(
+      if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+        result.push(key);
+      } else if (!Object.keys(obj1).every(
         (keyObj: keyof typeof obj1) => (obj1[keyObj] === obj2[keyObj]),
       )) {
         result.push(key);

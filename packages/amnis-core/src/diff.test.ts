@@ -97,6 +97,25 @@ test('should show difference in array value', () => {
   expect(diffResult[0]).toBe('array');
 });
 
+test('should show difference in array when array is empty', () => {
+  const obj1 = {
+    string: 'string',
+    number: 4,
+    boolean: true,
+    array: [] as (string | number | boolean)[],
+    object: { a: 'a', b: 2, c: true },
+  };
+  const obj2 = {
+    ...obj1,
+    array: ['a', 2, true],
+    object: { ...obj1.object },
+  };
+
+  const diffResult = diffCompare(obj1, obj2);
+  expect(diffResult).toHaveLength(1);
+  expect(diffResult[0]).toBe('array');
+});
+
 test('should show difference in object value', () => {
   const obj1 = {
     string: 'string',

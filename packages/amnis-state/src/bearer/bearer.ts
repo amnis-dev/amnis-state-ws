@@ -1,5 +1,5 @@
 import {
-  rtk, Bearer, bearerKey, coreActions,
+  rtk, Bearer, bearerKey,
 } from '@amnis/core';
 import { apiAuth } from '@amnis/api';
 
