@@ -6,6 +6,7 @@ import {
   systemKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type {
@@ -16,7 +17,7 @@ import type {
  * RTK system adapter.
  * Manages the normalized entities.
  */
-export const systemAdapter = rtk.createEntityAdapter<System>({
+export const systemAdapter = rtk.createEntityAdapter<Entity<System>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

@@ -1,12 +1,12 @@
 import type { DateJSON, UID, SURL } from '../../types.js';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { User } from '../user/user.types.js';
 import type { Contact } from '../contact/index.js';
 
 /**
  * Profile entity
  */
-export interface Profile extends Entity {
+export interface Profile extends EntityCreator {
   /**
    * User this profile is associated with.
    */
@@ -56,9 +56,9 @@ export interface Profile extends Entity {
 /**
  * Profile properties excluding the extended entity properties.
  */
-export type ProfileBase = EntityExtension<Profile>;
+export type ProfileBase = EntityCreatorBase<Profile>;
 
 /**
   * Base properties.
   */
-export type ProfileCreator = EntityExtensionCreate<Profile, 'nameDisplay' | '$user'>;
+export type ProfileCreator = EntityCreatorParams<Profile, 'nameDisplay' | '$user'>;

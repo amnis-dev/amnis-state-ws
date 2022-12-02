@@ -6,6 +6,7 @@ import {
   sessionKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers, apiAuth } from '@amnis/api';
 import type {
@@ -16,7 +17,7 @@ import type {
  * RTK session adapter.
  * Manages the normalized entities.
  */
-export const sessionAdapter = rtk.createEntityAdapter<Session>({
+export const sessionAdapter = rtk.createEntityAdapter<Entity<Session>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

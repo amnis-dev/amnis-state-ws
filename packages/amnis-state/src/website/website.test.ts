@@ -1,4 +1,4 @@
-import { websiteBase } from '@amnis/core';
+import { websiteBase, websiteCreator } from '@amnis/core';
 import {
   websiteInitialState,
   websiteSelectors,
@@ -24,7 +24,7 @@ test('website should return the initial state', () => {
 test('should handle creating a new website', () => {
   const store = storeSetup();
 
-  const action = websiteActions.create({ ...websiteBase });
+  const action = websiteActions.create(websiteCreator(websiteBase));
 
   store.dispatch(action);
   const entities = websiteSelectors.selectAll(store.getState());

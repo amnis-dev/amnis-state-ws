@@ -1,4 +1,4 @@
-import { sessionBase } from '@amnis/core';
+import { sessionBase, sessionCreator } from '@amnis/core';
 import {
   sessionInitialState,
   sessionSelectors,
@@ -23,7 +23,7 @@ test('session should return the initial state', () => {
 test('should handle creating a new session', () => {
   const store = storeSetup();
 
-  const action = sessionActions.create({ ...sessionBase });
+  const action = sessionActions.create(sessionCreator(sessionBase));
 
   store.dispatch(action);
   const entities = sessionSelectors.selectAll(store.getState());

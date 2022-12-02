@@ -1,7 +1,7 @@
 ---
 to: "<%= path ? `${path}/${name}/${name}.types.ts` : null %>"
 ---
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity/index.js';
+import type { Entity, EntityCreatorBase, EntityExtensionCreate } from '../entity/index.js';
 
 /**
  * <%= Name %> entity
@@ -16,7 +16,7 @@ export interface <%= Name %> extends Entity {
 /**
  * <%= Name %> properties excluding the extended entity properties.
  */
-export type <%= Name %>Base = EntityExtension<<%= Name %>>;
+export type <%= Name %>Base = EntityCreatorBase<<%= Name %>>;
 
 /**
  * Base properties in order to create a log.

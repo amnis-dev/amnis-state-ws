@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 
 import type { JWTAccess } from '../../jwt.types.js';
-import type { EntityCreator, Session, LogCreator } from '../../entity/index.js';
+import type { Session, LogCreator } from '../../entity/index.js';
 
 /**
  * String representation of a SHA256 encoded string.
@@ -138,7 +138,7 @@ export type CryptoPassCompare = (plaintext: string, hashtext: CryptoPassword) =>
  * Encodes a session instance.
  */
 export type CryptoSessionEncrypt = (
-  session: EntityCreator<Session>,
+  session: Session,
   key?: CryptoSymKey
 ) => Promise<CryptoSymEncryption>;
 

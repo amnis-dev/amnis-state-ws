@@ -1,5 +1,5 @@
 import type { UID, SURL, UIDTree } from '../../types.js';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Image } from '../image/image.types.js';
 import type { Contact } from '../contact/index.js';
 import type { Route } from '../route/index.js';
@@ -11,7 +11,7 @@ export type WebsiteSocialType =
 'facebook' | 'twitter' | 'instagram' | 'youtube'
 | 'reddit' | 'discord' | 'twitch' | 'steam' | 'itchio';
 
-export interface Website extends Entity {
+export interface Website extends EntityCreator {
   /**
    * Name of the website.
    */
@@ -61,9 +61,9 @@ export interface Website extends Entity {
 /**
  * Website properties excluding the extended entity properties.
  */
-export type WebsiteBase = EntityExtension<Website>;
+export type WebsiteBase = EntityCreatorBase<Website>;
 
 /**
  * Base properties in order to create a log.
  */
-export type WebsiteCreator = EntityExtensionCreate<Website, 'name' | 'url'>;
+export type WebsiteCreator = EntityCreatorParams<Website, 'name' | 'url'>;

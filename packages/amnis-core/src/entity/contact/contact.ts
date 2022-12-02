@@ -1,4 +1,3 @@
-import { EntityCreator } from '../entity.types.js';
 import type { LogCreator } from '../log/index.js';
 import { regexWebUrl } from '../../regex.js';
 import { uid } from '../../uid.js';
@@ -34,7 +33,7 @@ export function contactCheck(contact: Contact): LogCreator[] {
 
 export function contactCreator(
   contact: ContactCreator,
-): EntityCreator<Contact> {
+): Contact {
   return {
     ...contactBase,
     ...contact,

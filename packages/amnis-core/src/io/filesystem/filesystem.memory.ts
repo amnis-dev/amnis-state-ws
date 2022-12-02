@@ -1,8 +1,6 @@
 import {
   imageCreator,
   entityCreate,
-  imageKey,
-  Image,
 } from '../../entity/index.js';
 import { FileSystem } from './filesystem.types.js';
 
@@ -16,7 +14,7 @@ export const filesystemMemory: FileSystem = {
       /**
        * Create an image entity.
        */
-      const imageEntity = entityCreate<Image>(imageKey, imageCreator({
+      const imageEntity = entityCreate(imageCreator({
         extension: 'webp',
         mimetype: 'image/webp',
         title: 'Unknown Image',

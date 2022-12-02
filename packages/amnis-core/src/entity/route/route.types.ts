@@ -1,10 +1,10 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { UID } from '../../types.js';
 
 /**
  * Data for routing to a resouce.
  */
-export interface Route extends Entity {
+export interface Route extends EntityCreator {
   /**
    * Text to present when linking this route.
    */
@@ -16,7 +16,7 @@ export interface Route extends Entity {
   path: string;
 
   /**
-   * Entity this route points to.
+   * EntityCreator this route points to.
    */
   $entity?: UID;
 
@@ -29,9 +29,9 @@ export interface Route extends Entity {
 /**
  * Route properties excluding the extended entity properties.
  */
-export type RouteBase = EntityExtension<Route>;
+export type RouteBase = EntityCreatorBase<Route>;
 
 /**
  * Base properties in order to create a log.
  */
-export type RouteCreator = EntityExtensionCreate<Route, 'label' | 'path'>;
+export type RouteCreator = EntityCreatorParams<Route, 'label' | 'path'>;

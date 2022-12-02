@@ -6,6 +6,7 @@ import {
   profileKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ProfileMeta } from './profile.types.js';
@@ -14,7 +15,7 @@ import type { ProfileMeta } from './profile.types.js';
  * RTK profile adapter.
  * Manages the normalized entities.
  */
-export const profileAdapter = rtk.createEntityAdapter<Profile>({
+export const profileAdapter = rtk.createEntityAdapter<Entity<Profile>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

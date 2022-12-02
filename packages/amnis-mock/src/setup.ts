@@ -80,6 +80,6 @@ export const setupAudit = async (
    * Create the record in the database.
    */
   context.database.create({
-    [auditKey]: [entityCreate(auditKey, audit)],
+    [auditKey]: [entityCreate(audit)],
   });
 };

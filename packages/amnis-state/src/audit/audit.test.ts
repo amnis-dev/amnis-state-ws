@@ -1,4 +1,4 @@
-import { auditBase } from '@amnis/core';
+import { auditBase, auditCreator } from '@amnis/core';
 import {
   auditInitialState,
   auditSelectors,
@@ -24,7 +24,7 @@ test('audit should return the initial state', () => {
 test('should handle creating a new audit', () => {
   const store = storeSetup();
 
-  const action = auditActions.create({ ...auditBase });
+  const action = auditActions.create(auditCreator(auditBase));
 
   store.dispatch(action);
   const entities = auditSelectors.selectAll(store.getState());

@@ -1,6 +1,5 @@
 import { uid } from '../../uid.js';
 import { durationCalc } from '../../core.js';
-import type { EntityCreator } from '../entity.types.js';
 import type { LogCreator } from '../log/index.js';
 import { roleKey } from '../role/index.js';
 import { websiteKey } from '../website/index.js';
@@ -37,7 +36,7 @@ export function systemCheck(system: System): LogCreator[] {
 
 export function systemCreator(
   system: SystemCreator,
-): EntityCreator<System> {
+): System {
   return {
     ...systemBase,
     ...system,

@@ -1,11 +1,11 @@
 import type { UID, DateNumeric, SURL } from '../../types.js';
-import type { Entity } from '../entity.types.js';
+import type { EntityCreator } from '../entity.types.js';
 
 /**
  * A session object.
  * For stateless servers, it is recommended to store session data in *SECURE* HTTP cookies only.
  */
-export interface Session extends Entity {
+export interface Session extends EntityCreator {
   /**
    * Subject of the session.
    * Typically a user id.

@@ -6,6 +6,7 @@ import {
   roleKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { RoleMeta } from './role.types.js';
@@ -14,7 +15,7 @@ import type { RoleMeta } from './role.types.js';
  * RTK role adapter.
  * Manages the normalized entities.
  */
-export const roleAdapter = rtk.createEntityAdapter<Role>({
+export const roleAdapter = rtk.createEntityAdapter<Entity<Role>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

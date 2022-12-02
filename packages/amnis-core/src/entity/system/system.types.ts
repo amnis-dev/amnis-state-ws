@@ -1,9 +1,9 @@
 import type { Role } from '../role/index.js';
 import type { UID, UIDList } from '../../types.js';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Website } from '../website/index.js';
 
-export interface System extends Entity {
+export interface System extends EntityCreator {
   /**
    * Name of the system.
    */
@@ -49,9 +49,9 @@ export interface System extends Entity {
 /**
  * System properties excluding the extended entity properties.
  */
-export type SystemBase = EntityExtension<System>;
+export type SystemBase = EntityCreatorBase<System>;
 
 /**
  * System base properties for creation.
  */
-export type SystemCreator = EntityExtensionCreate<System, 'name' | '$adminRole' | '$execRole'>;
+export type SystemCreator = EntityCreatorParams<System, 'name' | '$adminRole' | '$execRole'>;

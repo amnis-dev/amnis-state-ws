@@ -1,10 +1,10 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import { DateJSON } from '../../types.js';
 
 /**
  * Service entity
  */
-export interface Service extends Entity {
+export interface Service extends EntityCreator {
   /**
    * Name of the service.
    */
@@ -29,9 +29,9 @@ export interface Service extends Entity {
 /**
  * Service properties excluding the extended entity properties.
  */
-export type ServiceBase = EntityExtension<Service>;
+export type ServiceBase = EntityCreatorBase<Service>;
 
 /**
  * Base properties in order to create a log.
  */
-export type ServiceCreator = EntityExtensionCreate<Service, 'name'>;
+export type ServiceCreator = EntityCreatorParams<Service, 'name'>;

@@ -1,4 +1,4 @@
-import { serviceBase } from '@amnis/core';
+import { serviceBase, serviceCreator } from '@amnis/core';
 import {
   serviceInitialState,
   serviceSelectors,
@@ -24,7 +24,7 @@ test('service should return the initial state', () => {
 test('should handle creating a new service', () => {
   const store = storeSetup();
 
-  const action = serviceActions.create({ ...serviceBase });
+  const action = serviceActions.create(serviceCreator(serviceBase));
 
   store.dispatch(action);
   const entities = serviceSelectors.selectAll(store.getState());

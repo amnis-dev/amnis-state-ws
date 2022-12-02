@@ -2,7 +2,6 @@ import { uid } from '../uid.js';
 import {
   entityCreate,
   roleKey,
-  System,
   systemCreator,
   systemKey,
   websiteKey,
@@ -10,7 +9,7 @@ import {
 import { stateReferenceQuery, stateToCreate } from './state.js';
 import { StateCreator, StateQuery } from './state.types.js';
 
-const system = entityCreate<System>(systemKey, systemCreator({
+const system = entityCreate(systemCreator({
   name: 'Query System',
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),

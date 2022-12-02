@@ -1,4 +1,4 @@
-import { noteBase } from '@amnis/core';
+import { noteBase, noteCreator } from '@amnis/core';
 import {
   noteInitialState,
   noteSelectors,
@@ -24,7 +24,7 @@ test('note should return the initial state', () => {
 test('should handle creating a new note', () => {
   const store = storeSetup();
 
-  const action = noteActions.create({ ...noteBase });
+  const action = noteActions.create(noteCreator(noteBase));
 
   store.dispatch(action);
   const entities = noteSelectors.selectAll(store.getState());

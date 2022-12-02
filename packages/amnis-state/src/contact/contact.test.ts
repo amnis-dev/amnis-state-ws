@@ -1,4 +1,4 @@
-import { contactBase } from '@amnis/core';
+import { contactBase, contactCreator } from '@amnis/core';
 import {
   contactInitialState,
   contactSelectors,
@@ -24,7 +24,7 @@ test('contact should return the initial state', () => {
 test('should handle creating a new contact', () => {
   const store = storeSetup();
 
-  const action = contactActions.create({ ...contactBase });
+  const action = contactActions.create(contactCreator(contactBase));
 
   store.dispatch(action);
   const entities = contactSelectors.selectAll(store.getState());

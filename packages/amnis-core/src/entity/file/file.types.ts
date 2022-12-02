@@ -1,5 +1,7 @@
 import type { UID } from '../../types.js';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type {
+  EntityCreator, EntityCreatorBase, EntityCreatorParams,
+} from '../entity.types.js';
 import type { Profile } from '../profile/index.js';
 
 /**
@@ -40,7 +42,7 @@ type FileMimetype =
 /**
  * An abstract file type intended to be extended my more specific types: Image, Video, and Audio.
  */
-export interface File extends Entity {
+export interface File extends EntityCreator {
   /**
    * Title of the image.
    */
@@ -80,9 +82,9 @@ export interface File extends Entity {
 /**
  * File properties excluding the extended entity properties.
  */
-export type FileBase = EntityExtension<File>;
+export type FileBase = EntityCreatorBase<File>;
 
 /**
   * Base properties in order to create a file.
   */
-export type FileCreator = EntityExtensionCreate<File, 'title' | 'mimetype' | 'size'>;
+export type FileCreator = EntityCreatorParams<File, 'title' | 'mimetype' | 'size'>;

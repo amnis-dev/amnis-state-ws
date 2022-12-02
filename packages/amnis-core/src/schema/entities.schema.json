@@ -8,108 +8,102 @@
         "audit": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CAudit%3E"
+            "$ref": "#/definitions/Audit"
           }
         },
         "contact": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CContact%3E"
-          }
-        },
-        "encryption": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/EntityCreator%3CEncryption%3E"
+            "$ref": "#/definitions/Contact"
           }
         },
         "history": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CHistory%3E"
+            "$ref": "#/definitions/History"
           }
         },
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CImage%3E"
+            "$ref": "#/definitions/Image"
           }
         },
         "locale": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CLocale%3E"
+            "$ref": "#/definitions/Locale"
           }
         },
         "log": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CLog%3E"
+            "$ref": "#/definitions/Log"
           }
         },
         "note": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CNote%3E"
+            "$ref": "#/definitions/Note"
           }
         },
         "profile": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CProfile%3E"
+            "$ref": "#/definitions/Profile"
           }
         },
         "role": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CRole%3E"
+            "$ref": "#/definitions/Role"
           }
         },
         "service": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CService%3E"
+            "$ref": "#/definitions/Service"
           }
         },
         "system": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CSystem%3E"
+            "$ref": "#/definitions/System"
           }
         },
         "user": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CUser%3E"
+            "$ref": "#/definitions/User"
           }
         },
         "session": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CSession%3E"
+            "$ref": "#/definitions/Session"
           }
         },
         "video": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CVideo%3E"
+            "$ref": "#/definitions/Video"
           }
         },
         "website": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityCreator%3CWebsite%3E"
+            "$ref": "#/definitions/Website"
           }
         }
       },
       "additionalProperties": false
     },
-    "EntityCreator<Audit>": {
+    "Audit": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CAudit%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "action": {
           "type": "string",
@@ -140,332 +134,112 @@
         "action",
         "completed"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Audit>": {
-      "$ref": "#/definitions/EntityOmit%3CAudit%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Audit>": {
-      "type": "object",
-      "properties": {
-        "action": {
-          "type": "string",
-          "description": "Action attempted"
-        },
-        "completed": {
-          "type": "boolean",
-          "description": "If the action was completed."
-        },
-        "inputBody": {
-          "description": "Input body data."
-        },
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "Subject id of the audit."
-        },
-        "ip": {
-          "type": "string",
-          "description": "IP address of the subject."
-        },
-        "location": {
-          "type": "string",
-          "description": "Location of the subject."
-        }
-      },
-      "required": [
-        "action",
-        "completed"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "A data structure for audit information."
     },
-    "UID": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "UID<Audit>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Contact>": {
+    "EntityCreator": {
       "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "$id": {
-          "$ref": "#/definitions/UID%3CContact%3E"
-        },
-        "name": {
-          "type": "string",
-          "description": "Name (or title) of the contact",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "description": "Details about the contact."
-        },
-        "phones": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Phone numbers. First item in the array is the primary phone number.",
-          "title": "Phone Numbers"
-        },
-        "emails": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Contact emails. First item in the array is the primary email.",
-          "title": "E-Mail Addresses"
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SURL"
-          },
-          "description": "Contact's social urls."
-        }
-      },
-      "required": [
-        "$id",
-        "emails",
-        "name",
-        "phones",
-        "socials"
-      ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Contact>": {
-      "$ref": "#/definitions/EntityOmit%3CContact%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Contact>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name (or title) of the contact",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "description": "Details about the contact."
-        },
-        "phones": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Phone numbers. First item in the array is the primary phone number.",
-          "title": "Phone Numbers"
-        },
-        "emails": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Contact emails. First item in the array is the primary email.",
-          "title": "E-Mail Addresses"
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SURL"
-          },
-          "description": "Contact's social urls."
-        }
-      },
-      "required": [
-        "name",
-        "phones",
-        "emails",
-        "socials"
-      ],
-      "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
-    },
-    "SURL": {
-      "type": "string",
-      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
-    },
-    "UID<Contact>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Encryption>": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "$id": {
-          "$ref": "#/definitions/UID%3CEncryption%3E"
-        },
-        "name": {
-          "type": "string",
-          "description": "Human friendly name of the cyptographic key"
-        },
-        "tag": {
-          "type": "string",
-          "description": "A unique tag name that identifies this encryption."
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "asym",
-            "sym"
-          ],
-          "description": "Type of encryption method used."
-        },
-        "value": {
-          "type": "string",
-          "description": "Value of the encryption"
-        }
-      },
-      "required": [
-        "$id",
-        "name",
-        "tag",
-        "type",
-        "value"
-      ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Encryption>": {
-      "$ref": "#/definitions/EntityOmit%3CEncryption%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Encryption>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Human friendly name of the cyptographic key"
-        },
-        "tag": {
-          "type": "string",
-          "description": "A unique tag name that identifies this encryption."
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "asym",
-            "sym"
-          ],
-          "description": "Type of encryption method used."
-        },
-        "value": {
-          "type": "string",
-          "description": "Value of the encryption"
-        }
-      },
-      "required": [
-        "name",
-        "tag",
-        "type",
-        "value"
-      ],
-      "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
-    },
-    "UID<Encryption>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<History>": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "$id": {
-          "$ref": "#/definitions/UID%3CHistory%3E"
-        },
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "The subject that was updated."
-        },
-        "update": {
-          "$ref": "#/definitions/StateUpdateEntity",
-          "description": "The state update record that was performed."
-        }
-      },
-      "required": [
-        "$id",
-        "$subject",
-        "update"
-      ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<History>": {
-      "$ref": "#/definitions/EntityOmit%3CHistory%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<History>": {
-      "type": "object",
-      "properties": {
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "The subject that was updated."
-        },
-        "update": {
-          "$ref": "#/definitions/StateUpdateEntity",
-          "description": "The state update record that was performed."
-        }
-      },
-      "required": [
-        "$subject",
-        "update"
-      ],
-      "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
-    },
-    "StateUpdateEntity": {
-      "type": "object",
-      "additionalProperties": {},
       "properties": {
         "$id": {
           "$ref": "#/definitions/UID",
-          "description": "UID for this entity.",
-          "default": ""
+          "description": "All objects that can be composed into an entity must have an identifier."
         }
       },
       "required": [
         "$id"
       ],
-      "description": "A common stateful result from updates. A state object with parial entities to update."
+      "additionalProperties": false,
+      "description": "Subset interface for an entity."
     },
-    "UID<History>": {
+    "UID": {
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreator<Image>": {
+    "Contact": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CImage%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
-        "extension": {
+        "name": {
           "type": "string",
-          "enum": [
-            "webp",
-            "jpeg",
-            "png",
-            "bmp",
-            "tiff"
-          ],
-          "description": "image extention type."
+          "description": "Name (or title) of the contact",
+          "title": "Name"
         },
-        "width": {
-          "type": "number",
-          "description": "Original width in pixels."
+        "description": {
+          "type": "string",
+          "description": "Details about the contact."
         },
-        "height": {
-          "type": "number",
-          "description": "Original height in pixels."
+        "phones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Phone numbers. First item in the array is the primary phone number.",
+          "title": "Phone Numbers"
         },
-        "aspect": {
-          "type": "number",
-          "description": "Aspect ratio calculation (width / height)."
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Contact emails. First item in the array is the primary email.",
+          "title": "E-Mail Addresses"
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SURL"
+          },
+          "description": "Contact's social urls."
+        }
+      },
+      "required": [
+        "$id",
+        "emails",
+        "name",
+        "phones",
+        "socials"
+      ],
+      "additionalProperties": false,
+      "description": "Contact entity"
+    },
+    "SURL": {
+      "type": "string",
+      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    },
+    "History": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
+        },
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "The subject that was updated."
+        },
+        "changes": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The state update record that was performed."
+        }
+      },
+      "required": [
+        "$id",
+        "$subject",
+        "changes"
+      ],
+      "additionalProperties": false,
+      "description": "Historical updates to data."
+    },
+    "Image": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "title": {
           "type": "string",
@@ -512,6 +286,29 @@
         "$author": {
           "$ref": "#/definitions/UID%3CProfile%3E",
           "description": "Profile identifier to the author."
+        },
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webp",
+            "jpeg",
+            "png",
+            "bmp",
+            "tiff"
+          ],
+          "description": "image extention type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
         }
       },
       "required": [
@@ -525,37 +322,14 @@
         "title",
         "width"
       ],
-      "description": "Type for an entity create object."
+      "additionalProperties": false
     },
-    "EntityExtension<Image>": {
-      "$ref": "#/definitions/EntityOmit%3CImage%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Image>": {
+    "File": {
       "type": "object",
       "properties": {
-        "extension": {
-          "type": "string",
-          "enum": [
-            "webp",
-            "jpeg",
-            "png",
-            "bmp",
-            "tiff"
-          ],
-          "description": "image extention type."
-        },
-        "width": {
-          "type": "number",
-          "description": "Original width in pixels."
-        },
-        "height": {
-          "type": "number",
-          "description": "Original height in pixels."
-        },
-        "aspect": {
-          "type": "number",
-          "description": "Aspect ratio calculation (width / height)."
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "title": {
           "type": "string",
@@ -605,32 +379,25 @@
         }
       },
       "required": [
-        "extension",
-        "width",
-        "height",
-        "aspect",
-        "title",
-        "slug",
+        "$id",
         "mimetype",
-        "size"
+        "size",
+        "slug",
+        "title"
       ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "An abstract file type intended to be extended my more specific types: Image, Video, and Audio."
     },
     "UID<Profile>": {
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "UID<Image>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Locale>": {
+    "Locale": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CLocale%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "code": {
           "type": "string",
@@ -663,63 +430,20 @@
         "t",
         "v"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Locale>": {
-      "$ref": "#/definitions/EntityOmit%3CLocale%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Locale>": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string",
-          "description": "Two-character language code.",
-          "minLength": 2,
-          "maxLength": 2
-        },
-        "set": {
-          "type": "string",
-          "description": "Name of the translation set for organization.",
-          "minLength": 1,
-          "maxLength": 32
-        },
-        "t": {
-          "$ref": "#/definitions/LocaleTranslation",
-          "description": "The language key value translations."
-        },
-        "v": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Variables that can be inserted into translation text."
-        }
-      },
-      "required": [
-        "code",
-        "set",
-        "t",
-        "v"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "Locale entity"
     },
     "LocaleTranslation": {
       "type": "object",
       "additionalProperties": false,
       "description": "Record of locale translations."
     },
-    "UID<Locale>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Log>": {
+    "Log": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CLog%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "level": {
           "$ref": "#/definitions/LogLevel",
@@ -749,44 +473,8 @@
         "system",
         "title"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Log>": {
-      "$ref": "#/definitions/EntityOmit%3CLog%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Log>": {
-      "type": "object",
-      "properties": {
-        "level": {
-          "$ref": "#/definitions/LogLevel",
-          "description": "Level of the log."
-        },
-        "title": {
-          "type": "string",
-          "description": "Title of the log."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description of the log."
-        },
-        "system": {
-          "type": "string",
-          "description": "System this log is from."
-        },
-        "$invoker": {
-          "$ref": "#/definitions/UID%3CUser%3E",
-          "description": "UID to a user that invoked the log."
-        }
-      },
-      "required": [
-        "level",
-        "title",
-        "description",
-        "system"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "An entity object that contains log information."
     },
     "LogLevel": {
       "type": "string",
@@ -804,16 +492,12 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "UID<Log>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Note>": {
+    "Note": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CNote%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "$subject": {
           "$ref": "#/definitions/UID",
@@ -829,41 +513,15 @@
         "$subject",
         "text"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Note>": {
-      "$ref": "#/definitions/EntityOmit%3CNote%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Note>": {
-      "type": "object",
-      "properties": {
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "Subject this note is attached to."
-        },
-        "text": {
-          "type": "string",
-          "description": "Textual content of the note."
-        }
-      },
-      "required": [
-        "$subject",
-        "text"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "A message to aid memory about the historic change."
     },
-    "UID<Note>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Profile>": {
+    "Profile": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CProfile%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "$user": {
           "$ref": "#/definitions/UID%3CUser%3E",
@@ -907,69 +565,23 @@
         "$user",
         "nameDisplay"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Profile>": {
-      "$ref": "#/definitions/EntityOmit%3CProfile%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Profile>": {
-      "type": "object",
-      "properties": {
-        "$user": {
-          "$ref": "#/definitions/UID%3CUser%3E",
-          "description": "User this profile is associated with."
-        },
-        "nameDisplay": {
-          "type": "string",
-          "description": "Display name for the profile."
-        },
-        "nameGiven": {
-          "type": "string",
-          "description": "Given/First name"
-        },
-        "nameFamily": {
-          "type": "string",
-          "description": "Family/Last name"
-        },
-        "birthDate": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Date of birth."
-        },
-        "title": {
-          "type": "string",
-          "description": "Title for work or otherwise."
-        },
-        "$contact": {
-          "$ref": "#/definitions/UID%3CContact%3E",
-          "description": "Profile Contact."
-        },
-        "organization": {
-          "type": "string",
-          "description": "Organization profile is a part of."
-        },
-        "avatar": {
-          "$ref": "#/definitions/SURL",
-          "description": "Avatar string url to an image."
-        }
-      },
-      "required": [
-        "$user",
-        "nameDisplay"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "Profile entity"
     },
     "DateJSON": {
       "type": "string",
       "description": "A string that represents a JSON Date."
     },
-    "EntityCreator<Role>": {
+    "UID<Contact>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
+    "Role": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CRole%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "name": {
           "type": "string",
@@ -998,58 +610,19 @@
         "grants",
         "name"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Role>": {
-      "$ref": "#/definitions/EntityOmit%3CRole%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Role>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the license."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the license."
-        },
-        "color": {
-          "type": "string",
-          "description": "Color that represents this role."
-        },
-        "grants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GrantString"
-          },
-          "description": "Permissions this license grants."
-        }
-      },
-      "required": [
-        "name",
-        "description",
-        "color",
-        "grants"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "A license is a defined object for granting multiple permissions to perform actions or selections."
     },
     "GrantString": {
       "type": "string",
       "description": "Role grant string."
     },
-    "UID<Role>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Service>": {
+    "Service": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CService%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "name": {
           "description": "Name of the service."
@@ -1078,54 +651,15 @@
         "name",
         "status"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Service>": {
-      "$ref": "#/definitions/EntityOmit%3CService%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Service>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "Name of the service."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description of the service."
-        },
-        "status": {
-          "type": "string",
-          "enum": [
-            "offline",
-            "running",
-            "restarting"
-          ],
-          "description": "Status of the service."
-        },
-        "dateChecked": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Last checked datetime"
-        }
-      },
-      "required": [
-        "name",
-        "status",
-        "dateChecked"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "Service entity"
     },
-    "UID<Service>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<System>": {
+    "System": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CSystem%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "name": {
           "type": "string",
@@ -1169,60 +703,13 @@
         "name",
         "sessionExpires"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<System>": {
-      "$ref": "#/definitions/EntityOmit%3CSystem%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<System>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the system."
-        },
-        "sessionExpires": {
-          "type": "number",
-          "description": "Number in milliseconds that an authentication session should live.",
-          "default": 3600000
-        },
-        "$website": {
-          "$ref": "#/definitions/UID%3CWebsite%3E",
-          "description": "System's website configurations."
-        },
-        "$adminRole": {
-          "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
-        },
-        "$execRole": {
-          "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
-        },
-        "$initialRoles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "The initial roles to assign to a user when a new account is created.",
-          "default": []
-        },
-        "$anonymousRoles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
-          "default": []
-        }
-      },
-      "required": [
-        "name",
-        "sessionExpires",
-        "$website",
-        "$adminRole",
-        "$execRole",
-        "$initialRoles",
-        "$anonymousRoles"
-      ],
-      "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "additionalProperties": false
     },
     "UID<Website>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
+    "UID<Role>": {
       "type": "string",
       "description": "A id identifier to another document."
     },
@@ -1233,22 +720,97 @@
       },
       "description": "An array of identifiers."
     },
-    "UID<System>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<User>": {
+    "User": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CUser%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "name": {
           "type": "string",
           "description": "Name for the user.",
           "minLength": 3,
           "maxLength": 64
+        },
+        "publicKey": {
+          "type": "object",
+          "properties": {
+            "alg": {
+              "type": "string"
+            },
+            "crv": {
+              "type": "string"
+            },
+            "d": {
+              "type": "string"
+            },
+            "dp": {
+              "type": "string"
+            },
+            "dq": {
+              "type": "string"
+            },
+            "e": {
+              "type": "string"
+            },
+            "ext": {
+              "type": "boolean"
+            },
+            "k": {
+              "type": "string"
+            },
+            "key_ops": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kty": {
+              "type": "string"
+            },
+            "n": {
+              "type": "string"
+            },
+            "oth": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "d": {
+                    "type": "string"
+                  },
+                  "r": {
+                    "type": "string"
+                  },
+                  "t": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "p": {
+              "type": "string"
+            },
+            "q": {
+              "type": "string"
+            },
+            "qi": {
+              "type": "string"
+            },
+            "use": {
+              "type": "string"
+            },
+            "x": {
+              "type": "string"
+            },
+            "y": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "description": "User's public key for verifying signatures."
         },
         "email": {
           "type": "string",
@@ -1305,77 +867,8 @@
         "devices",
         "name"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<User>": {
-      "$ref": "#/definitions/EntityOmit%3CUser%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<User>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name for the user.",
-          "minLength": 3,
-          "maxLength": 64
-        },
-        "email": {
-          "type": "string",
-          "description": "Email address",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64
-        },
-        "emailVerified": {
-          "type": "boolean",
-          "description": "If the user email is verified."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Phone number",
-          "maxLength": 24
-        },
-        "phoneVerified": {
-          "type": "boolean",
-          "description": "If the user phone number is verified."
-        },
-        "password": {
-          "type": "string",
-          "description": "User password. A null password means another form of auth must be used.",
-          "minLength": 6,
-          "maxLength": 64
-        },
-        "admin": {
-          "type": "boolean",
-          "description": "If this is an administrative account."
-        },
-        "devices": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DeviceString"
-          },
-          "description": "Devices this user signs in with.",
-          "default": []
-        },
-        "$roles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Roles this user has been given.",
-          "default": []
-        },
-        "$permits": {
-          "$ref": "#/definitions/UIDList%3CPermit%3E",
-          "description": "Special-case permits this user has been bestowed.",
-          "default": []
-        }
-      },
-      "required": [
-        "name",
-        "devices",
-        "$roles",
-        "$permits"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "Data associated to a User."
     },
     "DeviceString": {
       "type": "string",
@@ -1392,12 +885,12 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
-    "EntityCreator<Session>": {
+    "Session": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CSession%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "$subject": {
           "$ref": "#/definitions/UID",
@@ -1439,97 +932,19 @@
         "exp",
         "name"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Session>": {
-      "$ref": "#/definitions/EntityOmit%3CSession%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Session>": {
-      "type": "object",
-      "properties": {
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "Subject of the session. Typically a user id."
-        },
-        "iat": {
-          "$ref": "#/definitions/DateNumeric",
-          "description": "Possible \"Issued At\" property when decoding."
-        },
-        "exp": {
-          "$ref": "#/definitions/DateNumeric",
-          "description": "Expiration date (numeric)."
-        },
-        "admin": {
-          "type": "boolean",
-          "description": "Flag that determines if this is an administrative session."
-        },
-        "name": {
-          "type": "string",
-          "description": "Display name."
-        },
-        "avatar": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/SURL"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Avatar image url."
-        }
-      },
-      "required": [
-        "$subject",
-        "exp",
-        "admin",
-        "name",
-        "avatar"
-      ],
       "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "description": "A session object. For stateless servers, it is recommended to store session data in *SECURE* HTTP cookies only."
     },
     "DateNumeric": {
       "type": "number",
       "description": "A string that represents a JSON Date."
     },
-    "UID<Session>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Video>": {
+    "Video": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CVideo%3E"
-        },
-        "extension": {
-          "type": "string",
-          "enum": [
-            "webm",
-            "mp4",
-            "mpeg",
-            "mov"
-          ],
-          "description": "Video format type."
-        },
-        "width": {
-          "type": "number",
-          "description": "Original width in pixels."
-        },
-        "height": {
-          "type": "number",
-          "description": "Original height in pixels."
-        },
-        "aspect": {
-          "type": "number",
-          "description": "Aspect ratio calculation (width / height)."
-        },
-        "duration": {
-          "type": "number",
-          "description": "Duration length of the video in seconds."
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "title": {
           "type": "string",
@@ -1576,6 +991,32 @@
         "$author": {
           "$ref": "#/definitions/UID%3CProfile%3E",
           "description": "Profile identifier to the author."
+        },
+        "extension": {
+          "type": "string",
+          "enum": [
+            "webm",
+            "mp4",
+            "mpeg",
+            "mov"
+          ],
+          "description": "Video format type."
+        },
+        "width": {
+          "type": "number",
+          "description": "Original width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Original height in pixels."
+        },
+        "aspect": {
+          "type": "number",
+          "description": "Aspect ratio calculation (width / height)."
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration length of the video in seconds."
         }
       },
       "required": [
@@ -1590,112 +1031,14 @@
         "title",
         "width"
       ],
-      "description": "Type for an entity create object."
+      "additionalProperties": false
     },
-    "EntityExtension<Video>": {
-      "$ref": "#/definitions/EntityOmit%3CVideo%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Video>": {
+    "Website": {
       "type": "object",
-      "properties": {
-        "extension": {
-          "type": "string",
-          "enum": [
-            "webm",
-            "mp4",
-            "mpeg",
-            "mov"
-          ],
-          "description": "Video format type."
-        },
-        "width": {
-          "type": "number",
-          "description": "Original width in pixels."
-        },
-        "height": {
-          "type": "number",
-          "description": "Original height in pixels."
-        },
-        "aspect": {
-          "type": "number",
-          "description": "Aspect ratio calculation (width / height)."
-        },
-        "duration": {
-          "type": "number",
-          "description": "Duration length of the video in seconds."
-        },
-        "title": {
-          "type": "string",
-          "description": "Title of the image."
-        },
-        "slug": {
-          "type": "string",
-          "description": "The slug for referencing the image."
-        },
-        "mimetype": {
-          "type": "string",
-          "enum": [
-            "image/jpeg",
-            "image/gif",
-            "image/png",
-            "image/bmp",
-            "image/svg+xml",
-            "image/webp",
-            "image/tiff",
-            "video/mp4",
-            "video/mpeg",
-            "video/webm",
-            "audio/mpeg",
-            "audio/ogg",
-            "audio/wav",
-            "audio/webm",
-            "application/pdf",
-            "text/plain"
-          ],
-          "description": "Mime type of the file"
-        },
-        "size": {
-          "type": "number",
-          "description": "Size of the media on disk in bytes."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description for the image."
-        },
-        "author": {
-          "type": "string",
-          "description": "String name of the media author."
-        },
-        "$author": {
-          "$ref": "#/definitions/UID%3CProfile%3E",
-          "description": "Profile identifier to the author."
-        }
-      },
-      "required": [
-        "extension",
-        "width",
-        "height",
-        "aspect",
-        "duration",
-        "title",
-        "slug",
-        "mimetype",
-        "size"
-      ],
-      "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
-    },
-    "UID<Video>": {
-      "type": "string",
-      "description": "A id identifier to another document."
-    },
-    "EntityCreator<Website>": {
-      "type": "object",
-      "additionalProperties": false,
       "properties": {
         "$id": {
-          "$ref": "#/definitions/UID%3CWebsite%3E"
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
         },
         "name": {
           "type": "string",
@@ -1748,67 +1091,7 @@
         "socials",
         "url"
       ],
-      "description": "Type for an entity create object."
-    },
-    "EntityExtension<Website>": {
-      "$ref": "#/definitions/EntityOmit%3CWebsite%3E",
-      "description": "Type for creation method"
-    },
-    "EntityOmit<Website>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the website."
-        },
-        "nameShort": {
-          "type": "string",
-          "description": "Sorter name of the website. Important for smaller displays."
-        },
-        "url": {
-          "type": "string",
-          "description": "Primary URL to the website."
-        },
-        "$navigation": {
-          "$ref": "#/definitions/UIDTree%3CRoute%3E",
-          "description": "Primary navigational routes."
-        },
-        "title": {
-          "type": "string",
-          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
-        },
-        "$logo": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "UID to the image used for the logo."
-        },
-        "$favicon": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "Link the website's favicon"
-        },
-        "$contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CContact%3E"
-          },
-          "description": "Contacts that should be listed on the website."
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SURL"
-          },
-          "description": "List of the social network links."
-        }
-      },
-      "required": [
-        "name",
-        "url",
-        "$navigation",
-        "$contacts",
-        "socials"
-      ],
-      "additionalProperties": false,
-      "description": "Omitted types of the core Entity interface."
+      "additionalProperties": false
     },
     "UIDTree<Route>": {
       "type": "array",
@@ -1838,109 +1121,107 @@
       "type": "string",
       "description": "A id identifier to another document."
     },
+    "UID<Image>": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
     "StateUpdater": {
       "type": "object",
       "properties": {
         "audit": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CAudit%3E"
+            "$ref": "#/definitions/EntityUpdater%3CAudit%3E"
           }
         },
         "contact": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CContact%3E"
-          }
-        },
-        "encryption": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/EntityUpdate%3CEncryption%3E"
+            "$ref": "#/definitions/EntityUpdater%3CContact%3E"
           }
         },
         "history": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CHistory%3E"
+            "$ref": "#/definitions/EntityUpdater%3CHistory%3E"
           }
         },
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CImage%3E"
+            "$ref": "#/definitions/EntityUpdater%3CImage%3E"
           }
         },
         "locale": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CLocale%3E"
+            "$ref": "#/definitions/EntityUpdater%3CLocale%3E"
           }
         },
         "log": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CLog%3E"
+            "$ref": "#/definitions/EntityUpdater%3CLog%3E"
           }
         },
         "note": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CNote%3E"
+            "$ref": "#/definitions/EntityUpdater%3CNote%3E"
           }
         },
         "profile": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CProfile%3E"
+            "$ref": "#/definitions/EntityUpdater%3CProfile%3E"
           }
         },
         "role": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CRole%3E"
+            "$ref": "#/definitions/EntityUpdater%3CRole%3E"
           }
         },
         "service": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CService%3E"
+            "$ref": "#/definitions/EntityUpdater%3CService%3E"
           }
         },
         "system": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CSystem%3E"
+            "$ref": "#/definitions/EntityUpdater%3CSystem%3E"
           }
         },
         "user": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CUser%3E"
+            "$ref": "#/definitions/EntityUpdater%3CUser%3E"
           }
         },
         "session": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CSession%3E"
+            "$ref": "#/definitions/EntityUpdater%3CSession%3E"
           }
         },
         "video": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CVideo%3E"
+            "$ref": "#/definitions/EntityUpdater%3CVideo%3E"
           }
         },
         "website": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/EntityUpdate%3CWebsite%3E"
+            "$ref": "#/definitions/EntityUpdater%3CWebsite%3E"
           }
         }
       },
       "additionalProperties": false
     },
-    "EntityUpdate<Audit>": {
+    "EntityUpdater<Audit>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1974,39 +1255,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Audit>": {
-      "type": "object",
-      "properties": {
-        "action": {
-          "type": "string",
-          "description": "Action attempted"
-        },
-        "completed": {
-          "type": "boolean",
-          "description": "If the action was completed."
-        },
-        "inputBody": {
-          "description": "Input body data."
-        },
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "Subject id of the audit."
-        },
-        "ip": {
-          "type": "string",
-          "description": "IP address of the subject."
-        },
-        "location": {
-          "type": "string",
-          "description": "Location of the subject."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<Audit>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<Contact>": {
+    "EntityUpdater<Contact>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2049,108 +1304,9 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Contact>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name (or title) of the contact",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "description": "Details about the contact."
-        },
-        "phones": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Phone numbers. First item in the array is the primary phone number.",
-          "title": "Phone Numbers"
-        },
-        "emails": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Contact emails. First item in the array is the primary email.",
-          "title": "E-Mail Addresses"
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SURL"
-          },
-          "description": "Contact's social urls."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
-    },
-    "EntityUpdate<Encryption>": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "$id": {
-          "$ref": "#/definitions/UID%3CEncryption%3E"
-        },
-        "name": {
-          "type": "string",
-          "description": "Human friendly name of the cyptographic key"
-        },
-        "tag": {
-          "type": "string",
-          "description": "A unique tag name that identifies this encryption."
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "asym",
-            "sym"
-          ],
-          "description": "Type of encryption method used."
-        },
-        "value": {
-          "type": "string",
-          "description": "Value of the encryption"
-        }
-      },
-      "required": [
-        "$id"
-      ],
-      "description": "Type for an entity update object."
-    },
-    "EntityPartial<Encryption>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Human friendly name of the cyptographic key"
-        },
-        "tag": {
-          "type": "string",
-          "description": "A unique tag name that identifies this encryption."
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "asym",
-            "sym"
-          ],
-          "description": "Type of encryption method used."
-        },
-        "value": {
-          "type": "string",
-          "description": "Value of the encryption"
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
-    },
-    "EntityUpdate<History>": {
+    "EntityUpdater<History>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2161,32 +1317,22 @@
           "$ref": "#/definitions/UID",
           "description": "The subject that was updated."
         },
-        "update": {
-          "$ref": "#/definitions/StateUpdateEntity",
+        "changes": {
+          "type": "object",
+          "additionalProperties": false,
           "description": "The state update record that was performed."
         }
       },
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<History>": {
-      "type": "object",
-      "properties": {
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "The subject that was updated."
-        },
-        "update": {
-          "$ref": "#/definitions/StateUpdateEntity",
-          "description": "The state update record that was performed."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<History>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<Image>": {
+    "EntityUpdater<Image>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2266,85 +1412,9 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Image>": {
-      "type": "object",
-      "properties": {
-        "extension": {
-          "type": "string",
-          "enum": [
-            "webp",
-            "jpeg",
-            "png",
-            "bmp",
-            "tiff"
-          ],
-          "description": "image extention type."
-        },
-        "width": {
-          "type": "number",
-          "description": "Original width in pixels."
-        },
-        "height": {
-          "type": "number",
-          "description": "Original height in pixels."
-        },
-        "aspect": {
-          "type": "number",
-          "description": "Aspect ratio calculation (width / height)."
-        },
-        "title": {
-          "type": "string",
-          "description": "Title of the image."
-        },
-        "slug": {
-          "type": "string",
-          "description": "The slug for referencing the image."
-        },
-        "mimetype": {
-          "type": "string",
-          "enum": [
-            "image/jpeg",
-            "image/gif",
-            "image/png",
-            "image/bmp",
-            "image/svg+xml",
-            "image/webp",
-            "image/tiff",
-            "video/mp4",
-            "video/mpeg",
-            "video/webm",
-            "audio/mpeg",
-            "audio/ogg",
-            "audio/wav",
-            "audio/webm",
-            "application/pdf",
-            "text/plain"
-          ],
-          "description": "Mime type of the file"
-        },
-        "size": {
-          "type": "number",
-          "description": "Size of the media on disk in bytes."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description for the image."
-        },
-        "author": {
-          "type": "string",
-          "description": "String name of the media author."
-        },
-        "$author": {
-          "$ref": "#/definitions/UID%3CProfile%3E",
-          "description": "Profile identifier to the author."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
-    },
-    "EntityUpdate<Locale>": {
+    "EntityUpdater<Locale>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2378,39 +1448,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Locale>": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string",
-          "description": "Two-character language code.",
-          "minLength": 2,
-          "maxLength": 2
-        },
-        "set": {
-          "type": "string",
-          "description": "Name of the translation set for organization.",
-          "minLength": 1,
-          "maxLength": 32
-        },
-        "t": {
-          "$ref": "#/definitions/LocaleTranslation",
-          "description": "The language key value translations."
-        },
-        "v": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Variables that can be inserted into translation text."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<Locale>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<Log>": {
+    "EntityUpdater<Log>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2441,36 +1485,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Log>": {
-      "type": "object",
-      "properties": {
-        "level": {
-          "$ref": "#/definitions/LogLevel",
-          "description": "Level of the log."
-        },
-        "title": {
-          "type": "string",
-          "description": "Title of the log."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description of the log."
-        },
-        "system": {
-          "type": "string",
-          "description": "System this log is from."
-        },
-        "$invoker": {
-          "$ref": "#/definitions/UID%3CUser%3E",
-          "description": "UID to a user that invoked the log."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<Log>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<Note>": {
+    "EntityUpdater<Note>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2489,24 +1510,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Note>": {
-      "type": "object",
-      "properties": {
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "Subject this note is attached to."
-        },
-        "text": {
-          "type": "string",
-          "description": "Textual content of the note."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<Note>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<Profile>": {
+    "EntityUpdater<Profile>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2553,52 +1563,9 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Profile>": {
-      "type": "object",
-      "properties": {
-        "$user": {
-          "$ref": "#/definitions/UID%3CUser%3E",
-          "description": "User this profile is associated with."
-        },
-        "nameDisplay": {
-          "type": "string",
-          "description": "Display name for the profile."
-        },
-        "nameGiven": {
-          "type": "string",
-          "description": "Given/First name"
-        },
-        "nameFamily": {
-          "type": "string",
-          "description": "Family/Last name"
-        },
-        "birthDate": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Date of birth."
-        },
-        "title": {
-          "type": "string",
-          "description": "Title for work or otherwise."
-        },
-        "$contact": {
-          "$ref": "#/definitions/UID%3CContact%3E",
-          "description": "Profile Contact."
-        },
-        "organization": {
-          "type": "string",
-          "description": "Organization profile is a part of."
-        },
-        "avatar": {
-          "$ref": "#/definitions/SURL",
-          "description": "Avatar string url to an image."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
-    },
-    "EntityUpdate<Role>": {
+    "EntityUpdater<Role>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2628,35 +1595,9 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Role>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the license."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the license."
-        },
-        "color": {
-          "type": "string",
-          "description": "Color that represents this role."
-        },
-        "grants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GrantString"
-          },
-          "description": "Permissions this license grants."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
-    },
-    "EntityUpdate<Service>": {
+    "EntityUpdater<Service>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2687,36 +1628,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Service>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "Name of the service."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description of the service."
-        },
-        "status": {
-          "type": "string",
-          "enum": [
-            "offline",
-            "running",
-            "restarting"
-          ],
-          "description": "Status of the service."
-        },
-        "dateChecked": {
-          "$ref": "#/definitions/DateJSON",
-          "description": "Last checked datetime"
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<Service>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<System>": {
+    "EntityUpdater<System>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2758,47 +1676,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<System>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the system."
-        },
-        "sessionExpires": {
-          "type": "number",
-          "description": "Number in milliseconds that an authentication session should live.",
-          "default": 3600000
-        },
-        "$website": {
-          "$ref": "#/definitions/UID%3CWebsite%3E",
-          "description": "System's website configurations."
-        },
-        "$adminRole": {
-          "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
-        },
-        "$execRole": {
-          "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
-        },
-        "$initialRoles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "The initial roles to assign to a user when a new account is created.",
-          "default": []
-        },
-        "$anonymousRoles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
-          "default": []
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<System>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<User>": {
+    "EntityUpdater<User>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2810,6 +1694,85 @@
           "description": "Name for the user.",
           "minLength": 3,
           "maxLength": 64
+        },
+        "publicKey": {
+          "type": "object",
+          "properties": {
+            "alg": {
+              "type": "string"
+            },
+            "crv": {
+              "type": "string"
+            },
+            "d": {
+              "type": "string"
+            },
+            "dp": {
+              "type": "string"
+            },
+            "dq": {
+              "type": "string"
+            },
+            "e": {
+              "type": "string"
+            },
+            "ext": {
+              "type": "boolean"
+            },
+            "k": {
+              "type": "string"
+            },
+            "key_ops": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kty": {
+              "type": "string"
+            },
+            "n": {
+              "type": "string"
+            },
+            "oth": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "d": {
+                    "type": "string"
+                  },
+                  "r": {
+                    "type": "string"
+                  },
+                  "t": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "p": {
+              "type": "string"
+            },
+            "q": {
+              "type": "string"
+            },
+            "qi": {
+              "type": "string"
+            },
+            "use": {
+              "type": "string"
+            },
+            "x": {
+              "type": "string"
+            },
+            "y": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "description": "User's public key for verifying signatures."
         },
         "email": {
           "type": "string",
@@ -2862,69 +1825,9 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<User>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name for the user.",
-          "minLength": 3,
-          "maxLength": 64
-        },
-        "email": {
-          "type": "string",
-          "description": "Email address",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64
-        },
-        "emailVerified": {
-          "type": "boolean",
-          "description": "If the user email is verified."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Phone number",
-          "maxLength": 24
-        },
-        "phoneVerified": {
-          "type": "boolean",
-          "description": "If the user phone number is verified."
-        },
-        "password": {
-          "type": "string",
-          "description": "User password. A null password means another form of auth must be used.",
-          "minLength": 6,
-          "maxLength": 64
-        },
-        "admin": {
-          "type": "boolean",
-          "description": "If this is an administrative account."
-        },
-        "devices": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DeviceString"
-          },
-          "description": "Devices this user signs in with.",
-          "default": []
-        },
-        "$roles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Roles this user has been given.",
-          "default": []
-        },
-        "$permits": {
-          "$ref": "#/definitions/UIDList%3CPermit%3E",
-          "description": "Special-case permits this user has been bestowed.",
-          "default": []
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
-    },
-    "EntityUpdate<Session>": {
+    "EntityUpdater<Session>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -2966,47 +1869,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Session>": {
-      "type": "object",
-      "properties": {
-        "$subject": {
-          "$ref": "#/definitions/UID",
-          "description": "Subject of the session. Typically a user id."
-        },
-        "iat": {
-          "$ref": "#/definitions/DateNumeric",
-          "description": "Possible \"Issued At\" property when decoding."
-        },
-        "exp": {
-          "$ref": "#/definitions/DateNumeric",
-          "description": "Expiration date (numeric)."
-        },
-        "admin": {
-          "type": "boolean",
-          "description": "Flag that determines if this is an administrative session."
-        },
-        "name": {
-          "type": "string",
-          "description": "Display name."
-        },
-        "avatar": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/SURL"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Avatar image url."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<Session>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<Video>": {
+    "EntityUpdater<Video>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -3089,88 +1958,13 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
+      "description": "Subset interface for updating a creator entity"
     },
-    "EntityPartial<Video>": {
-      "type": "object",
-      "properties": {
-        "extension": {
-          "type": "string",
-          "enum": [
-            "webm",
-            "mp4",
-            "mpeg",
-            "mov"
-          ],
-          "description": "Video format type."
-        },
-        "width": {
-          "type": "number",
-          "description": "Original width in pixels."
-        },
-        "height": {
-          "type": "number",
-          "description": "Original height in pixels."
-        },
-        "aspect": {
-          "type": "number",
-          "description": "Aspect ratio calculation (width / height)."
-        },
-        "duration": {
-          "type": "number",
-          "description": "Duration length of the video in seconds."
-        },
-        "title": {
-          "type": "string",
-          "description": "Title of the image."
-        },
-        "slug": {
-          "type": "string",
-          "description": "The slug for referencing the image."
-        },
-        "mimetype": {
-          "type": "string",
-          "enum": [
-            "image/jpeg",
-            "image/gif",
-            "image/png",
-            "image/bmp",
-            "image/svg+xml",
-            "image/webp",
-            "image/tiff",
-            "video/mp4",
-            "video/mpeg",
-            "video/webm",
-            "audio/mpeg",
-            "audio/ogg",
-            "audio/wav",
-            "audio/webm",
-            "application/pdf",
-            "text/plain"
-          ],
-          "description": "Mime type of the file"
-        },
-        "size": {
-          "type": "number",
-          "description": "Size of the media on disk in bytes."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description for the image."
-        },
-        "author": {
-          "type": "string",
-          "description": "String name of the media author."
-        },
-        "$author": {
-          "$ref": "#/definitions/UID%3CProfile%3E",
-          "description": "Profile identifier to the author."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+    "UID<Video>": {
+      "type": "string",
+      "description": "A id identifier to another document."
     },
-    "EntityUpdate<Website>": {
+    "EntityUpdater<Website>": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -3223,56 +2017,7 @@
       "required": [
         "$id"
       ],
-      "description": "Type for an entity update object."
-    },
-    "EntityPartial<Website>": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the website."
-        },
-        "nameShort": {
-          "type": "string",
-          "description": "Sorter name of the website. Important for smaller displays."
-        },
-        "url": {
-          "type": "string",
-          "description": "Primary URL to the website."
-        },
-        "$navigation": {
-          "$ref": "#/definitions/UIDTree%3CRoute%3E",
-          "description": "Primary navigational routes."
-        },
-        "title": {
-          "type": "string",
-          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
-        },
-        "$logo": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "UID to the image used for the logo."
-        },
-        "$favicon": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "Link the website's favicon"
-        },
-        "$contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CContact%3E"
-          },
-          "description": "Contacts that should be listed on the website."
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SURL"
-          },
-          "description": "List of the social network links."
-        }
-      },
-      "additionalProperties": false,
-      "description": "Type for an partial method."
+      "description": "Subset interface for updating a creator entity"
     }
   }
 }

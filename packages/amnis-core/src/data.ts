@@ -23,6 +23,7 @@ import {
   auditKey,
   entityCreate,
   historyKey,
+  Entity,
 } from './entity/index.js';
 import {
   CryptoPassword,
@@ -33,8 +34,8 @@ export function dataInitial(): StateEntities {
    * ================================================================================
    * Roles to be assigned to users
    */
-  const roles: Role[] = [
-    entityCreate(roleKey, roleCreator({
+  const roles: Entity<Role>[] = [
+    entityCreate(roleCreator({
       name: 'Administrator',
       description: 'Most permissive role for overall system configuration and maintenance.',
       color: '#cc0000',
@@ -49,7 +50,7 @@ export function dataInitial(): StateEntities {
         grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
       ],
     }), { committed: true }),
-    entityCreate(roleKey, roleCreator({
+    entityCreate(roleCreator({
       name: 'Executive',
       description: 'Authoritative role for application configuration and maintenance.',
       color: '#3e3ee6',
@@ -63,7 +64,7 @@ export function dataInitial(): StateEntities {
         grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
       ],
     }), { committed: true }),
-    entityCreate(roleKey, roleCreator({
+    entityCreate(roleCreator({
       name: 'Base',
       description: 'Basis for standard authenticated use of the application.',
       color: '#000000',
@@ -77,7 +78,7 @@ export function dataInitial(): StateEntities {
         grantStringify({ key: contactKey, scope: 'global', task: task(0, 1, 0, 0) }),
       ],
     }), { committed: true }),
-    entityCreate(roleKey, roleCreator({
+    entityCreate(roleCreator({
       name: 'Anonymous',
       description: 'Permissions for accessing the application without authentication.',
       color: '#000000',
@@ -92,8 +93,8 @@ export function dataInitial(): StateEntities {
    * ================================================================================
    * User Accounts
    */
-  const users: User[] = [
-    entityCreate(userKey, userCreator({
+  const users: Entity<User>[] = [
+    entityCreate(userCreator({
       name: 'admin',
       email: 'admin@email.address',
       /** passwd12 */
@@ -101,7 +102,7 @@ export function dataInitial(): StateEntities {
       $roles: [roles[0].$id],
       $permits: [],
     }), { committed: true }),
-    entityCreate(userKey, userCreator({
+    entityCreate(userCreator({
       name: 'exec',
       email: 'exec@email.address',
       /** passwd12 */
@@ -109,7 +110,7 @@ export function dataInitial(): StateEntities {
       $roles: [roles[1].$id],
       $permits: [],
     }), { committed: true }),
-    entityCreate(userKey, userCreator({
+    entityCreate(userCreator({
       name: 'user',
       email: 'user@email.address',
       /** passwd12 */
@@ -123,16 +124,16 @@ export function dataInitial(): StateEntities {
    * ================================================================================
    * User contacts.
    */
-  const contacts: Contact[] = [
-    entityCreate(contactKey, contactCreator({
+  const contacts: Entity<Contact>[] = [
+    entityCreate(contactCreator({
       name: 'Administrator Contact',
       emails: [users[0].email as string],
     }), { $owner: users[0].$id, committed: true }),
-    entityCreate(contactKey, contactCreator({
+    entityCreate(contactCreator({
       name: 'Executive Contact',
       emails: [users[1].email as string],
     }), { $owner: users[1].$id, committed: true }),
-    entityCreate(contactKey, contactCreator({
+    entityCreate(contactCreator({
       name: 'User Contact',
       emails: [users[2].email as string],
     }), { $owner: users[2].$id, committed: true }),
@@ -142,18 +143,18 @@ export function dataInitial(): StateEntities {
    * ================================================================================
    * User profiles.
    */
-  const profiles: Profile[] = [
-    entityCreate(profileKey, profileCreator({
+  const profiles: Entity<Profile>[] = [
+    entityCreate(profileCreator({
       $user: users[0].$id,
       $contact: contacts[0].$id,
       nameDisplay: 'Administrator',
     }), { $owner: users[0].$id, committed: true }),
-    entityCreate(profileKey, profileCreator({
+    entityCreate(profileCreator({
       $user: users[1].$id,
       $contact: contacts[1].$id,
       nameDisplay: 'Executive',
     }), { $owner: users[1].$id, committed: true }),
-    entityCreate(profileKey, profileCreator({
+    entityCreate(profileCreator({
       $user: users[2].$id,
       $contact: contacts[2].$id,
       nameDisplay: 'User',
@@ -164,8 +165,8 @@ export function dataInitial(): StateEntities {
    * ================================================================================
    * System settings.
    */
-  const systems: System[] = [
-    entityCreate(systemKey, systemCreator({
+  const systems: Entity<System>[] = [
+    entityCreate(systemCreator({
       name: 'Main System',
       $adminRole: roles[0].$id,
       $execRole: roles[1].$id,

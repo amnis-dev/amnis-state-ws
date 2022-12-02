@@ -1,4 +1,3 @@
-import type { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
 import type { Log, LogBase, LogCreator } from './log.types.js';
 
@@ -14,7 +13,7 @@ export const logBase: LogBase = {
 /**
  * Creates a log entry.
  */
-export function logCreator(log: LogCreator): EntityCreator<Log> {
+export function logCreator(log: LogCreator): Log {
   return {
     ...logBase,
     ...log,

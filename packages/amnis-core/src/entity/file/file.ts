@@ -1,4 +1,3 @@
-import { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
 import type { File, FileBase, FileCreator } from './file.types.js';
 
@@ -13,7 +12,7 @@ export const fileBase: FileBase = {
 
 export function fileCreator(
   file: FileCreator,
-): EntityCreator<File> {
+): File {
   return {
     ...fileBase,
     ...file,

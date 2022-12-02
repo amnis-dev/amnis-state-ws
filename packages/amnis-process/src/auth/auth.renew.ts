@@ -10,7 +10,6 @@ import {
   ioOutput,
   StateEntities,
   entityCreate,
-  Session,
 } from '@amnis/core';
 import { processConfig } from '../config.js';
 import { mwSession, mwValidate } from '../mw/index.js';
@@ -92,8 +91,7 @@ Io<AuthRenew, StateEntities>
 
     output.cookies.authSession = await crypto.sessionEncrypt(sessionNew);
 
-    output.json.result[sessionKey] = [entityCreate<Session>(
-      sessionKey,
+    output.json.result[sessionKey] = [entityCreate(
       sessionNew,
       { $owner: session.$subject, $creator: session.$subject },
     )];

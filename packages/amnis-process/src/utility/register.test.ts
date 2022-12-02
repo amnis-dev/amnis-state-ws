@@ -5,8 +5,6 @@ import {
   systemCreator,
   IoContext,
   entityCreate,
-  systemKey,
-  System,
   databaseMemory,
   filesystemMemory,
   cryptoWeb,
@@ -25,7 +23,7 @@ const context: IoContext = {
   validators: validateSetup([]),
 };
 
-const system = entityCreate<System>(systemKey, systemCreator({
+const system = entityCreate(systemCreator({
   name: 'Amnis Test System',
   $adminRole: uid<Role>(roleKey),
   $execRole: uid<Role>(roleKey),

@@ -1,4 +1,4 @@
-import { EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import { EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { File } from '../file/file.types.js';
 
 export interface Video extends File {
@@ -31,9 +31,9 @@ export interface Video extends File {
 /**
  * Video properties excluding the extended entity properties.
  */
-export type VideoBase = EntityExtension<Video>;
+export type VideoBase = EntityCreatorBase<Video>;
 
 /**
     * Base properties in order to create an image.
     */
-export type VideoCreator = EntityExtensionCreate<Video, 'title' | 'mimetype' | 'size' | 'extension' | 'width' | 'height' | 'duration'>;
+export type VideoCreator = EntityCreatorParams<Video, 'title' | 'mimetype' | 'size' | 'extension' | 'width' | 'height' | 'duration'>;

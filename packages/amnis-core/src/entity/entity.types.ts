@@ -3,15 +3,25 @@ import type { EntityState } from '@reduxjs/toolkit';
 import type { UID, UIDList, DateJSON } from '../types.js';
 
 /**
- * A common entity object.
- * Entity's are serializable (JSON) objects that can be committed to NoSQL Databases.
+ * Subset interface for an entity.
  */
-export interface Entity {
+export interface EntityCreator {
+  /**
+   * All objects that can be composed into an entity must have an
+   * identifier.
+   */
+  $id: UID;
+}
+
+/**
+ * An abstract interface that can only be formed from an entity creator object.
+ */
+export type Entity<C extends EntityCreator = EntityCreator> = C & {
   /**
    * UID for this entity.
    * @default ""
    */
-  readonly $id: UID;
+  readonly $id: UID<C>;
 
   /**
    * Creation date string.
@@ -52,77 +62,57 @@ export interface Entity {
    * Pseudo-owners of this data, but only as a reader.
    */
   $readers: UIDList;
-}
+};
 
 /**
  * Meta information for an entity collection.
  */
-export interface Meta<E extends Entity> {
+export interface Meta<C extends EntityCreator> {
   /**
    * The entity id referencing the active entity.
    */
-  active: UID<E> | null;
+  active: UID<C> | null;
 
   /**
     * The id representing a focused entity.
     */
-  focused: UID<E> | null;
+  focused: UID<C> | null;
 
   /**
    * List of ids considered to be selected.
    */
-  selection: UID<E>[];
+  selection: UID<C>[];
 
   /**
    * Record of original entity data since last updated from the api.
    */
-  original: Record<UID<E>, E | undefined>;
+  original: Record<UID<C>, Entity<C> | undefined>;
 
   /**
    * Property differences between current and original entities.
    */
-  differences: Record<UID<E>, (keyof E)[] | undefined>
+  differences: Record<UID<C>, (keyof Entity<C>)[] | undefined>
 }
 
 /**
- * Ambiguous entity type.
+ * Base object for default settings on a entity creator.
  */
-export interface EntityAmbiguous extends Entity {
-  [key: string]: any;
-}
-
-/**
- * Omitted types of the core Entity interface.
- */
-export type EntityOmit<E extends Entity> = Omit<E, keyof Entity>
-
-/**
- * Type for creation method
- */
-export type EntityExtension<E extends Entity> = EntityOmit<E>;
-
-/**
- * Type for an partial method.
- */
-export type EntityPartial<E extends Entity> = Partial<EntityExtension<E>>;
-
-/**
- * Type for an entity create object.
- */
-export type EntityCreator<E extends Entity> = EntityExtension<E> & { $id: UID<E> };
-
-/**
- * Type for an entity update object.
- */
-export type EntityUpdate<E extends Entity> = EntityPartial<E> & { $id: UID<E> };
+export type EntityCreatorBase<C extends EntityCreator> = Omit<C, '$id'>;
 
 /**
  * Create an entity creation parameters.
  */
-export type EntityExtensionCreate<E extends Entity, K extends keyof E> =
- Pick<E, K> & Omit<EntityPartial<E>, K>;
+export type EntityCreatorParams<
+  C extends EntityCreator,
+  K extends keyof C
+> = Pick<C, K> & Omit<Partial<C>, K>;
+
+/**
+ * Subset interface for updating a creator entity
+ */
+export type EntityUpdater<C extends EntityCreator> = Partial<Omit<C, '$id'>> & { $id: UID<C>; };
 
 /**
  * An entity state.
  */
-export type MetaState<E extends Entity> = EntityState<E> & Meta<E>;
+export type MetaState<C extends EntityCreator> = EntityState<Entity<C>> & Meta<C>;

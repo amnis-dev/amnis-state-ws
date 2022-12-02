@@ -1,4 +1,4 @@
-import { historyBase } from '@amnis/core';
+import { historyBase, historyCreator } from '@amnis/core';
 import {
   historyInitialState,
   historySelectors,
@@ -24,7 +24,7 @@ test('history should return the initial state', () => {
 test('should handle creating a new history', () => {
   const store = storeSetup();
 
-  const action = historyActions.create({ ...historyBase });
+  const action = historyActions.create(historyCreator(historyBase));
 
   store.dispatch(action);
   const entities = historySelectors.selectAll(store.getState());

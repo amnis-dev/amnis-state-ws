@@ -17,14 +17,15 @@ import {
   userKey,
   entityCreate,
   contactKey,
+  EntityCreator,
 } from '@amnis/core';
 import { apiAuth } from './auth/index.js';
 import { apiCrud } from './crud/index.js';
 
-export function apiExtraReducers<E extends Entity>(
+export function apiExtraReducers<C extends EntityCreator>(
   key: string,
-  adapter: EntityAdapter<E>,
-  builder: ActionReducerMapBuilder<MetaState<E>>,
+  adapter: EntityAdapter<Entity<C>>,
+  builder: ActionReducerMapBuilder<MetaState<C>>,
 ) {
   /**
    * ================================================================================
@@ -39,7 +40,7 @@ export function apiExtraReducers<E extends Entity>(
      * StateCreator log entities from the fulfillment.
      */
     if (key === logKey && logs?.length > 0) {
-      const logEntities = logs.map((logBase) => entityCreate(logKey, logCreator(logBase)));
+      const logEntities = logs.map((logBase) => entityCreate(logCreator(logBase)));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }
@@ -62,7 +63,7 @@ export function apiExtraReducers<E extends Entity>(
      */
     if (key === logKey && payload?.data?.logs?.length > 0) {
       const logs = payload.data.logs as LogCreator[];
-      const logEntities = logs.map((logBase) => entityCreate(logKey, logCreator(logBase)));
+      const logEntities = logs.map((logBase) => entityCreate(logCreator(logBase)));
       /** @ts-ignore */
       adapter.addMany(state, logEntities);
     }

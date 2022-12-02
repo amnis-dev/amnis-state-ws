@@ -1,7 +1,8 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
   contactKey,
-  entityStripToCreator,
+  entityStrip,
+  contactCreator,
 } from '@amnis/core';
 import { contactActions, contactSelectors, userSelectors } from '@amnis/state';
 import { clientStore } from './common/client.store.js';
@@ -30,12 +31,12 @@ test('should be able to create a new contact', async () => {
     password: 'passwd12',
   }));
 
-  const contactCreatorAction = contactActions.create({
+  const contactCreatorAction = contactActions.create(contactCreator({
     name: 'New Contact',
     emails: ['new@email.com'],
     phones: [],
     socials: [],
-  });
+  }));
   const contactActionEntityId = contactCreatorAction.payload.entity.$id;
 
   /**
@@ -53,9 +54,9 @@ test('should be able to create a new contact', async () => {
   }
   expect(contactLocal.committed).toBe(false);
 
-  const contactCreator = entityStripToCreator(contactLocal);
+  const contactStripped = entityStrip(contactLocal);
   const result = await clientStore.dispatch(apiCrud.endpoints.create.initiate({
-    [contactKey]: [contactCreator],
+    [contactKey]: [contactStripped],
   }));
 
   if ('error' in result) {

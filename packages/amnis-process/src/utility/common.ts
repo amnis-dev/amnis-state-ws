@@ -15,13 +15,13 @@ import {
   User,
   userKey,
   IoContext,
-  EntityCreator,
   stateEntitiesCreate,
   profileCreator,
   entityCreate,
   Contact,
   contactKey,
   contactCreator,
+  Entity,
 } from '@amnis/core';
 import { processConfig } from '../config.js';
 
@@ -48,7 +48,7 @@ export async function userFindByName(
     return undefined;
   }
 
-  return { ...resultsUser[userKey][0] } as User;
+  return { ...resultsUser[userKey][0] } as Entity<User>;
 }
 
 /**
@@ -57,7 +57,7 @@ export async function userFindByName(
 export async function userFindById(
   database: Database,
   userId: UID<User>,
-): Promise<User | undefined> {
+): Promise<Entity<User> | undefined> {
   const resultsUser = await database.read({
     [userKey]: {
       $query: {
@@ -74,16 +74,16 @@ export async function userFindById(
     return undefined;
   }
 
-  return { ...resultsUser[userKey][0] } as User;
+  return { ...resultsUser[userKey][0] } as Entity<User>;
 }
 
 /**
  * Creates a session with user and profile data.
  */
 export function sessionGenerate(
-  user: EntityCreator<User>,
-  profile: EntityCreator<Profile>,
-): EntityCreator<Session> {
+  user: User,
+  profile: Profile,
+): Session {
   const sessionExpires = dateNumeric(processConfig.PROCESS_SESSION_LIFE);
 
   /**
@@ -104,7 +104,7 @@ export function sessionGenerate(
  * Generates a new set of bearers
  */
 export async function bearerGenerate(
-  user: EntityCreator<User>,
+  user: User,
   context: IoContext,
 ): Promise<Bearer> {
   const bearerExpires = dateNumeric(processConfig.PROCESS_TOKEN_LIFE);
@@ -151,7 +151,10 @@ export function outputBadCredentials() {
 /**
  * Fetch a profile. Create a new one if it doesn't exist.
  */
-export async function profileFetch(database: Database, user: User): Promise<Profile | undefined> {
+export async function profileFetch(
+  database: Database,
+  user: User,
+): Promise<Entity<Profile> | undefined> {
   const results = await database.read({
     [profileKey]: {
       $query: {
@@ -168,7 +171,7 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
    * Create a new profile and store it if no results were found.
    */
   if (!results[profileKey] || results[profileKey].length < 1) {
-    const profile = entityCreate(profileKey, profileCreator({
+    const profile = entityCreate(profileCreator({
       $user: user.$id,
       nameDisplay: user.name,
     }), { $owner: user.$id, $creator: user.$id });
@@ -183,10 +186,10 @@ export async function profileFetch(database: Database, user: User): Promise<Prof
       return undefined;
     }
 
-    return profileResult as Profile;
+    return profileResult as Entity<Profile>;
   }
 
-  return results[profileKey][0] as Profile;
+  return results[profileKey][0] as Entity<Profile>;
 }
 
 /**
@@ -210,7 +213,7 @@ export async function contactFetch(
    * Create a new profile contact and store it if no results were found.
    */
   if (!results[contactKey] || results[contactKey].length < 1) {
-    const contact = entityCreate(contactKey, contactCreator({
+    const contact = entityCreate(contactCreator({
       name: `${profile.nameDisplay} Contact`,
     }), { $owner: profile.$user, $creator: profile.$user });
 
@@ -234,10 +237,10 @@ export async function contactFetch(
       ],
     });
 
-    return contactResult as Contact;
+    return contactResult as Entity<Contact>;
   }
 
-  return results[contactKey][0] as Contact;
+  return results[contactKey][0] as Entity<Contact>;
 }
 
 /**

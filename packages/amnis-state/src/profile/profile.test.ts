@@ -1,4 +1,4 @@
-import { profileBase } from '@amnis/core';
+import { profileBase, profileCreator } from '@amnis/core';
 import {
   profileInitialState,
   profileSelectors,
@@ -24,7 +24,7 @@ test('profile should return the initial state', () => {
 test('should handle creating a new profile', () => {
   const store = storeSetup();
 
-  const action = profileActions.create({ ...profileBase });
+  const action = profileActions.create(profileCreator(profileBase));
 
   store.dispatch(action);
   const entities = profileSelectors.selectAll(store.getState());
@@ -42,7 +42,7 @@ test('should handle creating a new profile', () => {
 test('should handle updating a profile', () => {
   const store = storeSetup();
 
-  const actionCreator = profileActions.create({ ...profileBase });
+  const actionCreator = profileActions.create(profileCreator(profileBase));
 
   store.dispatch(actionCreator);
   const entities1 = profileSelectors.selectAll(store.getState());
@@ -72,9 +72,9 @@ test('should handle updating a profile', () => {
   expect(Object.keys(diff.changes)).toHaveLength(1);
   expect(diff.changes?.nameDisplay).toEqual(newName);
 
-  expect(Object.keys(diff.update)).toHaveLength(2);
-  expect(diff.update.$id).toEqual(profileId);
-  expect(diff.update?.nameDisplay).toEqual(newName);
+  expect(Object.keys(diff.updator)).toHaveLength(2);
+  expect(diff.updator.$id).toEqual(profileId);
+  expect(diff.updator?.nameDisplay).toEqual(newName);
 
   const newName2 = 'Even Newer Profile Name';
   const actionUpdate2 = profileActions.update({

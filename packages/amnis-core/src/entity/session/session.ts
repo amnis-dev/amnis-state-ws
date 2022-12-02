@@ -1,15 +1,14 @@
 import { uid } from '../../uid.js';
 import { dateNumeric } from '../../core.js';
 import type {
-  EntityExtension,
-  EntityExtensionCreate,
-  EntityCreator,
+  EntityCreatorBase,
+  EntityCreatorParams,
 } from '../entity.types.js';
 import type { Session } from './session.types.js';
 
 export const sessionKey = 'session';
 
-export const sessionBase: EntityExtension<Session> = {
+export const sessionBase: EntityCreatorBase<Session> = {
   $subject: uid('user'),
   exp: dateNumeric(),
   admin: false,
@@ -18,8 +17,8 @@ export const sessionBase: EntityExtension<Session> = {
 };
 
 export function sessionCreator(
-  session: EntityExtensionCreate<Session, '$subject' | 'exp' | 'name'>,
-): EntityCreator<Session> {
+  session: EntityCreatorParams<Session, '$subject' | 'exp' | 'name'>,
+): Session {
   return {
     ...sessionBase,
     ...session,

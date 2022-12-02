@@ -24,7 +24,7 @@ test('key should return the initial state', () => {
 test('should handle creating a new key', () => {
   const store = storeSetup();
 
-  const action = keyActions.create({ ...keyBase });
+  const action = keyActions.create(keyBase);
 
   store.dispatch(action);
   const entities = keySelectors.selectAll(store.getState());

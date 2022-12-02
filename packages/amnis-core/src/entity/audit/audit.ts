@@ -1,4 +1,3 @@
-import { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
 import type { Audit, AuditBase, AuditCreator } from './audit.types.js';
 
@@ -11,7 +10,7 @@ export const auditBase: AuditBase = {
 
 export function auditCreator(
   audit: AuditCreator,
-): EntityCreator<Audit> {
+): Audit {
   return {
     ...auditBase,
     ...audit,

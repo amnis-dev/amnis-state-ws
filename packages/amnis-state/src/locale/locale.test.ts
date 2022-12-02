@@ -1,4 +1,4 @@
-import { localeBase } from '@amnis/core';
+import { localeBase, localeCreator } from '@amnis/core';
 import {
   localeInitialState,
   localeSelectors,
@@ -24,7 +24,7 @@ test('locale should return the initial state', () => {
 test('should handle creating a new locale', () => {
   const store = storeSetup();
 
-  const action = localeActions.create({ ...localeBase });
+  const action = localeActions.create(localeCreator(localeBase));
 
   store.dispatch(action);
   const entities = localeSelectors.selectAll(store.getState());

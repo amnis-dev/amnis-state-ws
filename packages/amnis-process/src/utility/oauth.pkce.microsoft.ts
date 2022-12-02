@@ -5,15 +5,13 @@ import {
   ioOutput,
   IoOutput,
   CryptoToken,
-  selectActive,
   StateEntities,
-  System,
-  systemKey,
   Bearer,
   bearerCreate,
   IoContext,
 } from '@amnis/core';
 
+import { systemSelectors } from '@amnis/state';
 import { processConfig } from '../config.js';
 import { loginSuccessProcess, userFindByName } from './common.js';
 import { register } from './register.js';
@@ -153,7 +151,7 @@ export async function oauthMicrosoft(
   /**
    * Set system settings from the store.
    */
-  const system = selectActive<System>(context.store.getState(), systemKey);
+  const system = systemSelectors.selectActive(context.store.getState());
 
   const registrationOutput = await register(
     context,

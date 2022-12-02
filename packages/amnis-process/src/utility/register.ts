@@ -12,7 +12,6 @@ import {
   stateEntitiesCreate,
   StateEntities,
   entityCreate,
-  sessionKey,
 } from '@amnis/core';
 import { sessionGenerate, bearerGenerate } from './common.js';
 
@@ -105,7 +104,7 @@ export async function register(
    */
   if (createSession === true) {
     const session = sessionGenerate(user, profile);
-    output.json.result.session = [entityCreate(sessionKey, session)];
+    output.json.result.session = [entityCreate(session)];
     output.cookies.authSession = await context.crypto.sessionEncrypt(session);
   }
 

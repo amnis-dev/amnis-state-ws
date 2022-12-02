@@ -2,25 +2,22 @@ import type { UID } from '../types.js';
 import type {
   Entity,
   EntityCreator,
-  EntityExtension,
-  EntityPartial,
   Meta,
 } from './entity.types.js';
 import { dateJSON } from '../core.js';
-import { uidList, uid } from '../uid.js';
+import { uid, uidList } from '../uid.js';
 import { regexReference, regexUuid } from '../regex.js';
 
 /**
  * Creates an entity.
  */
-export const entityCreate = <E extends Entity>(
-  key: string,
-  entity: EntityExtension<E>,
-  set?: Partial<Entity> | boolean,
-): E => {
-  const id = uid(key);
+export const entityCreate = <C extends EntityCreator>(
+  creator: C,
+  set?: Partial<Entity<C>> | boolean,
+): Entity<C> => {
+  const id = creator.$id as UID<C>;
   const now = dateJSON();
-  const base: Entity = {
+  const entity: Entity = {
     $id: id,
     created: now,
     updated: now,
@@ -36,18 +33,21 @@ export const entityCreate = <E extends Entity>(
   } : set || {};
 
   return {
-    ...base,
     ...entity,
+    ...creator,
     ...overwrite,
-  } as E;
+  } as Entity<C>;
 };
 
 /**
  * Modifies an entity.
  */
-export const entityUpdate = <E extends Entity>(
+export const entityUpdate = <
+  C extends EntityCreator,
+  E extends Entity<C>
+>(
   target: E,
-  modification: EntityPartial<E>,
+  modification: Partial<E>,
 ): E => {
   const now = new Date().toJSON();
   const result: E = {
@@ -61,13 +61,20 @@ export const entityUpdate = <E extends Entity>(
 /**
  * Array of entity prop keys.
  */
-export const entityKeys = Object.keys(entityCreate<Entity>('entity', {})).map((key) => key);
+export const entityKeys: (keyof Entity)[] = Object.keys(
+  entityCreate({
+    $id: uid('entity'),
+  }),
+).map((key) => key as keyof Entity);
 
 /**
  * Cleans and validates base entity keys and references for further processing.
  * TODO: This method can most certainly be made more efficient.
  */
-export function entityClean(key: string, entity: Entity): EntityCreator<Entity> | undefined {
+export function entityClean<C extends EntityCreator>(
+  key: string,
+  entity: Entity<C>,
+): C | undefined {
   let errored = false;
   const cleaned = Object.keys(entity)
     .reduce<Record<string, unknown>>((value, p) => {
@@ -121,37 +128,24 @@ export function entityClean(key: string, entity: Entity): EntityCreator<Entity> 
     return value;
   }, {});
 
-  return errored ? undefined : cleaned as EntityCreator<Entity>;
+  return errored ? undefined : cleaned as C;
 }
-
-/**
- * Strips entity properties.
- */
-export const entityStrip = <E extends Entity>(entity: E): EntityExtension<E> => {
-  const result = Object.keys(entity).reduce<EntityExtension<E>>((entityNew, key) => {
-    const k = key as keyof EntityExtension<E>;
-    if (!entityKeys.includes(key)) {
-      entityNew[k] = entity[k];
-    }
-    return entityNew;
-  }, {} as EntityExtension<E>);
-
-  return result;
-};
 
 /**
  * Strips an entity to a creator object.
  */
-export const entityStripToCreator = <E extends Entity>(entity: E): EntityCreator<E> => {
-  const result = Object.keys(entity).reduce<EntityCreator<E>>((entityNew, key) => {
-    const k = key as keyof EntityCreator<E>;
-    if (key === '$id' || !entityKeys.includes(key)) {
+export const entityStrip = <C extends EntityCreator>(
+  entity: Entity<C>,
+): C => {
+  const result = Object.keys(entity).reduce<C>((entityNew, key) => {
+    const k = key as keyof Entity;
+    if (k === '$id' || !entityKeys.includes(k)) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       /** @ts-ignore */
       entityNew[k] = entity[k];
     }
     return entityNew;
-  }, { $id: '' } as EntityCreator<E>);
+  }, { $id: '' } as C);
 
   return result;
 };
@@ -159,13 +153,15 @@ export const entityStripToCreator = <E extends Entity>(entity: E): EntityCreator
 /**
  * Create meta information for an entity meta information.
  */
-export function metaInitial<E extends Entity = Entity>(meta: Partial<Meta<E>> = {}): Meta<E> {
+export function metaInitial<C extends EntityCreator>(
+  meta: Partial<Meta<C>> = {},
+): Meta<C> {
   return {
     active: null,
     focused: null,
     selection: [],
-    original: {} as Record<UID<E>, E>,
-    differences: {} as Record<UID<E>, (keyof E)[]>,
+    original: {} as Record<UID<Entity<C>>, Entity<C>>,
+    differences: {} as Record<UID<Entity<C>>, (keyof Entity<C>)[]>,
     ...meta,
   };
 }

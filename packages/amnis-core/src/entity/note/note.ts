@@ -1,5 +1,4 @@
 import { uid } from '../../uid.js';
-import type { EntityCreator } from '../entity.types.js';
 import type { Note, NoteBase, NoteCreator } from './note.types.js';
 
 export const noteKey = 'note';
@@ -11,7 +10,7 @@ export const noteBase: NoteBase = {
 
 export function noteCreator(
   note: NoteCreator,
-): EntityCreator<Note> {
+): Note {
   return {
     ...noteBase,
     ...note,

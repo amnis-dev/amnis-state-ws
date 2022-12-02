@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { GrantScope } from '@amnis/core';
+import type { Entity, GrantScope } from '@amnis/core';
 import type { UID, UIDList } from '../types.js';
-import type { Entity, EntityCreator } from '../entity/index.js';
+import type { EntityCreator } from '../entity/index.js';
 
 /**
  * An ambiguous state.
@@ -86,13 +86,13 @@ export type Result = any;
 /**
   * A common stateful result of compelete entities.
   */
-export type StateEntities = State<Entity[]>;
+export type StateEntities = State<Entity<EntityCreator>[]>;
 
 /**
   * A common stateful result from creations.
   * A state object with entities to be created
   */
-export type StateCreator = State<EntityCreator<Entity>[]>;
+export type StateCreator = State<EntityCreator[]>;
 
 /**
   * A query object to search for entities.
@@ -103,7 +103,7 @@ export type StateQuery = State<Query>;
   * A common stateful result from updates.
   * A state object with parial entities to update.
   */
-export type StateUpdateEntity = { $id: Entity['$id'] } & Record<string, unknown>;
+export type StateUpdateEntity = { $id: EntityCreator['$id'] } & Record<string, unknown>;
 export type StateUpdater = State<StateUpdateEntity[]>;
 
 /**

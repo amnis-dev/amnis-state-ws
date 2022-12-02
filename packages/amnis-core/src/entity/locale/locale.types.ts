@@ -1,4 +1,4 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 
 /**
  * Symbol to make a special locale type.
@@ -18,7 +18,7 @@ export type LocaleTranslation = Record<LocaleTranslationKey, string>;
 /**
  * Locale entity
  */
-export interface Locale extends Entity {
+export interface Locale extends EntityCreator {
   /**
    * Two-character language code.
    * @minLength 2
@@ -47,9 +47,9 @@ export interface Locale extends Entity {
 /**
  * Locale properties excluding the extended entity properties.
  */
-export type LocaleBase = EntityExtension<Locale>;
+export type LocaleBase = EntityCreatorBase<Locale>;
 
 /**
  * Base properties in order to create a log.
  */
-export type LocaleCreator = EntityExtensionCreate<Locale, 'code' | 'set'>;
+export type LocaleCreator = EntityCreatorParams<Locale, 'code' | 'set'>;

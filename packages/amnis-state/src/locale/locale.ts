@@ -6,6 +6,7 @@ import {
   localeKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { LocaleMeta } from './locale.types.js';
@@ -14,7 +15,7 @@ import type { LocaleMeta } from './locale.types.js';
  * RTK locale adapter.
  * Manages the normalized entities.
  */
-export const localeAdapter = rtk.createEntityAdapter<Locale>({
+export const localeAdapter = rtk.createEntityAdapter<Entity<Locale>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

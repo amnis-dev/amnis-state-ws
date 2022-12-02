@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
-import { Entity, entityCreate } from '../entity/index.js';
+import { Entity, entityCreate, EntityCreator } from '../entity/index.js';
 import type { Grant, Task } from './grant/index.js';
 import type {
   State, StateCreator, StateEntities, StateQuery, StateScope,
@@ -99,13 +99,13 @@ export function stateToCreate(state: State): StateCreator {
   const stateCreator: StateCreator = {};
 
   Object.keys(state).every((sliceKey) => {
-    const slice = state[sliceKey] as EntityState<Entity>;
+    const slice = state[sliceKey] as EntityState<EntityCreator>;
 
     if (!slice.entities) {
       return true;
     }
 
-    stateCreator[sliceKey] = Object.values(slice.entities) as Entity[];
+    stateCreator[sliceKey] = Object.values(slice.entities) as EntityCreator[];
 
     return true;
   });
@@ -132,11 +132,11 @@ export function stateScopeCreate(grants: Grant[], attempt: Task): StateScope {
  */
 export function stateEntitiesCreate(
   stateCreator: StateCreator,
-  entityProps: Partial<Entity> = {},
+  entityProps: Partial<Entity<EntityCreator>> = {},
 ): StateEntities {
   return Object.keys(stateCreator).reduce<StateEntities>((acc, sliceKey) => {
     acc[sliceKey] = stateCreator[sliceKey].map(
-      (entityCreator) => entityCreate(sliceKey, entityCreator, entityProps),
+      (entityCreator) => entityCreate(entityCreator, entityProps),
     );
     return acc;
   }, {});

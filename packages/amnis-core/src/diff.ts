@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { entityKeys } from './entity/index.js';
+import { Entity, entityKeys } from './entity/index.js';
 
 type SameRecord<T> = { [N in keyof T]: T[N] }
 
@@ -22,7 +22,7 @@ export function diffCompare<R1 extends { [key: string]: any }>(
     /**
      * Ignore entity keys.
      */
-    if (!includeEntityKeys && entityKeys.includes(key as string)) {
+    if (!includeEntityKeys && entityKeys.includes(key as keyof Entity)) {
       return;
     }
     /**

@@ -1,4 +1,3 @@
-import { EntityCreator } from '../entity.types.js';
 import type { LogCreator } from '../log/index.js';
 import { uid } from '../../uid.js';
 import type {
@@ -62,7 +61,7 @@ export function localeCheck(locale: Locale): LogCreator[] {
 
 export function localeCreator(
   locale: LocaleCreator,
-): EntityCreator<Locale> {
+): Locale {
   return {
     ...localeBase,
     ...locale,

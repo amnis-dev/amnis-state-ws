@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { UID } from '../../types.js';
 
 /**
  * A data structure for audit information.
  */
-export interface Audit extends Entity {
+export interface Audit extends EntityCreator {
   /**
    * Action attempted
    */
@@ -38,11 +38,11 @@ export interface Audit extends Entity {
 }
 
 /**
- * Audit properties excluding the extended entity properties.
+ * Contact properties excluding the extended entity properties.
  */
-export type AuditBase = EntityExtension<Audit>;
+export type AuditBase = EntityCreatorBase<Audit>;
 
 /**
  * Base properties in order to create a log.
  */
-export type AuditCreator = EntityExtensionCreate<Audit, 'action' | 'completed'>;
+export type AuditCreator = EntityCreatorParams<Audit, 'action' | 'completed'>;

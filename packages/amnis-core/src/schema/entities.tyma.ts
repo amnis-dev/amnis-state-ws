@@ -14,42 +14,41 @@ import type {
   User,
   Video,
   Website,
-  EntityCreator,
-  EntityUpdate,
+  EntityUpdater,
 } from '../entity/index.js';
 
 export interface StateCreator {
-  audit?: EntityCreator<Audit>[];
-  contact?: EntityCreator<Contact>[];
-  history?: EntityCreator<History>[];
-  image?: EntityCreator<Image>[];
-  locale?: EntityCreator<Locale>[];
-  log?: EntityCreator<Log>[];
-  note?: EntityCreator<Note>[];
-  profile?: EntityCreator<Profile>[];
-  role?: EntityCreator<Role>[];
-  service?: EntityCreator<Service>[];
-  system?: EntityCreator<System>[];
-  user?: EntityCreator<User>[];
-  session?: EntityCreator<Session>[];
-  video?: EntityCreator<Video>[];
-  website?: EntityCreator<Website>[];
+  audit?: Audit[];
+  contact?: Contact[];
+  history?: History[];
+  image?: Image[];
+  locale?: Locale[];
+  log?: Log[];
+  note?: Note[];
+  profile?: Profile[];
+  role?: Role[];
+  service?: Service[];
+  system?: System[];
+  user?: User[];
+  session?: Session[];
+  video?: Video[];
+  website?: Website[];
 }
 
 export interface StateUpdater {
-  audit?: EntityUpdate<Audit>[];
-  contact?: EntityUpdate<Contact>[];
-  history?: EntityUpdate<History>[];
-  image?: EntityUpdate<Image>[];
-  locale?: EntityUpdate<Locale>[];
-  log?: EntityUpdate<Log>[];
-  note?: EntityUpdate<Note>[];
-  profile?: EntityUpdate<Profile>[];
-  role?: EntityUpdate<Role>[];
-  service?: EntityUpdate<Service>[];
-  system?: EntityUpdate<System>[];
-  user?: EntityUpdate<User>[];
-  session?: EntityUpdate<Session>[];
-  video?: EntityUpdate<Video>[];
-  website?: EntityUpdate<Website>[];
+  audit?: EntityUpdater<Audit>[];
+  contact?: EntityUpdater<Contact>[];
+  history?: EntityUpdater<History>[];
+  image?: EntityUpdater<Image>[];
+  locale?: EntityUpdater<Locale>[];
+  log?: EntityUpdater<Log>[];
+  note?: EntityUpdater<Note>[];
+  profile?: EntityUpdater<Profile>[];
+  role?: EntityUpdater<Role>[];
+  service?: EntityUpdater<Service>[];
+  system?: EntityUpdater<System>[];
+  user?: EntityUpdater<User>[];
+  session?: EntityUpdater<Session>[];
+  video?: EntityUpdater<Video>[];
+  website?: EntityUpdater<Website>[];
 }

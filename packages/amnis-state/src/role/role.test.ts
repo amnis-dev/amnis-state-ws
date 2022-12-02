@@ -1,4 +1,4 @@
-import { roleBase } from '@amnis/core';
+import { roleBase, roleCreator } from '@amnis/core';
 import {
   roleInitialState,
   roleSelectors,
@@ -24,7 +24,7 @@ test('role should return the initial state', () => {
 test('should handle creating a new role', () => {
   const store = storeSetup();
 
-  const action = roleActions.create({ ...roleBase });
+  const action = roleActions.create(roleCreator(roleBase));
 
   store.dispatch(action);
   const entities = roleSelectors.selectAll(store.getState());

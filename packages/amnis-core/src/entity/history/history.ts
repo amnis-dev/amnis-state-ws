@@ -1,7 +1,4 @@
 import { uid } from '../../uid.js';
-import {
-  EntityCreator,
-} from '../entity.types.js';
 import { StateEntities, StateUpdater } from '../../state/index.js';
 import { UID } from '../../types.js';
 import type { History, HistoryBase, HistoryCreator } from './history.types.js';
@@ -16,7 +13,7 @@ export const historyBase: HistoryBase = {
 
 export function historyCreator(
   history: HistoryCreator,
-): EntityCreator<History> {
+): History {
   return {
     ...historyBase,
     ...history,
@@ -49,8 +46,7 @@ export function historyMake(
     updateEntities.forEach((entity) => {
       const { $id, ...entityChanged } = entity;
       stateCreateHistory[historyKey].push(
-        entityCreate<History>(
-          historyKey,
+        entityCreate(
           historyCreator({
             $subject: $id, // The entity being updates is the subject.
             changes: entityChanged, // The changes object.

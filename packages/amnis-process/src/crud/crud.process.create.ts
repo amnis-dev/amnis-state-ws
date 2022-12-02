@@ -47,7 +47,6 @@ Io<StateCreator, StateEntities>
           const cleaned = entityClean(key, entity);
           if (cleaned) {
             return entityCreate(
-              key,
               cleaned,
               { $owner: access?.sub, $creator: access?.sub, committed: true },
             );

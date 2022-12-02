@@ -6,6 +6,7 @@ import {
   contactKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ContactMeta } from './contact.types.js';
@@ -14,7 +15,7 @@ import type { ContactMeta } from './contact.types.js';
  * RTK contact adapter.
  * Manages the normalized entities.
  */
-export const contactAdapter = rtk.createEntityAdapter<Contact>({
+export const contactAdapter = rtk.createEntityAdapter<Entity<Contact>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

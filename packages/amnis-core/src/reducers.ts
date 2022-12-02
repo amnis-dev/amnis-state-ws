@@ -6,11 +6,11 @@ import type {
 } from '@reduxjs/toolkit';
 import {
   Entity,
-  EntityExtension,
-  EntityUpdate,
   MetaState,
   entityCreate,
   metaInitial,
+  EntityCreator,
+  EntityUpdater,
 } from './entity/index.js';
 import { coreActions } from './actions.js';
 import type { UID } from './types.js';
@@ -22,12 +22,12 @@ export interface MetaOptions {
   selection?: boolean;
 }
 
-export interface CreatePayload<E extends Entity> {
-  entity: E;
+export interface CreatePayload<C extends EntityCreator> {
+  entity: Entity<C>;
   meta?: MetaOptions;
 }
 
-function setMeta<E extends Entity>(state: MetaState<E>, ref: E['$id'], meta?: MetaOptions) {
+function setMeta<C extends EntityCreator>(state: MetaState<C>, ref: C['$id'], meta?: MetaOptions) {
   if (meta) {
     if (meta.active) {
       state.active = ref;
@@ -41,23 +41,26 @@ function setMeta<E extends Entity>(state: MetaState<E>, ref: E['$id'], meta?: Me
   }
 }
 
-export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapter<E>) {
+export function coreReducers<C extends EntityCreator>(
+  key: string,
+  adapter: EntityAdapter<Entity<C>>,
+) {
   return {
     /**
      * Creates a new entity.
      */
     create: {
       reducer: (
-        state: MetaState<E>,
-        action: PayloadAction<CreatePayload<E>>,
+        state: MetaState<C>,
+        action: PayloadAction<CreatePayload<C>>,
       ) => {
         const { entity, meta } = action.payload;
         adapter.addOne(state, entity);
         setMeta(state, entity.$id, meta);
       },
-      prepare: (entityNew: EntityExtension<E>, meta?: MetaOptions) => ({
+      prepare: (creator: C, meta?: MetaOptions) => ({
         payload: {
-          entity: entityCreate(key, entityNew),
+          entity: entityCreate(creator),
           meta,
         },
       }),
@@ -68,13 +71,13 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      */
     createMany: {
       reducer: (
-        state: MetaState<E>,
-        action: PayloadAction<E[]>,
+        state: MetaState<C>,
+        action: PayloadAction<Entity<C>[]>,
       ) => {
         adapter.addMany(state, action.payload);
       },
-      prepare: (entitiesNew: EntityExtension<E>[]) => ({
-        payload: entitiesNew.map((entityNew) => entityCreate(key, entityNew)),
+      prepare: (creators: C[]) => ({
+        payload: creators.map((creator) => entityCreate(creator)),
       }),
     },
 
@@ -83,13 +86,13 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      */
     update: {
       reducer: (
-        state: MetaState<E>,
-        action: PayloadAction<EntityUpdate<E>>,
+        state: MetaState<C>,
+        action: PayloadAction<EntityUpdater<C>>,
       ) => {
         const { $id, ...other } = action.payload;
-        const changes = other as Partial<E>;
+        const changes = other as Entity<C>;
 
-        const entity = adapter.getSelectors().selectById(state, $id) as E;
+        const entity = adapter.getSelectors().selectById(state, $id);
 
         if (!entity) {
           return;
@@ -105,9 +108,9 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
         /**
          * Perform a diff compare.
          */
-        const diffResult = diffCompare<E>(
+        const diffResult = diffCompare<Entity<C>>(
           { ...entity, ...changes },
-          state.original[$id] as E,
+          state.original[$id] as Entity<C>,
           { includeEntityKeys: false },
         );
 
@@ -136,7 +139,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
           changes,
         });
       },
-      prepare: (entityUpdate: EntityUpdate<E>) => ({ payload: entityUpdate }),
+      prepare: (updator: EntityUpdater<C>) => ({ payload: updator }),
     },
 
     /**
@@ -144,21 +147,21 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      */
     delete: {
       reducer: (
-        state: MetaState<E>,
-        action: PayloadAction<UID<E>>,
+        state: MetaState<C>,
+        action: PayloadAction<UID<C>>,
       ) => {
         const id = action.payload;
         adapter.removeOne(state, id);
       },
-      prepare: (entityId: UID<E>) => ({ payload: entityId }),
+      prepare: (entityId: UID<C>) => ({ payload: entityId }),
     },
 
     /**
      * Sets active entity.
      */
     activeSet: (
-      state: MetaState<E>,
-      action: PayloadAction<UID<E>>,
+      state: MetaState<C>,
+      action: PayloadAction<UID<C>>,
     ) => {
       const id = action.payload;
       if (state.entities[id]) {
@@ -170,7 +173,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      * Clears active entity.
      */
     activeClear: (
-      state: MetaState<E>,
+      state: MetaState<C>,
     ) => {
       state.active = null;
     },
@@ -179,8 +182,8 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      * Sets focused entity.
      */
     focusSet: (
-      state: MetaState<E>,
-      action: PayloadAction<UID<E>>,
+      state: MetaState<C>,
+      action: PayloadAction<UID<C>>,
     ) => {
       const id = action.payload;
       if (state.entities[id]) {
@@ -192,7 +195,7 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      * Clears the focus on any entity.
      */
     focusClear: (
-      state: MetaState<E>,
+      state: MetaState<C>,
     ) => {
       state.focused = null;
     },
@@ -201,8 +204,8 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      * Sets the focus on a specific entity in the set.
      */
     selectionSet: (
-      state: MetaState<E>,
-      action: PayloadAction<UID<E>[]>,
+      state: MetaState<C>,
+      action: PayloadAction<UID<C>[]>,
     ) => {
       const selection = action.payload;
       state.selection = [...selection];
@@ -212,17 +215,17 @@ export function coreReducers<E extends Entity>(key: string, adapter: EntityAdapt
      * Clears entity selection.
      */
     selectionClear: (
-      state: MetaState<E>,
+      state: MetaState<C>,
     ) => {
       state.selection = [];
     },
   };
 }
 
-export function coreExtraReducers<E extends Entity>(
+export function coreExtraReducers<C extends EntityCreator>(
   key: string,
-  adapter: EntityAdapter<E>,
-  builder: ActionReducerMapBuilder<MetaState<E>>,
+  adapter: EntityAdapter<Entity<C>>,
+  builder: ActionReducerMapBuilder<MetaState<C>>,
 ) {
   builder.addCase(coreActions.insert, (state, action) => {
     const { payload } = action;
@@ -236,7 +239,7 @@ export function coreExtraReducers<E extends Entity>(
     const { payload } = action;
     if (payload[key] && Array.isArray(payload[key])) {
       const entityCreators = payload[key];
-      const entities = entityCreators.map((entityCreator) => entityCreate(key, entityCreator));
+      const entities = entityCreators.map((entityCreator) => entityCreate(entityCreator));
       /** @ts-ignore */
       adapter.addMany<MetaState<E>>(state, entities);
     }
@@ -276,7 +279,7 @@ export function coreExtraReducers<E extends Entity>(
   });
 
   builder.addCase(coreActions.wipe, (state) => {
-    const metaDefault = metaInitial<E>();
+    const metaDefault = metaInitial<C>();
 
     state.active = metaDefault.active;
     state.focused = metaDefault.focused;

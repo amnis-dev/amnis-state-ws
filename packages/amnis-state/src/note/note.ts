@@ -6,6 +6,7 @@ import {
   noteKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { NoteMeta } from './note.types.js';
@@ -14,7 +15,7 @@ import type { NoteMeta } from './note.types.js';
  * RTK note adapter.
  * Manages the normalized entities.
  */
-export const noteAdapter = rtk.createEntityAdapter<Note>({
+export const noteAdapter = rtk.createEntityAdapter<Entity<Note>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

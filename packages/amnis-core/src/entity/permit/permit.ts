@@ -1,14 +1,12 @@
 import { uid } from '../../uid.js';
 import type {
-  EntityExtension,
-  EntityExtensionCreate,
-  EntityCreator,
+  EntityCreatorBase, EntityCreatorParams,
 } from '../entity.types.js';
 import type { Permit } from './permit.types.js';
 
 export const permitKey = 'permit';
 
-export const permitBase: EntityExtension<Permit> = {
+export const permitBase: EntityCreatorBase<Permit> = {
   $issuer: uid('user'),
   $holder: uid('user'),
   $target: uid('entity'),
@@ -16,8 +14,8 @@ export const permitBase: EntityExtension<Permit> = {
 };
 
 export function permitCreator(
-  permit: EntityExtensionCreate<Permit, '$issuer' | '$holder' | '$target'>,
-): EntityCreator<Permit> {
+  permit: EntityCreatorParams<Permit, '$issuer' | '$holder' | '$target'>,
+): Permit {
   return {
     ...permitBase,
     ...permit,

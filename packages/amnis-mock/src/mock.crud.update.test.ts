@@ -1,5 +1,6 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
+  Entity,
   History,
   historyKey,
   Profile,
@@ -98,7 +99,7 @@ test('should be able to update user profile', async () => {
   const {
     original: userProfileUp3Original,
     changes: userProfileUp3Changes,
-    update: userProfileUp3Update,
+    updator: userProfileUp3Update,
   } = profileSelectors.selectDifference(clientStore.getState(), userProfile.$id);
   if (!userProfileUp3) {
     expect(userProfileUp3).toBeDefined();
@@ -123,8 +124,8 @@ test('should be able to update user profile', async () => {
   }
 
   const { data } = resultUpdate;
-  const profileUpdated = data.result?.[profileKey][0] as Profile;
-  const profileHistory = data.result?.[historyKey][0] as History;
+  const profileUpdated = data.result?.[profileKey][0] as Entity<Profile>;
+  const profileHistory = data.result?.[historyKey][0] as Entity<History>;
   if (!profileUpdated || !profileHistory) {
     expect(profileUpdated).toBeDefined();
     expect(profileHistory).toBeDefined();

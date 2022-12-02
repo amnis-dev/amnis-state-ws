@@ -1,5 +1,4 @@
 import { dateJSON } from '../../core.js';
-import type { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
 import type { Service, ServiceBase, ServiceCreator } from './service.types.js';
 
@@ -13,7 +12,7 @@ export const serviceBase: ServiceBase = {
 
 export function serviceCreator(
   service: ServiceCreator,
-): EntityCreator<Service> {
+): Service {
   return {
     ...serviceBase,
     dateChecked: dateJSON(),

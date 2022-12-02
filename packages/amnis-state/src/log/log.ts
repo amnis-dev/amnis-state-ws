@@ -6,6 +6,7 @@ import {
   logKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { LogMeta } from './log.types.js';
@@ -14,7 +15,7 @@ import type { LogMeta } from './log.types.js';
  * RTK log adapter.
  * Manages the normalized entities.
  */
-export const logAdapter = rtk.createEntityAdapter<Log>({
+export const logAdapter = rtk.createEntityAdapter<Entity<Log>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

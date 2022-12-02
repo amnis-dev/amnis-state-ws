@@ -6,6 +6,7 @@ import {
   websiteKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { WebsiteMeta } from './website.types.js';
@@ -14,7 +15,7 @@ import type { WebsiteMeta } from './website.types.js';
  * RTK website adapter.
  * Manages the normalized entities.
  */
-export const websiteAdapter = rtk.createEntityAdapter<Website>({
+export const websiteAdapter = rtk.createEntityAdapter<Entity<Website>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

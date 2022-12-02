@@ -1,4 +1,4 @@
-import { logBase } from '@amnis/core';
+import { logBase, logCreator } from '@amnis/core';
 import {
   logInitialState,
   logSelectors,
@@ -24,7 +24,7 @@ test('log should return the initial state', () => {
 test('should handle creating a new log', () => {
   const store = storeSetup();
 
-  const action = logActions.create({ ...logBase });
+  const action = logActions.create(logCreator(logBase));
 
   store.dispatch(action);
   const entities = logSelectors.selectAll(store.getState());

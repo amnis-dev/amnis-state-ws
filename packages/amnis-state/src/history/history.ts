@@ -6,6 +6,7 @@ import {
   historyKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { HistoryMeta } from './history.types.js';
@@ -14,7 +15,7 @@ import type { HistoryMeta } from './history.types.js';
  * RTK history adapter.
  * Manages the normalized entities.
  */
-export const historyAdapter = rtk.createEntityAdapter<History>({
+export const historyAdapter = rtk.createEntityAdapter<Entity<History>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

@@ -6,6 +6,7 @@ import {
   auditKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { AuditMeta } from './audit.types.js';
@@ -14,7 +15,7 @@ import type { AuditMeta } from './audit.types.js';
  * RTK audit adapter.
  * Manages the normalized entities.
  */
-export const auditAdapter = rtk.createEntityAdapter<Audit>({
+export const auditAdapter = rtk.createEntityAdapter<Entity<Audit>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

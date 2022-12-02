@@ -6,6 +6,7 @@ import {
   serviceKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { ServiceMeta } from './service.types.js';
@@ -14,7 +15,7 @@ import type { ServiceMeta } from './service.types.js';
  * RTK service adapter.
  * Manages the normalized entities.
  */
-export const serviceAdapter = rtk.createEntityAdapter<Service>({
+export const serviceAdapter = rtk.createEntityAdapter<Entity<Service>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

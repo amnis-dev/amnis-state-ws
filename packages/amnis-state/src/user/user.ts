@@ -6,6 +6,7 @@ import {
   userKey,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { UserMeta } from './user.types.js';
@@ -14,7 +15,7 @@ import type { UserMeta } from './user.types.js';
  * RTK user adapter.
  * Manages the normalized entities.
  */
-export const userAdapter = rtk.createEntityAdapter<User>({
+export const userAdapter = rtk.createEntityAdapter<Entity<User>>({
   /**
    * Identifiers are stored in the `$id` property.
    */

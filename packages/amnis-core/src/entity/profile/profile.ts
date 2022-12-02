@@ -1,5 +1,4 @@
 import { uid } from '../../uid.js';
-import type { EntityCreator } from '../entity.types.js';
 import type { Profile, ProfileBase, ProfileCreator } from './profile.types.js';
 import { userKey } from '../user/user.js';
 
@@ -12,7 +11,7 @@ export const profileBase: ProfileBase = {
 
 export function profileCreator(
   profile: ProfileCreator,
-): EntityCreator<Profile> {
+): Profile {
   return {
     ...profileBase,
     ...profile,

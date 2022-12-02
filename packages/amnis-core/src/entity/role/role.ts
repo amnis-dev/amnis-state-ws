@@ -1,4 +1,3 @@
-import type { EntityCreator } from '../entity.types.js';
 import { uid } from '../../uid.js';
 import type { Role, RoleBase, RoleCreator } from './role.types.js';
 
@@ -13,7 +12,7 @@ export const roleBase: RoleBase = {
 
 export function roleCreator(
   role: RoleCreator,
-): EntityCreator<Role> {
+): Role {
   return {
     ...roleBase,
     ...role,

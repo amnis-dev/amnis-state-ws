@@ -1,10 +1,12 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type {
+  EntityCreator, EntityCreatorBase, EntityCreatorParams,
+} from '../entity.types.js';
 import { SURL } from '../../types.js';
 
 /**
  * Contact entity
  */
-export interface Contact extends Entity {
+export interface Contact extends EntityCreator {
   /**
    * Name (or title) of the contact
    * @title Name
@@ -37,9 +39,9 @@ export interface Contact extends Entity {
 /**
  * Contact properties excluding the extended entity properties.
  */
-export type ContactBase = EntityExtension<Contact>;
+export type ContactBase = EntityCreatorBase<Contact>;
 
 /**
  * Base properties in order to create a log.
  */
-export type ContactCreator = EntityExtensionCreate<Contact, 'name'>;
+export type ContactCreator = EntityCreatorParams<Contact, 'name'>;

@@ -1,5 +1,5 @@
 import type { UIDList } from '../../types.js';
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Permit } from '../permit/index.js';
 import type { DeviceString } from '../device/index.js';
 import type { Role } from '../role/index.js';
@@ -7,7 +7,7 @@ import type { Role } from '../role/index.js';
 /**
  * Data associated to a User.
  */
-export interface User extends Entity {
+export interface User extends EntityCreator {
   /**
    * Name for the user.
    * @minLength 3
@@ -79,9 +79,9 @@ export interface User extends Entity {
 /**
  * User properties excluding the extended entity properties.
  */
-export type UserBase = EntityExtension<User>;
+export type UserBase = EntityCreatorBase<User>;
 
 /**
   * User base properties for creation.
   */
-export type UserCreator = EntityExtensionCreate<User, 'name'>;
+export type UserCreator = EntityCreatorParams<User, 'name'>;

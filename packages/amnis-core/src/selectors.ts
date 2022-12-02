@@ -12,20 +12,21 @@ import {
 } from './state/index.js';
 import {
   Entity,
-  EntityExtension,
-  EntityUpdate,
-  Meta,
+  EntityCreatorBase,
   Role,
   roleKey,
   Key,
   keyKey,
+  EntityCreator,
+  MetaState,
+  EntityUpdater,
 } from './entity/index.js';
 
 /**
  * Creates a slice selector.
  */
-const genSelectSlice = <E extends Entity>(sliceKey: string) => (state: State) => {
-  const slice = state[sliceKey] as Meta<E> & EntityState<E>;
+const genSelectSlice = <C extends EntityCreator>(sliceKey: string) => (state: State) => {
+  const slice = state[sliceKey] as MetaState<C>;
 
   if (!slice?.entities) {
     return undefined;
@@ -148,27 +149,27 @@ export const selectSelection = <E extends Entity>(
 /**
  * Selects an object to differentiate local updates.
  */
-const genSelectDifference = <E extends Entity = Entity>(
+const genSelectDifference = <C extends EntityCreator = EntityCreator>(
   sliceKey: string,
 ) => rtk.createSelector(
   [
-    (state, id: UID<E>) => id,
-    genSelectDifferences<E>(sliceKey),
-    genSelectOriginals<E>(sliceKey),
-    genSelectEntities<E>(sliceKey),
+    (state, id: UID<C>) => id,
+    genSelectDifferences<Entity<C>>(sliceKey),
+    genSelectOriginals<Entity<C>>(sliceKey),
+    genSelectEntities<Entity<C>>(sliceKey),
   ],
   (id, diffRecords, originalRecords, entities) => {
-    const current = entities[id] as E | undefined;
-    const original = originalRecords[id] as E | undefined;
+    const current = entities[id] as Entity<C> | undefined;
+    const original = originalRecords[id] as Entity<C> | undefined;
     const diffRecord = diffRecords[id];
-    const keys = diffRecord ? [...diffRecord as (keyof E)[]] : [] as (keyof E)[];
+    const keys = diffRecord ? [...diffRecord as (keyof Entity<C>)[]] : [] as (keyof Entity<C>)[];
 
     if (!current) {
       return {
         original: undefined,
         current: undefined,
-        changes: {} as EntityExtension<E>,
-        update: { $id: id } as EntityUpdate<E>,
+        changes: {} as EntityCreatorBase<C>,
+        updator: { $id: id } as EntityUpdater<C>,
         keys: [],
       };
     }
@@ -177,8 +178,8 @@ const genSelectDifference = <E extends Entity = Entity>(
       return {
         original,
         current,
-        changes: {} as EntityExtension<E>,
-        update: { $id: id } as EntityUpdate<E>,
+        changes: {} as EntityCreatorBase<C>,
+        updator: { $id: id } as EntityUpdater<C>,
         keys: [],
       };
     }
@@ -187,24 +188,24 @@ const genSelectDifference = <E extends Entity = Entity>(
       return {
         original: undefined,
         current: undefined,
-        changes: {} as EntityExtension<E>,
-        update: { $id: id } as EntityUpdate<E>,
+        changes: {} as EntityCreatorBase<C>,
+        updator: { $id: id } as EntityUpdater<C>,
         keys: [],
       };
     }
 
-    const changes = keys.reduce<EntityExtension<E>>((acc, k) => {
+    const changes = keys.reduce<EntityCreatorBase<C>>((acc, k) => {
       /** @ts-ignore */
       acc[k] = current[k];
       return acc;
-    }, {} as EntityExtension<E>);
-    const update = { $id: id, ...changes };
+    }, {} as EntityCreatorBase<C>);
+    const updator = { $id: id, ...changes };
 
     return {
       original: { ...original },
       current: { ...current },
       changes,
-      update,
+      updator,
       keys,
     };
   },
@@ -277,11 +278,11 @@ export function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
 /**
  * Create the selector utility object.
  */
-export function coreSelectors<E extends Entity>(sliceKey: string) {
+export function coreSelectors<C extends EntityCreator>(sliceKey: string) {
   return {
-    selectActive: genSelectActive<E>(sliceKey),
-    selectFocused: genSelectFocused<E>(sliceKey),
-    selectSelection: genSelectSelection<E>(sliceKey),
-    selectDifference: genSelectDifference<E>(sliceKey),
+    selectActive: genSelectActive<Entity<C>>(sliceKey),
+    selectFocused: genSelectFocused<Entity<C>>(sliceKey),
+    selectSelection: genSelectSelection<Entity<C>>(sliceKey),
+    selectDifference: genSelectDifference<C>(sliceKey),
   };
 }

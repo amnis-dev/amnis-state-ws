@@ -1,10 +1,10 @@
-import type { Entity, EntityExtension, EntityExtensionCreate } from '../entity.types.js';
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { GrantString } from '../../state/index.js';
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
  */
-export interface Role extends Entity {
+export interface Role extends EntityCreator {
   /**
   * Name of the license.
   */
@@ -29,9 +29,9 @@ export interface Role extends Entity {
 /**
  * Profile properties excluding the extended entity properties.
  */
-export type RoleBase = EntityExtension<Role>;
+export type RoleBase = EntityCreatorBase<Role>;
 
 /**
    * Base properties.
    */
-export type RoleCreator = EntityExtensionCreate<Role, 'name'>;
+export type RoleCreator = EntityCreatorParams<Role, 'name'>;
