@@ -9,6 +9,7 @@ import {
   <%= name %>Key,
   metaInitial,
   coreSelectors,
+  Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
 import type { <%= Name %>Meta } from './<%= name %>.types.js';

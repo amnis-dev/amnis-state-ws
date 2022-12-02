@@ -1,7 +1,5 @@
-import { deviceParse } from '../device/index.js';
 import type { LogCreator } from '../log/index.js';
 import { regexAlphanumeric, regexEmail } from '../../regex.js';
-import type { DeviceString } from '../device/index.js';
 import type { User, UserBase, UserCreator } from './user.types.js';
 import { coreConfig } from '../../config.js';
 import { uid } from '../../uid.js';
@@ -10,14 +8,10 @@ export const userKey = 'user';
 
 export const userBase: UserBase = {
   name: 'Unknown User',
-  devices: [],
+  $devices: [],
   $roles: [],
   $permits: [],
 };
-
-export function userCheckDevices(devices: DeviceString[]): boolean {
-  return !!devices.find((device) => !deviceParse(device));
-}
 
 /**
  * User validation method.
@@ -53,14 +47,6 @@ export function userCheck(user: User): LogCreator[] {
     logs.push({
       title: 'Invalid User Email',
       description: 'User email address is not structured properly.',
-      level: 'error',
-    });
-  }
-
-  if (user.devices?.length && userCheckDevices(user.devices)) {
-    logs.push({
-      title: 'Invalid Device',
-      description: 'The device associated with the user is invalid.',
       level: 'error',
     });
   }

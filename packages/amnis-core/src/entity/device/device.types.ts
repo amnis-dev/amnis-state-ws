@@ -1,23 +1,28 @@
-/* eslint-disable no-shadow */
-/**
- * Unique symbol for a serialized device string;
- */
-export enum DeviceNominal { _ = '' }
+import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 
-/**
- * A string that represents a device.
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type DeviceString = DeviceNominal & string;
-
-export interface Device {
+export interface Device extends EntityCreator {
   /**
    * IP address of the device.
    */
   ip: string;
 
   /**
-   * System of the device.
+   * Name of the device.
    */
-  system: string;
+  name: string;
+
+  /**
+   * Device's public key for verifying signatures.
+   */
+  publicKey: string;
 }
+
+/**
+ * Base object without a generated identifier.
+ */
+export type DeviceBase = EntityCreatorBase<Device>;
+
+/**
+ * Minimal parameters for creation.
+ */
+export type DeviceCreator = EntityCreatorParams<Device, 'ip' | 'name' | 'publicKey'>;

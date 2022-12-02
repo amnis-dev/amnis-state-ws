@@ -841,11 +841,8 @@
           "type": "boolean",
           "description": "If this is an administrative account."
         },
-        "devices": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DeviceString"
-          },
+        "$devices": {
+          "$ref": "#/definitions/UIDList%3CDevice%3E",
           "description": "Devices this user signs in with.",
           "default": []
         },
@@ -861,18 +858,25 @@
         }
       },
       "required": [
+        "$devices",
         "$id",
         "$permits",
         "$roles",
-        "devices",
         "name"
       ],
       "additionalProperties": false,
       "description": "Data associated to a User."
     },
-    "DeviceString": {
+    "UIDList<Device>": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UID%3CDevice%3E"
+      },
+      "description": "An array of identifiers."
+    },
+    "UID<Device>": {
       "type": "string",
-      "description": "A string that represents a device."
+      "description": "A id identifier to another document."
     },
     "UIDList<Permit>": {
       "type": "array",
@@ -1803,11 +1807,8 @@
           "type": "boolean",
           "description": "If this is an administrative account."
         },
-        "devices": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DeviceString"
-          },
+        "$devices": {
+          "$ref": "#/definitions/UIDList%3CDevice%3E",
           "description": "Devices this user signs in with.",
           "default": []
         },

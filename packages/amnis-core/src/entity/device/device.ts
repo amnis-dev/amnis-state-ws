@@ -1,40 +1,18 @@
-import { regexIpv4v6 } from '../../regex.js';
-import type { Device, DeviceString } from './device.types.js';
+import { uid } from '../../uid.js';
+import type { Device, DeviceBase, DeviceCreator } from './device.types.js';
 
-/**
- * Verifies a device ip.
- */
-export function deviceVerifyIp(ip: string): boolean {
-  return regexIpv4v6.test(ip);
-}
+export const deviceKey = 'device';
 
-/**
- * Stringifies a device.
- */
-export function deviceStringify(device: Device): DeviceString {
-  return `${device.ip}:${device.system}` as DeviceString;
-}
+export const deviceBase: DeviceBase = {
+  ip: '127.0.0.1',
+  name: 'Unknown Device',
+  publicKey: '',
+};
 
-/**
- * Parses a device string into an object.
- */
-export function deviceParse(deviceString: DeviceString): Device | undefined {
-  const [ip, system] = deviceString.split(':');
-
-  if (typeof ip !== 'string') {
-    return undefined;
-  }
-
-  if (!deviceVerifyIp(ip)) {
-    return undefined;
-  }
-
-  if (typeof system !== 'string') {
-    return undefined;
-  }
-
-  return {
-    ip,
-    system,
-  };
-}
+export const deviceCreator = (
+  device: DeviceCreator,
+): Device => ({
+  ...deviceBase,
+  ...device,
+  $id: uid(deviceKey),
+});
