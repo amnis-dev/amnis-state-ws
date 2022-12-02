@@ -23,7 +23,7 @@ test('should create a user', async () => {
       name: expect.any(String),
       password: expect.any(String),
       email: expect.any(String),
-      $devices: expect.any(Array),
+      $credentials: expect.any(Array),
       $roles: expect.any(Array),
       $permits: expect.any(Array),
     }),

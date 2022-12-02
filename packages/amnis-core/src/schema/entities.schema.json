@@ -841,9 +841,9 @@
           "type": "boolean",
           "description": "If this is an administrative account."
         },
-        "$devices": {
-          "$ref": "#/definitions/UIDList%3CDevice%3E",
-          "description": "Devices this user signs in with.",
+        "$credentials": {
+          "$ref": "#/definitions/UIDList%3CCredential%3E",
+          "description": "Credentials this user has registered.",
           "default": []
         },
         "$roles": {
@@ -858,7 +858,7 @@
         }
       },
       "required": [
-        "$devices",
+        "$credentials",
         "$id",
         "$permits",
         "$roles",
@@ -867,14 +867,14 @@
       "additionalProperties": false,
       "description": "Data associated to a User."
     },
-    "UIDList<Device>": {
+    "UIDList<Credential>": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/UID%3CDevice%3E"
+        "$ref": "#/definitions/UID%3CCredential%3E"
       },
       "description": "An array of identifiers."
     },
-    "UID<Device>": {
+    "UID<Credential>": {
       "type": "string",
       "description": "A id identifier to another document."
     },
@@ -1807,9 +1807,9 @@
           "type": "boolean",
           "description": "If this is an administrative account."
         },
-        "$devices": {
-          "$ref": "#/definitions/UIDList%3CDevice%3E",
-          "description": "Devices this user signs in with.",
+        "$credentials": {
+          "$ref": "#/definitions/UIDList%3CCredential%3E",
+          "description": "Credentials this user has registered.",
           "default": []
         },
         "$roles": {

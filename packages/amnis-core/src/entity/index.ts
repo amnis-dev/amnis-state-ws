@@ -3,7 +3,7 @@ export * from './entity.js';
 
 export * from './audit/index.js';
 export * from './contact/index.js';
-export * from './device/index.js';
+export * from './credential/index.js';
 export * from './file/index.js';
 export * from './history/index.js';
 export * from './image/index.js';

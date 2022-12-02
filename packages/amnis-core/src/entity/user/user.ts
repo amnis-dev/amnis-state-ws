@@ -8,7 +8,7 @@ export const userKey = 'user';
 
 export const userBase: UserBase = {
   name: 'Unknown User',
-  $devices: [],
+  $credentials: [],
   $roles: [],
   $permits: [],
 };

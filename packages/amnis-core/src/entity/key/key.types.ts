@@ -1,3 +1,6 @@
+import type { UID } from '../../types.js';
+import type { Credential } from '../credential/index.js';
+
 /**
  * Key object  for storing cryptographic keys.
  */
@@ -26,4 +29,9 @@ export interface Key {
    * The encoded value of the encryption key.
    */
   value: string;
+
+  /**
+   * The credential this key is connected with.
+   */
+  $credential?: UID<Credential>
 }

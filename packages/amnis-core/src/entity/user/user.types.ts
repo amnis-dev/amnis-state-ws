@@ -1,7 +1,7 @@
 import type { UIDList } from '../../types.js';
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Permit } from '../permit/index.js';
-import type { Device } from '../device/index.js';
+import type { Credential } from '../credential/index.js';
 import type { Role } from '../role/index.js';
 
 /**
@@ -58,10 +58,10 @@ export interface User extends EntityCreator {
   admin?: boolean;
 
   /**
-   * Devices this user signs in with.
+   * Credentials this user has registered.
    * @default []
    */
-  $devices: UIDList<Device>;
+  $credentials: UIDList<Credential>;
 
   /**
    * Roles this user has been given.
