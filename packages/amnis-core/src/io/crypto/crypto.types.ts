@@ -188,6 +188,38 @@ export type CryptoTokenVerify = <T = any>(
 export type CryptoTokenDecode = <T = any>(encoded: CryptoToken) => Promise<T>;
 
 /**
+ * Wraps a CryptoKey
+ */
+export type CryptoKeyWrap = (
+  key: CryptoKey,
+  password: string,
+  type?: 0 | 1 | 2,
+) => Promise<string>;
+
+/**
+ * Unwraps a CryptoKey
+ */
+export type CryptoKeyUnwrap = (
+  wrap: string,
+  password: string,
+) => Promise<CryptoKey | undefined>;
+
+/**
+ * Exports a CryptoKey
+ */
+export type CryptoKeyExport = (
+  key: CryptoKey,
+  type?: 0 | 1 | 2,
+) => Promise<string>;
+
+/**
+  * Imports a CryptoKey
+  */
+export type CryptoKeyImport = (
+  exported: string
+) => Promise<CryptoKey | undefined>;
+
+/**
  * Core interface for cryptographic methods.
  */
 export interface Crypto {
@@ -280,4 +312,24 @@ export interface Crypto {
    * Decodes any type of token.
    */
   tokenDecode: CryptoTokenDecode;
+
+  /**
+   * Wraps a cryptographic key.
+   */
+  keyWrap: CryptoKeyWrap;
+
+  /**
+   * Unwraps a cryptographic key.
+   */
+  keyUnwrap: CryptoKeyUnwrap;
+
+  /**
+   * Exports a cryptographic key.
+   */
+  keyExport: CryptoKeyExport;
+
+  /**
+   * Imports a cryptographic key.
+   */
+  keyImport: CryptoKeyImport;
 }

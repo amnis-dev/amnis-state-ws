@@ -14,7 +14,7 @@ import {
 import { systemSelectors } from '@amnis/state';
 import { processConfig } from '../config.js';
 import { loginSuccessProcess, userFindByName } from './common.js';
-import { register } from './register.js';
+import { register } from './register.back.js';
 
 /**
  * OAuth2 Response.

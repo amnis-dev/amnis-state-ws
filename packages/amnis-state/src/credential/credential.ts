@@ -9,7 +9,7 @@ import {
   Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
-import type { DeviceMeta } from './credential.types.js';
+import type { CredentialMeta } from './credential.types.js';
 
 /**
  * RTK credential adapter.
@@ -30,7 +30,7 @@ export const credentialAdapter = rtk.createEntityAdapter<Entity<Credential>>({
 /**
  * Initialized credential state with meta information.
  */
-export const credentialInitialState = credentialAdapter.getInitialState<DeviceMeta>(
+export const credentialInitialState = credentialAdapter.getInitialState<CredentialMeta>(
   metaInitial<Credential>(),
 );
 
@@ -87,7 +87,7 @@ export const credentialSelectors = {
 /**
  * Credential redux selector keys.
  */
-export type DeviceSelector = Extract<keyof typeof credentialSelectors, string>;
+export type CredentialSelector = Extract<keyof typeof credentialSelectors, string>;
 
 /**
  * Export the slice as default.

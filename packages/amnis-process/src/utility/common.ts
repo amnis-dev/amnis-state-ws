@@ -280,8 +280,6 @@ export async function loginSuccessProcess(
 
   const bearerAccess = await bearerGenerate(user, context);
 
-  user.password = undefined;
-
   output.json.result = stateEntitiesCreate({
     [userKey]: [user],
     [profileKey]: [profile],

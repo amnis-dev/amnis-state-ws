@@ -82,6 +82,26 @@ export function coreReducers<C extends EntityCreator>(
     },
 
     /**
+     * Inserts an entity
+     */
+    insert: {
+      reducer: (
+        state: MetaState<C>,
+        action: PayloadAction<CreatePayload<C>>,
+      ) => {
+        const { entity, meta } = action.payload;
+        adapter.addOne(state, entity);
+        setMeta(state, entity.$id, meta);
+      },
+      prepare: (entity: Entity<C>, meta?: MetaOptions) => ({
+        payload: {
+          entity,
+          meta,
+        },
+      }),
+    },
+
+    /**
      * Updates an existing entity.
      */
     update: {

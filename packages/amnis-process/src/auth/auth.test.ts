@@ -32,7 +32,6 @@ beforeAll(async () => {
     userCreator({
       name: 'ExampleUser',
       email: 'user.example@amnis.dev',
-      password: await cryptoWeb.passHash('passwd1'),
     }),
   ];
 

@@ -6,6 +6,9 @@
     "AuthSchema": {
       "type": "object",
       "properties": {
+        "register": {
+          "$ref": "#/definitions/AuthRegister"
+        },
         "login": {
           "$ref": "#/definitions/AuthLogin"
         },
@@ -24,6 +27,56 @@
       },
       "additionalProperties": false
     },
+    "AuthRegister": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 24,
+          "pattern": "^[a-zA-Z0-9-_]+$",
+          "description": "The usename to register under."
+        },
+        "challenge": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512
+        },
+        "origin": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 32
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "auth.create",
+            "webauthn.create"
+          ]
+        },
+        "credential": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512,
+          "description": "Encoded attestation signature of the credential object."
+        }
+      },
+      "required": [
+        "username",
+        "challenge",
+        "origin",
+        "type",
+        "credential",
+        "signature"
+      ],
+      "additionalProperties": false,
+      "description": "Payload for an registration request. A value of undefined starts a registration event."
+    },
     "AuthLogin": {
       "type": "object",
       "properties": {
@@ -34,16 +87,23 @@
           "pattern": "^[a-zA-Z0-9-_]+$",
           "description": "Unique name for login credentials"
         },
-        "password": {
+        "$credential": {
           "type": "string",
           "minLength": 6,
           "maxLength": 64,
-          "description": "Secret phrase associated with the username."
+          "description": "Credential identifier to use on the user account."
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 128,
+          "maxLength": 512,
+          "description": "Agent's cryptographic signature of the username and challenge."
         }
       },
       "required": [
         "username",
-        "password"
+        "$credential",
+        "signature"
       ],
       "additionalProperties": false,
       "description": "Payload for a login request."

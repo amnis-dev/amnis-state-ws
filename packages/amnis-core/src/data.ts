@@ -25,9 +25,6 @@ import {
   historyKey,
   Entity,
 } from './entity/index.js';
-import {
-  CryptoPassword,
-} from './io/index.js';
 
 export function dataInitial(): StateEntities {
   /**
@@ -97,24 +94,18 @@ export function dataInitial(): StateEntities {
     entityCreate(userCreator({
       name: 'admin',
       email: 'admin@email.address',
-      /** passwd12 */
-      password: 'rY2ezF3xDQdUZ6rIVk_R0nwrV1kTbN8Q7P9SY0TG0D0b6VzDCYwUgPPyTto0TVot' as CryptoPassword,
       $roles: [roles[0].$id],
       $permits: [],
     }), { committed: true }),
     entityCreate(userCreator({
       name: 'exec',
       email: 'exec@email.address',
-      /** passwd12 */
-      password: 'rY2ezF3xDQdUZ6rIVk_R0nwrV1kTbN8Q7P9SY0TG0D0b6VzDCYwUgPPyTto0TVot' as CryptoPassword,
       $roles: [roles[1].$id],
       $permits: [],
     }), { committed: true }),
     entityCreate(userCreator({
       name: 'user',
       email: 'user@email.address',
-      /** passwd12 */
-      password: 'rY2ezF3xDQdUZ6rIVk_R0nwrV1kTbN8Q7P9SY0TG0D0b6VzDCYwUgPPyTto0TVot' as CryptoPassword,
       $roles: [roles[2].$id],
       $permits: [],
     }), { committed: true }),

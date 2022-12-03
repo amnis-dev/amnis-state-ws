@@ -1,6 +1,53 @@
 import type { Bearer } from '@amnis/core';
 
 /**
+ * Payload for an registration request.
+ * A value of undefined starts a registration event.
+ */
+export interface AuthRegister {
+  /**
+   * @minLength 2
+   * @maxLength 24
+   * @pattern ^[a-zA-Z0-9-_]+$
+   * @description The usename to register under.
+   */
+  username: string;
+
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @desciption Encoded challenge object to prevent reply attacks.
+   */
+  challenge: string;
+
+  /**
+   * @minLength 4
+   * @maxLength 32
+   * @desciption Origin of the requesting client.
+   */
+  origin: string;
+
+  /**
+   * @desciption Type of event.
+   */
+  type: 'auth.create' | 'webauthn.create';
+
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @desciption Encoded credentials to register.
+   */
+  credential: string;
+
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @description Encoded attestation signature of the credential object.
+   */
+  signature: string;
+}
+
+/**
  * Payload for a login request.
  */
 export interface AuthLogin {
@@ -15,9 +62,16 @@ export interface AuthLogin {
   /**
    * @minLength 6
    * @maxLength 64
-   * @description Secret phrase associated with the username.
+   * @description Credential identifier to use on the user account.
    */
-  password: string;
+  $credential: string;
+
+  /**
+   * @minLength 128
+   * @maxLength 512
+   * @description Agent's cryptographic signature of the username and challenge.
+   */
+  signature: string;
 }
 
 /**

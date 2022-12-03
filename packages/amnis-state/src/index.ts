@@ -5,7 +5,9 @@ export * from './context.js';
 
 export * from './audit/index.js';
 export * from './key/index.js';
+export * from './challenge/index.js';
 export * from './contact/index.js';
+export * from './credential/index.js';
 export * from './history/index.js';
 export * from './locale/index.js';
 export * from './log/index.js';

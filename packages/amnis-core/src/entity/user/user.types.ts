@@ -1,4 +1,4 @@
-import type { UIDList } from '../../types.js';
+import type { DateJSON, UIDList } from '../../types.js';
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Permit } from '../permit/index.js';
 import type { Credential } from '../credential/index.js';
@@ -14,11 +14,6 @@ export interface User extends EntityCreator {
    * @maxLength 64
    */
   name: string;
-
-  /**
-   * User's public key for verifying signatures.
-   */
-  publicKey?: JsonWebKey;
 
   /**
    * Email address
@@ -45,17 +40,14 @@ export interface User extends EntityCreator {
   phoneVerified?: boolean;
 
   /**
-   * User password.
-   * A null password means another form of auth must be used.
-   * @minLength 6
-   * @maxLength 64
-   */
-  password?: string;
-
-  /**
    * If this is an administrative account.
    */
   admin?: boolean;
+
+  /**
+   * Date-time of last login.
+   */
+  logged?: DateJSON;
 
   /**
    * Credentials this user has registered.
@@ -67,13 +59,13 @@ export interface User extends EntityCreator {
    * Roles this user has been given.
    * @default []
    */
-  readonly $roles: UIDList<Role>;
+  $roles: UIDList<Role>;
 
   /**
    * Special-case permits this user has been bestowed.
    * @default []
    */
-  readonly $permits: UIDList<Permit>;
+  $permits: UIDList<Permit>;
 }
 
 /**

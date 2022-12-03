@@ -21,7 +21,6 @@ import { sessionGenerate, bearerGenerate } from './common.js';
 interface RegisterOptions {
   nameDisplay?: string;
   email?: string;
-  password?: string;
   createSession?: boolean;
   withTokens?: boolean;
   otherTokens?: Bearer[];
@@ -37,7 +36,7 @@ export async function register(
   options: RegisterOptions,
 ): Promise<IoOutput<StateEntities>> {
   const {
-    password, nameDisplay, createSession, withTokens, otherTokens,
+    nameDisplay, createSession, withTokens, otherTokens,
   } = options;
   const output = ioOutput<StateEntities>();
   const logs: LogCreator[] = [];
@@ -57,9 +56,6 @@ export async function register(
     email: options.email,
     $roles: [...system.$initialRoles],
   });
-  if (password) {
-    user.password = await context.crypto.passHash(password);
-  }
 
   logs.push(...userCheck(user));
 

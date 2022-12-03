@@ -2,6 +2,8 @@ import { base64Decode, base64Encode } from './crypto.encode.js';
 import { CryptoPassCompare, CryptoPassHash, CryptoPassword } from './crypto.types.js';
 import { webcrypto } from './webcrypto.js';
 
+const saltLength = 16;
+
 const passEncrypt = async (password: string, salt: Uint8Array) => {
   const wc = await webcrypto();
   const passEncoded = new TextEncoder().encode(password);
@@ -35,14 +37,14 @@ const passEncrypt = async (password: string, salt: Uint8Array) => {
 
 export const passHash: CryptoPassHash = async (plaintext) => {
   const wc = await webcrypto();
-  const salt = wc.getRandomValues(new Uint8Array(16));
+  const salt = wc.getRandomValues(new Uint8Array(saltLength));
   const passEncrypted = await passEncrypt(plaintext, salt);
   return passEncrypted as CryptoPassword;
 };
 
 export const passCompare: CryptoPassCompare = async (plaintext, hashtext) => {
   const uint8 = base64Decode(hashtext);
-  const salt = uint8.slice(0, 16);
+  const salt = uint8.slice(0, saltLength);
   const currentPassHash = await passEncrypt(plaintext, salt);
   return hashtext === currentPassHash;
 };

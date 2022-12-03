@@ -733,85 +733,6 @@
           "minLength": 3,
           "maxLength": 64
         },
-        "publicKey": {
-          "type": "object",
-          "properties": {
-            "alg": {
-              "type": "string"
-            },
-            "crv": {
-              "type": "string"
-            },
-            "d": {
-              "type": "string"
-            },
-            "dp": {
-              "type": "string"
-            },
-            "dq": {
-              "type": "string"
-            },
-            "e": {
-              "type": "string"
-            },
-            "ext": {
-              "type": "boolean"
-            },
-            "k": {
-              "type": "string"
-            },
-            "key_ops": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "kty": {
-              "type": "string"
-            },
-            "n": {
-              "type": "string"
-            },
-            "oth": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "d": {
-                    "type": "string"
-                  },
-                  "r": {
-                    "type": "string"
-                  },
-                  "t": {
-                    "type": "string"
-                  }
-                },
-                "additionalProperties": false
-              }
-            },
-            "p": {
-              "type": "string"
-            },
-            "q": {
-              "type": "string"
-            },
-            "qi": {
-              "type": "string"
-            },
-            "use": {
-              "type": "string"
-            },
-            "x": {
-              "type": "string"
-            },
-            "y": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "description": "User's public key for verifying signatures."
-        },
         "email": {
           "type": "string",
           "description": "Email address",
@@ -831,15 +752,13 @@
           "type": "boolean",
           "description": "If the user phone number is verified."
         },
-        "password": {
-          "type": "string",
-          "description": "User password. A null password means another form of auth must be used.",
-          "minLength": 6,
-          "maxLength": 64
-        },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
+        },
+        "logged": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date-time of last login."
         },
         "$credentials": {
           "$ref": "#/definitions/UIDList%3CCredential%3E",
@@ -1699,85 +1618,6 @@
           "minLength": 3,
           "maxLength": 64
         },
-        "publicKey": {
-          "type": "object",
-          "properties": {
-            "alg": {
-              "type": "string"
-            },
-            "crv": {
-              "type": "string"
-            },
-            "d": {
-              "type": "string"
-            },
-            "dp": {
-              "type": "string"
-            },
-            "dq": {
-              "type": "string"
-            },
-            "e": {
-              "type": "string"
-            },
-            "ext": {
-              "type": "boolean"
-            },
-            "k": {
-              "type": "string"
-            },
-            "key_ops": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "kty": {
-              "type": "string"
-            },
-            "n": {
-              "type": "string"
-            },
-            "oth": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "d": {
-                    "type": "string"
-                  },
-                  "r": {
-                    "type": "string"
-                  },
-                  "t": {
-                    "type": "string"
-                  }
-                },
-                "additionalProperties": false
-              }
-            },
-            "p": {
-              "type": "string"
-            },
-            "q": {
-              "type": "string"
-            },
-            "qi": {
-              "type": "string"
-            },
-            "use": {
-              "type": "string"
-            },
-            "x": {
-              "type": "string"
-            },
-            "y": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "description": "User's public key for verifying signatures."
-        },
         "email": {
           "type": "string",
           "description": "Email address",
@@ -1797,15 +1637,13 @@
           "type": "boolean",
           "description": "If the user phone number is verified."
         },
-        "password": {
-          "type": "string",
-          "description": "User password. A null password means another form of auth must be used.",
-          "minLength": 6,
-          "maxLength": 64
-        },
         "admin": {
           "type": "boolean",
           "description": "If this is an administrative account."
+        },
+        "logged": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date-time of last login."
         },
         "$credentials": {
           "$ref": "#/definitions/UIDList%3CCredential%3E",

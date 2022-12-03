@@ -11,7 +11,7 @@ import {
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
-import { register } from './register.js';
+import { register } from './register.back.js';
 
 const appStore = storeSetup();
 
@@ -38,9 +38,7 @@ test('should return registration output successfully.', async () => {
     context,
     system,
     'MyNewUser',
-    {
-      password: 'passwd12',
-    },
+    {},
   );
 
   const user = output.json.result?.user?.[0];
@@ -83,7 +81,6 @@ test('should return registration output successfully with access bearers.', asyn
     system,
     'MyNewUser',
     {
-      password: 'passwd12',
       withTokens: true,
     },
   );
@@ -155,9 +152,7 @@ test('should return registration output errored using oAuth username with passwo
     context,
     system,
     'TW#MyNewUser',
-    {
-      password: 'passwd12',
-    },
+    {},
   );
 
   expect(output).toBeDefined();

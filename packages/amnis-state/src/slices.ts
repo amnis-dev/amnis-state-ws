@@ -1,5 +1,6 @@
 import { auditSlice } from './audit/index.js';
 import { bearerSlice } from './bearer/index.js';
+import { challengeSlice } from './challenge/index.js';
 import { contactSlice } from './contact/index.js';
 import { credentialSlice } from './credential/index.js';
 import { keySlice } from './key/index.js';
@@ -18,6 +19,7 @@ import { websiteSlice } from './website/index.js';
 export const slices = {
   [auditSlice.name]: auditSlice,
   [bearerSlice.name]: bearerSlice,
+  [challengeSlice.name]: challengeSlice,
   [contactSlice.name]: contactSlice,
   [credentialSlice.name]: credentialSlice,
   [keySlice.name]: keySlice,

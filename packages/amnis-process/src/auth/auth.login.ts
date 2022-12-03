@@ -1,5 +1,5 @@
 import {
-  Io, IoProcess, AuthLogin, StateEntities, CryptoPassword,
+  Io, IoProcess, AuthLogin, StateEntities,
 } from '@amnis/core';
 import { mwValidate } from '../mw/index.js';
 import { userFindByName, outputBadCredentials, loginSuccessProcess } from '../utility/index.js';
@@ -8,13 +8,13 @@ const process: IoProcess<
 Io<AuthLogin, StateEntities>
 > = (context) => (
   async (input) => {
-    const { database, crypto } = context;
+    const { database } = context;
     const { body } = input;
 
     /**
      * CHECK CREDENTIALS
      */
-    const { username, password } = body;
+    const { username } = body;
 
     const user = await userFindByName(database, username);
 
@@ -22,11 +22,12 @@ Io<AuthLogin, StateEntities>
       return outputBadCredentials();
     }
 
-    if (!user.password) {
-      return outputBadCredentials();
-    }
+    // if (!user.password) {
+    //   return outputBadCredentials();
+    // }
 
-    const same = await crypto.passCompare(password, user.password as CryptoPassword);
+    // const same = await crypto.passCompare(password, user.password as CryptoPassword);
+    const same = false;
 
     if (same === false) {
       return outputBadCredentials();
