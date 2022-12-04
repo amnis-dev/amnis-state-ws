@@ -1,6 +1,6 @@
 import { challengeCreator } from '../entity/index.js';
 import { cryptoWeb } from './index.js';
-import { authRegisterCreate, authRegisterParse } from './io.auth.js';
+import { authRegistrationCreate, authRegistrationParse } from './io.auth.js';
 
 test('should create a valid auth registration object', async () => {
   const username = 'test_user';
@@ -8,14 +8,14 @@ test('should create a valid auth registration object', async () => {
     value: await cryptoWeb.randomString(),
   });
 
-  const [authRegister] = await authRegisterCreate({
+  const [authRegistration] = await authRegistrationCreate({
     agent: 'Jest Test Device',
     username,
     password: 'passwd12',
     challenge,
   });
 
-  expect(authRegister).toMatchObject({
+  expect(authRegistration).toMatchObject({
     username: 'test_user',
     challenge: expect.any(String),
     type: 'auth.create',
@@ -31,7 +31,7 @@ test('should be able to parse a generated auth registration object', async () =>
     value: await cryptoWeb.randomString(),
   });
 
-  const [authRegister, privateKeyWrapped] = await authRegisterCreate({
+  const [authRegistration, privateKeyWrapped] = await authRegistrationCreate({
     agent: 'Jest Test Device',
     username,
     password: 'passwd12',
@@ -40,14 +40,14 @@ test('should be able to parse a generated auth registration object', async () =>
 
   expect(typeof privateKeyWrapped === 'string').toBe(true);
 
-  const authRegisterParsed = await authRegisterParse(authRegister);
+  const authRegistrationParsed = await authRegistrationParse(authRegistration);
 
-  if ('level' in authRegisterParsed) {
-    expect(authRegisterParsed.level).toBeUndefined();
+  if ('level' in authRegistrationParsed) {
+    expect(authRegistrationParsed.level).toBeUndefined();
     return;
   }
 
-  expect(authRegisterParsed).toMatchObject({
+  expect(authRegistrationParsed).toMatchObject({
     username: 'test_user',
     challenge: expect.any(Object),
     type: 'auth.create',
@@ -56,12 +56,12 @@ test('should be able to parse a generated auth registration object', async () =>
     signature: expect.any(ArrayBuffer),
   });
 
-  expect(authRegisterParsed.challenge).toMatchObject({
+  expect(authRegistrationParsed.challenge).toMatchObject({
     value: expect.any(String),
     expires: expect.any(Number),
   });
 
-  expect(authRegisterParsed.credential).toMatchObject({
+  expect(authRegistrationParsed.credential).toMatchObject({
     name: 'Jest Test Device',
     publicKey: expect.any(String),
   });

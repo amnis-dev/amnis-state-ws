@@ -10,6 +10,7 @@ export const systemKey = 'system';
 export const systemBase: SystemBase = {
   name: '',
   sessionExpires: durationCalc('1h'),
+  registrationOpen: true,
   $website: uid(websiteKey),
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),

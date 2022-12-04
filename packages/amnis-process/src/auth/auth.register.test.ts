@@ -9,13 +9,9 @@ import {
   StateEntities,
   challengeKey,
   ioOutputErrored,
-  AuthRegister,
+  AuthRegistration,
   Challenge,
-  Entity,
-  credentialCreator,
-  base64Encode,
-  entityStrip,
-  authRegisterCreate,
+  authRegistrationCreate,
   IoOutput,
 } from '@amnis/core';
 import { storeSetup } from '@amnis/state';
@@ -85,15 +81,15 @@ test('should start ritual and complete registration', async () => {
     return;
   }
 
-  const [authRegister] = await authRegisterCreate({
+  const [authRegistration] = await authRegistrationCreate({
     agent: 'Jest Test Agent',
     username: 'new_user',
     password: 'passwd12',
     challenge,
   });
 
-  const inputRegister: IoInput<AuthRegister> = {
-    body: authRegister,
+  const inputRegister: IoInput<AuthRegistration> = {
+    body: authRegistration,
   };
 
   const resultRegister = await io.register(inputRegister);

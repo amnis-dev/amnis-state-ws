@@ -5,42 +5,49 @@ import type { Website } from '../website/index.js';
 
 export interface System extends EntityCreator {
   /**
-   * Name of the system.
+   * @description Name of the system.
    */
   name: string;
 
   /**
-   * Number in milliseconds that an authentication session should live.
+   * @description Number in milliseconds that an authentication session should live.
    * @default 3600000
    */
   sessionExpires: number;
 
   /**
-   * System's website configurations.
+   * @description Open registration to anonymous users. Otherwise, only executives and
+   * admins can initialize a registration for a new client.
+   * @default true
+   */
+  registrationOpen: boolean;
+
+  /**
+   * @description System's website configurations.
    */
   $website: UID<Website>;
 
   /**
-   * Role identifier that considers the user an administrator.
+   * @description Role identifier that considers the user an administrator.
    * Administrators have complete control.
    */
   $adminRole: UID<Role>;
 
   /**
-   * Role identifier that considers the user an executive.
+   * @description Role identifier that considers the user an executive.
    * Executives have second-highest control over a system, just under administrators.
    */
   $execRole: UID<Role>;
 
   /**
-   * The initial roles to assign to a user when a new account is created.
+   * @description The initial roles to assign to a user when a new account is created.
    * @default []
    */
   $initialRoles: UIDList<Role>;
 
   /**
-   * Anonymous access permissions.
-   * These are roles used when no authotization is provided by the client.
+   * @description Anonymous access permissions.
+   * These are roles used when no authorization is provided by the client.
    * @default []
    */
   $anonymousRoles: UIDList<Role>;

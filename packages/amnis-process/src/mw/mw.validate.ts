@@ -10,7 +10,7 @@ export const mwValidate: IoMiddleware<string> = (
     /**
      * Validate the body.
      */
-    const validateOutput = validate(validators[validatorKey], input.body);
+    const validateOutput = validate(validators[validatorKey], input.body ?? {});
     if (validateOutput) {
       return validateOutput;
     }

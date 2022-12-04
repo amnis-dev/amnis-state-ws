@@ -13,8 +13,9 @@ import {
 
 import { systemSelectors } from '@amnis/state';
 import { processConfig } from '../config.js';
-import { loginSuccessProcess, userFindByName } from './common.js';
+import { loginSuccessProcess } from './common.js';
 import { register } from './register.back.js';
+import { findUserByName } from './find.js';
 
 /**
  * OAuth2 Response.
@@ -116,7 +117,7 @@ export async function oauthMicrosoft(
    * Find the user or register a new one.
    */
   const username = `MS#${microsoftId.oid}`;
-  const userSearch = await userFindByName(context.database, username);
+  const userSearch = await findUserByName(context, username);
 
   /**
    * If the user already exists, return the login success.

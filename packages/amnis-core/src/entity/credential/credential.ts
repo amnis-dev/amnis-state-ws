@@ -4,7 +4,6 @@ import type { Credential, CredentialBase, CredentialCreator } from './credential
 export const credentialKey = 'credential';
 
 export const credentialBase: CredentialBase = {
-  ip: '127.0.0.1',
   name: 'Unknown Credential',
   publicKey: '',
 };

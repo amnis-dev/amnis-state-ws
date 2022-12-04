@@ -82,6 +82,11 @@ export interface IoInput<T = any, J = JWTAccess> {
    * Decrypted session data.
    */
   session?: Session;
+
+  /**
+   * Possible IP address
+   */
+  ip?: string;
 }
 
 /**

@@ -10,7 +10,6 @@ import {
   sessionCreator,
   sessionKey,
   ioOutput,
-  UID,
   Database,
   User,
   userKey,
@@ -24,58 +23,6 @@ import {
   Entity,
 } from '@amnis/core';
 import { processConfig } from '../config.js';
-
-/**
- * Finds a user by name.
- */
-export async function userFindByName(
-  database: Database,
-  username: string,
-): Promise<User | undefined> {
-  const resultsUser = await database.read({
-    [userKey]: {
-      $query: {
-        name: {
-          $eq: username,
-        },
-      },
-    },
-  }, {
-    scope: { [userKey]: 'global' },
-  });
-
-  if (!resultsUser[userKey]?.length) {
-    return undefined;
-  }
-
-  return { ...resultsUser[userKey][0] } as Entity<User>;
-}
-
-/**
- * Finds a user by ID.
- */
-export async function userFindById(
-  database: Database,
-  userId: UID<User>,
-): Promise<Entity<User> | undefined> {
-  const resultsUser = await database.read({
-    [userKey]: {
-      $query: {
-        $id: {
-          $eq: userId,
-        },
-      },
-    },
-  }, {
-    scope: { [userKey]: 'global' },
-  });
-
-  if (!resultsUser[userKey]?.length) {
-    return undefined;
-  }
-
-  return { ...resultsUser[userKey][0] } as Entity<User>;
-}
 
 /**
  * Creates a session with user and profile data.

@@ -4,7 +4,7 @@ import type { Bearer } from '@amnis/core';
  * Payload for an registration request.
  * A value of undefined starts a registration event.
  */
-export interface AuthRegister {
+export interface AuthRegistration {
   /**
    * @minLength 2
    * @maxLength 24

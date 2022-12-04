@@ -1,5 +1,5 @@
 import type {
-  AuthRegister,
+  AuthRegistration,
   AuthLogin,
   AuthLogout,
   AuthPkce,
@@ -8,7 +8,7 @@ import type {
 } from '@amnis/core';
 
 export interface AuthSchema {
-  register?: AuthRegister;
+  register?: AuthRegistration;
   login?: AuthLogin;
   logout?: AuthLogout;
   pkce?: AuthPkce;

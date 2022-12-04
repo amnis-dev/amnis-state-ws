@@ -13,9 +13,9 @@ import {
   CryptoAsymSignature,
   base64Decode,
 } from './crypto/index.js';
-import type { AuthRegister } from './io.auth.types.js';
+import type { AuthRegistration } from './io.auth.types.js';
 
-export interface AuthRegisterCreateOptions {
+export interface AuthRegistrationCreateOptions {
   agent: string;
   username: string;
   password: string;
@@ -23,11 +23,11 @@ export interface AuthRegisterCreateOptions {
   origin?: string;
 }
 
-export type AuthRegisterCreate = (
-  options: AuthRegisterCreateOptions
-) => Promise<[authRegister: AuthRegister, privateKeyWrapped: string]>;
+export type AuthRegistrationCreate = (
+  options: AuthRegistrationCreateOptions
+) => Promise<[authRegistration: AuthRegistration, privateKeyWrapped: string]>;
 
-export const authRegisterCreate: AuthRegisterCreate = async ({
+export const authRegistrationCreate: AuthRegistrationCreate = async ({
   agent,
   username,
   password,
@@ -91,7 +91,7 @@ export const authRegisterCreate: AuthRegisterCreate = async ({
     originFinal = window.location.origin;
   }
 
-  const authRegister: AuthRegister = {
+  const authRegistration: AuthRegistration = {
     username,
     challenge: challengeEncoded,
     type: 'auth.create',
@@ -100,28 +100,30 @@ export const authRegisterCreate: AuthRegisterCreate = async ({
     signature: signatureEncoded,
   };
 
-  return [authRegister, privateKeyWrapped];
+  return [authRegistration, privateKeyWrapped];
 };
 
-export interface AuthRegisterParsed extends Omit<AuthRegister, 'challenge' | 'credential' | 'signature'> {
+export interface AuthRegistrationParsed extends Omit<AuthRegistration, 'challenge' | 'credential' | 'signature'> {
   challenge: Challenge;
   credential: Credential;
   signature: CryptoAsymSignature;
 }
 
-export type AuthRegisterParse = (authRegister: AuthRegister) => Promise<AuthRegisterParsed | Log>;
+export type AuthRegistrationParse = (
+  authRegistration: AuthRegistration
+) => Promise<AuthRegistrationParsed | Log>;
 
-export const authRegisterParse: AuthRegisterParse = async (authRegister) => {
+export const authRegistrationParse: AuthRegistrationParse = async (authRegistration) => {
   try {
     const dec = new TextDecoder();
-    const { challenge, credential, signature } = authRegister;
+    const { challenge, credential, signature } = authRegistration;
 
     const challengeObject = JSON.parse(dec.decode(base64Decode(challenge))) as Challenge;
     const credentialObject = JSON.parse(dec.decode(base64Decode(credential))) as Credential;
     const signatureBuffer = base64Decode(signature).buffer as CryptoAsymSignature;
 
     return {
-      ...authRegister,
+      ...authRegistration,
       challenge: challengeObject,
       credential: credentialObject,
       signature: signatureBuffer,

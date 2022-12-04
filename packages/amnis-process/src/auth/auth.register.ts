@@ -1,5 +1,5 @@
 import {
-  AuthRegister,
+  AuthRegistration,
   challengeCreator,
   challengeKey,
   dateNumeric,
@@ -8,16 +8,17 @@ import {
   ioOutput,
   IoProcess,
   StateEntities,
-  authRegisterParse,
+  authRegistrationParse,
   logCreator,
   CryptoAsymPublicKey,
 } from '@amnis/core';
-import { challengeActions } from '@amnis/state';
+import { challengeActions, systemSelectors } from '@amnis/state';
 import { challengeValidate } from '../utility/challenge.js';
+import { registerAccount } from '../utility/register.js';
 import { validate } from '../validate.js';
 
 const process: IoProcess<
-Io<AuthRegister, StateEntities>
+Io<AuthRegistration, StateEntities>
 > = (context) => (
   async (input) => {
     const { store, crypto, validators } = context;
@@ -28,6 +29,30 @@ Io<AuthRegister, StateEntities>
      * registration ritual.
      */
     if (!body) {
+      const systemActive = systemSelectors.selectActive(store.getState());
+
+      if (!systemActive) {
+        const output = ioOutput();
+        output.status = 500;
+        output.json.logs.push(logCreator({
+          level: 'error',
+          title: 'Inactive System',
+          description: 'There is no active system available to initalize the registration.',
+        }));
+        return output;
+      }
+
+      if (systemActive.registrationOpen !== true) {
+        const output = ioOutput();
+        output.status = 500;
+        output.json.logs.push(logCreator({
+          level: 'error',
+          title: 'Registration Closed',
+          description: 'The system has disabled registration.',
+        }));
+        return output;
+      }
+
       const outputStart = ioOutput();
 
       /**
@@ -60,24 +85,24 @@ Io<AuthRegister, StateEntities>
     /**
      * Must validate the registration input if it's defined.
      */
-    const validateOutput = validate(validators.AuthRegister, body);
+    const validateOutput = validate(validators.AuthRegistration, body);
     if (validateOutput) {
       return validateOutput;
     }
 
-    const authRegisterParsed = await authRegisterParse(body);
+    const authRegistrationParsed = await authRegistrationParse(body);
 
     /**
      * Ensure the auth registration parsing was successfull.
      */
-    if ('level' in authRegisterParsed) {
+    if ('level' in authRegistrationParsed) {
       const output = ioOutput();
       output.status = 500; // Internal Server Error
-      output.json.logs = [authRegisterParsed];
+      output.json.logs = [authRegistrationParsed];
       return output;
     }
 
-    const { challenge, credential, signature } = authRegisterParsed;
+    const { challenge, credential, signature } = authRegistrationParsed;
 
     /**
      * Verify that the challenge code is valid.
@@ -122,9 +147,19 @@ Io<AuthRegister, StateEntities>
       return output;
     }
 
-    const outputRegister = ioOutput();
+    const outputRegistration = await registerAccount(
+      context,
+      authRegistrationParsed,
+      input.ip,
+    );
 
-    return outputRegister;
+    if (outputRegistration.status !== 200) {
+      return outputRegistration;
+    }
+
+    const output = ioOutput();
+
+    return output;
   }
 );
 

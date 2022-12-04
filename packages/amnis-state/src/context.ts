@@ -30,7 +30,13 @@ export interface ContextOptions extends Partial<IoContext> {
  */
 export async function contextSetup(options: ContextOptions = {}): Promise<IoContext> {
   const {
-    store, validators, database, filesystem, crypto, initialize, data,
+    store,
+    validators,
+    database,
+    filesystem,
+    crypto,
+    initialize = true,
+    data,
   } = options;
   const storeNext = store ?? storeDefault;
   const validatorsNext = (validators || []) as Validators;
