@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 
 import type { JWTAccess } from '../../jwt.types.js';
-import type { Session, LogCreator } from '../../entity/index.js';
+import type { Session } from '../../entity/index.js';
 
 /**
  * String representation of a SHA256 encoded string.
@@ -164,7 +164,7 @@ export type CryptoAccessEncode = (
 export type CryptoAccessVerify = (
   encoded: CryptoToken,
   publicKey?: CryptoAsymPublicKey
-) => Promise<JWTAccess | LogCreator>;
+) => Promise<JWTAccess | undefined>;
 
 /**
  * Encodes a JSON value.

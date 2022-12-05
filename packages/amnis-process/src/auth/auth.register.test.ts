@@ -1,11 +1,6 @@
 import {
-  databaseMemory,
-  dataInitial,
-  filesystemMemory,
   IoInput,
-  ioProcess,
   schemaAuth,
-  cryptoWeb,
   StateEntities,
   challengeKey,
   ioOutputErrored,
@@ -13,26 +8,29 @@ import {
   Challenge,
   authRegistrationCreate,
   IoOutput,
+  IoContext,
+  userKey,
+  profileKey,
+  contactKey,
+  credentialKey,
+  Entity,
+  User,
+  Profile,
+  Contact,
+  Credential,
+  sessionKey,
+  Session,
 } from '@amnis/core';
-import { storeSetup } from '@amnis/state';
+import { contextSetup, systemActions, systemSelectors } from '@amnis/state';
 import { validateSetup } from '../validate.js';
 import { authProcessRegister } from './auth.register.js';
 
-const io = ioProcess(
-  {
-    store: storeSetup(),
-    validators: validateSetup([schemaAuth]),
-    database: databaseMemory,
-    filesystem: filesystemMemory,
-    crypto: cryptoWeb,
-  },
-  {
-    register: authProcessRegister,
-  },
-);
+let context: IoContext;
 
 beforeAll(async () => {
-  await databaseMemory.create(dataInitial());
+  context = await contextSetup({
+    validators: validateSetup([schemaAuth]),
+  });
 });
 
 test('should start the registration ritual', async () => {
@@ -40,7 +38,7 @@ test('should start the registration ritual', async () => {
     body: undefined,
   };
 
-  const output = await io.register(input);
+  const output = await authProcessRegister(context)(input);
 
   expect(output.status).toBe(200);
 
@@ -61,7 +59,7 @@ test('should not register with invalid body input', async () => {
     body: {},
   };
 
-  const output = await io.register(input);
+  const output = await authProcessRegister(context)(input);
 
   expect(output.status).toBe(400);
   expect(ioOutputErrored(output)).toBe(true);
@@ -72,7 +70,7 @@ test('should start ritual and complete registration', async () => {
     body: undefined,
   };
 
-  const resultStart = await io.register(inputStart) as IoOutput<StateEntities>;
+  const resultStart = await authProcessRegister(context)(inputStart) as IoOutput<StateEntities>;
 
   const challenge = resultStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
@@ -92,7 +90,78 @@ test('should start ritual and complete registration', async () => {
     body: authRegistration,
   };
 
-  const resultRegister = await io.register(inputRegister);
+  const resultRegister = await authProcessRegister(context)(inputRegister);
 
   console.log(JSON.stringify(resultRegister, null, 2));
+
+  expect(resultRegister.status).toBe(200);
+
+  const { logs, result: entities } = resultRegister.json;
+
+  if (!entities) {
+    expect(entities).toBeDefined();
+    return;
+  }
+
+  const systemActive = systemSelectors.selectActive(context.store.getState());
+
+  const users = entities[userKey] as Entity<User>[];
+  const profiles = entities[profileKey] as Entity<Profile>[];
+  const contacts = entities[contactKey] as Entity<Contact>[];
+  const credentials = entities[credentialKey] as Entity<Credential>[];
+  const session = entities[sessionKey] as Entity<Session>[];
+
+  expect(users).toBeDefined();
+  expect(users).toHaveLength(1);
+  expect(users[0].$roles).toEqual(systemActive?.$initialRoles);
+  expect(users[0].$owner).toEqual(users[0].$id);
+
+  expect(profiles).toBeDefined();
+  expect(profiles).toHaveLength(1);
+  expect(profiles[0].$owner).toEqual(users[0].$id);
+
+  expect(contacts).toBeDefined();
+  expect(contacts).toHaveLength(1);
+  expect(contacts[0].$owner).toEqual(users[0].$id);
+
+  expect(credentials).toBeDefined();
+  expect(credentials).toHaveLength(1);
+  expect(credentials[0].$owner).toEqual(users[0].$id);
+
+  expect(session).toBeDefined();
+  expect(session).toHaveLength(1);
+  expect(session[0].$owner).toEqual(users[0].$id);
+
+  expect(logs).toHaveLength(1);
+  expect(logs[0].level).toBe('success');
+  expect(logs[0].title).toBe('Account Registered');
+});
+
+test('should not be able to register when turned off by the system', async () => {
+  const system = systemSelectors.selectActive(context.store.getState());
+
+  if (!system) {
+    expect(system).toBeDefined();
+    return;
+  }
+
+  context.store.dispatch(systemActions.update({
+    $id: system.$id,
+    registrationOpen: false,
+  }));
+
+  const inputStart: IoInput = {
+    body: undefined,
+  };
+
+  const resultStart = await authProcessRegister(context)(inputStart) as IoOutput<StateEntities>;
+
+  expect(resultStart.status).toBe(500);
+
+  const { logs, result } = resultStart.json;
+
+  expect(result).toBeUndefined();
+  expect(logs).toHaveLength(1);
+  expect(logs[0].level).toBe('error');
+  expect(logs[0].title).toBe('Registration Closed');
 });

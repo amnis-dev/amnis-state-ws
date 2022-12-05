@@ -1,35 +1,47 @@
 import {
-  databaseMemoryStorage, Entity, IoContext, User, userKey,
+  databaseMemoryStorage,
+  Entity,
+  IoContext,
+  User,
+  userKey,
+  Credential,
+  credentialKey,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
-import { findUserById, findUserByName } from './find.js';
+import { findCredentialById, findUserByName } from './find.js';
 
 let context: IoContext;
 let userExisting: Entity<User>;
+let credentialExisting: Entity<Credential>;
 
 beforeAll(async () => {
   context = await contextSetup({
     initialize: true,
   });
-  userExisting = Object.values(databaseMemoryStorage()[userKey])[0] as Entity<User>;
-});
-
-test('should find user by id', async () => {
-  const userFound = await findUserById(context, userExisting.$id);
-
-  if (!userFound) {
-    expect(userFound).toBeDefined();
-    return;
-  }
-  expect(userFound.$id).toBe(userExisting.$id);
+  userExisting = Object.values(
+    databaseMemoryStorage()[userKey],
+  )[0] as Entity<User>;
+  credentialExisting = Object.values(
+    databaseMemoryStorage()[credentialKey],
+  )[0] as Entity<Credential>;
 });
 
 test('should find user by name', async () => {
-  const userFound = await findUserByName(context, userExisting.name);
+  const found = await findUserByName(context, userExisting.name);
 
-  if (!userFound) {
-    expect(userFound).toBeDefined();
+  if (!found) {
+    expect(found).toBeDefined();
     return;
   }
-  expect(userFound.name).toBe(userExisting.name);
+  expect(found.name).toBe(userExisting.name);
+});
+
+test('should find credential by id', async () => {
+  const found = await findCredentialById(context, credentialExisting.$id);
+
+  if (!found) {
+    expect(found).toBeDefined();
+    return;
+  }
+  expect(found.$id).toBe(credentialExisting.$id);
 });

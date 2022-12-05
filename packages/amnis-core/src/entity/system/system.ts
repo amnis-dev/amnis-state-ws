@@ -11,6 +11,7 @@ export const systemBase: SystemBase = {
   name: '',
   sessionExpires: durationCalc('1h'),
   registrationOpen: true,
+  registrationExpiration: 30,
   $website: uid(websiteKey),
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),

@@ -22,16 +22,16 @@ Io<AuthRegistration, StateEntities>
 > = (context) => (
   async (input) => {
     const { store, crypto, validators } = context;
-    const { body } = input;
+    const { body, access } = input;
 
     /**
      * When the body is undefined, output data necessary to begin the
      * registration ritual.
      */
     if (!body) {
-      const systemActive = systemSelectors.selectActive(store.getState());
+      const system = systemSelectors.selectActive(store.getState());
 
-      if (!systemActive) {
+      if (!system) {
         const output = ioOutput();
         output.status = 500;
         output.json.logs.push(logCreator({
@@ -42,15 +42,20 @@ Io<AuthRegistration, StateEntities>
         return output;
       }
 
-      if (systemActive.registrationOpen !== true) {
-        const output = ioOutput();
-        output.status = 500;
-        output.json.logs.push(logCreator({
-          level: 'error',
-          title: 'Registration Closed',
-          description: 'The system has disabled registration.',
-        }));
-        return output;
+      if (system.registrationOpen !== true) {
+        const isAdmin = access?.roles.includes(system.$adminRole);
+        const isExec = access?.roles.includes(system.$execRole);
+
+        if (!isAdmin && !isExec) {
+          const output = ioOutput();
+          output.status = 500;
+          output.json.logs.push(logCreator({
+            level: 'error',
+            title: 'Registration Closed',
+            description: 'The system has disabled registration.',
+          }));
+          return output;
+        }
       }
 
       const outputStart = ioOutput();
@@ -66,7 +71,7 @@ Io<AuthRegistration, StateEntities>
       const challengeEntity = entityCreate(
         challengeCreator({
           value: challangeValue,
-          expires: dateNumeric('15m'),
+          expires: dateNumeric(`${system.registrationExpiration}m`),
         }),
       );
 
@@ -85,7 +90,7 @@ Io<AuthRegistration, StateEntities>
     /**
      * Must validate the registration input if it's defined.
      */
-    const validateOutput = validate(validators.AuthRegistration, body);
+    const validateOutput = validate(validators.AuthRegister, body);
     if (validateOutput) {
       return validateOutput;
     }
@@ -95,10 +100,14 @@ Io<AuthRegistration, StateEntities>
     /**
      * Ensure the auth registration parsing was successfull.
      */
-    if ('level' in authRegistrationParsed) {
+    if (!authRegistrationParsed) {
       const output = ioOutput();
       output.status = 500; // Internal Server Error
-      output.json.logs = [authRegistrationParsed];
+      output.json.logs = [logCreator({
+        level: 'error',
+        title: 'Invalid Encoding',
+        description: 'Registration parameters could not be decoded.',
+      })];
       return output;
     }
 
@@ -159,7 +168,7 @@ Io<AuthRegistration, StateEntities>
 
     const output = ioOutput();
 
-    return output;
+    return outputRegistration;
   }
 );
 

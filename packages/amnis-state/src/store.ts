@@ -17,6 +17,33 @@ export function storeSetup() {
   return store;
 }
 
+/**
+ * Configures a default context store.
+ */
+export function storeContextSetup() {
+  const {
+    system,
+    challenge,
+    key,
+    role,
+  } = stateSet.reducers;
+  const rootReducer = rtk.combineReducers({
+    system,
+    challenge,
+    key,
+    role,
+  });
+
+  const store = rtk.configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => (
+      getDefaultMiddleware().concat(stateSet.middleware)
+    ),
+  });
+
+  return store;
+}
+
 export const store = storeSetup();
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -5,12 +5,12 @@ import { uid } from '../../uid.js';
 
 export const userKey = 'user';
 
-export const userBase: UserBase = {
+export const userBase = (): UserBase => ({
   name: 'Unknown User',
   $credentials: [],
   $roles: [],
   $permits: [],
-};
+});
 
 /**
  * User validation method.
@@ -36,7 +36,7 @@ export function userCreator(
   user: UserCreator,
 ): User {
   return {
-    ...userBase,
+    ...userBase(),
     ...user,
     $id: uid(userKey),
   };

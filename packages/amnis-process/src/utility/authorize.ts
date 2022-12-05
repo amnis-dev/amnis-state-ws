@@ -1,4 +1,6 @@
-import type { State, Grant, Task } from '@amnis/core';
+import {
+  State, Grant, Task,
+} from '@amnis/core';
 
 /**
  * Authorization wall that filters out state slices based on grants.
@@ -8,7 +10,7 @@ import type { State, Grant, Task } from '@amnis/core';
  *
  * It does return a scope state map for the database to use.
  */
-export function authorizeWall(state: State, grants: Grant[], attempt: Task): State {
+export const authorizeWall = (state: State, grants: Grant[], attempt: Task): State => {
   const sanitized: State = {};
 
   grants.every(({ key, task }) => {
@@ -27,6 +29,6 @@ export function authorizeWall(state: State, grants: Grant[], attempt: Task): Sta
   });
 
   return sanitized;
-}
+};
 
 export default authorizeWall;

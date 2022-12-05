@@ -39,6 +39,7 @@ export const registerAccount = async (
       title: 'Username Already Registered',
       description: `The username "${authRegistrationParsed.username}" has already been registered.`,
     }));
+    return output;
   }
 
   /**
@@ -101,7 +102,7 @@ export const registerAccount = async (
     [profileKey]: [profile],
     [contactKey]: [contact],
     [credentialKey]: [credential],
-  });
+  }, { $owner: user.$id });
 
   /**
    * Commit the new data into the database.

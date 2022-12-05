@@ -24,9 +24,13 @@ import {
   entityCreate,
   historyKey,
   Entity,
+  Credential,
+  credentialKey,
 } from './entity/index.js';
 
-export function dataInitial(): StateEntities {
+import { accountsGet } from './accounts.js';
+
+export const dataInitial = async (): Promise<StateEntities> => {
   /**
    * ================================================================================
    * Roles to be assigned to users
@@ -81,7 +85,6 @@ export function dataInitial(): StateEntities {
       color: '#000000',
       grants: [
         grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: profileKey, scope: 'global', task: task(0, 1, 0, 0) }),
       ],
     }), { committed: true }),
   ];
@@ -90,26 +93,53 @@ export function dataInitial(): StateEntities {
    * ================================================================================
    * User Accounts
    */
+
+  // Setup the accounts.
+  const accounts = await accountsGet();
+
   const users: Entity<User>[] = [
     entityCreate(userCreator({
-      name: 'admin',
+      name: accounts.admin.name,
       email: 'admin@email.address',
       $roles: [roles[0].$id],
       $permits: [],
     }), { committed: true }),
     entityCreate(userCreator({
-      name: 'exec',
+      name: accounts.exec.name,
       email: 'exec@email.address',
       $roles: [roles[1].$id],
       $permits: [],
     }), { committed: true }),
     entityCreate(userCreator({
-      name: 'user',
+      name: accounts.user.name,
       email: 'user@email.address',
       $roles: [roles[2].$id],
       $permits: [],
     }), { committed: true }),
   ];
+
+  /**
+   * ================================================================================
+   * User credentials
+   */
+  const credentials: Entity<Credential>[] = [
+    entityCreate(
+      accounts.admin.credential,
+      { $owner: users[0].$id, committed: true },
+    ),
+    entityCreate(
+      accounts.exec.credential,
+      { $owner: users[1].$id, committed: true },
+    ),
+    entityCreate(
+      accounts.user.credential,
+      { $owner: users[2].$id, committed: true },
+    ),
+  ];
+
+  users[0].$credentials.push(credentials[0].$id);
+  users[1].$credentials.push(credentials[1].$id);
+  users[2].$credentials.push(credentials[2].$id);
 
   /**
    * ================================================================================
@@ -169,10 +199,11 @@ export function dataInitial(): StateEntities {
   return {
     [roleKey]: roles,
     [userKey]: users,
+    [credentialKey]: credentials,
     [contactKey]: contacts,
     [profileKey]: profiles,
     [systemKey]: systems,
   };
-}
+};
 
 export default dataInitial;

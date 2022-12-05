@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { logCreator } from '../../entity/index.js';
 import { JWTAccess } from '../../jwt.types.js';
 import { CryptoAccessEncode, CryptoAccessVerify } from './crypto.types.js';
 import { tokenSign, tokenVerify } from './token.js';
@@ -31,11 +30,7 @@ export const accessVerify: CryptoAccessVerify = async (
   const verified = await tokenVerify(encoded, publicKey);
 
   if (!verified) {
-    return logCreator({
-      level: 'error',
-      title: 'Token Error',
-      description: 'There was an issue verifying the access token',
-    });
+    return undefined;
   }
 
   return verified;

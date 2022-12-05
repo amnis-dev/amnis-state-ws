@@ -4,8 +4,6 @@ import {
   credentialCreator,
   Entity,
   entityStrip,
-  Log,
-  logCreator,
 } from '../entity/index.js';
 import {
   cryptoWeb,
@@ -25,7 +23,11 @@ export interface AuthRegistrationCreateOptions {
 
 export type AuthRegistrationCreate = (
   options: AuthRegistrationCreateOptions
-) => Promise<[authRegistration: AuthRegistration, privateKeyWrapped: string]>;
+) => Promise<[
+  authRegistration: AuthRegistration,
+  privateKeyWrapped: string,
+  credential: Credential
+]>;
 
 export const authRegistrationCreate: AuthRegistrationCreate = async ({
   agent,
@@ -100,7 +102,7 @@ export const authRegistrationCreate: AuthRegistrationCreate = async ({
     signature: signatureEncoded,
   };
 
-  return [authRegistration, privateKeyWrapped];
+  return [authRegistration, privateKeyWrapped, credential];
 };
 
 export interface AuthRegistrationParsed extends Omit<AuthRegistration, 'challenge' | 'credential' | 'signature'> {
@@ -111,7 +113,7 @@ export interface AuthRegistrationParsed extends Omit<AuthRegistration, 'challeng
 
 export type AuthRegistrationParse = (
   authRegistration: AuthRegistration
-) => Promise<AuthRegistrationParsed | Log>;
+) => Promise<AuthRegistrationParsed | undefined>;
 
 export const authRegistrationParse: AuthRegistrationParse = async (authRegistration) => {
   try {
@@ -129,10 +131,6 @@ export const authRegistrationParse: AuthRegistrationParse = async (authRegistrat
       signature: signatureBuffer,
     };
   } catch (e) {
-    return logCreator({
-      level: 'error',
-      title: 'Invalid Encoding',
-      description: 'Registration parameters could not be decoded.',
-    });
+    return undefined;
   }
 };

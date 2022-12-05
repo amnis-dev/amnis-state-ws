@@ -23,6 +23,12 @@ export interface System extends EntityCreator {
   registrationOpen: boolean;
 
   /**
+   * @description Expiration of a registration event in minutes.
+   * @default 30
+   */
+  registrationExpiration: number;
+
+  /**
    * @description System's website configurations.
    */
   $website: UID<Website>;

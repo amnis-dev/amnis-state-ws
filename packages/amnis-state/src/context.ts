@@ -10,7 +10,7 @@ import {
   systemKey,
   Validators,
 } from '@amnis/core';
-import { store as storeDefault } from './store.js';
+import { storeContextSetup } from './store.js';
 import { systemActions } from './system/index.js';
 
 export interface ContextOptions extends Partial<IoContext> {
@@ -38,11 +38,11 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
     initialize = true,
     data,
   } = options;
-  const storeNext = store ?? storeDefault;
+  const storeNext = store ?? storeContextSetup();
   const validatorsNext = (validators || []) as Validators;
   const databaseNext = database ?? databaseMemory;
   const filesystemNext = filesystem ?? filesystemMemory;
-  const dataNext = data ?? dataInitial();
+  const dataNext = data ?? await dataInitial();
 
   const cryptoNext = crypto ?? cryptoWeb;
 

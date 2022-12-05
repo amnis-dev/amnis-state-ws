@@ -42,8 +42,8 @@ test('should be able to parse a generated auth registration object', async () =>
 
   const authRegistrationParsed = await authRegistrationParse(authRegistration);
 
-  if ('level' in authRegistrationParsed) {
-    expect(authRegistrationParsed.level).toBeUndefined();
+  if (!authRegistrationParsed) {
+    expect(authRegistrationParsed).toBeDefined();
     return;
   }
 
