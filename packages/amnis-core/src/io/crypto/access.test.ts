@@ -50,13 +50,7 @@ test('should encode and NOT verify access token due to expiration', async () => 
   expect(encoded).toBeDefined();
 
   const verified = await accessVerify(encoded);
-  expect(verified).toEqual({
-    $id: expect.any(String),
-    level: 'error',
-    title: expect.any(String),
-    system: expect.any(String),
-    description: expect.any(String),
-  });
+  expect(verified).toBeUndefined();
 });
 
 test('should encode and NOT verify access token from different generated asymmetric key', async () => {
@@ -65,11 +59,5 @@ test('should encode and NOT verify access token from different generated asymmet
   expect(encoded).toBeDefined();
 
   const verified = await accessVerify(encoded);
-  expect(verified).toEqual({
-    $id: expect.any(String),
-    level: 'error',
-    title: expect.any(String),
-    system: expect.any(String),
-    description: expect.any(String),
-  });
+  expect(verified).toBeUndefined();
 });

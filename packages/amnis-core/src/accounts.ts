@@ -24,6 +24,7 @@ export const accountsGet = async () => {
     const [adminRegistration, adminPrivateKey, adminCredential] = await authRegistrationCreate({
       agent: 'Local Agent',
       username: 'admin',
+      displayName: 'Administrator',
       password: 'passwd12',
       challenge,
     });
@@ -43,6 +44,7 @@ export const accountsGet = async () => {
     const [execRegistration, execPrivateKey, execCredential] = await authRegistrationCreate({
       agent: 'Local Agent',
       username: 'exec',
+      displayName: 'Executive',
       password: 'passwd12',
       challenge,
     });
@@ -62,6 +64,7 @@ export const accountsGet = async () => {
     const [userRegistration, userPrivateKey, userCredential] = await authRegistrationCreate({
       agent: 'Local Agent',
       username: 'user',
+      displayName: 'User',
       password: 'passwd12',
       challenge,
     });

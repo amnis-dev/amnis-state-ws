@@ -2,7 +2,6 @@
 import type { Dictionary, EntityState } from '@reduxjs/toolkit';
 import { rtk } from './rtk.js';
 import type { UID } from './types.js';
-import { CryptoAsymPublicKey } from './io/index.js';
 import {
   State,
   Bearer,
@@ -229,7 +228,7 @@ export function selectBearer(state: State, id: string): Bearer | undefined {
 /**
  * Selects a public key from the crypto slice.
  */
-export function selectKey(state: State, id: string): CryptoAsymPublicKey | undefined {
+export function selectKey(state: State, id: string): string | undefined {
   const slice = state[keyKey] as EntityState<Key>;
 
   if (!slice?.entities) {
@@ -244,7 +243,7 @@ export function selectKey(state: State, id: string): CryptoAsymPublicKey | undef
     (entity) => (entity?.id === id),
   );
 
-  return keyObject?.value as CryptoAsymPublicKey;
+  return keyObject?.value;
 }
 
 /**

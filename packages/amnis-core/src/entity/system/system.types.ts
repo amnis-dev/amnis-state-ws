@@ -10,10 +10,16 @@ export interface System extends EntityCreator {
   name: string;
 
   /**
-   * @description Number in milliseconds that an authentication session should live.
-   * @default 3600000
+   * @description Number in minutes that an authentication session should live.
+   * @default 60
    */
   sessionExpires: number;
+
+  /**
+   * @description Number in minutes that a bearer token should live.
+   * @default 30
+   */
+  bearerExpires: number;
 
   /**
    * @description Open registration to anonymous users. Otherwise, only executives and

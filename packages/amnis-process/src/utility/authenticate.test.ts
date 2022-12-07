@@ -2,7 +2,6 @@ import {
   accountsGet,
   base64Encode,
   challengeCreator,
-  CryptoAsymPrivateKey,
   IoContext,
 } from '@amnis/core';
 import { challengeActions, contextSetup } from '@amnis/state';
@@ -31,7 +30,7 @@ test('should authenticate as normal user account', async () => {
 
   const signature = await context.crypto.asymSign(
     userAccount.name + userAccount.credential.$id + challenge,
-    privateKey as CryptoAsymPrivateKey,
+    privateKey,
   );
 
   const signatureEncoded = base64Encode(new Uint8Array(signature));
@@ -44,9 +43,50 @@ test('should authenticate as normal user account', async () => {
     signatureEncoded,
   );
 
-  console.log(JSON.stringify(output, null, 2));
-
   expect(output.status).toBe(200);
+  expect(output.cookies.authSession).toBeDefined();
+  expect(output.cookies.authSession).toEqual(expect.any(String));
+  expect(output.json.bearers).toBeDefined();
+  expect(output.json.bearers).toHaveLength(1);
+  expect(output.json.bearers?.[0]).toMatchObject({
+    id: 'core',
+    exp: expect.any(Number),
+    access: expect.any(String),
+  });
+
+  const {
+    user: users,
+    profile: profiles,
+    contact: contacts,
+    session: sessions,
+  } = output.json.result;
+
+  expect(users).toBeDefined();
+  expect(users).toHaveLength(1);
+  expect(users[0]).toMatchObject({
+    name: 'user',
+    $credentials: [
+      userAccount.credential.$id,
+    ],
+  });
+
+  expect(profiles).toBeDefined();
+  expect(profiles).toHaveLength(1);
+  expect(profiles[0]).toMatchObject({
+    $user: users[0].$id,
+  });
+
+  expect(contacts).toBeDefined();
+  expect(contacts).toHaveLength(1);
+  expect(contacts[0]).toMatchObject({
+    $id: profiles[0].$contact,
+  });
+
+  expect(sessions).toBeDefined();
+  expect(sessions).toHaveLength(1);
+  expect(sessions[0]).toMatchObject({
+    $subject: users[0].$id,
+  });
 });
 
 test('should not authenticate with non-existing user', async () => {
@@ -60,12 +100,15 @@ test('should not authenticate with non-existing user', async () => {
   const username = 'i-dont-exist';
   const asymKeys = await context.crypto.asymGenerate('signer');
   const signature = await context.crypto.asymSign(username + challenge, asymKeys.privateKey);
+
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+
   const output = await authenticateAccount(
     context,
     challenge,
     username,
     userAccount.credential.$id,
-    signature,
+    signatureEncoded,
   );
 
   expect(output.status).toBe(401);
@@ -92,7 +135,7 @@ test('should not authenticate using different credentials', async () => {
 
   const signature = await context.crypto.asymSign(
     userAccount.name + userAccount.credential.$id + challenge,
-    privateKey as CryptoAsymPrivateKey,
+    privateKey,
   );
 
   const signatureEncoded = base64Encode(new Uint8Array(signature));
@@ -112,7 +155,7 @@ test('should not authenticate using different credentials', async () => {
   expect(output.json.logs[0].title).toBe('Authentication Failed: Unlinked Credential');
 });
 
-test('should not authenticate using different private key for signing', async () => {
+test('should not authenticate using a different private key for signing', async () => {
   const { user: userAccount, exec: execAccount } = await accountsGet();
 
   const challenge = challengeCreator({
@@ -129,7 +172,7 @@ test('should not authenticate using different private key for signing', async ()
 
   const signature = await context.crypto.asymSign(
     userAccount.name + userAccount.credential.$id + challenge,
-    privateKey as CryptoAsymPrivateKey,
+    privateKey,
   );
 
   const signatureEncoded = base64Encode(new Uint8Array(signature));

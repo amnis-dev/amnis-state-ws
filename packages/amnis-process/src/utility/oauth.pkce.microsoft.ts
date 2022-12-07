@@ -4,7 +4,6 @@ import {
   dateNumeric,
   ioOutput,
   IoOutput,
-  CryptoToken,
   StateEntities,
   Bearer,
   bearerCreate,
@@ -24,10 +23,10 @@ interface OAuth2TokenData {
   bearer_type: string;
   expires_in: number,
   ext_expires_in: number;
-  access_token: CryptoToken;
-  id_token: CryptoToken;
+  access_token: string;
+  id_token: string;
   scope: string;
-  refresh_token?: CryptoToken;
+  refresh_token?: string;
   error?: string;
   error_description?: string;
 }

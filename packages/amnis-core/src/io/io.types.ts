@@ -8,7 +8,7 @@ import type { LogCreator, Session } from '../entity/index.js';
 
 import type { Database } from './database/database.types.js';
 import type { FileSystem } from './filesystem/filesystem.types.js';
-import { Crypto, CryptoSymEncryption, CryptoToken } from './crypto/crypto.types.js';
+import { Crypto } from './crypto/crypto.types.js';
 import { JWTAccess } from '../jwt.types.js';
 
 /**
@@ -66,7 +66,7 @@ export interface IoInput<T = any, J = JWTAccess> {
   /**
    * Encoded JWT data.
    */
-  accessEncoded?: CryptoToken;
+  accessEncoded?: string;
 
   /**
    * Verified decoded token.
@@ -76,7 +76,7 @@ export interface IoInput<T = any, J = JWTAccess> {
   /**
    * Ecrypted Session
    */
-  sessionEncryption?: CryptoSymEncryption;
+  sessionEncryption?: string;
 
   /**
    * Decrypted session data.

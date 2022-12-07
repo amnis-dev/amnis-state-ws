@@ -6,6 +6,10 @@ import {
   User,
   userKey,
   Credential,
+  Profile,
+  profileKey,
+  Contact,
+  contactKey,
 } from '@amnis/core';
 
 /**
@@ -58,4 +62,56 @@ export const findCredentialById = async (
   }
 
   return results[credentialKey][0] as Entity<Credential>;
+};
+
+/**
+ * Finds a profile by user Id.
+ */
+export const findProfileByUserId = async (
+  context: IoContext,
+  id: UID<User>,
+): Promise<Entity<Profile> | undefined> => {
+  const results = await context.database.read({
+    [profileKey]: {
+      $query: {
+        $user: {
+          $eq: id,
+        },
+      },
+    },
+  }, {
+    scope: { [profileKey]: 'global' },
+  });
+
+  if (!results[profileKey]?.length) {
+    return undefined;
+  }
+
+  return results[profileKey][0] as Entity<Profile>;
+};
+
+/**
+ * Finds a contact by id.
+ */
+export const findContactById = async (
+  context: IoContext,
+  id: UID<Contact>,
+): Promise<Entity<Contact> | undefined> => {
+  const results = await context.database.read({
+    [contactKey]: {
+      $query: {
+        $id: {
+          $eq: id,
+        },
+      },
+    },
+  }, {
+    scope: { [contactKey]: 'global' },
+  });
+
+  if (!results[contactKey]?.length) {
+    return undefined;
+  }
+
+  return results[contactKey][0] as Entity<Contact>;
 };

@@ -12,6 +12,9 @@ export const accessEncode: CryptoAccessEncode = async (
 ) => {
   const jwtPrep = {
     ...access,
+    /**
+     * Token exp are required to have the expiration in seconds.
+     */
     exp: Math.floor(access.exp / 1000), // Seconds Since the Epoch
   };
 
@@ -33,5 +36,13 @@ export const accessVerify: CryptoAccessVerify = async (
     return undefined;
   }
 
-  return verified;
+  const jwtAccess: JWTAccess = {
+    ...verified,
+    /**
+     * The token could have had the exp in seconds. Return it to MS.
+     */
+    exp: verified.exp * 1000,
+  };
+
+  return jwtAccess;
 };

@@ -89,7 +89,7 @@ export const registerAccount = async (
    * Create a new profile
    */
   const profile = profileCreator({
-    nameDisplay: '',
+    nameDisplay: authRegistrationParsed.displayName,
     $user: user.$id,
     $contact: contact.$id,
   });

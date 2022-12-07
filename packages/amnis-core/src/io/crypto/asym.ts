@@ -1,13 +1,9 @@
 import {
   CryptoAsymDecrypt,
   CryptoAsymEncrypt,
-  CryptoAsymEncryption,
   CryptoAsymGenerate,
   CryptoAsymKeyPair,
-  CryptoAsymPrivateKey,
-  CryptoAsymPublicKey,
   CryptoAsymSign,
-  CryptoAsymSignature,
   CryptoAsymVerify,
 } from './crypto.types.js';
 import { webcrypto } from './webcrypto.js';
@@ -37,8 +33,8 @@ export const asymGenerate: CryptoAsymGenerate = async (type) => {
     );
 
     return {
-      privateKey: keyPairGen.privateKey as CryptoAsymPrivateKey,
-      publicKey: keyPairGen.publicKey as CryptoAsymPublicKey,
+      privateKey: keyPairGen.privateKey,
+      publicKey: keyPairGen.publicKey,
     };
   }
 
@@ -53,8 +49,8 @@ export const asymGenerate: CryptoAsymGenerate = async (type) => {
   );
 
   return {
-    privateKey: keyPairGen.privateKey as CryptoAsymPrivateKey,
-    publicKey: keyPairGen.publicKey as CryptoAsymPublicKey,
+    privateKey: keyPairGen.privateKey,
+    publicKey: keyPairGen.publicKey,
   };
 };
 
@@ -91,7 +87,7 @@ export const asymEncrypt: CryptoAsymEncrypt = async (
     key,
     unit8,
   );
-  return encryption as CryptoAsymEncryption;
+  return encryption;
 };
 
 /**
@@ -129,7 +125,7 @@ export const asymSign: CryptoAsymSign = async (
     { name: 'ECDSA', hash: { name: 'SHA-256' } },
     key,
     uint8,
-  ) as CryptoAsymSignature;
+  );
   return signature;
 };
 

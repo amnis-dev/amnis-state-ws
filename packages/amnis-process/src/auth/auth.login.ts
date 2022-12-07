@@ -1,49 +1,63 @@
 import {
-  Io, IoProcess, AuthLogin, StateEntities,
+  Io,
+  IoProcess,
+  AuthLogin,
+  StateEntities,
+  UID,
+  challengeDecode,
 } from '@amnis/core';
-import { mwValidate } from '../mw/index.js';
-import { userFindByName, outputBadCredentials, loginSuccessProcess } from '../utility/index.js';
+import { authenticateAccount } from '../utility/authenticate.js';
+import { challengeCreate } from '../utility/challenge.js';
+import { validate } from '../validate.js';
 
 const process: IoProcess<
 Io<AuthLogin, StateEntities>
 > = (context) => (
   async (input) => {
-    const { database } = context;
+    const { validators } = context;
     const { body } = input;
 
     /**
-     * CHECK CREDENTIALS
+     * When the body is undefined, output data necessary to begin the
+     * authentication ritual.
      */
-    const { username } = body;
-
-    const user = await userFindByName(database, username);
-
-    if (!user) {
-      return outputBadCredentials();
-    }
-
-    // if (!user.password) {
-    //   return outputBadCredentials();
-    // }
-
-    // const same = await crypto.passCompare(password, user.password as CryptoPassword);
-    const same = false;
-
-    if (same === false) {
-      return outputBadCredentials();
+    if (!body) {
+      const output = await challengeCreate(context, input);
+      return output;
     }
 
     /**
-     * SUCCESSFUL LOGIN
+     * Must validate the registration input if it's defined.
      */
-    const successOutput = await loginSuccessProcess(context, user);
+    const validateOutput = validate(validators.AuthLogin, body);
+    if (validateOutput) {
+      return validateOutput;
+    }
 
-    return successOutput;
+    const {
+      challenge, username, $credential, signature,
+    } = body;
+
+    /**
+     * Decode the challenge.
+     */
+    const challengeDecoded = challengeDecode(challenge);
+
+    /**
+     * Complete the authentication.
+     */
+    const output = await authenticateAccount(
+      context,
+      challengeDecoded,
+      username,
+      $credential as UID,
+      signature,
+    );
+
+    return output;
   }
 );
 
-export const authProcessLogin = mwValidate('AuthLogin')(
-  process,
-);
+export const authProcessLogin = process;
 
 export default { authProcessLogin };

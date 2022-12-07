@@ -2,9 +2,7 @@ import { base64Decode, base64Encode } from './crypto.encode.js';
 import {
   CryptoSymDecrypt,
   CryptoSymEncrypt,
-  CryptoSymEncryption,
   CryptoSymGenerate,
-  CryptoSymKey,
 } from './crypto.types.js';
 import { webcrypto } from './webcrypto.js';
 
@@ -18,11 +16,11 @@ export const symGenerate: CryptoSymGenerate = async () => {
     true,
     ['encrypt', 'decrypt'],
   );
-  return key as CryptoSymKey;
+  return key;
 };
 
-let symKey: CryptoSymKey | undefined;
-export const symSingleton = async (): Promise<CryptoSymKey> => {
+let symKey: CryptoKey | undefined;
+export const symSingleton = async (): Promise<CryptoKey> => {
   if (!symKey) {
     symKey = await symGenerate();
   }
@@ -52,7 +50,7 @@ export const symEncrypt: CryptoSymEncrypt = async (data, key) => {
 
   const encryptionB64 = base64Encode(encryption);
 
-  return encryptionB64 as CryptoSymEncryption;
+  return encryptionB64;
 };
 
 export const symDecrypt: CryptoSymDecrypt = async (encryption, key) => {

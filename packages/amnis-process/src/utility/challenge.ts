@@ -1,7 +1,11 @@
 import {
   Challenge,
+  challengeCreator,
+  challengeKey,
   dateNumeric,
+  entityCreate,
   IoContext,
+  IoInput,
   IoOutput,
   ioOutput,
   logCreator,
@@ -9,12 +13,84 @@ import {
 import {
   challengeActions,
   challengeSelectors,
+  systemSelectors,
 } from '@amnis/state';
 
+/**
+ * Create a challenge from context and output it.
+ */
+export const challengeCreate = async (
+  context: IoContext,
+  input: IoInput,
+) => {
+  const { store, crypto } = context;
+  const { access } = input;
+
+  const system = systemSelectors.selectActive(store.getState());
+
+  if (!system) {
+    const output = ioOutput();
+    output.status = 500;
+    output.json.logs.push(logCreator({
+      level: 'error',
+      title: 'Inactive System',
+      description: 'There is no active system available to initalize the registration.',
+    }));
+    return output;
+  }
+
+  if (system.registrationOpen !== true) {
+    const isAdmin = access?.roles.includes(system.$adminRole);
+    const isExec = access?.roles.includes(system.$execRole);
+
+    if (!isAdmin && !isExec) {
+      const output = ioOutput();
+      output.status = 500;
+      output.json.logs.push(logCreator({
+        level: 'error',
+        title: 'Registration Closed',
+        description: 'The system has disabled registration.',
+      }));
+      return output;
+    }
+  }
+
+  /**
+   * Create the challenge string.
+   */
+  const challangeValue = await crypto.randomString(32);
+
+  /**
+   * Generate the unique challange code to send back.
+   */
+  const challengeEntity = entityCreate(
+    challengeCreator({
+      value: challangeValue,
+      expires: dateNumeric(`${system.registrationExpiration}m`),
+    }),
+  );
+
+  /**
+   * Store the challenge on the io store to check against later.
+   */
+  store.dispatch(challengeActions.insert(challengeEntity));
+
+  const output = ioOutput();
+  output.status = 200;
+  output.json.result = {
+    [challengeKey]: [challengeEntity],
+  };
+  return output;
+};
+
+/**
+ * Validate a challenge from context.
+ */
 export const challengeValidate = (
-  { store }: IoContext,
+  context: IoContext,
   challenge: Challenge,
 ): true | IoOutput => {
+  const { store } = context;
   /**
    * Verify that the challenge code is valid.
    */
@@ -56,5 +132,3 @@ export const challengeValidate = (
 
   return true;
 };
-
-export default { challengeValidate };

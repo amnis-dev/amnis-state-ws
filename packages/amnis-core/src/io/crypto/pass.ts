@@ -1,5 +1,5 @@
 import { base64Decode, base64Encode } from './crypto.encode.js';
-import { CryptoPassCompare, CryptoPassHash, CryptoPassword } from './crypto.types.js';
+import { CryptoPassCompare, CryptoPassHash } from './crypto.types.js';
 import { webcrypto } from './webcrypto.js';
 
 const saltLength = 16;
@@ -39,7 +39,7 @@ export const passHash: CryptoPassHash = async (plaintext) => {
   const wc = await webcrypto();
   const salt = wc.getRandomValues(new Uint8Array(saltLength));
   const passEncrypted = await passEncrypt(plaintext, salt);
-  return passEncrypted as CryptoPassword;
+  return passEncrypted;
 };
 
 export const passCompare: CryptoPassCompare = async (plaintext, hashtext) => {

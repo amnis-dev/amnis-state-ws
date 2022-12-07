@@ -1,152 +1,83 @@
 import {
-  AuthLogin,
-  databaseMemory,
-  dataInitial,
-  filesystemMemory,
-  IoInput,
-  ioProcess,
-  Profile,
-  profileKey,
   schemaAuth,
-  sessionKey,
-  User,
-  userKey,
+  IoContext,
+  accountsGet,
+  IoInput,
+  AuthLogin,
+  StateEntities,
+  challengeKey,
+  Challenge,
+  challengeEncode,
   cryptoWeb,
+  base64Encode,
 } from '@amnis/core';
-import { storeSetup } from '@amnis/state';
+import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
 import { authProcessLogin } from './auth.login.js';
 
-const io = ioProcess(
-  {
-    store: storeSetup(),
-    validators: validateSetup([schemaAuth]),
-    database: databaseMemory,
-    filesystem: filesystemMemory,
-    crypto: cryptoWeb,
-  },
-  {
-    login: authProcessLogin,
-  },
-);
+let context: IoContext;
 
 beforeAll(async () => {
-  await databaseMemory.create(dataInitial());
+  context = await contextSetup({
+    validators: validateSetup([schemaAuth]),
+  });
 });
 
-test('should login as administrator', async () => {
-  const input: IoInput<AuthLogin> = {
-    body: {
-      username: 'admin',
-      password: 'passwd12',
-    },
+test('should start the login ritual', async () => {
+  const input: IoInput = {
+    body: undefined,
   };
 
-  const output = await io.login(input);
+  const output = await authProcessLogin(context)(input);
 
   expect(output.status).toBe(200);
-  expect(output.cookies?.authSession).toBeDefined();
-  expect(output.json.bearers).toHaveLength(1);
-  expect(output.json.result?.[userKey]).toHaveLength(1);
-  expect(output.json.result?.[profileKey]).toHaveLength(1);
-  expect(output.json.result?.[sessionKey]).toHaveLength(1);
 
-  const user = output.json.result?.[userKey][0] as User;
-  const profile = output.json.result?.[profileKey][0] as Profile;
+  if (!output.json.result) {
+    expect(output.json.result).toBeDefined();
+    return;
+  }
 
-  expect(user.name).toBe('admin');
-  expect(profile.nameDisplay).toBe('Administrator');
+  const stateEntities = output.json.result as StateEntities;
+
+  expect(Object.keys(stateEntities)).toHaveLength(1);
+  expect(stateEntities).toMatchObject({
+    [challengeKey]: expect.any(Array),
+  });
 });
 
-test('should not login as administrator with incorrect credentials', async () => {
+test('must be able to login as a user', async () => {
+  const { user: userAccount } = await accountsGet();
+
+  const inputStart: IoInput = {
+    body: undefined,
+  };
+  const outputStart = await authProcessLogin(context)(inputStart);
+  const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
+
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
+
+  console.log({ challenge });
+
+  const privateKeyUnwrapped = await cryptoWeb.keyUnwrap(userAccount.privateKey, 'passwd12');
+  const signature = await cryptoWeb.asymSign(
+    userAccount.name + userAccount.credential.$id + challenge,
+    privateKeyUnwrapped,
+  );
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+
   const input: IoInput<AuthLogin> = {
     body: {
-      username: 'admin',
-      password: '21dwssap',
+      username: userAccount.name,
+      challenge: challengeEncode(challenge),
+      $credential: userAccount.credential.$id,
+      signature: signatureEncoded,
     },
   };
 
-  const output = await io.login(input);
+  const output = await authProcessLogin(context)(input);
 
-  expect(output.status).toBe(401);
-  expect(Object.keys(output.cookies)).toHaveLength(0);
-  expect(output.json.logs).toHaveLength(1);
-});
-
-test('should login as executive', async () => {
-  const input: IoInput<AuthLogin> = {
-    body: {
-      username: 'exec',
-      password: 'passwd12',
-    },
-  };
-
-  const output = await io.login(input);
-
-  expect(output.status).toBe(200);
-  expect(output.cookies?.authSession).toBeDefined();
-  expect(output.json.bearers).toHaveLength(1);
-  expect(output.json.result?.[userKey]).toHaveLength(1);
-  expect(output.json.result?.[profileKey]).toHaveLength(1);
-  expect(output.json.result?.[sessionKey]).toHaveLength(1);
-
-  const user = output.json.result?.[userKey][0] as User;
-  const profile = output.json.result?.[profileKey][0] as Profile;
-
-  expect(user.name).toBe('exec');
-  expect(profile.nameDisplay).toBe('Executive');
-});
-
-test('should not login as executive with incorrect credentials', async () => {
-  const input: IoInput<AuthLogin> = {
-    body: {
-      username: 'exec',
-      password: '21dwssap',
-    },
-  };
-
-  const output = await io.login(input);
-
-  expect(output.status).toBe(401);
-  expect(Object.keys(output.cookies)).toHaveLength(0);
-  expect(output.json.logs).toHaveLength(1);
-});
-
-test('should login as user', async () => {
-  const input: IoInput<AuthLogin> = {
-    body: {
-      username: 'user',
-      password: 'passwd12',
-    },
-  };
-
-  const output = await io.login(input);
-
-  expect(output.status).toBe(200);
-  expect(output.cookies?.authSession).toBeDefined();
-  expect(output.json.bearers).toHaveLength(1);
-  expect(output.json.result?.[userKey]).toHaveLength(1);
-  expect(output.json.result?.[profileKey]).toHaveLength(1);
-  expect(output.json.result?.[sessionKey]).toHaveLength(1);
-
-  const user = output.json.result?.[userKey][0] as User;
-  const profile = output.json.result?.[profileKey][0] as Profile;
-
-  expect(user.name).toBe('user');
-  expect(profile.nameDisplay).toBe('User');
-});
-
-test('should not login as user with incorrect credentials', async () => {
-  const input: IoInput<AuthLogin> = {
-    body: {
-      username: 'user',
-      password: '21dwssap',
-    },
-  };
-
-  const output = await io.login(input);
-
-  expect(output.status).toBe(401);
-  expect(Object.keys(output.cookies)).toHaveLength(0);
-  expect(output.json.logs).toHaveLength(1);
+  console.log(JSON.stringify({ input, output }, null, 2));
 });

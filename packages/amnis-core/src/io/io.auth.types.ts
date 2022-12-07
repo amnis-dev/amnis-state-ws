@@ -14,6 +14,13 @@ export interface AuthRegistration {
   username: string;
 
   /**
+   * @minLength 2
+   * @maxLength 24
+   * @description The display name to register under.
+   */
+  displayName: string;
+
+  /**
    * @minLength 16
    * @maxLength 512
    * @desciption Encoded challenge object to prevent reply attacks.
@@ -60,14 +67,21 @@ export interface AuthLogin {
   username: string;
 
   /**
-   * @minLength 6
-   * @maxLength 64
+   * @minLength 16
+   * @maxLength 512
+   * @desciption Encoded challenge object to prevent reply attacks.
+   */
+  challenge: string;
+
+  /**
+   * @minLength 12
+   * @maxLength 40
    * @description Credential identifier to use on the user account.
    */
   $credential: string;
 
   /**
-   * @minLength 128
+   * @minLength 8
    * @maxLength 512
    * @description Agent's cryptographic signature of the username and challenge.
    */

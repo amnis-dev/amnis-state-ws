@@ -667,8 +667,23 @@
         },
         "sessionExpires": {
           "type": "number",
-          "description": "Number in milliseconds that an authentication session should live.",
-          "default": 3600000
+          "description": "Number in minutes that an authentication session should live.",
+          "default": 60
+        },
+        "bearerExpires": {
+          "type": "number",
+          "description": "Number in minutes that a bearer token should live.",
+          "default": 30
+        },
+        "registrationOpen": {
+          "type": "boolean",
+          "description": "Open registration to anonymous users. Otherwise, only executives and\nadmins can initialize a registration for a new client.",
+          "default": true
+        },
+        "registrationExpiration": {
+          "type": "number",
+          "description": "Expiration of a registration event in minutes.",
+          "default": 30
         },
         "$website": {
           "$ref": "#/definitions/UID%3CWebsite%3E",
@@ -676,11 +691,11 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
+          "description": "Role identifier that considers the user an administrator.\nAdministrators have complete control."
         },
         "$execRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
+          "description": "Role identifier that considers the user an executive.\nExecutives have second-highest control over a system, just under administrators."
         },
         "$initialRoles": {
           "$ref": "#/definitions/UIDList%3CRole%3E",
@@ -689,7 +704,7 @@
         },
         "$anonymousRoles": {
           "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
+          "description": "Anonymous access permissions.\nThese are roles used when no authorization is provided by the client.",
           "default": []
         }
       },
@@ -700,7 +715,10 @@
         "$id",
         "$initialRoles",
         "$website",
+        "bearerExpires",
         "name",
+        "registrationExpiration",
+        "registrationOpen",
         "sessionExpires"
       ],
       "additionalProperties": false
@@ -1570,8 +1588,23 @@
         },
         "sessionExpires": {
           "type": "number",
-          "description": "Number in milliseconds that an authentication session should live.",
-          "default": 3600000
+          "description": "Number in minutes that an authentication session should live.",
+          "default": 60
+        },
+        "bearerExpires": {
+          "type": "number",
+          "description": "Number in minutes that a bearer token should live.",
+          "default": 30
+        },
+        "registrationOpen": {
+          "type": "boolean",
+          "description": "Open registration to anonymous users. Otherwise, only executives and\nadmins can initialize a registration for a new client.",
+          "default": true
+        },
+        "registrationExpiration": {
+          "type": "number",
+          "description": "Expiration of a registration event in minutes.",
+          "default": 30
         },
         "$website": {
           "$ref": "#/definitions/UID%3CWebsite%3E",
@@ -1579,11 +1612,11 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
+          "description": "Role identifier that considers the user an administrator.\nAdministrators have complete control."
         },
         "$execRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
+          "description": "Role identifier that considers the user an executive.\nExecutives have second-highest control over a system, just under administrators."
         },
         "$initialRoles": {
           "$ref": "#/definitions/UIDList%3CRole%3E",
@@ -1592,7 +1625,7 @@
         },
         "$anonymousRoles": {
           "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Anonymous access permissions. These are roles used when no authotization is provided by the client.",
+          "description": "Anonymous access permissions.\nThese are roles used when no authorization is provided by the client.",
           "default": []
         }
       },

@@ -6,16 +6,16 @@ import { entityCreate } from '../entity.js';
 
 export const historyKey = 'history';
 
-export const historyBase: HistoryBase = {
+export const historyBase = (): HistoryBase => ({
   $subject: uid(historyKey),
   changes: {},
-};
+});
 
 export function historyCreator(
   history: HistoryCreator,
 ): History {
   return {
-    ...historyBase,
+    ...historyBase(),
     ...history,
     $id: uid(historyKey),
   };

@@ -8,7 +8,6 @@ import {
 import {
   cryptoWeb,
   base64Encode,
-  CryptoAsymSignature,
   base64Decode,
 } from './crypto/index.js';
 import type { AuthRegistration } from './io.auth.types.js';
@@ -16,6 +15,7 @@ import type { AuthRegistration } from './io.auth.types.js';
 export interface AuthRegistrationCreateOptions {
   agent: string;
   username: string;
+  displayName: string;
   password: string;
   challenge: Entity<Challenge> | Challenge;
   origin?: string;
@@ -32,6 +32,7 @@ export type AuthRegistrationCreate = (
 export const authRegistrationCreate: AuthRegistrationCreate = async ({
   agent,
   username,
+  displayName,
   password,
   challenge,
   origin,
@@ -95,6 +96,7 @@ export const authRegistrationCreate: AuthRegistrationCreate = async ({
 
   const authRegistration: AuthRegistration = {
     username,
+    displayName,
     challenge: challengeEncoded,
     type: 'auth.create',
     origin: originFinal,
@@ -108,7 +110,7 @@ export const authRegistrationCreate: AuthRegistrationCreate = async ({
 export interface AuthRegistrationParsed extends Omit<AuthRegistration, 'challenge' | 'credential' | 'signature'> {
   challenge: Challenge;
   credential: Credential;
-  signature: CryptoAsymSignature;
+  signature: ArrayBuffer;
 }
 
 export type AuthRegistrationParse = (
@@ -122,7 +124,7 @@ export const authRegistrationParse: AuthRegistrationParse = async (authRegistrat
 
     const challengeObject = JSON.parse(dec.decode(base64Decode(challenge))) as Challenge;
     const credentialObject = JSON.parse(dec.decode(base64Decode(credential))) as Credential;
-    const signatureBuffer = base64Decode(signature).buffer as CryptoAsymSignature;
+    const signatureBuffer = base64Decode(signature).buffer;
 
     return {
       ...authRegistration,

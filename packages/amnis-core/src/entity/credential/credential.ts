@@ -3,15 +3,15 @@ import type { Credential, CredentialBase, CredentialCreator } from './credential
 
 export const credentialKey = 'credential';
 
-export const credentialBase: CredentialBase = {
+export const credentialBase = (): CredentialBase => ({
   name: 'Unknown Credential',
   publicKey: '',
-};
+});
 
 export const credentialCreator = (
   credential: CredentialCreator,
 ): Credential => ({
-  ...credentialBase,
+  ...credentialBase(),
   ...credential,
   $id: uid(credentialKey),
 });

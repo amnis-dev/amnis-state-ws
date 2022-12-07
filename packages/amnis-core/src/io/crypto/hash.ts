@@ -1,5 +1,5 @@
 import { base64Encode } from './crypto.encode.js';
-import { CryptoHash, CryptoHashData } from './crypto.types.js';
+import { CryptoHashData } from './crypto.types.js';
 import { webcrypto } from './webcrypto.js';
 
 /**
@@ -11,7 +11,7 @@ export const hashData: CryptoHashData = async (data) => {
   const hash = await wc.subtle.digest('SHA-256', encoded);
   const hashUint8 = new Uint8Array(hash);
   const hashB64 = base64Encode(hashUint8, true);
-  return hashB64 as CryptoHash;
+  return hashB64;
 };
 
 export default hashData;

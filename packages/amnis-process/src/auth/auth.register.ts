@@ -1,19 +1,17 @@
 import {
   AuthRegistration,
-  challengeCreator,
-  challengeKey,
-  dateNumeric,
-  entityCreate,
   Io,
   ioOutput,
   IoProcess,
   StateEntities,
   authRegistrationParse,
   logCreator,
-  CryptoAsymPublicKey,
+  userKey,
+  Entity,
+  User,
 } from '@amnis/core';
-import { challengeActions, systemSelectors } from '@amnis/state';
-import { challengeValidate } from '../utility/challenge.js';
+import { authenticateLogin } from '../utility/authenticate.js';
+import { challengeCreate, challengeValidate } from '../utility/challenge.js';
 import { registerAccount } from '../utility/register.js';
 import { validate } from '../validate.js';
 
@@ -21,70 +19,16 @@ const process: IoProcess<
 Io<AuthRegistration, StateEntities>
 > = (context) => (
   async (input) => {
-    const { store, crypto, validators } = context;
-    const { body, access } = input;
+    const { crypto, validators } = context;
+    const { body } = input;
 
     /**
      * When the body is undefined, output data necessary to begin the
      * registration ritual.
      */
     if (!body) {
-      const system = systemSelectors.selectActive(store.getState());
-
-      if (!system) {
-        const output = ioOutput();
-        output.status = 500;
-        output.json.logs.push(logCreator({
-          level: 'error',
-          title: 'Inactive System',
-          description: 'There is no active system available to initalize the registration.',
-        }));
-        return output;
-      }
-
-      if (system.registrationOpen !== true) {
-        const isAdmin = access?.roles.includes(system.$adminRole);
-        const isExec = access?.roles.includes(system.$execRole);
-
-        if (!isAdmin && !isExec) {
-          const output = ioOutput();
-          output.status = 500;
-          output.json.logs.push(logCreator({
-            level: 'error',
-            title: 'Registration Closed',
-            description: 'The system has disabled registration.',
-          }));
-          return output;
-        }
-      }
-
-      const outputStart = ioOutput();
-
-      /**
-       * Create the challenge string.
-       */
-      const challangeValue = await crypto.randomString(32);
-
-      /**
-       * Generate the unique challange code to send back.
-       */
-      const challengeEntity = entityCreate(
-        challengeCreator({
-          value: challangeValue,
-          expires: dateNumeric(`${system.registrationExpiration}m`),
-        }),
-      );
-
-      /**
-       * Store the challenge on the io store to check against later.
-       */
-      store.dispatch(challengeActions.insert(challengeEntity));
-
-      outputStart.status = 200;
-      outputStart.json.result = {
-        [challengeKey]: [challengeEntity],
-      };
-      return outputStart;
+      const output = await challengeCreate(context, input);
+      return output;
     }
 
     /**
@@ -142,7 +86,7 @@ Io<AuthRegistration, StateEntities>
     const signatureValid = await crypto.asymVerify(
       body.credential,
       signature,
-      publicKey as CryptoAsymPublicKey,
+      publicKey,
     );
 
     if (signatureValid !== true) {
@@ -166,9 +110,26 @@ Io<AuthRegistration, StateEntities>
       return outputRegistration;
     }
 
-    const output = ioOutput();
+    const user = outputRegistration.json.result?.[userKey]?.[0] as Entity<User>;
 
-    return outputRegistration;
+    if (!user) {
+      const output = ioOutput();
+      output.status = 500; // Internal Server Error
+      output.json.logs = [logCreator({
+        level: 'error',
+        title: 'User Not Registered',
+        description: 'There was an issue when registering your user account.',
+      })];
+      return output;
+    }
+
+    /**
+     * With a successful registration, we can login the user with the
+     * register account.
+     */
+    const outputLogin = authenticateLogin(context, user);
+
+    return outputLogin;
   }
 );
 

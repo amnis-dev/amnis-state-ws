@@ -5,53 +5,11 @@ import type { JWTAccess } from '../../jwt.types.js';
 import type { Session } from '../../entity/index.js';
 
 /**
- * String representation of a SHA256 encoded string.
- */
-export enum CryptoHashNominal { _ = '' }
-export type CryptoHash = CryptoHashNominal & string;
-
-/**
- * String representation of a AES cipher encryption string.
- */
-export enum CryptoSymKeyNominal { _ = '' }
-export enum CryptoSymEncryptionNominal { _ = '' }
-export type CryptoSymKey = CryptoSymKeyNominal & CryptoKey;
-export type CryptoSymEncryption = CryptoSymEncryptionNominal & string;
-
-/**
- * String representation of an RSA cipher encryption string.
- */
-export enum CryptoAsymNominal { _ = '' }
-export enum CryptoAsymSignatureNominal { _ = '' }
-export type CryptoAsymEncryption = CryptoAsymNominal & ArrayBuffer;
-export type CryptoAsymSignature = CryptoAsymSignatureNominal & ArrayBuffer;
-
-/**
- * String representation of RSA public and private encryption strings.
- */
-export enum CryptoAsymPrivateKeyNominal { _ = '' }
-export type CryptoAsymPrivateKey = CryptoAsymPrivateKeyNominal & CryptoKey;
-export enum CryptoAsymPublicKeyNominal { _ = '' }
-export type CryptoAsymPublicKey = CryptoAsymPublicKeyNominal & CryptoKey;
-
-/**
- * String representation of a hashed password.
- */
-export enum CryptoPasswordNominal { _ = '' }
-export type CryptoPassword = CryptoPasswordNominal & string;
-
-/**
- * String representation of an encoded object.
- */
-export enum CryptoTokenNominal { _ = '' }
-export type CryptoToken = CryptoTokenNominal & string;
-
-/**
  * An RSA assymetric key pair type.
  */
 export type CryptoAsymKeyPair = {
-  privateKey: CryptoAsymPrivateKey,
-  publicKey: CryptoAsymPublicKey
+  privateKey: CryptoKey,
+  publicKey: CryptoKey
 };
 
 /**
@@ -62,27 +20,27 @@ export type CryptoRandomString = (length?: number) => Promise<string>;
 /**
  * Hashes a string with SHA256.
  */
-export type CryptoHashData = (data: string) => Promise<CryptoHash>;
+export type CryptoHashData = (data: string) => Promise<string>;
 
 /**
  * Generates a new symmetric encyption key.
  */
-export type CryptoSymGenerate = () => Promise<CryptoSymKey>;
+export type CryptoSymGenerate = () => Promise<CryptoKey>;
 
 /**
  * Encrypts with Symmetric AES encrypted text.
  */
 export type CryptoSymEncrypt = (
   data: string,
-  key?: CryptoSymKey
-) => Promise<CryptoSymEncryption>;
+  key?: CryptoKey
+) => Promise<string>;
 
 /**
  * Decrypts a Symmetric AES encrypted string.
  */
 export type CryptoSymDecrypt = (
-  encryption: CryptoSymEncryption,
-  key?: CryptoSymKey
+  encryption: string,
+  key?: CryptoKey
 ) => Promise<string | undefined>;
 
 /**
@@ -95,15 +53,15 @@ export type CryptoAsymGenerate = (type: 'encryptor' | 'signer') => Promise<Crypt
  */
 export type CryptoAsymEncrypt = (
   data: string,
-  publicKey?: CryptoAsymPublicKey
-) => Promise<CryptoAsymEncryption>;
+  publicKey?: CryptoKey
+) => Promise<ArrayBuffer>;
 
 /**
  * Decrypts with an Asymmetric RSA encrypted private key.
  */
 export type CryptoAsymDecrypt = (
-  encryption: CryptoAsymEncryption,
-  privateKey?: CryptoAsymPrivateKey
+  encryption: ArrayBuffer,
+  privateKey?: CryptoKey
 ) => Promise<string | undefined>;
 
 /**
@@ -111,43 +69,43 @@ export type CryptoAsymDecrypt = (
  */
 export type CryptoAsymSign = (
   data: string,
-  privateKey?: CryptoAsymPrivateKey
-) => Promise<CryptoAsymSignature>;
+  privateKey?: CryptoKey
+) => Promise<ArrayBuffer>;
 
 /**
  * Verifies with an Asymmetric RSA encrypted public key.
  */
 export type CryptoAsymVerify = (
   data: string,
-  signature: CryptoAsymSignature,
-  publicKey?: CryptoAsymPublicKey
+  signature: ArrayBuffer,
+  publicKey?: CryptoKey
 ) => Promise<boolean>;
 
 /**
  * Hashes a plaintext password.
  */
-export type CryptoPassHash = (plaintext: string) => Promise<CryptoPassword>;
+export type CryptoPassHash = (plaintext: string) => Promise<string>;
 
 /**
  * Compares a plaintext password and a hashed password.
  * Returns true if the passwords match.
  */
-export type CryptoPassCompare = (plaintext: string, hashtext: CryptoPassword) => Promise<boolean>;
+export type CryptoPassCompare = (plaintext: string, hashtext: string) => Promise<boolean>;
 
 /**
  * Encodes a session instance.
  */
 export type CryptoSessionEncrypt = (
   session: Session,
-  key?: CryptoSymKey
-) => Promise<CryptoSymEncryption>;
+  key?: CryptoKey
+) => Promise<string>;
 
 /**
  * Verifies an encoded session.
  */
 export type CryptoSessionDecrypt = (
-  encryption: CryptoSymEncryption,
-  key?: CryptoSymKey
+  encryption: string,
+  key?: CryptoKey
 ) => Promise<Session | undefined>;
 
 /**
@@ -155,15 +113,15 @@ export type CryptoSessionDecrypt = (
  */
 export type CryptoAccessEncode = (
   access: JWTAccess,
-  privateKey?: CryptoAsymPrivateKey
-) => Promise<CryptoToken>;
+  privateKey?: CryptoKey
+) => Promise<string>;
 
 /**
  * Verifies an encoded session.
  */
 export type CryptoAccessVerify = (
-  encoded: CryptoToken,
-  publicKey?: CryptoAsymPublicKey
+  encoded: string,
+  publicKey?: CryptoKey
 ) => Promise<JWTAccess | undefined>;
 
 /**
@@ -171,21 +129,21 @@ export type CryptoAccessVerify = (
  */
 export type CryptoTokenEncode = (
   json: any,
-  privateKey?: CryptoAsymPrivateKey
-) => Promise<CryptoToken>;
+  privateKey?: CryptoKey
+) => Promise<string>;
 
 /**
  * Verifies an encoded value.
  */
 export type CryptoTokenVerify = <T = any>(
-  encoded: CryptoToken,
-  publicKey?: CryptoAsymPublicKey
+  encoded: string,
+  publicKey?: CryptoKey
 ) => Promise<T | undefined>;
 
 /**
  * Decodes an encoded value without verifying.
  */
-export type CryptoTokenDecode = <T = any>(encoded: CryptoToken) => Promise<T>;
+export type CryptoTokenDecode = <T = any>(encoded: string) => Promise<T>;
 
 /**
  * Wraps a CryptoKey

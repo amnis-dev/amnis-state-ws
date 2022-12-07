@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  CryptoAsymSignature,
-  CryptoToken,
   CryptoTokenDecode,
   CryptoTokenEncode,
   CryptoTokenVerify,
@@ -35,7 +33,7 @@ export const tokenSign: CryptoTokenEncode = async (json, privateKey) => {
   const signature = await asymSign(dataString, privateKey) as ArrayBuffer;
   const signatureBase64 = base64Encode(new Uint8Array(signature), true);
 
-  return `${dataString}.${signatureBase64}` as CryptoToken;
+  return `${dataString}.${signatureBase64}`;
 };
 
 export const tokenVerify: CryptoTokenVerify = async (encoded, publicKey) => {
@@ -59,7 +57,7 @@ export const tokenVerify: CryptoTokenVerify = async (encoded, publicKey) => {
     signature.set(signatureUnpadded);
     const verified = await asymVerify(
       `${headerB64}.${payloadB64}`,
-      signature.buffer as CryptoAsymSignature,
+      signature.buffer,
       publicKey,
     );
 

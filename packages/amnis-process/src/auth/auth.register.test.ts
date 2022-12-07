@@ -82,6 +82,7 @@ test('should start ritual and complete registration', async () => {
   const [authRegistration] = await authRegistrationCreate({
     agent: 'Jest Test Agent',
     username: 'new_user',
+    displayName: 'New User',
     password: 'passwd12',
     challenge,
   });
@@ -96,7 +97,7 @@ test('should start ritual and complete registration', async () => {
 
   expect(resultRegister.status).toBe(200);
 
-  const { logs, result: entities } = resultRegister.json;
+  const { logs, bearers, result: entities } = resultRegister.json;
 
   if (!entities) {
     expect(entities).toBeDefined();
@@ -135,6 +136,14 @@ test('should start ritual and complete registration', async () => {
   expect(logs).toHaveLength(1);
   expect(logs[0].level).toBe('success');
   expect(logs[0].title).toBe('Account Registered');
+
+  if (!bearers) {
+    expect(bearers).toBeDefined();
+    return;
+  }
+
+  expect(bearers).toHaveLength(1);
+  expect(bearers[0]).toBe(expect.any(String));
 });
 
 test('should not be able to register when turned off by the system', async () => {

@@ -5,12 +5,12 @@ import type { Contact, ContactBase, ContactCreator } from './contact.types.js';
 
 export const contactKey = 'contact';
 
-export const contactBase: ContactBase = {
+export const contactBase = (): ContactBase => ({
   name: 'Unknown Contact',
   phones: [],
   emails: [],
   socials: [],
-};
+});
 
 /**
  * Contact check method.
@@ -35,7 +35,7 @@ export function contactCreator(
   contact: ContactCreator,
 ): Contact {
   return {
-    ...contactBase,
+    ...contactBase(),
     ...contact,
     $id: uid(contactKey),
   };

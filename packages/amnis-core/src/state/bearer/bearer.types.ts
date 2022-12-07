@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-import { CryptoToken } from '../../io/index.js';
 import type { DateNumeric } from '../../types.js';
 
 /**
@@ -19,5 +18,5 @@ export interface Bearer {
   /**
    * Encoded access token.
    */
-  access: CryptoToken;
+  access: string;
 }

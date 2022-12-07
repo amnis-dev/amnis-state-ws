@@ -1,7 +1,5 @@
 import {
   Challenge,
-  credentialKey,
-  Entity,
   IoContext,
   IoOutput,
   ioOutput,
@@ -9,11 +7,21 @@ import {
   UID,
   Credential,
   base64Decode,
-  CryptoAsymSignature,
-  CryptoAsymPublicKey,
+  User,
+  StateEntities,
+  Entity,
+  entityCreate,
+  userKey,
+  profileKey,
+  contactKey,
+  sessionKey,
 } from '@amnis/core';
+import { systemSelectors } from '@amnis/state';
 import { challengeValidate } from './challenge.js';
-import { findCredentialById, findUserByName } from './find.js';
+import {
+  findContactById, findCredentialById, findProfileByUserId, findUserByName,
+} from './find.js';
+import { generateBearer, generateSession } from './generate.js';
 
 const authenticateFailedOutput = (subtitle: string, description: string) => {
   const output = ioOutput();
@@ -23,6 +31,93 @@ const authenticateFailedOutput = (subtitle: string, description: string) => {
     title: `Authentication Failed: ${subtitle}`,
     description,
   }));
+  return output;
+};
+
+const authenticateLoginFailedOutput = (title: string, description: string) => {
+  const output = ioOutput();
+  output.status = 500; // Unauthorized
+  output.json.logs.push(logCreator({
+    level: 'error',
+    title,
+    description,
+  }));
+  return output;
+};
+
+/**
+ * Login a user with a username without validation.
+ * Use authenticateAccount to authenticate securely.
+ */
+export const authenticateLogin = async (
+  context: IoContext,
+  user: Entity<User>,
+): Promise<IoOutput<StateEntities>> => {
+  const profile = await findProfileByUserId(context, user.$id);
+
+  if (!profile) {
+    return authenticateLoginFailedOutput(
+      'No Profile',
+      'No profile information was found with the provided user account.',
+    );
+  }
+
+  if (!profile.$contact) {
+    return authenticateLoginFailedOutput(
+      'No Contact Relation',
+      'There is no contact information associated with the provided user account\'s profile.',
+    );
+  }
+
+  const contact = await findContactById(context, profile.$contact);
+
+  if (!contact) {
+    return authenticateLoginFailedOutput(
+      'No Contact',
+      'No contact information was found with the provided user account\'s profile.',
+    );
+  }
+
+  /**
+   * Get the active system.
+   */
+  const system = systemSelectors.selectActive(context.store.getState());
+
+  if (!system) {
+    const output = ioOutput();
+    output.status = 500;
+    output.json.logs.push(logCreator({
+      level: 'error',
+      title: 'Inactive System',
+      description: 'There is no active system available to complete the login.',
+    }));
+    return output;
+  }
+
+  /**
+   * Create the authenticated user's session.
+   */
+  const sessionBase = await generateSession(system, user, profile);
+  const session = entityCreate(sessionBase, { $owner: user.$id });
+  const sessionEncrypted = await context.crypto.sessionEncrypt(sessionBase);
+
+  /**
+   * Create the authenticated user's access bearer token.
+   */
+  const bearerAccess = await generateBearer(context, system, user);
+
+  const stateEntities: StateEntities = {
+    [userKey]: [user],
+    [profileKey]: [profile],
+    [contactKey]: [contact],
+    [sessionKey]: [session],
+  };
+
+  const output = ioOutput();
+  output.json.result = stateEntities;
+  output.cookies.authSession = sessionEncrypted;
+  output.json.bearers = [bearerAccess];
+
   return output;
 };
 
@@ -86,8 +181,8 @@ export const authenticateAccount = async (
 
   const verified = await context.crypto.asymVerify(
     username + credentialId + challenge,
-    signature as CryptoAsymSignature,
-    publicKey as CryptoAsymPublicKey,
+    signature,
+    publicKey,
   );
 
   if (!verified) {
@@ -97,9 +192,10 @@ export const authenticateAccount = async (
     );
   }
 
-  const output = ioOutput();
-  output.status = 401;
+  /**
+   * All authentication checks can been completed.
+   */
+  const output = await authenticateLogin(context, user);
+
   return output;
 };
-
-export default { authenticateAccount };

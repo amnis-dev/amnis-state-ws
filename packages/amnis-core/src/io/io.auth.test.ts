@@ -4,6 +4,7 @@ import { authRegistrationCreate, authRegistrationParse } from './io.auth.js';
 
 test('should create a valid auth registration object', async () => {
   const username = 'test_user';
+  const displayName = 'Test User';
   const challenge = challengeCreator({
     value: await cryptoWeb.randomString(),
   });
@@ -11,12 +12,14 @@ test('should create a valid auth registration object', async () => {
   const [authRegistration] = await authRegistrationCreate({
     agent: 'Jest Test Device',
     username,
+    displayName,
     password: 'passwd12',
     challenge,
   });
 
   expect(authRegistration).toMatchObject({
     username: 'test_user',
+    displayName: 'Test User',
     challenge: expect.any(String),
     type: 'auth.create',
     origin: 'http://localhost',
@@ -27,6 +30,7 @@ test('should create a valid auth registration object', async () => {
 
 test('should be able to parse a generated auth registration object', async () => {
   const username = 'test_user';
+  const displayName = 'Test User';
   const challenge = challengeCreator({
     value: await cryptoWeb.randomString(),
   });
@@ -34,6 +38,7 @@ test('should be able to parse a generated auth registration object', async () =>
   const [authRegistration, privateKeyWrapped] = await authRegistrationCreate({
     agent: 'Jest Test Device',
     username,
+    displayName,
     password: 'passwd12',
     challenge,
   });
@@ -49,6 +54,7 @@ test('should be able to parse a generated auth registration object', async () =>
 
   expect(authRegistrationParsed).toMatchObject({
     username: 'test_user',
+    displayName: 'Test User',
     challenge: expect.any(Object),
     type: 'auth.create',
     origin: 'http://localhost',

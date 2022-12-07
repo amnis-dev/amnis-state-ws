@@ -1,9 +1,7 @@
-import { CryptoToken } from '@amnis/core';
-
 /**
  * Gets a JWT bearer from an authorization header
  */
-export function httpAuthorizationParse(authorization?: string | null): CryptoToken | undefined {
+export function httpAuthorizationParse(authorization?: string | null): string | undefined {
   if (!authorization) {
     return undefined;
   }
@@ -14,7 +12,7 @@ export function httpAuthorizationParse(authorization?: string | null): CryptoTok
     return undefined;
   }
 
-  return accessEncoded as CryptoToken;
+  return accessEncoded as string;
 }
 
 export default { httpAuthorizationParse };

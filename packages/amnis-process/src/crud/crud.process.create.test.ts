@@ -1,6 +1,4 @@
 import {
-  AuthLogin,
-  dataInitial,
   IoInput,
   ioProcess,
   schemaAuth,
@@ -10,43 +8,35 @@ import {
   userCreator,
   userKey,
   ioOutputErrored,
-  coreActions,
   User,
-  userBase,
-  uid,
-  stateEntitiesCreate,
-  databaseMemory,
-  filesystemMemory,
   databaseMemoryStorage,
-  cryptoWeb,
   Entity,
+  IoContext,
+  IoMap,
+  schemaState,
 } from '@amnis/core';
-import { storeSetup } from '@amnis/state';
+import { contextSetup } from '@amnis/state';
+import { authenticateLogin } from '../utility/authenticate.js';
 import { validateSetup } from '../validate.js';
-import { authProcessLogin } from '../auth/auth.login.js';
 import { crudProcessCreate } from './crud.process.create.js';
 
-const data = dataInitial();
-const store = storeSetup();
-
-const io = ioProcess(
-  {
-    store,
-    validators: validateSetup([schemaAuth, schemaEntity]),
-    database: databaseMemory,
-    filesystem: filesystemMemory,
-    crypto: cryptoWeb,
-  },
-  {
-    login: authProcessLogin,
-    create: crudProcessCreate,
-  },
-);
+let context: IoContext;
+let dataUsers: Entity<User>[];
+let io: IoMap<'create'>;
 
 beforeAll(async () => {
-  const stateEntities = stateEntitiesCreate(data);
-  store.dispatch(coreActions.insert(stateEntities));
-  await databaseMemory.create(stateEntities);
+  context = await contextSetup({
+    validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
+  });
+  const storage = databaseMemoryStorage();
+  dataUsers = Object.values(storage[userKey]) as Entity<User>[];
+
+  io = ioProcess(
+    context,
+    {
+      create: crudProcessCreate,
+    },
+  );
 });
 
 test('should not create without bearer', async () => {
@@ -66,34 +56,28 @@ test('should not create without bearer', async () => {
 });
 
 test('should login as administrator and create user', async () => {
-  const inputLogin: IoInput<AuthLogin> = {
-    body: {
-      username: 'admin',
-      password: 'passwd12',
-    },
-  };
-
-  const outputLogin = await io.login(inputLogin);
+  const outputLogin = await authenticateLogin(
+    context,
+    dataUsers.find((e) => e.name === 'admin') as Entity<User>,
+  );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
-  const userEntity = {
-    ...userBase,
-    $id: uid(userKey),
+  const userNew = userCreator({
     name: 'Admin\'s New User',
-  };
-
-  // expect(userEntity.committed).toBe(false);
+  });
 
   const inputCreator: IoInput<StateCreator> = {
     accessEncoded: bearerAccess.access,
     body: {
       [userKey]: [
-        userEntity,
+        userNew,
       ],
     },
   };
 
   const outputCreator = await io.create(inputCreator);
+
+  console.log(JSON.stringify(outputCreator, null, 2));
 
   expect(outputCreator.status).toBe(200);
   expect(outputCreator.json.result?.user[0]?.committed).toBe(true);
@@ -106,21 +90,15 @@ test('should login as administrator and create user', async () => {
 });
 
 test('should login as executive and create user', async () => {
-  const inputLogin: IoInput<AuthLogin> = {
-    body: {
-      username: 'exec',
-      password: 'passwd12',
-    },
-  };
-
-  const outputLogin = await io.login(inputLogin);
+  const outputLogin = await authenticateLogin(
+    context,
+    dataUsers.find((e) => e.name === 'exec') as Entity<User>,
+  );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
-  const userNew = {
-    ...userBase,
-    $id: uid(userKey),
+  const userNew = userCreator({
     name: 'Exec\'s New User',
-  };
+  });
 
   const inputCreator: IoInput<StateCreator> = {
     accessEncoded: bearerAccess.access,
@@ -141,21 +119,15 @@ test('should login as executive and create user', async () => {
 });
 
 test('should login as user and cannot create user', async () => {
-  const inputLogin: IoInput<AuthLogin> = {
-    body: {
-      username: 'user',
-      password: 'passwd12',
-    },
-  };
-
-  const outputLogin = await io.login(inputLogin);
+  const outputLogin = await authenticateLogin(
+    context,
+    dataUsers.find((e) => e.name === 'user') as Entity<User>,
+  );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
-  const userNew = {
-    ...userBase,
-    $id: uid(userKey),
+  const userNew = userCreator({
     name: 'User\'s New User',
-  };
+  });
 
   const inputCreator: IoInput<StateCreator> = {
     accessEncoded: bearerAccess.access,
