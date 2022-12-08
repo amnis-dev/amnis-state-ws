@@ -14,6 +14,13 @@ export interface AuthRegistration {
   username: string;
 
   /**
+   * @minLength 4
+   * @maxLength 32
+   * @description The password for the registration.
+   */
+  password: string;
+
+  /**
    * @minLength 2
    * @maxLength 24
    * @description The display name to register under.
@@ -65,6 +72,13 @@ export interface AuthLogin {
    * @description Unique name for login credentials
    */
   username: string;
+
+  /**
+   * @minLength 4
+   * @maxLength 32
+   * @description The password for the login.
+   */
+  password?: string;
 
   /**
    * @minLength 16

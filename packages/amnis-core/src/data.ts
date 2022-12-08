@@ -29,6 +29,7 @@ import {
 } from './entity/index.js';
 
 import { accountsGet } from './accounts.js';
+import { cryptoWeb } from './index.js';
 
 export const dataInitial = async (): Promise<StateEntities> => {
   /**
@@ -100,18 +101,21 @@ export const dataInitial = async (): Promise<StateEntities> => {
   const users: Entity<User>[] = [
     entityCreate(userCreator({
       name: accounts.admin.name,
+      password: await cryptoWeb.passHash(accounts.admin.password),
       email: 'admin@email.address',
       $roles: [roles[0].$id],
       $permits: [],
     }), { committed: true }),
     entityCreate(userCreator({
       name: accounts.exec.name,
+      password: await cryptoWeb.passHash(accounts.exec.password),
       email: 'exec@email.address',
       $roles: [roles[1].$id],
       $permits: [],
     }), { committed: true }),
     entityCreate(userCreator({
       name: accounts.user.name,
+      password: await cryptoWeb.passHash(accounts.user.password),
       email: 'user@email.address',
       $roles: [roles[2].$id],
       $permits: [],

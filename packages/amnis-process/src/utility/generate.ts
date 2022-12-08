@@ -22,7 +22,7 @@ export const generateSession = async (
   /**
    * Create the session expiration.
    */
-  const sessionExpires = dateNumeric(`${system.sessionExpires}`);
+  const sessionExpires = dateNumeric(`${system.sessionExpires}m`);
 
   /**
    * Create the new user session.

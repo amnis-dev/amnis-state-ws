@@ -2,6 +2,7 @@ import {
   accountsGet,
   base64Encode,
   challengeCreator,
+  cryptoWeb,
   IoContext,
 } from '@amnis/core';
 import { challengeActions, contextSetup } from '@amnis/state';
@@ -152,7 +153,7 @@ test('should not authenticate using different credentials', async () => {
   expect(output.json.result).toBeUndefined();
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0].level).toBe('error');
-  expect(output.json.logs[0].title).toBe('Authentication Failed: Unlinked Credential');
+  expect(output.json.logs[0].title).toBe('Authentication Failed: Invalid Credential');
 });
 
 test('should not authenticate using a different private key for signing', async () => {
@@ -190,4 +191,83 @@ test('should not authenticate using a different private key for signing', async 
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0].level).toBe('error');
   expect(output.json.logs[0].title).toBe('Authentication Failed: Improper Attestation');
+});
+
+test('should not authenticate using a different challenge value', async () => {
+  const { user: userAccount, exec: execAccount } = await accountsGet();
+
+  const challenge = challengeCreator({
+    value: await context.crypto.randomString(8),
+  });
+  context.store.dispatch(challengeActions.create(challenge));
+  const challengeChanged = {
+    ...challenge,
+    value: await cryptoWeb.randomString(32),
+  };
+
+  const privateKey = await context.crypto.keyUnwrap(execAccount.privateKey, execAccount.password);
+
+  if (!privateKey) {
+    expect(privateKey).toBeDefined();
+    return;
+  }
+
+  const signature = await context.crypto.asymSign(
+    userAccount.name + userAccount.credential.$id + challenge,
+    privateKey,
+  );
+
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+
+  const output = await authenticateAccount(
+    context,
+    challengeChanged,
+    userAccount.name,
+    userAccount.credential.$id,
+    signatureEncoded,
+  );
+
+  expect(output.status).toBe(500);
+  expect(output.json.result).toBeUndefined();
+  expect(output.json.logs).toHaveLength(1);
+  expect(output.json.logs[0].level).toBe('error');
+  expect(output.json.logs[0].title).toBe('Invalid Challenge Code');
+});
+
+test('should not authenticate using different credentials but valid password', async () => {
+  const { user: userAccount, exec: execAccount } = await accountsGet();
+
+  const challenge = challengeCreator({
+    value: await context.crypto.randomString(8),
+  });
+  context.store.dispatch(challengeActions.create(challenge));
+
+  const privateKey = await context.crypto.keyUnwrap(userAccount.privateKey, userAccount.password);
+
+  if (!privateKey) {
+    expect(privateKey).toBeDefined();
+    return;
+  }
+
+  const signature = await context.crypto.asymSign(
+    userAccount.name + userAccount.credential.$id + challenge,
+    privateKey,
+  );
+
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+
+  const output = await authenticateAccount(
+    context,
+    challenge,
+    userAccount.name,
+    execAccount.credential.$id,
+    signatureEncoded,
+    userAccount.password,
+  );
+
+  expect(output.status).toBe(401);
+  expect(output.json.result).toBeUndefined();
+  expect(output.json.logs).toHaveLength(1);
+  expect(output.json.logs[0].level).toBe('error');
+  expect(output.json.logs[0].title).toBe('Unknown Device');
 });

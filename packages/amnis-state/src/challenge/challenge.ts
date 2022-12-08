@@ -7,9 +7,21 @@ import {
   metaInitial,
   coreSelectors,
   Entity,
+  dateNumeric,
+  UID,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
+import type { Action, PayloadAction } from '@reduxjs/toolkit';
 import type { ChallengeMeta } from './challenge.types.js';
+
+/**
+ * Matcher for any challenge action.
+ */
+function isChallengeAction(
+  action: Action<string>,
+): action is PayloadAction {
+  return action.type.startsWith(challengeKey);
+}
 
 /**
  * RTK challenge adapter.
@@ -55,6 +67,20 @@ export const challengeSlice = rtk.createSlice({
      * Required: Enables mutations from api requests.
      */
     apiExtraReducers(challengeKey, challengeAdapter, builder);
+    /**
+     * Match any challenge action.
+     */
+    builder.addMatcher(isChallengeAction, (state) => {
+      /**
+       * Clean up any expired challenges.
+       */
+      const now = dateNumeric();
+      const expiredIds = Object.values(state.entities)
+        .filter((e) => e !== undefined && e.expires <= now)
+        .map((e) => e?.$id) as UID<Challenge>[];
+
+      challengeAdapter.removeMany(state, expiredIds);
+    });
   },
 });
 

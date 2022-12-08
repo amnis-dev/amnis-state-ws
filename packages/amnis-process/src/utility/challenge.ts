@@ -99,7 +99,7 @@ export const challengeValidate = (
   /**
    * Challenge not found on the server store.
    */
-  if (!challengeServer) {
+  if (!challengeServer || challenge.value !== challengeServer.value) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [logCreator({

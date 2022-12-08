@@ -29,6 +29,9 @@ export type AuthRegistrationCreate = (
   credential: Credential
 ]>;
 
+/**
+ * Creates encoded parameters for a registration.
+ */
 export const authRegistrationCreate: AuthRegistrationCreate = async ({
   agent,
   username,
@@ -96,6 +99,7 @@ export const authRegistrationCreate: AuthRegistrationCreate = async ({
 
   const authRegistration: AuthRegistration = {
     username,
+    password,
     displayName,
     challenge: challengeEncoded,
     type: 'auth.create',
@@ -117,6 +121,9 @@ export type AuthRegistrationParse = (
   authRegistration: AuthRegistration
 ) => Promise<AuthRegistrationParsed | undefined>;
 
+/**
+ * Parses encoded auth registration parameters.
+ */
 export const authRegistrationParse: AuthRegistrationParse = async (authRegistration) => {
   try {
     const dec = new TextDecoder();

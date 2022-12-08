@@ -7,6 +7,7 @@ export const userKey = 'user';
 
 export const userBase = (): UserBase => ({
   name: 'Unknown User',
+  locked: false,
   $credentials: [],
   $roles: [],
   $permits: [],

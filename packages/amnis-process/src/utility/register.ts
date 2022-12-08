@@ -77,10 +77,18 @@ export const registerAccount = async (
   });
 
   /**
+   * Hash the given password.
+   */
+  const passwordHashed = await context.crypto.passHash(
+    authRegistrationParsed.password,
+  );
+
+  /**
    * Create a new user.
    */
   const user = userCreator({
     name: authRegistrationParsed.username,
+    password: passwordHashed,
     $credentials: [credential.$id],
     $roles: rolesInitial,
   });

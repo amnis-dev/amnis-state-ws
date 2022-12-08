@@ -34,7 +34,7 @@ Io<AuthRegistration, StateEntities>
     /**
      * Must validate the registration input if it's defined.
      */
-    const validateOutput = validate(validators.AuthRegister, body);
+    const validateOutput = validate(validators.AuthRegistration, body);
     if (validateOutput) {
       return validateOutput;
     }
@@ -127,7 +127,9 @@ Io<AuthRegistration, StateEntities>
      * With a successful registration, we can login the user with the
      * register account.
      */
-    const outputLogin = authenticateLogin(context, user);
+    const outputLogin = await authenticateLogin(context, user);
+
+    outputLogin.json.logs = [...outputRegistration.json.logs, ...outputLogin.json.logs];
 
     return outputLogin;
   }

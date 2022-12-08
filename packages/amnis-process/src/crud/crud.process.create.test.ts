@@ -138,6 +138,8 @@ test('should login as user and cannot create user', async () => {
 
   const outputCreator = await io.create(inputCreator);
 
+  console.log(JSON.stringify(outputCreator, null, 2));
+
   expect(outputCreator.status).toBe(200);
   expect(ioOutputErrored(outputCreator)).toBe(true);
 

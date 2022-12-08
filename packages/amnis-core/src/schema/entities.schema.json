@@ -749,11 +749,22 @@
           "type": "string",
           "description": "Name for the user.",
           "minLength": 3,
-          "maxLength": 64
+          "maxLength": 32
+        },
+        "password": {
+          "type": "string",
+          "description": "A hashed value of the users password.",
+          "minLength": 16,
+          "maxLength": 512
+        },
+        "locked": {
+          "type": "boolean",
+          "description": "If this account is locked from being authenticated.",
+          "default": false
         },
         "email": {
           "type": "string",
-          "description": "Email address",
+          "description": "Email address for user account related purposes.",
           "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
           "maxLength": 64
         },
@@ -763,7 +774,7 @@
         },
         "phone": {
           "type": "string",
-          "description": "Phone number",
+          "description": "Phone number for user account related purposes.",
           "maxLength": 24
         },
         "phoneVerified": {
@@ -799,6 +810,7 @@
         "$id",
         "$permits",
         "$roles",
+        "locked",
         "name"
       ],
       "additionalProperties": false,
@@ -1649,11 +1661,22 @@
           "type": "string",
           "description": "Name for the user.",
           "minLength": 3,
-          "maxLength": 64
+          "maxLength": 32
+        },
+        "password": {
+          "type": "string",
+          "description": "A hashed value of the users password.",
+          "minLength": 16,
+          "maxLength": 512
+        },
+        "locked": {
+          "type": "boolean",
+          "description": "If this account is locked from being authenticated.",
+          "default": false
         },
         "email": {
           "type": "string",
-          "description": "Email address",
+          "description": "Email address for user account related purposes.",
           "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
           "maxLength": 64
         },
@@ -1663,7 +1686,7 @@
         },
         "phone": {
           "type": "string",
-          "description": "Phone number",
+          "description": "Phone number for user account related purposes.",
           "maxLength": 24
         },
         "phoneVerified": {

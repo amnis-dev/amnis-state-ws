@@ -78,3 +78,25 @@ test('should fail to find a non-existing challenge', async () => {
   expect(result.json.logs.length).toBeGreaterThan(0);
   expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
 });
+
+test('should fail to find an existing challenge with a wrong value', async () => {
+  const challengeNonExisting = challengeCreator({
+    value: await context.crypto.randomString(16),
+    expires: dateNumeric('15m'),
+  });
+
+  const challengeWrong = {
+    ...challengeValid,
+    value: challengeNonExisting.value,
+  };
+
+  const result = challengeValidate(context, challengeWrong);
+
+  if (result === true) {
+    expect(result).not.toBe(true);
+    return;
+  }
+  expect(result.status).toBe(500);
+  expect(result.json.logs.length).toBeGreaterThan(0);
+  expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
+});

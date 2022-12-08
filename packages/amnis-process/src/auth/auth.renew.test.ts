@@ -4,7 +4,6 @@ import {
   schemaAuth,
   AuthLogin,
   stateEntitiesCreate,
-  CryptoSymEncryption,
   databaseMemory,
   filesystemMemory,
   cryptoWeb,

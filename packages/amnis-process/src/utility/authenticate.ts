@@ -118,6 +118,12 @@ export const authenticateLogin = async (
   output.cookies.authSession = sessionEncrypted;
   output.json.bearers = [bearerAccess];
 
+  output.json.logs.push(logCreator({
+    level: 'success',
+    title: 'Authentication Successful',
+    description: 'Credential has been verified.',
+  }));
+
   return output;
 };
 
@@ -130,6 +136,7 @@ export const authenticateAccount = async (
   username: string,
   credentialId: UID<Credential>,
   signatureEncoded: string,
+  password?: string,
 ): Promise<IoOutput> => {
   /**
    * Validate challenge.
@@ -151,13 +158,43 @@ export const authenticateAccount = async (
     );
   }
 
+  if (user.locked) {
+    return authenticateFailedOutput(
+      'Account Locked',
+      'This account has been locked.',
+    );
+  }
+
+  /**
+   * Check if there's a password and it matches the user's password.
+   */
+  const passwordMatched = (password && user.password)
+    ? await context.crypto.passCompare(password, user.password) : false;
+
   /**
    * Find the credentials on the user.
    */
   if (!user.$credentials.includes(credentialId)) {
+    if (passwordMatched) {
+      const output = ioOutput();
+      output.status = 401; // Unauthorized
+      output.json.logs.push(logCreator({
+        level: 'error',
+        title: 'Unknown Device',
+        description: 'This device requesting authentication is unrecognized.',
+      }));
+      return output;
+    }
     return authenticateFailedOutput(
-      'Unlinked Credential',
-      'The provided credential is not associated with this user.',
+      'Invalid Credential',
+      'The provided credential is not valid for this user.',
+    );
+  }
+
+  if (!passwordMatched) {
+    return authenticateFailedOutput(
+      'Wrong Password',
+      'The provided password is incorrect.',
     );
   }
 

@@ -12,12 +12,10 @@ import {
   userKey,
   profileKey,
   contactKey,
-  credentialKey,
   Entity,
   User,
   Profile,
   Contact,
-  Credential,
   sessionKey,
   Session,
 } from '@amnis/core';
@@ -93,8 +91,6 @@ test('should start ritual and complete registration', async () => {
 
   const resultRegister = await authProcessRegister(context)(inputRegister);
 
-  console.log(JSON.stringify(resultRegister, null, 2));
-
   expect(resultRegister.status).toBe(200);
 
   const { logs, bearers, result: entities } = resultRegister.json;
@@ -109,13 +105,13 @@ test('should start ritual and complete registration', async () => {
   const users = entities[userKey] as Entity<User>[];
   const profiles = entities[profileKey] as Entity<Profile>[];
   const contacts = entities[contactKey] as Entity<Contact>[];
-  const credentials = entities[credentialKey] as Entity<Credential>[];
   const session = entities[sessionKey] as Entity<Session>[];
 
   expect(users).toBeDefined();
   expect(users).toHaveLength(1);
   expect(users[0].$roles).toEqual(systemActive?.$initialRoles);
   expect(users[0].$owner).toEqual(users[0].$id);
+  expect(users[0].password).toBeDefined();
 
   expect(profiles).toBeDefined();
   expect(profiles).toHaveLength(1);
@@ -125,17 +121,15 @@ test('should start ritual and complete registration', async () => {
   expect(contacts).toHaveLength(1);
   expect(contacts[0].$owner).toEqual(users[0].$id);
 
-  expect(credentials).toBeDefined();
-  expect(credentials).toHaveLength(1);
-  expect(credentials[0].$owner).toEqual(users[0].$id);
-
   expect(session).toBeDefined();
   expect(session).toHaveLength(1);
   expect(session[0].$owner).toEqual(users[0].$id);
 
-  expect(logs).toHaveLength(1);
+  expect(logs).toHaveLength(2);
   expect(logs[0].level).toBe('success');
   expect(logs[0].title).toBe('Account Registered');
+  expect(logs[1].level).toBe('success');
+  expect(logs[1].title).toBe('Authentication Successful');
 
   if (!bearers) {
     expect(bearers).toBeDefined();
@@ -143,7 +137,11 @@ test('should start ritual and complete registration', async () => {
   }
 
   expect(bearers).toHaveLength(1);
-  expect(bearers[0]).toBe(expect.any(String));
+  expect(bearers[0]).toMatchObject({
+    id: 'core',
+    exp: expect.any(Number),
+    access: expect.any(String),
+  });
 });
 
 test('should not be able to register when turned off by the system', async () => {

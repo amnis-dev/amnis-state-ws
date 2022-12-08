@@ -11,12 +11,25 @@ export interface User extends EntityCreator {
   /**
    * Name for the user.
    * @minLength 3
-   * @maxLength 64
+   * @maxLength 32
    */
   name: string;
 
   /**
-   * Email address
+   * A hashed value of the users password.
+   * @minLength 16
+   * @maxLength 512
+   */
+  password?: string;
+
+  /**
+   * If this account is locked from being authenticated.
+   * @default false
+   */
+  locked: boolean;
+
+  /**
+   * Email address for user account related purposes.
    * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
    * @maxLength 64
    * @errorMessage "There was an email error"
@@ -29,7 +42,7 @@ export interface User extends EntityCreator {
   emailVerified?: boolean;
 
   /**
-   * Phone number
+   * Phone number for user account related purposes.
    * @maxLength 24
    */
   phone?: string;

@@ -35,7 +35,11 @@ Io<AuthLogin, StateEntities>
     }
 
     const {
-      challenge, username, $credential, signature,
+      challenge,
+      username,
+      $credential,
+      signature,
+      password,
     } = body;
 
     /**
@@ -52,6 +56,7 @@ Io<AuthLogin, StateEntities>
       username,
       $credential as UID,
       signature,
+      password,
     );
 
     return output;

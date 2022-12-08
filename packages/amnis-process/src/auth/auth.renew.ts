@@ -13,7 +13,6 @@ import {
 } from '@amnis/core';
 import { processConfig } from '../config.js';
 import { mwSession, mwValidate } from '../mw/index.js';
-import { profileFetch, bearerGenerate, userFindById } from '../utility/common.js';
 
 /**
  * Renews a session holder's session and access bearers.
