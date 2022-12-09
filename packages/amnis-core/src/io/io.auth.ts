@@ -1,5 +1,6 @@
 import {
   Challenge,
+  challengeEncode,
   Credential,
   credentialCreator,
   Entity,
@@ -10,7 +11,7 @@ import {
   base64Encode,
   base64Decode,
 } from './crypto/index.js';
-import type { AuthRegistration } from './io.auth.types.js';
+import type { AuthLogin, AuthRegistration } from './io.auth.types.js';
 
 export interface AuthRegistrationCreateOptions {
   agent: string;
@@ -145,12 +146,44 @@ export const authRegistrationParse: AuthRegistrationParse = async (authRegistrat
 };
 
 /**
- * Creates an AuthLogin object.
+ * Parameters for the authLoginCreate method.
  */
+export interface AuthLoginCreateParams {
+  username: string;
+  password: string;
+  challenge: Challenge;
+  credential: Credential;
+  privateKeyWrapped: string;
+}
+
+export type AuthLoginCreate = (params: AuthLoginCreateParams) => Promise<AuthLogin>;
 
 /**
- * Creates an auth login.
+ * Creates an AuthLogin object.
  */
-export const authLoginCreate = () => {
+export const authLoginCreate: AuthLoginCreate = async ({
+  username,
+  password,
+  challenge,
+  credential,
+  privateKeyWrapped,
+}) => {
+  const challengeEncoded = challengeEncode(challenge);
 
+  const signatureData = username + credential.$id + challenge.value;
+
+  const privateKey = await cryptoWeb.keyUnwrap(privateKeyWrapped, password) || (await cryptoWeb.asymGenerate('signer')).privateKey;
+
+  const signature = await cryptoWeb.asymSign(signatureData, privateKey);
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+
+  const authLogin: AuthLogin = {
+    username,
+    password,
+    challenge: challengeEncoded,
+    $credential: credential.$id,
+    signature: signatureEncoded,
+  };
+
+  return authLogin;
 };

@@ -17,6 +17,7 @@ import {
   Session,
   dateNumeric,
   ioOutput,
+  authLoginCreate,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
@@ -66,21 +67,16 @@ test('should login as a admin', async () => {
     return;
   }
 
-  const privateKeyUnwrapped = await cryptoWeb.keyUnwrap(adminAccount.privateKey, 'passwd12');
-  const signature = await cryptoWeb.asymSign(
-    adminAccount.name + adminAccount.credential.$id + challenge,
-    privateKeyUnwrapped,
-  );
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: adminAccount.name,
+    password: adminAccount.password,
+    challenge,
+    credential: adminAccount.credential,
+    privateKeyWrapped: adminAccount.privateKey,
+  });
 
   const input: IoInput<AuthLogin> = {
-    body: {
-      username: adminAccount.name,
-      password: adminAccount.password,
-      challenge: challengeEncode(challenge),
-      $credential: adminAccount.credential.$id,
-      signature: signatureEncoded,
-    },
+    body: authLogin,
   };
 
   const output = await authProcessLogin(context)(input, ioOutput());

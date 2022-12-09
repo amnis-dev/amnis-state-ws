@@ -30,7 +30,7 @@ test('should authenticate as normal user account', async () => {
   }
 
   const signature = await context.crypto.asymSign(
-    userAccount.name + userAccount.credential.$id + challenge,
+    userAccount.name + userAccount.credential.$id + challenge.value,
     privateKey,
   );
 
@@ -136,7 +136,7 @@ test('should not authenticate using different credentials', async () => {
   }
 
   const signature = await context.crypto.asymSign(
-    userAccount.name + userAccount.credential.$id + challenge,
+    userAccount.name + userAccount.credential.$id + challenge.value,
     privateKey,
   );
 
