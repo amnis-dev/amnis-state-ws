@@ -143,3 +143,14 @@ export const authRegistrationParse: AuthRegistrationParse = async (authRegistrat
     return undefined;
   }
 };
+
+/**
+ * Creates an AuthLogin object.
+ */
+
+/**
+ * Creates an auth login.
+ */
+export const authLoginCreate = () => {
+
+};

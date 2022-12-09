@@ -16,6 +16,7 @@ import {
   Contact,
   Session,
   dateNumeric,
+  ioOutput,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
@@ -34,7 +35,7 @@ test('should start the login ritual', async () => {
     body: undefined,
   };
 
-  const output = await authProcessLogin(context)(input);
+  const output = await authProcessLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
 
@@ -57,7 +58,7 @@ test('should login as a admin', async () => {
   const inputStart: IoInput = {
     body: undefined,
   };
-  const outputStart = await authProcessLogin(context)(inputStart);
+  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {
@@ -82,7 +83,7 @@ test('should login as a admin', async () => {
     },
   };
 
-  const output = await authProcessLogin(context)(input);
+  const output = await authProcessLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
   expect(output.cookies.authSession).toBeDefined();
@@ -121,7 +122,7 @@ test('should NOT login as an admin with different private key', async () => {
   const inputStart: IoInput = {
     body: undefined,
   };
-  const outputStart = await authProcessLogin(context)(inputStart);
+  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {
@@ -146,7 +147,7 @@ test('should NOT login as an admin with different private key', async () => {
     },
   };
 
-  const output = await authProcessLogin(context)(input);
+  const output = await authProcessLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(401);
   expect(Object.keys(output.cookies)).toHaveLength(0);
@@ -166,7 +167,7 @@ test('should NOT login as an admin with different challenge', async () => {
   const inputStart: IoInput = {
     body: undefined,
   };
-  const outputStart = await authProcessLogin(context)(inputStart);
+  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {
@@ -200,7 +201,7 @@ test('should NOT login as an admin with different challenge', async () => {
     },
   };
 
-  const output = await authProcessLogin(context)(input);
+  const output = await authProcessLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(500);
   expect(Object.keys(output.cookies)).toHaveLength(0);

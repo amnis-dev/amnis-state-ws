@@ -4,7 +4,6 @@ import {
   Database,
   Grant,
   Io,
-  ioOutput,
   IoProcess,
   selectRoleGrants,
   StateEntities,
@@ -81,10 +80,9 @@ async function readRecursive(
 export const process: IoProcess<
 Io<StateQuery, StateEntities>
 > = (context) => (
-  async (input) => {
+  async (input, output) => {
     const { store, database } = context;
     const { body, access } = input;
-    const output = ioOutput<StateEntities>();
 
     if (!access) {
       output.status = 401; // 401 Unauthorized

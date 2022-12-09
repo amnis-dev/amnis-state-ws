@@ -97,14 +97,14 @@ export const authenticateLogin = async (
   /**
    * Create the authenticated user's session.
    */
-  const sessionBase = await generateSession(system, user, profile);
+  const sessionBase = await generateSession(system, user.$id, profile.nameDisplay);
   const session = entityCreate(sessionBase, { $owner: user.$id });
   const sessionEncrypted = await context.crypto.sessionEncrypt(sessionBase);
 
   /**
    * Create the authenticated user's access bearer token.
    */
-  const bearerAccess = await generateBearer(context, system, user);
+  const bearerAccess = await generateBearer(context, system, user.$id, user.$roles);
 
   const stateEntities: StateEntities = {
     [userKey]: [user],

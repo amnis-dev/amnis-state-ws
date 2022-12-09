@@ -1,5 +1,5 @@
 import {
-  AuthLogout, Io, ioOutput, IoProcess, StateDeleter, uidList, sessionKey,
+  AuthLogout, Io, IoProcess, StateDeleter, uidList, sessionKey,
 } from '@amnis/core';
 import { mwSession, mwValidate } from '../mw/index.js';
 
@@ -9,9 +9,8 @@ import { mwSession, mwValidate } from '../mw/index.js';
 const process: IoProcess<
 Io<AuthLogout, StateDeleter>
 > = () => (
-  async (input) => {
+  async (input, output) => {
     const { session } = input;
-    const output = ioOutput<StateDeleter>();
 
     /**
      * Delete the session cookie.

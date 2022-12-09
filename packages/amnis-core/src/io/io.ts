@@ -28,9 +28,36 @@ export function ioOutput<T = any>(): IoOutput<T> {
     json: {
       logs: [],
       result: undefined,
-      expire: undefined,
     },
   };
+}
+
+export function ioOutputApply<O extends IoOutput>(output: O, apply: IoOutput) {
+  output.status = apply.status;
+  output.cookies = { ...output.cookies, ...apply.cookies };
+  output.json.logs = output.json.logs.concat(apply.json.logs);
+
+  if (
+    typeof output.json.result === 'object' && !Array.isArray(output.json.result)
+    && typeof apply.json.result === 'object' && !Array.isArray(apply.json.result)
+  ) {
+    output.json.result = {
+      ...output.json.result,
+      ...apply.json.result,
+    };
+  } else if (Array.isArray(output.json.result) && Array.isArray(apply.json.result)) {
+    output.json.result = output.json.result.concat(apply.json.result);
+  } else {
+    output.json.result = apply.json.result;
+  }
+
+  if (apply.json.bearers) {
+    if (output.json.bearers) {
+      output.json.bearers = output.json.bearers.concat(apply.json.bearers);
+    } else {
+      output.json.bearers = apply.json.bearers;
+    }
+  }
 }
 
 const levels: LogLevel[] = [

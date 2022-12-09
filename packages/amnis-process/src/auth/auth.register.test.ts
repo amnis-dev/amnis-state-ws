@@ -18,6 +18,7 @@ import {
   Contact,
   sessionKey,
   Session,
+  ioOutput,
 } from '@amnis/core';
 import { contextSetup, systemActions, systemSelectors } from '@amnis/state';
 import { validateSetup } from '../validate.js';
@@ -36,7 +37,7 @@ test('should start the registration ritual', async () => {
     body: undefined,
   };
 
-  const output = await authProcessRegister(context)(input);
+  const output = await authProcessRegister(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
 
@@ -57,7 +58,7 @@ test('should not register with invalid body input', async () => {
     body: {},
   };
 
-  const output = await authProcessRegister(context)(input);
+  const output = await authProcessRegister(context)(input, ioOutput());
 
   expect(output.status).toBe(400);
   expect(ioOutputErrored(output)).toBe(true);
@@ -68,7 +69,10 @@ test('should start ritual and complete registration', async () => {
     body: undefined,
   };
 
-  const resultStart = await authProcessRegister(context)(inputStart) as IoOutput<StateEntities>;
+  const resultStart = await authProcessRegister(context)(
+    inputStart,
+    ioOutput(),
+  ) as IoOutput<StateEntities>;
 
   const challenge = resultStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
@@ -89,7 +93,7 @@ test('should start ritual and complete registration', async () => {
     body: authRegistration,
   };
 
-  const resultRegister = await authProcessRegister(context)(inputRegister);
+  const resultRegister = await authProcessRegister(context)(inputRegister, ioOutput());
 
   expect(resultRegister.status).toBe(200);
 
@@ -161,7 +165,10 @@ test('should not be able to register when turned off by the system', async () =>
     body: undefined,
   };
 
-  const resultStart = await authProcessRegister(context)(inputStart) as IoOutput<StateEntities>;
+  const resultStart = await authProcessRegister(context)(
+    inputStart,
+    ioOutput(),
+  ) as IoOutput<StateEntities>;
 
   expect(resultStart.status).toBe(500);
 

@@ -9,6 +9,7 @@ import {
   cryptoWeb,
   IoContext,
   IoInput,
+  ioOutput,
   schemaAuth,
   sessionKey,
 } from '@amnis/core';
@@ -31,7 +32,7 @@ test('should login and then logout as administrator', async () => {
   const inputStart: IoInput = {
     body: undefined,
   };
-  const outputStart = await authProcessLogin(context)(inputStart);
+  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {
@@ -56,7 +57,7 @@ test('should login and then logout as administrator', async () => {
     },
   };
 
-  const outputLogin = await authProcessLogin(context)(inputLogin);
+  const outputLogin = await authProcessLogin(context)(inputLogin, ioOutput());
 
   expect(outputLogin.status).toBe(200);
   expect(outputLogin.cookies.authSession).toBeDefined();
@@ -66,7 +67,7 @@ test('should login and then logout as administrator', async () => {
     body: {},
   };
 
-  const outputLogout = await authProcessLogout(context)(inputLogout);
+  const outputLogout = await authProcessLogout(context)(inputLogout, ioOutput());
 
   expect(outputLogout.status).toBe(200);
   expect(Object.keys(outputLogout.json.result)).toHaveLength(1);
@@ -80,7 +81,7 @@ test('should not logout without an existing session', async () => {
     body: {},
   };
 
-  const outputLogout = await authProcessLogout(context)(inputLogout);
+  const outputLogout = await authProcessLogout(context)(inputLogout, ioOutput());
 
   expect(outputLogout.status).toBe(401);
 });

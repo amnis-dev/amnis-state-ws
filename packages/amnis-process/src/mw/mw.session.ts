@@ -1,13 +1,12 @@
-import { ioOutput, IoMiddleware } from '@amnis/core';
+import { IoMiddleware } from '@amnis/core';
 
 /**
  * Ensures a JWT bearer is set.
  */
-export const mwSession: IoMiddleware = () => (next) => (context) => async (input) => {
+export const mwSession: IoMiddleware = () => (next) => (context) => async (input, output) => {
   const { sessionEncryption } = input;
 
   if (!sessionEncryption) {
-    const output = ioOutput();
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -20,7 +19,6 @@ export const mwSession: IoMiddleware = () => (next) => (context) => async (input
   input.session = await context.crypto.sessionDecrypt(sessionEncryption);
 
   if (!input.session) {
-    const output = ioOutput();
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -30,7 +28,7 @@ export const mwSession: IoMiddleware = () => (next) => (context) => async (input
     return output;
   }
 
-  return next(context)(input);
+  return next(context)(input, output);
 };
 
 export default { mwSession };

@@ -16,6 +16,7 @@ import {
   IoMap,
   Entity,
   User,
+  ioOutput,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { authenticateLogin } from '../utility/authenticate.js';
@@ -55,7 +56,7 @@ test('should not update without bearer', async () => {
     },
   };
 
-  const outputUpdate = await io.update(inputUpdate);
+  const outputUpdate = await io.update(inputUpdate, ioOutput());
 
   expect(outputUpdate.status).toBe(401);
 });
@@ -80,7 +81,7 @@ test('should login as administrator and update user email', async () => {
     },
   };
 
-  const outputUpdate = await io.update(inputUpdate);
+  const outputUpdate = await io.update(inputUpdate, ioOutput());
 
   expect(outputUpdate.status).toBe(200);
   expect(ioOutputErrored(outputUpdate)).toBe(false);
@@ -119,7 +120,7 @@ test('should login as administrator and update profile display name', async () =
     },
   };
 
-  const outputUpdate = await io.update(inputUpdate);
+  const outputUpdate = await io.update(inputUpdate, ioOutput());
 
   // console.log(JSON.stringify(outputUpdate, null, 2));
   expect(outputUpdate.status).toBe(200);
@@ -160,7 +161,7 @@ test('should login as executive and update user name', async () => {
     },
   };
 
-  const outputUpdate = await io.update(inputUpdate);
+  const outputUpdate = await io.update(inputUpdate, ioOutput());
 
   // console.log(JSON.stringify(outputUpdate, null, 2));
   expect(outputUpdate.status).toBe(200);
@@ -204,7 +205,7 @@ test(
       },
     };
 
-    const outputUpdate = await io.update(inputUpdate);
+    const outputUpdate = await io.update(inputUpdate, ioOutput());
 
     // console.log(JSON.stringify(outputUpdate, null, 2));
     expect(outputUpdate.status).toBe(200);
@@ -246,7 +247,7 @@ test('should login as user and be denied updating another profile', async () => 
     },
   };
 
-  const outputUpdate = await io.update(inputUpdate);
+  const outputUpdate = await io.update(inputUpdate, ioOutput());
 
   // console.log(JSON.stringify(outputUpdate, null, 2));
   expect(outputUpdate.status).toBe(200);

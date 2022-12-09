@@ -7,7 +7,7 @@ import { entityCreate } from '../entity.js';
 export const historyKey = 'history';
 
 export const historyBase = (): HistoryBase => ({
-  $subject: uid(historyKey),
+  $subject: uid(historyKey, 'null'),
   changes: {},
 });
 

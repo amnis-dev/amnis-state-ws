@@ -83,26 +83,29 @@ export const tokenVerify: CryptoTokenVerify = async (encoded, publicKey) => {
   }
 };
 
-export const tokenDecode: CryptoTokenDecode = async (encoded) => {
+export const tokenDecode: CryptoTokenDecode = async <T = Record<string, unknown>>(
+  encoded: string,
+) => {
   const [headerB64, payloadB64, signatureB64] = encoded.split('.');
 
   if (!signatureB64 || !payloadB64 || !headerB64) {
     // console.warn('Token is not properly formatted');
-    return undefined;
+    return [];
   }
 
   const dec = new TextDecoder();
 
   try {
-    const payload = JSON.parse(dec.decode(base64Decode(payloadB64)));
+    const payload = JSON.parse(dec.decode(base64Decode(payloadB64))) as T;
+    const sigature = base64Decode(signatureB64);
 
     if (!payload) {
-      return undefined;
+      return [];
     }
 
-    return payload;
+    return [payload, `${headerB64}.${payloadB64}`, sigature.buffer];
   } catch (error) {
     // console.error('Failed to parse token');
-    return undefined;
+    return [];
   }
 };

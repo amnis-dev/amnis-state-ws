@@ -1,6 +1,6 @@
 import { dateNumeric } from '../../core.js';
-import { asymGenerate } from './asym.js';
-import { tokenSign, tokenVerify } from './token.js';
+import { asymGenerate, asymVerify } from './asym.js';
+import { tokenDecode, tokenSign, tokenVerify } from './token.js';
 
 const payload = {
   exp: dateNumeric('1h') / 1000,
@@ -43,4 +43,18 @@ test('should create a new json web token and NOT verify it with different public
   const tokenVerified = await tokenVerify(tokenSigned, keyPair.publicKey);
 
   expect(tokenVerified).toBeUndefined();
+});
+
+test('should create a new json web token, decode it, then verify the decoded data', async () => {
+  const tokenSigned = await tokenSign(payload);
+  const [tokenDecoded, tokenRaw, tokenSignature] = await tokenDecode(tokenSigned);
+
+  if (!tokenDecoded || !tokenRaw || !tokenSignature) {
+    expect(tokenDecoded).toBeDefined();
+    expect(tokenRaw).toBeDefined();
+    expect(tokenSignature).toBeDefined();
+    return;
+  }
+  const verified = await asymVerify(tokenRaw, tokenSignature);
+  expect(verified).toBe(true);
 });

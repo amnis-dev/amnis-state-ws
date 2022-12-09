@@ -1,5 +1,4 @@
 import {
-  ioOutput,
   IoMiddleware,
   selectKey,
   JWTAccess,
@@ -11,11 +10,10 @@ import { systemSelectors } from '@amnis/state';
 /**
  * Ensures a JWT bearer is set.
  */
-export const mwAccess: IoMiddleware = () => (next) => (context) => async (input) => {
+export const mwAccess: IoMiddleware = () => (next) => (context) => async (input, output) => {
   const { accessEncoded } = input;
 
   if (!accessEncoded) {
-    const output = ioOutput();
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -43,7 +41,6 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input)
   if (!access) {
     const system = systemSelectors.selectActive(context.store.getState());
     if (!system) {
-      const output = ioOutput();
       output.status = 503; // 503 Service Unavailable
       output.json.logs.push({
         level: 'error',
@@ -65,7 +62,7 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input)
 
   input.access = access;
 
-  return next(context)(input);
+  return next(context)(input, output);
 };
 
 export default { mwAccess };

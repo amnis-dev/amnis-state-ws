@@ -16,11 +16,12 @@ test('history key should be is properly set', () => {
  * ============================================================
  */
 test('should create a history', () => {
-  const history = historyCreator(historyBase);
+  const history = historyCreator(historyBase());
 
-  expect(history).toEqual(
-    expect.objectContaining(historyBase),
-  );
+  expect(history).toMatchObject({
+    $subject: expect.any(String),
+    changes: {},
+  });
 });
 
 /**

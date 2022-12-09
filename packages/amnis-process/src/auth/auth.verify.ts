@@ -1,5 +1,5 @@
 import {
-  Io, ioOutput, IoProcess, AuthVerify,
+  Io, IoProcess, AuthVerify,
 } from '@amnis/core';
 import { mwValidate } from '../mw/index.js';
 
@@ -9,9 +9,8 @@ import { mwValidate } from '../mw/index.js';
 export const process: IoProcess<
 Io<AuthVerify, boolean>
 > = (context) => (
-  async (input) => {
+  async (input, output) => {
     const { body: bearer } = input;
-    const output = ioOutput<boolean>();
 
     output.json.result = false;
 
@@ -21,14 +20,10 @@ Io<AuthVerify, boolean>
 
     const jwt = await context.crypto.accessVerify(bearer.access);
 
-    if ('level' in jwt) {
-      output.json.logs.push(jwt);
-      return output;
-    }
-
-    if ('exp' in jwt) {
+    if (jwt !== undefined) {
       output.json.result = true;
     }
+
     return output;
   }
 );

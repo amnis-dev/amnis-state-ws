@@ -143,7 +143,9 @@ export type CryptoTokenVerify = <T = any>(
 /**
  * Decodes an encoded value without verifying.
  */
-export type CryptoTokenDecode = <T = any>(encoded: string) => Promise<T>;
+export type CryptoTokenDecode = <T = Record<string, unknown>>(
+  encoded: string
+) => Promise<[payload: T, raw: string, signature: ArrayBuffer] | []>;
 
 /**
  * Wraps a CryptoKey

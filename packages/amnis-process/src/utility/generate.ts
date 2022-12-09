@@ -4,11 +4,12 @@ import {
   dateNumeric,
   IoContext,
   JWTAccess,
-  Profile,
+  Role,
   Session,
   sessionCreator,
   System,
-  User,
+  UID,
+  UIDList,
 } from '@amnis/core';
 
 /**
@@ -16,8 +17,8 @@ import {
  */
 export const generateSession = async (
   system: System,
-  user: User,
-  profile: Profile,
+  subjectId: UID,
+  displayName: string,
 ): Promise<Session> => {
   /**
    * Create the session expiration.
@@ -28,11 +29,11 @@ export const generateSession = async (
    * Create the new user session.
    */
   const session = sessionCreator({
-    $subject: user.$id,
+    $subject: subjectId,
     exp: sessionExpires,
     admin: false,
-    name: profile.nameDisplay,
-    avatar: profile.avatar || null,
+    name: displayName,
+    avatar: null,
   });
 
   return session;
@@ -44,7 +45,8 @@ export const generateSession = async (
 export const generateBearer = async (
   context: IoContext,
   system: System,
-  user: User,
+  subjectId: UID,
+  roles: UIDList<Role>,
 ): Promise<Bearer> => {
   /**
    * Create the bearer token expiration.
@@ -56,10 +58,10 @@ export const generateBearer = async (
    */
   const jwtAccess: JWTAccess = {
     iss: '',
-    sub: user.$id,
+    sub: subjectId,
     exp: bearerExpires,
     typ: 'access',
-    roles: user.$roles,
+    roles,
   };
 
   /**

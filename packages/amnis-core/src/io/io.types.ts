@@ -2,7 +2,6 @@
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { Store } from '@reduxjs/toolkit';
 
-import type { DateJSON } from '../types.js';
 import type { Bearer } from '../state/index.js';
 import type { LogCreator, Session } from '../entity/index.js';
 
@@ -104,11 +103,6 @@ export interface IoOutputJson<T = any> {
   result?: T;
 
   /**
-   * Session expiration date-time.
-   */
-  expire?: DateJSON;
-
-  /**
    * Possible bearers.
    */
   bearers?: Bearer[];
@@ -153,6 +147,7 @@ export interface IoQueries {
  */
 export type Io<Body = any, Result = any, Token = JWTAccess> = (
   input: IoInput<Body, Token>,
+  output: IoOutput<Result>
 ) => Promise<IoOutput<Result>>;
 
 /**

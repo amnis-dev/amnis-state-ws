@@ -14,6 +14,7 @@ import {
   IoContext,
   IoMap,
   schemaState,
+  ioOutput,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { authenticateLogin } from '../utility/authenticate.js';
@@ -50,7 +51,7 @@ test('should not create without bearer', async () => {
     },
   };
 
-  const outputCreator = await io.create(inputCreator);
+  const outputCreator = await io.create(inputCreator, ioOutput());
 
   expect(outputCreator.status).toBe(401);
 });
@@ -75,9 +76,7 @@ test('should login as administrator and create user', async () => {
     },
   };
 
-  const outputCreator = await io.create(inputCreator);
-
-  console.log(JSON.stringify(outputCreator, null, 2));
+  const outputCreator = await io.create(inputCreator, ioOutput());
 
   expect(outputCreator.status).toBe(200);
   expect(outputCreator.json.result?.user[0]?.committed).toBe(true);
@@ -107,7 +106,7 @@ test('should login as executive and create user', async () => {
     },
   };
 
-  const outputCreator = await io.create(inputCreator);
+  const outputCreator = await io.create(inputCreator, ioOutput());
 
   expect(outputCreator.status).toBe(200);
   expect(ioOutputErrored(outputCreator)).toBe(false);
@@ -136,9 +135,7 @@ test('should login as user and cannot create user', async () => {
     },
   };
 
-  const outputCreator = await io.create(inputCreator);
-
-  console.log(JSON.stringify(outputCreator, null, 2));
+  const outputCreator = await io.create(inputCreator, ioOutput());
 
   expect(outputCreator.status).toBe(200);
   expect(ioOutputErrored(outputCreator)).toBe(true);

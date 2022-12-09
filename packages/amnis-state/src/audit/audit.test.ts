@@ -24,11 +24,11 @@ test('audit should return the initial state', () => {
 test('should handle creating a new audit', () => {
   const store = storeSetup();
 
-  const action = auditActions.create(auditCreator(auditBase));
+  const action = auditActions.create(auditCreator(auditBase()));
 
   store.dispatch(action);
   const entities = auditSelectors.selectAll(store.getState());
   expect(entities).toHaveLength(1);
 
-  expect(entities[0]).toEqual(expect.objectContaining(auditBase));
+  expect(entities[0]).toEqual(expect.objectContaining(auditBase()));
 });

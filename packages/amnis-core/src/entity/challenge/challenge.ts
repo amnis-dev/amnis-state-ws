@@ -10,14 +10,13 @@ export const challengeKey = 'challenge';
 
 export const challengeBase = (): ChallengeBase => ({
   value: rtk.nanoid(8),
-  expires: dateNumeric(),
+  expires: dateNumeric('5m'),
 });
 
 export const challengeCreator = (
   challenge: ChallengeCreator,
 ): Challenge => ({
   ...challengeBase(),
-  expires: dateNumeric('5m'),
   ...challenge,
   $id: uid(challengeKey),
 });

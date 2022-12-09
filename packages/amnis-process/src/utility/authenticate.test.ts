@@ -42,6 +42,7 @@ test('should authenticate as normal user account', async () => {
     userAccount.name,
     userAccount.credential.$id,
     signatureEncoded,
+    userAccount.password,
   );
 
   expect(output.status).toBe(200);
@@ -184,6 +185,7 @@ test('should not authenticate using a different private key for signing', async 
     userAccount.name,
     userAccount.credential.$id,
     signatureEncoded,
+    userAccount.password,
   );
 
   expect(output.status).toBe(401);

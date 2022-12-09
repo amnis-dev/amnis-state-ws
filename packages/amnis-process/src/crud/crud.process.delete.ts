@@ -2,7 +2,7 @@
 
 import {
   coreActions,
-  Io, ioOutput, IoProcess, Role, selectRoleGrants, StateDeleter, stateScopeCreate, Task, UID,
+  Io, IoProcess, Role, selectRoleGrants, StateDeleter, stateScopeCreate, Task, UID,
 } from '@amnis/core';
 import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
@@ -10,10 +10,9 @@ import { authorizeWall } from '../utility/authorize.js';
 export const process: IoProcess<
 Io<StateDeleter, StateDeleter>
 > = (context) => (
-  async (input) => {
+  async (input, output) => {
     const { store, database } = context;
     const { body, access } = input;
-    const output = ioOutput<StateDeleter>();
 
     const roleRefs: UID<Role>[] = access?.roles || [];
 

@@ -7,7 +7,6 @@ import {
   historyKey,
   historyMake,
   Io,
-  ioOutput,
   IoProcess,
   selectRoleGrants,
   State,
@@ -23,10 +22,9 @@ import { authorizeWall } from '../utility/authorize.js';
 export const process: IoProcess<
 Io<StateUpdater, StateCreator>
 > = (context) => (
-  async (input) => {
+  async (input, output) => {
     const { store, database, crypto } = context;
     const { body, access } = input;
-    const output = ioOutput();
 
     if (!access) {
       output.status = 401; // 401 Unauthorized

@@ -5,6 +5,7 @@ import {
   StateEntities,
   UID,
   challengeDecode,
+  ioOutputApply,
 } from '@amnis/core';
 import { authenticateAccount } from '../utility/authenticate.js';
 import { challengeCreate } from '../utility/challenge.js';
@@ -13,7 +14,7 @@ import { validate } from '../validate.js';
 const process: IoProcess<
 Io<AuthLogin, StateEntities>
 > = (context) => (
-  async (input) => {
+  async (input, output) => {
     const { validators } = context;
     const { body } = input;
 
@@ -22,7 +23,7 @@ Io<AuthLogin, StateEntities>
      * authentication ritual.
      */
     if (!body) {
-      const output = await challengeCreate(context, input);
+      ioOutputApply(output, await challengeCreate(context, input));
       return output;
     }
 
@@ -31,7 +32,9 @@ Io<AuthLogin, StateEntities>
      */
     const validateOutput = validate(validators.AuthLogin, body);
     if (validateOutput) {
-      return validateOutput;
+      ioOutputApply(output, validateOutput);
+      console.log(JSON.stringify({ outputValidation: output }, null, 2));
+      return output;
     }
 
     const {
@@ -47,16 +50,21 @@ Io<AuthLogin, StateEntities>
      */
     const challengeDecoded = challengeDecode(challenge);
 
-    /**
-     * Complete the authentication.
-     */
-    const output = await authenticateAccount(
+    const outputAuthentication = await authenticateAccount(
       context,
       challengeDecoded,
       username,
       $credential as UID,
       signature,
       password,
+    );
+
+    /**
+     * Complete the authentication.
+     */
+    ioOutputApply(
+      output,
+      outputAuthentication,
     );
 
     return output;

@@ -1,7 +1,6 @@
 import {
   AuthRegistration,
   Io,
-  ioOutput,
   IoProcess,
   StateEntities,
   authRegistrationParse,
@@ -9,6 +8,7 @@ import {
   userKey,
   Entity,
   User,
+  ioOutputApply,
 } from '@amnis/core';
 import { authenticateLogin } from '../utility/authenticate.js';
 import { challengeCreate, challengeValidate } from '../utility/challenge.js';
@@ -18,7 +18,7 @@ import { validate } from '../validate.js';
 const process: IoProcess<
 Io<AuthRegistration, StateEntities>
 > = (context) => (
-  async (input) => {
+  async (input, output) => {
     const { crypto, validators } = context;
     const { body } = input;
 
@@ -27,7 +27,7 @@ Io<AuthRegistration, StateEntities>
      * registration ritual.
      */
     if (!body) {
-      const output = await challengeCreate(context, input);
+      await ioOutputApply(output, await challengeCreate(context, input));
       return output;
     }
 
@@ -45,7 +45,6 @@ Io<AuthRegistration, StateEntities>
      * Ensure the auth registration parsing was successfull.
      */
     if (!authRegistrationParsed) {
-      const output = ioOutput();
       output.status = 500; // Internal Server Error
       output.json.logs = [logCreator({
         level: 'error',
@@ -70,13 +69,12 @@ Io<AuthRegistration, StateEntities>
      */
     const publicKey = await crypto.keyImport(credential.publicKey);
     if (!publicKey) {
-      const output = ioOutput();
       output.status = 500; // Internal Server Error
-      output.json.logs = [logCreator({
+      output.json.logs.push(logCreator({
         level: 'error',
         title: 'Public Key Not Found',
         description: 'Could not retrieve the public key from the request.',
-      })];
+      }));
       return output;
     }
 
@@ -90,36 +88,34 @@ Io<AuthRegistration, StateEntities>
     );
 
     if (signatureValid !== true) {
-      const output = ioOutput();
       output.status = 500; // Internal Server Error
-      output.json.logs = [logCreator({
+      output.json.logs.push(logCreator({
         level: 'error',
         title: 'Unrecognized Signature',
         description: 'Could not verify the requesting signature against the credential.',
-      })];
+      }));
       return output;
     }
 
-    const outputRegistration = await registerAccount(
+    ioOutputApply(output, await registerAccount(
       context,
       authRegistrationParsed,
       input.ip,
-    );
+    ));
 
-    if (outputRegistration.status !== 200) {
-      return outputRegistration;
+    if (output.status !== 200) {
+      return output;
     }
 
-    const user = outputRegistration.json.result?.[userKey]?.[0] as Entity<User>;
+    const user = output.json.result?.[userKey]?.[0] as Entity<User>;
 
     if (!user) {
-      const output = ioOutput();
       output.status = 500; // Internal Server Error
-      output.json.logs = [logCreator({
+      output.json.logs.push(logCreator({
         level: 'error',
-        title: 'User Not Registered',
-        description: 'There was an issue when registering your user account.',
-      })];
+        title: 'User Account Missing',
+        description: 'User account was not provided from the registration event.',
+      }));
       return output;
     }
 
@@ -127,11 +123,9 @@ Io<AuthRegistration, StateEntities>
      * With a successful registration, we can login the user with the
      * register account.
      */
-    const outputLogin = await authenticateLogin(context, user);
+    ioOutputApply(output, await authenticateLogin(context, user));
 
-    outputLogin.json.logs = [...outputRegistration.json.logs, ...outputLogin.json.logs];
-
-    return outputLogin;
+    return output;
   }
 );
 

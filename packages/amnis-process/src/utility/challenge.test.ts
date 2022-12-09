@@ -59,7 +59,7 @@ test('should fail to validate an expired challenge', async () => {
   }
   expect(result.status).toBe(500);
   expect(result.json.logs.length).toBeGreaterThan(0);
-  expect(result.json.logs[0].title).toBe('Challenge Code Expired');
+  expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
 });
 
 test('should fail to find a non-existing challenge', async () => {

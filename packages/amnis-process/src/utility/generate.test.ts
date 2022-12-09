@@ -36,7 +36,7 @@ test('should generate a session', async () => {
     return;
   }
 
-  const session = await generateSession(system, userExisting, profileExisting);
+  const session = await generateSession(system, userExisting.$id, profileExisting.nameDisplay);
 
   expect(session).toMatchObject({
     $subject: expect.any(String),
@@ -54,7 +54,7 @@ test('should generate a bearer', async () => {
     return;
   }
 
-  const bearer = await generateBearer(context, system, userExisting);
+  const bearer = await generateBearer(context, system, userExisting.$id, userExisting.$roles);
   const now = dateNumeric();
   const tolerance = 1000; // one second.
   const time = 1800000 - tolerance; // 30 minutes - tolerance.
