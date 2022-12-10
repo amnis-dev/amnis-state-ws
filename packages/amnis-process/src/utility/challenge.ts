@@ -89,6 +89,7 @@ export const challengeCreate = async (
 export const challengeValidate = (
   context: IoContext,
   challenge: Challenge,
+  username?: string,
 ): true | IoOutput => {
   const { store } = context;
   /**
@@ -121,6 +122,20 @@ export const challengeValidate = (
       level: 'error',
       title: 'Challenge Code Expired',
       description: 'The challenge code required for registration has expired.',
+    })];
+    return output;
+  }
+
+  /**
+   * Ensure that this challenge is not intended for a specific username.
+   */
+  if (challenge.username && username && challenge.username !== username) {
+    const output = ioOutput();
+    output.status = 500; // Internal Server Error
+    output.json.logs = [logCreator({
+      level: 'error',
+      title: 'User Not Challenged',
+      description: 'This challenge code is indended for another user.',
     })];
     return output;
   }

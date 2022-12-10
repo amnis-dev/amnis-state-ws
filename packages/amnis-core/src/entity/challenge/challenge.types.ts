@@ -13,6 +13,7 @@ export interface Challenge extends EntityCreator {
   value: string;
 
   /**
+   * @min 0
    * @description Expiration date-time of the challenge.
    */
   expires: DateNumeric;
@@ -23,6 +24,12 @@ export interface Challenge extends EntityCreator {
    * @description The subject being challenged.
    */
   $subject?: UID;
+
+  /**
+   * Username that this challenge is indended for.
+   * Challenge should only work with the indended username in context.
+   */
+  username?: string;
 }
 
 /**

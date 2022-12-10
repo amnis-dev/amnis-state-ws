@@ -15,6 +15,9 @@ import {
   profileKey,
   contactKey,
   sessionKey,
+  dateJSON,
+  StateUpdater,
+  credentialKey,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
 import { challengeValidate } from './challenge.js';
@@ -228,6 +231,18 @@ export const authenticateAccount = async (
       'The provided credential could not be verified.',
     );
   }
+
+  /**
+   * Update the credential with last used time.
+   */
+  const updater: StateUpdater = {
+    [credentialKey]: [{
+      $id: credential.$id,
+      updated: dateJSON(),
+      used: dateJSON(),
+    }],
+  };
+  context.database.update(updater);
 
   /**
    * All authentication checks can been completed.

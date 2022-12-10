@@ -59,7 +59,11 @@ Io<AuthRegistration, StateEntities>
     /**
      * Verify that the challenge code is valid.
      */
-    const challangeValidation = challengeValidate(context, challenge);
+    const challangeValidation = challengeValidate(
+      context,
+      challenge,
+      authRegistrationParsed.username,
+    );
     if (challangeValidation !== true) {
       return challangeValidation;
     }
