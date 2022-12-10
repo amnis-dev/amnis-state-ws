@@ -2,6 +2,7 @@
 import { ResponseTransformer, rest } from 'msw';
 import { authProcess } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
+import { ioOutput } from '@amnis/core';
 import { setupAudit, setupInput } from './setup.js';
 import { MockHandlers } from './mock.types.js';
 
@@ -28,7 +29,7 @@ export const authSetupHandlers: MockHandlers = async (options) => {
 
       const input = await setupInput(req);
 
-      const output = await authProcess[processKey](context)(input);
+      const output = await authProcess[processKey](context)(input, ioOutput());
 
       const ctxCookies: ResponseTransformer<any, any>[] = [];
       Object.keys(output.cookies).forEach((cookieName) => {

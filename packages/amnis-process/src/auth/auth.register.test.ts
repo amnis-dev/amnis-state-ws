@@ -55,7 +55,7 @@ test('should start the registration ritual', async () => {
 
 test('should not register with invalid body input', async () => {
   const input: IoInput = {
-    body: {},
+    body: { invalid: true },
   };
 
   const output = await authProcessRegister(context)(input, ioOutput());
@@ -82,7 +82,6 @@ test('should start ritual and complete registration', async () => {
   }
 
   const [authRegistration] = await authRegistrationCreate({
-    agent: 'Jest Test Agent',
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',

@@ -24,7 +24,7 @@ test('credentials should return the initial state', () => {
 test('should handle creating a new credentials', () => {
   const store = storeSetup();
 
-  const action = credentialActions.create(credentialCreator(credentialBase));
+  const action = credentialActions.create(credentialCreator(credentialBase()));
 
   store.dispatch(action);
   const entities = credentialSelectors.selectAll(store.getState());

@@ -1,5 +1,9 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
+  accountsGet,
+  authLoginCreate,
+  Challenge,
+  challengeKey,
   Entity,
   History,
   historyKey,
@@ -30,11 +34,38 @@ afterAll(() => {
 });
 
 test('should be able to update user profile', async () => {
-  // Must login to obtain token permitted to create entities.
-  await clientStore.dispatch(apiAuth.endpoints.login.initiate({
-    username: 'admin',
-    password: 'passwd12',
-  }));
+  /**
+   * Get the user account information.
+   */
+  const { admin: adminAccount } = await accountsGet();
+
+  /**
+   * Must first begin the login ritual by obtaining a challenge code.
+   */
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+
+  if ('error' in resultInitiate) {
+    expect(resultInitiate.error).toBeUndefined();
+    return;
+  }
+
+  /** s
+   * Extract the challenge.
+   */
+  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+
+  /**
+   * Create the login request body.
+   */
+  const authLogin = await authLoginCreate({
+    username: adminAccount.name,
+    password: adminAccount.password,
+    challenge,
+    credential: adminAccount.credential,
+    privateKeyWrapped: adminAccount.privateKey,
+  });
+
+  await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
 
   /**
    * Read profiles to put them in the state.

@@ -1,5 +1,5 @@
 import {
-  auditCreator, auditKey, CryptoSymEncryption, entityCreate, IoContext, IoInput, IoOutput,
+  auditCreator, auditKey, entityCreate, IoContext, IoInput, IoOutput, JWTAccess,
 } from '@amnis/core';
 import { httpAuthorizationParse } from '@amnis/process';
 import type { DefaultBodyType, PathParams, RestRequest } from 'msw';
@@ -11,6 +11,11 @@ export type Request = RestRequest<DefaultBodyType, PathParams<string>>;
  */
 export const setupInput = async (req: Request): Promise<IoInput> => {
   /**
+   * Mock a local ip.
+   */
+  const ip = '127.0.0.1';
+
+  /**
    * Extract body and authSession data from the request.
    */
   const body = await req.json();
@@ -21,7 +26,8 @@ export const setupInput = async (req: Request): Promise<IoInput> => {
    */
   const input: IoInput = {
     body: body ?? {},
-    sessionEncryption: authSession as CryptoSymEncryption,
+    sessionEncryption: authSession,
+    ip,
   };
 
   /**
@@ -70,7 +76,7 @@ export const setupAudit = async (
    * Get the subject if there is one.
    */
   if (input.accessEncoded) {
-    const access = await context.crypto.tokenDecode(input.accessEncoded);
+    const [access] = await context.crypto.tokenDecode<JWTAccess>(input.accessEncoded);
     if (access) {
       audit.$subject = access.sub;
     }

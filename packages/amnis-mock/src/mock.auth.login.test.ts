@@ -1,7 +1,12 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
+  accountsGet,
   auditKey,
+  authLoginCreate,
+  Challenge,
+  challengeKey,
   contactKey,
+  Entity,
   profileKey,
   sessionKey,
   userKey,
@@ -31,11 +36,39 @@ afterAll(() => {
   mockService.stop();
 });
 
-test('should be able to login', async () => {
-  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
-    username: 'user',
-    password: 'passwd12',
-  }));
+test('should be able to login as user', async () => {
+  /**
+   * Get the user account information.
+   */
+  const { user } = await accountsGet();
+
+  /**
+   * Must first begin the login ritual by obtaining a challenge code.
+   */
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+
+  if ('error' in resultInitiate) {
+    expect(resultInitiate.error).toBeUndefined();
+    return;
+  }
+
+  /**
+   * Extract the challenge.
+   */
+  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+
+  /**
+   * Create the login request body.
+   */
+  const authLogin = await authLoginCreate({
+    username: user.name,
+    password: user.password,
+    challenge,
+    credential: user.credential,
+    privateKeyWrapped: user.privateKey,
+  });
+
+  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
 
   if ('error' in result) {
     expect(result.error).toBeUndefined();
@@ -62,10 +95,38 @@ test('should be able to login', async () => {
 });
 
 test('should NOT be able to login with a bad password', async () => {
-  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
-    username: 'user',
-    password: 'passwd1',
-  }));
+  /**
+   * Get the user account information.
+   */
+  const { user } = await accountsGet();
+
+  /**
+   * Must first begin the login ritual by obtaining a challenge code.
+   */
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+
+  if ('error' in resultInitiate) {
+    expect(resultInitiate.error).toBeUndefined();
+    return;
+  }
+
+  /**
+   * Extract the challenge.
+   */
+  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+
+  /**
+   * Create the login request body.
+   */
+  const authLogin = await authLoginCreate({
+    username: user.name,
+    password: user.password.slice(1),
+    challenge,
+    credential: user.credential,
+    privateKeyWrapped: user.privateKey,
+  });
+
+  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
 
   if ('error' in result) {
     expect(result.error).toBeUndefined();
@@ -76,14 +137,42 @@ test('should NOT be able to login with a bad password', async () => {
   const { logs } = data;
 
   expect(logs).toHaveLength(1);
-  expect(logs?.[0]?.title).toBe('Bad Credentials');
+  expect(logs?.[0]?.title).toBe('Authentication Failed: Wrong Password');
 });
 
-test('should see audits of login requests', async () => {
-  const resultLogin = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
-    username: 'admin',
-    password: 'passwd12',
-  }));
+test('should see audits of login requests as admin', async () => {
+  /**
+   * Get the user account information.
+   */
+  const { admin } = await accountsGet();
+
+  /**
+   * Must first begin the login ritual by obtaining a challenge code.
+   */
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+
+  if ('error' in resultInitiate) {
+    expect(resultInitiate.error).toBeUndefined();
+    return;
+  }
+
+  /**
+   * Extract the challenge.
+   */
+  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+
+  /**
+   * Create the login request body.
+   */
+  const authLogin = await authLoginCreate({
+    username: admin.name,
+    password: admin.password,
+    challenge,
+    credential: admin.credential,
+    privateKeyWrapped: admin.privateKey,
+  });
+
+  const resultLogin = await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
 
   if ('error' in resultLogin) {
     expect(resultLogin.error).toBeUndefined();
@@ -101,5 +190,6 @@ test('should see audits of login requests', async () => {
 
   const { data } = resultAudits;
 
-  expect(data?.result?.[auditKey]).toHaveLength(3);
+  expect(Object.keys(data?.result || {})).toHaveLength(1);
+  expect(data?.result?.[auditKey]).toHaveLength(6);
 });

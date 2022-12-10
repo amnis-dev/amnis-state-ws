@@ -10,7 +10,6 @@ test('should create a valid auth registration object', async () => {
   });
 
   const [authRegistration] = await authRegistrationCreate({
-    agent: 'Jest Test Device',
     username,
     displayName,
     password: 'passwd12',
@@ -36,7 +35,6 @@ test('should be able to parse a generated auth registration object', async () =>
   });
 
   const [authRegistration, privateKeyWrapped] = await authRegistrationCreate({
-    agent: 'Jest Test Device',
     username,
     displayName,
     password: 'passwd12',
@@ -68,7 +66,7 @@ test('should be able to parse a generated auth registration object', async () =>
   });
 
   expect(authRegistrationParsed.credential).toMatchObject({
-    name: 'Jest Test Device',
+    name: expect.any(String),
     publicKey: expect.any(String),
   });
 });

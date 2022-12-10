@@ -5,7 +5,9 @@ import {
   sessionSelectors,
   userSelectors,
 } from '@amnis/state';
-import { selectBearer } from '@amnis/core';
+import {
+  accountsGet, authLoginCreate, Challenge, challengeKey, Entity, selectBearer,
+} from '@amnis/core';
 import { clientStore } from './common/client.store.js';
 import { mockService } from './mock.service.js';
 
@@ -26,10 +28,38 @@ afterAll(() => {
 });
 
 test('should be able to login and logout', async () => {
-  await clientStore.dispatch(apiAuth.endpoints.login.initiate({
-    username: 'user',
-    password: 'passwd12',
-  }));
+  /**
+   * Get the user account information.
+   */
+  const { user } = await accountsGet();
+
+  /**
+   * Must first begin the login ritual by obtaining a challenge code.
+   */
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+
+  if ('error' in resultInitiate) {
+    expect(resultInitiate.error).toBeUndefined();
+    return;
+  }
+
+  /** s
+   * Extract the challenge.
+   */
+  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+
+  /**
+   * Create the login request body.
+   */
+  const authLogin = await authLoginCreate({
+    username: user.name,
+    password: user.password,
+    challenge,
+    credential: user.credential,
+    privateKeyWrapped: user.privateKey,
+  });
+
+  await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
 
   const sessionLoginActive = sessionSelectors.selectActive(clientStore.getState());
 

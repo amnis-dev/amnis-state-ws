@@ -28,7 +28,6 @@ test('should register a new account', async () => {
   });
 
   const [authRegistration] = await authRegistrationCreate({
-    agent: 'Jest Test Agent',
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
@@ -91,7 +90,6 @@ test('should not register with an existing username', async () => {
   });
 
   const [authRegistration] = await authRegistrationCreate({
-    agent: 'Jest Test Agent',
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',

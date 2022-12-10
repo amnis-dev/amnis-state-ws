@@ -2,6 +2,7 @@
 import { ResponseTransformer, rest } from 'msw';
 import { crudProcess } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
+import { ioOutput } from '@amnis/core';
 import { setupInput } from './setup.js';
 import { MockHandlers, MockOptions } from './mock.types.js';
 
@@ -28,7 +29,7 @@ export const crudSetupHandlers: MockHandlers = async (options) => {
 
       const input = await setupInput(req);
 
-      const output = await crudProcess[processKey](context)(input);
+      const output = await crudProcess[processKey](context)(input, ioOutput());
 
       const ctxCookies: ResponseTransformer<any, any>[] = [];
       Object.keys(output.cookies).forEach((cookieName) => {

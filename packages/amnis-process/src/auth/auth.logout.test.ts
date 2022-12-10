@@ -1,12 +1,10 @@
 import {
   accountsGet,
   AuthLogin,
+  authLoginCreate,
   AuthLogout,
-  base64Encode,
   Challenge,
-  challengeEncode,
   challengeKey,
-  cryptoWeb,
   IoContext,
   IoInput,
   ioOutput,
@@ -40,21 +38,16 @@ test('should login and then logout as administrator', async () => {
     return;
   }
 
-  const privateKeyUnwrapped = await cryptoWeb.keyUnwrap(adminAccount.privateKey, 'passwd12');
-  const signature = await cryptoWeb.asymSign(
-    adminAccount.name + adminAccount.credential.$id + challenge,
-    privateKeyUnwrapped,
-  );
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: adminAccount.name,
+    password: adminAccount.password,
+    challenge,
+    credential: adminAccount.credential,
+    privateKeyWrapped: adminAccount.privateKey,
+  });
 
   const inputLogin: IoInput<AuthLogin> = {
-    body: {
-      username: adminAccount.name,
-      password: adminAccount.password,
-      challenge: challengeEncode(challenge),
-      $credential: adminAccount.credential.$id,
-      signature: signatureEncoded,
-    },
+    body: authLogin,
   };
 
   const outputLogin = await authProcessLogin(context)(inputLogin, ioOutput());

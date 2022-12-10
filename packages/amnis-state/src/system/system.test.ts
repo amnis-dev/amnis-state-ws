@@ -24,7 +24,7 @@ test('system should return the initial state', () => {
 test('should handle creating a new system', () => {
   const store = storeSetup();
 
-  const action = systemActions.create(systemCreator(systemBase));
+  const action = systemActions.create(systemCreator(systemBase()));
 
   store.dispatch(action);
   const entities = systemSelectors.selectAll(store.getState());

@@ -4,7 +4,6 @@ import {
   dateNumeric,
   ioOutput,
   IoOutput,
-  CryptoToken,
   StateEntities,
   Bearer,
   bearerCreate,
@@ -13,8 +12,6 @@ import {
 
 import { systemSelectors } from '@amnis/state';
 import { processConfig } from '../config.js';
-import { loginSuccessProcess } from './common.js';
-import { register } from './register.back.js';
 import { findUserByName } from './find.js';
 
 /**
@@ -23,9 +20,9 @@ import { findUserByName } from './find.js';
 interface OAuth2TokenData {
   bearer_type: string;
   expires_in: number,
-  access_token: CryptoToken;
+  access_token: string;
   scope: string;
-  refresh_token?: CryptoToken;
+  refresh_token?: string;
   error?: string,
   error_description?: string;
 }
@@ -46,116 +43,120 @@ export async function oauthTwitter(
   context: IoContext,
   auth: Omit<AuthPkce, 'platform'>,
 ): Promise<IoOutput<StateEntities>> {
-  const output = ioOutput<StateEntities>();
-  /**
-   * STEP 1
-   * Get the access and refresh bearers.
-   */
-  const params = new URLSearchParams();
-  params.append('grant_type', 'authorization_code');
-  params.append('client_id', auth.clientId);
-  params.append('code', auth.code);
-  params.append('redirect_uri', auth.redirectUri);
-  params.append('code_verifier', auth.codeVerifier);
+  // const output = ioOutput<StateEntities>();
+  // /**
+  //  * STEP 1
+  //  * Get the access and refresh bearers.
+  //  */
+  // const params = new URLSearchParams();
+  // params.append('grant_type', 'authorization_code');
+  // params.append('client_id', auth.clientId);
+  // params.append('code', auth.code);
+  // params.append('redirect_uri', auth.redirectUri);
+  // params.append('code_verifier', auth.codeVerifier);
 
-  const bearerResponse = await fetch(bearerEndpoint, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: params.toString(),
-  });
+  // const bearerResponse = await fetch(bearerEndpoint, {
+  //   method: 'post',
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //   },
+  //   body: params.toString(),
+  // });
 
-  const bearerData = await bearerResponse.json() as OAuth2TokenData;
+  // const bearerData = await bearerResponse.json() as OAuth2TokenData;
 
-  if (bearerData.error || typeof bearerData?.access_token !== 'string') {
-    output.status = 401; // Unauthorized
-    output.json.logs.push({
-      level: 'error',
-      title: 'Invaid Request',
-      description: bearerData?.error_description || 'Could not verify OAuth 2.0 authentication.',
-    });
-    return output;
-  }
-
-  /**
-   * STEP 2
-   * Obtain user information from the OAuth endpoint.
-   */
-  const userResponse = await fetch(userEndpoint, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${bearerData.access_token}`,
-    },
-  });
-
-  const userPayload = await userResponse.json();
-  const userData = userPayload.data as TwitterUser;
-
-  if (typeof userData.name !== 'string' || typeof userData.id !== 'string') {
-    output.status = 401; // Unauthorized
-    output.json.logs.push({
-      level: 'error',
-      title: 'Invaid Request',
-      description: bearerData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
-    });
-    return output;
-  }
-
-  /**
-   * Step 3
-   * Find the user or register a new one.
-   */
-  const username = `TR#${userData.id}`;
-  const userSearch = await findUserByName(context, username);
-
-  /**
-   * If the user already exists, return the login success.
-   */
-  if (userSearch) {
-    const successOutput = await loginSuccessProcess(context, userSearch);
-    return successOutput;
-  }
-
-  /**
-   * If a user didn't exist, register a new account.
-   */
-  const bearers: Bearer[] = [];
-
-  const bearerAccess = bearerCreate({
-    id: 'twitter',
-    exp: dateNumeric(`${bearerData.expires_in}s`),
-    access: bearerData.access_token as CryptoToken,
-  });
-  bearers.push(bearerAccess);
-
-  // if (bearerData.refresh_token) {
-  //   const bearerRefresh = bearerCreate({
-  //     api: 'twitter',
-  //     type: 'refresh',
-  //     exp: dateNumeric('200d'),
-  //     jwt: bearerData.refresh_token as CryptoToken,
+  // if (bearerData.error || typeof bearerData?.access_token !== 'string') {
+  //   output.status = 401; // Unauthorized
+  //   output.json.logs.push({
+  //     level: 'error',
+  //     title: 'Invaid Request',
+  //     description: bearerData?.error_description || 'Could not verify OAuth 2.0 authentication.',
   //   });
-  //   bearers.push(bearerRefresh);
+  //   return output;
   // }
 
-  /**
-   * Set system settings from the store.
-   */
-  const system = systemSelectors.selectActive(context.store.getState());
+  // /**
+  //  * STEP 2
+  //  * Obtain user information from the OAuth endpoint.
+  //  */
+  // const userResponse = await fetch(userEndpoint, {
+  //   method: 'GET',
+  //   headers: {
+  //     Authorization: `Bearer ${bearerData.access_token}`,
+  //   },
+  // });
 
-  const registrationOutput = await register(
-    context,
-    system,
-    username,
-    {
-      otherTokens: bearers,
-      nameDisplay: userData?.name || '',
-      createSession: true,
-    },
-  );
+  // const userPayload = await userResponse.json();
+  // const userData = userPayload.data as TwitterUser;
 
-  return registrationOutput;
+  // if (typeof userData.name !== 'string' || typeof userData.id !== 'string') {
+  //   output.status = 401; // Unauthorized
+  //   output.json.logs.push({
+  //     level: 'error',
+  //     title: 'Invaid Request',
+  //     description:
+  //       bearerData?.error_description || 'Could not obtain user with OAuth 2.0 authentication.',
+  //   });
+  //   return output;
+  // }
+
+  // /**
+  //  * Step 3
+  //  * Find the user or register a new one.
+  //  */
+  // const username = `TR#${userData.id}`;
+  // const userSearch = await findUserByName(context, username);
+
+  // /**
+  //  * If the user already exists, return the login success.
+  //  */
+  // if (userSearch) {
+  //   const successOutput = await loginSuccessProcess(context, userSearch);
+  //   return successOutput;
+  // }
+
+  // /**
+  //  * If a user didn't exist, register a new account.
+  //  */
+  // const bearers: Bearer[] = [];
+
+  // const bearerAccess = bearerCreate({
+  //   id: 'twitter',
+  //   exp: dateNumeric(`${bearerData.expires_in}s`),
+  //   access: bearerData.access_token as CryptoToken,
+  // });
+  // bearers.push(bearerAccess);
+
+  // // if (bearerData.refresh_token) {
+  // //   const bearerRefresh = bearerCreate({
+  // //     api: 'twitter',
+  // //     type: 'refresh',
+  // //     exp: dateNumeric('200d'),
+  // //     jwt: bearerData.refresh_token as CryptoToken,
+  // //   });
+  // //   bearers.push(bearerRefresh);
+  // // }
+
+  // /**
+  //  * Set system settings from the store.
+  //  */
+  // const system = systemSelectors.selectActive(context.store.getState());
+
+  // const registrationOutput = await register(
+  //   context,
+  //   system,
+  //   username,
+  //   {
+  //     otherTokens: bearers,
+  //     nameDisplay: userData?.name || '',
+  //     createSession: true,
+  //   },
+  // );
+
+  // return registrationOutput;
+
+  const output = ioOutput();
+  return output;
 }
 
 export default oauthTwitter;

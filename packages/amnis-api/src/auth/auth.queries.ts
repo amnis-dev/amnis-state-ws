@@ -15,7 +15,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   login: builder.mutation<
   IoOutputJson<StateEntities>,
-  AuthLogin
+  AuthLogin | Record<string, never>
   >({
     query: (payload) => ({
       url: 'login',

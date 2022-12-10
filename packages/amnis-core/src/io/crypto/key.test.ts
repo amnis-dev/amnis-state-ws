@@ -1,5 +1,4 @@
 import { asymGenerate, asymSign, asymVerify } from './asym.js';
-import { CryptoAsymPrivateKey, CryptoAsymPublicKey } from './crypto.types.js';
 import {
   keyExport, keyImport, keyUnwrap, keyWrap,
 } from './key.js';
@@ -16,7 +15,7 @@ test('should wrap and unwrap key to verify signature', async () => {
     return;
   }
 
-  const signature = await asymSign(data, unwrapped as CryptoAsymPrivateKey);
+  const signature = await asymSign(data, unwrapped);
   const verify = await asymVerify(data, signature, asymSignerKeys.publicKey);
 
   expect(verify).toBe(true);
@@ -44,7 +43,7 @@ test('should export public key and import it back again to verify signature', as
   }
 
   const signature = await asymSign(data, asymSignerKeys.privateKey);
-  const verify = await asymVerify(data, signature, imported as CryptoAsymPublicKey);
+  const verify = await asymVerify(data, signature, imported);
 
   expect(verify).toBe(true);
 });

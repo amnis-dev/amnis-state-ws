@@ -26,7 +26,7 @@ Io<AuthRegistration, StateEntities>
      * When the body is undefined, output data necessary to begin the
      * registration ritual.
      */
-    if (!body) {
+    if (!body || Object.keys(body).length === 0) {
       await ioOutputApply(output, await challengeCreate(context, input));
       return output;
     }

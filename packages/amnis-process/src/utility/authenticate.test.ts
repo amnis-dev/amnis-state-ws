@@ -1,9 +1,10 @@
 import {
   accountsGet,
-  base64Encode,
+  authLoginCreate,
   challengeCreator,
   cryptoWeb,
   IoContext,
+  UID,
 } from '@amnis/core';
 import { challengeActions, contextSetup } from '@amnis/state';
 import { authenticateAccount } from './authenticate.js';
@@ -22,27 +23,21 @@ test('should authenticate as normal user account', async () => {
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const privateKey = await context.crypto.keyUnwrap(userAccount.privateKey, userAccount.password);
-
-  if (!privateKey) {
-    expect(privateKey).toBeDefined();
-    return;
-  }
-
-  const signature = await context.crypto.asymSign(
-    userAccount.name + userAccount.credential.$id + challenge.value,
-    privateKey,
-  );
-
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: userAccount.name,
+    password: userAccount.password,
+    challenge,
+    credential: userAccount.credential,
+    privateKeyWrapped: userAccount.privateKey,
+  });
 
   const output = await authenticateAccount(
     context,
     challenge,
-    userAccount.name,
-    userAccount.credential.$id,
-    signatureEncoded,
-    userAccount.password,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
   );
 
   expect(output.status).toBe(200);
@@ -100,17 +95,22 @@ test('should not authenticate with non-existing user', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const username = 'i-dont-exist';
-  const asymKeys = await context.crypto.asymGenerate('signer');
-  const signature = await context.crypto.asymSign(username + challenge, asymKeys.privateKey);
 
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username,
+    password: userAccount.password,
+    challenge,
+    credential: userAccount.credential,
+    privateKeyWrapped: userAccount.privateKey,
+  });
 
   const output = await authenticateAccount(
     context,
     challenge,
-    username,
-    userAccount.credential.$id,
-    signatureEncoded,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
   );
 
   expect(output.status).toBe(401);
@@ -128,26 +128,21 @@ test('should not authenticate using different credentials', async () => {
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const privateKey = await context.crypto.keyUnwrap(userAccount.privateKey, userAccount.password);
-
-  if (!privateKey) {
-    expect(privateKey).toBeDefined();
-    return;
-  }
-
-  const signature = await context.crypto.asymSign(
-    userAccount.name + userAccount.credential.$id + challenge.value,
-    privateKey,
-  );
-
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: userAccount.name,
+    password: 'wrongpassword',
+    challenge,
+    credential: execAccount.credential,
+    privateKeyWrapped: userAccount.privateKey,
+  });
 
   const output = await authenticateAccount(
     context,
     challenge,
-    userAccount.name,
-    execAccount.credential.$id,
-    signatureEncoded,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
   );
 
   expect(output.status).toBe(401);
@@ -165,27 +160,21 @@ test('should not authenticate using a different private key for signing', async 
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const privateKey = await context.crypto.keyUnwrap(execAccount.privateKey, execAccount.password);
-
-  if (!privateKey) {
-    expect(privateKey).toBeDefined();
-    return;
-  }
-
-  const signature = await context.crypto.asymSign(
-    userAccount.name + userAccount.credential.$id + challenge,
-    privateKey,
-  );
-
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: userAccount.name,
+    password: userAccount.password,
+    challenge,
+    credential: userAccount.credential,
+    privateKeyWrapped: execAccount.privateKey,
+  });
 
   const output = await authenticateAccount(
     context,
     challenge,
-    userAccount.name,
-    userAccount.credential.$id,
-    signatureEncoded,
-    userAccount.password,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
   );
 
   expect(output.status).toBe(401);
@@ -196,7 +185,7 @@ test('should not authenticate using a different private key for signing', async 
 });
 
 test('should not authenticate using a different challenge value', async () => {
-  const { user: userAccount, exec: execAccount } = await accountsGet();
+  const { user: userAccount } = await accountsGet();
 
   const challenge = challengeCreator({
     value: await context.crypto.randomString(8),
@@ -207,26 +196,21 @@ test('should not authenticate using a different challenge value', async () => {
     value: await cryptoWeb.randomString(32),
   };
 
-  const privateKey = await context.crypto.keyUnwrap(execAccount.privateKey, execAccount.password);
-
-  if (!privateKey) {
-    expect(privateKey).toBeDefined();
-    return;
-  }
-
-  const signature = await context.crypto.asymSign(
-    userAccount.name + userAccount.credential.$id + challenge,
-    privateKey,
-  );
-
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: userAccount.name,
+    password: userAccount.password,
+    challenge: challengeChanged,
+    credential: userAccount.credential,
+    privateKeyWrapped: userAccount.privateKey,
+  });
 
   const output = await authenticateAccount(
     context,
     challengeChanged,
-    userAccount.name,
-    userAccount.credential.$id,
-    signatureEncoded,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
   );
 
   expect(output.status).toBe(500);
@@ -244,27 +228,21 @@ test('should not authenticate using different credentials but valid password', a
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const privateKey = await context.crypto.keyUnwrap(userAccount.privateKey, userAccount.password);
-
-  if (!privateKey) {
-    expect(privateKey).toBeDefined();
-    return;
-  }
-
-  const signature = await context.crypto.asymSign(
-    userAccount.name + userAccount.credential.$id + challenge,
-    privateKey,
-  );
-
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: userAccount.name,
+    password: userAccount.password,
+    challenge,
+    credential: execAccount.credential,
+    privateKeyWrapped: userAccount.privateKey,
+  });
 
   const output = await authenticateAccount(
     context,
     challenge,
-    userAccount.name,
-    execAccount.credential.$id,
-    signatureEncoded,
-    userAccount.password,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
   );
 
   expect(output.status).toBe(401);

@@ -7,9 +7,7 @@ import {
   StateEntities,
   challengeKey,
   Challenge,
-  challengeEncode,
   cryptoWeb,
-  base64Encode,
   User,
   Entity,
   Profile,
@@ -126,21 +124,16 @@ test('should NOT login as an admin with different private key', async () => {
     return;
   }
 
-  const privateKeyUnwrapped = await cryptoWeb.keyUnwrap(userAccount.privateKey, 'passwd12');
-  const signature = await cryptoWeb.asymSign(
-    adminAccount.name + adminAccount.credential.$id + challenge,
-    privateKeyUnwrapped,
-  );
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: adminAccount.name,
+    password: adminAccount.password,
+    challenge,
+    credential: adminAccount.credential,
+    privateKeyWrapped: userAccount.privateKey,
+  });
 
   const input: IoInput<AuthLogin> = {
-    body: {
-      username: adminAccount.name,
-      password: adminAccount.password,
-      challenge: challengeEncode(challenge),
-      $credential: adminAccount.credential.$id,
-      signature: signatureEncoded,
-    },
+    body: authLogin,
   };
 
   const output = await authProcessLogin(context)(input, ioOutput());
@@ -180,21 +173,16 @@ test('should NOT login as an admin with different challenge', async () => {
   expect(challenge.$id).toEqual(wrongChallenge.$id);
   expect(challenge?.value).not.toEqual(wrongChallenge.value);
 
-  const privateKeyUnwrapped = await cryptoWeb.keyUnwrap(adminAccount.privateKey, 'passwd12');
-  const signature = await cryptoWeb.asymSign(
-    adminAccount.name + adminAccount.credential.$id + challenge,
-    privateKeyUnwrapped,
-  );
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  const authLogin = await authLoginCreate({
+    username: adminAccount.name,
+    password: adminAccount.password,
+    challenge: wrongChallenge,
+    credential: adminAccount.credential,
+    privateKeyWrapped: adminAccount.privateKey,
+  });
 
   const input: IoInput<AuthLogin> = {
-    body: {
-      username: adminAccount.name,
-      password: adminAccount.password,
-      challenge: challengeEncode(wrongChallenge),
-      $credential: adminAccount.credential.$id,
-      signature: signatureEncoded,
-    },
+    body: authLogin,
   };
 
   const output = await authProcessLogin(context)(input, ioOutput());
