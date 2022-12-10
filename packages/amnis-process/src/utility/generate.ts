@@ -31,9 +31,7 @@ export const generateSession = async (
   const session = sessionCreator({
     $subject: subjectId,
     exp: sessionExpires,
-    admin: false,
     name: displayName,
-    avatar: null,
   });
 
   return session;

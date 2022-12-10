@@ -2,9 +2,16 @@
 
 import {
   coreActions,
-  Io, IoProcess, Role, selectRoleGrants, StateDeleter, stateScopeCreate, Task, UID,
+  Io,
+  IoProcess,
+  Role,
+  selectRoleGrants,
+  StateDeleter,
+  stateScopeCreate,
+  Task,
+  UID,
 } from '@amnis/core';
-import { mwAccess, mwValidate } from '../mw/index.js';
+import { mwAccess, mwRefresh, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 export const process: IoProcess<
@@ -100,7 +107,9 @@ Io<StateDeleter, StateDeleter>
 
 export const crudProcessDelete = mwAccess()(
   mwValidate('StateDeleter')(
-    process,
+    mwRefresh()(
+      process,
+    ),
   ),
 );
 

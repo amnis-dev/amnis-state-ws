@@ -4,7 +4,6 @@ import {
   entityClean,
   entityCreate,
   Io,
-  ioOutput,
   IoProcess,
   Role,
   selectRoleGrants,
@@ -14,16 +13,15 @@ import {
   Task,
   UID,
 } from '@amnis/core';
-import { mwAccess, mwValidate } from '../mw/index.js';
+import { mwAccess, mwValidate, mwRefresh } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 const process: IoProcess<
 Io<StateCreator, StateEntities>
 > = (context) => (
-  async (input) => {
+  async (input, output) => {
     const { store, database } = context;
     const { body, access } = input;
-    const output = ioOutput<StateEntities>();
 
     const roleRefs: UID<Role>[] = access?.roles || [];
 
@@ -101,7 +99,9 @@ Io<StateCreator, StateEntities>
 
 export const crudProcessCreate = mwAccess()(
   mwValidate('StateCreator')(
-    process,
+    mwRefresh()(
+      process,
+    ),
   ),
 );
 
