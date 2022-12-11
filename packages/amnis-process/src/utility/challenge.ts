@@ -5,7 +5,6 @@ import {
   dateNumeric,
   entityCreate,
   IoContext,
-  IoInput,
   IoOutput,
   ioOutput,
   logCreator,
@@ -16,15 +15,24 @@ import {
   systemSelectors,
 } from '@amnis/state';
 
+export interface ChallengeCreateOptions {
+  username?: string;
+  privatize?: boolean;
+}
+
+export interface ChallengeValidateOptions {
+  username?: string;
+  valuePrivate?: string;
+}
+
 /**
  * Create a challenge from context and output it.
  */
 export const challengeCreate = async (
   context: IoContext,
-  input: IoInput,
+  options: ChallengeCreateOptions = {},
 ) => {
   const { store, crypto } = context;
-  const { access } = input;
 
   const system = systemSelectors.selectActive(store.getState());
 
@@ -34,25 +42,9 @@ export const challengeCreate = async (
     output.json.logs.push(logCreator({
       level: 'error',
       title: 'Inactive System',
-      description: 'There is no active system available to initalize the registration.',
+      description: 'There is no active system available to generate new challenges.',
     }));
     return output;
-  }
-
-  if (system.registrationOpen !== true) {
-    const isAdmin = access?.roles.includes(system.$adminRole);
-    const isExec = access?.roles.includes(system.$execRole);
-
-    if (!isAdmin && !isExec) {
-      const output = ioOutput();
-      output.status = 500;
-      output.json.logs.push(logCreator({
-        level: 'error',
-        title: 'Registration Closed',
-        description: 'The system has disabled registration.',
-      }));
-      return output;
-    }
   }
 
   /**
@@ -69,6 +61,15 @@ export const challengeCreate = async (
       expires: dateNumeric(`${system.registrationExpiration}m`),
     }),
   );
+
+  if (options.username) {
+    challengeEntity.username = options.username;
+  }
+
+  if (options.private === true) {
+    const challangeValuePrivate = await crypto.randomString(16);
+    challengeEntity.valuePrivate = challangeValuePrivate;
+  }
 
   /**
    * Store the challenge on the io store to check against later.
@@ -89,7 +90,7 @@ export const challengeCreate = async (
 export const challengeValidate = (
   context: IoContext,
   challenge: Challenge,
-  username?: string,
+  options: ChallengeValidateOptions = {},
 ): true | IoOutput => {
   const { store } = context;
   /**
@@ -129,13 +130,27 @@ export const challengeValidate = (
   /**
    * Ensure that this challenge is not intended for a specific username.
    */
-  if (challenge.username && username && challenge.username !== username) {
+  if (challenge.username && challenge.username !== options.username) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [logCreator({
       level: 'error',
-      title: 'User Not Challenged',
-      description: 'This challenge code is indended for another user.',
+      title: 'Not Challenged',
+      description: 'This challenge code is intended for another use.',
+    })];
+    return output;
+  }
+
+  /**
+   * Ensure that this challenge's private value is validated against if set.
+   */
+  if (challenge.valuePrivate && challenge.valuePrivate !== options.valuePrivate) {
+    const output = ioOutput();
+    output.status = 500; // Internal Server Error
+    output.json.logs = [logCreator({
+      level: 'error',
+      title: 'Challenged is Private',
+      description: 'This challenge code is private.',
     })];
     return output;
   }

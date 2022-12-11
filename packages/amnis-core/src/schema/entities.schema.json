@@ -857,36 +857,19 @@
           "$ref": "#/definitions/DateNumeric",
           "description": "Expiration date (numeric)."
         },
-        "admin": {
-          "type": "boolean",
-          "description": "Flag that determines if this is an administrative session."
-        },
         "name": {
           "type": "string",
           "description": "Display name."
-        },
-        "avatar": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/SURL"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Avatar image url."
         }
       },
       "required": [
         "$id",
         "$subject",
-        "admin",
-        "avatar",
         "exp",
         "name"
       ],
       "additionalProperties": false,
-      "description": "A session object. For stateless servers, it is recommended to store session data in *SECURE* HTTP cookies only."
+      "description": "A session object. Session data should be stored in *SECURE* HTTP cookies only."
     },
     "DateNumeric": {
       "type": "number",
@@ -1741,24 +1724,9 @@
           "$ref": "#/definitions/DateNumeric",
           "description": "Expiration date (numeric)."
         },
-        "admin": {
-          "type": "boolean",
-          "description": "Flag that determines if this is an administrative session."
-        },
         "name": {
           "type": "string",
           "description": "Display name."
-        },
-        "avatar": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/SURL"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Avatar image url."
         }
       },
       "required": [

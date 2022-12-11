@@ -22,6 +22,7 @@ import {
 } from '@amnis/core';
 import { contextSetup, systemActions, systemSelectors } from '@amnis/state';
 import { validateSetup } from '../validate.js';
+import { authProcessChallenge } from './auth.challenge.js';
 import { authProcessRegister } from './auth.register.js';
 
 let context: IoContext;
@@ -34,10 +35,10 @@ beforeAll(async () => {
 
 test('should start the registration ritual', async () => {
   const input: IoInput = {
-    body: undefined,
+    body: {},
   };
 
-  const output = await authProcessRegister(context)(input, ioOutput());
+  const output = await authProcessChallenge(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
 
@@ -66,10 +67,10 @@ test('should not register with invalid body input', async () => {
 
 test('should start ritual and complete registration', async () => {
   const inputStart: IoInput = {
-    body: undefined,
+    body: {},
   };
 
-  const resultStart = await authProcessRegister(context)(
+  const resultStart = await authProcessChallenge(context)(
     inputStart,
     ioOutput(),
   ) as IoOutput<StateEntities>;
@@ -161,17 +162,37 @@ test('should not be able to register when turned off by the system', async () =>
   }));
 
   const inputStart: IoInput = {
-    body: undefined,
+    body: {},
   };
 
-  const resultStart = await authProcessRegister(context)(
+  const resultStart = await authProcessChallenge(context)(
     inputStart,
     ioOutput(),
   ) as IoOutput<StateEntities>;
 
-  expect(resultStart.status).toBe(500);
+  const challenge = resultStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
-  const { logs, result } = resultStart.json;
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
+
+  const [authRegistration] = await authRegistrationCreate({
+    username: 'new_user',
+    displayName: 'New User',
+    password: 'passwd12',
+    challenge,
+  });
+
+  const inputRegister: IoInput<AuthRegistration> = {
+    body: authRegistration,
+  };
+
+  const resultRegister = await authProcessRegister(context)(inputRegister, ioOutput());
+
+  expect(resultRegister.status).toBe(500);
+
+  const { logs, result } = resultRegister.json;
 
   expect(result).toBeUndefined();
   expect(logs).toHaveLength(1);

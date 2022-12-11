@@ -19,6 +19,7 @@ import {
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
+import { authProcessChallenge } from './auth.challenge.js';
 import { authProcessLogin } from './auth.login.js';
 
 let context: IoContext;
@@ -29,12 +30,12 @@ beforeAll(async () => {
   });
 });
 
-test('should start the login ritual', async () => {
+test('should start the login ritual by generating a challenge', async () => {
   const input: IoInput = {
-    body: undefined,
+    body: {},
   };
 
-  const output = await authProcessLogin(context)(input, ioOutput());
+  const output = await authProcessChallenge(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
 
@@ -55,9 +56,9 @@ test('should login as a admin', async () => {
   const { admin: adminAccount } = await accountsGet();
 
   const inputStart: IoInput = {
-    body: undefined,
+    body: {},
   };
-  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
+  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {
@@ -114,9 +115,9 @@ test('should NOT login as an admin with different private key', async () => {
   const { admin: adminAccount, user: userAccount } = await accountsGet();
 
   const inputStart: IoInput = {
-    body: undefined,
+    body: {},
   };
-  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
+  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {
@@ -154,9 +155,9 @@ test('should NOT login as an admin with different challenge', async () => {
   const { admin: adminAccount } = await accountsGet();
 
   const inputStart: IoInput = {
-    body: undefined,
+    body: {},
   };
-  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
+  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {

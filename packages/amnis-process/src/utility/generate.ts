@@ -9,6 +9,7 @@ import {
   sessionCreator,
   System,
   UID,
+  uidList,
   UIDList,
 } from '@amnis/core';
 
@@ -19,6 +20,7 @@ export const generateSession = async (
   system: System,
   subjectId: UID,
   displayName: string,
+  $roles: UIDList<Role> = uidList(),
 ): Promise<Session> => {
   /**
    * Create the session expiration.
@@ -32,6 +34,8 @@ export const generateSession = async (
     $subject: subjectId,
     exp: sessionExpires,
     name: displayName,
+    adm: $roles.includes(system.$adminRole),
+    exc: $roles.includes(system.$execRole),
   });
 
   return session;

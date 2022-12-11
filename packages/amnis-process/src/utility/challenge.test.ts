@@ -17,6 +17,7 @@ import { challengeValidate } from './challenge.js';
 let context: IoContext;
 let challengeValid: Entity<Challenge>;
 let challengeExpired: Entity<Challenge>;
+let challengeUser: Entity<Challenge>;
 
 beforeAll(async () => {
   context = await contextSetup({
@@ -30,8 +31,14 @@ beforeAll(async () => {
     value: await context.crypto.randomString(16),
     expires: dateNumeric() - 1000 as DateNumeric,
   }));
+  challengeUser = entityCreate(challengeCreator({
+    value: await context.crypto.randomString(16),
+    expires: dateNumeric('15m'),
+    username: 'someuser',
+  }));
   context.store.dispatch(challengeActions.insert(challengeValid));
   context.store.dispatch(challengeActions.insert(challengeExpired));
+  context.store.dispatch(challengeActions.insert(challengeUser));
 });
 
 test('should successfully validate a valid challenge', async () => {
@@ -99,4 +106,34 @@ test('should fail to find an existing challenge with a wrong value', async () =>
   expect(result.status).toBe(500);
   expect(result.json.logs.length).toBeGreaterThan(0);
   expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
+});
+
+test('should fail to validate a valid user challenge without a username', async () => {
+  const result = challengeValidate(context, challengeUser);
+
+  if (result === true) {
+    expect(result).not.toBe(true);
+    return;
+  }
+  expect(result.status).toBe(500);
+  expect(result.json.logs.length).toBeGreaterThan(0);
+  expect(result.json.logs[0].title).toBe('Not Challenged');
+});
+
+test('should fail to validate a valid user challenge with an invalid username', async () => {
+  const result = challengeValidate(context, challengeUser, { username: 'someotheruser' });
+
+  if (result === true) {
+    expect(result).not.toBe(true);
+    return;
+  }
+  expect(result.status).toBe(500);
+  expect(result.json.logs.length).toBeGreaterThan(0);
+  expect(result.json.logs[0].title).toBe('Not Challenged');
+});
+
+test('should validate a valid user challenge with the correct username', async () => {
+  const result = challengeValidate(context, challengeUser, { username: 'someuser' });
+
+  expect(result).toBe(true);
 });

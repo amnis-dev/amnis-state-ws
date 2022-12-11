@@ -45,7 +45,7 @@ test('should be able to login as user', async () => {
   /**
    * Must first begin the login ritual by obtaining a challenge code.
    */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
 
   if ('error' in resultInitiate) {
     expect(resultInitiate.error).toBeUndefined();
@@ -103,7 +103,7 @@ test('should NOT be able to login with a bad password', async () => {
   /**
    * Must first begin the login ritual by obtaining a challenge code.
    */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
 
   if ('error' in resultInitiate) {
     expect(resultInitiate.error).toBeUndefined();
@@ -149,7 +149,7 @@ test('should see audits of login requests as admin', async () => {
   /**
    * Must first begin the login ritual by obtaining a challenge code.
    */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
 
   if ('error' in resultInitiate) {
     expect(resultInitiate.error).toBeUndefined();

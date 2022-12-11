@@ -7,35 +7,14 @@ import {
   challengeDecode,
   ioOutputApply,
 } from '@amnis/core';
+import { mwValidate } from '../mw/index.js';
 import { authenticateAccount } from '../utility/authenticate.js';
-import { challengeCreate } from '../utility/challenge.js';
-import { validate } from '../validate.js';
 
 const process: IoProcess<
 Io<AuthLogin, StateEntities>
 > = (context) => (
   async (input, output) => {
-    const { validators } = context;
     const { body } = input;
-
-    /**
-     * When the body is undefined, output data necessary to begin the
-     * authentication ritual.
-     */
-    if (!body || Object.keys(body).length === 0) {
-      ioOutputApply(output, await challengeCreate(context, input));
-      return output;
-    }
-
-    /**
-     * Must validate the registration input if it's defined.
-     */
-    const validateOutput = validate(validators.AuthLogin, body);
-    if (validateOutput) {
-      ioOutputApply(output, validateOutput);
-      console.log(JSON.stringify({ outputValidation: output }, null, 2));
-      return output;
-    }
 
     const {
       challenge,
@@ -71,6 +50,6 @@ Io<AuthLogin, StateEntities>
   }
 );
 
-export const authProcessLogin = process;
+export const authProcessLogin = mwValidate('AuthLogin')(process);
 
 export default { authProcessLogin };

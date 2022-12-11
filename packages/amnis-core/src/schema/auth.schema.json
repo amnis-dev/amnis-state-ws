@@ -6,6 +6,9 @@
     "AuthSchema": {
       "type": "object",
       "properties": {
+        "challenge": {
+          "$ref": "#/definitions/AuthChallenge"
+        },
         "register": {
           "$ref": "#/definitions/AuthRegistration"
         },
@@ -15,9 +18,6 @@
         "logout": {
           "$ref": "#/definitions/AuthLogout"
         },
-        "pkce": {
-          "$ref": "#/definitions/AuthPkce"
-        },
         "renew": {
           "$ref": "#/definitions/AuthRenew"
         },
@@ -26,6 +26,11 @@
         }
       },
       "additionalProperties": false
+    },
+    "AuthChallenge": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Challenge Generation Request."
     },
     "AuthRegistration": {
       "type": "object",
@@ -140,62 +145,6 @@
         "not": {}
       },
       "description": "Payload that destroys the user session and connection."
-    },
-    "AuthPkce": {
-      "type": "object",
-      "properties": {
-        "platform": {
-          "type": "string",
-          "enum": [
-            "microsoft",
-            "twitter"
-          ],
-          "description": "Supported PKCE login methods."
-        },
-        "clientId": {
-          "type": "string",
-          "minLength": 16,
-          "maxLength": 128,
-          "pattern": "^[a-zA-Z0-9-_]+$"
-        },
-        "code": {
-          "type": "string",
-          "minLength": 32,
-          "maxLength": 1024,
-          "pattern": "^[a-zA-Z0-9-_.]+$"
-        },
-        "codeVerifier": {
-          "type": "string",
-          "minLength": 32,
-          "maxLength": 256,
-          "pattern": "^[a-zA-Z0-9-_]+$"
-        },
-        "redirectUri": {
-          "type": "string",
-          "minLength": 8,
-          "maxLength": 512,
-          "pattern": "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?"
-        },
-        "tenantId": {
-          "type": "string",
-          "minLength": 16,
-          "maxLength": 64,
-          "pattern": "^[a-zA-Z0-9-_]+$"
-        },
-        "gov": {
-          "type": "boolean",
-          "description": "True or false value."
-        }
-      },
-      "required": [
-        "platform",
-        "clientId",
-        "code",
-        "codeVerifier",
-        "redirectUri"
-      ],
-      "additionalProperties": false,
-      "description": "Logs in from a third-party using the data from OpenID PKCE Authorization."
     },
     "AuthRenew": {
       "type": "object",

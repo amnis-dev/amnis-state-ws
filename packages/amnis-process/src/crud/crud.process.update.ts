@@ -16,7 +16,7 @@ import {
   Task,
   userKey,
 } from '@amnis/core';
-import { mwAccess, mwValidate, mwRefresh } from '../mw/index.js';
+import { mwAccess, mwValidate } from '../mw/index.js';
 import { authorizeWall } from '../utility/authorize.js';
 
 export const process: IoProcess<
@@ -140,9 +140,7 @@ Io<StateUpdater, StateCreator>
 
 export const crudProcessUpdate = mwAccess()(
   mwValidate('StateUpdater')(
-    mwRefresh()(
-      process,
-    ),
+    process,
   ),
 );
 

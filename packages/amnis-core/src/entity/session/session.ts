@@ -12,6 +12,8 @@ export const sessionBase = (): EntityCreatorBase<Session> => ({
   $subject: uid('user'),
   exp: dateNumeric(),
   name: 'Unnamed Session Holder',
+  adm: false,
+  exc: false,
 });
 
 export function sessionCreator(

@@ -38,7 +38,7 @@ test('should be able to create a new contact', async () => {
   /**
    * Must first begin the login ritual by obtaining a challenge code.
    */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.login.initiate({}));
+  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
 
   if ('error' in resultInitiate) {
     expect(resultInitiate.error).toBeUndefined();

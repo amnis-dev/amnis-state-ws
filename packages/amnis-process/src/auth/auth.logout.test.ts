@@ -13,6 +13,7 @@ import {
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
+import { authProcessChallenge } from './auth.challenge.js';
 import { authProcessLogin } from './auth.login.js';
 import { authProcessLogout } from './auth.logout.js';
 
@@ -28,9 +29,9 @@ test('should login and then logout as administrator', async () => {
   const { admin: adminAccount } = await accountsGet();
 
   const inputStart: IoInput = {
-    body: undefined,
+    body: {},
   };
-  const outputStart = await authProcessLogin(context)(inputStart, ioOutput());
+  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
 
   if (!challenge) {

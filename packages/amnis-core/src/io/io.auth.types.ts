@@ -1,6 +1,24 @@
 import type { Bearer } from '@amnis/core';
 
 /**
+ * Challenge Generation Request.
+ */
+export interface AuthChallenge {
+  /**
+   * @minLength 2
+   * @maxLength 24
+   * @pattern ^[a-zA-Z0-9-_]+$
+   * @description Username that the challenge only works for.
+   */
+  username?: never;
+
+  /**
+   * @description Option to generate a private value.
+   */
+  privatize?: boolean;
+}
+
+/**
  * Payload for an registration request.
  * A value of undefined starts a registration event.
  */

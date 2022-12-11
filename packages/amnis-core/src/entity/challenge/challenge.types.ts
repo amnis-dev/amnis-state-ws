@@ -30,6 +30,13 @@ export interface Challenge extends EntityCreator {
    * Challenge should only work with the indended username in context.
    */
   username?: string;
+
+  /**
+   * @minLength 16
+   * @maxLength 256
+   * An optional private value to be generate administratively.
+   */
+  valuePrivate?: string;
 }
 
 /**

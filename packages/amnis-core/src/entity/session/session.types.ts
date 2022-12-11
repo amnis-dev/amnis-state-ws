@@ -23,6 +23,16 @@ export interface Session extends EntityCreator {
   exp: DateNumeric;
 
   /**
+   * If the session holder is an administrator.
+   */
+  adm: boolean;
+
+  /**
+   * If the session holder is an executive.
+   */
+  exc: boolean;
+
+  /**
    * Display name.
    */
   name: string;

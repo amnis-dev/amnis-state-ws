@@ -10,33 +10,44 @@ import {
   User,
   ioOutputApply,
 } from '@amnis/core';
+import { systemSelectors } from '@amnis/state';
+import { mwValidate } from '../mw/index.js';
 import { authenticateLogin } from '../utility/authenticate.js';
-import { challengeCreate, challengeValidate } from '../utility/challenge.js';
+import { challengeValidate } from '../utility/challenge.js';
 import { registerAccount } from '../utility/register.js';
-import { validate } from '../validate.js';
 
 const process: IoProcess<
 Io<AuthRegistration, StateEntities>
 > = (context) => (
   async (input, output) => {
-    const { crypto, validators } = context;
-    const { body } = input;
+    const { crypto, store } = context;
+    const { body, access } = input;
 
-    /**
-     * When the body is undefined, output data necessary to begin the
-     * registration ritual.
-     */
-    if (!body || Object.keys(body).length === 0) {
-      await ioOutputApply(output, await challengeCreate(context, input));
+    const system = systemSelectors.selectActive(store.getState());
+
+    if (!system) {
+      output.status = 500;
+      output.json.logs.push(logCreator({
+        level: 'error',
+        title: 'Inactive System',
+        description: 'There is no active system available to initalize the registration.',
+      }));
       return output;
     }
 
-    /**
-     * Must validate the registration input if it's defined.
-     */
-    const validateOutput = validate(validators.AuthRegistration, body);
-    if (validateOutput) {
-      return validateOutput;
+    if (system.registrationOpen !== true) {
+      const isAdmin = !!access?.roles.includes(system.$adminRole);
+      const isExec = !!access?.roles.includes(system.$execRole);
+
+      if (!isAdmin && !isExec) {
+        output.status = 500;
+        output.json.logs.push(logCreator({
+          level: 'error',
+          title: 'Registration Closed',
+          description: 'The system has disabled registration.',
+        }));
+        return output;
+      }
     }
 
     const authRegistrationParsed = await authRegistrationParse(body);
@@ -62,7 +73,9 @@ Io<AuthRegistration, StateEntities>
     const challangeValidation = challengeValidate(
       context,
       challenge,
-      authRegistrationParsed.username,
+      {
+        username: authRegistrationParsed.username,
+      },
     );
     if (challangeValidation !== true) {
       return challangeValidation;
@@ -133,6 +146,6 @@ Io<AuthRegistration, StateEntities>
   }
 );
 
-export const authProcessRegister = process;
+export const authProcessRegister = mwValidate('AuthRegistration')(process);
 
 export default { authProcessRegister };

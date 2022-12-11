@@ -233,7 +233,7 @@ export const authenticateAccount = async (
   }
 
   /**
-   * Update the credential with last used time.
+   * Update the credential timestamps.
    */
   const updater: StateUpdater = {
     [credentialKey]: [{
