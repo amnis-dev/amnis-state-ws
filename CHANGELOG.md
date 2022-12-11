@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/amnis-dev/amnis-state/compare/v0.9.3...v0.10.0) (2022-12-11)
+
+
+### Features
+
+* Added refreshing middleware to create delete and update middleware ([700ec9c](https://github.com/amnis-dev/amnis-state/commit/700ec9cada3f16c122ca0f2c9d93dde3c51ccf91))
+* Challenges can now be set for specific users ([a203142](https://github.com/amnis-dev/amnis-state/commit/a20314287d5c1d7b9e6a27b5db1e7d8e53c8eb62))
+* Device is now an entity type ([2030ceb](https://github.com/amnis-dev/amnis-state/commit/2030ceb8e1e88e1e4605457c7ef7334666d73d7e))
+* Refactor on entity creations ([b0d7a10](https://github.com/amnis-dev/amnis-state/commit/b0d7a10e61ed7684a8a182a66eb1a90f85c32b94))
+* Refactored authentication and registration to use asymetric 2-factor credentials ([2ee2354](https://github.com/amnis-dev/amnis-state/commit/2ee235483cc35be9678f178f55a26af8764f60fc))
+* Refactored challenge methods ([e68a659](https://github.com/amnis-dev/amnis-state/commit/e68a6597d3bd137b5483a409e3eb9c64e9f0a9fc))
+* Renamed device entity to credential entity ([551c6fe](https://github.com/amnis-dev/amnis-state/commit/551c6feaec3148d7d8082af910a0168745547929))
+
 ### [0.9.3](https://github.com/amnis-dev/amnis-state/compare/v0.9.2...v0.9.3) (2022-11-30)
 
 
