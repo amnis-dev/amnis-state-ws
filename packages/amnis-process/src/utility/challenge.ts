@@ -66,7 +66,7 @@ export const challengeCreate = async (
     challengeEntity.username = options.username;
   }
 
-  if (options.private === true) {
+  if (options.privatize === true) {
     const challangeValuePrivate = await crypto.randomString(16);
     challengeEntity.valuePrivate = challangeValuePrivate;
   }
