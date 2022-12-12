@@ -40,7 +40,7 @@ Io<AuthChallenge, StateEntities>
       output.json.logs.push(logCreator({
         level: 'error',
         title: 'Unauthorized Challange Creation',
-        description: 'Must be logged in to create a challenge in this way.',
+        description: 'Must be logged in to create this challenge.',
       }));
       return output;
     }
@@ -52,7 +52,7 @@ Io<AuthChallenge, StateEntities>
       output.json.logs.push(logCreator({
         level: 'error',
         title: 'Unauthorized Challange Creation',
-        description: 'Not authorized to create a challenge in this way.',
+        description: 'Account not authorized to create a challenge in this way.',
       }));
       return output;
     }
