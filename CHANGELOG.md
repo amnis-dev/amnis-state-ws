@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.10.1](https://github.com/amnis-dev/amnis-state/compare/v0.10.0...v0.10.1) (2022-12-13)
+
+
+### Features
+
+* Added agent utility methods with localstorage persistence ([5e87ba3](https://github.com/amnis-dev/amnis-state/commit/5e87ba30fe89a2cec459be1ceae74279688db022))
+* Added local storage interface for core package ([8c1be78](https://github.com/amnis-dev/amnis-state/commit/8c1be7884b5d48844c0b954e1fa2c0f7ae125a9f))
+
+
+### Bug Fixes
+
+* challenge fetches o longer cache ([f6543ac](https://github.com/amnis-dev/amnis-state/commit/f6543acbe06439aed4d5fdc1bca4a1260bdd2410))
+
 ## [0.10.0](https://github.com/amnis-dev/amnis-state/compare/v0.9.3...v0.10.0) (2022-12-11)
 
 
