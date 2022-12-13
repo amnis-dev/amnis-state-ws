@@ -3,9 +3,6 @@ import {
   contactKey,
   entityStrip,
   contactCreator,
-  challengeKey,
-  Entity,
-  Challenge,
   authLoginCreate,
   accountsGet,
 } from '@amnis/core';
@@ -48,7 +45,12 @@ test('should be able to create a new contact', async () => {
   /** s
    * Extract the challenge.
    */
-  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+  const challenge = resultInitiate.data?.result;
+
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
 
   /**
    * Create the login request body.

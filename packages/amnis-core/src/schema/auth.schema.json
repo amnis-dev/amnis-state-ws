@@ -29,6 +29,12 @@
     },
     "AuthChallenge": {
       "type": "object",
+      "properties": {
+        "privatize": {
+          "type": "boolean",
+          "description": "Option to generate a private value."
+        }
+      },
       "additionalProperties": false,
       "description": "Challenge Generation Request."
     },

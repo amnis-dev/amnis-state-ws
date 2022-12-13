@@ -7,6 +7,8 @@ import {
   AuthPkce,
   AuthRenew,
   AuthVerify,
+  Challenge,
+  Entity,
   IoOutputJson,
   StateDeleter,
   StateEntities,
@@ -14,8 +16,8 @@ import {
 
 export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
 
-  challenge: builder.mutation<
-  IoOutputJson<StateEntities>,
+  challenge: builder.query<
+  IoOutputJson<Entity<Challenge>>,
   AuthChallenge
   >({
     query: (payload) => ({

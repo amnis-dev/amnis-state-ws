@@ -6,7 +6,7 @@ import {
   userSelectors,
 } from '@amnis/state';
 import {
-  accountsGet, authLoginCreate, Challenge, challengeKey, Entity, selectBearer,
+  accountsGet, authLoginCreate, selectBearer,
 } from '@amnis/core';
 import { clientStore } from './common/client.store.js';
 import { mockService } from './mock.service.js';
@@ -46,7 +46,12 @@ test('should be able to login and logout', async () => {
   /** s
    * Extract the challenge.
    */
-  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+  const challenge = resultInitiate.data?.result;
+
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
 
   /**
    * Create the login request body.

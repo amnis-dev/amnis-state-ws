@@ -4,8 +4,6 @@ import {
   accountsGet,
   IoInput,
   AuthLogin,
-  StateEntities,
-  challengeKey,
   Challenge,
   cryptoWeb,
   User,
@@ -44,12 +42,9 @@ test('should start the login ritual by generating a challenge', async () => {
     return;
   }
 
-  const stateEntities = output.json.result as StateEntities;
+  const challenge = output.json.result as Challenge | undefined;
 
-  expect(Object.keys(stateEntities)).toHaveLength(1);
-  expect(stateEntities).toMatchObject({
-    [challengeKey]: expect.any(Array),
-  });
+  expect(challenge).toBeDefined();
 });
 
 test('should login as a admin', async () => {
@@ -59,7 +54,7 @@ test('should login as a admin', async () => {
     body: {},
   };
   const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
-  const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
+  const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
     expect(challenge).toBeDefined();
@@ -118,7 +113,7 @@ test('should NOT login as an admin with different private key', async () => {
     body: {},
   };
   const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
-  const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
+  const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
     expect(challenge).toBeDefined();
@@ -158,7 +153,7 @@ test('should NOT login as an admin with different challenge', async () => {
     body: {},
   };
   const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
-  const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
+  const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
     expect(challenge).toBeDefined();

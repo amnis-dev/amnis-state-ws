@@ -21,7 +21,6 @@ export const mockService: MockService = {
     const {
       baseUrl = '',
       context = await contextSetup({
-        initialize: true,
         validators: validateSetup([schemaAuth, schemaState, schemaEntity]),
       }),
     } = opt;

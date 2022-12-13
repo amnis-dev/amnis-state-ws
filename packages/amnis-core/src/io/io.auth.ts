@@ -1,4 +1,8 @@
 import {
+  agentFingerprint,
+  agentName,
+} from '../agent.js';
+import {
   Challenge,
   challengeEncode,
   Credential,
@@ -11,77 +15,45 @@ import {
   base64Encode,
   base64Decode,
 } from './crypto/index.js';
-import type { AuthLogin, AuthRegistration } from './io.auth.types.js';
+import type {
+  AuthLogin,
+  AuthRegistration,
+} from './io.auth.types.js';
 
-function generateCanvasFingerprint(agentText: string) {
-  // Create a hidden canvas element
-  const canvas = document.createElement('canvas');
-  canvas.style.display = 'none';
-  document.body.appendChild(canvas);
+/**
+ * I don't know how reliable/consistent this is to use as a unique password yet.
+ */
+// function generateCanvasFingerprint(agentText: string) {
+//   // Create a hidden canvas element
+//   const canvas = document.createElement('canvas');
+//   canvas.style.display = 'none';
+//   document.body.appendChild(canvas);
 
-  // Get the 2D rendering context for the canvas
-  const ctx = canvas.getContext('2d');
+//   // Get the 2D rendering context for the canvas
+//   const ctx = canvas.getContext('2d');
 
-  if (!ctx) {
-    return base64Encode(new Uint8Array([1]));
-  }
+//   if (!ctx) {
+//     return base64Encode(new Uint8Array([1]));
+//   }
 
-  // Draw information on the canvas.
-  ctx.textBaseline = 'top';
-  ctx.font = '14px \'Arial\'';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#f60';
-  ctx.fillRect(125, 1, 62, 20);
-  ctx.fillStyle = '#069';
-  ctx.fillText(agentText, 2, 15);
-  ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
-  ctx.fillText(agentText, 4, 17);
+//   // Draw information on the canvas.
+//   ctx.textBaseline = 'top';
+//   ctx.font = '14px \'Arial\'';
+//   ctx.textBaseline = 'alphabetic';
+//   ctx.fillStyle = '#f60';
+//   ctx.fillRect(125, 1, 62, 20);
+//   ctx.fillStyle = '#069';
+//   ctx.fillText(agentText, 2, 15);
+//   ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+//   ctx.fillText(agentText, 4, 17);
 
-  // Extract the image data from the canvas and create the fingerprint.
-  const imageData = ctx.getImageData(0, 0, 250, 25);
-  const fingerprint = base64Encode(new Uint8Array(imageData.data.buffer));
+//   // Extract the image data from the canvas and create the fingerprint.
+//   const imageData = ctx.getImageData(0, 0, 250, 25);
+//   const fingerprint = base64Encode(new Uint8Array(imageData.data.buffer));
 
-  // Return the canvas fingerprint
-  return fingerprint;
-}
-
-function getAgentString() {
-  if (typeof process === 'undefined') {
-    const { userAgent } = window.navigator;
-    const agent = userAgent
-      .replace(/[\d_./]+/gm, '')
-      .match(/\(.*?;/m)?.[0].slice(1, -1) ?? 'Unknown Device';
-    if (userAgent.includes('Chrome')) { return `${agent} (Chrome)`; }
-    if (userAgent.includes('Firefox')) { return `${agent} (Firefox)`; }
-    if (userAgent.includes('Edg')) { return `${agent} (Edge)`; }
-    if (userAgent.includes('Opera')) { return `${agent} (Opera)`; }
-    if (userAgent.includes('Safari')) { return `${agent} (Safari)`; }
-    return agent;
-  }
-
-  const agent = process.platform;
-  return agent.charAt(0).toUpperCase() + agent.slice(1);
-}
-
-function getBlurryFingerprint() {
-  if (typeof process === 'undefined') {
-    const { maxTouchPoints, hardwareConcurrency } = window.navigator;
-    const print = generateCanvasFingerprint(
-      `${getAgentString()}${maxTouchPoints}${hardwareConcurrency}`,
-    );
-    return print;
-  }
-
-  const { title, platform } = process;
-  const str = title + platform;
-  const codes = str.split('').map(
-    (c) => (
-      c.charCodeAt(0) % 89
-    ) + 33,
-  );
-  const print = base64Encode(new Uint8Array(codes));
-  return print;
-}
+//   // Return the canvas fingerprint
+//   return fingerprint;
+// }
 
 export interface AuthRegistrationCreateOptions {
   username: string;
@@ -110,7 +82,7 @@ export const authRegistrationCreate: AuthRegistrationCreate = async ({
   origin,
 }) => {
   const enc = new TextEncoder();
-  const agent = getAgentString();
+  const agent = agentName();
 
   /**
    * Encode the challenge.
@@ -136,7 +108,7 @@ export const authRegistrationCreate: AuthRegistrationCreate = async ({
    */
   const privateKeyWrapped = await cryptoWeb.keyWrap(
     credentialKeys.privateKey,
-    await cryptoWeb.hashData(getBlurryFingerprint()),
+    await cryptoWeb.hashData(agentFingerprint()),
   );
 
   const credential = credentialCreator({
@@ -243,7 +215,7 @@ export const authLoginCreate: AuthLoginCreate = async ({
 
   const privateKey = await cryptoWeb.keyUnwrap(
     privateKeyWrapped,
-    await cryptoWeb.hashData(getBlurryFingerprint()),
+    await cryptoWeb.hashData(agentFingerprint()),
   ) || (await cryptoWeb.asymGenerate('signer')).privateKey;
 
   const signature = await cryptoWeb.asymSign(signatureData, privateKey);

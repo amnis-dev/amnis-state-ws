@@ -1,4 +1,5 @@
-import { challengeCreator, Credential } from './entity/index.js';
+import { agentGet } from './agent.js';
+import { challengeCreator, Credential, credentialCreator } from './entity/index.js';
 import {
   authRegistrationCreate,
 } from './io/io.auth.js';
@@ -59,18 +60,16 @@ export const accountsGet = async () => {
    * User
    */
   if (!user) {
-    const [userRegistration, userPrivateKey, userCredential] = await authRegistrationCreate({
-      username: 'user',
-      displayName: 'User',
-      password: 'passwd12',
-      challenge,
-    });
+    const agent = await agentGet();
 
     user = {
-      name: userRegistration.username,
-      credential: userCredential,
+      name: 'user',
+      credential: credentialCreator({
+        name: agent.name,
+        publicKey: agent.publicKey,
+      }),
       password: 'passwd12',
-      privateKey: userPrivateKey,
+      privateKey: agent.privateKey,
     };
   }
 

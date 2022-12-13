@@ -857,6 +857,14 @@
           "$ref": "#/definitions/DateNumeric",
           "description": "Expiration date (numeric)."
         },
+        "adm": {
+          "type": "boolean",
+          "description": "If the session holder is an administrator."
+        },
+        "exc": {
+          "type": "boolean",
+          "description": "If the session holder is an executive."
+        },
         "name": {
           "type": "string",
           "description": "Display name."
@@ -865,6 +873,8 @@
       "required": [
         "$id",
         "$subject",
+        "adm",
+        "exc",
         "exp",
         "name"
       ],
@@ -1723,6 +1733,14 @@
         "exp": {
           "$ref": "#/definitions/DateNumeric",
           "description": "Expiration date (numeric)."
+        },
+        "adm": {
+          "type": "boolean",
+          "description": "If the session holder is an administrator."
+        },
+        "exc": {
+          "type": "boolean",
+          "description": "If the session holder is an executive."
         },
         "name": {
           "type": "string",

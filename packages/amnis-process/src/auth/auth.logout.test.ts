@@ -4,7 +4,6 @@ import {
   authLoginCreate,
   AuthLogout,
   Challenge,
-  challengeKey,
   IoContext,
   IoInput,
   ioOutput,
@@ -32,7 +31,7 @@ test('should login and then logout as administrator', async () => {
     body: {},
   };
   const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
-  const challenge = outputStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
+  const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
     expect(challenge).toBeDefined();

@@ -1,17 +1,18 @@
 import {
   Io,
   IoProcess,
-  StateEntities,
   ioOutputApply,
   AuthChallenge,
   logCreator,
+  Challenge,
+  Entity,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
 import { mwValidate } from '../mw/index.js';
 import { challengeCreate } from '../utility/challenge.js';
 
 const process: IoProcess<
-Io<AuthChallenge, StateEntities>
+Io<AuthChallenge, Entity<Challenge>>
 > = (context) => (
   async (input, output) => {
     const { store, crypto } = context;

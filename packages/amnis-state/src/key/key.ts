@@ -3,7 +3,6 @@ import {
   rtk,
   Key,
   keyKey,
-  localstorageSetup,
 } from '@amnis/core';
 
 /**
@@ -28,12 +27,6 @@ export const keyAdapter = rtk.createEntityAdapter<Key>({
 export const keyInitialState = keyAdapter.getInitialState();
 
 /**
- * Load key data from local storage.
- */
-const keyLocalStorage = localstorageSetup<Key>(keyKey, keyInitialState, keyAdapter);
-keyLocalStorage.load();
-
-/**
  * RTK Key Slice
  */
 export const keySlice = rtk.createSlice({
@@ -42,10 +35,6 @@ export const keySlice = rtk.createSlice({
   reducers: {
     create(state, action: PayloadAction<Key>) {
       keyAdapter.addOne(state, action.payload);
-      const data = Object.values(state.entities)
-        .map((e) => e as Key)
-        .filter((k) => k !== undefined);
-      keyLocalStorage.save(data);
     },
   },
 });

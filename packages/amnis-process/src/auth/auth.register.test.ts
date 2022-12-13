@@ -2,7 +2,6 @@ import {
   IoInput,
   schemaAuth,
   StateEntities,
-  challengeKey,
   ioOutputErrored,
   AuthRegistration,
   Challenge,
@@ -47,11 +46,9 @@ test('should start the registration ritual', async () => {
     return;
   }
 
-  const stateEntities = output.json.result as StateEntities;
+  const credential = output.json.result as Credential | undefined;
 
-  expect(stateEntities).toMatchObject({
-    [challengeKey]: expect.any(Array),
-  });
+  expect(credential).toBeDefined();
 });
 
 test('should not register with invalid body input', async () => {
@@ -75,7 +72,7 @@ test('should start ritual and complete registration', async () => {
     ioOutput(),
   ) as IoOutput<StateEntities>;
 
-  const challenge = resultStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
+  const challenge = resultStart.json.result as Challenge | undefined;
 
   if (!challenge) {
     expect(challenge).toBeDefined();
@@ -170,7 +167,7 @@ test('should not be able to register when turned off by the system', async () =>
     ioOutput(),
   ) as IoOutput<StateEntities>;
 
-  const challenge = resultStart.json.result?.[challengeKey]?.[0] as Challenge | undefined;
+  const challenge = resultStart.json.result as Challenge | undefined;
 
   if (!challenge) {
     expect(challenge).toBeDefined();

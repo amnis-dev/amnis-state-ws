@@ -3,10 +3,8 @@ import {
   accountsGet,
   auditKey,
   authLoginCreate,
-  Challenge,
-  challengeKey,
   contactKey,
-  Entity,
+  dateNumeric,
   profileKey,
   sessionKey,
   userKey,
@@ -55,7 +53,12 @@ test('should be able to login as user', async () => {
   /**
    * Extract the challenge.
    */
-  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+  const challenge = resultInitiate.data?.result;
+
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
 
   /**
    * Create the login request body.
@@ -113,7 +116,14 @@ test('should NOT be able to login with a bad password', async () => {
   /**
    * Extract the challenge.
    */
-  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+  const challenge = resultInitiate.data?.result;
+
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
+
+  console.log(JSON.stringify({ challenge, now: dateNumeric() }, null, 2));
 
   /**
    * Create the login request body.
@@ -135,6 +145,8 @@ test('should NOT be able to login with a bad password', async () => {
 
   const { data } = result;
   const { logs } = data;
+
+  // console.log(JSON.stringify(data, null, 2));
 
   expect(logs).toHaveLength(1);
   expect(logs?.[0]?.title).toBe('Authentication Failed: Wrong Password');
@@ -159,7 +171,12 @@ test('should see audits of login requests as admin', async () => {
   /**
    * Extract the challenge.
    */
-  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+  const challenge = resultInitiate.data?.result;
+
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
 
   /**
    * Create the login request body.

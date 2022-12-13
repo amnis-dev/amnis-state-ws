@@ -1,8 +1,8 @@
 import {
   Challenge,
   challengeCreator,
-  challengeKey,
   dateNumeric,
+  Entity,
   entityCreate,
   IoContext,
   IoOutput,
@@ -31,7 +31,7 @@ export interface ChallengeValidateOptions {
 export const challengeCreate = async (
   context: IoContext,
   options: ChallengeCreateOptions = {},
-) => {
+): Promise<IoOutput<Entity<Challenge>>> => {
   const { store, crypto } = context;
 
   const system = systemSelectors.selectActive(store.getState());
@@ -78,9 +78,7 @@ export const challengeCreate = async (
 
   const output = ioOutput();
   output.status = 200;
-  output.json.result = {
-    [challengeKey]: [challengeEntity],
-  };
+  output.json.result = challengeEntity;
   return output;
 };
 
@@ -107,7 +105,7 @@ export const challengeValidate = (
     output.json.logs = [logCreator({
       level: 'error',
       title: 'Invalid Challenge Code',
-      description: 'The challenge code required for registration is not valid',
+      description: 'The challenge code is not valid',
     })];
     return output;
   }
@@ -122,7 +120,7 @@ export const challengeValidate = (
     output.json.logs = [logCreator({
       level: 'error',
       title: 'Challenge Code Expired',
-      description: 'The challenge code required for registration has expired.',
+      description: 'The challenge code has expired.',
     })];
     return output;
   }

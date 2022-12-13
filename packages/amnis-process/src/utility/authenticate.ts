@@ -101,6 +101,7 @@ export const authenticateLogin = async (
    * Create the authenticated user's session.
    */
   const sessionBase = await generateSession(system, user.$id, profile.nameDisplay);
+
   const session = entityCreate(sessionBase, { $owner: user.$id });
   const sessionEncrypted = await context.crypto.sessionEncrypt(sessionBase);
 

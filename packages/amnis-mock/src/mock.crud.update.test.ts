@@ -2,8 +2,6 @@ import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
   accountsGet,
   authLoginCreate,
-  Challenge,
-  challengeKey,
   Entity,
   History,
   historyKey,
@@ -52,7 +50,12 @@ test('should be able to update user profile', async () => {
   /** s
    * Extract the challenge.
    */
-  const challenge = resultInitiate.data.result?.[challengeKey][0] as Entity<Challenge>;
+  const challenge = resultInitiate.data?.result;
+
+  if (!challenge) {
+    expect(challenge).toBeDefined();
+    return;
+  }
 
   /**
    * Create the login request body.

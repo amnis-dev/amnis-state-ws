@@ -24,11 +24,13 @@ class LocalStorageMemory {
   }
 }
 
-if (typeof localStorage === 'undefined') {
+if (typeof window === 'undefined') {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   /** @ts-ignore */
   global.localStorage = new LocalStorageMemory();
 }
+
+export const { localStorage } = global;
 
 export const localstorageSetup = <T>(
   key: string,

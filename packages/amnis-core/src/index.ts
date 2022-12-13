@@ -12,6 +12,7 @@ export * from './reducers.js';
 export * from './selectors.js';
 export * from './diff.js';
 export * from './localstorage.js';
+export * from './agent.js';
 
 /**
  * Wrapper of redux toolkit for ESM.
