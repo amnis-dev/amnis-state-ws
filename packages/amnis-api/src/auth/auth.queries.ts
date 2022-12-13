@@ -16,7 +16,7 @@ import {
 
 export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
 
-  challenge: builder.query<
+  challenge: builder.mutation<
   IoOutputJson<Entity<Challenge>>,
   AuthChallenge
   >({
