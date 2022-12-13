@@ -5,6 +5,7 @@ import {
 import { webcrypto } from './webcrypto.js';
 
 const saltLength = 16;
+const ivLength = 16;
 
 const keyImportPassword = async (wc: Crypto, password: string): Promise<CryptoKey> => {
   const enc = new TextEncoder();
@@ -23,6 +24,7 @@ export const keyWrap: CryptoKeyWrap = async (key, password, type) => {
 
   const passwordKey = await keyImportPassword(wc, password);
   const salt = wc.getRandomValues(new Uint8Array(saltLength));
+  const iv = wc.getRandomValues(new Uint8Array(ivLength));
 
   const wrappingKey = await wc.subtle.deriveKey(
     {
@@ -32,18 +34,18 @@ export const keyWrap: CryptoKeyWrap = async (key, password, type) => {
       hash: 'SHA-256',
     },
     passwordKey,
-    { name: 'AES-KW', length: 256 },
+    { name: 'AES-GCM', length: 256 },
     true,
     ['wrapKey', 'unwrapKey'],
   );
 
-  const keyWrapped = await wc.subtle.wrapKey('jwk', key, wrappingKey, 'AES-KW');
+  const keyWrapped = await wc.subtle.wrapKey('jwk', key, wrappingKey, { name: 'AES-GCM', iv });
 
   /**
    * Combine with salt with the wrapped encryption.
    */
   const derived = new Uint8Array(keyWrapped);
-  const combined = new Uint8Array(1 + salt.length + derived.length);
+  const combined = new Uint8Array(1 + salt.length + iv.length + derived.length);
 
   /**
    * 0 = asym encrypter
@@ -52,7 +54,8 @@ export const keyWrap: CryptoKeyWrap = async (key, password, type) => {
    */
   combined.set([type ?? 1]);
   combined.set(salt, 1);
-  combined.set(derived, salt.length + 1);
+  combined.set(iv, salt.length + 1);
+  combined.set(derived, salt.length + iv.length + 1);
 
   return base64Encode(combined);
 };
@@ -66,6 +69,7 @@ export const keyUnwrap: CryptoKeyUnwrap = async (wrap, password) => {
     const passwordKey = await keyImportPassword(wc, password);
     const type = wrapped[0];
     const salt = wrapped.slice(1, saltLength + 1);
+    const iv = wrapped.slice(saltLength + 1, saltLength + ivLength + 1);
 
     const [algorithm, usage] = ((t) => {
       switch (t) {
@@ -106,16 +110,16 @@ export const keyUnwrap: CryptoKeyUnwrap = async (wrap, password) => {
         hash: 'SHA-256',
       },
       passwordKey,
-      { name: 'AES-KW', length: 256 },
+      { name: 'AES-GCM', length: 256 },
       true,
       ['wrapKey', 'unwrapKey'],
     );
 
     const keyUnwrapped = await wc.subtle.unwrapKey(
       'jwk',
-      wrapped.slice(saltLength + 1),
+      wrapped.slice(saltLength + ivLength + 1),
       unwrappingKey,
-      'AES-KW',
+      { name: 'AES-GCM', iv },
       algorithm,
       true,
       usage,

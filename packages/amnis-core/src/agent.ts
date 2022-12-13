@@ -29,7 +29,8 @@ export function agentName() {
     const { userAgent } = navigator;
     const name = userAgent
       .replace(/[\d_./]+/gm, '')
-      .match(/\(.*?;/m)?.[0].slice(1, -1) ?? 'Unknown Device';
+      .match(/\(.*?;/m)?.[0].slice(1, -1)
+      .trim() ?? 'Unknown Device';
     if (userAgent.includes('Chrome')) { return `${name} (Chrome)`; }
     if (userAgent.includes('Firefox')) { return `${name} (Firefox)`; }
     if (userAgent.includes('Edg')) { return `${name} (Edge)`; }
