@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.10.3](https://github.com/amnis-dev/amnis-state/compare/v0.10.2...v0.10.3) (2022-12-14)
+
+
+### Features
+
+* Added success logs for delete operations ([d38f7b7](https://github.com/amnis-dev/amnis-state/commit/d38f7b7394c550d56979437b6be1fac187ea88ff))
+* Added success messages on create and update operations ([4990b2f](https://github.com/amnis-dev/amnis-state/commit/4990b2fb265d92bc915cac005f1a7cb10a49962c))
+* Refactored naming of processors ([e5e95ba](https://github.com/amnis-dev/amnis-state/commit/e5e95bac6d3780586293d1fbde718b09ac041e70))
+
 ### [0.10.2](https://github.com/amnis-dev/amnis-state/compare/v0.10.1...v0.10.2) (2022-12-13)
 
 
