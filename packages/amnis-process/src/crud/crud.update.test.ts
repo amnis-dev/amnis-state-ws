@@ -143,14 +143,14 @@ test('should login as administrator and update profile display name', async () =
   });
 });
 
-test('should login as executive and update user name', async () => {
+test('should login as executive and update user email', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers[1] as Entity<User>,
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
-  const nameNew = 'userupdated';
+  const emailNew = 'new@email.com';
   const inputUpdate: IoInput<StateUpdater> = {
     accessEncoded: bearerAccess.access,
     body: {
@@ -158,7 +158,7 @@ test('should login as executive and update user name', async () => {
         {
           // User ID
           $id: dataUsers[2].$id,
-          name: nameNew,
+          email: emailNew,
         },
       ],
     },
@@ -173,14 +173,44 @@ test('should login as executive and update user name', async () => {
   expect(outputUpdate.json.result?.[userKey]).toHaveLength(1);
   expect(outputUpdate.json.result?.[userKey][0]).toMatchObject({
     $id: dataUsers[2].$id,
-    name: nameNew,
+    email: emailNew,
   });
   expect(outputUpdate.json.result?.[historyKey]).toHaveLength(1);
   expect(outputUpdate.json.result?.[historyKey][0]).toMatchObject({
     changes: {
-      name: nameNew,
+      email: emailNew,
     },
   });
+});
+
+test('should login as executive and NOT update user name', async () => {
+  const outputLogin = await authenticateLogin(
+    context,
+    dataUsers[1] as Entity<User>,
+  );
+  const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
+
+  const nameNew = 'new_username';
+  const inputUpdate: IoInput<StateUpdater> = {
+    accessEncoded: bearerAccess.access,
+    body: {
+      [userKey]: [
+        {
+          // User ID
+          $id: dataUsers[2].$id,
+          name: nameNew,
+        },
+      ],
+    },
+  };
+
+  const outputUpdate = await io.update(inputUpdate, ioOutput());
+  console.log(JSON.stringify(outputUpdate, null, 2));
+
+  expect(outputUpdate.status).toBe(200);
+  expect(ioOutputErrored(outputUpdate)).toBe(true);
+
+  expect(Object.keys(outputUpdate.json.result)).toHaveLength(0);
 });
 
 test(

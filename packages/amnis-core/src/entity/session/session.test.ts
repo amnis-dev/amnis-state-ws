@@ -24,6 +24,9 @@ test('should create a session', () => {
       $subject: expect.any(String),
       name: expect.any(String),
       exp: expect.any(Number),
+      prv: false,
+      adm: false,
+      exc: false,
     }),
   );
 });

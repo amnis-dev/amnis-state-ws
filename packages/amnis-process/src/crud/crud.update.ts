@@ -58,13 +58,30 @@ Io<StateUpdater, StateCreator>
     }, {});
 
     /**
-     * Ensure all user passwords are hashed.
+     * UPDATE EXCEPTION: User Entities.
      */
     if (stateUpdateSanatizd[userKey]) {
       // eslint-disable-next-line no-restricted-syntax
       for await (const entity of stateUpdateSanatizd[userKey]) {
-        if (entity.password) {
-          entity.password = await crypto.passHash(entity.password);
+        if (entity) {
+          /**
+           * User names cannot be altered through this process.
+           */
+          if (entity.name) {
+            output.json.logs.push({
+              level: 'error',
+              title: 'Update Failed',
+              description: 'A user\'s name property cannot be updated.',
+            });
+            output.json.result = {};
+            return output;
+          }
+          /**
+           * Ensure all user passwords are hashed.
+           */
+          if (entity.password) {
+            entity.password = await crypto.passHash(entity.password);
+          }
         }
       }
     }
@@ -131,7 +148,7 @@ Io<StateUpdater, StateCreator>
       output.json.logs.push(logCreator({
         level: 'success',
         title: 'Update Successful',
-        description: `Successfully updated records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
+        description: `Updated records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
       }));
     }
 
@@ -140,7 +157,9 @@ Io<StateUpdater, StateCreator>
      */
     const stateCreateHistory = historyMake(stateFinal, access.sub, deniedKeys, true);
     const resultHistory = await database.create(stateCreateHistory);
-    output.json.result[historyKey] = resultHistory[historyKey];
+    if (resultHistory[historyKey]?.length) {
+      output.json.result[historyKey] = resultHistory[historyKey];
+    }
 
     /**
      * Update the server store with possible changes.

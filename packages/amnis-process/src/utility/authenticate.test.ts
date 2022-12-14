@@ -83,6 +83,93 @@ test('should authenticate as normal user account', async () => {
   expect(sessions).toHaveLength(1);
   expect(sessions[0]).toMatchObject({
     $subject: users[0].$id,
+    prv: false,
+    exc: false,
+    adm: false,
+  });
+});
+
+test('should authenticate as executive account', async () => {
+  const { exec: execAccount } = await accountsGet();
+
+  const challenge = challengeCreator({
+    value: await context.crypto.randomString(8),
+  });
+  context.store.dispatch(challengeActions.create(challenge));
+
+  const authLogin = await apiAuthLoginCreate({
+    username: execAccount.name,
+    password: execAccount.password,
+    challenge,
+    credential: execAccount.credential,
+    privateKeyWrapped: execAccount.privateKey,
+  });
+
+  const output = await authenticateAccount(
+    context,
+    challenge,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
+  );
+
+  expect(output.status).toBe(200);
+
+  const {
+    user: users,
+    session: sessions,
+  } = output.json.result;
+
+  expect(sessions).toBeDefined();
+  expect(sessions).toHaveLength(1);
+  expect(sessions[0]).toMatchObject({
+    $subject: users[0].$id,
+    prv: true,
+    exc: true,
+    adm: false,
+  });
+});
+
+test('should authenticate as administrator account', async () => {
+  const { admin: adminAccount } = await accountsGet();
+
+  const challenge = challengeCreator({
+    value: await context.crypto.randomString(8),
+  });
+  context.store.dispatch(challengeActions.create(challenge));
+
+  const authLogin = await apiAuthLoginCreate({
+    username: adminAccount.name,
+    password: adminAccount.password,
+    challenge,
+    credential: adminAccount.credential,
+    privateKeyWrapped: adminAccount.privateKey,
+  });
+
+  const output = await authenticateAccount(
+    context,
+    challenge,
+    authLogin.username,
+    authLogin.$credential as UID,
+    authLogin.signature,
+    authLogin.password,
+  );
+
+  expect(output.status).toBe(200);
+
+  const {
+    user: users,
+    session: sessions,
+  } = output.json.result;
+
+  expect(sessions).toBeDefined();
+  expect(sessions).toHaveLength(1);
+  expect(sessions[0]).toMatchObject({
+    $subject: users[0].$id,
+    prv: true,
+    exc: false,
+    adm: true,
   });
 });
 

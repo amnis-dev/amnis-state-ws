@@ -77,7 +77,7 @@ Io<StateDeleter, StateDeleter>
       output.json.logs.push({
         level: 'success',
         title: 'Deletion Successful',
-        description: `Successfully deleted records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
+        description: `Deleted records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
       });
     }
 

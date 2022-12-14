@@ -75,7 +75,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       grants: [
         grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: userKey, scope: 'owned', task: task(0, 1, 0, 0) }),
+        grantStringify({ key: userKey, scope: 'owned', task: task(0, 1, 1, 0) }),
         grantStringify({ key: credentialKey, scope: 'owned', task: task(0, 1, 0, 1) }),
         grantStringify({ key: profileKey, scope: 'owned', task: task(0, 1, 1, 0) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(0, 1, 0, 0) }),

@@ -99,7 +99,7 @@ Io<StateCreator, StateEntities>
       output.json.logs.push({
         level: 'success',
         title: 'Creation Successful',
-        description: `Successfully created records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
+        description: `Created records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
       });
     }
 

@@ -27,6 +27,9 @@ export const generateSession = async (
    */
   const sessionExpires = dateNumeric(`${system.sessionExpires}m`);
 
+  const admIs = $roles.includes(system.$adminRole);
+  const excIs = $roles.includes(system.$execRole);
+
   /**
    * Create the new user session.
    */
@@ -34,8 +37,9 @@ export const generateSession = async (
     $subject: subjectId,
     exp: sessionExpires,
     name: displayName,
-    adm: $roles.includes(system.$adminRole),
-    exc: $roles.includes(system.$execRole),
+    adm: admIs,
+    exc: excIs,
+    prv: admIs || excIs,
   });
 
   return session;

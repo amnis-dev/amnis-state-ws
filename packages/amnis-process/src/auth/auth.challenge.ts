@@ -48,7 +48,7 @@ Io<ApiAuthChallenge, Entity<Challenge>>
 
     const session = await crypto.sessionDecrypt(sessionEncryption);
 
-    if (session?.adm !== true && session?.exc !== true) {
+    if (session?.prv !== true) {
       output.status = 401;
       output.json.logs.push(logCreator({
         level: 'error',
