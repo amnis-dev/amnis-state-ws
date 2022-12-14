@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.10.4](https://github.com/amnis-dev/amnis-state/compare/v0.10.3...v0.10.4) (2022-12-14)
+
+
+### Bug Fixes
+
+* Fixed issue with session flags not flagging when a privileged account is used ([ae78cde](https://github.com/amnis-dev/amnis-state/commit/ae78cde0573f1d80d44061fe33467a4890c409a4))
+
 ### [0.10.3](https://github.com/amnis-dev/amnis-state/compare/v0.10.2...v0.10.3) (2022-12-14)
 
 

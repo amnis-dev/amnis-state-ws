@@ -33,7 +33,7 @@ export interface Session extends EntityCreator {
   exc: boolean;
 
   /**
-   * If the session holder if one of the priviledged roles.
+   * If the session holder if one of the privileged roles.
    * (Administrator or Executive)
    */
   prv: boolean;
