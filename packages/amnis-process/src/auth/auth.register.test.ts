@@ -3,9 +3,9 @@ import {
   schemaAuth,
   StateEntities,
   ioOutputErrored,
-  AuthRegistration,
+  ApiAuthRegistration,
   Challenge,
-  authRegistrationCreate,
+  apiAuthRegistrationCreate,
   IoOutput,
   IoContext,
   userKey,
@@ -79,14 +79,14 @@ test('should start ritual and complete registration', async () => {
     return;
   }
 
-  const [authRegistration] = await authRegistrationCreate({
+  const [authRegistration] = await apiAuthRegistrationCreate({
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     challenge,
   });
 
-  const inputRegister: IoInput<AuthRegistration> = {
+  const inputRegister: IoInput<ApiAuthRegistration> = {
     body: authRegistration,
   };
 
@@ -174,14 +174,14 @@ test('should not be able to register when turned off by the system', async () =>
     return;
   }
 
-  const [authRegistration] = await authRegistrationCreate({
+  const [authRegistration] = await apiAuthRegistrationCreate({
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     challenge,
   });
 
-  const inputRegister: IoInput<AuthRegistration> = {
+  const inputRegister: IoInput<ApiAuthRegistration> = {
     body: authRegistration,
   };
 

@@ -7,27 +7,27 @@
       "type": "object",
       "properties": {
         "challenge": {
-          "$ref": "#/definitions/AuthChallenge"
+          "$ref": "#/definitions/ApiAuthChallenge"
         },
         "register": {
-          "$ref": "#/definitions/AuthRegistration"
+          "$ref": "#/definitions/ApiAuthRegistration"
         },
         "login": {
-          "$ref": "#/definitions/AuthLogin"
+          "$ref": "#/definitions/ApiAuthLogin"
         },
         "logout": {
-          "$ref": "#/definitions/AuthLogout"
+          "$ref": "#/definitions/ApiAuthLogout"
         },
         "renew": {
-          "$ref": "#/definitions/AuthRenew"
+          "$ref": "#/definitions/ApiAuthRenew"
         },
         "verify": {
-          "$ref": "#/definitions/AuthVerify"
+          "$ref": "#/definitions/ApiAuthVerify"
         }
       },
       "additionalProperties": false
     },
-    "AuthChallenge": {
+    "ApiAuthChallenge": {
       "type": "object",
       "properties": {
         "privatize": {
@@ -38,7 +38,7 @@
       "additionalProperties": false,
       "description": "Challenge Generation Request."
     },
-    "AuthRegistration": {
+    "ApiAuthRegistration": {
       "type": "object",
       "properties": {
         "username": {
@@ -102,7 +102,7 @@
       "additionalProperties": false,
       "description": "Payload for an registration request. A value of undefined starts a registration event."
     },
-    "AuthLogin": {
+    "ApiAuthLogin": {
       "type": "object",
       "properties": {
         "username": {
@@ -145,14 +145,14 @@
       "additionalProperties": false,
       "description": "Payload for a login request."
     },
-    "AuthLogout": {
+    "ApiAuthLogout": {
       "type": "object",
       "additionalProperties": {
         "not": {}
       },
       "description": "Payload that destroys the user session and connection."
     },
-    "AuthRenew": {
+    "ApiAuthRenew": {
       "type": "object",
       "properties": {
         "info": {
@@ -163,7 +163,7 @@
       "additionalProperties": false,
       "description": "Payload for a session and bearer renewal. Should not have any data in the body."
     },
-    "AuthVerify": {
+    "ApiAuthVerify": {
       "$ref": "#/definitions/Bearer",
       "description": "Verifies the validity of a stringified bearer."
     },

@@ -32,6 +32,11 @@ export * from './state/index.js';
 export * from './io/index.js';
 
 /**
+ * API interfaces and unitilities
+ */
+export * from './api/index.js';
+
+/**
  * Entities and Abstractions.
  */
 export * from './entity/index.js';

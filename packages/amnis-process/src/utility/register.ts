@@ -3,7 +3,6 @@ import {
   ioOutput,
   IoOutput,
   StateEntities,
-  AuthRegistrationParsed,
   credentialCreator,
   contactCreator,
   profileCreator,
@@ -14,6 +13,7 @@ import {
   profileKey,
   contactKey,
   credentialKey,
+  ApiAuthRegistrationParsed,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
 import { findUserByName } from './find.js';
@@ -23,7 +23,7 @@ import { findUserByName } from './find.js';
  */
 export const registerAccount = async (
   context: IoContext,
-  authRegistrationParsed: AuthRegistrationParsed,
+  authRegistrationParsed: ApiAuthRegistrationParsed,
   ip?: string,
 ): Promise<IoOutput<StateEntities>> => {
   /**

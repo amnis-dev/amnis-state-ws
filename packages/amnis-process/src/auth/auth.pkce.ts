@@ -1,5 +1,5 @@
 import {
-  AuthPkce,
+  ApiAuthPkce,
   Io,
   ioOutput,
   IoProcess,
@@ -9,7 +9,7 @@ import { oauthTwitter, oauthMicrosoft } from '../utility/index.js';
 import { mwValidate } from '../mw/index.js';
 
 const process: IoProcess<
-Io<AuthPkce, StateEntities>
+Io<ApiAuthPkce, StateEntities>
 > = (context) => (
   async (input) => {
     const { body } = input;
@@ -38,7 +38,7 @@ Io<AuthPkce, StateEntities>
   }
 );
 
-export const processAuthPcke = mwValidate('AuthPkce')(
+export const processAuthPcke = mwValidate('ApiAuthPkce')(
   process,
 );
 

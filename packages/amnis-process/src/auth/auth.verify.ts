@@ -1,5 +1,5 @@
 import {
-  Io, IoProcess, AuthVerify,
+  Io, IoProcess, ApiAuthVerify,
 } from '@amnis/core';
 import { mwValidate } from '../mw/index.js';
 
@@ -7,7 +7,7 @@ import { mwValidate } from '../mw/index.js';
  * Verifies the validity of an access bearer.
  */
 export const process: IoProcess<
-Io<AuthVerify, boolean>
+Io<ApiAuthVerify, boolean>
 > = (context) => (
   async (input, output) => {
     const { body: bearer } = input;
@@ -28,7 +28,7 @@ Io<AuthVerify, boolean>
   }
 );
 
-export const processAuthVerify = mwValidate('AuthVerify')(
+export const processAuthVerify = mwValidate('ApiAuthVerify')(
   process,
 );
 

@@ -1,18 +1,18 @@
 import type {
-  AuthRegistration,
-  AuthLogin,
-  AuthLogout,
-  // AuthPkce,
-  AuthRenew,
-  AuthVerify,
-  AuthChallenge,
+  ApiAuthRegistration,
+  ApiAuthLogin,
+  ApiAuthLogout,
+  // ApiAuthPkce,
+  ApiAuthRenew,
+  ApiAuthVerify,
+  ApiAuthChallenge,
 } from '@amnis/core';
 
 export interface AuthSchema {
-  challenge?: AuthChallenge;
-  register?: AuthRegistration;
-  login?: AuthLogin;
-  logout?: AuthLogout;
-  renew?: AuthRenew;
-  verify?: AuthVerify;
+  challenge?: ApiAuthChallenge;
+  register?: ApiAuthRegistration;
+  login?: ApiAuthLogin;
+  logout?: ApiAuthLogout;
+  renew?: ApiAuthRenew;
+  verify?: ApiAuthVerify;
 }

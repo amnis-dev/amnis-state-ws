@@ -109,6 +109,7 @@ test('should login as executive and create user', async () => {
   const outputCreator = await io.create(inputCreator, ioOutput());
 
   expect(outputCreator.status).toBe(200);
+  expect(outputCreator.json.logs.length).toBeGreaterThan(0);
   expect(ioOutputErrored(outputCreator)).toBe(false);
 
   const storage = databaseMemoryStorage();
@@ -138,6 +139,7 @@ test('should login as user and cannot create user', async () => {
   const outputCreator = await io.create(inputCreator, ioOutput());
 
   expect(outputCreator.status).toBe(200);
+  expect(outputCreator.json.logs.length).toBeGreaterThan(0);
   expect(ioOutputErrored(outputCreator)).toBe(true);
 
   const storage = databaseMemoryStorage();

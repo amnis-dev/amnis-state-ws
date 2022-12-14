@@ -1,6 +1,6 @@
 import {
   accountsGet,
-  authLoginCreate,
+  apiAuthLoginCreate,
   challengeCreator,
   cryptoWeb,
   IoContext,
@@ -23,7 +23,7 @@ test('should authenticate as normal user account', async () => {
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: userAccount.name,
     password: userAccount.password,
     challenge,
@@ -96,7 +96,7 @@ test('should not authenticate with non-existing user', async () => {
 
   const username = 'i-dont-exist';
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username,
     password: userAccount.password,
     challenge,
@@ -128,7 +128,7 @@ test('should not authenticate using different credentials', async () => {
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: userAccount.name,
     password: 'wrongpassword',
     challenge,
@@ -160,7 +160,7 @@ test('should not authenticate using a different private key for signing', async 
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: userAccount.name,
     password: userAccount.password,
     challenge,
@@ -196,7 +196,7 @@ test('should not authenticate using a different challenge value', async () => {
     value: await cryptoWeb.randomString(32),
   };
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: userAccount.name,
     password: userAccount.password,
     challenge: challengeChanged,
@@ -228,7 +228,7 @@ test('should not authenticate using different credentials but valid password', a
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: userAccount.name,
     password: userAccount.password,
     challenge,

@@ -2,7 +2,7 @@ import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
   accountsGet,
   auditKey,
-  authLoginCreate,
+  apiAuthLoginCreate,
   contactKey,
   dateNumeric,
   profileKey,
@@ -63,7 +63,7 @@ test('should be able to login as user', async () => {
   /**
    * Create the login request body.
    */
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: user.name,
     password: user.password,
     challenge,
@@ -128,7 +128,7 @@ test('should NOT be able to login with a bad password', async () => {
   /**
    * Create the login request body.
    */
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: user.name,
     password: user.password.slice(1),
     challenge,
@@ -181,7 +181,7 @@ test('should see audits of login requests as admin', async () => {
   /**
    * Create the login request body.
    */
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: admin.name,
     password: admin.password,
     challenge,

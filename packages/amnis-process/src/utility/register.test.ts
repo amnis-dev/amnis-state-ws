@@ -1,6 +1,6 @@
 import {
-  authRegistrationCreate,
-  authRegistrationParse,
+  apiAuthRegistrationCreate,
+  apiAuthRegistrationParse,
   challengeCreator,
   Contact,
   contactKey,
@@ -27,14 +27,14 @@ test('should register a new account', async () => {
     value: await context.crypto.randomString(16),
   });
 
-  const [authRegistration] = await authRegistrationCreate({
+  const [authRegistration] = await apiAuthRegistrationCreate({
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     challenge,
   });
 
-  const authRegistrationParsed = await authRegistrationParse(authRegistration);
+  const authRegistrationParsed = await apiAuthRegistrationParse(authRegistration);
 
   if (!authRegistrationParsed) {
     expect(authRegistrationParsed).toBeDefined();
@@ -89,14 +89,14 @@ test('should not register with an existing username', async () => {
     value: await context.crypto.randomString(16),
   });
 
-  const [authRegistration] = await authRegistrationCreate({
+  const [authRegistration] = await apiAuthRegistrationCreate({
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     challenge,
   });
 
-  const authRegistrationParsed = await authRegistrationParse(authRegistration);
+  const authRegistrationParsed = await apiAuthRegistrationParse(authRegistration);
 
   if (!authRegistrationParsed) {
     expect(authRegistrationParsed).toBeDefined();

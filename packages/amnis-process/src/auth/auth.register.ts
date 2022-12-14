@@ -1,9 +1,9 @@
 import {
-  AuthRegistration,
+  ApiAuthRegistration,
   Io,
   IoProcess,
   StateEntities,
-  authRegistrationParse,
+  apiAuthRegistrationParse,
   logCreator,
   userKey,
   Entity,
@@ -17,7 +17,7 @@ import { challengeValidate } from '../utility/challenge.js';
 import { registerAccount } from '../utility/register.js';
 
 const process: IoProcess<
-Io<AuthRegistration, StateEntities>
+Io<ApiAuthRegistration, StateEntities>
 > = (context) => (
   async (input, output) => {
     const { crypto, store } = context;
@@ -50,7 +50,7 @@ Io<AuthRegistration, StateEntities>
       }
     }
 
-    const authRegistrationParsed = await authRegistrationParse(body);
+    const authRegistrationParsed = await apiAuthRegistrationParse(body);
 
     /**
      * Ensure the auth registration parsing was successfull.
@@ -146,6 +146,6 @@ Io<AuthRegistration, StateEntities>
   }
 );
 
-export const processAuthRegister = mwValidate('AuthRegistration')(process);
+export const processAuthRegister = mwValidate('ApiAuthRegistration')(process);
 
 export default { processAuthRegister };

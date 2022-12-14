@@ -1,5 +1,5 @@
 import {
-  AuthLogout, Io, IoProcess, StateDeleter, uidList, sessionKey,
+  ApiAuthLogout, Io, IoProcess, StateDeleter, uidList, sessionKey,
 } from '@amnis/core';
 import { mwSession, mwValidate } from '../mw/index.js';
 
@@ -7,7 +7,7 @@ import { mwSession, mwValidate } from '../mw/index.js';
  * Renews a session holder's session and access bearers.
  */
 const process: IoProcess<
-Io<AuthLogout, StateDeleter>
+Io<ApiAuthLogout, StateDeleter>
 > = () => (
   async (input, output) => {
     const { session } = input;
@@ -31,7 +31,7 @@ Io<AuthLogout, StateDeleter>
 );
 
 export const processAuthLogout = mwSession()(
-  mwValidate('AuthLogout')(
+  mwValidate('ApiAuthLogout')(
     process,
   ),
 );

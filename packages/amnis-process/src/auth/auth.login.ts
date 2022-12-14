@@ -1,7 +1,7 @@
 import {
   Io,
   IoProcess,
-  AuthLogin,
+  ApiAuthLogin,
   StateEntities,
   UID,
   challengeDecode,
@@ -11,7 +11,7 @@ import { mwValidate } from '../mw/index.js';
 import { authenticateAccount } from '../utility/authenticate.js';
 
 const process: IoProcess<
-Io<AuthLogin, StateEntities>
+Io<ApiAuthLogin, StateEntities>
 > = (context) => (
   async (input, output) => {
     const { body } = input;
@@ -50,6 +50,6 @@ Io<AuthLogin, StateEntities>
   }
 );
 
-export const processAuthLogin = mwValidate('AuthLogin')(process);
+export const processAuthLogin = mwValidate('ApiAuthLogin')(process);
 
 export default { processAuthLogin };

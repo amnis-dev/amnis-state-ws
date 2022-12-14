@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions.js';
 import {
-  AuthChallenge,
-  AuthLogin,
-  AuthLogout,
-  AuthPkce,
-  AuthRenew,
-  AuthVerify,
+  ApiAuthChallenge,
+  ApiAuthLogin,
+  ApiAuthLogout,
+  ApiAuthPkce,
+  ApiAuthRenew,
+  ApiAuthVerify,
   Challenge,
   Entity,
   IoOutputJson,
@@ -18,7 +18,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   challenge: builder.mutation<
   IoOutputJson<Entity<Challenge>>,
-  AuthChallenge
+  ApiAuthChallenge
   >({
     query: (payload) => ({
       url: 'challenge',
@@ -29,7 +29,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   login: builder.mutation<
   IoOutputJson<StateEntities>,
-  AuthLogin
+  ApiAuthLogin
   >({
     query: (payload) => ({
       url: 'login',
@@ -41,7 +41,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   logout: builder.mutation<
   IoOutputJson<StateDeleter>,
-  AuthLogout
+  ApiAuthLogout
   >({
     query: (payload) => ({
       url: 'logout',
@@ -53,7 +53,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   pkce: builder.mutation<
   IoOutputJson<StateEntities>,
-  AuthPkce
+  ApiAuthPkce
   >({
     query: (payload) => ({
       url: 'pkce',
@@ -65,7 +65,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   renew: builder.query<
   IoOutputJson<StateEntities>,
-  AuthRenew
+  ApiAuthRenew
   >({
     query: (payload) => ({
       url: 'renew',
@@ -77,7 +77,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   verify: builder.query<
   IoOutputJson<boolean>,
-  AuthVerify
+  ApiAuthVerify
   >({
     query: (payload) => ({
       url: 'verify',

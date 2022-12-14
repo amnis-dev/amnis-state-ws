@@ -91,6 +91,18 @@ Io<StateCreator, StateEntities>
       });
     }
 
+    /**
+     * Create a possible success output.
+     */
+    const acceptedKeys = Object.keys(result).filter((key) => !deniedKeys.includes(key));
+    if (acceptedKeys.length > 0) {
+      output.json.logs.push({
+        level: 'success',
+        title: 'Creation Successful',
+        description: `Successfully created records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
+      });
+    }
+
     output.json.result = result;
 
     return output;

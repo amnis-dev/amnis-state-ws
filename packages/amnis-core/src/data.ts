@@ -85,7 +85,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
     }), { committed: true }),
     entityCreate(roleCreator({
       name: 'Anonymous',
-      description: 'Permissions for accessing the application without authentication.',
+      description: 'Permissions for accessing the application data without authentication.',
       color: '#000000',
       grants: [
         grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),

@@ -1,8 +1,8 @@
 import {
   accountsGet,
-  AuthLogin,
-  authLoginCreate,
-  AuthLogout,
+  ApiAuthLogin,
+  apiAuthLoginCreate,
+  ApiAuthLogout,
   Challenge,
   IoContext,
   IoInput,
@@ -38,7 +38,7 @@ test('should login and then logout as administrator', async () => {
     return;
   }
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: adminAccount.name,
     password: adminAccount.password,
     challenge,
@@ -46,7 +46,7 @@ test('should login and then logout as administrator', async () => {
     privateKeyWrapped: adminAccount.privateKey,
   });
 
-  const inputLogin: IoInput<AuthLogin> = {
+  const inputLogin: IoInput<ApiAuthLogin> = {
     body: authLogin,
   };
 
@@ -55,7 +55,7 @@ test('should login and then logout as administrator', async () => {
   expect(outputLogin.status).toBe(200);
   expect(outputLogin.cookies.authSession).toBeDefined();
 
-  const inputLogout: IoInput<AuthLogout> = {
+  const inputLogout: IoInput<ApiAuthLogout> = {
     sessionEncryption: outputLogin.cookies.authSession,
     body: {},
   };
@@ -70,7 +70,7 @@ test('should login and then logout as administrator', async () => {
 });
 
 test('should not logout without an existing session', async () => {
-  const inputLogout: IoInput<AuthLogout> = {
+  const inputLogout: IoInput<ApiAuthLogout> = {
     body: {},
   };
 

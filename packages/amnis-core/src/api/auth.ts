@@ -14,7 +14,7 @@ import {
   cryptoWeb,
   base64Encode,
   base64Decode,
-} from '../io/crypto/index.js';
+} from '../io/index.js';
 import type {
   ApiAuthLogin,
   ApiAuthRegistration,
@@ -55,7 +55,7 @@ import type {
 //   return fingerprint;
 // }
 
-export interface AuthRegistrationCreateOptions {
+export interface ApiAuthRegistrationCreateOptions {
   username: string;
   displayName: string;
   password: string;
@@ -63,8 +63,8 @@ export interface AuthRegistrationCreateOptions {
   origin?: string;
 }
 
-export type AuthRegistrationCreate = (
-  options: AuthRegistrationCreateOptions
+export type ApiAuthRegistrationCreate = (
+  options: ApiAuthRegistrationCreateOptions
 ) => Promise<[
   authRegistration: ApiAuthRegistration,
   privateKeyWrapped: string,
@@ -74,7 +74,7 @@ export type AuthRegistrationCreate = (
 /**
  * Creates encoded parameters for a registration.
  */
-export const authRegistrationCreate: AuthRegistrationCreate = async ({
+export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
   username,
   displayName,
   password,
@@ -153,20 +153,20 @@ export const authRegistrationCreate: AuthRegistrationCreate = async ({
   return [authRegistration, privateKeyWrapped, credential];
 };
 
-export interface AuthRegistrationParsed extends Omit<ApiAuthRegistration, 'challenge' | 'credential' | 'signature'> {
+export interface ApiAuthRegistrationParsed extends Omit<ApiAuthRegistration, 'challenge' | 'credential' | 'signature'> {
   challenge: Challenge;
   credential: Credential;
   signature: ArrayBuffer;
 }
 
-export type AuthRegistrationParse = (
+export type ApiAuthRegistrationParse = (
   authRegistration: ApiAuthRegistration
-) => Promise<AuthRegistrationParsed | undefined>;
+) => Promise<ApiAuthRegistrationParsed | undefined>;
 
 /**
  * Parses encoded auth registration parameters.
  */
-export const authRegistrationParse: AuthRegistrationParse = async (authRegistration) => {
+export const apiAuthRegistrationParse: ApiAuthRegistrationParse = async (authRegistration) => {
   try {
     const dec = new TextDecoder();
     const { challenge, credential, signature } = authRegistration;
@@ -187,9 +187,9 @@ export const authRegistrationParse: AuthRegistrationParse = async (authRegistrat
 };
 
 /**
- * Parameters for the authLoginCreate method.
+ * Parameters for the apiAuthLoginCreate method.
  */
-export interface AuthLoginCreateParams {
+export interface ApiAuthLoginCreateParams {
   username: string;
   password: string;
   challenge: Challenge;
@@ -197,12 +197,12 @@ export interface AuthLoginCreateParams {
   privateKeyWrapped: string;
 }
 
-export type AuthLoginCreate = (params: AuthLoginCreateParams) => Promise<ApiAuthLogin>;
+export type ApiAuthLoginCreate = (params: ApiAuthLoginCreateParams) => Promise<ApiAuthLogin>;
 
 /**
  * Creates an ApiAuthLogin object.
  */
-export const authLoginCreate: AuthLoginCreate = async ({
+export const apiAuthLoginCreate: ApiAuthLoginCreate = async ({
   username,
   password,
   challenge,

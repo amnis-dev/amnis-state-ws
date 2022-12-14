@@ -2,7 +2,7 @@ import {
   Io,
   IoProcess,
   ioOutputApply,
-  AuthChallenge,
+  ApiAuthChallenge,
   logCreator,
   Challenge,
   Entity,
@@ -12,7 +12,7 @@ import { mwValidate } from '../mw/index.js';
 import { challengeCreate } from '../utility/challenge.js';
 
 const process: IoProcess<
-Io<AuthChallenge, Entity<Challenge>>
+Io<ApiAuthChallenge, Entity<Challenge>>
 > = (context) => (
   async (input, output) => {
     const { store, crypto } = context;
@@ -63,7 +63,7 @@ Io<AuthChallenge, Entity<Challenge>>
   }
 );
 
-export const processAuthChallenge = mwValidate('AuthChallenge')(
+export const processAuthChallenge = mwValidate('ApiAuthChallenge')(
   process,
 );
 

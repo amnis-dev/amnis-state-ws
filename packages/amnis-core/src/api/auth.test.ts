@@ -1,6 +1,6 @@
 import { challengeCreator } from '../entity/index.js';
-import { cryptoWeb } from './index.js';
-import { authRegistrationCreate, authRegistrationParse } from './io.auth.js';
+import { cryptoWeb } from '../index.js';
+import { apiAuthRegistrationCreate, apiAuthRegistrationParse } from './auth.js';
 
 test('should create a valid auth registration object', async () => {
   const username = 'test_user';
@@ -9,7 +9,7 @@ test('should create a valid auth registration object', async () => {
     value: await cryptoWeb.randomString(),
   });
 
-  const [authRegistration] = await authRegistrationCreate({
+  const [authRegistration] = await apiAuthRegistrationCreate({
     username,
     displayName,
     password: 'passwd12',
@@ -34,7 +34,7 @@ test('should be able to parse a generated auth registration object', async () =>
     value: await cryptoWeb.randomString(),
   });
 
-  const [authRegistration, privateKeyWrapped] = await authRegistrationCreate({
+  const [authRegistration, privateKeyWrapped] = await apiAuthRegistrationCreate({
     username,
     displayName,
     password: 'passwd12',
@@ -43,7 +43,7 @@ test('should be able to parse a generated auth registration object', async () =>
 
   expect(typeof privateKeyWrapped === 'string').toBe(true);
 
-  const authRegistrationParsed = await authRegistrationParse(authRegistration);
+  const authRegistrationParsed = await apiAuthRegistrationParse(authRegistration);
 
   if (!authRegistrationParsed) {
     expect(authRegistrationParsed).toBeDefined();

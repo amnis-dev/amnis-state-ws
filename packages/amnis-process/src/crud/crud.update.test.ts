@@ -97,6 +97,9 @@ test('should login as administrator and update user email', async () => {
       email: expect.any(String),
     },
   });
+
+  expect(outputUpdate.json.logs).toHaveLength(1);
+  expect(ioOutputErrored(outputUpdate)).toBe(false);
 });
 
 test('should login as administrator and update profile display name', async () => {

@@ -1,7 +1,7 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
   accountsGet,
-  authLoginCreate,
+  apiAuthLoginCreate,
   Entity,
   History,
   historyKey,
@@ -60,7 +60,7 @@ test('should be able to update user profile', async () => {
   /**
    * Create the login request body.
    */
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: adminAccount.name,
     password: adminAccount.password,
     challenge,

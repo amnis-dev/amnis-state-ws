@@ -3,7 +3,7 @@ import {
   contactKey,
   entityStrip,
   contactCreator,
-  authLoginCreate,
+  apiAuthLoginCreate,
   accountsGet,
 } from '@amnis/core';
 import { contactActions, contactSelectors, userSelectors } from '@amnis/state';
@@ -55,7 +55,7 @@ test('should be able to create a new contact', async () => {
   /**
    * Create the login request body.
    */
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: adminAccount.name,
     password: adminAccount.password,
     challenge,

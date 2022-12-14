@@ -8,6 +8,7 @@ import {
   historyMake,
   Io,
   IoProcess,
+  logCreator,
   selectRoleGrants,
   State,
   StateCreator,
@@ -120,6 +121,18 @@ Io<StateUpdater, StateCreator>
         title: 'Updates Disallowed',
         description: `Missing permissions to update the collections: ${deniedKeys.join(', ')}`,
       });
+    }
+
+    /**
+     * Create a possible success output.
+     */
+    const acceptedKeys = Object.keys(result).filter((key) => !deniedKeys.includes(key));
+    if (acceptedKeys.length > 0) {
+      output.json.logs.push(logCreator({
+        level: 'success',
+        title: 'Update Successful',
+        description: `Successfully updated records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
+      }));
     }
 
     /**

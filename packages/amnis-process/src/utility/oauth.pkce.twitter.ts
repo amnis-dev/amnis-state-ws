@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import {
-  AuthPkce,
+  ApiAuthPkce,
   dateNumeric,
   ioOutput,
   IoOutput,
@@ -41,7 +41,7 @@ const userEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}users/me`;
 
 export async function oauthTwitter(
   context: IoContext,
-  auth: Omit<AuthPkce, 'platform'>,
+  auth: Omit<ApiAuthPkce, 'platform'>,
 ): Promise<IoOutput<StateEntities>> {
   // const output = ioOutput<StateEntities>();
   // /**

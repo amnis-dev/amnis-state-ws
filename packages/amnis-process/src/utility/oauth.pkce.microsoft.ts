@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import {
-  AuthPkce,
+  ApiAuthPkce,
   dateNumeric,
   ioOutput,
   IoOutput,
@@ -41,7 +41,7 @@ export interface MicrosoftId {
 
 export async function oauthMicrosoft(
   context: IoContext,
-  auth: Omit<AuthPkce, 'platform'>,
+  auth: Omit<ApiAuthPkce, 'platform'>,
 ): Promise<IoOutput<StateEntities>> {
   // const bearerEndpoint = auth.tenantId
   //   ? `https://login.microsoftonline.${auth.gov ? 'us' : 'com'}/${auth.tenantId}/oauth2/v2.0/bearer`

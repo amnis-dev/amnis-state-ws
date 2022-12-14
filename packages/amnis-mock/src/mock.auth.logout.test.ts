@@ -6,7 +6,7 @@ import {
   userSelectors,
 } from '@amnis/state';
 import {
-  accountsGet, authLoginCreate, selectBearer,
+  accountsGet, apiAuthLoginCreate, selectBearer,
 } from '@amnis/core';
 import { clientStore } from './common/client.store.js';
 import { mockService } from './mock.service.js';
@@ -56,7 +56,7 @@ test('should be able to login and logout', async () => {
   /**
    * Create the login request body.
    */
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: user.name,
     password: user.password,
     challenge,

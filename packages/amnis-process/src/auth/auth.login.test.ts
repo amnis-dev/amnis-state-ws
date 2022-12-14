@@ -3,7 +3,7 @@ import {
   IoContext,
   accountsGet,
   IoInput,
-  AuthLogin,
+  ApiAuthLogin,
   Challenge,
   cryptoWeb,
   User,
@@ -13,7 +13,7 @@ import {
   Session,
   dateNumeric,
   ioOutput,
-  authLoginCreate,
+  apiAuthLoginCreate,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
@@ -61,7 +61,7 @@ test('should login as a admin', async () => {
     return;
   }
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: adminAccount.name,
     password: adminAccount.password,
     challenge,
@@ -69,7 +69,7 @@ test('should login as a admin', async () => {
     privateKeyWrapped: adminAccount.privateKey,
   });
 
-  const input: IoInput<AuthLogin> = {
+  const input: IoInput<ApiAuthLogin> = {
     body: authLogin,
   };
 
@@ -120,7 +120,7 @@ test('should NOT login as an admin with different private key', async () => {
     return;
   }
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: adminAccount.name,
     password: adminAccount.password,
     challenge,
@@ -128,7 +128,7 @@ test('should NOT login as an admin with different private key', async () => {
     privateKeyWrapped: userAccount.privateKey,
   });
 
-  const input: IoInput<AuthLogin> = {
+  const input: IoInput<ApiAuthLogin> = {
     body: authLogin,
   };
 
@@ -169,7 +169,7 @@ test('should NOT login as an admin with different challenge', async () => {
   expect(challenge.$id).toEqual(wrongChallenge.$id);
   expect(challenge?.value).not.toEqual(wrongChallenge.value);
 
-  const authLogin = await authLoginCreate({
+  const authLogin = await apiAuthLoginCreate({
     username: adminAccount.name,
     password: adminAccount.password,
     challenge: wrongChallenge,
@@ -177,7 +177,7 @@ test('should NOT login as an admin with different challenge', async () => {
     privateKeyWrapped: adminAccount.privateKey,
   });
 
-  const input: IoInput<AuthLogin> = {
+  const input: IoInput<ApiAuthLogin> = {
     body: authLogin,
   };
 

@@ -5,8 +5,13 @@ import {
   credentialKey,
 } from './entity/index.js';
 import {
-  AuthLogin,
-  AuthRegistration, base64Decode, base64Encode, cryptoWeb,
+  ApiAuthLogin,
+  ApiAuthRegistration,
+} from './api/index.js';
+import {
+  base64Decode,
+  base64Encode,
+  cryptoWeb,
 } from './io/index.js';
 import { localStorage } from './localstorage.js';
 import { UID } from './types.js';
@@ -177,14 +182,14 @@ export const agentSign = async (data: string): Promise<string> => {
 };
 
 /**
- * Create an AuthRegistration with agent properties.
+ * Create an ApiAuthRegistration with agent properties.
  */
 export const agentRegistration = async (
   username: string,
   displayName: string,
   password: string,
   challenge: Challenge,
-): Promise<AuthRegistration> => {
+): Promise<ApiAuthRegistration> => {
   const challengeEncoded = challengeEncode(challenge);
 
   let origin = 'http://localhost';
@@ -196,7 +201,7 @@ export const agentRegistration = async (
   const credential = await agentCredential();
   const signature = await agentSign(credential);
 
-  const authRegistration: AuthRegistration = {
+  const authRegistration: ApiAuthRegistration = {
     username,
     password,
     displayName,
@@ -211,7 +216,7 @@ export const agentRegistration = async (
 };
 
 /**
- * Create an AuthLogin for this agent.
+ * Create an ApiAuthLogin for this agent.
  */
 export const agentLogin = async (
   username: string,
@@ -224,7 +229,7 @@ export const agentLogin = async (
   const signatureData = username + agentCurrent.credentialId + challenge.value;
   const signature = await agentSign(signatureData);
 
-  const authLogin: AuthLogin = {
+  const authLogin: ApiAuthLogin = {
     username,
     password,
     challenge: challengeEncoded,

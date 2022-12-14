@@ -1,8 +1,8 @@
 import { agentGet } from './agent.js';
 import { challengeCreator, Credential, credentialCreator } from './entity/index.js';
 import {
-  authRegistrationCreate,
-} from './io/io.auth.js';
+  apiAuthRegistrationCreate,
+} from './api/auth.js';
 
 export interface Account {
   name: string;
@@ -22,7 +22,7 @@ export const accountsGet = async () => {
    * Administrator
    */
   if (!admin) {
-    const [adminRegistration, adminPrivateKey, adminCredential] = await authRegistrationCreate({
+    const [adminRegistration, adminPrivateKey, adminCredential] = await apiAuthRegistrationCreate({
       username: 'admin',
       displayName: 'Administrator',
       password: 'passwd12',
@@ -41,7 +41,7 @@ export const accountsGet = async () => {
    * Executive
    */
   if (!exec) {
-    const [execRegistration, execPrivateKey, execCredential] = await authRegistrationCreate({
+    const [execRegistration, execPrivateKey, execCredential] = await apiAuthRegistrationCreate({
       username: 'exec',
       displayName: 'Executive',
       password: 'passwd12',
