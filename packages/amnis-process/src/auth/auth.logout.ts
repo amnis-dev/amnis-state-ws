@@ -30,10 +30,10 @@ Io<AuthLogout, StateDeleter>
   }
 );
 
-export const authProcessLogout = mwSession()(
+export const processAuthLogout = mwSession()(
   mwValidate('AuthLogout')(
     process,
   ),
 );
 
-export default { authProcessLogout };
+export default { processAuthLogout };

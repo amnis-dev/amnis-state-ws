@@ -21,7 +21,7 @@ import {
 import { contextSetup } from '@amnis/state';
 import { authenticateLogin } from '../utility/authenticate.js';
 import { validateSetup } from '../validate.js';
-import { crudProcessUpdate } from './crud.process.update.js';
+import { processCrudUpdate } from './crud.update.js';
 
 let context: IoContext;
 let dataUsers: Entity<User>[];
@@ -39,7 +39,7 @@ beforeAll(async () => {
   io = ioProcess(
     context,
     {
-      update: crudProcessUpdate,
+      update: processCrudUpdate,
     },
   );
 });

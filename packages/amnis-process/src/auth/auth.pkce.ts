@@ -38,8 +38,8 @@ Io<AuthPkce, StateEntities>
   }
 );
 
-export const authProcessPcke = mwValidate('AuthPkce')(
+export const processAuthPcke = mwValidate('AuthPkce')(
   process,
 );
 
-export default { authProcessPcke };
+export default { processAuthPcke };

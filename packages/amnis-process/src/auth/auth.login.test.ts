@@ -17,8 +17,8 @@ import {
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
-import { authProcessChallenge } from './auth.challenge.js';
-import { authProcessLogin } from './auth.login.js';
+import { processAuthChallenge } from './auth.challenge.js';
+import { processAuthLogin } from './auth.login.js';
 
 let context: IoContext;
 
@@ -33,7 +33,7 @@ test('should start the login ritual by generating a challenge', async () => {
     body: {},
   };
 
-  const output = await authProcessChallenge(context)(input, ioOutput());
+  const output = await processAuthChallenge(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
 
@@ -53,7 +53,7 @@ test('should login as a admin', async () => {
   const inputStart: IoInput = {
     body: {},
   };
-  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
+  const outputStart = await processAuthChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
@@ -73,7 +73,7 @@ test('should login as a admin', async () => {
     body: authLogin,
   };
 
-  const output = await authProcessLogin(context)(input, ioOutput());
+  const output = await processAuthLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
   expect(output.cookies.authSession).toBeDefined();
@@ -112,7 +112,7 @@ test('should NOT login as an admin with different private key', async () => {
   const inputStart: IoInput = {
     body: {},
   };
-  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
+  const outputStart = await processAuthChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
@@ -132,7 +132,7 @@ test('should NOT login as an admin with different private key', async () => {
     body: authLogin,
   };
 
-  const output = await authProcessLogin(context)(input, ioOutput());
+  const output = await processAuthLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(401);
   expect(Object.keys(output.cookies)).toHaveLength(0);
@@ -152,7 +152,7 @@ test('should NOT login as an admin with different challenge', async () => {
   const inputStart: IoInput = {
     body: {},
   };
-  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
+  const outputStart = await processAuthChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
@@ -181,7 +181,7 @@ test('should NOT login as an admin with different challenge', async () => {
     body: authLogin,
   };
 
-  const output = await authProcessLogin(context)(input, ioOutput());
+  const output = await processAuthLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(500);
   expect(Object.keys(output.cookies)).toHaveLength(0);

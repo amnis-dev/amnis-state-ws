@@ -159,10 +159,10 @@ Io<StateQuery, StateEntities>
   }
 );
 
-export const crudProcessRead = mwAccess()(
+export const processCrudRead = mwAccess()(
   mwValidate('StateQuery')(
     process,
   ),
 );
 
-export default { crudProcessRead };
+export default { processCrudRead };

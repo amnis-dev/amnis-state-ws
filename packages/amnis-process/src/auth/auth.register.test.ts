@@ -21,8 +21,8 @@ import {
 } from '@amnis/core';
 import { contextSetup, systemActions, systemSelectors } from '@amnis/state';
 import { validateSetup } from '../validate.js';
-import { authProcessChallenge } from './auth.challenge.js';
-import { authProcessRegister } from './auth.register.js';
+import { processAuthChallenge } from './auth.challenge.js';
+import { processAuthRegister } from './auth.register.js';
 
 let context: IoContext;
 
@@ -37,7 +37,7 @@ test('should start the registration ritual', async () => {
     body: {},
   };
 
-  const output = await authProcessChallenge(context)(input, ioOutput());
+  const output = await processAuthChallenge(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
 
@@ -56,7 +56,7 @@ test('should not register with invalid body input', async () => {
     body: { invalid: true },
   };
 
-  const output = await authProcessRegister(context)(input, ioOutput());
+  const output = await processAuthRegister(context)(input, ioOutput());
 
   expect(output.status).toBe(400);
   expect(ioOutputErrored(output)).toBe(true);
@@ -67,7 +67,7 @@ test('should start ritual and complete registration', async () => {
     body: {},
   };
 
-  const resultStart = await authProcessChallenge(context)(
+  const resultStart = await processAuthChallenge(context)(
     inputStart,
     ioOutput(),
   ) as IoOutput<StateEntities>;
@@ -90,7 +90,7 @@ test('should start ritual and complete registration', async () => {
     body: authRegistration,
   };
 
-  const resultRegister = await authProcessRegister(context)(inputRegister, ioOutput());
+  const resultRegister = await processAuthRegister(context)(inputRegister, ioOutput());
 
   expect(resultRegister.status).toBe(200);
 
@@ -162,7 +162,7 @@ test('should not be able to register when turned off by the system', async () =>
     body: {},
   };
 
-  const resultStart = await authProcessChallenge(context)(
+  const resultStart = await processAuthChallenge(context)(
     inputStart,
     ioOutput(),
   ) as IoOutput<StateEntities>;
@@ -185,7 +185,7 @@ test('should not be able to register when turned off by the system', async () =>
     body: authRegistration,
   };
 
-  const resultRegister = await authProcessRegister(context)(inputRegister, ioOutput());
+  const resultRegister = await processAuthRegister(context)(inputRegister, ioOutput());
 
   expect(resultRegister.status).toBe(500);
 

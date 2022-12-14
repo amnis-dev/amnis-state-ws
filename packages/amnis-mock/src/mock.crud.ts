@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResponseTransformer, rest } from 'msw';
-import { crudProcess } from '@amnis/process';
+import { processCrud } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
 import { ioOutput } from '@amnis/core';
 import { setupInput } from './setup.js';
@@ -19,9 +19,9 @@ export const crudSetupHandlers: MockHandlers = async (options) => {
   return [
     rest.post(`${baseUrl}/api/crud/:processer`, async (req, res, ctx) => {
       const { processer } = req.params;
-      const processKey = processer as keyof typeof crudProcess;
+      const processKey = processer as keyof typeof processCrud;
 
-      if (!crudProcess[processKey]) {
+      if (!processCrud[processKey]) {
         return res(
           ctx.status(400, `CRUD Process '${processer}' does not exist.`),
         );
@@ -29,7 +29,7 @@ export const crudSetupHandlers: MockHandlers = async (options) => {
 
       const input = await setupInput(req);
 
-      const output = await crudProcess[processKey](context)(input, ioOutput());
+      const output = await processCrud[processKey](context)(input, ioOutput());
 
       const ctxCookies: ResponseTransformer<any, any>[] = [];
       Object.keys(output.cookies).forEach((cookieName) => {

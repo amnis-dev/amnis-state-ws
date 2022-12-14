@@ -28,8 +28,8 @@ Io<AuthVerify, boolean>
   }
 );
 
-export const authProcessVerify = mwValidate('AuthVerify')(
+export const processAuthVerify = mwValidate('AuthVerify')(
   process,
 );
 
-export default authProcessVerify;
+export default processAuthVerify;

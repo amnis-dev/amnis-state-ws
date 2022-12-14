@@ -50,6 +50,6 @@ Io<AuthLogin, StateEntities>
   }
 );
 
-export const authProcessLogin = mwValidate('AuthLogin')(process);
+export const processAuthLogin = mwValidate('AuthLogin')(process);
 
-export default { authProcessLogin };
+export default { processAuthLogin };

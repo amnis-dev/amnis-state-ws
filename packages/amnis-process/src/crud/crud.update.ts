@@ -138,10 +138,10 @@ Io<StateUpdater, StateCreator>
   }
 );
 
-export const crudProcessUpdate = mwAccess()(
+export const processCrudUpdate = mwAccess()(
   mwValidate('StateUpdater')(
     process,
   ),
 );
 
-export default crudProcessUpdate;
+export default processCrudUpdate;

@@ -1,20 +1,20 @@
-import { authProcessChallenge } from './auth.challenge.js';
-import { authProcessLogin } from './auth.login.js';
-import { authProcessLogout } from './auth.logout.js';
-// import { authProcessPcke } from './auth.pkce.js';
-import { authProcessRegister } from './auth.register.js';
-import { authProcessVerify } from './auth.verify.js';
+import { processAuthChallenge } from './auth.challenge.js';
+import { processAuthLogin } from './auth.login.js';
+import { processAuthLogout } from './auth.logout.js';
+// import { processAuthPcke } from './auth.pkce.js';
+import { processAuthRegister } from './auth.register.js';
+import { processAuthVerify } from './auth.verify.js';
 
-export const authProcess = {
-  challenge: authProcessChallenge,
-  register: authProcessRegister,
-  login: authProcessLogin,
-  logout: authProcessLogout,
+export const processAuth = {
+  challenge: processAuthChallenge,
+  register: processAuthRegister,
+  login: processAuthLogin,
+  logout: processAuthLogout,
   /**
    * TODO: PKCE logins need to be refactored with newly implemented login and registation methods.
    */
-  // pkce: authProcessPcke,
-  verify: authProcessVerify,
+  // pkce: processAuthPcke,
+  verify: processAuthVerify,
 };
 
-export default authProcess;
+export default processAuth;

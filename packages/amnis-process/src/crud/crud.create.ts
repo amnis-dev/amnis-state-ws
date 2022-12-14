@@ -97,10 +97,10 @@ Io<StateCreator, StateEntities>
   }
 );
 
-export const crudProcessCreate = mwAccess()(
+export const processCrudCreate = mwAccess()(
   mwValidate('StateCreator')(
     process,
   ),
 );
 
-export default { crudProcessCreate };
+export default { processCrudCreate };

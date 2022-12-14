@@ -105,10 +105,10 @@ Io<StateDeleter, StateDeleter>
   }
 );
 
-export const crudProcessDelete = mwAccess()(
+export const processCrudDelete = mwAccess()(
   mwValidate('StateDeleter')(
     process,
   ),
 );
 
-export default { crudProcessDelete };
+export default { processCrudDelete };

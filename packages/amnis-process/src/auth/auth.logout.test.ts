@@ -12,9 +12,9 @@ import {
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
-import { authProcessChallenge } from './auth.challenge.js';
-import { authProcessLogin } from './auth.login.js';
-import { authProcessLogout } from './auth.logout.js';
+import { processAuthChallenge } from './auth.challenge.js';
+import { processAuthLogin } from './auth.login.js';
+import { processAuthLogout } from './auth.logout.js';
 
 let context: IoContext;
 
@@ -30,7 +30,7 @@ test('should login and then logout as administrator', async () => {
   const inputStart: IoInput = {
     body: {},
   };
-  const outputStart = await authProcessChallenge(context)(inputStart, ioOutput());
+  const outputStart = await processAuthChallenge(context)(inputStart, ioOutput());
   const challenge = outputStart.json.result as Challenge | undefined;
 
   if (!challenge) {
@@ -50,7 +50,7 @@ test('should login and then logout as administrator', async () => {
     body: authLogin,
   };
 
-  const outputLogin = await authProcessLogin(context)(inputLogin, ioOutput());
+  const outputLogin = await processAuthLogin(context)(inputLogin, ioOutput());
 
   expect(outputLogin.status).toBe(200);
   expect(outputLogin.cookies.authSession).toBeDefined();
@@ -60,7 +60,7 @@ test('should login and then logout as administrator', async () => {
     body: {},
   };
 
-  const outputLogout = await authProcessLogout(context)(inputLogout, ioOutput());
+  const outputLogout = await processAuthLogout(context)(inputLogout, ioOutput());
 
   expect(outputLogout.status).toBe(200);
   expect(Object.keys(outputLogout.json.result)).toHaveLength(1);
@@ -74,7 +74,7 @@ test('should not logout without an existing session', async () => {
     body: {},
   };
 
-  const outputLogout = await authProcessLogout(context)(inputLogout, ioOutput());
+  const outputLogout = await processAuthLogout(context)(inputLogout, ioOutput());
 
   expect(outputLogout.status).toBe(401);
 });

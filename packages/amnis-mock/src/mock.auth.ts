@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResponseTransformer, rest } from 'msw';
-import { authProcess } from '@amnis/process';
+import { processAuth } from '@amnis/process';
 import { contextSetup } from '@amnis/state';
 import { ioOutput } from '@amnis/core';
 import { setupAudit, setupInput } from './setup.js';
@@ -19,9 +19,9 @@ export const authSetupHandlers: MockHandlers = async (options) => {
   return [
     rest.post(`${baseUrl}/api/auth/:processer`, async (req, res, ctx) => {
       const { processer } = req.params;
-      const processKey = processer as keyof typeof authProcess;
+      const processKey = processer as keyof typeof processAuth;
 
-      if (!authProcess[processKey]) {
+      if (!processAuth[processKey]) {
         return res(
           ctx.status(400, `Auth Process '${processer}' does not exist.`),
         );
@@ -29,7 +29,7 @@ export const authSetupHandlers: MockHandlers = async (options) => {
 
       const input = await setupInput(req);
 
-      const output = await authProcess[processKey](context)(input, ioOutput());
+      const output = await processAuth[processKey](context)(input, ioOutput());
 
       const ctxCookies: ResponseTransformer<any, any>[] = [];
       Object.keys(output.cookies).forEach((cookieName) => {

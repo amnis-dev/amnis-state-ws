@@ -146,6 +146,6 @@ Io<AuthRegistration, StateEntities>
   }
 );
 
-export const authProcessRegister = mwValidate('AuthRegistration')(process);
+export const processAuthRegister = mwValidate('AuthRegistration')(process);
 
-export default { authProcessRegister };
+export default { processAuthRegister };

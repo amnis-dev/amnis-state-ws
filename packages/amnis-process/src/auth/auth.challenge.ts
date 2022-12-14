@@ -63,8 +63,8 @@ Io<AuthChallenge, Entity<Challenge>>
   }
 );
 
-export const authProcessChallenge = mwValidate('AuthChallenge')(
+export const processAuthChallenge = mwValidate('AuthChallenge')(
   process,
 );
 
-export default { authProcessChallenge };
+export default { processAuthChallenge };

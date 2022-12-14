@@ -1,13 +1,13 @@
-import { crudProcessCreate } from './crud.process.create.js';
-import { crudProcessRead } from './crud.process.read.js';
-import { crudProcessUpdate } from './crud.process.update.js';
-import { crudProcessDelete } from './crud.process.delete.js';
+import { processCrudCreate } from './crud.create.js';
+import { processCrudRead } from './crud.read.js';
+import { processCrudUpdate } from './crud.update.js';
+import { processCrudDelete } from './crud.delete.js';
 
-export const crudProcess = {
-  create: crudProcessCreate,
-  read: crudProcessRead,
-  update: crudProcessUpdate,
-  delete: crudProcessDelete,
+export const processCrud = {
+  create: processCrudCreate,
+  read: processCrudRead,
+  update: processCrudUpdate,
+  delete: processCrudDelete,
 };
 
-export default crudProcess;
+export default processCrud;
