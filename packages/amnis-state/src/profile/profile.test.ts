@@ -72,9 +72,9 @@ test('should handle updating a profile', () => {
   expect(Object.keys(diff.changes)).toHaveLength(1);
   expect(diff.changes?.nameDisplay).toEqual(newName);
 
-  expect(Object.keys(diff.updator)).toHaveLength(2);
-  expect(diff.updator.$id).toEqual(profileId);
-  expect(diff.updator?.nameDisplay).toEqual(newName);
+  expect(Object.keys(diff.updater)).toHaveLength(2);
+  expect(diff.updater.$id).toEqual(profileId);
+  expect(diff.updater?.nameDisplay).toEqual(newName);
 
   const newName2 = 'Even Newer Profile Name';
   const actionUpdate2 = profileActions.update({

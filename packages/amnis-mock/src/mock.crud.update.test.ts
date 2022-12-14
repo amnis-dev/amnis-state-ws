@@ -133,7 +133,7 @@ test('should be able to update user profile', async () => {
   const {
     original: userProfileUp3Original,
     changes: userProfileUp3Changes,
-    updator: userProfileUp3Update,
+    updater: userProfileUp3Update,
   } = profileSelectors.selectDifference(clientStore.getState(), userProfile.$id);
   if (!userProfileUp3) {
     expect(userProfileUp3).toBeDefined();

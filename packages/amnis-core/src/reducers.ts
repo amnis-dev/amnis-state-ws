@@ -159,7 +159,7 @@ export function coreReducers<C extends EntityCreator>(
           changes,
         });
       },
-      prepare: (updator: EntityUpdater<C>) => ({ payload: updator }),
+      prepare: (updater: EntityUpdater<C>) => ({ payload: updater }),
     },
 
     /**

@@ -168,7 +168,7 @@ const genSelectDifference = <C extends EntityCreator = EntityCreator>(
         original: undefined,
         current: undefined,
         changes: {} as EntityCreatorBase<C>,
-        updator: { $id: id } as EntityUpdater<C>,
+        updater: { $id: id } as EntityUpdater<C>,
         keys: [],
       };
     }
@@ -178,7 +178,7 @@ const genSelectDifference = <C extends EntityCreator = EntityCreator>(
         original,
         current,
         changes: {} as EntityCreatorBase<C>,
-        updator: { $id: id } as EntityUpdater<C>,
+        updater: { $id: id } as EntityUpdater<C>,
         keys: [],
       };
     }
@@ -188,7 +188,7 @@ const genSelectDifference = <C extends EntityCreator = EntityCreator>(
         original: undefined,
         current: undefined,
         changes: {} as EntityCreatorBase<C>,
-        updator: { $id: id } as EntityUpdater<C>,
+        updater: { $id: id } as EntityUpdater<C>,
         keys: [],
       };
     }
@@ -198,13 +198,13 @@ const genSelectDifference = <C extends EntityCreator = EntityCreator>(
       acc[k] = current[k];
       return acc;
     }, {} as EntityCreatorBase<C>);
-    const updator = { $id: id, ...changes };
+    const updater = { $id: id, ...changes };
 
     return {
       original: { ...original },
       current: { ...current },
       changes,
-      updator,
+      updater,
       keys,
     };
   },
