@@ -41,7 +41,7 @@ export const localstorageSetup = <T>(
    * Load data from local storage
    */
   load() {
-    const keyData = localStorage.getItem(`state-${key}`);
+    const keyData = localStorage.getItem(`root-${key}`);
 
     if (!keyData) {
       return;
@@ -66,7 +66,7 @@ export const localstorageSetup = <T>(
      * Encode the saved data.
      */
 
-      localStorage.setItem(`state-${key}`, encoded);
+      localStorage.setItem(`root-${key}`, encoded);
     } catch (e) {
       console.log(`Error saving ${key} data to LocalStorage.`);
     }

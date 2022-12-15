@@ -46,7 +46,12 @@ Io<StateCreator, StateEntities>
           if (cleaned) {
             return entityCreate(
               cleaned,
-              { $owner: access?.sub, $creator: access?.sub, committed: true },
+              {
+                $owner: access?.sub,
+                $creator: access?.sub,
+                committed: true,
+                new: false,
+              },
             );
           }
           entityIssue = true;

@@ -26,6 +26,7 @@ export const entityCreate = <C extends EntityCreator>(
     $readers: uidList(),
     $creator: id,
     committed: false,
+    new: true,
   };
 
   const overwrite: Partial<Entity> = typeof set === 'boolean' ? {

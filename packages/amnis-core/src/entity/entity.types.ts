@@ -42,6 +42,12 @@ export type Entity<C extends EntityCreator = EntityCreator> = C & {
   committed: boolean;
 
   /**
+   * Flag to determine if this entity is new/has never been not created in storage yet.
+   * @default true
+   */
+  new: boolean;
+
+  /**
    * If this entity is marked to be deleted.
    * @default false
    */
