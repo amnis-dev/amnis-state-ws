@@ -26,17 +26,11 @@ export interface Challenge extends EntityCreator {
   $subject?: UID;
 
   /**
-   * Username that this challenge is indended for.
-   * Challenge should only work with the indended username in context.
+   * @minLength 6
+   * @maxLength 32
+   * An optional one-time passcode value to be generate administratively.
    */
-  username?: string;
-
-  /**
-   * @minLength 16
-   * @maxLength 256
-   * An optional private value to be generate administratively.
-   */
-  valuePrivate?: string;
+  otp?: string;
 }
 
 /**

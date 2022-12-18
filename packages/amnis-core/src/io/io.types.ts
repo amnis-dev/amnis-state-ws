@@ -9,6 +9,7 @@ import type { Database } from './database/database.types.js';
 import type { FileSystem } from './filesystem/filesystem.types.js';
 import { Crypto } from './crypto/crypto.types.js';
 import { JWTAccess } from '../jwt.types.js';
+import { Send } from './send/send.types.js';
 
 /**
  * Validator
@@ -46,6 +47,11 @@ export interface IoContext {
    * Interface for cryptographic functions.
    */
   crypto: Crypto;
+
+  /**
+   * An interface for sending messages to external systems.
+   */
+  send: Send;
 
   /**
    * Schemas for validating input structures.

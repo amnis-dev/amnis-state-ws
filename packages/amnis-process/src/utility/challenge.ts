@@ -8,6 +8,7 @@ import {
   IoOutput,
   ioOutput,
   logCreator,
+  UID,
 } from '@amnis/core';
 import {
   challengeActions,
@@ -16,13 +17,13 @@ import {
 } from '@amnis/state';
 
 export interface ChallengeCreateOptions {
-  username?: string;
+  $subject?: UID;
   privatize?: boolean;
 }
 
 export interface ChallengeValidateOptions {
-  username?: string;
-  valuePrivate?: string;
+  $subject?: UID;
+  otp?: string;
 }
 
 /**
@@ -62,13 +63,13 @@ export const challengeCreate = async (
     }),
   );
 
-  if (options.username) {
-    challengeEntity.username = options.username;
+  if (options.$subject) {
+    challengeEntity.$subject = options.$subject;
   }
 
   if (options.privatize === true) {
-    const challangeValuePrivate = await crypto.randomString(16);
-    challengeEntity.valuePrivate = challangeValuePrivate;
+    const challangeValuePrivate = await crypto.randomString(12);
+    challengeEntity.otp = challangeValuePrivate;
   }
 
   /**
@@ -126,9 +127,9 @@ export const challengeValidate = (
   }
 
   /**
-   * Ensure that this challenge is not intended for a specific username.
+   * Ensure that this challenge is not intended for a specific subject.
    */
-  if (challenge.username && challenge.username !== options.username) {
+  if (challenge.$subject && challenge.$subject !== options.$subject) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [logCreator({
@@ -142,13 +143,13 @@ export const challengeValidate = (
   /**
    * Ensure that this challenge's private value is validated against if set.
    */
-  if (challenge.valuePrivate && challenge.valuePrivate !== options.valuePrivate) {
+  if (challenge.otp && challenge.otp !== options.otp) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [logCreator({
       level: 'error',
       title: 'Challenged is Private',
-      description: 'This challenge code is private.',
+      description: 'This challenge code required a one-time passcode.',
     })];
     return output;
   }

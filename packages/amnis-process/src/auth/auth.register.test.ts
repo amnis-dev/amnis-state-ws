@@ -1,12 +1,10 @@
 import {
   IoInput,
   schemaAuth,
-  StateEntities,
   ioOutputErrored,
   ApiAuthRegistration,
   Challenge,
   apiAuthRegistrationCreate,
-  IoOutput,
   IoContext,
   userKey,
   profileKey,
@@ -51,7 +49,7 @@ test('should start the registration ritual', async () => {
     return;
   }
 
-  const credential = output.json.result as Credential | undefined;
+  const credential = output.json.result;
 
   expect(credential).toBeDefined();
 });
@@ -85,7 +83,7 @@ test('should start ritual and complete registration', async () => {
   const resultStart = await processAuthChallenge(context)(
     inputStart,
     ioOutput(),
-  ) as IoOutput<StateEntities>;
+  );
 
   const challenge = resultStart.json.result as Challenge | undefined;
 
@@ -185,7 +183,7 @@ test('should not be able to register when turned off by the system', async () =>
   const resultStart = await processAuthChallenge(context)(
     inputStart,
     ioOutput(),
-  ) as IoOutput<StateEntities>;
+  );
 
   const challenge = resultStart.json.result as Challenge | undefined;
 

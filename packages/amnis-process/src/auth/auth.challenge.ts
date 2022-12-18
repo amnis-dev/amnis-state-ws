@@ -6,16 +6,20 @@ import {
   logCreator,
   Challenge,
   Entity,
+  UID,
+  challengeCreator,
+  entityCreate,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
 import { mwValidate } from '../mw/index.js';
 import { challengeCreate } from '../utility/challenge.js';
+import { findUserById } from '../utility/find.js';
 
 const process: IoProcess<
 Io<ApiAuthChallenge, Entity<Challenge>>
 > = (context) => (
   async (input, output) => {
-    const { store, crypto } = context;
+    const { store, crypto, send } = context;
     const { body, sessionEncryption } = input;
     const system = systemSelectors.selectActive(store.getState());
 
@@ -29,42 +33,118 @@ Io<ApiAuthChallenge, Entity<Challenge>>
       return output;
     }
 
-    const { username, privatize } = body;
+    const { subject, email, purpose } = body;
 
-    if (username === undefined && privatize === undefined) {
+    if (subject === undefined) {
       ioOutputApply(output, await challengeCreate(context));
       return output;
     }
 
-    if (!sessionEncryption) {
-      output.status = 401;
-      output.json.logs.push(logCreator({
+    /**
+     * Ensure the subject is an existing user.
+     */
+    const user = await findUserById(context, subject as UID);
+
+    if (!user) {
+      output.json.logs.push({
         level: 'error',
-        title: 'Unauthorized Challange Creation',
-        description: 'Must be logged in to create this challenge.',
-      }));
+        title: 'Cannot Find Subject',
+        description: 'The subject id cannot be found.',
+      });
       return output;
     }
 
-    const session = await crypto.sessionDecrypt(sessionEncryption);
+    /**
+     * Check if the challenge creator has a session.
+     */
+    const session = sessionEncryption ? await crypto.sessionDecrypt(sessionEncryption) : undefined;
 
-    if (session?.prv !== true) {
-      output.status = 401;
-      output.json.logs.push(logCreator({
+    /**
+     * Generate the challenge code output.
+     */
+    const outputChallenge = await challengeCreate(
+      context,
+      { $subject: subject as UID, privatize: true },
+    );
+
+    const resultChallenge = outputChallenge.json.result;
+
+    /**
+     * Return the fail output if the challenge could not be created.
+     */
+    if (!resultChallenge) {
+      return {
+        ...outputChallenge,
+        json: {
+          ...outputChallenge.json,
+          result: undefined,
+        },
+      };
+    }
+
+    const { otp } = resultChallenge;
+    if (!otp) {
+      output.json.logs.push({
         level: 'error',
-        title: 'Unauthorized Challange Creation',
-        description: 'Account not authorized to create a challenge in this way.',
-      }));
+        title: 'Challenge Creation Failed',
+        description: 'Generating challenge could not be completed.',
+      });
       return output;
     }
 
-    ioOutputApply(output, await challengeCreate(context, { username, privatize }));
+    /**
+     * Apply the output result.
+     */
+    output.json.result = entityCreate(challengeCreator({
+      expires: resultChallenge.expires,
+      value: resultChallenge.value,
+    }));
+
+    /**
+     * If the session holder is a privileged account, also send back the challenge OTP.
+     */
+    if (session?.prv === true) {
+      output.json.result.otp = otp;
+    }
+
+    /**
+     * If the email is set, send to one-time-passcode to the subject's email.
+     */
+    if (email && user.email === email && user.emailVerified === true) {
+      const otpHyphenated = otp.replace(/(.{4})/g, '$1-');
+
+      const emailSubject = ((p: typeof purpose): string => {
+        switch (p) {
+          case 'adddevice':
+            return 'Register New Device Request';
+          case 'resetpass':
+            return 'Reset Password Request';
+          case 'register':
+            return 'Registration Request';
+          case 'confirm':
+            return 'Email Confirmation';
+          default:
+            return 'One Time Passcode';
+        }
+      })(purpose);
+
+      send.email({
+        to: email,
+        from: system.emailAuth,
+        fromName: system.name,
+        subject: emailSubject,
+        text: `Use the following confirmation code to complete the process: ${otpHyphenated}`,
+      });
+    }
+
     return output;
   }
 );
 
 export const processAuthChallenge = mwValidate('ApiAuthChallenge')(
   process,
-);
+) as IoProcess<
+Io<ApiAuthChallenge, Entity<Challenge>>
+>;
 
 export default { processAuthChallenge };

@@ -6,6 +6,7 @@ import {
   filesystemMemory,
   IoContext,
   roleKey,
+  sendMemory,
   StateEntities,
   systemKey,
   Validators,
@@ -37,11 +38,13 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
     crypto,
     initialize = true,
     data,
+    send,
   } = options;
   const storeNext = store ?? storeContextSetup();
   const validatorsNext = (validators || []) as Validators;
   const databaseNext = database ?? databaseMemory;
   const filesystemNext = filesystem ?? filesystemMemory;
+  const sendNext = send ?? sendMemory;
   const dataNext = data ?? await dataInitial();
 
   const cryptoNext = crypto ?? cryptoWeb;
@@ -84,6 +87,7 @@ export async function contextSetup(options: ContextOptions = {}): Promise<IoCont
     database: databaseNext,
     filesystem: filesystemNext,
     crypto: cryptoNext,
+    send: sendNext,
   };
 }
 

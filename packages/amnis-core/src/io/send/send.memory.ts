@@ -1,5 +1,4 @@
 import { dateJSON } from '../../core.js';
-import { logCreator } from '../../entity/index.js';
 import { rtk } from '../../rtk.js';
 import { DateJSON } from '../../types.js';
 import type { Send, SendEmailProps } from './send.types.js';
@@ -11,15 +10,17 @@ export interface SendInboxItem extends SendEmailProps {
   received: DateJSON;
 }
 
-export type SendInbox = Record<string, SendInboxItem[]>;
+export type SendMailbox = Record<string, SendInboxItem[]>;
 
-export type SendCallback = (inbox: SendInbox) => void;
+export type SendCallback = (inbox: SendMailbox) => void;
 
 export type SendUnsubscribe = () => void;
 
-const sendInbox: SendInbox = {};
+const sendMailboxes: SendMailbox = {};
 
 const sendSubcribers: { [key: string]: SendCallback } = {};
+
+export const sendMailboxStorage = () => sendMailboxes;
 
 export const sendSubscribe = (callback: SendCallback): SendUnsubscribe => {
   const uid = rtk.nanoid();
@@ -30,23 +31,22 @@ export const sendSubscribe = (callback: SendCallback): SendUnsubscribe => {
 };
 
 export const sendMemory: Send = {
-  email: (email) => {
-    const inboxKey = email.to;
-    if (!sendInbox[inboxKey]) {
-      sendInbox[inboxKey] = [];
+  /**
+   * Sends an email.
+   */
+  email: async (email) => {
+    const mailboxKey = email.to;
+    if (!sendMailboxes[mailboxKey]) {
+      sendMailboxes[mailboxKey] = [];
     }
-    sendInbox[inboxKey].push({
+    sendMailboxes[mailboxKey].push({
       ...email,
       received: dateJSON(),
     });
 
-    Object.values(sendSubcribers).forEach((listener) => listener(sendInbox));
+    Object.values(sendSubcribers).forEach((listener) => listener(sendMailboxes));
 
-    return logCreator({
-      title: 'Email Sent',
-      description: `An email has been successfully sent to ${email.to}.`,
-      level: 'success',
-    });
+    return true;
   },
 };
 

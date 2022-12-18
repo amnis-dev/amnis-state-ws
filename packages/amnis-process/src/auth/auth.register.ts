@@ -21,7 +21,7 @@ Io<ApiAuthRegistration, StateEntities>
 > = (context) => (
   async (input, output) => {
     const { crypto, store } = context;
-    const { body, access } = input;
+    const { body } = input;
 
     const system = systemSelectors.selectActive(store.getState());
 
@@ -36,18 +36,13 @@ Io<ApiAuthRegistration, StateEntities>
     }
 
     if (system.registrationOpen !== true) {
-      const isAdmin = !!access?.roles.includes(system.$adminRole);
-      const isExec = !!access?.roles.includes(system.$execRole);
-
-      if (!isAdmin && !isExec) {
-        output.status = 500;
-        output.json.logs.push(logCreator({
-          level: 'error',
-          title: 'Registration Closed',
-          description: 'The system has disabled registration.',
-        }));
-        return output;
-      }
+      output.status = 500;
+      output.json.logs.push(logCreator({
+        level: 'error',
+        title: 'Registration Closed',
+        description: 'The system has disabled registration.',
+      }));
+      return output;
     }
 
     const authRegistrationParsed = await apiAuthRegistrationParse(body);
@@ -73,9 +68,6 @@ Io<ApiAuthRegistration, StateEntities>
     const challangeValidation = challengeValidate(
       context,
       challenge,
-      {
-        username: authRegistrationParsed.username,
-      },
     );
     if (challangeValidation !== true) {
       return challangeValidation;
@@ -99,7 +91,7 @@ Io<ApiAuthRegistration, StateEntities>
      * Verify the signature
      */
     const signatureValid = await crypto.asymVerify(
-      body.credential,
+      body.username + body.credential,
       signature,
       publicKey,
     );
@@ -146,6 +138,10 @@ Io<ApiAuthRegistration, StateEntities>
   }
 );
 
-export const processAuthRegister = mwValidate('ApiAuthRegistration')(process);
+export const processAuthRegister = mwValidate('ApiAuthRegistration')(
+  process,
+) as IoProcess<
+Io<ApiAuthRegistration, StateEntities>
+>;
 
 export default { processAuthRegister };

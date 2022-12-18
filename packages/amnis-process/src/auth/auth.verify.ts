@@ -30,6 +30,8 @@ Io<ApiAuthVerify, boolean>
 
 export const processAuthVerify = mwValidate('ApiAuthVerify')(
   process,
-);
+) as IoProcess<
+Io<ApiAuthVerify, boolean>
+>;
 
 export default processAuthVerify;

@@ -6,6 +6,9 @@ import {
   Entity,
   entityCreate,
   IoContext,
+  uid,
+  UID,
+  userKey,
 } from '@amnis/core';
 import {
   challengeActions,
@@ -15,6 +18,7 @@ import {
 import { challengeValidate } from './challenge.js';
 
 let context: IoContext;
+let challengeSubject: UID;
 let challengeValid: Entity<Challenge>;
 let challengeExpired: Entity<Challenge>;
 let challengeUser: Entity<Challenge>;
@@ -23,6 +27,7 @@ beforeAll(async () => {
   context = await contextSetup({
     initialize: true,
   });
+  challengeSubject = uid(userKey);
   challengeValid = entityCreate(challengeCreator({
     value: await context.crypto.randomString(16),
     expires: dateNumeric('15m'),
@@ -34,7 +39,7 @@ beforeAll(async () => {
   challengeUser = entityCreate(challengeCreator({
     value: await context.crypto.randomString(16),
     expires: dateNumeric('15m'),
-    username: 'someuser',
+    $subject: challengeSubject,
   }));
   context.store.dispatch(challengeActions.insert(challengeValid));
   context.store.dispatch(challengeActions.insert(challengeExpired));
@@ -120,8 +125,8 @@ test('should fail to validate a valid user challenge without a username', async 
   expect(result.json.logs[0].title).toBe('Not Challenged');
 });
 
-test('should fail to validate a valid user challenge with an invalid username', async () => {
-  const result = challengeValidate(context, challengeUser, { username: 'someotheruser' });
+test('should fail to validate a valid user challenge with an invalid subject', async () => {
+  const result = challengeValidate(context, challengeUser, { $subject: uid(userKey) });
 
   if (result === true) {
     expect(result).not.toBe(true);
@@ -133,7 +138,7 @@ test('should fail to validate a valid user challenge with an invalid username', 
 });
 
 test('should validate a valid user challenge with the correct username', async () => {
-  const result = challengeValidate(context, challengeUser, { username: 'someuser' });
+  const result = challengeValidate(context, challengeUser, { $subject: challengeSubject });
 
   expect(result).toBe(true);
 });

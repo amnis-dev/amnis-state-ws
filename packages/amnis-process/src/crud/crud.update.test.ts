@@ -209,7 +209,6 @@ test('should login as executive and NOT update user name', async () => {
   };
 
   const outputUpdate = await io.update(inputUpdate, ioOutput());
-  console.log(JSON.stringify(outputUpdate, null, 2));
 
   expect(outputUpdate.status).toBe(200);
   expect(ioOutputErrored(outputUpdate)).toBe(true);

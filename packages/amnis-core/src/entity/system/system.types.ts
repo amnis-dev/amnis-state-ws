@@ -35,6 +35,27 @@ export interface System extends EntityCreator {
   registrationExpiration: number;
 
   /**
+   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
+   * @maxLength 64
+   * @description The sender email address for news.
+   */
+  emailNews: string;
+
+  /**
+   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
+   * @maxLength 64
+   * @description The sender email address for system notifications.
+   */
+  emailNotify: string;
+
+  /**
+   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
+   * @maxLength 64
+   * @description The sender email address for authentication tasks.
+   */
+  emailAuth: string;
+
+  /**
    * @description System's website configurations.
    */
   $website: UID<Website>;

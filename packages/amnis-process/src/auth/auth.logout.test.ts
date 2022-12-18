@@ -68,7 +68,7 @@ test('should login and then logout as administrator', async () => {
   const outputLogout = await processAuthLogout(context)(inputLogout, ioOutput());
 
   expect(outputLogout.status).toBe(200);
-  expect(Object.keys(outputLogout.json.result)).toHaveLength(1);
+  expect(Object.keys(outputLogout.json.result || {})).toHaveLength(1);
   expect(outputLogout.json.result?.[sessionKey]).toBeDefined();
   expect(outputLogout.json.result?.[sessionKey]).toHaveLength(1);
   expect(outputLogout.json.result?.[sessionKey][0]).toEqual(expect.any(String));

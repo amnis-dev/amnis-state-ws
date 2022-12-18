@@ -34,6 +34,8 @@ export const processAuthLogout = mwSession()(
   mwValidate('ApiAuthLogout')(
     process,
   ),
-);
+) as IoProcess<
+Io<ApiAuthLogout, StateDeleter>
+>;
 
 export default { processAuthLogout };

@@ -126,6 +126,8 @@ export const processAuthAuthenticate = mwValidate('ApiAuthAuthenticate')(
   mwSession()(
     process,
   ),
-);
+) as IoProcess<
+Io<ApiAuthAuthenticate, StateEntities>
+>;
 
 export default { processAuthAuthenticate };

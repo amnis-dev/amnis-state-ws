@@ -1,5 +1,3 @@
-import { LogCreator } from '../../entity/index.js';
-
 /**
  * Send template function.
  */
@@ -20,6 +18,11 @@ export interface SendEmailProps {
   from: string;
 
   /**
+   * Name of the sender.
+   */
+  fromName?: string;
+
+  /**
    * Email subject.
    */
   subject: string;
@@ -32,13 +35,13 @@ export interface SendEmailProps {
   /**
    * HTML version of the email.
    */
-  html: string;
+  html?: string;
 }
 
 /**
  * Emailer method.
  */
-export type SendEmail = (email: SendEmailProps) => LogCreator;
+export type SendEmail = (email: SendEmailProps) => Promise<boolean>;
 
 /**
  * I/O interface for sending emails, texts, or other types of communication methods.

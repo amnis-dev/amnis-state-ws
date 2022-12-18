@@ -121,7 +121,7 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
    * Sign the credential data to ensure it came from this client.
    */
   const signature = await cryptoWeb.asymSign(
-    credentialEncoded,
+    username + credentialEncoded,
     credentialKeys.privateKey,
   );
 
@@ -165,7 +165,9 @@ export type ApiAuthRegistrationParse = (
  */
 export const apiAuthRegistrationParse: ApiAuthRegistrationParse = async (authRegistration) => {
   try {
-    const { challenge, credential, signature } = authRegistration;
+    const {
+      challenge, credential, signature, ...props
+    } = authRegistration;
 
     const challengeObject = base64JsonDecode<Challenge>(challenge);
     const credentialObject = base64JsonDecode<Credential>(credential);
@@ -176,7 +178,7 @@ export const apiAuthRegistrationParse: ApiAuthRegistrationParse = async (authReg
     }
 
     return {
-      ...authRegistration,
+      ...props,
       challenge: challengeObject,
       credential: credentialObject,
       signature: signatureBuffer,

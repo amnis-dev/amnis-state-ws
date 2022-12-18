@@ -60,6 +60,10 @@ Io<ApiAuthLogin, StateEntities>
   }
 );
 
-export const processAuthLogin = mwValidate('ApiAuthLogin')(process);
+export const processAuthLogin = mwValidate('ApiAuthLogin')(
+  process,
+) as IoProcess<
+Io<ApiAuthLogin, StateEntities>
+>;
 
 export default { processAuthLogin };

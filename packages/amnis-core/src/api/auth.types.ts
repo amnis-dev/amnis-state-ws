@@ -1,21 +1,33 @@
 import type { Bearer } from '../state/bearer/index.js';
 
 /**
+ * Challenge purposes
+ */
+export type ApiAuthChallengePurpose = 'resetpass' | 'adddevice' | 'register' | 'confirm';
+
+/**
  * Challenge Generation Request.
  */
 export interface ApiAuthChallenge {
   /**
-   * @minLength 2
-   * @maxLength 24
-   * @pattern ^[a-zA-Z0-9-_]+$
-   * @description Username that the challenge only works for.
+   * @minLength 8
+   * @maxLength 32
+   * @description Subject that the challenge only works for. A subject challenge includes an OTP.
    */
-  username?: never;
+  subject?: string;
 
   /**
-   * @description Option to generate a private value.
+   * An optional purpose title for the challenge.
    */
-  privatize?: boolean;
+  purpose?: ApiAuthChallengePurpose;
+
+  /**
+   * Email address to send the one-time-passcode to.
+   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
+   * @maxLength 64
+   * @errorMessage "The email address is poorly formatted"
+   */
+  email?: string;
 }
 
 /**
@@ -59,6 +71,14 @@ export interface ApiAuthRegistration {
   password: string;
 
   /**
+   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
+   * @maxLength 64
+   * @description Email address to add to the account to receive one-time-passcodes.
+   * @errorMessage "The email address is poorly formatted"
+   */
+  email?: string;
+
+  /**
    * @minLength 2
    * @maxLength 24
    * @description The display name to register under.
@@ -94,7 +114,7 @@ export interface ApiAuthRegistration {
   /**
    * @minLength 16
    * @maxLength 512
-   * @description Encoded attestation signature of the credential object.
+   * @description Encoded attestation signature of the challenge + credential encodings.
    */
   signature: string;
 }
