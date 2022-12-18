@@ -1,5 +1,5 @@
+import { base64JsonDecode, base64JsonEncode } from '../../base64.js';
 import { dateNumeric } from '../../core.js';
-import { base64Decode, base64Encode } from '../../io/crypto/index.js';
 import { rtk } from '../../rtk.js';
 import { uid } from '../../uid.js';
 import { entityStrip } from '../entity.js';
@@ -22,19 +22,11 @@ export const challengeCreator = (
 });
 
 export const challengeEncode = (challenge: Challenge) => {
-  const enc = new TextEncoder();
-  return base64Encode(
-    enc.encode(
-      JSON.stringify(entityStrip(challenge as Entity<Challenge>)),
-    ),
-  );
+  const encoded = base64JsonEncode(entityStrip(challenge as Entity<Challenge>));
+  return encoded;
 };
 
 export const challengeDecode = (encoded: string) => {
-  const dec = new TextDecoder();
-  return JSON.parse(
-    dec.decode(
-      base64Decode(encoded),
-    ),
-  ) as Challenge;
+  const decoded = base64JsonDecode<Challenge>(encoded);
+  return decoded;
 };

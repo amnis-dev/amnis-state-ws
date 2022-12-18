@@ -6,6 +6,9 @@
     "AuthSchema": {
       "type": "object",
       "properties": {
+        "authenticate": {
+          "$ref": "#/definitions/ApiAuthAuthenticate"
+        },
         "challenge": {
           "$ref": "#/definitions/ApiAuthChallenge"
         },
@@ -26,6 +29,28 @@
         }
       },
       "additionalProperties": false
+    },
+    "ApiAuthAuthenticate": {
+      "type": "object",
+      "properties": {
+        "challenge": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512,
+          "description": "Encoded attestation signature of the challenge object."
+        }
+      },
+      "required": [
+        "challenge",
+        "signature"
+      ],
+      "additionalProperties": false,
+      "description": "A request to authenticate with a session. User must log in if authentication fails."
     },
     "ApiAuthChallenge": {
       "type": "object",

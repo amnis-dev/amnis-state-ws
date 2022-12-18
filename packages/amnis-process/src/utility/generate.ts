@@ -19,7 +19,7 @@ import {
 export const generateSession = async (
   system: System,
   subjectId: UID,
-  displayName: string,
+  publicKey: string,
   $roles: UIDList<Role> = uidList(),
 ): Promise<Session> => {
   /**
@@ -36,7 +36,7 @@ export const generateSession = async (
   const session = sessionCreator({
     $subject: subjectId,
     exp: sessionExpires,
-    name: displayName,
+    pub: publicKey,
     adm: admIs,
     exc: excIs,
     prv: admIs || excIs,

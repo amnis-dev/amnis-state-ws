@@ -13,6 +13,12 @@ export interface Session extends EntityCreator {
   $subject: UID;
 
   /**
+   * Serialized public key value of the agent's session.
+   * This is used to verify signatures on reconnections.
+   */
+  pub: string;
+
+  /**
    * Possible "Issued At" property when decoding.
    */
   iat?: DateNumeric;
@@ -33,13 +39,8 @@ export interface Session extends EntityCreator {
   exc: boolean;
 
   /**
-   * If the session holder if one of the privileged roles.
+   * If the session holder has one of the privileged roles.
    * (Administrator or Executive)
    */
   prv: boolean;
-
-  /**
-   * Display name.
-   */
-  name: string;
 }

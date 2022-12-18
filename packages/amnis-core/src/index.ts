@@ -4,6 +4,7 @@
 export * from './types.js';
 export * from './jwt.types.js';
 export * from './accounts.js';
+export * from './base64.js';
 export * from './data.js';
 export * from './uid.js';
 export * from './core.js';

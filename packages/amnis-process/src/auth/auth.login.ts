@@ -29,6 +29,16 @@ Io<ApiAuthLogin, StateEntities>
      */
     const challengeDecoded = challengeDecode(challenge);
 
+    if (!challengeDecoded) {
+      output.status = 500;
+      output.json.logs.push({
+        level: 'error',
+        title: 'Invalid Challenge',
+        description: 'The provided challenge could not be parsed.',
+      });
+      return output;
+    }
+
     const outputAuthentication = await authenticateAccount(
       context,
       challengeDecoded,

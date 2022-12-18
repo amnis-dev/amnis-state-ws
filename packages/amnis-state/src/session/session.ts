@@ -24,9 +24,9 @@ export const sessionAdapter = rtk.createEntityAdapter<Entity<Session>>({
   selectId: (entity) => entity.$id,
 
   /**
-   * Sort by the session holder's name.
+   * Sort by the session holder's id.
    */
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
+  sortComparer: (a, b) => a.$id.localeCompare(b.$id),
 });
 
 /**

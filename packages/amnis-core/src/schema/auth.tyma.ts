@@ -6,9 +6,11 @@ import type {
   ApiAuthRenew,
   ApiAuthVerify,
   ApiAuthChallenge,
+  ApiAuthAuthenticate,
 } from '@amnis/core';
 
 export interface AuthSchema {
+  authenticate?: ApiAuthAuthenticate;
   challenge?: ApiAuthChallenge;
   register?: ApiAuthRegistration;
   login?: ApiAuthLogin;

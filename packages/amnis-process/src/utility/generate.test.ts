@@ -3,8 +3,6 @@ import {
   dateNumeric,
   Entity,
   IoContext,
-  Profile,
-  profileKey,
   User,
   userKey,
 } from '@amnis/core';
@@ -14,7 +12,6 @@ import { generateBearer, generateSession } from './generate.js';
 let context: IoContext;
 
 let userExisting: Entity<User>;
-let profileExisting: Entity<Profile>;
 
 beforeAll(async () => {
   context = await contextSetup();
@@ -22,10 +19,6 @@ beforeAll(async () => {
   userExisting = Object.values(
     databaseMemoryStorage()[userKey],
   )[0] as Entity<User>;
-
-  profileExisting = Object.values(
-    databaseMemoryStorage()[profileKey],
-  )[0] as Entity<Profile>;
 });
 
 test('should generate a session', async () => {
@@ -36,13 +29,13 @@ test('should generate a session', async () => {
     return;
   }
 
-  const session = await generateSession(system, userExisting.$id, profileExisting.nameDisplay);
+  const session = await generateSession(system, userExisting.$id, '');
 
   expect(session).toMatchObject({
     $subject: expect.any(String),
     exp: expect.any(Number),
-    name: expect.any(String),
     $id: expect.any(String),
+    pub: expect.any(String),
   });
 });
 

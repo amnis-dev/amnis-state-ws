@@ -60,6 +60,7 @@ test('should login as administrator and create user', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers.find((e) => e.name === 'admin') as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -92,6 +93,7 @@ test('should login as executive and create user', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers.find((e) => e.name === 'exec') as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -122,6 +124,7 @@ test('should login as user and cannot create user', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers.find((e) => e.name === 'user') as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 

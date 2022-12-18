@@ -6,7 +6,7 @@ import {
 } from './crypto.types.js';
 import { asymSign, asymVerify } from './asym.js';
 import { dateNumeric } from '../../core.js';
-import { base64Decode, base64Encode } from './crypto.encode.js';
+import { base64Decode, base64Encode } from '../../base64.js';
 // import { webcrypto } from '../webcrypto.js';
 
 export const tokenSign: CryptoTokenEncode = async (json, privateKey) => {

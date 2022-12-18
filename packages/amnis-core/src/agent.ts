@@ -5,17 +5,21 @@ import {
   credentialKey,
 } from './entity/index.js';
 import {
+  ApiAuthAuthenticate,
   ApiAuthLogin,
   ApiAuthRegistration,
 } from './api/index.js';
 import {
-  base64Decode,
-  base64Encode,
   cryptoWeb,
 } from './io/index.js';
 import { localStorage } from './localstorage.js';
 import { UID } from './types.js';
 import { uid } from './uid.js';
+import {
+  base64Encode,
+  base64JsonDecode,
+  base64JsonEncode,
+} from './base64.js';
 
 export interface Agent {
   name: string;
@@ -112,8 +116,7 @@ export const agentCreate = async (): Promise<Agent> => {
   /**
    * Encode the agent.
    */
-  const enc = new TextEncoder();
-  const encoded = base64Encode(enc.encode(JSON.stringify(agent)));
+  const encoded = base64JsonEncode(agent);
 
   localStorage.setItem('agent', encoded);
 
@@ -128,8 +131,7 @@ export const agentGet = async (): Promise<Agent> => {
     const encoded = localStorage.getItem('agent');
     if (encoded) {
       try {
-        const dec = new TextDecoder();
-        const decoded = JSON.parse(dec.decode(base64Decode(encoded))) as Agent;
+        const decoded = base64JsonDecode<Agent>(encoded);
         agent = decoded;
       } catch (e) {
         agent = await agentCreate();
@@ -154,10 +156,7 @@ export const agentCredential = async (): Promise<string> => {
   });
   credential.$id = agentCurrent.credentialId;
 
-  const enc = new TextEncoder();
-  const credentialEncoded = base64Encode(
-    enc.encode(JSON.stringify(credential)),
-  );
+  const credentialEncoded = base64JsonEncode(credential);
 
   return credentialEncoded;
 };
@@ -216,13 +215,30 @@ export const agentRegistration = async (
 };
 
 /**
+ * Create an ApiAuthAuthenticate for this agent.
+ */
+export const agentAuthenticate = async (
+  challenge: Challenge,
+): Promise<ApiAuthAuthenticate> => {
+  const challengeEncoded = challengeEncode(challenge);
+  const signature = await agentSign(challengeEncoded);
+
+  const authAuthenticate: ApiAuthAuthenticate = {
+    challenge: challengeEncoded,
+    signature,
+  };
+
+  return authAuthenticate;
+};
+
+/**
  * Create an ApiAuthLogin for this agent.
  */
 export const agentLogin = async (
   username: string,
   password:string,
   challenge: Challenge,
-) => {
+): Promise<ApiAuthLogin> => {
   const agentCurrent = await agentGet();
   const challengeEncoded = challengeEncode(challenge);
 

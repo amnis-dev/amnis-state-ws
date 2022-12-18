@@ -13,7 +13,7 @@ import {
 } from '@amnis/core';
 
 /**
- * Finds a user by Id.
+ * Finds a user by name.
  */
 export const findUserByName = async (
   context: IoContext,
@@ -24,6 +24,32 @@ export const findUserByName = async (
       $query: {
         name: {
           $eq: name,
+        },
+      },
+    },
+  }, {
+    scope: { [userKey]: 'global' },
+  });
+
+  if (!results[userKey]?.length) {
+    return undefined;
+  }
+
+  return results[userKey][0] as Entity<User>;
+};
+
+/**
+ * Finds a user by ID.
+ */
+export const findUserById = async (
+  context: IoContext,
+  id: UID<User>,
+): Promise<Entity<User> | undefined> => {
+  const results = await context.database.read({
+    [userKey]: {
+      $query: {
+        $id: {
+          $eq: id,
         },
       },
     },

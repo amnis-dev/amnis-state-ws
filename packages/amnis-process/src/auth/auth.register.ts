@@ -140,7 +140,7 @@ Io<ApiAuthRegistration, StateEntities>
      * With a successful registration, we can login the user with the
      * register account.
      */
-    ioOutputApply(output, await authenticateLogin(context, user));
+    ioOutputApply(output, await authenticateLogin(context, user, credential.publicKey));
 
     return output;
   }

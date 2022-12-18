@@ -19,6 +19,26 @@ export interface ApiAuthChallenge {
 }
 
 /**
+ * A request to authenticate with a session.
+ * User must log in if authentication fails.
+ */
+export interface ApiAuthAuthenticate {
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @desciption Encoded challenge object to prevent reply attacks.
+   */
+  challenge: string;
+
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @description Encoded attestation signature of the challenge object.
+   */
+  signature: string;
+}
+
+/**
  * Payload for an registration request.
  * A value of undefined starts a registration event.
  */

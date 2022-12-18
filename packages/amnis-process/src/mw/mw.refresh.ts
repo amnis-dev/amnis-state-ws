@@ -81,7 +81,7 @@ export const mwRefresh: IoMiddleware = () => (next) => (context) => async (input
   /**
    * Everything checks out, refresh the access token and session.
    */
-  const sessionNew = await generateSession(system, session.$subject, session.name);
+  const sessionNew = await generateSession(system, session.$subject, '');
   const sessionEncrypted = await context.crypto.sessionEncrypt(sessionNew);
   output.cookies.authSession = sessionEncrypted;
 

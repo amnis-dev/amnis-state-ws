@@ -1,4 +1,4 @@
-import { base64Decode, base64Encode } from './crypto.encode.js';
+import { base64Decode, base64Encode } from '../../base64.js';
 import {
   CryptoKeyExport, CryptoKeyImport, CryptoKeyUnwrap, CryptoKeyWrap,
 } from './crypto.types.js';

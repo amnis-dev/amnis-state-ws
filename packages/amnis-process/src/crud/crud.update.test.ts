@@ -65,6 +65,7 @@ test('should login as administrator and update user email', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers[0] as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -106,6 +107,7 @@ test('should login as administrator and update profile display name', async () =
   const outputLogin = await authenticateLogin(
     context,
     dataUsers[0] as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -147,6 +149,7 @@ test('should login as executive and update user email', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers[1] as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -187,6 +190,7 @@ test('should login as executive and NOT update user name', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers[1] as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -219,6 +223,7 @@ test(
     const outputLogin = await authenticateLogin(
       context,
       dataUsers[2] as Entity<User>,
+      '',
     );
 
     const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
@@ -263,6 +268,7 @@ test('should login as user and be denied updating another profile', async () => 
   const outputLogin = await authenticateLogin(
     context,
     dataUsers[2] as Entity<User>,
+    '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 

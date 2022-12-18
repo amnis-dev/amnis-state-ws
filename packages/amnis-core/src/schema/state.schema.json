@@ -22,10 +22,10 @@
       "additionalProperties": false
     },
     "StateCreator": {
-      "$ref": "#/definitions/State%3Cdef-interface-1570551179-167-353-1570551179-0-24501081728679%5B%5D%3E",
+      "$ref": "#/definitions/State%3Cdef-interface-1570551179-167-353-1570551179-0-25861081728679%5B%5D%3E",
       "description": "A common stateful result from creations. A state object with entities to be created"
     },
-    "State<def-interface-1570551179-167-353-1570551179-0-24501081728679[]>": {
+    "State<def-interface-1570551179-167-353-1570551179-0-25861081728679[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",

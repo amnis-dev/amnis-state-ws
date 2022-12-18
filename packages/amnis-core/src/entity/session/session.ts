@@ -11,14 +11,14 @@ export const sessionKey = 'session';
 export const sessionBase = (): EntityCreatorBase<Session> => ({
   $subject: uid('user'),
   exp: dateNumeric(),
-  name: 'Unnamed Session Holder',
+  pub: '',
   prv: false,
   adm: false,
   exc: false,
 });
 
 export function sessionCreator(
-  session: EntityCreatorParams<Session, '$subject' | 'exp' | 'name'>,
+  session: EntityCreatorParams<Session, '$subject' | 'exp'>,
 ): Session {
   return {
     ...sessionBase(),

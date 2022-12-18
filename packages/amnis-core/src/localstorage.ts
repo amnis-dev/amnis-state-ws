@@ -1,5 +1,5 @@
 import type { EntityAdapter, EntityState } from '@reduxjs/toolkit';
-import { base64Decode, base64Encode } from './index.js';
+import { base64JsonDecode, base64JsonEncode } from './base64.js';
 
 /**
  * Mocked memeory version of LocalStorage in case a form doesn't exist.
@@ -48,9 +48,10 @@ export const localstorageSetup = <T>(
     }
 
     try {
-      const dec = new TextDecoder();
-      const data = JSON.parse(dec.decode(base64Decode(keyData))) as T[];
-      adapter.upsertMany(state, data);
+      const data = base64JsonDecode<T[]>(keyData);
+      if (data) {
+        adapter.upsertMany(state, data);
+      }
     } catch (e) {
       console.log(`Error loading ${key} data from LocalStorage.`);
     }
@@ -60,11 +61,10 @@ export const localstorageSetup = <T>(
    */
   save: async (data: T[]) => {
     try {
-      const enc = new TextEncoder();
-      const encoded = base64Encode(enc.encode(JSON.stringify(data)));
+      const encoded = base64JsonEncode(data);
       /**
-     * Encode the saved data.
-     */
+       * Encode the saved data.
+       */
 
       localStorage.setItem(`root-${key}`, encoded);
     } catch (e) {

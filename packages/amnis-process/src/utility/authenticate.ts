@@ -55,6 +55,7 @@ const authenticateLoginFailedOutput = (title: string, description: string) => {
 export const authenticateLogin = async (
   context: IoContext,
   user: Entity<User>,
+  publicKey: string,
 ): Promise<IoOutput<StateEntities>> => {
   const profile = await findProfileByUserId(context, user.$id);
 
@@ -100,7 +101,12 @@ export const authenticateLogin = async (
   /**
    * Create the authenticated user's session.
    */
-  const sessionBase = await generateSession(system, user.$id, profile.nameDisplay, user.$roles);
+  const sessionBase = await generateSession(
+    system,
+    user.$id,
+    publicKey,
+    user.$roles,
+  );
 
   const session = entityCreate(sessionBase, { $owner: user.$id });
   const sessionEncrypted = await context.crypto.sessionEncrypt(sessionBase);
@@ -248,7 +254,7 @@ export const authenticateAccount = async (
   /**
    * All authentication checks can been completed.
    */
-  const output = await authenticateLogin(context, user);
+  const output = await authenticateLogin(context, user, credential.publicKey);
 
   return output;
 };

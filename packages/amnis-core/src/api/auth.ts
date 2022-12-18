@@ -3,6 +3,12 @@ import {
   agentName,
 } from '../agent.js';
 import {
+  base64Decode,
+  base64Encode,
+  base64JsonDecode,
+  base64JsonEncode,
+} from '../base64.js';
+import {
   Challenge,
   challengeEncode,
   Credential,
@@ -12,8 +18,6 @@ import {
 } from '../entity/index.js';
 import {
   cryptoWeb,
-  base64Encode,
-  base64Decode,
 } from '../io/index.js';
 import type {
   ApiAuthLogin,
@@ -81,17 +85,12 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
   challenge,
   origin,
 }) => {
-  const enc = new TextEncoder();
   const agent = agentName();
 
   /**
    * Encode the challenge.
    */
-  const challengeEncoded = base64Encode(
-    enc.encode(
-      JSON.stringify(entityStrip(challenge as Entity<Challenge>)),
-    ),
-  );
+  const challengeEncoded = base64JsonEncode(entityStrip(challenge as Entity<Challenge>));
 
   /**
    * Create a new credentials
@@ -116,9 +115,7 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
     publicKey: publicKeyExport,
   });
 
-  const credentialEncoded = base64Encode(
-    enc.encode(JSON.stringify(credential)),
-  );
+  const credentialEncoded = base64JsonEncode(credential);
 
   /**
    * Sign the credential data to ensure it came from this client.
@@ -168,12 +165,15 @@ export type ApiAuthRegistrationParse = (
  */
 export const apiAuthRegistrationParse: ApiAuthRegistrationParse = async (authRegistration) => {
   try {
-    const dec = new TextDecoder();
     const { challenge, credential, signature } = authRegistration;
 
-    const challengeObject = JSON.parse(dec.decode(base64Decode(challenge))) as Challenge;
-    const credentialObject = JSON.parse(dec.decode(base64Decode(credential))) as Credential;
+    const challengeObject = base64JsonDecode<Challenge>(challenge);
+    const credentialObject = base64JsonDecode<Credential>(credential);
     const signatureBuffer = base64Decode(signature).buffer;
+
+    if (!challengeObject || !credentialObject) {
+      return undefined;
+    }
 
     return {
       ...authRegistration,

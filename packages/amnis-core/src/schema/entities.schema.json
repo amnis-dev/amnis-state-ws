@@ -849,6 +849,10 @@
           "$ref": "#/definitions/UID",
           "description": "Subject of the session. Typically a user id."
         },
+        "pub": {
+          "type": "string",
+          "description": "Serialized public key value of the agent's session. This is used to verify signatures on reconnections."
+        },
         "iat": {
           "$ref": "#/definitions/DateNumeric",
           "description": "Possible \"Issued At\" property when decoding."
@@ -865,6 +869,10 @@
           "type": "boolean",
           "description": "If the session holder is an executive."
         },
+        "prv": {
+          "type": "boolean",
+          "description": "If the session holder has one of the privileged roles. (Administrator or Executive)"
+        },
         "name": {
           "type": "string",
           "description": "Display name."
@@ -876,7 +884,9 @@
         "adm",
         "exc",
         "exp",
-        "name"
+        "name",
+        "prv",
+        "pub"
       ],
       "additionalProperties": false,
       "description": "A session object. Session data should be stored in *SECURE* HTTP cookies only."
@@ -1726,6 +1736,10 @@
           "$ref": "#/definitions/UID",
           "description": "Subject of the session. Typically a user id."
         },
+        "pub": {
+          "type": "string",
+          "description": "Serialized public key value of the agent's session. This is used to verify signatures on reconnections."
+        },
         "iat": {
           "$ref": "#/definitions/DateNumeric",
           "description": "Possible \"Issued At\" property when decoding."
@@ -1741,6 +1755,10 @@
         "exc": {
           "type": "boolean",
           "description": "If the session holder is an executive."
+        },
+        "prv": {
+          "type": "boolean",
+          "description": "If the session holder has one of the privileged roles. (Administrator or Executive)"
         },
         "name": {
           "type": "string",
