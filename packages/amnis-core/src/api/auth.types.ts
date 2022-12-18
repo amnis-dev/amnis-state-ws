@@ -28,6 +28,11 @@ export interface ApiAuthChallenge {
    * @errorMessage "The email address is poorly formatted"
    */
   email?: string;
+
+  /**
+   * Options signature from a privileged account to return the OTP.
+   */
+  signature?: string;
 }
 
 /**

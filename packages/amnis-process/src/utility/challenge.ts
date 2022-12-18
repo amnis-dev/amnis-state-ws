@@ -129,7 +129,10 @@ export const challengeValidate = (
   /**
    * Ensure that this challenge is not intended for a specific subject.
    */
-  if (challenge.$subject && challenge.$subject !== options.$subject) {
+  if (
+    (challenge.$subject || options.$subject)
+    && challenge.$subject !== options.$subject
+  ) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [logCreator({
@@ -143,7 +146,10 @@ export const challengeValidate = (
   /**
    * Ensure that this challenge's private value is validated against if set.
    */
-  if (challenge.otp && challenge.otp !== options.otp) {
+  if (
+    (challenge.otp || options.otp)
+    && challenge.otp !== options.otp
+  ) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [logCreator({

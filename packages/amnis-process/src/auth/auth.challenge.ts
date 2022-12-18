@@ -9,6 +9,7 @@ import {
   UID,
   challengeCreator,
   entityCreate,
+  base64Decode,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
 import { mwValidate } from '../mw/index.js';
@@ -33,7 +34,12 @@ Io<ApiAuthChallenge, Entity<Challenge>>
       return output;
     }
 
-    const { subject, email, purpose } = body;
+    const {
+      subject,
+      email,
+      purpose,
+      signature: signatureEncoded,
+    } = body;
 
     if (subject === undefined) {
       ioOutputApply(output, await challengeCreate(context));
@@ -103,8 +109,20 @@ Io<ApiAuthChallenge, Entity<Challenge>>
     /**
      * If the session holder is a privileged account, also send back the challenge OTP.
      */
-    if (session?.prv === true) {
-      output.json.result.otp = otp;
+    if (session?.prv === true && signatureEncoded) {
+      /**
+       * that the signature is valid.
+       */
+      const signature = base64Decode(signatureEncoded).buffer;
+      const publicKey = await crypto.keyImport(session.pub);
+      const isValidSignature = await crypto.asymVerify(subject, signature, publicKey);
+      /**
+       * If the signature is valid, return to one-time-passcode.
+       * Administrators can encoded into a URL and send it to a trusted person.
+       */
+      if (isValidSignature) {
+        output.json.result.otp = otp;
+      }
     }
 
     /**

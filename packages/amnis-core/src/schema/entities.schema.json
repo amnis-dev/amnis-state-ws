@@ -685,6 +685,24 @@
           "description": "Expiration of a registration event in minutes.",
           "default": 30
         },
+        "emailNews": {
+          "type": "string",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64,
+          "description": "The sender email address for news."
+        },
+        "emailNotify": {
+          "type": "string",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64,
+          "description": "The sender email address for system notifications."
+        },
+        "emailAuth": {
+          "type": "string",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64,
+          "description": "The sender email address for authentication tasks."
+        },
         "$website": {
           "$ref": "#/definitions/UID%3CWebsite%3E",
           "description": "System's website configurations."
@@ -716,6 +734,9 @@
         "$initialRoles",
         "$website",
         "bearerExpires",
+        "emailAuth",
+        "emailNews",
+        "emailNotify",
         "name",
         "registrationExpiration",
         "registrationOpen",
@@ -872,10 +893,6 @@
         "prv": {
           "type": "boolean",
           "description": "If the session holder has one of the privileged roles. (Administrator or Executive)"
-        },
-        "name": {
-          "type": "string",
-          "description": "Display name."
         }
       },
       "required": [
@@ -884,7 +901,6 @@
         "adm",
         "exc",
         "exp",
-        "name",
         "prv",
         "pub"
       ],
@@ -1621,6 +1637,24 @@
           "description": "Expiration of a registration event in minutes.",
           "default": 30
         },
+        "emailNews": {
+          "type": "string",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64,
+          "description": "The sender email address for news."
+        },
+        "emailNotify": {
+          "type": "string",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64,
+          "description": "The sender email address for system notifications."
+        },
+        "emailAuth": {
+          "type": "string",
+          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+          "maxLength": 64,
+          "description": "The sender email address for authentication tasks."
+        },
         "$website": {
           "$ref": "#/definitions/UID%3CWebsite%3E",
           "description": "System's website configurations."
@@ -1759,10 +1793,6 @@
         "prv": {
           "type": "boolean",
           "description": "If the session holder has one of the privileged roles. (Administrator or Executive)"
-        },
-        "name": {
-          "type": "string",
-          "description": "Display name."
         }
       },
       "required": [
