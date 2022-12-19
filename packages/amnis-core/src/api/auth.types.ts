@@ -36,6 +36,33 @@ export interface ApiAuthChallenge {
 }
 
 /**
+ * Adds a credential to an account.
+ */
+export interface ApiAuthCredential {
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @desciption Encoded signature challenge object to prevent reply attacks
+   * with a level of authenticity using an OTP.
+   */
+  challenge: string;
+
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @desciption Encoded credentials to add.
+   */
+  credential: string;
+
+  /**
+   * @minLength 16
+   * @maxLength 512
+   * @description Encoded attestation signature of the encoded credential.
+   */
+  signature: string;
+}
+
+/**
  * A request to authenticate with a session.
  * User must log in if authentication fails.
  */

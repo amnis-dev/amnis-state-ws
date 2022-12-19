@@ -141,7 +141,7 @@ test('should start ritual and complete registration', async () => {
 
   expect(logs).toHaveLength(2);
   expect(logs[0].level).toBe('success');
-  expect(logs[0].title).toBe('Account Registered');
+  expect(logs[0].title).toBe('Account Created');
   expect(logs[1].level).toBe('success');
   expect(logs[1].title).toBe('Authentication Successful');
 

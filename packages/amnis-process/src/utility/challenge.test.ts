@@ -113,8 +113,8 @@ test('should fail to find an existing challenge with a wrong value', async () =>
   expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
 });
 
-test('should fail to validate a valid user challenge without a username', async () => {
-  const result = challengeValidate(context, challengeUser);
+test('should fail to validate a valid user challenge without a subject', async () => {
+  const result = challengeValidate(context, { ...challengeUser, $subject: undefined });
 
   if (result === true) {
     expect(result).not.toBe(true);
@@ -126,7 +126,7 @@ test('should fail to validate a valid user challenge without a username', async 
 });
 
 test('should fail to validate a valid user challenge with an invalid subject', async () => {
-  const result = challengeValidate(context, challengeUser, { $subject: uid(userKey) });
+  const result = challengeValidate(context, { ...challengeUser, $subject: uid(userKey) });
 
   if (result === true) {
     expect(result).not.toBe(true);
@@ -137,8 +137,8 @@ test('should fail to validate a valid user challenge with an invalid subject', a
   expect(result.json.logs[0].title).toBe('Not Challenged');
 });
 
-test('should validate a valid user challenge with the correct username', async () => {
-  const result = challengeValidate(context, challengeUser, { $subject: challengeSubject });
+test('should validate a valid user challenge with the correct subject', async () => {
+  const result = challengeValidate(context, { ...challengeUser, $subject: challengeSubject });
 
   expect(result).toBe(true);
 });

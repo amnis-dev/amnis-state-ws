@@ -12,6 +12,9 @@
         "challenge": {
           "$ref": "#/definitions/ApiAuthChallenge"
         },
+        "credential": {
+          "$ref": "#/definitions/ApiAuthCredential"
+        },
         "register": {
           "$ref": "#/definitions/ApiAuthRegistration"
         },
@@ -26,6 +29,13 @@
         },
         "verify": {
           "$ref": "#/definitions/ApiAuthVerify"
+        },
+        "typeChallenge": {
+          "$ref": "#/definitions/Challenge",
+          "description": "Encoded types."
+        },
+        "typeCrendential": {
+          "$ref": "#/definitions/Credential"
         }
       },
       "additionalProperties": false
@@ -88,6 +98,34 @@
         "confirm"
       ],
       "description": "Challenge purposes"
+    },
+    "ApiAuthCredential": {
+      "type": "object",
+      "properties": {
+        "challenge": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512
+        },
+        "credential": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 512,
+          "description": "Encoded attestation signature of the encoded credential."
+        }
+      },
+      "required": [
+        "challenge",
+        "credential",
+        "signature"
+      ],
+      "additionalProperties": false,
+      "description": "Adds a credential to an account."
     },
     "ApiAuthRegistration": {
       "type": "object",
@@ -250,6 +288,84 @@
     },
     "DateNumeric": {
       "type": "number",
+      "description": "A string that represents a JSON Date."
+    },
+    "Challenge": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
+        },
+        "value": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 256,
+          "description": "The string random value of the challenge."
+        },
+        "expires": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Expiration date-time of the challenge."
+        },
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "minLength": 16,
+          "maxLength": 64,
+          "description": "The subject being challenged."
+        },
+        "otp": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 32,
+          "description": "An optional one-time passcode value to be generate administratively."
+        }
+      },
+      "required": [
+        "$id",
+        "expires",
+        "value"
+      ],
+      "additionalProperties": false,
+      "description": "Entity that contains data to verify credentials."
+    },
+    "UID": {
+      "type": "string",
+      "description": "A id identifier to another document."
+    },
+    "Credential": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the credential"
+        },
+        "publicKey": {
+          "type": "string",
+          "description": "Credential's public key for verifying signatures."
+        },
+        "ip": {
+          "type": "string",
+          "description": "The IP address when the credential was registered."
+        },
+        "used": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date-time of when the credential was last used."
+        }
+      },
+      "required": [
+        "$id",
+        "name",
+        "publicKey"
+      ],
+      "additionalProperties": false,
+      "description": "Entity that contains data to verify credentials."
+    },
+    "DateJSON": {
+      "type": "string",
       "description": "A string that represents a JSON Date."
     }
   }

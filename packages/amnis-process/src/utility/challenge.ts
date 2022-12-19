@@ -21,11 +21,6 @@ export interface ChallengeCreateOptions {
   privatize?: boolean;
 }
 
-export interface ChallengeValidateOptions {
-  $subject?: UID;
-  otp?: string;
-}
-
 /**
  * Create a challenge from context and output it.
  */
@@ -89,9 +84,9 @@ export const challengeCreate = async (
 export const challengeValidate = (
   context: IoContext,
   challenge: Challenge,
-  options: ChallengeValidateOptions = {},
 ): true | IoOutput => {
   const { store } = context;
+
   /**
    * Verify that the challenge code is valid.
    */
@@ -130,8 +125,8 @@ export const challengeValidate = (
    * Ensure that this challenge is not intended for a specific subject.
    */
   if (
-    (challenge.$subject || options.$subject)
-    && challenge.$subject !== options.$subject
+    (challengeServer.$subject || challenge.$subject)
+    && challengeServer.$subject !== challenge.$subject
   ) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
@@ -147,8 +142,8 @@ export const challengeValidate = (
    * Ensure that this challenge's private value is validated against if set.
    */
   if (
-    (challenge.otp || options.otp)
-    && challenge.otp !== options.otp
+    (challengeServer.otp || challenge.otp)
+    && challengeServer.otp !== challenge.otp
   ) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error

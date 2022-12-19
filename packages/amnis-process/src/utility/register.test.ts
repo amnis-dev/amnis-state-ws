@@ -81,7 +81,7 @@ test('should register a new account', async () => {
 
   expect(logs).toHaveLength(1);
   expect(logs[0].level).toBe('success');
-  expect(logs[0].title).toBe('Account Registered');
+  expect(logs[0].title).toBe('Account Created');
 });
 
 test('should not register with an existing username', async () => {
@@ -111,5 +111,5 @@ test('should not register with an existing username', async () => {
   expect(result.status).toBe(500);
   expect(result.json.result).toBeUndefined();
   expect(result.json.logs[0].level).toBe('error');
-  expect(result.json.logs[0].title).toBe('Username Already Registered');
+  expect(result.json.logs[0].title).toBe('Handle Already Registered');
 });

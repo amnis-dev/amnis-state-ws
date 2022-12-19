@@ -13,12 +13,14 @@ export interface Challenge extends EntityCreator {
   value: string;
 
   /**
+   * @type number
    * @min 0
    * @description Expiration date-time of the challenge.
    */
   expires: DateNumeric;
 
   /**
+   * @type string
    * @minLength 16
    * @maxLength 64
    * @description The subject being challenged.
@@ -26,9 +28,10 @@ export interface Challenge extends EntityCreator {
   $subject?: UID;
 
   /**
+   * @type string
    * @minLength 6
    * @maxLength 32
-   * An optional one-time passcode value to be generate administratively.
+   * @description An optional one-time passcode value to be generate administratively.
    */
   otp?: string;
 }
