@@ -45,7 +45,7 @@
       "properties": {
         "challenge": {
           "type": "string",
-          "minLength": 16,
+          "minLength": 8,
           "maxLength": 512
         },
         "signature": {
@@ -104,7 +104,7 @@
       "properties": {
         "challenge": {
           "type": "string",
-          "minLength": 16,
+          "minLength": 8,
           "maxLength": 512
         },
         "credential": {
@@ -157,7 +157,7 @@
         },
         "challenge": {
           "type": "string",
-          "minLength": 16,
+          "minLength": 8,
           "maxLength": 512
         },
         "origin": {
@@ -215,7 +215,7 @@
         },
         "challenge": {
           "type": "string",
-          "minLength": 16,
+          "minLength": 8,
           "maxLength": 512
         },
         "$credential": {
@@ -299,9 +299,9 @@
         },
         "value": {
           "type": "string",
+          "description": "The string random value of the challenge.",
           "minLength": 16,
-          "maxLength": 256,
-          "description": "The string random value of the challenge."
+          "maxLength": 256
         },
         "expires": {
           "$ref": "#/definitions/DateNumeric",
@@ -309,15 +309,13 @@
         },
         "$subject": {
           "$ref": "#/definitions/UID",
-          "minLength": 16,
-          "maxLength": 64,
           "description": "The subject being challenged."
         },
         "otp": {
           "type": "string",
+          "description": "An optional one-time passcode value to be generate administratively.",
           "minLength": 6,
-          "maxLength": 32,
-          "description": "An optional one-time passcode value to be generate administratively."
+          "maxLength": 32
         }
       },
       "required": [
@@ -330,7 +328,9 @@
     },
     "UID": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "Credential": {
       "type": "object",

@@ -153,7 +153,9 @@
     },
     "UID": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "Contact": {
       "type": "object",
@@ -390,7 +392,9 @@
     },
     "UID<Profile>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "Locale": {
       "type": "object",
@@ -490,7 +494,9 @@
     },
     "UID<User>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "Note": {
       "type": "object",
@@ -574,7 +580,9 @@
     },
     "UID<Contact>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "Role": {
       "type": "object",
@@ -746,11 +754,15 @@
     },
     "UID<Website>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "UID<Role>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "UIDList<Role>": {
       "type": "array",
@@ -846,7 +858,9 @@
     },
     "UID<Credential>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "UIDList<Permit>": {
       "type": "array",
@@ -857,7 +871,9 @@
     },
     "UID<Permit>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "Session": {
       "type": "object",
@@ -1091,11 +1107,15 @@
     },
     "UID<Route>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "UID<Image>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "StateUpdater": {
       "type": "object",
@@ -1231,7 +1251,9 @@
     },
     "UID<Audit>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<Contact>": {
       "type": "object",
@@ -1302,7 +1324,9 @@
     },
     "UID<History>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<Image>": {
       "type": "object",
@@ -1424,7 +1448,9 @@
     },
     "UID<Locale>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<Log>": {
       "type": "object",
@@ -1461,7 +1487,9 @@
     },
     "UID<Log>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<Note>": {
       "type": "object",
@@ -1486,7 +1514,9 @@
     },
     "UID<Note>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<Profile>": {
       "type": "object",
@@ -1604,7 +1634,9 @@
     },
     "UID<Service>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<System>": {
       "type": "object",
@@ -1685,7 +1717,9 @@
     },
     "UID<System>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<User>": {
       "type": "object",
@@ -1802,7 +1836,9 @@
     },
     "UID<Session>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<Video>": {
       "type": "object",
@@ -1891,7 +1927,9 @@
     },
     "UID<Video>": {
       "type": "string",
-      "description": "A id identifier to another document."
+      "description": "A id identifier to another document.",
+      "minLength": 16,
+      "maxLength": 64
     },
     "EntityUpdater<Website>": {
       "type": "object",

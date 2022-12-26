@@ -7,7 +7,6 @@ import {
   IoContext,
   IoOutput,
   ioOutput,
-  logCreator,
   UID,
 } from '@amnis/core';
 import {
@@ -16,6 +15,7 @@ import {
   systemSelectors,
 } from '@amnis/state';
 
+const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 export interface ChallengeCreateOptions {
   $subject?: UID;
   privatize?: boolean;
@@ -35,11 +35,11 @@ export const challengeCreate = async (
   if (!system) {
     const output = ioOutput();
     output.status = 500;
-    output.json.logs.push(logCreator({
+    output.json.logs.push({
       level: 'error',
       title: 'Inactive System',
       description: 'There is no active system available to generate new challenges.',
-    }));
+    });
     return output;
   }
 
@@ -63,8 +63,17 @@ export const challengeCreate = async (
   }
 
   if (options.privatize === true) {
-    const challangeValuePrivate = await crypto.randomString(12);
-    challengeEntity.otp = challangeValuePrivate;
+    let challangeValuePrivate = await crypto.randomString(12);
+    const matchesSpecialChars = challangeValuePrivate.match(/[^a-z^A-Z^0-9]/gm);
+    matchesSpecialChars?.forEach((c) => {
+      challangeValuePrivate = challangeValuePrivate.replace(
+        c,
+        alphabet.charAt(
+          Math.floor(Math.random() * alphabet.length),
+        ),
+      );
+    });
+    challengeEntity.otp = challangeValuePrivate.toLowerCase();
   }
 
   /**
@@ -98,11 +107,11 @@ export const challengeValidate = (
   if (!challengeServer || challenge.value !== challengeServer.value) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
-    output.json.logs = [logCreator({
+    output.json.logs = [{
       level: 'error',
       title: 'Invalid Challenge Code',
       description: 'The challenge code is not valid',
-    })];
+    }];
     return output;
   }
 
@@ -113,16 +122,16 @@ export const challengeValidate = (
   if (challengeServer.expires <= dateNumeric()) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
-    output.json.logs = [logCreator({
+    output.json.logs = [{
       level: 'error',
       title: 'Challenge Code Expired',
       description: 'The challenge code has expired.',
-    })];
+    }];
     return output;
   }
 
   /**
-   * Ensure that this challenge is not intended for a specific subject.
+   * Ensure that this challenge matches the intended specific subject.
    */
   if (
     (challengeServer.$subject || challenge.$subject)
@@ -130,11 +139,11 @@ export const challengeValidate = (
   ) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
-    output.json.logs = [logCreator({
+    output.json.logs = [{
       level: 'error',
       title: 'Not Challenged',
       description: 'This challenge code is intended for another use.',
-    })];
+    }];
     return output;
   }
 
@@ -147,11 +156,11 @@ export const challengeValidate = (
   ) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
-    output.json.logs = [logCreator({
+    output.json.logs = [{
       level: 'error',
-      title: 'Challenged is Private',
+      title: 'Challenged Privately',
       description: 'This challenge code required a one-time passcode.',
-    })];
+    }];
     return output;
   }
 

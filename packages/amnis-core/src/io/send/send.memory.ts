@@ -16,11 +16,13 @@ export type SendCallback = (inbox: SendMailbox) => void;
 
 export type SendUnsubscribe = () => void;
 
-const sendMailboxes: SendMailbox = {};
+let sendMailboxes: SendMailbox = {};
 
 const sendSubcribers: { [key: string]: SendCallback } = {};
 
 export const sendMailboxStorage = () => sendMailboxes;
+
+export const sendMailboxClear = () => { sendMailboxes = {}; };
 
 export const sendSubscribe = (callback: SendCallback): SendUnsubscribe => {
   const uid = rtk.nanoid();

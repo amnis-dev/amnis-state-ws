@@ -104,7 +104,8 @@ Io<ApiAuthChallenge, Entity<Challenge>>
     output.json.result = entityCreate(challengeCreator({
       expires: resultChallenge.expires,
       value: resultChallenge.value,
-    }));
+      $subject: resultChallenge.$subject,
+    }), { $id: resultChallenge.$id });
 
     /**
      * If the session holder is a privileged account, also send back the challenge OTP.
@@ -118,7 +119,7 @@ Io<ApiAuthChallenge, Entity<Challenge>>
       const isValidSignature = await crypto.asymVerify(subject, signature, publicKey);
       /**
        * If the signature is valid, return to one-time-passcode.
-       * Administrators can encoded into a URL and send it to a trusted person.
+       * Administrators can encode it into a URL and send it to the trusted person.
        */
       if (isValidSignature) {
         output.json.result.otp = otp;
@@ -129,8 +130,6 @@ Io<ApiAuthChallenge, Entity<Challenge>>
      * If the email is set, send to one-time-passcode to the subject's email.
      */
     if (email && user.email === email && user.emailVerified === true) {
-      const otpHyphenated = otp.replace(/(.{4})/g, '$1-');
-
       const emailSubject = ((p: typeof purpose): string => {
         switch (p) {
           case 'adddevice':
@@ -151,7 +150,7 @@ Io<ApiAuthChallenge, Entity<Challenge>>
         from: system.emailAuth,
         fromName: system.name,
         subject: emailSubject,
-        text: `Use the following confirmation code to complete the process: ${otpHyphenated}`,
+        text: `Use the following confirmation code to complete the process: "${otp}"`,
       });
     }
 

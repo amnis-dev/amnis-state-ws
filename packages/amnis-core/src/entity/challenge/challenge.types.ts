@@ -6,32 +6,28 @@ import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../e
  */
 export interface Challenge extends EntityCreator {
   /**
+   * The string random value of the challenge.
+   *
    * @minLength 16
    * @maxLength 256
-   * @description The string random value of the challenge.
    */
   value: string;
 
   /**
-   * @type number
-   * @min 0
-   * @description Expiration date-time of the challenge.
+   * Expiration date-time of the challenge.
    */
   expires: DateNumeric;
 
   /**
-   * @type string
-   * @minLength 16
-   * @maxLength 64
-   * @description The subject being challenged.
+   * The subject being challenged.
    */
   $subject?: UID;
 
   /**
-   * @type string
+   * An optional one-time passcode value to be generate administratively.
+   *
    * @minLength 6
    * @maxLength 32
-   * @description An optional one-time passcode value to be generate administratively.
    */
   otp?: string;
 }

@@ -7,6 +7,7 @@ import {
   base64JsonDecode,
   base64Decode,
   ioOutputApply,
+  Credential,
 } from '@amnis/core';
 import { mwValidate } from '../mw/index.js';
 import { accountCredentialAdd } from '../utility/account.js';
@@ -59,6 +60,9 @@ Io<ApiAuthCredential, StateEntities>
       return outputValidateChallenge;
     }
 
+    /**
+     * Validate that the challenge data matches the server issued challenge.
+     */
     const outputChallengeValid = challengeValidate(context, challenge);
 
     if (outputChallengeValid !== true) {
@@ -68,7 +72,7 @@ Io<ApiAuthCredential, StateEntities>
     /**
      * Decode the credential.
      */
-    const credential = base64JsonDecode(credentialEncoded);
+    const credential = base64JsonDecode<Credential>(credentialEncoded);
     if (!credential) {
       output.status = 500;
       output.json.logs.push({
@@ -76,6 +80,7 @@ Io<ApiAuthCredential, StateEntities>
         title: 'Invalid Credential',
         description: 'Could not parse the provided credential.',
       });
+      return output;
     }
     /**
      * Validate the structure of the credential.
@@ -89,10 +94,11 @@ Io<ApiAuthCredential, StateEntities>
      * Decode and validate the sigature.
      */
     const signature = base64Decode(signatureEncoded).buffer;
+    const credentialPublicKey = await crypto.keyImport(credential.publicKey);
     const validSignature = await crypto.asymVerify(
       credentialEncoded,
       signature,
-      credential.publicKey,
+      credentialPublicKey,
     );
 
     if (validSignature !== true) {
@@ -128,10 +134,10 @@ Io<ApiAuthCredential, StateEntities>
   }
 );
 
-export const processAuthChallenge = mwValidate('ApiAuthCredential')(
+export const processAuthCredential = mwValidate('ApiAuthCredential')(
   process,
 ) as IoProcess<
 Io<ApiAuthCredential, StateEntities>
 >;
 
-export default { processAuthChallenge };
+export default { processAuthCredential };

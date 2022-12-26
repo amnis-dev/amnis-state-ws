@@ -8,7 +8,7 @@ import { webcrypto } from './webcrypto.js';
 export const randomString: CryptoRandomString = async (length = 128) => {
   const wc = await webcrypto();
   const random = wc.getRandomValues(new Uint8Array(length));
-  const data = base64Encode(random);
+  const data = base64Encode(random).slice(0, length);
   return data;
 };
 
