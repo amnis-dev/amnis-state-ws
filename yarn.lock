@@ -122,7 +122,7 @@ __metadata:
     rimraf: ^3.0.2
     rollup: ^3.1.0
     standard-version: ^9.5.0
-    ts-json-schema-generator: ^1.1.2
+    ts-json-schema-generator: ^1.2.0
     ts-node: ^10.7.0
     tsconfig-paths: ^4.0.0
     twitter-api-sdk: ^1.0.9
@@ -5012,7 +5012,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^9.4.0":
+"commander@npm:^9.4.1":
   version: 9.4.1
   resolution: "commander@npm:9.4.1"
   checksum: bfb18e325a5bdf772763c2213d5c7d9e77144d944124e988bcd8e5e65fb6d45d5d4e86b09155d0f2556c9a59c31e428720e57968bcd050b2306e910a0bf3cf13
@@ -10958,7 +10958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-stable-stringify@npm:^2.4.0":
+"safe-stable-stringify@npm:^2.4.1":
   version: 2.4.1
   resolution: "safe-stable-stringify@npm:2.4.1"
   checksum: d8e505c462031301040605a4836ca25b52a1744eff01b0939b4d43136638fb8e88e0cec3d3ab6ab8e26f501086e6ba6bf34b228f57bf2ac56cb8d4061355d723
@@ -11750,20 +11750,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-json-schema-generator@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "ts-json-schema-generator@npm:1.1.2"
+"ts-json-schema-generator@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "ts-json-schema-generator@npm:1.2.0"
   dependencies:
     "@types/json-schema": ^7.0.11
-    commander: ^9.4.0
+    commander: ^9.4.1
     glob: ^8.0.3
     json5: ^2.2.1
     normalize-path: ^3.0.0
-    safe-stable-stringify: ^2.4.0
-    typescript: ~4.8.3
+    safe-stable-stringify: ^2.4.1
+    typescript: ~4.9.3
   bin:
     ts-json-schema-generator: bin/ts-json-schema-generator
-  checksum: 6a24f76a48cd64d33fa907b394af0ed8ba8230ccfcf75000b510135ea6267bdf8628ad84421b97e75039ca0455366b563fb3308c991613be3e041bb640817c38
+  checksum: 855615d442f4834f03a2761955a350255f29f0b4197e2101a30a250062ca0fb793d8c1244ee313f716e075981ffe43d24c1d1fe6a7c23d62a6c05d0a3ba28ada
   languageName: node
   linkType: hard
 
@@ -11970,7 +11970,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^3 || ^4, typescript@npm:^4.8.4, typescript@npm:~4.8.3":
+"typescript@npm:^3 || ^4, typescript@npm:^4.8.4":
   version: 4.8.4
   resolution: "typescript@npm:4.8.4"
   bin:
@@ -11980,13 +11980,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^3 || ^4#~builtin<compat/typescript>, typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>, typescript@patch:typescript@~4.8.3#~builtin<compat/typescript>":
+"typescript@npm:~4.9.3":
+  version: 4.9.4
+  resolution: "typescript@npm:4.9.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: e782fb9e0031cb258a80000f6c13530288c6d63f1177ed43f770533fdc15740d271554cdae86701c1dd2c83b082cea808b07e97fd68b38a172a83dbf9e0d0ef9
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^3 || ^4#~builtin<compat/typescript>, typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
   resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 301459fc3eb3b1a38fe91bf96d98eb55da88a9cb17b4ef80b4d105d620f4d547ba776cc27b44cc2ef58b66eda23fe0a74142feb5e79a6fb99f54fc018a696afa
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@~4.9.3#~builtin<compat/typescript>":
+  version: 4.9.4
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=701156"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
   languageName: node
   linkType: hard
 
