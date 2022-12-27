@@ -36,8 +36,8 @@ beforeAll(async () => {
   const storage = databaseMemoryStorage();
   const storageUsers = Object.values(storage[userKey]) as Entity<User>[];
 
-  adminUser = storageUsers.find((u) => u.name === 'admin') as Entity<User>;
-  userUser = storageUsers.find((u) => u.name === 'user') as Entity<User>;
+  adminUser = storageUsers.find((u) => u.handle === 'admin') as Entity<User>;
+  userUser = storageUsers.find((u) => u.handle === 'user') as Entity<User>;
 
   const { user, admin } = await accountsGet();
   /**

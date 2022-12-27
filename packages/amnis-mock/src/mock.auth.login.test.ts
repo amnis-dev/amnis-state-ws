@@ -64,7 +64,7 @@ test('should be able to login as user', async () => {
    * Create the login request body.
    */
   const authLogin = await apiAuthLoginCreate({
-    username: user.name,
+    username: user.handle,
     password: user.password,
     challenge,
     credential: user.credential,
@@ -129,7 +129,7 @@ test('should NOT be able to login with a bad password', async () => {
    * Create the login request body.
    */
   const authLogin = await apiAuthLoginCreate({
-    username: user.name,
+    username: user.handle,
     password: user.password.slice(1),
     challenge,
     credential: user.credential,
@@ -182,7 +182,7 @@ test('should see audits of login requests as admin', async () => {
    * Create the login request body.
    */
   const authLogin = await apiAuthLoginCreate({
-    username: admin.name,
+    username: admin.handle,
     password: admin.password,
     challenge,
     credential: admin.credential,

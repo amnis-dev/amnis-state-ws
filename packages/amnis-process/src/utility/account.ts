@@ -4,6 +4,8 @@ import {
   Credential,
   credentialKey,
   entityCreate,
+  handleCreator,
+  handleKey,
   IoContext,
   ioOutput,
   IoOutput,
@@ -18,7 +20,7 @@ import {
   userKey,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
-import { findUserByName } from './find.js';
+import { findUserByHandle } from './find.js';
 
 /**
  * Options for creating an account.
@@ -70,7 +72,7 @@ export const accountCreate = async (
   /**
    * Ensure the handle name doesn't already exist in the database.
    */
-  const userFound = await findUserByName(context, handle);
+  const userFound = await findUserByHandle(context, handle);
 
   if (userFound) {
     output.status = 500;
@@ -118,10 +120,18 @@ export const accountCreate = async (
    * Initialize the new user creator.
    */
   const user = userCreator({
-    name: handle,
+    handle,
     password: passwordHashed,
     email,
     $roles: $initialRoles,
+  });
+
+  /**
+   * Create a handle reference.
+   */
+  const handleCreate = handleCreator({
+    name: handle,
+    $subject: user.$id,
   });
 
   /**
@@ -145,6 +155,7 @@ export const accountCreate = async (
    */
   const stateEntities: StateEntities = stateEntitiesCreate({
     [userKey]: [user],
+    [handleKey]: [handleCreate],
     [profileKey]: [profile],
     [contactKey]: [contact],
   }, { $owner: user.$id });

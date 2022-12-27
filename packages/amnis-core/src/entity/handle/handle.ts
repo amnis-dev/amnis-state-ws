@@ -3,10 +3,10 @@ import type { Handle, HandleBase, HandleCreator } from './handle.types.js';
 
 export const handleKey = 'handle';
 
-export const handleBase: HandleBase = {
+export const handleBase = (): HandleBase => ({
   name: '',
   $subject: uid('entity'),
-};
+});
 
 export function handleCreator(
   handle: HandleCreator,

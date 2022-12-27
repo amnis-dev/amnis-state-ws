@@ -45,7 +45,7 @@ test('should not create without bearer', async () => {
     body: {
       [userKey]: [
         userCreator({
-          name: 'New User',
+          handle: 'NewUser',
         }),
       ],
     },
@@ -59,13 +59,13 @@ test('should not create without bearer', async () => {
 test('should login as administrator and create user', async () => {
   const outputLogin = await authenticateLogin(
     context,
-    dataUsers.find((e) => e.name === 'admin') as Entity<User>,
+    dataUsers.find((e) => e.handle === 'admin') as Entity<User>,
     '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const userNew = userCreator({
-    name: 'Admin\'s New User',
+    handle: 'NewUserByAdmin',
   });
 
   const inputCreator: IoInput<StateCreator> = {
@@ -86,19 +86,19 @@ test('should login as administrator and create user', async () => {
   const storage = databaseMemoryStorage();
 
   expect(Object.values(storage.user)).toHaveLength(4);
-  expect((Object.values(storage.user)[3] as Entity<User>)?.name).toBe('Admin\'s New User');
+  expect((Object.values(storage.user)[3] as Entity<User>)?.handle).toBe('NewUserByAdmin');
 });
 
 test('should login as executive and create user', async () => {
   const outputLogin = await authenticateLogin(
     context,
-    dataUsers.find((e) => e.name === 'exec') as Entity<User>,
+    dataUsers.find((e) => e.handle === 'exec') as Entity<User>,
     '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const userNew = userCreator({
-    name: 'Exec\'s New User',
+    handle: 'NewUserByExec',
   });
 
   const inputCreator: IoInput<StateCreator> = {
@@ -117,19 +117,19 @@ test('should login as executive and create user', async () => {
   const storage = databaseMemoryStorage();
 
   expect(Object.values(storage.user)).toHaveLength(5);
-  expect((Object.values(storage.user)[4] as Entity<User>)?.name).toBe('Exec\'s New User');
+  expect((Object.values(storage.user)[4] as Entity<User>)?.handle).toBe('NewUserByExec');
 });
 
 test('should login as user and cannot create user', async () => {
   const outputLogin = await authenticateLogin(
     context,
-    dataUsers.find((e) => e.name === 'user') as Entity<User>,
+    dataUsers.find((e) => e.handle === 'user') as Entity<User>,
     '',
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
   const userNew = userCreator({
-    name: 'User\'s New User',
+    handle: 'NewUserByUser',
   });
 
   const inputCreator: IoInput<StateCreator> = {

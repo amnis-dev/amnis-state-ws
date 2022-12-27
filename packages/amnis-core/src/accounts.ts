@@ -5,7 +5,7 @@ import {
 } from './api/auth.js';
 
 export interface Account {
-  name: string;
+  handle: string;
   credential: Credential;
   password: string;
   privateKey: string;
@@ -30,7 +30,7 @@ export const accountsGet = async () => {
     });
 
     admin = {
-      name: adminRegistration.username,
+      handle: adminRegistration.username,
       credential: adminCredential,
       password: 'passwd12',
       privateKey: adminPrivateKey,
@@ -49,7 +49,7 @@ export const accountsGet = async () => {
     });
 
     exec = {
-      name: execRegistration.username,
+      handle: execRegistration.username,
       credential: execCredential,
       password: 'passwd12',
       privateKey: execPrivateKey,
@@ -63,7 +63,7 @@ export const accountsGet = async () => {
     const agent = await agentGet();
 
     user = {
-      name: 'user',
+      handle: 'user',
       credential: credentialCreator({
         name: agent.name,
         publicKey: agent.publicKey,

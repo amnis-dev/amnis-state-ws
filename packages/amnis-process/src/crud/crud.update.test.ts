@@ -90,7 +90,7 @@ test('should login as administrator and update user email', async () => {
   expect(outputUpdate.json.result?.[userKey]).toHaveLength(1);
   expect(outputUpdate.json.result?.[userKey][0]).toMatchObject({
     $id: dataUsers[2].$id,
-    name: 'user',
+    handle: 'user',
   });
   expect(outputUpdate.json.result?.[historyKey]).toHaveLength(1);
   expect(outputUpdate.json.result?.[historyKey][0]).toMatchObject({
@@ -186,7 +186,7 @@ test('should login as executive and update user email', async () => {
   });
 });
 
-test('should login as executive and NOT update user name', async () => {
+test('should login as executive and NOT update user handle', async () => {
   const outputLogin = await authenticateLogin(
     context,
     dataUsers[1] as Entity<User>,
@@ -194,7 +194,7 @@ test('should login as executive and NOT update user name', async () => {
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
-  const nameNew = 'new_username';
+  const handleNew = 'new_username';
   const inputUpdate: IoInput<StateUpdater> = {
     accessEncoded: bearerAccess.access,
     body: {
@@ -202,7 +202,7 @@ test('should login as executive and NOT update user name', async () => {
         {
           // User ID
           $id: dataUsers[2].$id,
-          name: nameNew,
+          handle: handleNew,
         },
       ],
     },

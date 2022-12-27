@@ -42,7 +42,7 @@ beforeAll(async () => {
   const storage = databaseMemoryStorage();
   const storageUsers = Object.values(storage[userKey]) as Entity<User>[];
 
-  userUser = storageUsers.find((u) => u.name === 'user') as Entity<User>;
+  userUser = storageUsers.find((u) => u.handle === 'user') as Entity<User>;
 });
 
 /**

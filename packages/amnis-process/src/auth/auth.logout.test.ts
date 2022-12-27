@@ -44,7 +44,7 @@ test('should login and then logout as administrator', async () => {
   }
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.name,
+    username: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,

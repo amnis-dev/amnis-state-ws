@@ -24,7 +24,7 @@ test('should authenticate as normal user account', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.name,
+    username: userAccount.handle,
     password: userAccount.password,
     challenge,
     credential: userAccount.credential,
@@ -61,7 +61,7 @@ test('should authenticate as normal user account', async () => {
   expect(users).toBeDefined();
   expect(users).toHaveLength(1);
   expect(users[0]).toMatchObject({
-    name: 'user',
+    handle: 'user',
     $credentials: [
       userAccount.credential.$id,
     ],
@@ -98,7 +98,7 @@ test('should authenticate as executive account', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: execAccount.name,
+    username: execAccount.handle,
     password: execAccount.password,
     challenge,
     credential: execAccount.credential,
@@ -140,7 +140,7 @@ test('should authenticate as administrator account', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.name,
+    username: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,
@@ -216,7 +216,7 @@ test('should not authenticate using different credentials', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.name,
+    username: userAccount.handle,
     password: 'wrongpassword',
     challenge,
     credential: execAccount.credential,
@@ -248,7 +248,7 @@ test('should not authenticate using a different private key for signing', async 
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.name,
+    username: userAccount.handle,
     password: userAccount.password,
     challenge,
     credential: userAccount.credential,
@@ -284,7 +284,7 @@ test('should not authenticate using a different challenge value', async () => {
   };
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.name,
+    username: userAccount.handle,
     password: userAccount.password,
     challenge: challengeChanged,
     credential: userAccount.credential,
@@ -316,7 +316,7 @@ test('should not authenticate using different credentials but valid password', a
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.name,
+    username: userAccount.handle,
     password: userAccount.password,
     challenge,
     credential: execAccount.credential,

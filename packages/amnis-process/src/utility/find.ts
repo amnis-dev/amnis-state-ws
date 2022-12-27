@@ -10,25 +10,41 @@ import {
   profileKey,
   Contact,
   contactKey,
+  handleKey,
+  Handle,
 } from '@amnis/core';
 
 /**
- * Finds a user by name.
+ * Finds a user by handle.
  */
-export const findUserByName = async (
+export const findUserByHandle = async (
   context: IoContext,
-  name: string,
+  handle: string,
 ): Promise<Entity<User> | undefined> => {
-  const results = await context.database.read({
-    [userKey]: {
+  const resultsHandle = await context.database.read({
+    [handleKey]: {
       $query: {
         name: {
-          $eq: name,
+          $eq: handle,
         },
       },
     },
-  }, {
-    scope: { [userKey]: 'global' },
+  });
+
+  const handleEntity = resultsHandle[handleKey]?.[0] as Entity<Handle> | undefined;
+
+  if (!handleEntity) {
+    return undefined;
+  }
+
+  const results = await context.database.read({
+    [userKey]: {
+      $query: {
+        $id: {
+          $eq: handleEntity.$subject,
+        },
+      },
+    },
   });
 
   if (!results[userKey]?.length) {

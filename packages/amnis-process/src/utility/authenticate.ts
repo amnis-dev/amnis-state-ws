@@ -22,7 +22,7 @@ import {
 import { systemSelectors } from '@amnis/state';
 import { challengeValidate } from './challenge.js';
 import {
-  findContactById, findCredentialById, findProfileByUserId, findUserByName,
+  findContactById, findCredentialById, findProfileByUserId, findUserByHandle,
 } from './find.js';
 import { generateBearer, generateSession } from './generate.js';
 
@@ -159,7 +159,7 @@ export const authenticateAccount = async (
   /**
    * Find the user
    */
-  const user = await findUserByName(context, username);
+  const user = await findUserByHandle(context, username);
 
   if (!user) {
     return authenticateFailedOutput(

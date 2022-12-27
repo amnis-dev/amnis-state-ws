@@ -180,7 +180,7 @@
       "items": {
         "$ref": "#/definitions/UID%3Cunknown%3E"
       },
-      "description": "An array of identifiers."
+      "description": "List of identifiers."
     },
     "UID<unknown>": {
       "type": "string",

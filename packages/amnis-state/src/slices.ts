@@ -3,6 +3,7 @@ import { bearerSlice } from './bearer/index.js';
 import { challengeSlice } from './challenge/index.js';
 import { contactSlice } from './contact/index.js';
 import { credentialSlice } from './credential/index.js';
+import { handleSlice } from './handle/handle.js';
 import { keySlice } from './key/index.js';
 import { historySlice } from './history/index.js';
 import { localeSlice } from './locale/index.js';
@@ -22,6 +23,7 @@ export const slices = {
   [challengeSlice.name]: challengeSlice,
   [contactSlice.name]: contactSlice,
   [credentialSlice.name]: credentialSlice,
+  [handleSlice.name]: handleSlice,
   [keySlice.name]: keySlice,
   [historySlice.name]: historySlice,
   [localeSlice.name]: localeSlice,

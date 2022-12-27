@@ -3,17 +3,16 @@ import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../e
 import type { Permit } from '../permit/index.js';
 import type { Credential } from '../credential/index.js';
 import type { Role } from '../role/index.js';
+import type { HandleName } from '../handle/index.js';
 
 /**
  * Data associated to a User.
  */
 export interface User extends EntityCreator {
   /**
-   * Name for the user.
-   * @minLength 3
-   * @maxLength 32
+   * Handle for the user.
    */
-  name: string;
+  handle: HandleName;
 
   /**
    * A hashed value of the users password.
@@ -86,4 +85,4 @@ export type UserBase = EntityCreatorBase<User>;
 /**
   * User base properties for creation.
   */
-export type UserCreator = EntityCreatorParams<User, 'name'>;
+export type UserCreator = EntityCreatorParams<User, 'handle'>;

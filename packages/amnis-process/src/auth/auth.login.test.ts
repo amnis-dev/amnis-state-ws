@@ -72,7 +72,7 @@ test('should login as a admin', async () => {
   }
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.name,
+    username: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,
@@ -100,7 +100,7 @@ test('should login as a admin', async () => {
   const sessions = output.json.result?.session as Entity<Session>[];
 
   expect(users).toHaveLength(1);
-  expect(users[0].name).toBe(adminAccount.name);
+  expect(users[0].handle).toBe(adminAccount.handle);
   expect(users[0].$credentials?.[0]).toBe(adminAccount.credential.$id);
   expect(users[0].$owner).toBe(users[0].$id);
 
@@ -136,7 +136,7 @@ test('should NOT login as an admin with different private key', async () => {
   }
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.name,
+    username: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,
@@ -190,7 +190,7 @@ test('should NOT login as an admin with different challenge', async () => {
   expect(challenge?.value).not.toEqual(wrongChallenge.value);
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.name,
+    username: adminAccount.handle,
     password: adminAccount.password,
     challenge: wrongChallenge,
     credential: adminAccount.credential,

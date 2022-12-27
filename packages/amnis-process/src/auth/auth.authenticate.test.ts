@@ -51,7 +51,7 @@ test('should create an admin session and authenticate using the admin keys', asy
    * Get the admin account information.
    */
   const { admin } = await accountsGet();
-  const adminUser = storageUsers.find((u) => u.name === admin.name) as Entity<User>;
+  const adminUser = storageUsers.find((u) => u.handle === admin.handle) as Entity<User>;
 
   /**
    * Generate the session.
@@ -116,7 +116,7 @@ test('should create an admin session and authenticate using the admin keys', asy
   const sessions = output.json.result?.session as Entity<Session>[];
 
   expect(users).toHaveLength(1);
-  expect(users[0].name).toBe(admin.name);
+  expect(users[0].handle).toBe(admin.handle);
   expect(users[0].$credentials?.[0]).toBe(admin.credential.$id);
   expect(users[0].$owner).toBe(users[0].$id);
 
@@ -142,7 +142,7 @@ test('should create a user session and authenticate using the user keys', async 
    * Get the admin account information.
    */
   const { user } = await accountsGet();
-  const userUser = storageUsers.find((u) => u.name === user.name) as Entity<User>;
+  const userUser = storageUsers.find((u) => u.handle === user.handle) as Entity<User>;
 
   /**
    * Generate the session.
@@ -193,7 +193,7 @@ test('should create a user session and authenticate using the user keys', async 
   const sessions = output.json.result?.session as Entity<Session>[];
 
   expect(users).toHaveLength(1);
-  expect(users[0].name).toBe(user.name);
+  expect(users[0].handle).toBe(user.handle);
   expect(users[0].$credentials?.[0]).toBe(user.credential.$id);
   expect(users[0].$owner).toBe(users[0].$id);
 
@@ -219,7 +219,7 @@ test('should create an admin session and fail authentication with an incorrect c
    * Get the admin account information.
    */
   const { admin } = await accountsGet();
-  const adminUser = storageUsers.find((u) => u.name === admin.name) as Entity<User>;
+  const adminUser = storageUsers.find((u) => u.handle === admin.handle) as Entity<User>;
 
   /**
    * Generate the session.
@@ -281,7 +281,7 @@ test('should create an admin session and fail authentication with an incorrect s
    * Get the admin account information.
    */
   const { admin, exec } = await accountsGet();
-  const adminUser = storageUsers.find((u) => u.name === admin.name) as Entity<User>;
+  const adminUser = storageUsers.find((u) => u.handle === admin.handle) as Entity<User>;
 
   /**
    * Generate the session.

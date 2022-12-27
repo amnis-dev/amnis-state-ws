@@ -6,7 +6,7 @@ import { uid } from '../../uid.js';
 export const userKey = 'user';
 
 export const userBase = (): UserBase => ({
-  name: 'Unknown User',
+  handle: 'unknown_user',
   locked: false,
   $credentials: [],
   $roles: [],

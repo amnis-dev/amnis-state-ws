@@ -4,6 +4,7 @@ import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../e
 /**
  * Human-freindly name to reference a particular subject.
  *
+ * @pattern ^[A-Za-z0-9_-]+$
  * @minLength 1
  * @maxLength 24
  */

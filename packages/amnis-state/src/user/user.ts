@@ -22,9 +22,9 @@ export const userAdapter = rtk.createEntityAdapter<Entity<User>>({
   selectId: (entity) => entity.$id,
 
   /**
-   * Sort by the user's name.
+   * Sort by the user's handle.
    */
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
+  sortComparer: (a, b) => a.handle.localeCompare(b.handle),
 });
 
 /**

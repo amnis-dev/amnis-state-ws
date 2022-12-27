@@ -65,13 +65,13 @@ Io<StateUpdater, StateCreator>
       for await (const entity of stateUpdateSanatizd[userKey]) {
         if (entity) {
           /**
-           * User names cannot be altered through this process.
+           * User handles cannot be altered through this process.
            */
-          if (entity.name) {
+          if (entity.handle) {
             output.json.logs.push({
               level: 'error',
               title: 'Update Failed',
-              description: 'A user\'s name property cannot be updated.',
+              description: 'A user\'s handle property cannot be updated.',
             });
             output.json.result = {};
             return output;

@@ -13,7 +13,7 @@ import {
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import {
-  findContactById, findCredentialById, findProfileByUserId, findUserByName,
+  findContactById, findCredentialById, findProfileByUserId, findUserByHandle,
 } from './find.js';
 
 let context: IoContext;
@@ -44,14 +44,14 @@ beforeAll(async () => {
   )[0] as Entity<Contact>;
 });
 
-test('should find user by name', async () => {
-  const found = await findUserByName(context, userExisting.name);
+test('should find user by handle', async () => {
+  const found = await findUserByHandle(context, userExisting.handle);
 
   if (!found) {
     expect(found).toBeDefined();
     return;
   }
-  expect(found.name).toBe(userExisting.name);
+  expect(found.handle).toBe(userExisting.handle);
 });
 
 test('should find profile by user id', async () => {

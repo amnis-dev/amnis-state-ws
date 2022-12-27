@@ -29,7 +29,9 @@ import {
 } from './entity/index.js';
 
 import { accountsGet } from './accounts.js';
-import { cryptoWeb } from './index.js';
+import {
+  cryptoWeb, Handle, handleCreator, handleKey,
+} from './index.js';
 
 export const dataInitial = async (): Promise<StateEntities> => {
   /**
@@ -47,6 +49,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
         grantStringify({ key: auditKey, scope: 'global', task: task(0, 1, 1, 1) }),
         grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 1, 1) }),
         grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        grantStringify({ key: handleKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: credentialKey, scope: 'global', task: task(0, 1, 0, 1) }),
         grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
@@ -62,6 +65,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
         grantStringify({ key: auditKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        grantStringify({ key: handleKey, scope: 'global', task: task(0, 0, 1, 1) }),
         grantStringify({ key: credentialKey, scope: 'global', task: task(0, 1, 0, 1) }),
         grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
@@ -76,6 +80,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
         grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: userKey, scope: 'owned', task: task(0, 1, 1, 0) }),
+        grantStringify({ key: handleKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: credentialKey, scope: 'owned', task: task(0, 1, 0, 1) }),
         grantStringify({ key: profileKey, scope: 'owned', task: task(0, 1, 1, 0) }),
         grantStringify({ key: profileKey, scope: 'global', task: task(0, 1, 0, 0) }),
@@ -88,6 +93,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       description: 'Permissions for accessing the application data without authentication.',
       color: '#000000',
       grants: [
+        grantStringify({ key: handleKey, scope: 'global', task: task(0, 1, 0, 0) }),
         grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
       ],
     }), { committed: true, new: false }),
@@ -103,7 +109,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
 
   const users: Entity<User>[] = [
     entityCreate(userCreator({
-      name: accounts.admin.name,
+      handle: accounts.admin.handle,
       password: await cryptoWeb.passHash(accounts.admin.password),
       email: 'admin@email.addr',
       emailVerified: true,
@@ -111,7 +117,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       $permits: [],
     }), { committed: true, new: false }),
     entityCreate(userCreator({
-      name: accounts.exec.name,
+      handle: accounts.exec.handle,
       password: await cryptoWeb.passHash(accounts.exec.password),
       email: 'exec@email.addr',
       emailVerified: true,
@@ -119,13 +125,31 @@ export const dataInitial = async (): Promise<StateEntities> => {
       $permits: [],
     }), { committed: true, new: false }),
     entityCreate(userCreator({
-      name: accounts.user.name,
+      handle: accounts.user.handle,
       password: await cryptoWeb.passHash(accounts.user.password),
       email: 'user@email.addr',
       emailVerified: true,
       $roles: [roles[2].$id],
       $permits: [],
     }), { committed: true, new: false }),
+  ];
+
+  /**
+   * User handles.
+   */
+  const handles: Entity<Handle>[] = [
+    entityCreate(handleCreator({
+      name: users[0].handle,
+      $subject: users[0].$id,
+    })),
+    entityCreate(handleCreator({
+      name: users[1].handle,
+      $subject: users[1].$id,
+    })),
+    entityCreate(handleCreator({
+      name: users[2].handle,
+      $subject: users[2].$id,
+    })),
   ];
 
   /**
@@ -209,6 +233,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
   return {
     [roleKey]: roles,
     [userKey]: users,
+    [handleKey]: handles,
     [credentialKey]: credentials,
     [contactKey]: contacts,
     [profileKey]: profiles,

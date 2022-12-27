@@ -12,13 +12,13 @@ test('user key should be is properly set', () => {
  */
 test('should create a user', async () => {
   const user = userCreator({
-    name: 'Newbie',
+    handle: 'Newbie',
     email: 'newbie@amnis.dev',
   });
 
   expect(user).toEqual(
     expect.objectContaining({
-      name: expect.any(String),
+      handle: expect.any(String),
       email: expect.any(String),
       $credentials: expect.any(Array),
       $roles: expect.any(Array),

@@ -6,6 +6,7 @@ import {
   cryptoWeb,
   databaseMemoryClear,
   Entity,
+  handleKey,
   IoContext,
   ioOutputErrored,
   profileKey,
@@ -31,13 +32,13 @@ afterEach(() => {
  * ================================================================================================
  */
 test('should create a new account with minial options', async () => {
-  const handle = 'newbie';
+  const handleName = 'newbie';
   const password = 'passwd12';
   const email = 'email@amnis.dev';
   const output = await accountCreate(
     context,
     {
-      handle,
+      handle: handleName,
       password,
       email,
     },
@@ -54,13 +55,13 @@ test('should create a new account with minial options', async () => {
     return;
   }
 
-  expect(Object.keys(result)).toHaveLength(3);
+  expect(Object.keys(result)).toHaveLength(4);
 
   const users = result[userKey] as Entity<User>[];
   expect(users).toBeDefined();
   expect(users).toHaveLength(1);
   expect(users[0]).toMatchObject({
-    name: handle,
+    handle: handleName,
     password: expect.any(String),
     email,
     $credentials: [],
@@ -69,11 +70,19 @@ test('should create a new account with minial options', async () => {
   const isPasswordSame = await cryptoWeb.passCompare(password, users[0].password ?? '');
   expect(isPasswordSame).toBe(true);
 
+  const handle = result[handleKey];
+  expect(handle).toBeDefined();
+  expect(handle).toHaveLength(1);
+  expect(handle[0]).toMatchObject({
+    name: handleName,
+    $subject: users[0].$id,
+  });
+
   const contacts = result[contactKey];
   expect(contacts).toBeDefined();
   expect(contacts).toHaveLength(1);
   expect(contacts[0]).toMatchObject({
-    name: handle,
+    name: handleName,
     $owner: users[0].$id,
   });
 
@@ -81,7 +90,7 @@ test('should create a new account with minial options', async () => {
   expect(profiles).toBeDefined();
   expect(profiles).toHaveLength(1);
   expect(profiles[0]).toMatchObject({
-    nameDisplay: handle,
+    nameDisplay: handleName,
     $user: users[0].$id,
     $contact: contacts[0].$id,
     $owner: users[0].$id,
@@ -132,13 +141,13 @@ test('should NOT create a new account with the same handles', async () => {
  * ================================================================================================
  */
 test('should create a new account with different display name', async () => {
-  const handle = 'newbie';
+  const handleName = 'newbie';
   const password = 'passwd12';
   const nameDisplay = 'Newbie Newbert';
   const output = await accountCreate(
     context,
     {
-      handle,
+      handle: handleName,
       password,
       nameDisplay,
     },
@@ -155,23 +164,31 @@ test('should create a new account with different display name', async () => {
     return;
   }
 
-  expect(Object.keys(result)).toHaveLength(3);
+  expect(Object.keys(result)).toHaveLength(4);
 
   const users = result[userKey];
   expect(users).toBeDefined();
   expect(users).toHaveLength(1);
   expect(users[0]).toMatchObject({
-    name: handle,
+    handle: handleName,
     password: expect.any(String),
     $credentials: [],
     $owner: users[0].$id,
+  });
+
+  const handle = result[handleKey];
+  expect(handle).toBeDefined();
+  expect(handle).toHaveLength(1);
+  expect(handle[0]).toMatchObject({
+    name: handleName,
+    $subject: users[0].$id,
   });
 
   const contacts = result[contactKey];
   expect(contacts).toBeDefined();
   expect(contacts).toHaveLength(1);
   expect(contacts[0]).toMatchObject({
-    name: handle,
+    name: handleName,
     $owner: users[0].$id,
   });
 
@@ -194,7 +211,7 @@ test('should create a new account with different display name', async () => {
  * ================================================================================================
  */
 test('should create a new account with a credential', async () => {
-  const handle = 'newbie';
+  const handleName = 'newbie';
   const password = 'passwd12';
   const credential = credentialCreator({
     name: 'Jest Agent',
@@ -203,7 +220,7 @@ test('should create a new account with a credential', async () => {
   const output = await accountCreate(
     context,
     {
-      handle,
+      handle: handleName,
       password,
       credential,
     },
@@ -220,7 +237,7 @@ test('should create a new account with a credential', async () => {
     return;
   }
 
-  expect(Object.keys(result)).toHaveLength(4);
+  expect(Object.keys(result)).toHaveLength(5);
 
   const credentials = result[credentialKey];
   expect(credentials).toBeDefined();
@@ -234,17 +251,25 @@ test('should create a new account with a credential', async () => {
   expect(users).toBeDefined();
   expect(users).toHaveLength(1);
   expect(users[0]).toMatchObject({
-    name: handle,
+    handle: handleName,
     password: expect.any(String),
     $credentials: [credentials[0].$id],
     $owner: users[0].$id,
+  });
+
+  const handle = result[handleKey];
+  expect(handle).toBeDefined();
+  expect(handle).toHaveLength(1);
+  expect(handle[0]).toMatchObject({
+    name: handleName,
+    $subject: users[0].$id,
   });
 
   const contacts = result[contactKey];
   expect(contacts).toBeDefined();
   expect(contacts).toHaveLength(1);
   expect(contacts[0]).toMatchObject({
-    name: handle,
+    name: handleName,
     $owner: users[0].$id,
   });
 
@@ -252,7 +277,7 @@ test('should create a new account with a credential', async () => {
   expect(profiles).toBeDefined();
   expect(profiles).toHaveLength(1);
   expect(profiles[0]).toMatchObject({
-    nameDisplay: handle,
+    nameDisplay: handleName,
     $user: users[0].$id,
     $contact: contacts[0].$id,
     $owner: users[0].$id,

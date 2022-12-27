@@ -12,7 +12,7 @@ import {
 
 import { systemSelectors } from '@amnis/state';
 import { processConfig } from '../config.js';
-import { findUserByName } from './find.js';
+import { findUserByHandle } from './find.js';
 
 /**
  * OAuth2 Response.
@@ -105,7 +105,7 @@ export async function oauthTwitter(
   //  * Find the user or register a new one.
   //  */
   // const username = `TR#${userData.id}`;
-  // const userSearch = await findUserByName(context, username);
+  // const userSearch = await findUserByHandle(context, username);
 
   // /**
   //  * If the user already exists, return the login success.

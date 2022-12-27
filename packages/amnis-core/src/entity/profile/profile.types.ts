@@ -39,8 +39,6 @@ export interface Profile extends EntityCreator {
 
   /**
    * Profile Contact.
-   *
-   * @pattern ^contact
    */
   $contact?: UID<Contact>;
 
