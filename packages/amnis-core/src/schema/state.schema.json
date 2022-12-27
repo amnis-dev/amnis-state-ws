@@ -52,8 +52,9 @@
     "UID": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "StateQuery": {
       "$ref": "#/definitions/State%3CQuery%3E",
@@ -184,8 +185,9 @@
     "UID<unknown>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     }
   }
 }

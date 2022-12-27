@@ -1,5 +1,5 @@
 import type { Role } from '../role/index.js';
-import type { UID, UIDList } from '../../types.js';
+import type { Email, UID, UIDList } from '../../types.js';
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Website } from '../website/index.js';
 
@@ -35,25 +35,19 @@ export interface System extends EntityCreator {
   registrationExpiration: number;
 
   /**
-   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
-   * @maxLength 64
-   * @description The sender email address for news.
+   * The sender email address for news.
    */
-  emailNews: string;
+  emailNews: Email;
 
   /**
-   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
-   * @maxLength 64
-   * @description The sender email address for system notifications.
+   * The sender email address for system notifications.
    */
-  emailNotify: string;
+  emailNotify: Email;
 
   /**
-   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
-   * @maxLength 64
-   * @description The sender email address for authentication tasks.
+   * The sender email address for authentication tasks.
    */
-  emailAuth: string;
+  emailAuth: Email;
 
   /**
    * @description System's website configurations.

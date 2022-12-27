@@ -1,4 +1,5 @@
 import type { Bearer } from '../state/bearer/index.js';
+import type { Email } from '../types.js';
 
 /**
  * Challenge purposes
@@ -23,11 +24,8 @@ export interface ApiAuthChallenge {
 
   /**
    * Email address to send the one-time-passcode to.
-   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
-   * @maxLength 64
-   * @errorMessage "The email address is poorly formatted"
    */
-  email?: string;
+  email?: Email;
 
   /**
    * Options signature from a privileged account to return the OTP.
@@ -103,12 +101,9 @@ export interface ApiAuthRegistration {
   password: string;
 
   /**
-   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
-   * @maxLength 64
-   * @description Email address to add to the account to receive one-time-passcodes.
-   * @errorMessage "The email address is poorly formatted"
+   * Email address to add to the account to receive one-time-passcodes.
    */
-  email?: string;
+  email?: Email;
 
   /**
    * @minLength 2

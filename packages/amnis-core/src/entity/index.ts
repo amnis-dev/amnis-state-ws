@@ -6,6 +6,7 @@ export * from './challenge/index.js';
 export * from './contact/index.js';
 export * from './credential/index.js';
 export * from './file/index.js';
+export * from './handle/index.js';
 export * from './history/index.js';
 export * from './image/index.js';
 export * from './key/index.js';

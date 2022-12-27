@@ -1,4 +1,4 @@
-import type { DateJSON, UIDList } from '../../types.js';
+import type { DateJSON, Email, UIDList } from '../../types.js';
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Permit } from '../permit/index.js';
 import type { Credential } from '../credential/index.js';
@@ -30,11 +30,8 @@ export interface User extends EntityCreator {
 
   /**
    * Email address for user account related purposes.
-   * @pattern ^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$
-   * @maxLength 64
-   * @errorMessage "There was an email error"
    */
-  email?: string;
+  email?: Email;
 
   /**
    * If the user email is verified.

@@ -17,6 +17,12 @@
             "$ref": "#/definitions/Contact"
           }
         },
+        "handle": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Handle"
+          }
+        },
         "history": {
           "type": "array",
           "items": {
@@ -154,8 +160,9 @@
     "UID": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "Contact": {
       "type": "object",
@@ -210,6 +217,36 @@
     "SURL": {
       "type": "string",
       "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    },
+    "Handle": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
+        },
+        "name": {
+          "$ref": "#/definitions/HandleName",
+          "description": "The handle name."
+        },
+        "$subject": {
+          "$ref": "#/definitions/UID",
+          "description": "The subject this handle references."
+        }
+      },
+      "required": [
+        "$id",
+        "$subject",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "Handles contain unique human-friendly names that reference a particular subject. Typically a user."
+    },
+    "HandleName": {
+      "type": "string",
+      "description": "Human-freindly name to reference a particular subject.",
+      "minLength": 1,
+      "maxLength": 24
     },
     "History": {
       "type": "object",
@@ -393,8 +430,9 @@
     "UID<Profile>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "Locale": {
       "type": "object",
@@ -495,8 +533,9 @@
     "UID<User>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "Note": {
       "type": "object",
@@ -555,7 +594,8 @@
         },
         "$contact": {
           "$ref": "#/definitions/UID%3CContact%3E",
-          "description": "Profile Contact."
+          "description": "Profile Contact.",
+          "pattern": "^contact"
         },
         "organization": {
           "type": "string",
@@ -581,8 +621,9 @@
     "UID<Contact>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "Role": {
       "type": "object",
@@ -694,21 +735,15 @@
           "default": 30
         },
         "emailNews": {
-          "type": "string",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64,
+          "$ref": "#/definitions/Email",
           "description": "The sender email address for news."
         },
         "emailNotify": {
-          "type": "string",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64,
+          "$ref": "#/definitions/Email",
           "description": "The sender email address for system notifications."
         },
         "emailAuth": {
-          "type": "string",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64,
+          "$ref": "#/definitions/Email",
           "description": "The sender email address for authentication tasks."
         },
         "$website": {
@@ -752,17 +787,25 @@
       ],
       "additionalProperties": false
     },
+    "Email": {
+      "type": "string",
+      "description": "An email address",
+      "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "maxLength": 64
+    },
     "UID<Website>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "UID<Role>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "UIDList<Role>": {
       "type": "array",
@@ -796,10 +839,8 @@
           "default": false
         },
         "email": {
-          "type": "string",
-          "description": "Email address for user account related purposes.",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64
+          "$ref": "#/definitions/Email",
+          "description": "Email address for user account related purposes."
         },
         "emailVerified": {
           "type": "boolean",
@@ -859,8 +900,9 @@
     "UID<Credential>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "UIDList<Permit>": {
       "type": "array",
@@ -872,8 +914,9 @@
     "UID<Permit>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "Session": {
       "type": "object",
@@ -1108,14 +1151,16 @@
     "UID<Route>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "UID<Image>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "StateUpdater": {
       "type": "object",
@@ -1252,8 +1297,9 @@
     "UID<Audit>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Contact>": {
       "type": "object",
@@ -1325,8 +1371,9 @@
     "UID<History>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Image>": {
       "type": "object",
@@ -1449,8 +1496,9 @@
     "UID<Locale>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Log>": {
       "type": "object",
@@ -1488,8 +1536,9 @@
     "UID<Log>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Note>": {
       "type": "object",
@@ -1515,8 +1564,9 @@
     "UID<Note>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Profile>": {
       "type": "object",
@@ -1551,7 +1601,8 @@
         },
         "$contact": {
           "$ref": "#/definitions/UID%3CContact%3E",
-          "description": "Profile Contact."
+          "description": "Profile Contact.",
+          "pattern": "^contact"
         },
         "organization": {
           "type": "string",
@@ -1635,8 +1686,9 @@
     "UID<Service>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<System>": {
       "type": "object",
@@ -1670,21 +1722,15 @@
           "default": 30
         },
         "emailNews": {
-          "type": "string",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64,
+          "$ref": "#/definitions/Email",
           "description": "The sender email address for news."
         },
         "emailNotify": {
-          "type": "string",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64,
+          "$ref": "#/definitions/Email",
           "description": "The sender email address for system notifications."
         },
         "emailAuth": {
-          "type": "string",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64,
+          "$ref": "#/definitions/Email",
           "description": "The sender email address for authentication tasks."
         },
         "$website": {
@@ -1718,8 +1764,9 @@
     "UID<System>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<User>": {
       "type": "object",
@@ -1746,10 +1793,8 @@
           "default": false
         },
         "email": {
-          "type": "string",
-          "description": "Email address for user account related purposes.",
-          "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-          "maxLength": 64
+          "$ref": "#/definitions/Email",
+          "description": "Email address for user account related purposes."
         },
         "emailVerified": {
           "type": "boolean",
@@ -1837,8 +1882,9 @@
     "UID<Session>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Video>": {
       "type": "object",
@@ -1928,8 +1974,9 @@
     "UID<Video>": {
       "type": "string",
       "description": "A id identifier to another document.",
-      "minLength": 16,
-      "maxLength": 64
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Website>": {
       "type": "object",

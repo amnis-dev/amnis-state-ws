@@ -1,6 +1,7 @@
 import type {
   Audit,
   Contact,
+  Handle,
   History,
   Image,
   Locale,
@@ -20,6 +21,7 @@ import type {
 export interface StateCreator {
   audit?: Audit[];
   contact?: Contact[];
+  handle?: Handle[];
   history?: History[];
   image?: Image[];
   locale?: Locale[];
