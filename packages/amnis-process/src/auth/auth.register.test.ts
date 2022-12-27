@@ -96,6 +96,7 @@ test('should start ritual and complete registration', async () => {
     username: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
+    email: 'example@amnis.dev',
     challenge,
   });
 
@@ -126,6 +127,7 @@ test('should start ritual and complete registration', async () => {
   expect(users[0].$roles).toEqual(systemActive?.$initialRoles);
   expect(users[0].$owner).toEqual(users[0].$id);
   expect(users[0].password).toBeDefined();
+  expect(users[0].email).toBe('example@amnis.dev');
 
   expect(profiles).toBeDefined();
   expect(profiles).toHaveLength(1);

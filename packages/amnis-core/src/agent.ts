@@ -242,7 +242,7 @@ export const agentLogin = async (
   const agentCurrent = await agentGet();
   const challengeEncoded = challengeEncode(challenge);
 
-  const signatureData = username + agentCurrent.credentialId + challenge.value;
+  const signatureData = username + agentCurrent.credentialId;
   const signature = await agentSign(signatureData);
 
   const authLogin: ApiAuthLogin = {

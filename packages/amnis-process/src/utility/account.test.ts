@@ -33,11 +33,13 @@ afterEach(() => {
 test('should create a new account with minial options', async () => {
   const handle = 'newbie';
   const password = 'passwd12';
+  const email = 'email@amnis.dev';
   const output = await accountCreate(
     context,
     {
       handle,
       password,
+      email,
     },
   );
 
@@ -60,6 +62,7 @@ test('should create a new account with minial options', async () => {
   expect(users[0]).toMatchObject({
     name: handle,
     password: expect.any(String),
+    email,
     $credentials: [],
     $owner: users[0].$id,
   });

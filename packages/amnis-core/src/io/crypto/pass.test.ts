@@ -4,7 +4,6 @@ test('should hash a password', async () => {
   const password = 'MyPassword123';
   const passwordHashed1 = await passHash(password);
   const passwordHashed2 = await passHash(password);
-  // console.log({ password, passwordHashed1, length: passwordHashed1.length });
   expect(passwordHashed1).toBeDefined();
   expect(passwordHashed2).toBeDefined();
 
@@ -15,7 +14,6 @@ test('should hash a password', async () => {
 test('should hash a password and validate hash value with the original', async () => {
   const password = 'MyPassword123';
   const passwordHashed = await passHash(password);
-  // console.log({ password, passwordHashed, length: passwordHashed.length });
   const result = await passCompare(password, passwordHashed);
 
   expect(result).toBe(true);
@@ -24,7 +22,6 @@ test('should hash a password and validate hash value with the original', async (
 test('should hash a password and NOT validate hash with a different password', async () => {
   const password = 'MyPassword123';
   const passwordHashed = await passHash(password);
-  // console.log({ password, passwordHashed, length: passwordHashed.length });
   const result = await passCompare('MyPassword12', passwordHashed);
 
   expect(result).toBe(false);

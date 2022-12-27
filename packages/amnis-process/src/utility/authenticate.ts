@@ -227,7 +227,7 @@ export const authenticateAccount = async (
   const publicKey = await context.crypto.keyImport(credential.publicKey);
 
   const verified = await context.crypto.asymVerify(
-    username + credentialId + challenge.value,
+    username + credentialId,
     signature,
     publicKey,
   );

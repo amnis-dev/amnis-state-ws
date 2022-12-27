@@ -65,6 +65,7 @@ export interface ApiAuthRegistrationCreateOptions {
   password: string;
   challenge: Entity<Challenge> | Challenge;
   origin?: string;
+  email?: string;
 }
 
 export type ApiAuthRegistrationCreate = (
@@ -84,6 +85,7 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
   password,
   challenge,
   origin,
+  email,
 }) => {
   const agent = agentName();
 
@@ -121,7 +123,7 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
    * Sign the credential data to ensure it came from this client.
    */
   const signature = await cryptoWeb.asymSign(
-    username + credentialEncoded,
+    username + credentialEncoded + email,
     credentialKeys.privateKey,
   );
 
@@ -139,6 +141,7 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
   const authRegistration: ApiAuthRegistration = {
     username,
     password,
+    email,
     displayName,
     challenge: challengeEncoded,
     type: 'auth.create',
@@ -213,7 +216,7 @@ export const apiAuthLoginCreate: ApiAuthLoginCreate = async ({
 }) => {
   const challengeEncoded = challengeEncode(challenge);
 
-  const signatureData = username + credential.$id + challenge.value;
+  const signatureData = username + credential.$id;
 
   const privateKey = await cryptoWeb.keyUnwrap(
     privateKeyWrapped,
