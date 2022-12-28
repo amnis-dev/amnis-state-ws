@@ -3,21 +3,21 @@ import { cryptoWeb } from '../index.js';
 import { apiAuthRegistrationCreate, apiAuthRegistrationParse } from './auth.js';
 
 test('should create a valid auth registration object', async () => {
-  const username = 'test_user';
+  const handle = 'test_user';
   const displayName = 'Test User';
   const challenge = challengeCreator({
     value: await cryptoWeb.randomString(),
   });
 
   const [authRegistration] = await apiAuthRegistrationCreate({
-    username,
+    handle,
     displayName,
     password: 'passwd12',
     challenge,
   });
 
   expect(authRegistration).toMatchObject({
-    username: 'test_user',
+    handle: 'test_user',
     displayName: 'Test User',
     challenge: expect.any(String),
     type: 'auth.create',
@@ -28,14 +28,14 @@ test('should create a valid auth registration object', async () => {
 });
 
 test('should be able to parse a generated auth registration object', async () => {
-  const username = 'test_user';
+  const handle = 'test_user';
   const displayName = 'Test User';
   const challenge = challengeCreator({
     value: await cryptoWeb.randomString(),
   });
 
   const [authRegistration, privateKeyWrapped] = await apiAuthRegistrationCreate({
-    username,
+    handle,
     displayName,
     password: 'passwd12',
     challenge,
@@ -51,7 +51,7 @@ test('should be able to parse a generated auth registration object', async () =>
   }
 
   expect(authRegistrationParsed).toMatchObject({
-    username: 'test_user',
+    handle: 'test_user',
     displayName: 'Test User',
     challenge: expect.any(Object),
     type: 'auth.create',

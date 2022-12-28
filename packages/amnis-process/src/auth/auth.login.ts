@@ -18,7 +18,7 @@ Io<ApiAuthLogin, StateEntities>
 
     const {
       challenge,
-      username,
+      handle,
       $credential,
       signature,
       password,
@@ -42,7 +42,7 @@ Io<ApiAuthLogin, StateEntities>
     const outputAuthentication = await authenticateAccount(
       context,
       challengeDecoded,
-      username,
+      handle,
       $credential as UID,
       signature,
       password,

@@ -28,7 +28,7 @@ test('should register a new account', async () => {
   });
 
   const [authRegistration] = await apiAuthRegistrationCreate({
-    username: 'new_user',
+    handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     challenge,
@@ -84,13 +84,13 @@ test('should register a new account', async () => {
   expect(logs[0].title).toBe('Account Created');
 });
 
-test('should not register with an existing username', async () => {
+test('should not register with an existing handle', async () => {
   const challenge = challengeCreator({
     value: await context.crypto.randomString(16),
   });
 
   const [authRegistration] = await apiAuthRegistrationCreate({
-    username: 'new_user',
+    handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     challenge,

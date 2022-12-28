@@ -27,7 +27,7 @@ export const registerAccount = async (
   const output = await accountCreate(
     context,
     {
-      handle: authRegistrationParsed.username,
+      handle: authRegistrationParsed.handle,
       password: authRegistrationParsed.password,
       email: authRegistrationParsed.email,
       credential,

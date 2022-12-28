@@ -23,14 +23,14 @@ export const accountsGet = async () => {
    */
   if (!admin) {
     const [adminRegistration, adminPrivateKey, adminCredential] = await apiAuthRegistrationCreate({
-      username: 'admin',
+      handle: 'admin',
       displayName: 'Administrator',
       password: 'passwd12',
       challenge,
     });
 
     admin = {
-      handle: adminRegistration.username,
+      handle: adminRegistration.handle,
       credential: adminCredential,
       password: 'passwd12',
       privateKey: adminPrivateKey,
@@ -42,14 +42,14 @@ export const accountsGet = async () => {
    */
   if (!exec) {
     const [execRegistration, execPrivateKey, execCredential] = await apiAuthRegistrationCreate({
-      username: 'exec',
+      handle: 'exec',
       displayName: 'Executive',
       password: 'passwd12',
       challenge,
     });
 
     exec = {
-      handle: execRegistration.username,
+      handle: execRegistration.handle,
       credential: execCredential,
       password: 'passwd12',
       privateKey: execPrivateKey,

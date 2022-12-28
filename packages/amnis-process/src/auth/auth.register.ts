@@ -91,7 +91,7 @@ Io<ApiAuthRegistration, StateEntities>
      * Verify the signature
      */
     const signatureValid = await crypto.asymVerify(
-      body.username + body.credential + body.email,
+      body.handle + body.credential + body.email,
       signature,
       publicKey,
     );

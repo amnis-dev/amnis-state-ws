@@ -93,7 +93,7 @@ test('should start ritual and complete registration', async () => {
   }
 
   const [authRegistration] = await apiAuthRegistrationCreate({
-    username: 'new_user',
+    handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     email: 'example@amnis.dev',
@@ -195,7 +195,7 @@ test('should not be able to register when turned off by the system', async () =>
   }
 
   const [authRegistration] = await apiAuthRegistrationCreate({
-    username: 'new_user',
+    handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     challenge,

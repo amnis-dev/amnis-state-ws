@@ -3,7 +3,7 @@ import type {
   ApiAuthLogin,
   ApiAuthLogout,
   // ApiAuthPkce,
-  ApiAuthRenew,
+  ApiAuthCreate,
   ApiAuthVerify,
   ApiAuthChallenge,
   ApiAuthAuthenticate,
@@ -19,8 +19,8 @@ export interface AuthSchema {
   register?: ApiAuthRegistration;
   login?: ApiAuthLogin;
   logout?: ApiAuthLogout;
-  renew?: ApiAuthRenew;
   verify?: ApiAuthVerify;
+  create?: ApiAuthCreate;
   /**
    * Encoded types.
    */

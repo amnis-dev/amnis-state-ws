@@ -68,18 +68,6 @@ export const bearerSlice = rtk.createSlice({
         bearerAdapter.upsertMany(state, bearers);
       }
     });
-
-    /**
-     * Get bearers from a successful renewal.
-     */
-    builder.addMatcher(apiAuth.endpoints.renew.matchFulfilled, (state, action) => {
-      const { payload } = action;
-      const { bearers } = payload;
-
-      if (bearers?.length) {
-        bearerAdapter.upsertMany(state, bearers);
-      }
-    });
   },
 });
 

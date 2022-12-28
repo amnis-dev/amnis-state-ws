@@ -57,7 +57,7 @@ test('should be able to login and logout', async () => {
    * Create the login request body.
    */
   const authLogin = await apiAuthLoginCreate({
-    username: user.handle,
+    handle: user.handle,
     password: user.password,
     challenge,
     credential: user.credential,

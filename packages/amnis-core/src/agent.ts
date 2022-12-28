@@ -184,7 +184,7 @@ export const agentSign = async (data: string): Promise<string> => {
  * Create an ApiAuthRegistration with agent properties.
  */
 export const agentRegistration = async (
-  username: string,
+  handle: string,
   displayName: string,
   password: string,
   challenge: Challenge,
@@ -201,7 +201,7 @@ export const agentRegistration = async (
   const signature = await agentSign(credential);
 
   const authRegistration: ApiAuthRegistration = {
-    username,
+    handle,
     password,
     displayName,
     challenge: challengeEncoded,
@@ -235,18 +235,18 @@ export const agentAuthenticate = async (
  * Create an ApiAuthLogin for this agent.
  */
 export const agentLogin = async (
-  username: string,
+  handle: string,
   password:string,
   challenge: Challenge,
 ): Promise<ApiAuthLogin> => {
   const agentCurrent = await agentGet();
   const challengeEncoded = challengeEncode(challenge);
 
-  const signatureData = username + agentCurrent.credentialId;
+  const signatureData = handle + agentCurrent.credentialId;
   const signature = await agentSign(signatureData);
 
   const authLogin: ApiAuthLogin = {
-    username,
+    handle,
     password,
     challenge: challengeEncoded,
     $credential: agentCurrent.credentialId,

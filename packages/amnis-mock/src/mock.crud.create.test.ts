@@ -56,7 +56,7 @@ test('should be able to create a new contact', async () => {
    * Create the login request body.
    */
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.handle,
+    handle: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,

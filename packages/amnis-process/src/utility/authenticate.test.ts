@@ -24,7 +24,7 @@ test('should authenticate as normal user account', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.handle,
+    handle: userAccount.handle,
     password: userAccount.password,
     challenge,
     credential: userAccount.credential,
@@ -34,7 +34,7 @@ test('should authenticate as normal user account', async () => {
   const output = await authenticateAccount(
     context,
     challenge,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,
@@ -98,7 +98,7 @@ test('should authenticate as executive account', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: execAccount.handle,
+    handle: execAccount.handle,
     password: execAccount.password,
     challenge,
     credential: execAccount.credential,
@@ -108,7 +108,7 @@ test('should authenticate as executive account', async () => {
   const output = await authenticateAccount(
     context,
     challenge,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,
@@ -140,7 +140,7 @@ test('should authenticate as administrator account', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.handle,
+    handle: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,
@@ -150,7 +150,7 @@ test('should authenticate as administrator account', async () => {
   const output = await authenticateAccount(
     context,
     challenge,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,
@@ -181,10 +181,10 @@ test('should not authenticate with non-existing user', async () => {
   });
   context.store.dispatch(challengeActions.create(challenge));
 
-  const username = 'i-dont-exist';
+  const handle = 'i-dont-exist';
 
   const authLogin = await apiAuthLoginCreate({
-    username,
+    handle,
     password: userAccount.password,
     challenge,
     credential: userAccount.credential,
@@ -194,7 +194,7 @@ test('should not authenticate with non-existing user', async () => {
   const output = await authenticateAccount(
     context,
     challenge,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,
@@ -216,7 +216,7 @@ test('should not authenticate using different credentials', async () => {
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.handle,
+    handle: userAccount.handle,
     password: 'wrongpassword',
     challenge,
     credential: execAccount.credential,
@@ -226,7 +226,7 @@ test('should not authenticate using different credentials', async () => {
   const output = await authenticateAccount(
     context,
     challenge,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,
@@ -248,7 +248,7 @@ test('should not authenticate using a different private key for signing', async 
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.handle,
+    handle: userAccount.handle,
     password: userAccount.password,
     challenge,
     credential: userAccount.credential,
@@ -258,7 +258,7 @@ test('should not authenticate using a different private key for signing', async 
   const output = await authenticateAccount(
     context,
     challenge,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,
@@ -284,7 +284,7 @@ test('should not authenticate using a different challenge value', async () => {
   };
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.handle,
+    handle: userAccount.handle,
     password: userAccount.password,
     challenge: challengeChanged,
     credential: userAccount.credential,
@@ -294,7 +294,7 @@ test('should not authenticate using a different challenge value', async () => {
   const output = await authenticateAccount(
     context,
     challengeChanged,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,
@@ -316,7 +316,7 @@ test('should not authenticate using different credentials but valid password', a
   context.store.dispatch(challengeActions.create(challenge));
 
   const authLogin = await apiAuthLoginCreate({
-    username: userAccount.handle,
+    handle: userAccount.handle,
     password: userAccount.password,
     challenge,
     credential: execAccount.credential,
@@ -326,7 +326,7 @@ test('should not authenticate using different credentials but valid password', a
   const output = await authenticateAccount(
     context,
     challenge,
-    authLogin.username,
+    authLogin.handle,
     authLogin.$credential as UID,
     authLogin.signature,
     authLogin.password,

@@ -61,7 +61,7 @@ Io<ApiAuthAuthenticate, StateEntities>
     }
 
     /**
-     * Ecure the challenge is valid.
+     * Ensure the challenge is valid.
      */
     const challengeVerified = challengeValidate(context, challenge);
     if (challengeVerified !== true) {

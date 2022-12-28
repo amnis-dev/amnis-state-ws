@@ -49,7 +49,7 @@ const authenticateLoginFailedOutput = (title: string, description: string) => {
 };
 
 /**
- * Login a user with a username without validation.
+ * Login a user with a handle without validation.
  * Use authenticateAccount to authenticate securely.
  */
 export const authenticateLogin = async (
@@ -143,7 +143,7 @@ export const authenticateLogin = async (
 export const authenticateAccount = async (
   context: IoContext,
   challenge: Challenge,
-  username: string,
+  handle: string,
   credentialId: UID<Credential>,
   signatureEncoded: string,
   password?: string,
@@ -159,12 +159,12 @@ export const authenticateAccount = async (
   /**
    * Find the user
    */
-  const user = await findUserByHandle(context, username);
+  const user = await findUserByHandle(context, handle);
 
   if (!user) {
     return authenticateFailedOutput(
       'User Not Found',
-      `Could not find username "${user}".`,
+      `Could not find handle "${user}".`,
     );
   }
 
@@ -227,7 +227,7 @@ export const authenticateAccount = async (
   const publicKey = await context.crypto.keyImport(credential.publicKey);
 
   const verified = await context.crypto.asymVerify(
-    username + credentialId,
+    handle + credentialId,
     signature,
     publicKey,
   );

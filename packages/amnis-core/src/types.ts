@@ -55,3 +55,27 @@ export type SURL = SURLNominal & string;
  * @errorMessage "The email address is poorly formatted"
  */
 export type Email = string;
+
+/**
+ * A clear-text password.
+ *
+ * @minLength 4
+ * @maxLength 32
+ */
+export type Password = string;
+
+/**
+ * An encoded challenge to prevent replay attacks.
+ *
+ * @minLength 16
+ * @maxLength 512
+ */
+export type ChallengeEncoded = string;
+
+/**
+ * An encoded cryptographic signature to verify that data can be trusted.
+ *
+ * @minLength 16
+ * @maxLength 512
+ */
+export type SignatureEncoded = string;

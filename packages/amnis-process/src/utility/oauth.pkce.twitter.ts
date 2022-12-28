@@ -33,7 +33,7 @@ interface OAuth2TokenData {
 export interface TwitterUser {
   id: string;
   name: string;
-  username: string;
+  handle: string;
 }
 
 const bearerEndpoint = `${processConfig.PROCESS_TWITTER_OAUTH2_URL}oauth2/bearer`;
@@ -104,8 +104,8 @@ export async function oauthTwitter(
   //  * Step 3
   //  * Find the user or register a new one.
   //  */
-  // const username = `TR#${userData.id}`;
-  // const userSearch = await findUserByHandle(context, username);
+  // const handle = `TR#${userData.id}`;
+  // const userSearch = await findUserByHandle(context, handle);
 
   // /**
   //  * If the user already exists, return the login success.
@@ -145,7 +145,7 @@ export async function oauthTwitter(
   // const registrationOutput = await register(
   //   context,
   //   system,
-  //   username,
+  //   handle,
   //   {
   //     otherTokens: bearers,
   //     nameDisplay: userData?.name || '',

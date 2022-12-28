@@ -27,7 +27,7 @@ import { findUserByHandle } from './find.js';
  */
 export interface AccountCreateOptions {
   /**
-   * The handle for the account. Also called the username.
+   * The handle for the account. Also called the handle.
    */
   handle: string;
   /**

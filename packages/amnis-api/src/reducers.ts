@@ -149,44 +149,6 @@ export function apiExtraReducers<C extends EntityCreator>(
 
   /**
    * ================================================================================
-   * Auth Renew
-   * Matches when a renew request is fulfilled.
-   * ------------------------------------------------------------
-   */
-  builder.addMatcher(apiAuth.endpoints.renew.matchFulfilled, (state, action) => {
-    const { payload } = action;
-    const { result } = payload;
-    if (result && result[key] && Array.isArray(result[key])) {
-      /** @ts-ignore */
-      adapter.upsertMany<MetaState<E>>(state, result[key]);
-
-      /**
-       * Set the new active session.
-       */
-      if (key === sessionKey && !!result[key].length) {
-        const sessionIdPrev = state.active;
-        state.active = result[key][0].$id;
-
-        /**
-         * StateDeleter the previously active session if it existed.
-         */
-        if (sessionIdPrev) {
-          /** @ts-ignore */
-          adapter.removeOne(state, sessionIdPrev);
-        }
-      }
-
-      /**
-       * Set the active user/profile.
-       */
-      if ([userKey, profileKey].includes(key) && !!result[key].length) {
-        state.active = result[key][0].$id;
-      }
-    }
-  });
-
-  /**
-   * ================================================================================
    * CRUD Create
    * Matches when a creation method is fulfilled.
    * ------------------------------------------------------------

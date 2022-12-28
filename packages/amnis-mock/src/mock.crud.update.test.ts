@@ -61,7 +61,7 @@ test('should be able to update user profile', async () => {
    * Create the login request body.
    */
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.handle,
+    handle: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,

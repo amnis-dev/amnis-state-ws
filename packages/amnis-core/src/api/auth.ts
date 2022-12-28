@@ -60,7 +60,7 @@ import type {
 // }
 
 export interface ApiAuthRegistrationCreateOptions {
-  username: string;
+  handle: string;
   displayName: string;
   password: string;
   challenge: Entity<Challenge> | Challenge;
@@ -80,7 +80,7 @@ export type ApiAuthRegistrationCreate = (
  * Creates encoded parameters for a registration.
  */
 export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
-  username,
+  handle,
   displayName,
   password,
   challenge,
@@ -123,7 +123,7 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
    * Sign the credential data to ensure it came from this client.
    */
   const signature = await cryptoWeb.asymSign(
-    username + credentialEncoded + email,
+    handle + credentialEncoded + email,
     credentialKeys.privateKey,
   );
 
@@ -139,7 +139,7 @@ export const apiAuthRegistrationCreate: ApiAuthRegistrationCreate = async ({
   }
 
   const authRegistration: ApiAuthRegistration = {
-    username,
+    handle,
     password,
     email,
     displayName,
@@ -195,7 +195,7 @@ export const apiAuthRegistrationParse: ApiAuthRegistrationParse = async (authReg
  * Parameters for the apiAuthLoginCreate method.
  */
 export interface ApiAuthLoginCreateParams {
-  username: string;
+  handle: string;
   password: string;
   challenge: Challenge;
   credential: Credential;
@@ -208,7 +208,7 @@ export type ApiAuthLoginCreate = (params: ApiAuthLoginCreateParams) => Promise<A
  * Creates an ApiAuthLogin object.
  */
 export const apiAuthLoginCreate: ApiAuthLoginCreate = async ({
-  username,
+  handle,
   password,
   challenge,
   credential,
@@ -216,7 +216,7 @@ export const apiAuthLoginCreate: ApiAuthLoginCreate = async ({
 }) => {
   const challengeEncoded = challengeEncode(challenge);
 
-  const signatureData = username + credential.$id;
+  const signatureData = handle + credential.$id;
 
   const privateKey = await cryptoWeb.keyUnwrap(
     privateKeyWrapped,
@@ -227,7 +227,7 @@ export const apiAuthLoginCreate: ApiAuthLoginCreate = async ({
   const signatureEncoded = base64Encode(new Uint8Array(signature));
 
   const authLogin: ApiAuthLogin = {
-    username,
+    handle,
     password,
     challenge: challengeEncoded,
     $credential: credential.$id,

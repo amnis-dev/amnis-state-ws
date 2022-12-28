@@ -2,10 +2,10 @@
 import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions.js';
 import {
   ApiAuthChallenge,
+  ApiAuthCredential,
   ApiAuthLogin,
   ApiAuthLogout,
   ApiAuthPkce,
-  ApiAuthRenew,
   ApiAuthVerify,
   Challenge,
   Entity,
@@ -22,6 +22,17 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
   >({
     query: (payload) => ({
       url: 'challenge',
+      method: 'post',
+      body: payload,
+    }),
+  }),
+
+  credential: builder.mutation<
+  IoOutputJson<StateEntities>,
+  ApiAuthCredential
+  >({
+    query: (payload) => ({
+      url: 'credential',
       method: 'post',
       body: payload,
     }),
@@ -57,18 +68,6 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
   >({
     query: (payload) => ({
       url: 'pkce',
-      method: 'post',
-      credentials: 'include',
-      body: payload,
-    }),
-  }),
-
-  renew: builder.query<
-  IoOutputJson<StateEntities>,
-  ApiAuthRenew
-  >({
-    query: (payload) => ({
-      url: 'renew',
       method: 'post',
       credentials: 'include',
       body: payload,

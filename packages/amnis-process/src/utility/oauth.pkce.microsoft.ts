@@ -114,8 +114,8 @@ export async function oauthMicrosoft(
   //  * Step 3
   //  * Find the user or register a new one.
   //  */
-  // const username = `MS#${microsoftId.oid}`;
-  // const userSearch = await findUserByHandle(context, username);
+  // const handle = `MS#${microsoftId.oid}`;
+  // const userSearch = await findUserByHandle(context, handle);
 
   // /**
   //  * If the user already exists, return the login success.
@@ -155,7 +155,7 @@ export async function oauthMicrosoft(
   // const registrationOutput = await register(
   //   context,
   //   system,
-  //   username,
+  //   handle,
   //   {
   //     withTokens: true,
   //     otherTokens: bearers,

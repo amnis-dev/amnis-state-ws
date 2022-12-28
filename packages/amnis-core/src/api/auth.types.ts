@@ -1,5 +1,8 @@
+import { HandleName } from '../entity/index.js';
 import type { Bearer } from '../state/bearer/index.js';
-import type { Email } from '../types.js';
+import type {
+  ChallengeEncoded, Email, Password, SignatureEncoded,
+} from '../types.js';
 
 /**
  * Challenge purposes
@@ -30,7 +33,7 @@ export interface ApiAuthChallenge {
   /**
    * Options signature from a privileged account to return the OTP.
    */
-  signature?: string;
+  signature?: SignatureEncoded;
 }
 
 /**
@@ -38,12 +41,10 @@ export interface ApiAuthChallenge {
  */
 export interface ApiAuthCredential {
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @desciption Encoded signature challenge object to prevent reply attacks
+   * Encoded signature challenge object to prevent reply attacks
    * with a level of authenticity using an OTP.
    */
-  challenge: string;
+  challenge: ChallengeEncoded;
 
   /**
    * @minLength 16
@@ -53,11 +54,9 @@ export interface ApiAuthCredential {
   credential: string;
 
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @description Encoded attestation signature of the encoded credential.
+   * Encoded attestation signature of the encoded credential.
    */
-  signature: string;
+  signature: SignatureEncoded;
 }
 
 /**
@@ -66,18 +65,14 @@ export interface ApiAuthCredential {
  */
 export interface ApiAuthAuthenticate {
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @desciption Encoded challenge object to prevent reply attacks.
+   * Encoded challenge object to prevent reply attacks.
    */
-  challenge: string;
+  challenge: ChallengeEncoded;
 
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @description Encoded attestation signature of the challenge object.
+   * Encoded attestation signature of the challenge object.
    */
-  signature: string;
+  signature: SignatureEncoded;
 }
 
 /**
@@ -86,19 +81,14 @@ export interface ApiAuthAuthenticate {
  */
 export interface ApiAuthRegistration {
   /**
-   * @minLength 2
-   * @maxLength 24
-   * @pattern ^[a-zA-Z0-9-_]+$
-   * @description The usename to register under.
+   * The handle name to register under.
    */
-  username: string;
+  handle: HandleName;
 
   /**
-   * @minLength 4
-   * @maxLength 32
-   * @description The password for the registration.
+   * The password for the registration.
    */
-  password: string;
+  password: Password;
 
   /**
    * Email address to add to the account to receive one-time-passcodes.
@@ -113,11 +103,9 @@ export interface ApiAuthRegistration {
   displayName: string;
 
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @desciption Encoded challenge object to prevent reply attacks.
+   * Encoded challenge object to prevent reply attacks.
    */
-  challenge: string;
+  challenge: ChallengeEncoded;
 
   /**
    * @minLength 4
@@ -139,11 +127,9 @@ export interface ApiAuthRegistration {
   credential: string;
 
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @description Encoded attestation signature of the challenge + credential encodings.
+   * Encoded attestation signature of the challenge + credential encodings.
    */
-  signature: string;
+  signature: SignatureEncoded;
 }
 
 /**
@@ -151,19 +137,14 @@ export interface ApiAuthRegistration {
  */
 export interface ApiAuthLogin {
   /**
-   * @minLength 2
-   * @maxLength 24
-   * @pattern ^[a-zA-Z0-9-_]+$
-   * @description Unique name for login credentials
+   * Unique name for login credentials
    */
-  username: string;
+  handle: HandleName;
 
   /**
-   * @minLength 4
-   * @maxLength 32
-   * @description The password for the login.
+   * The login password
    */
-  password?: string;
+  password?: Password;
 
   /**
    * @minLength 16
@@ -182,7 +163,7 @@ export interface ApiAuthLogin {
   /**
    * @minLength 8
    * @maxLength 512
-   * @description Agent's cryptographic signature of the username and challenge.
+   * @description Agent's cryptographic signature of the handle and challenge.
    */
   signature: string;
 }
@@ -245,14 +226,38 @@ export interface ApiAuthPkce {
 }
 
 /**
- * Payload for a session and bearer renewal.
- * Should not have any data in the body.
+ * Creates an account for authentication.
  */
-export interface ApiAuthRenew {
+export interface ApiAuthCreate {
   /**
-   * Include user and profile data with the response.
+   * The user handle.
    */
-  info?: boolean;
+  handle: HandleName;
+
+  /**
+   * The account password to apply.
+   */
+  password: Password;
+
+  /**
+   * Account email address for important account related information
+   */
+  email?: Email;
+
+  /**
+   * Display name for the account profile.
+   */
+  nameDisplay?: string;
+
+  /**
+   * Creation challenge.
+   */
+  challenge: ChallengeEncoded;
+
+  /**
+   * Signature verification.
+   */
+  signature: SignatureEncoded;
 }
 
 /**

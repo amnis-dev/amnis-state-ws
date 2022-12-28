@@ -72,7 +72,7 @@ test('should login as a admin', async () => {
   }
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.handle,
+    handle: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,
@@ -136,7 +136,7 @@ test('should NOT login as an admin with different private key', async () => {
   }
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.handle,
+    handle: adminAccount.handle,
     password: adminAccount.password,
     challenge,
     credential: adminAccount.credential,
@@ -190,7 +190,7 @@ test('should NOT login as an admin with different challenge', async () => {
   expect(challenge?.value).not.toEqual(wrongChallenge.value);
 
   const authLogin = await apiAuthLoginCreate({
-    username: adminAccount.handle,
+    handle: adminAccount.handle,
     password: adminAccount.password,
     challenge: wrongChallenge,
     credential: adminAccount.credential,

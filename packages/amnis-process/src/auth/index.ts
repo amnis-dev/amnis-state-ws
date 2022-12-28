@@ -1,4 +1,6 @@
 import { processAuthChallenge } from './auth.challenge.js';
+import { processAuthCreate } from './auth.create.js';
+import { processAuthCredential } from './auth.credential.js';
 import { processAuthLogin } from './auth.login.js';
 import { processAuthLogout } from './auth.logout.js';
 // import { processAuthPcke } from './auth.pkce.js';
@@ -7,6 +9,8 @@ import { processAuthVerify } from './auth.verify.js';
 
 export const processAuth = {
   challenge: processAuthChallenge,
+  create: processAuthCreate,
+  credential: processAuthCredential,
   register: processAuthRegister,
   login: processAuthLogin,
   logout: processAuthLogout,
