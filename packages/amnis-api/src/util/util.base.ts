@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetch, { Headers, Request } from 'cross-fetch';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/index.js';
-import { rtkq } from '@amnis/core';
-import { headersAuthorizationToken } from './util.headers.js';
+import { rtkq, State } from '@amnis/core';
+import { headersAuthorizationToken, headersChallenge, headersSignature } from './util.headers.js';
 import { apiSelectors } from '../api/api.js';
 
 global.Headers = Headers;
@@ -23,7 +23,44 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
   const rawBaseQuery = rtkq.fetchBaseQuery({
     baseUrl: apiMeta ? apiMeta.baseUrl : '',
     fetchFn: fetch,
-    prepareHeaders: apiMeta?.bearerId ? headersAuthorizationToken(apiMeta.bearerId) : undefined,
+    prepareHeaders: async (headers, api) => {
+      const state = api.getState() as State;
+
+      /**
+       * Apply a bearer if needed.
+       */
+      if (apiMeta?.bearerId) {
+        headersAuthorizationToken(headers, state, apiMeta.bearerId);
+      }
+
+      /**
+       * Provide a signature headers on the required requests
+       */
+      if (
+        apiMeta?.sign
+        && (apiMeta.sign === true || apiMeta.sign.includes(api.endpoint))
+      ) {
+        if (typeof args === 'string') {
+          await headersSignature(headers, args);
+        } else {
+          await headersSignature(headers, args.body);
+        }
+      }
+
+      /**
+       * Provide challenge headers on the required requests
+       */
+      if (
+        apiMeta?.challenge
+        && (apiMeta.challenge === true || apiMeta.challenge.includes(api.endpoint))
+      ) {
+        await headersChallenge(headers, apiMeta.challengeUrl || '/api/auth/challenge');
+      }
+
+      headers.forEach((value, key) => console.log(`HEADER ... ${key}: ${value}`));
+
+      return headers;
+    },
   });
   return rawBaseQuery(args, store, extraOptions);
 };

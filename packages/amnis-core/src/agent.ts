@@ -6,6 +6,7 @@ import {
 } from './entity/index.js';
 import {
   ApiAuthAuthenticate,
+  ApiAuthCreate,
   ApiAuthLogin,
   ApiAuthRegistration,
 } from './api/index.js';
@@ -183,7 +184,7 @@ export const agentSign = async (data: string): Promise<string> => {
 /**
  * Create an ApiAuthRegistration with agent properties.
  */
-export const agentRegistration = async (
+export const agentApiRegistration = async (
   handle: string,
   displayName: string,
   password: string,
@@ -217,7 +218,7 @@ export const agentRegistration = async (
 /**
  * Create an ApiAuthAuthenticate for this agent.
  */
-export const agentAuthenticate = async (
+export const agentApiAuthenticate = async (
   challenge: Challenge,
 ): Promise<ApiAuthAuthenticate> => {
   const challengeEncoded = challengeEncode(challenge);
@@ -234,7 +235,7 @@ export const agentAuthenticate = async (
 /**
  * Create an ApiAuthLogin for this agent.
  */
-export const agentLogin = async (
+export const agentApiLogin = async (
   handle: string,
   password:string,
   challenge: Challenge,
@@ -254,4 +255,27 @@ export const agentLogin = async (
   };
 
   return authLogin;
+};
+
+/**
+ * Create an ApiAuthCreate for this agent.
+ */
+export const agentApiCreate = async (
+  challenge: Challenge,
+  options: Omit<ApiAuthCreate, 'challenge' | 'signature'>,
+): Promise<ApiAuthCreate> => {
+  const challengeEncoded = challengeEncode(challenge);
+
+  const signatureData = Object.values(options).reduce<string>(
+    (acc, cur) => acc + cur,
+    '',
+  );
+  const signatureEncoded = await agentSign(signatureData);
+
+  const authCreate: ApiAuthCreate = {
+    challenge: challengeEncoded,
+    signature: signatureEncoded,
+    ...options,
+  };
+  return authCreate;
 };

@@ -2,8 +2,6 @@ import {
   Challenge,
   challengeCreator,
   dateNumeric,
-  Entity,
-  entityCreate,
   IoContext,
   IoOutput,
   ioOutput,
@@ -27,7 +25,7 @@ export interface ChallengeCreateOptions {
 export const challengeCreate = async (
   context: IoContext,
   options: ChallengeCreateOptions = {},
-): Promise<IoOutput<Entity<Challenge>>> => {
+): Promise<IoOutput<Challenge>> => {
   const { store, crypto } = context;
 
   const system = systemSelectors.selectActive(store.getState());
@@ -51,15 +49,13 @@ export const challengeCreate = async (
   /**
    * Generate the unique challange code to send back.
    */
-  const challengeEntity = entityCreate(
-    challengeCreator({
-      value: challangeValue,
-      expires: dateNumeric(`${system.registrationExpiration}m`),
-    }),
-  );
+  const challengeItem = challengeCreator({
+    value: challangeValue,
+    expires: dateNumeric(`${system.registrationExpiration}m`),
+  });
 
   if (options.$subject) {
-    challengeEntity.$subject = options.$subject;
+    challengeItem.$subject = options.$subject;
   }
 
   if (options.privatize === true) {
@@ -73,17 +69,17 @@ export const challengeCreate = async (
         ),
       );
     });
-    challengeEntity.otp = challangeValuePrivate.toLowerCase();
+    challengeItem.otp = challangeValuePrivate.toLowerCase();
   }
 
   /**
    * Store the challenge on the io store to check against later.
    */
-  store.dispatch(challengeActions.insert(challengeEntity));
+  store.dispatch(challengeActions.create(challengeItem));
 
   const output = ioOutput();
   output.status = 200;
-  output.json.result = challengeEntity;
+  output.json.result = challengeItem;
   return output;
 };
 

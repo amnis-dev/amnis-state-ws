@@ -61,7 +61,7 @@ test('should login and then logout as administrator', async () => {
   expect(outputLogin.cookies.authSession).toBeDefined();
 
   const inputLogout: IoInput<ApiAuthLogout> = {
-    sessionEncryption: outputLogin.cookies.authSession,
+    sessionEncrypted: outputLogin.cookies.authSession,
     body: {},
   };
 

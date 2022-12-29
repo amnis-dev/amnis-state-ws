@@ -4,7 +4,6 @@ import {
   auditKey,
   apiAuthLoginCreate,
   contactKey,
-  dateNumeric,
   profileKey,
   sessionKey,
   userKey,
@@ -21,7 +20,7 @@ import { mockService } from './mock.service.js';
 const baseUrl = 'https://amnis.dev';
 
 clientStore.dispatch(apiActions.upsertMany([
-  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth` },
+  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth`, challengeUrl: `${baseUrl}/api/auth/challenge` },
   { id: 'apiCrud', baseUrl: `${baseUrl}/api/crud` },
 ]));
 
@@ -123,8 +122,6 @@ test('should NOT be able to login with a bad password', async () => {
     return;
   }
 
-  console.log(JSON.stringify({ challenge, now: dateNumeric() }, null, 2));
-
   /**
    * Create the login request body.
    */
@@ -208,5 +205,5 @@ test('should see audits of login requests as admin', async () => {
   const { data } = resultAudits;
 
   expect(Object.keys(data?.result || {})).toHaveLength(1);
-  expect(data?.result?.[auditKey]).toHaveLength(6);
+  expect(data?.result?.[auditKey]).toHaveLength(9);
 });

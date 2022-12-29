@@ -28,6 +28,9 @@ test('api should return the initial state', () => {
   expect(apiAuthMeta).toEqual({
     id: 'apiAuth',
     baseUrl: '/api/auth',
+    sign: ['login', 'register'],
+    challenge: ['login', 'register'],
+    challengeUrl: '/api/auth/challenge',
   });
 
   const apiCrudMeta = apiSelectors.selectById(store.getState(), 'apiCrud');

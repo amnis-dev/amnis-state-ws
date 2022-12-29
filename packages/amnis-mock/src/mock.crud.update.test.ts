@@ -18,7 +18,7 @@ import { mockService } from './mock.service.js';
 const baseUrl = 'https://amnis.dev';
 
 clientStore.dispatch(apiActions.upsertMany([
-  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth` },
+  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth`, challengeUrl: `${baseUrl}/api/auth/challenge` },
   { id: 'apiCrud', baseUrl: `${baseUrl}/api/crud` },
 ]));
 

@@ -12,7 +12,6 @@ import {
   IoInput,
   ApiAuthCredential,
   ioOutput,
-  entityStrip,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { challengeCreate } from '../utility/challenge.js';
@@ -74,7 +73,7 @@ test('should add a new credential to the user account', async () => {
     expect(challenge).toBeDefined();
     return;
   }
-  const challengeEncoded = base64JsonEncode(entityStrip(challenge));
+  const challengeEncoded = base64JsonEncode(challenge);
 
   /**
    * Process the new credential creation.

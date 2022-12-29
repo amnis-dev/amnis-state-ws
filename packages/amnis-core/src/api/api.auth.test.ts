@@ -1,6 +1,6 @@
 import { challengeCreator } from '../entity/index.js';
 import { cryptoWeb } from '../index.js';
-import { apiAuthRegistrationCreate, apiAuthRegistrationParse } from './auth.js';
+import { apiAuthRegistrationCreate, apiAuthRegistrationParse } from './api.auth.js';
 
 test('should create a valid auth registration object', async () => {
   const handle = 'test_user';

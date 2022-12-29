@@ -16,4 +16,22 @@ export interface Api {
    * Bearer token to find for this api.
    */
   bearerId?: string;
+
+  /**
+   * Endpoints that require signing.
+   * A value of `true` indicates all endpoints.
+   */
+  sign?: string[] | boolean;
+
+  /**
+   * Endpoints that require a challenge value.
+   * A value of `true` indicates all endpoints.
+   */
+  challenge?: boolean | string[];
+
+  /**
+   * URL to fetch challenges from.
+   */
+  challengeUrl?: string;
+
 }

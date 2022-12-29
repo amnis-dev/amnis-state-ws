@@ -24,7 +24,7 @@ export function apiMockGenerateHandlers(
         /**
          * Set the encoded session cookie on the input.
          */
-        input.sessionEncryption = authSession;
+        input.sessionEncrypted = authSession;
 
         /**
          * Capture the authorization bearer if sent with the request.

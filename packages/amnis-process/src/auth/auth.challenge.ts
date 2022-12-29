@@ -17,11 +17,11 @@ import { challengeCreate } from '../utility/challenge.js';
 import { findUserById } from '../utility/find.js';
 
 const process: IoProcess<
-Io<ApiAuthChallenge, Entity<Challenge>>
+Io<ApiAuthChallenge, Challenge>
 > = (context) => (
   async (input, output) => {
     const { store, crypto, send } = context;
-    const { body, sessionEncryption } = input;
+    const { body, sessionEncrypted } = input;
     const system = systemSelectors.selectActive(store.getState());
 
     if (!system) {
@@ -63,7 +63,7 @@ Io<ApiAuthChallenge, Entity<Challenge>>
     /**
      * Check if the challenge creator has a session.
      */
-    const session = sessionEncryption ? await crypto.sessionDecrypt(sessionEncryption) : undefined;
+    const session = sessionEncrypted ? await crypto.sessionDecrypt(sessionEncrypted) : undefined;
 
     /**
      * Generate the challenge code output.
@@ -105,7 +105,8 @@ Io<ApiAuthChallenge, Entity<Challenge>>
       expires: resultChallenge.expires,
       value: resultChallenge.value,
       $subject: resultChallenge.$subject,
-    }), { $id: resultChallenge.$id });
+    }));
+    output.json.result.$id = resultChallenge.$id;
 
     /**
      * If the session holder is a privileged account, also send back the challenge OTP.

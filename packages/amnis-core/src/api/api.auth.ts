@@ -20,9 +20,10 @@ import {
   cryptoWeb,
 } from '../io/index.js';
 import type {
+  ApiAuthCreate,
   ApiAuthLogin,
   ApiAuthRegistration,
-} from './auth.types.js';
+} from './api.auth.types.js';
 
 /**
  * I don't know how reliable/consistent this is to use as a unique password yet.
@@ -235,4 +236,46 @@ export const apiAuthLoginCreate: ApiAuthLoginCreate = async ({
   };
 
   return authLogin;
+};
+
+/**
+ * Parameters for the apiAuthCreateCreate method.
+ */
+export interface ApiAuthCreateCreateParams extends Omit<ApiAuthCreate, 'challenge' | 'signature'> {
+  challenge: Challenge;
+  privateKeyWrapped: string;
+}
+
+export type ApiAuthCreateCreate = (params: ApiAuthCreateCreateParams) => Promise<ApiAuthCreate>;
+
+/**
+ * Creates an ApiAuthCreate object.
+ */
+export const apiAuthCreateCreate: ApiAuthCreateCreate = async ({
+  challenge,
+  privateKeyWrapped,
+  ...createProps
+}) => {
+  const challengeEncoded = challengeEncode(challenge);
+
+  const signatureData = Object.values(createProps).reduce<string>(
+    (acc, cur) => acc + cur,
+    '',
+  );
+
+  const privateKey = await cryptoWeb.keyUnwrap(
+    privateKeyWrapped,
+    await cryptoWeb.hashData(agentFingerprint()),
+  ) || (await cryptoWeb.asymGenerate('signer')).privateKey;
+
+  const signature = await cryptoWeb.asymSign(signatureData, privateKey);
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+
+  const authCreate: ApiAuthCreate = {
+    challenge: challengeEncoded,
+    signature: signatureEncoded,
+    ...createProps,
+  };
+
+  return authCreate;
 };

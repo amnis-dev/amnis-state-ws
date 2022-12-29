@@ -41,6 +41,16 @@ Io<ApiAuthCreate, StateEntities>
       return output;
     }
 
+    if (session.prv !== true) {
+      output.status = 401;
+      output.json.logs.push({
+        level: 'error',
+        title: 'Unauthorized',
+        description: 'This account is not authorized to create other accounts.',
+      });
+      return output;
+    }
+
     const {
       challenge: challengeEncoded,
       signature: signatureEncoded,

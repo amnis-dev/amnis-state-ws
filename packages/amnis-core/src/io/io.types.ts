@@ -81,7 +81,7 @@ export interface IoInput<T = any, J = JWTAccess> {
   /**
    * Ecrypted Session
    */
-  sessionEncryption?: string;
+  sessionEncrypted?: string;
 
   /**
    * Decrypted session data.

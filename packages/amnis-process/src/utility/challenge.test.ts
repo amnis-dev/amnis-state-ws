@@ -3,8 +3,6 @@ import {
   challengeCreator,
   DateNumeric,
   dateNumeric,
-  Entity,
-  entityCreate,
   IoContext,
   uid,
   UID,
@@ -19,31 +17,31 @@ import { challengeValidate } from './challenge.js';
 
 let context: IoContext;
 let challengeSubject: UID;
-let challengeValid: Entity<Challenge>;
-let challengeExpired: Entity<Challenge>;
-let challengeUser: Entity<Challenge>;
+let challengeValid: Challenge;
+let challengeExpired: Challenge;
+let challengeUser: Challenge;
 
 beforeAll(async () => {
   context = await contextSetup({
     initialize: true,
   });
   challengeSubject = uid(userKey);
-  challengeValid = entityCreate(challengeCreator({
+  challengeValid = challengeCreator({
     value: await context.crypto.randomString(16),
     expires: dateNumeric('15m'),
-  }));
-  challengeExpired = entityCreate(challengeCreator({
+  });
+  challengeExpired = challengeCreator({
     value: await context.crypto.randomString(16),
     expires: dateNumeric() - 1000 as DateNumeric,
-  }));
-  challengeUser = entityCreate(challengeCreator({
+  });
+  challengeUser = challengeCreator({
     value: await context.crypto.randomString(16),
     expires: dateNumeric('15m'),
     $subject: challengeSubject,
-  }));
-  context.store.dispatch(challengeActions.insert(challengeValid));
-  context.store.dispatch(challengeActions.insert(challengeExpired));
-  context.store.dispatch(challengeActions.insert(challengeUser));
+  });
+  context.store.dispatch(challengeActions.create(challengeValid));
+  context.store.dispatch(challengeActions.create(challengeExpired));
+  context.store.dispatch(challengeActions.create(challengeUser));
 });
 
 test('should successfully validate a valid challenge', async () => {

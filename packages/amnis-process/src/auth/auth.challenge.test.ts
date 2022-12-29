@@ -279,7 +279,7 @@ test('should generate a challenge entity with a subject as an administrator to r
       subject: userUser.$id,
       signature: base64Encode(new Uint8Array(signature)),
     },
-    sessionEncryption: adminSessionEncryption,
+    sessionEncrypted: adminSessionEncryption,
   };
   const output = await processAuthChallenge(context)(input, ioOutput());
   const challenge = output.json.result;
@@ -333,7 +333,7 @@ test('should generate a challenge entity with a subject as a user NOT return an 
       subject: userUser.$id,
       signature: base64Encode(new Uint8Array(signature)),
     },
-    sessionEncryption: userSessionEncryption,
+    sessionEncrypted: userSessionEncryption,
   };
   const output = await processAuthChallenge(context)(input, ioOutput());
   const challenge = output.json.result;

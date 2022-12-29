@@ -18,7 +18,7 @@ import {
   Profile,
   Contact,
   Session,
-  agentAuthenticate,
+  agentApiAuthenticate,
   challengeCreator,
   dateNumeric,
 } from '@amnis/core';
@@ -97,7 +97,7 @@ test('should create an admin session and authenticate using the admin keys', asy
       challenge: challengeEncoded,
       signature: signatureEncoded,
     },
-    sessionEncryption: sessionEncrypted,
+    sessionEncrypted,
   };
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
@@ -167,14 +167,14 @@ test('should create a user session and authenticate using the user keys', async 
   /**
    * Use the agent authentication method.
    */
-  const apiAuthenticate = await agentAuthenticate(challenge);
+  const apiAuthenticate = await agentApiAuthenticate(challenge);
 
   /**
    * Now that everything is prepared, start authenticating.
    */
   const inputAuthenticate: IoInput<ApiAuthAuthenticate> = {
     body: apiAuthenticate,
-    sessionEncryption: sessionEncrypted,
+    sessionEncrypted,
   };
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
@@ -259,7 +259,7 @@ test('should create an admin session and fail authentication with an incorrect c
       challenge: challengeEncoded,
       signature: signatureEncoded,
     },
-    sessionEncryption: sessionEncrypted,
+    sessionEncrypted,
   };
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
@@ -327,7 +327,7 @@ test('should create an admin session and fail authentication with an incorrect s
       challenge: challengeEncoded,
       signature: signatureEncoded,
     },
-    sessionEncryption: sessionEncrypted,
+    sessionEncrypted,
   };
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 

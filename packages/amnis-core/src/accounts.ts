@@ -2,7 +2,7 @@ import { agentGet } from './agent.js';
 import { challengeCreator, Credential, credentialCreator } from './entity/index.js';
 import {
   apiAuthRegistrationCreate,
-} from './api/auth.js';
+} from './api/api.auth.js';
 
 export interface Account {
   handle: string;
