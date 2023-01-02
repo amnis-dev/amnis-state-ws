@@ -3,9 +3,9 @@ import {
   IoProcess,
   StateEntities,
   ApiAuthCreate,
-  challengeDecode,
   base64Decode,
   ioOutputApply,
+  base64JsonDecode,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
 import { mwSession, mwValidate } from '../mw/index.js';
@@ -60,7 +60,7 @@ Io<ApiAuthCreate, StateEntities>
     /**
      * Decode the challenge.
      */
-    const challenge = challengeDecode(challengeEncoded);
+    const challenge = base64JsonDecode(challengeEncoded);
     if (!challenge) {
       output.status = 500;
       output.json.logs.push({

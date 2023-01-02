@@ -1,7 +1,7 @@
 import { HandleName } from '../entity/index.js';
 import type { Bearer } from '../state/bearer/index.js';
 import type {
-  ChallengeEncoded, Email, Password, SignatureEncoded,
+  ChallengeEncoded, Email, Password, SignatureEncoded, UID,
 } from '../types.js';
 
 /**
@@ -63,17 +63,7 @@ export interface ApiAuthCredential {
  * A request to authenticate with a session.
  * User must log in if authentication fails.
  */
-export interface ApiAuthAuthenticate {
-  /**
-   * Encoded challenge object to prevent reply attacks.
-   */
-  challenge: ChallengeEncoded;
-
-  /**
-   * Encoded attestation signature of the challenge object.
-   */
-  signature: SignatureEncoded;
-}
+export type ApiAuthAuthenticate = Record<string, never>;
 
 /**
  * Payload for an registration request.
@@ -147,25 +137,9 @@ export interface ApiAuthLogin {
   password?: Password;
 
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @desciption Encoded challenge object to prevent reply attacks.
+   * Credential identifier to use on the user account.
    */
-  challenge: string;
-
-  /**
-   * @minLength 12
-   * @maxLength 40
-   * @description Credential identifier to use on the user account.
-   */
-  $credential: string;
-
-  /**
-   * @minLength 8
-   * @maxLength 512
-   * @description Agent's cryptographic signature of the handle and challenge.
-   */
-  signature: string;
+  $credential: UID;
 }
 
 /**

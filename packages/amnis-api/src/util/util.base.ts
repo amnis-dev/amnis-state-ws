@@ -54,7 +54,7 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
         apiMeta?.challenge
         && (apiMeta.challenge === true || apiMeta.challenge.includes(api.endpoint))
       ) {
-        await headersChallenge(headers, apiMeta.challengeUrl || '/api/auth/challenge');
+        await headersChallenge(headers, state, `${reducerPath}/${api.endpoint}`);
       }
 
       headers.forEach((value, key) => console.log(`HEADER ... ${key}: ${value}`));

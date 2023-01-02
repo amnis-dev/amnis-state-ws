@@ -3,12 +3,12 @@ import {
   IoProcess,
   ApiAuthLogin,
   StateEntities,
-  UID,
-  challengeDecode,
   ioOutputApply,
 } from '@amnis/core';
-import { mwValidate } from '../mw/index.js';
-import { authenticateAccount } from '../utility/authenticate.js';
+import {
+  mwChallenge, mwCredential, mwSignature, mwValidate,
+} from '../mw/index.js';
+import { authenticateLogin } from '../utility/authenticate.js';
 
 const process: IoProcess<
 Io<ApiAuthLogin, StateEntities>
@@ -17,35 +17,18 @@ Io<ApiAuthLogin, StateEntities>
     const { body } = input;
 
     const {
-      challenge,
       handle,
       $credential,
-      signature,
       password,
     } = body;
 
-    /**
-     * Decode the challenge.
-     */
-    const challengeDecoded = challengeDecode(challenge);
-
-    if (!challengeDecoded) {
-      output.status = 500;
-      output.json.logs.push({
-        level: 'error',
-        title: 'Invalid Challenge',
-        description: 'The provided challenge could not be parsed.',
-      });
-      return output;
-    }
-
-    const outputAuthentication = await authenticateAccount(
+    const outputAuthentication = await authenticateLogin(
       context,
-      challengeDecoded,
-      handle,
-      $credential as UID,
-      signature,
-      password,
+      {
+        handle,
+        $credential,
+        password,
+      },
     );
 
     /**
@@ -61,7 +44,13 @@ Io<ApiAuthLogin, StateEntities>
 );
 
 export const processAuthLogin = mwValidate('ApiAuthLogin')(
-  process,
+  mwChallenge()(
+    mwCredential()(
+      mwSignature()(
+        process,
+      ),
+    ),
+  ),
 ) as IoProcess<
 Io<ApiAuthLogin, StateEntities>
 >;

@@ -1,4 +1,4 @@
-import { challengeBase, challengeCreator } from '@amnis/core';
+import { challengeBase, challengeCreate } from '@amnis/core';
 import {
   challengeInitialState,
   challengeSelectors,
@@ -24,7 +24,7 @@ test('challenges should return the initial state', () => {
 test('should handle creating a new challenges', () => {
   const store = storeSetup();
 
-  const action = challengeActions.create(challengeCreator(challengeBase()));
+  const action = challengeActions.create(challengeCreate(challengeBase()));
 
   store.dispatch(action);
   const entities = challengeSelectors.selectAll(store.getState());

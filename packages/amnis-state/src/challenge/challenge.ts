@@ -1,16 +1,12 @@
 import {
   rtk,
-  coreReducers,
-  coreExtraReducers,
   Challenge,
   challengeKey,
-  metaInitial,
-  coreSelectors,
-  Entity,
+  challengeCreate,
   dateNumeric,
   UID,
+  challengeBase,
 } from '@amnis/core';
-import { apiExtraReducers } from '@amnis/api';
 import type { Action, PayloadAction } from '@reduxjs/toolkit';
 import type { ChallengeMeta } from './challenge.types.js';
 
@@ -27,14 +23,14 @@ function isChallengeAction(
  * RTK challenge adapter.
  * Manages the normalized entities.
  */
-export const challengeAdapter = rtk.createEntityAdapter<Entity<Challenge>>({
+export const challengeAdapter = rtk.createEntityAdapter<Challenge>({
   /**
    * Identifiers are stored in the `$id` property.
    */
-  selectId: (entity) => entity.$id,
+  selectId: (challenge) => challenge.$id,
 
   /**
-   * TODO: A sort comparer other than `$id` is ideal.
+   * OPTIONAL: Sort by value other than $id.
    */
   // sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
@@ -42,9 +38,9 @@ export const challengeAdapter = rtk.createEntityAdapter<Entity<Challenge>>({
 /**
  * Initialized challenge state with meta information.
  */
-export const challengeInitialState = challengeAdapter.getInitialState<ChallengeMeta>(
-  metaInitial<Challenge>(),
-);
+export const challengeInitialState = challengeAdapter.getInitialState<ChallengeMeta>({
+  otps: [],
+});
 
 /**
  * RTK Challenge Slice
@@ -53,20 +49,24 @@ export const challengeSlice = rtk.createSlice({
   name: challengeKey,
   initialState: challengeInitialState,
   reducers: {
-    /**
-     * Common reducers and actions.
-     */
-    ...coreReducers<Challenge>(challengeKey, challengeAdapter),
+    create: (state, action: PayloadAction<Partial<Challenge>>) => {
+      challengeAdapter.addOne(state, challengeCreate(action.payload));
+    },
+    insert: (state, action: PayloadAction<Partial<Challenge> & { $id: Challenge['$id'] }>) => {
+      challengeAdapter.addOne(
+        state,
+        {
+          ...challengeBase(),
+          ...action.payload,
+          $id: action.payload.$id,
+        },
+      );
+    },
+    delete: (state, action: PayloadAction<UID>) => {
+      challengeAdapter.removeOne(state, action.payload);
+    },
   },
   extraReducers: (builder) => {
-    /**
-     * Required: Enables mutations from core actions.
-     */
-    coreExtraReducers(challengeKey, challengeAdapter, builder);
-    /**
-     * Required: Enables mutations from api requests.
-     */
-    apiExtraReducers(challengeKey, challengeAdapter, builder);
     /**
      * Match any challenge action.
      */
@@ -76,7 +76,7 @@ export const challengeSlice = rtk.createSlice({
        */
       const now = dateNumeric();
       const expiredIds = Object.values(state.entities)
-        .filter((e) => e !== undefined && e.expires <= now)
+        .filter((e) => e !== undefined && e.exp <= now)
         .map((e) => e?.$id) as UID<Challenge>[];
 
       challengeAdapter.removeMany(state, expiredIds);
@@ -104,10 +104,6 @@ export const challengeSelectors = {
   ...challengeAdapter.getSelectors<{
     [challengeKey]: typeof challengeInitialState;
   }>((state) => state[challengeKey]),
-  /**
-   * Gets core selectors.
-   */
-  ...coreSelectors<Challenge>(challengeKey),
 };
 
 /**

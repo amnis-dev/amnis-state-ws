@@ -1,11 +1,10 @@
 import {
   Challenge,
-  challengeCreator,
+  challengeCreate,
   DateNumeric,
   dateNumeric,
   IoContext,
   uid,
-  UID,
   userKey,
 } from '@amnis/core';
 import {
@@ -15,33 +14,33 @@ import {
 } from '@amnis/state';
 import { challengeValidate } from './challenge.js';
 
+const challengeSubjectId = uid(userKey);
+
 let context: IoContext;
-let challengeSubject: UID;
 let challengeValid: Challenge;
 let challengeExpired: Challenge;
-let challengeUser: Challenge;
+let challengeSubject: Challenge;
 
 beforeAll(async () => {
   context = await contextSetup({
     initialize: true,
   });
-  challengeSubject = uid(userKey);
-  challengeValid = challengeCreator({
-    value: await context.crypto.randomString(16),
-    expires: dateNumeric('15m'),
+  challengeValid = challengeCreate({
+    val: await context.crypto.randomString(16),
+    exp: dateNumeric('15m'),
   });
-  challengeExpired = challengeCreator({
-    value: await context.crypto.randomString(16),
-    expires: dateNumeric() - 1000 as DateNumeric,
+  challengeExpired = challengeCreate({
+    val: await context.crypto.randomString(16),
+    exp: dateNumeric() - 1000 as DateNumeric,
   });
-  challengeUser = challengeCreator({
-    value: await context.crypto.randomString(16),
-    expires: dateNumeric('15m'),
-    $subject: challengeSubject,
+  challengeSubject = challengeCreate({
+    val: await context.crypto.randomString(16),
+    exp: dateNumeric('15m'),
+    $sub: challengeSubjectId,
   });
-  context.store.dispatch(challengeActions.create(challengeValid));
-  context.store.dispatch(challengeActions.create(challengeExpired));
-  context.store.dispatch(challengeActions.create(challengeUser));
+  context.store.dispatch(challengeActions.insert(challengeValid));
+  context.store.dispatch(challengeActions.insert(challengeExpired));
+  context.store.dispatch(challengeActions.insert(challengeSubject));
 });
 
 test('should successfully validate a valid challenge', async () => {
@@ -69,13 +68,13 @@ test('should fail to validate an expired challenge', async () => {
   }
   expect(result.status).toBe(500);
   expect(result.json.logs.length).toBeGreaterThan(0);
-  expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
+  expect(result.json.logs[0].title).toBe('Invalid Challenge');
 });
 
 test('should fail to find a non-existing challenge', async () => {
-  const challengeNonExisting = challengeCreator({
-    value: await context.crypto.randomString(16),
-    expires: dateNumeric('15m'),
+  const challengeNonExisting = challengeCreate({
+    val: await context.crypto.randomString(16),
+    exp: dateNumeric('15m'),
   });
 
   const result = challengeValidate(context, challengeNonExisting);
@@ -86,18 +85,18 @@ test('should fail to find a non-existing challenge', async () => {
   }
   expect(result.status).toBe(500);
   expect(result.json.logs.length).toBeGreaterThan(0);
-  expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
+  expect(result.json.logs[0].title).toBe('Invalid Challenge');
 });
 
 test('should fail to find an existing challenge with a wrong value', async () => {
-  const challengeNonExisting = challengeCreator({
-    value: await context.crypto.randomString(16),
-    expires: dateNumeric('15m'),
+  const challengeNonExisting = challengeCreate({
+    val: await context.crypto.randomString(16),
+    exp: dateNumeric('15m'),
   });
 
   const challengeWrong = {
     ...challengeValid,
-    value: challengeNonExisting.value,
+    val: challengeNonExisting.val,
   };
 
   const result = challengeValidate(context, challengeWrong);
@@ -108,11 +107,11 @@ test('should fail to find an existing challenge with a wrong value', async () =>
   }
   expect(result.status).toBe(500);
   expect(result.json.logs.length).toBeGreaterThan(0);
-  expect(result.json.logs[0].title).toBe('Invalid Challenge Code');
+  expect(result.json.logs[0].title).toBe('Invalid Challenge');
 });
 
 test('should fail to validate a valid user challenge without a subject', async () => {
-  const result = challengeValidate(context, { ...challengeUser, $subject: undefined });
+  const result = challengeValidate(context, { ...challengeSubject, $sub: undefined });
 
   if (result === true) {
     expect(result).not.toBe(true);
@@ -124,7 +123,7 @@ test('should fail to validate a valid user challenge without a subject', async (
 });
 
 test('should fail to validate a valid user challenge with an invalid subject', async () => {
-  const result = challengeValidate(context, { ...challengeUser, $subject: uid(userKey) });
+  const result = challengeValidate(context, { ...challengeSubject, $sub: uid(userKey) });
 
   if (result === true) {
     expect(result).not.toBe(true);
@@ -136,7 +135,7 @@ test('should fail to validate a valid user challenge with an invalid subject', a
 });
 
 test('should validate a valid user challenge with the correct subject', async () => {
-  const result = challengeValidate(context, { ...challengeUser, $subject: challengeSubject });
+  const result = challengeValidate(context, { ...challengeSubject, $sub: challengeSubjectId });
 
   expect(result).toBe(true);
 });

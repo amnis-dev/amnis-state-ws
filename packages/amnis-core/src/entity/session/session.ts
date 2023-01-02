@@ -10,8 +10,8 @@ export const sessionKey = 'session';
 
 export const sessionBase = (): EntityCreatorBase<Session> => ({
   $subject: uid('user'),
+  $credential: uid('credential'),
   exp: dateNumeric(),
-  pub: '',
   prv: false,
   adm: false,
   exc: false,

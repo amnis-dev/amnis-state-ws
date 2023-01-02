@@ -2,8 +2,8 @@
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { Store } from '@reduxjs/toolkit';
 
-import type { Bearer } from '../state/index.js';
-import type { LogCreator, Session } from '../entity/index.js';
+import type { Bearer, Challenge } from '../state/index.js';
+import type { LogCreator, Session, Credential } from '../entity/index.js';
 
 import type { Database } from './database/database.types.js';
 import type { FileSystem } from './filesystem/filesystem.types.js';
@@ -62,7 +62,7 @@ export interface IoContext {
 /**
  * Input interface.
  */
-export interface IoInput<T = any, J = JWTAccess> {
+export interface IoInput<T = Record<string, unknown>, J = JWTAccess> {
   /**
    * The input body.
    */
@@ -87,6 +87,31 @@ export interface IoInput<T = any, J = JWTAccess> {
    * Decrypted session data.
    */
   session?: Session;
+
+  /**
+   * Encoded challenge data.
+   */
+  challengeEncoded?: string;
+
+  /**
+   * Decoded challenge object.
+   */
+  challenge?: Challenge;
+
+  /**
+   * Encoded signature data.
+   */
+  signatureEncoded?: string;
+
+  /**
+   * Decoded signature buffer.
+   */
+  signature?: ArrayBuffer;
+
+  /**
+   * The current credential.
+   */
+  credential?: Credential;
 
   /**
    * Possible IP address

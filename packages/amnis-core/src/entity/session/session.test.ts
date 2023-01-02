@@ -21,7 +21,7 @@ test('should create a session', () => {
   expect(session).toEqual(
     expect.objectContaining({
       $subject: expect.any(String),
-      pub: expect.any(String),
+      $credential: expect.any(String),
       exp: expect.any(Number),
       prv: false,
       adm: false,

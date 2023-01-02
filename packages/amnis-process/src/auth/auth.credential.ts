@@ -3,7 +3,6 @@ import {
   IoProcess,
   ApiAuthCredential,
   StateEntities,
-  challengeDecode,
   base64JsonDecode,
   base64Decode,
   ioOutputApply,
@@ -29,7 +28,7 @@ Io<ApiAuthCredential, StateEntities>
     /**
      * Decode and validate the challenge.
      */
-    const challenge = challengeDecode(challengeEncoded);
+    const challenge = base64JsonDecode(challengeEncoded);
     if (!challenge) {
       output.status = 500;
       output.json.logs.push({

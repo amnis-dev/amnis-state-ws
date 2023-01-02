@@ -2,7 +2,6 @@ export * from './entity.types.js';
 export * from './entity.js';
 
 export * from './audit/index.js';
-export * from './challenge/index.js';
 export * from './contact/index.js';
 export * from './credential/index.js';
 export * from './file/index.js';

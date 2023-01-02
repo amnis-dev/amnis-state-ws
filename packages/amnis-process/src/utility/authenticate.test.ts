@@ -1,13 +1,9 @@
 import {
   accountsGet,
-  apiAuthLoginCreate,
-  challengeCreator,
-  cryptoWeb,
   IoContext,
-  UID,
 } from '@amnis/core';
-import { challengeActions, contextSetup } from '@amnis/state';
-import { authenticateAccount } from './authenticate.js';
+import { contextSetup } from '@amnis/state';
+import { authenticateLogin } from './authenticate.js';
 
 let context: IoContext;
 
@@ -18,26 +14,13 @@ beforeAll(async () => {
 test('should authenticate as normal user account', async () => {
   const { user: userAccount } = await accountsGet();
 
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-
-  const authLogin = await apiAuthLoginCreate({
-    handle: userAccount.handle,
-    password: userAccount.password,
-    challenge,
-    credential: userAccount.credential,
-    privateKeyWrapped: userAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
+  const output = await authenticateLogin(
     context,
-    challenge,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
+    {
+      handle: userAccount.handle,
+      password: userAccount.password,
+      $credential: userAccount.credential.$id,
+    },
   );
 
   expect(output.status).toBe(200);
@@ -83,6 +66,7 @@ test('should authenticate as normal user account', async () => {
   expect(sessions).toHaveLength(1);
   expect(sessions[0]).toMatchObject({
     $subject: users[0].$id,
+    $credential: userAccount.credential.$id,
     prv: false,
     exc: false,
     adm: false,
@@ -92,26 +76,13 @@ test('should authenticate as normal user account', async () => {
 test('should authenticate as executive account', async () => {
   const { exec: execAccount } = await accountsGet();
 
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-
-  const authLogin = await apiAuthLoginCreate({
-    handle: execAccount.handle,
-    password: execAccount.password,
-    challenge,
-    credential: execAccount.credential,
-    privateKeyWrapped: execAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
+  const output = await authenticateLogin(
     context,
-    challenge,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
+    {
+      handle: execAccount.handle,
+      password: execAccount.password,
+      $credential: execAccount.credential.$id,
+    },
   );
 
   expect(output.status).toBe(200);
@@ -125,6 +96,7 @@ test('should authenticate as executive account', async () => {
   expect(sessions).toHaveLength(1);
   expect(sessions[0]).toMatchObject({
     $subject: users[0].$id,
+    $credential: execAccount.credential.$id,
     prv: true,
     exc: true,
     adm: false,
@@ -134,26 +106,13 @@ test('should authenticate as executive account', async () => {
 test('should authenticate as administrator account', async () => {
   const { admin: adminAccount } = await accountsGet();
 
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-
-  const authLogin = await apiAuthLoginCreate({
-    handle: adminAccount.handle,
-    password: adminAccount.password,
-    challenge,
-    credential: adminAccount.credential,
-    privateKeyWrapped: adminAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
+  const output = await authenticateLogin(
     context,
-    challenge,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
+    {
+      handle: adminAccount.handle,
+      password: adminAccount.password,
+      $credential: adminAccount.credential.$id,
+    },
   );
 
   expect(output.status).toBe(200);
@@ -167,6 +126,7 @@ test('should authenticate as administrator account', async () => {
   expect(sessions).toHaveLength(1);
   expect(sessions[0]).toMatchObject({
     $subject: users[0].$id,
+    $credential: adminAccount.credential.$id,
     prv: true,
     exc: false,
     adm: true,
@@ -176,28 +136,15 @@ test('should authenticate as administrator account', async () => {
 test('should not authenticate with non-existing user', async () => {
   const { user: userAccount } = await accountsGet();
 
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-
   const handle = 'i-dont-exist';
 
-  const authLogin = await apiAuthLoginCreate({
-    handle,
-    password: userAccount.password,
-    challenge,
-    credential: userAccount.credential,
-    privateKeyWrapped: userAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
+  const output = await authenticateLogin(
     context,
-    challenge,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
+    {
+      handle,
+      password: userAccount.password,
+      $credential: userAccount.credential.$id,
+    },
   );
 
   expect(output.status).toBe(401);
@@ -210,26 +157,51 @@ test('should not authenticate with non-existing user', async () => {
 test('should not authenticate using different credentials', async () => {
   const { user: userAccount, exec: execAccount } = await accountsGet();
 
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-
-  const authLogin = await apiAuthLoginCreate({
-    handle: userAccount.handle,
-    password: 'wrongpassword',
-    challenge,
-    credential: execAccount.credential,
-    privateKeyWrapped: userAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
+  const output = await authenticateLogin(
     context,
-    challenge,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
+    {
+      handle: userAccount.handle,
+      password: userAccount.password,
+      $credential: execAccount.credential.$id,
+    },
+  );
+
+  expect(output.status).toBe(401);
+  expect(output.json.result).toBeUndefined();
+  expect(output.json.logs).toHaveLength(1);
+  expect(output.json.logs[0].level).toBe('error');
+  expect(output.json.logs[0].title).toBe('Unknown Agent');
+});
+
+test('should not authenticate using a wrong password', async () => {
+  const { user: userAccount } = await accountsGet();
+
+  const output = await authenticateLogin(
+    context,
+    {
+      handle: userAccount.handle,
+      password: userAccount.password.slice(-1),
+      $credential: userAccount.credential.$id,
+    },
+  );
+
+  expect(output.status).toBe(401);
+  expect(output.json.result).toBeUndefined();
+  expect(output.json.logs).toHaveLength(1);
+  expect(output.json.logs[0].level).toBe('error');
+  expect(output.json.logs[0].title).toBe('Authentication Failed: Wrong Password');
+});
+
+test('should not authenticate using different credentials and wrong password', async () => {
+  const { user: userAccount, exec: execAccount } = await accountsGet();
+
+  const output = await authenticateLogin(
+    context,
+    {
+      handle: userAccount.handle,
+      password: userAccount.password.slice(-1),
+      $credential: execAccount.credential.$id,
+    },
   );
 
   expect(output.status).toBe(401);
@@ -237,104 +209,4 @@ test('should not authenticate using different credentials', async () => {
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0].level).toBe('error');
   expect(output.json.logs[0].title).toBe('Authentication Failed: Invalid Credential');
-});
-
-test('should not authenticate using a different private key for signing', async () => {
-  const { user: userAccount, exec: execAccount } = await accountsGet();
-
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-
-  const authLogin = await apiAuthLoginCreate({
-    handle: userAccount.handle,
-    password: userAccount.password,
-    challenge,
-    credential: userAccount.credential,
-    privateKeyWrapped: execAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
-    context,
-    challenge,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
-  );
-
-  expect(output.status).toBe(401);
-  expect(output.json.result).toBeUndefined();
-  expect(output.json.logs).toHaveLength(1);
-  expect(output.json.logs[0].level).toBe('error');
-  expect(output.json.logs[0].title).toBe('Authentication Failed: Improper Attestation');
-});
-
-test('should not authenticate using a different challenge value', async () => {
-  const { user: userAccount } = await accountsGet();
-
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-  const challengeChanged = {
-    ...challenge,
-    value: await cryptoWeb.randomString(32),
-  };
-
-  const authLogin = await apiAuthLoginCreate({
-    handle: userAccount.handle,
-    password: userAccount.password,
-    challenge: challengeChanged,
-    credential: userAccount.credential,
-    privateKeyWrapped: userAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
-    context,
-    challengeChanged,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
-  );
-
-  expect(output.status).toBe(500);
-  expect(output.json.result).toBeUndefined();
-  expect(output.json.logs).toHaveLength(1);
-  expect(output.json.logs[0].level).toBe('error');
-  expect(output.json.logs[0].title).toBe('Invalid Challenge Code');
-});
-
-test('should not authenticate using different credentials but valid password', async () => {
-  const { user: userAccount, exec: execAccount } = await accountsGet();
-
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(8),
-  });
-  context.store.dispatch(challengeActions.create(challenge));
-
-  const authLogin = await apiAuthLoginCreate({
-    handle: userAccount.handle,
-    password: userAccount.password,
-    challenge,
-    credential: execAccount.credential,
-    privateKeyWrapped: userAccount.privateKey,
-  });
-
-  const output = await authenticateAccount(
-    context,
-    challenge,
-    authLogin.handle,
-    authLogin.$credential as UID,
-    authLogin.signature,
-    authLogin.password,
-  );
-
-  expect(output.status).toBe(401);
-  expect(output.json.result).toBeUndefined();
-  expect(output.json.logs).toHaveLength(1);
-  expect(output.json.logs[0].level).toBe('error');
-  expect(output.json.logs[0].title).toBe('Unknown Device');
 });

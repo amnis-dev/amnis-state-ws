@@ -1,11 +1,8 @@
 import {
-  Challenge,
-  challengeEncode,
   credentialCreator,
   credentialKey,
 } from './entity/index.js';
 import {
-  ApiAuthAuthenticate,
   ApiAuthCreate,
   ApiAuthLogin,
   ApiAuthRegistration,
@@ -21,6 +18,7 @@ import {
   base64JsonDecode,
   base64JsonEncode,
 } from './base64.js';
+import { Challenge } from './state/index.js';
 
 export interface Agent {
   name: string;
@@ -190,7 +188,7 @@ export const agentApiRegistration = async (
   password: string,
   challenge: Challenge,
 ): Promise<ApiAuthRegistration> => {
-  const challengeEncoded = challengeEncode(challenge);
+  const challengeEncoded = base64JsonEncode(challenge);
 
   let origin = 'http://localhost';
 
@@ -216,42 +214,18 @@ export const agentApiRegistration = async (
 };
 
 /**
- * Create an ApiAuthAuthenticate for this agent.
- */
-export const agentApiAuthenticate = async (
-  challenge: Challenge,
-): Promise<ApiAuthAuthenticate> => {
-  const challengeEncoded = challengeEncode(challenge);
-  const signature = await agentSign(challengeEncoded);
-
-  const authAuthenticate: ApiAuthAuthenticate = {
-    challenge: challengeEncoded,
-    signature,
-  };
-
-  return authAuthenticate;
-};
-
-/**
  * Create an ApiAuthLogin for this agent.
  */
 export const agentApiLogin = async (
   handle: string,
   password:string,
-  challenge: Challenge,
 ): Promise<ApiAuthLogin> => {
   const agentCurrent = await agentGet();
-  const challengeEncoded = challengeEncode(challenge);
-
-  const signatureData = handle + agentCurrent.credentialId;
-  const signature = await agentSign(signatureData);
 
   const authLogin: ApiAuthLogin = {
     handle,
     password,
-    challenge: challengeEncoded,
     $credential: agentCurrent.credentialId,
-    signature,
   };
 
   return authLogin;
@@ -264,7 +238,7 @@ export const agentApiCreate = async (
   challenge: Challenge,
   options: Omit<ApiAuthCreate, 'challenge' | 'signature'>,
 ): Promise<ApiAuthCreate> => {
-  const challengeEncoded = challengeEncode(challenge);
+  const challengeEncoded = base64JsonEncode(challenge);
 
   const signatureData = Object.values(options).reduce<string>(
     (acc, cur) => acc + cur,

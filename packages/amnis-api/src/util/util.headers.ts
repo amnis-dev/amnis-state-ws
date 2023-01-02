@@ -1,9 +1,10 @@
-import fetch from 'cross-fetch';
-
 import {
-  agentSign, base64JsonEncode, Challenge, selectBearer, State,
+  agentSign, base64JsonEncode, Challenge, challengeKey, selectBearer, State,
 } from '@amnis/core';
 
+/**
+ * Adds an authroization token to the header.
+ */
 export const headersAuthorizationToken = (
   headers: Headers,
   state: State,
@@ -16,6 +17,9 @@ export const headersAuthorizationToken = (
   }
 };
 
+/**
+ * Signs the payload of the request and adds the encoded signature value to the header.
+ */
 export const headersSignature = async (
   headers: Headers,
   body: Record<string, unknown> | string,
@@ -25,20 +29,23 @@ export const headersSignature = async (
   headers.set('Signature', signature);
 };
 
+/**
+ * Adds a challenge header if the challenge reference matches the reference.
+ */
 export const headersChallenge = async (
   headers: Headers,
-  challengeUrl: string,
+  state: State,
+  ref: string,
 ) => {
-  const result = await fetch(challengeUrl, { method: 'POST', body: JSON.stringify({}) });
-  if (result.status !== 200) {
-    console.error(`There was a problem fetching a challenge code from "${challengeUrl}".`);
+  const challengeEntities = state[challengeKey]?.entities as Record<string, Challenge>;
+
+  if (!challengeEntities) {
     return;
   }
 
-  const json = await result.json();
-  const challenge = json.result as Challenge | undefined;
+  const challenge = Object.values(challengeEntities).find((c) => c.ref === ref);
+
   if (!challenge) {
-    console.error(`No challenge received from "${challengeUrl}".`);
     return;
   }
 

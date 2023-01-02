@@ -42,34 +42,10 @@
     },
     "ApiAuthAuthenticate": {
       "type": "object",
-      "properties": {
-        "challenge": {
-          "$ref": "#/definitions/ChallengeEncoded",
-          "description": "Encoded challenge object to prevent reply attacks."
-        },
-        "signature": {
-          "$ref": "#/definitions/SignatureEncoded",
-          "description": "Encoded attestation signature of the challenge object."
-        }
+      "additionalProperties": {
+        "not": {}
       },
-      "required": [
-        "challenge",
-        "signature"
-      ],
-      "additionalProperties": false,
       "description": "A request to authenticate with a session. User must log in if authentication fails."
-    },
-    "ChallengeEncoded": {
-      "type": "string",
-      "description": "An encoded challenge to prevent replay attacks.",
-      "minLength": 16,
-      "maxLength": 512
-    },
-    "SignatureEncoded": {
-      "type": "string",
-      "description": "An encoded cryptographic signature to verify that data can be trusted.",
-      "minLength": 16,
-      "maxLength": 512
     },
     "ApiAuthChallenge": {
       "type": "object",
@@ -112,6 +88,12 @@
       "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
       "maxLength": 64
     },
+    "SignatureEncoded": {
+      "type": "string",
+      "description": "An encoded cryptographic signature to verify that data can be trusted.",
+      "minLength": 16,
+      "maxLength": 512
+    },
     "ApiAuthCredential": {
       "type": "object",
       "properties": {
@@ -136,6 +118,12 @@
       ],
       "additionalProperties": false,
       "description": "Adds a credential to an account."
+    },
+    "ChallengeEncoded": {
+      "type": "string",
+      "description": "An encoded challenge to prevent replay attacks.",
+      "minLength": 16,
+      "maxLength": 512
     },
     "ApiAuthRegistration": {
       "type": "object",
@@ -221,32 +209,24 @@
           "$ref": "#/definitions/Password",
           "description": "The login password"
         },
-        "challenge": {
-          "type": "string",
-          "minLength": 16,
-          "maxLength": 512
-        },
         "$credential": {
-          "type": "string",
-          "minLength": 12,
-          "maxLength": 40,
+          "$ref": "#/definitions/UID",
           "description": "Credential identifier to use on the user account."
-        },
-        "signature": {
-          "type": "string",
-          "minLength": 8,
-          "maxLength": 512,
-          "description": "Agent's cryptographic signature of the handle and challenge."
         }
       },
       "required": [
         "handle",
-        "challenge",
-        "$credential",
-        "signature"
+        "$credential"
       ],
       "additionalProperties": false,
       "description": "Payload for a login request."
+    },
+    "UID": {
+      "type": "string",
+      "description": "A id identifier to another document.",
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "ApiAuthLogout": {
       "type": "object",
@@ -329,43 +309,44 @@
       "properties": {
         "$id": {
           "$ref": "#/definitions/UID",
-          "description": "All objects that can be composed into an entity must have an identifier."
+          "description": "Challenge identifier"
         },
-        "value": {
+        "val": {
           "type": "string",
           "description": "The string random value of the challenge.",
           "minLength": 16,
           "maxLength": 256
         },
-        "expires": {
+        "exp": {
           "$ref": "#/definitions/DateNumeric",
           "description": "Expiration date-time of the challenge."
         },
-        "$subject": {
+        "ref": {
+          "type": "string",
+          "description": "A reference value that can indicate what endpoint this challenge is intended for.",
+          "maxLength": 64
+        },
+        "$sub": {
           "$ref": "#/definitions/UID",
           "description": "The subject being challenged."
         },
         "otp": {
           "type": "string",
           "description": "An optional one-time passcode value to be generate administratively.",
-          "minLength": 6,
           "maxLength": 32
+        },
+        "otpl": {
+          "type": "number",
+          "description": "Specifies the exact length the OTP must be."
         }
       },
       "required": [
         "$id",
-        "expires",
-        "value"
+        "val",
+        "exp"
       ],
       "additionalProperties": false,
       "description": "Entity that contains data to verify credentials."
-    },
-    "UID": {
-      "type": "string",
-      "description": "A id identifier to another document.",
-      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
-      "minLength": 18,
-      "maxLength": 56
     },
     "Credential": {
       "type": "object",

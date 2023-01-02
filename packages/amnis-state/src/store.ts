@@ -26,12 +26,20 @@ export function storeContextSetup() {
     challenge,
     key,
     role,
+    user,
+    credential,
+    profile,
+    contact,
   } = stateSet.reducers;
   const rootReducer = rtk.combineReducers({
     system,
     challenge,
     key,
     role,
+    user,
+    credential,
+    profile,
+    contact,
   });
 
   const store = rtk.configureStore({

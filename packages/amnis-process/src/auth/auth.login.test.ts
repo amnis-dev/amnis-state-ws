@@ -13,7 +13,8 @@ import {
   Session,
   dateNumeric,
   ioOutput,
-  apiAuthLoginCreate,
+  base64JsonEncode,
+  accountsSign,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import { validateSetup } from '../validate.js';
@@ -70,17 +71,20 @@ test('should login as a admin', async () => {
     expect(challenge).toBeDefined();
     return;
   }
+  const challengeEncoded = base64JsonEncode(challenge);
 
-  const authLogin = await apiAuthLoginCreate({
+  const apiAuthLogin: ApiAuthLogin = {
     handle: adminAccount.handle,
+    $credential: adminAccount.credential.$id,
     password: adminAccount.password,
-    challenge,
-    credential: adminAccount.credential,
-    privateKeyWrapped: adminAccount.privateKey,
-  });
+  };
+
+  const signatureEncoded = await accountsSign(adminAccount, apiAuthLogin);
 
   const input: IoInput<ApiAuthLogin> = {
-    body: authLogin,
+    body: apiAuthLogin,
+    challengeEncoded,
+    signatureEncoded,
   };
 
   const output = await processAuthLogin(context)(input, ioOutput());
@@ -121,7 +125,7 @@ test('should login as a admin', async () => {
  * ************************************************************************************************
  * ================================================================================================
  */
-test('should NOT login as an admin with different private key', async () => {
+test('should NOT login as an admin signed with a different private key', async () => {
   const { admin: adminAccount, user: userAccount } = await accountsGet();
 
   const inputStart: IoInput = {
@@ -135,16 +139,20 @@ test('should NOT login as an admin with different private key', async () => {
     return;
   }
 
-  const authLogin = await apiAuthLoginCreate({
+  const challengeEncoded = base64JsonEncode(challenge);
+
+  const apiAuthLogin: ApiAuthLogin = {
     handle: adminAccount.handle,
+    $credential: adminAccount.credential.$id,
     password: adminAccount.password,
-    challenge,
-    credential: adminAccount.credential,
-    privateKeyWrapped: userAccount.privateKey,
-  });
+  };
+
+  const signatureEncoded = await accountsSign(userAccount, apiAuthLogin);
 
   const input: IoInput<ApiAuthLogin> = {
-    body: authLogin,
+    body: apiAuthLogin,
+    challengeEncoded,
+    signatureEncoded,
   };
 
   const output = await processAuthLogin(context)(input, ioOutput());
@@ -157,7 +165,7 @@ test('should NOT login as an admin with different private key', async () => {
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0]).toMatchObject({
     level: 'error',
-    title: 'Authentication Failed: Improper Attestation',
+    title: 'Invalid Signature',
   });
 });
 
@@ -182,23 +190,27 @@ test('should NOT login as an admin with different challenge', async () => {
 
   const wrongChallenge: Challenge = {
     $id: challenge.$id,
-    value: await cryptoWeb.randomString(32),
-    expires: dateNumeric('30m'),
+    val: await cryptoWeb.randomString(32),
+    exp: dateNumeric('30m'),
   };
 
   expect(challenge.$id).toEqual(wrongChallenge.$id);
-  expect(challenge?.value).not.toEqual(wrongChallenge.value);
+  expect(challenge?.val).not.toEqual(wrongChallenge.val);
 
-  const authLogin = await apiAuthLoginCreate({
+  const challengeEncoded = base64JsonEncode(wrongChallenge);
+
+  const apiAuthLogin: ApiAuthLogin = {
     handle: adminAccount.handle,
+    $credential: adminAccount.credential.$id,
     password: adminAccount.password,
-    challenge: wrongChallenge,
-    credential: adminAccount.credential,
-    privateKeyWrapped: adminAccount.privateKey,
-  });
+  };
+
+  const signatureEncoded = await accountsSign(adminAccount, apiAuthLogin);
 
   const input: IoInput<ApiAuthLogin> = {
-    body: authLogin,
+    body: apiAuthLogin,
+    challengeEncoded,
+    signatureEncoded,
   };
 
   const output = await processAuthLogin(context)(input, ioOutput());
@@ -211,6 +223,6 @@ test('should NOT login as an admin with different challenge', async () => {
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0]).toMatchObject({
     level: 'error',
-    title: 'Invalid Challenge Code',
+    title: 'Invalid Challenge',
   });
 });

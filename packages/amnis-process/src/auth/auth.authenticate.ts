@@ -3,21 +3,24 @@ import {
   IoProcess,
   ApiAuthAuthenticate,
   StateEntities,
-  challengeDecode,
-  base64Decode,
   ioOutputApply,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
-import { mwValidate, mwSession } from '../mw/index.js';
-import { challengeValidate } from '../utility/challenge.js';
-import { authenticateLogin, findUserById } from '../utility/index.js';
+import {
+  mwValidate,
+  mwSession,
+  mwChallenge,
+  mwSignature,
+  mwCredential,
+} from '../mw/index.js';
+import { authenticateFinalize, findUserById } from '../utility/index.js';
 
 const process: IoProcess<
 Io<ApiAuthAuthenticate, StateEntities>
 > = (context) => (
   async (input, output) => {
-    const { store, crypto } = context;
-    const { body, session } = input;
+    const { store } = context;
+    const { session } = input;
 
     if (!session) {
       return output;
@@ -39,68 +42,6 @@ Io<ApiAuthAuthenticate, StateEntities>
     }
 
     /**
-     * Decode the challenge and the signature.
-     */
-    const {
-      challenge: challengeEncoded,
-      signature: signatureEncoded,
-    } = body;
-
-    /**
-     * Decode the challenge.
-     */
-    const challenge = challengeDecode(challengeEncoded);
-    if (!challenge) {
-      output.status = 500; // 500 Internal Server Error
-      output.json.logs.push({
-        level: 'error',
-        title: 'Invalid Challenge',
-        description: 'Could not parse the provided challenge.',
-      });
-      return output;
-    }
-
-    /**
-     * Ensure the challenge is valid.
-     */
-    const challengeVerified = challengeValidate(context, challenge);
-    if (challengeVerified !== true) {
-      ioOutputApply(output, challengeVerified);
-      return output;
-    }
-
-    const signature = base64Decode(signatureEncoded).buffer;
-    const publicKey = await crypto.keyImport(session.pub);
-
-    /**
-     * Ensure the session public key is valid.
-     */
-    if (!publicKey) {
-      output.status = 500; // 500 Internal Server Error
-      output.json.logs.push({
-        level: 'error',
-        title: 'Invalid Session Key',
-        description: 'There was a problem importing the session key.',
-      });
-      return output;
-    }
-
-    /**
-     * Verify the signed signature against the session's public key.
-     */
-    const signatureVerified = await crypto.asymVerify(challengeEncoded, signature, publicKey);
-
-    if (!signatureVerified) {
-      output.status = 500; // 500 Internal Server Error
-      output.json.logs.push({
-        level: 'error',
-        title: 'Invalid Signature',
-        description: 'Could not verify the provided agent signature.',
-      });
-      return output;
-    }
-
-    /**
      * Getting here means all the authentication checks were valid.
      * The session holder can be logged in.
      */
@@ -116,7 +57,7 @@ Io<ApiAuthAuthenticate, StateEntities>
       return output;
     }
 
-    ioOutputApply(output, await authenticateLogin(context, user, session.pub));
+    ioOutputApply(output, await authenticateFinalize(context, user.$id, session.$credential));
 
     return output;
   }
@@ -124,7 +65,13 @@ Io<ApiAuthAuthenticate, StateEntities>
 
 export const processAuthAuthenticate = mwValidate('ApiAuthAuthenticate')(
   mwSession()(
-    process,
+    mwChallenge()(
+      mwCredential()(
+        mwSignature()(
+          process,
+        ),
+      ),
+    ),
   ),
 ) as IoProcess<
 Io<ApiAuthAuthenticate, StateEntities>

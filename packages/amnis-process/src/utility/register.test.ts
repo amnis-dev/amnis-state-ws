@@ -1,7 +1,7 @@
 import {
   apiAuthRegistrationCreate,
   apiAuthRegistrationParse,
-  challengeCreator,
+  challengeCreate,
   Contact,
   contactKey,
   credentialKey,
@@ -23,8 +23,8 @@ beforeAll(async () => {
 });
 
 test('should register a new account', async () => {
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(16),
+  const challenge = challengeCreate({
+    val: await context.crypto.randomString(16),
   });
 
   const [authRegistration] = await apiAuthRegistrationCreate({
@@ -85,8 +85,8 @@ test('should register a new account', async () => {
 });
 
 test('should not register with an existing handle', async () => {
-  const challenge = challengeCreator({
-    value: await context.crypto.randomString(16),
+  const challenge = challengeCreate({
+    val: await context.crypto.randomString(16),
   });
 
   const [authRegistration] = await apiAuthRegistrationCreate({

@@ -11,6 +11,7 @@ import {
   UID,
   uidList,
   UIDList,
+  Credential,
 } from '@amnis/core';
 
 /**
@@ -18,8 +19,8 @@ import {
  */
 export const generateSession = async (
   system: System,
-  subjectId: UID,
-  publicKey: string,
+  $subject: UID,
+  $credential: UID<Credential>,
   $roles: UIDList<Role> = uidList(),
 ): Promise<Session> => {
   /**
@@ -34,9 +35,9 @@ export const generateSession = async (
    * Create the new user session.
    */
   const session = sessionCreator({
-    $subject: subjectId,
+    $subject,
+    $credential,
     exp: sessionExpires,
-    pub: publicKey,
     adm: admIs,
     exc: excIs,
     prv: admIs || excIs,

@@ -9,8 +9,6 @@ import {
   base64JsonEncode,
 } from '../base64.js';
 import {
-  Challenge,
-  challengeEncode,
   Credential,
   credentialCreator,
   Entity,
@@ -19,9 +17,9 @@ import {
 import {
   cryptoWeb,
 } from '../io/index.js';
+import { Challenge } from '../state/index.js';
 import type {
   ApiAuthCreate,
-  ApiAuthLogin,
   ApiAuthRegistration,
 } from './api.auth.types.js';
 
@@ -64,7 +62,7 @@ export interface ApiAuthRegistrationCreateOptions {
   handle: string;
   displayName: string;
   password: string;
-  challenge: Entity<Challenge> | Challenge;
+  challenge: Challenge;
   origin?: string;
   email?: string;
 }
@@ -193,52 +191,6 @@ export const apiAuthRegistrationParse: ApiAuthRegistrationParse = async (authReg
 };
 
 /**
- * Parameters for the apiAuthLoginCreate method.
- */
-export interface ApiAuthLoginCreateParams {
-  handle: string;
-  password: string;
-  challenge: Challenge;
-  credential: Credential;
-  privateKeyWrapped: string;
-}
-
-export type ApiAuthLoginCreate = (params: ApiAuthLoginCreateParams) => Promise<ApiAuthLogin>;
-
-/**
- * Creates an ApiAuthLogin object.
- */
-export const apiAuthLoginCreate: ApiAuthLoginCreate = async ({
-  handle,
-  password,
-  challenge,
-  credential,
-  privateKeyWrapped,
-}) => {
-  const challengeEncoded = challengeEncode(challenge);
-
-  const signatureData = handle + credential.$id;
-
-  const privateKey = await cryptoWeb.keyUnwrap(
-    privateKeyWrapped,
-    await cryptoWeb.hashData(agentFingerprint()),
-  ) || (await cryptoWeb.asymGenerate('signer')).privateKey;
-
-  const signature = await cryptoWeb.asymSign(signatureData, privateKey);
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
-
-  const authLogin: ApiAuthLogin = {
-    handle,
-    password,
-    challenge: challengeEncoded,
-    $credential: credential.$id,
-    signature: signatureEncoded,
-  };
-
-  return authLogin;
-};
-
-/**
  * Parameters for the apiAuthCreateCreate method.
  */
 export interface ApiAuthCreateCreateParams extends Omit<ApiAuthCreate, 'challenge' | 'signature'> {
@@ -256,7 +208,7 @@ export const apiAuthCreateCreate: ApiAuthCreateCreate = async ({
   privateKeyWrapped,
   ...createProps
 }) => {
-  const challengeEncoded = challengeEncode(challenge);
+  const challengeEncoded = base64JsonEncode(challenge);
 
   const signatureData = Object.values(createProps).reduce<string>(
     (acc, cur) => acc + cur,

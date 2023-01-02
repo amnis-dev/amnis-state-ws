@@ -13,6 +13,12 @@ import {
   handleKey,
   Handle,
 } from '@amnis/core';
+import {
+  credentialActions,
+  credentialSelectors,
+  userActions,
+  userSelectors,
+} from '@amnis/state';
 
 /**
  * Finds a user by handle.
@@ -59,25 +65,31 @@ export const findUserByHandle = async (
  */
 export const findUserById = async (
   context: IoContext,
-  id: UID<User>,
+  $id: UID<User>,
 ): Promise<Entity<User> | undefined> => {
-  const results = await context.database.read({
-    [userKey]: {
-      $query: {
-        $id: {
-          $eq: id,
+  const { store, database } = context;
+
+  let user: Entity<User> | undefined;
+  user = userSelectors.selectById(store.getState(), $id);
+
+  if (!user) {
+    const results = await database.read({
+      [userKey]: {
+        $query: {
+          $id: {
+            $eq: $id,
+          },
         },
       },
-    },
-  }, {
-    scope: { [userKey]: 'global' },
-  });
+    });
+    user = results[userKey]?.[0] as Entity<User> | undefined;
 
-  if (!results[userKey]?.length) {
-    return undefined;
+    if (user) {
+      store.dispatch(userActions.insert(user));
+    }
   }
 
-  return results[userKey][0] as Entity<User>;
+  return user;
 };
 
 /**
@@ -85,25 +97,31 @@ export const findUserById = async (
  */
 export const findCredentialById = async (
   context: IoContext,
-  id: UID<Credential>,
+  $id: UID<Credential>,
 ): Promise<Entity<Credential> | undefined> => {
-  const results = await context.database.read({
-    [credentialKey]: {
-      $query: {
-        $id: {
-          $eq: id,
+  const { store, database } = context;
+
+  let credential: Entity<Credential> | undefined;
+  credential = credentialSelectors.selectById(store.getState(), $id);
+
+  if (!credential) {
+    const results = await database.read({
+      [credentialKey]: {
+        $query: {
+          $id: {
+            $eq: $id,
+          },
         },
       },
-    },
-  }, {
-    scope: { [credentialKey]: 'global' },
-  });
+    });
+    credential = results[credentialKey]?.[0] as Entity<Credential> | undefined;
 
-  if (!results[credentialKey]?.length) {
-    return undefined;
+    if (credential) {
+      store.dispatch(credentialActions.insert(credential));
+    }
   }
 
-  return results[credentialKey][0] as Entity<Credential>;
+  return credential;
 };
 
 /**

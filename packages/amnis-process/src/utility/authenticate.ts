@@ -1,15 +1,9 @@
 import {
-  Challenge,
   IoContext,
   IoOutput,
   ioOutput,
-  logCreator,
-  UID,
-  Credential,
-  base64Decode,
   User,
   StateEntities,
-  Entity,
   entityCreate,
   userKey,
   profileKey,
@@ -18,56 +12,79 @@ import {
   dateJSON,
   StateUpdater,
   credentialKey,
+  ApiAuthLogin,
+  UID,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
-import { challengeValidate } from './challenge.js';
 import {
-  findContactById, findCredentialById, findProfileByUserId, findUserByHandle,
+  findContactById,
+  findCredentialById,
+  findProfileByUserId,
+  findUserByHandle,
+  findUserById,
 } from './find.js';
 import { generateBearer, generateSession } from './generate.js';
 
 const authenticateFailedOutput = (subtitle: string, description: string) => {
   const output = ioOutput();
   output.status = 401; // Unauthorized
-  output.json.logs.push(logCreator({
+  output.json.logs.push({
     level: 'error',
     title: `Authentication Failed: ${subtitle}`,
     description,
-  }));
+  });
   return output;
 };
 
-const authenticateLoginFailedOutput = (title: string, description: string) => {
+const authenticateFinalizeFailedOutput = (title: string, description: string) => {
   const output = ioOutput();
   output.status = 500; // Unauthorized
-  output.json.logs.push(logCreator({
+  output.json.logs.push({
     level: 'error',
     title,
     description,
-  }));
+  });
   return output;
 };
 
 /**
- * Login a user with a handle without validation.
- * Use authenticateAccount to authenticate securely.
+ * Finalize the user authentication by generating a session, token, and
+ * returning account data. This does not verify any login parameters.
+ *
+ * Use authenticateLogin to authenticate securely.
  */
-export const authenticateLogin = async (
+export const authenticateFinalize = async (
   context: IoContext,
-  user: Entity<User>,
-  publicKey: string,
+  $user: UID<User>,
+  $credential: UID<Credential>,
 ): Promise<IoOutput<StateEntities>> => {
+  const user = await findUserById(context, $user);
+
+  if (!user) {
+    return authenticateFinalizeFailedOutput(
+      'No User',
+      'No user information was found with the provided account data.',
+    );
+  }
+
+  if (user.$credentials.indexOf($credential) < 0) {
+    return authenticateFinalizeFailedOutput(
+      'No Credential',
+      'No credential information was found with the provided account data.',
+    );
+  }
+
   const profile = await findProfileByUserId(context, user.$id);
 
   if (!profile) {
-    return authenticateLoginFailedOutput(
+    return authenticateFinalizeFailedOutput(
       'No Profile',
-      'No profile information was found with the provided user account.',
+      'No profile information was found with the provided account data.',
     );
   }
 
   if (!profile.$contact) {
-    return authenticateLoginFailedOutput(
+    return authenticateFinalizeFailedOutput(
       'No Contact Relation',
       'There is no contact information associated with the provided user account\'s profile.',
     );
@@ -76,7 +93,7 @@ export const authenticateLogin = async (
   const contact = await findContactById(context, profile.$contact);
 
   if (!contact) {
-    return authenticateLoginFailedOutput(
+    return authenticateFinalizeFailedOutput(
       'No Contact',
       'No contact information was found with the provided user account\'s profile.',
     );
@@ -90,12 +107,24 @@ export const authenticateLogin = async (
   if (!system) {
     const output = ioOutput();
     output.status = 500;
-    output.json.logs.push(logCreator({
+    output.json.logs.push({
       level: 'error',
       title: 'Inactive System',
       description: 'There is no active system available to complete the login.',
-    }));
+    });
     return output;
+  }
+
+  /**
+   * Find the credentials in the database.
+   */
+  const credential = await findCredentialById(context, $credential);
+
+  if (!credential) {
+    return authenticateFailedOutput(
+      'Missing Credential',
+      'The provided credential could not be found.',
+    );
   }
 
   /**
@@ -104,7 +133,7 @@ export const authenticateLogin = async (
   const sessionBase = await generateSession(
     system,
     user.$id,
-    publicKey,
+    credential.$id,
     user.$roles,
   );
 
@@ -128,33 +157,23 @@ export const authenticateLogin = async (
   output.cookies.authSession = sessionEncrypted;
   output.json.bearers = [bearerAccess];
 
-  output.json.logs.push(logCreator({
+  output.json.logs.push({
     level: 'success',
     title: 'Authentication Successful',
     description: 'Credential has been verified.',
-  }));
+  });
 
   return output;
 };
 
 /**
- * Authenticates an account's credentials.
+ * Authenticates securely by verifying login parameters.
  */
-export const authenticateAccount = async (
+export const authenticateLogin = async (
   context: IoContext,
-  challenge: Challenge,
-  handle: string,
-  credentialId: UID<Credential>,
-  signatureEncoded: string,
-  password?: string,
+  login: ApiAuthLogin,
 ): Promise<IoOutput> => {
-  /**
-   * Validate challenge.
-   */
-  const challangeValidation = challengeValidate(context, challenge);
-  if (challangeValidation !== true) {
-    return challangeValidation;
-  }
+  const { handle, $credential, password } = login;
 
   /**
    * Find the user
@@ -184,15 +203,15 @@ export const authenticateAccount = async (
   /**
    * Find the credentials on the user.
    */
-  if (!user.$credentials.includes(credentialId)) {
+  if (!user.$credentials.includes($credential)) {
     if (passwordMatched) {
       const output = ioOutput();
       output.status = 401; // Unauthorized
-      output.json.logs.push(logCreator({
+      output.json.logs.push({
         level: 'error',
-        title: 'Unknown Device',
-        description: 'This device requesting authentication is unrecognized.',
-      }));
+        title: 'Unknown Agent',
+        description: 'The client agent requesting authentication is unrecognized.',
+      });
       return output;
     }
     return authenticateFailedOutput(
@@ -209,42 +228,11 @@ export const authenticateAccount = async (
   }
 
   /**
-   * Find the credentials in the database.
-   */
-  const credential = await findCredentialById(context, credentialId);
-
-  if (!credential) {
-    return authenticateFailedOutput(
-      'Missing Credential',
-      'The provided credential could not be found.',
-    );
-  }
-
-  /**
-   * Validate the sigature with the credentials public key.
-   */
-  const signature = base64Decode(signatureEncoded).buffer;
-  const publicKey = await context.crypto.keyImport(credential.publicKey);
-
-  const verified = await context.crypto.asymVerify(
-    handle + credentialId,
-    signature,
-    publicKey,
-  );
-
-  if (!verified) {
-    return authenticateFailedOutput(
-      'Improper Attestation',
-      'The provided credential could not be verified.',
-    );
-  }
-
-  /**
    * Update the credential timestamps.
    */
   const updater: StateUpdater = {
     [credentialKey]: [{
-      $id: credential.$id,
+      $id: $credential,
       updated: dateJSON(),
       used: dateJSON(),
     }],
@@ -254,7 +242,7 @@ export const authenticateAccount = async (
   /**
    * All authentication checks can been completed.
    */
-  const output = await authenticateLogin(context, user, credential.publicKey);
+  const output = await authenticateFinalize(context, user.$id, $credential);
 
   return output;
 };

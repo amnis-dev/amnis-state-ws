@@ -14,7 +14,7 @@ import {
   ioOutput,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
-import { challengeCreate } from '../utility/challenge.js';
+import { challengeNew } from '../utility/challenge.js';
 import { validateSetup } from '../validate.js';
 import { processAuthCredential } from './auth.credential.js';
 
@@ -64,7 +64,7 @@ test('should add a new credential to the user account', async () => {
   /**
    * Create a subject challenge.
    */
-  const challengeOutout = await challengeCreate(context, {
+  const challengeOutout = await challengeNew(context, {
     $subject: userUser.$id,
     privatize: true,
   });
@@ -100,7 +100,7 @@ test('should add a new credential to the user account', async () => {
   const user = users[0] as Entity<User>;
   const credential = credentials[0] as Entity<Credential>;
 
-  expect(user.$id).toBe(challenge.$subject);
+  expect(user.$id).toBe(challenge.$sub);
   expect(user.$credentials).toHaveLength(2);
   expect(user.$credentials.includes(credentialNew.$id)).toBe(true);
   expect(credential.$id).toBe(credentialNew.$id);

@@ -46,8 +46,8 @@ beforeAll(async () => {
   adminSessionEncryption = await context.crypto.sessionEncrypt(
     sessionCreator({
       $subject: adminUser.$id,
+      $credential: admin.credential.$id,
       exp: dateNumeric('30m'),
-      pub: admin.credential.publicKey,
       prv: true,
       adm: true,
     }),
@@ -55,8 +55,8 @@ beforeAll(async () => {
   userSessionEncryption = await context.crypto.sessionEncrypt(
     sessionCreator({
       $subject: adminUser.$id,
+      $credential: user.credential.$id,
       exp: dateNumeric('30m'),
-      pub: user.credential.publicKey,
     }),
   );
 });
@@ -82,9 +82,9 @@ test('should generate a challenge entity', async () => {
   }
 
   expect(challenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(challenge.$subject).toBeUndefined();
+  expect(challenge.$sub).toBeUndefined();
   expect(challenge.otp).toBeUndefined();
 
   /**
@@ -99,9 +99,9 @@ test('should generate a challenge entity', async () => {
   }
 
   expect(ioChallenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(ioChallenge.$subject).toBeUndefined();
+  expect(ioChallenge.$sub).toBeUndefined();
   expect(ioChallenge.otp).toBeUndefined();
 });
 
@@ -124,9 +124,9 @@ test('should generate a challenge entity with a subject', async () => {
   }
 
   expect(challenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(challenge.$subject).toBe(userUser.$id);
+  expect(challenge.$sub).toBe(userUser.$id);
   expect(challenge.otp).toBeUndefined();
 
   /**
@@ -141,9 +141,9 @@ test('should generate a challenge entity with a subject', async () => {
   }
 
   expect(ioChallenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(ioChallenge.$subject).toBe(userUser.$id);
+  expect(ioChallenge.$sub).toBe(userUser.$id);
   expect(ioChallenge.otp).toEqual(expect.any(String));
 });
 
@@ -168,9 +168,9 @@ test('should generate a challenge entity with a subject and send the OTP via ema
   }
 
   expect(challenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(challenge.$subject).toBe(userUser.$id);
+  expect(challenge.$sub).toBe(userUser.$id);
   expect(challenge.otp).toBeUndefined();
 
   /**
@@ -185,9 +185,9 @@ test('should generate a challenge entity with a subject and send the OTP via ema
   }
 
   expect(ioChallenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(ioChallenge.$subject).toBe(userUser.$id);
+  expect(ioChallenge.$sub).toBe(userUser.$id);
   expect(ioChallenge.otp).toEqual(expect.any(String));
 
   /**
@@ -229,9 +229,9 @@ test('should generate a challenge entity with a subject and NOT send the OTP to 
   }
 
   expect(challenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(challenge.$subject).toBe(userUser.$id);
+  expect(challenge.$sub).toBe(userUser.$id);
   expect(challenge.otp).toBeUndefined();
 
   /**
@@ -246,9 +246,9 @@ test('should generate a challenge entity with a subject and NOT send the OTP to 
   }
 
   expect(ioChallenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(ioChallenge.$subject).toBe(userUser.$id);
+  expect(ioChallenge.$sub).toBe(userUser.$id);
   expect(ioChallenge.otp).toEqual(expect.any(String));
 
   /**
@@ -289,9 +289,9 @@ test('should generate a challenge entity with a subject as an administrator to r
   }
 
   expect(challenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(challenge.$subject).toBe(userUser.$id);
+  expect(challenge.$sub).toBe(userUser.$id);
   expect(challenge.otp).toEqual(expect.any(String));
 
   /**
@@ -306,9 +306,9 @@ test('should generate a challenge entity with a subject as an administrator to r
   }
 
   expect(ioChallenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(ioChallenge.$subject).toBe(userUser.$id);
+  expect(ioChallenge.$sub).toBe(userUser.$id);
   expect(ioChallenge.otp).toEqual(challenge.otp);
 });
 
@@ -343,9 +343,9 @@ test('should generate a challenge entity with a subject as a user NOT return an 
   }
 
   expect(challenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(challenge.$subject).toBe(userUser.$id);
+  expect(challenge.$sub).toBe(userUser.$id);
   expect(challenge.otp).toBeUndefined();
 
   /**
@@ -360,8 +360,8 @@ test('should generate a challenge entity with a subject as a user NOT return an 
   }
 
   expect(ioChallenge).toMatchObject({
-    value: expect.any(String),
+    val: expect.any(String),
   });
-  expect(ioChallenge.$subject).toBe(userUser.$id);
+  expect(ioChallenge.$sub).toBe(userUser.$id);
   expect(ioChallenge.otp).toEqual(expect.any(String));
 });

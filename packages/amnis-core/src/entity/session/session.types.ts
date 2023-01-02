@@ -13,10 +13,9 @@ export interface Session extends EntityCreator {
   $subject: UID;
 
   /**
-   * Serialized public key value of the agent's session.
-   * This is used to verify signatures on reconnections.
+   * The credential id in use.
    */
-  pub: string;
+  $credential: UID;
 
   /**
    * Possible "Issued At" property when decoding.

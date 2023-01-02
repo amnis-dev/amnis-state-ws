@@ -1,6 +1,6 @@
 import {
   Challenge,
-  challengeCreator,
+  challengeCreate,
   dateNumeric,
   IoContext,
   IoOutput,
@@ -15,6 +15,7 @@ import {
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 export interface ChallengeCreateOptions {
+  ref?: string;
   $subject?: UID;
   privatize?: boolean;
 }
@@ -22,7 +23,7 @@ export interface ChallengeCreateOptions {
 /**
  * Create a challenge from context and output it.
  */
-export const challengeCreate = async (
+export const challengeNew = async (
   context: IoContext,
   options: ChallengeCreateOptions = {},
 ): Promise<IoOutput<Challenge>> => {
@@ -49,13 +50,17 @@ export const challengeCreate = async (
   /**
    * Generate the unique challange code to send back.
    */
-  const challengeItem = challengeCreator({
-    value: challangeValue,
-    expires: dateNumeric(`${system.registrationExpiration}m`),
+  const challengeItem = challengeCreate({
+    val: challangeValue,
+    exp: dateNumeric(`${system.registrationExpiration}m`),
   });
 
+  if (options.ref) {
+    challengeItem.ref = options.ref;
+  }
+
   if (options.$subject) {
-    challengeItem.$subject = options.$subject;
+    challengeItem.$sub = options.$subject;
   }
 
   if (options.privatize === true) {
@@ -75,7 +80,7 @@ export const challengeCreate = async (
   /**
    * Store the challenge on the io store to check against later.
    */
-  store.dispatch(challengeActions.create(challengeItem));
+  store.dispatch(challengeActions.insert(challengeItem));
 
   const output = ioOutput();
   output.status = 200;
@@ -100,13 +105,13 @@ export const challengeValidate = (
   /**
    * Challenge not found on the server store.
    */
-  if (!challengeServer || challenge.value !== challengeServer.value) {
+  if (!challengeServer || challenge.val !== challengeServer.val) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [{
       level: 'error',
-      title: 'Invalid Challenge Code',
-      description: 'The challenge code is not valid',
+      title: 'Invalid Challenge',
+      description: 'The challenge value is not valid',
     }];
     return output;
   }
@@ -115,7 +120,7 @@ export const challengeValidate = (
    * Challenge cannot be used anymore if expired.
    * Expired challenges are cleaned up later.
    */
-  if (challengeServer.expires <= dateNumeric()) {
+  if (challengeServer.exp <= dateNumeric()) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error
     output.json.logs = [{
@@ -130,8 +135,8 @@ export const challengeValidate = (
    * Ensure that this challenge matches the intended specific subject.
    */
   if (
-    (challengeServer.$subject || challenge.$subject)
-    && challengeServer.$subject !== challenge.$subject
+    (challengeServer.$sub || challenge.$sub)
+    && challengeServer.$sub !== challenge.$sub
   ) {
     const output = ioOutput();
     output.status = 500; // Internal Server Error

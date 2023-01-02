@@ -24,7 +24,7 @@ export const systemAdapter = rtk.createEntityAdapter<Entity<System>>({
   selectId: (entity) => entity.$id,
 
   /**
-   * TODO: A sort comparer other than `$id` is ideal.
+   * OPTIONAL: Sort by value other than $id.
    */
   // sortComparer: (a, b) => a.name.localeCompare(b.name),
 });

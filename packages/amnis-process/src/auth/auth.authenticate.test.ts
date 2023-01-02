@@ -10,7 +10,6 @@ import {
   IoInput,
   ApiAuthChallenge,
   ApiAuthAuthenticate,
-  challengeEncode,
   cryptoWeb,
   accountsGet,
   base64Encode,
@@ -18,9 +17,10 @@ import {
   Profile,
   Contact,
   Session,
-  agentApiAuthenticate,
-  challengeCreator,
+  challengeCreate,
   dateNumeric,
+  agentSign,
+  base64JsonEncode,
 } from '@amnis/core';
 import { contextSetup, systemSelectors } from '@amnis/state';
 import { generateSession } from '../utility/generate.js';
@@ -56,7 +56,7 @@ test('should create an admin session and authenticate using the admin keys', asy
   /**
    * Generate the session.
    */
-  const session = await generateSession(system, adminUser.$id, admin.credential.publicKey);
+  const session = await generateSession(system, adminUser.$id, admin.credential.$id);
   const sessionEncrypted = await cryptoWeb.sessionEncrypt(session);
 
   /**
@@ -72,7 +72,7 @@ test('should create an admin session and authenticate using the admin keys', asy
     expect(challenge).toBeDefined();
     return;
   }
-  const challengeEncoded = challengeEncode(challenge);
+  const challengeEncoded = base64JsonEncode(challenge);
 
   /**
    * Sign the encoded challenge.
@@ -86,19 +86,25 @@ test('should create an admin session and authenticate using the admin keys', asy
     return;
   }
 
-  const signature = await cryptoWeb.asymSign(challengeEncoded, privateKey);
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
-
   /**
    * Now that everything is prepared, start authenticating.
    */
   const inputAuthenticate: IoInput<ApiAuthAuthenticate> = {
-    body: {
-      challenge: challengeEncoded,
-      signature: signatureEncoded,
-    },
+    body: {},
     sessionEncrypted,
+    challengeEncoded,
   };
+
+  /**
+   * Sign the input body and attach it.
+   */
+  const signature = await cryptoWeb.asymSign(
+    JSON.stringify(inputAuthenticate.body),
+    privateKey,
+  );
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  inputAuthenticate.signatureEncoded = signatureEncoded;
+
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
   expect(output.status).toBe(200);
@@ -147,7 +153,7 @@ test('should create a user session and authenticate using the user keys', async 
   /**
    * Generate the session.
    */
-  const session = await generateSession(system, userUser.$id, user.credential.publicKey);
+  const session = await generateSession(system, userUser.$id, user.credential.$id);
   const sessionEncrypted = await cryptoWeb.sessionEncrypt(session);
 
   /**
@@ -164,18 +170,25 @@ test('should create a user session and authenticate using the user keys', async 
     return;
   }
 
-  /**
-   * Use the agent authentication method.
-   */
-  const apiAuthenticate = await agentApiAuthenticate(challenge);
+  const challengeEncoded = base64JsonEncode(challenge);
 
   /**
    * Now that everything is prepared, start authenticating.
    */
   const inputAuthenticate: IoInput<ApiAuthAuthenticate> = {
-    body: apiAuthenticate,
+    body: {},
     sessionEncrypted,
+    challengeEncoded,
   };
+
+  /**
+   * Sign the input body and attach it.
+   */
+  const signatureEncoded = await agentSign(
+    JSON.stringify(inputAuthenticate.body),
+  );
+  inputAuthenticate.signatureEncoded = signatureEncoded;
+
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
   expect(output.status).toBe(200);
@@ -224,17 +237,17 @@ test('should create an admin session and fail authentication with an incorrect c
   /**
    * Generate the session.
    */
-  const session = await generateSession(system, adminUser.$id, admin.credential.publicKey);
+  const session = await generateSession(system, adminUser.$id, admin.credential.$id);
   const sessionEncrypted = await cryptoWeb.sessionEncrypt(session);
 
   /**
    * Create a challenge.
    */
-  const challenge = challengeCreator({
-    value: await cryptoWeb.randomString(32),
-    expires: dateNumeric('30m'),
+  const challenge = challengeCreate({
+    val: await cryptoWeb.randomString(32),
+    exp: dateNumeric('30m'),
   });
-  const challengeEncoded = challengeEncode(challenge);
+  const challengeEncoded = base64JsonEncode(challenge);
 
   /**
    * Sign the encoded challenge.
@@ -248,26 +261,32 @@ test('should create an admin session and fail authentication with an incorrect c
     return;
   }
 
-  const signature = await cryptoWeb.asymSign(challengeEncoded, privateKey);
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
-
   /**
    * Now that everything is prepared, start authenticating.
    */
   const inputAuthenticate: IoInput<ApiAuthAuthenticate> = {
-    body: {
-      challenge: challengeEncoded,
-      signature: signatureEncoded,
-    },
+    body: {},
     sessionEncrypted,
+    challengeEncoded,
   };
+
+  /**
+   * Sign the input body and attach it.
+   */
+  const signature = await cryptoWeb.asymSign(
+    JSON.stringify(inputAuthenticate.body),
+    privateKey,
+  );
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  inputAuthenticate.signatureEncoded = signatureEncoded;
+
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
   expect(output.status).toBe(500);
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0]).toMatchObject({
     level: 'error',
-    title: 'Invalid Challenge Code',
+    title: 'Invalid Challenge',
   });
 });
 
@@ -286,7 +305,7 @@ test('should create an admin session and fail authentication with an incorrect s
   /**
    * Generate the session.
    */
-  const session = await generateSession(system, adminUser.$id, admin.credential.publicKey);
+  const session = await generateSession(system, adminUser.$id, admin.credential.$id);
   const sessionEncrypted = await cryptoWeb.sessionEncrypt(session);
 
   /**
@@ -302,7 +321,7 @@ test('should create an admin session and fail authentication with an incorrect s
     expect(challenge).toBeDefined();
     return;
   }
-  const challengeEncoded = challengeEncode(challenge);
+  const challengeEncoded = base64JsonEncode(challenge);
 
   /**
    * Sign the encoded challenge.
@@ -316,22 +335,28 @@ test('should create an admin session and fail authentication with an incorrect s
     return;
   }
 
-  const signature = await cryptoWeb.asymSign(challengeEncoded, privateKey);
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
-
   /**
    * Now that everything is prepared, start authenticating.
    */
   const inputAuthenticate: IoInput<ApiAuthAuthenticate> = {
-    body: {
-      challenge: challengeEncoded,
-      signature: signatureEncoded,
-    },
+    body: {},
     sessionEncrypted,
+    challengeEncoded,
   };
+
+  /**
+   * Sign the input body and attach it.
+   */
+  const signature = await cryptoWeb.asymSign(
+    JSON.stringify(inputAuthenticate.body),
+    privateKey,
+  );
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+  inputAuthenticate.signatureEncoded = signatureEncoded;
+
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
-  expect(output.status).toBe(500);
+  expect(output.status).toBe(401);
   expect(output.json.logs).toHaveLength(1);
   expect(output.json.logs[0]).toMatchObject({
     level: 'error',

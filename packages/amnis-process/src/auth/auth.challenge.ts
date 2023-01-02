@@ -3,17 +3,15 @@ import {
   IoProcess,
   ioOutputApply,
   ApiAuthChallenge,
-  logCreator,
   Challenge,
+  challengeCreate,
   Entity,
   UID,
-  challengeCreator,
-  entityCreate,
   base64Decode,
 } from '@amnis/core';
 import { systemSelectors } from '@amnis/state';
 import { mwValidate } from '../mw/index.js';
-import { challengeCreate } from '../utility/challenge.js';
+import { challengeNew } from '../utility/challenge.js';
 import { findUserById } from '../utility/find.js';
 
 const process: IoProcess<
@@ -26,11 +24,11 @@ Io<ApiAuthChallenge, Challenge>
 
     if (!system) {
       output.status = 500;
-      output.json.logs.push(logCreator({
+      output.json.logs.push({
         level: 'error',
         title: 'Inactive System',
         description: 'There is no active system available to generate a challenge.',
-      }));
+      });
       return output;
     }
 
@@ -42,7 +40,7 @@ Io<ApiAuthChallenge, Challenge>
     } = body;
 
     if (subject === undefined) {
-      ioOutputApply(output, await challengeCreate(context));
+      ioOutputApply(output, await challengeNew(context));
       return output;
     }
 
@@ -68,7 +66,7 @@ Io<ApiAuthChallenge, Challenge>
     /**
      * Generate the challenge code output.
      */
-    const outputChallenge = await challengeCreate(
+    const outputChallenge = await challengeNew(
       context,
       { $subject: subject as UID, privatize: true },
     );
@@ -101,11 +99,11 @@ Io<ApiAuthChallenge, Challenge>
     /**
      * Apply the output result.
      */
-    output.json.result = entityCreate(challengeCreator({
-      expires: resultChallenge.expires,
-      value: resultChallenge.value,
-      $subject: resultChallenge.$subject,
-    }));
+    output.json.result = challengeCreate({
+      exp: resultChallenge.exp,
+      val: resultChallenge.val,
+      $sub: resultChallenge.$sub,
+    });
     output.json.result.$id = resultChallenge.$id;
 
     /**
