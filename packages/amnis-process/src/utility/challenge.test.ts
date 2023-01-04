@@ -4,12 +4,14 @@ import {
   DateNumeric,
   dateNumeric,
   IoContext,
+  schemaAuth,
 } from '@amnis/core';
 import {
   challengeActions,
   challengeSelectors,
   contextSetup,
 } from '@amnis/state';
+import { validateSetup } from '../validate.js';
 import { challengeValidate } from './challenge.js';
 
 let context: IoContext;
@@ -19,6 +21,7 @@ let challengeExpired: Challenge;
 beforeAll(async () => {
   context = await contextSetup({
     initialize: true,
+    validators: validateSetup([schemaAuth]),
   });
   challengeValid = challengeCreate({
     val: await context.crypto.randomString(16),
@@ -33,9 +36,9 @@ beforeAll(async () => {
 });
 
 test('should successfully validate a valid challenge', async () => {
-  const result = challengeValidate(context, challengeValid);
+  const output = challengeValidate(context, challengeValid);
 
-  expect(result).toBe(true);
+  expect(output).toBe(true);
 
   /**
    * Should no longer find the challenge entity in the context store.
@@ -49,15 +52,15 @@ test('should successfully validate a valid challenge', async () => {
 });
 
 test('should fail to validate an expired challenge', async () => {
-  const result = challengeValidate(context, challengeExpired);
+  const output = challengeValidate(context, challengeExpired);
 
-  if (result === true) {
-    expect(result).not.toBe(true);
+  if (output === true) {
+    expect(output).not.toBe(true);
     return;
   }
-  expect(result.status).toBe(500);
-  expect(result.json.logs.length).toBeGreaterThan(0);
-  expect(result.json.logs[0].title).toBe('Invalid Challenge');
+  expect(output.status).toBe(500);
+  expect(output.json.logs.length).toBeGreaterThan(0);
+  expect(output.json.logs[0].title).toBe('Invalid Challenge');
 });
 
 test('should fail to find a non-existing challenge', async () => {
@@ -66,15 +69,15 @@ test('should fail to find a non-existing challenge', async () => {
     exp: dateNumeric('15m'),
   });
 
-  const result = challengeValidate(context, challengeNonExisting);
+  const output = challengeValidate(context, challengeNonExisting);
 
-  if (result === true) {
-    expect(result).not.toBe(true);
+  if (output === true) {
+    expect(output).not.toBe(true);
     return;
   }
-  expect(result.status).toBe(500);
-  expect(result.json.logs.length).toBeGreaterThan(0);
-  expect(result.json.logs[0].title).toBe('Invalid Challenge');
+  expect(output.status).toBe(500);
+  expect(output.json.logs.length).toBeGreaterThan(0);
+  expect(output.json.logs[0].title).toBe('Invalid Challenge');
 });
 
 test('should fail to find an existing challenge with a wrong value', async () => {
@@ -88,13 +91,14 @@ test('should fail to find an existing challenge with a wrong value', async () =>
     val: challengeNonExisting.val,
   };
 
-  const result = challengeValidate(context, challengeWrong);
+  const output = challengeValidate(context, challengeWrong);
 
-  if (result === true) {
-    expect(result).not.toBe(true);
+  if (output === true) {
+    expect(output).not.toBe(true);
     return;
   }
-  expect(result.status).toBe(500);
-  expect(result.json.logs.length).toBeGreaterThan(0);
-  expect(result.json.logs[0].title).toBe('Invalid Challenge');
+
+  expect(output.status).toBe(500);
+  expect(output.json.logs.length).toBeGreaterThan(0);
+  expect(output.json.logs[0].title).toBe('Invalid Challenge');
 });
