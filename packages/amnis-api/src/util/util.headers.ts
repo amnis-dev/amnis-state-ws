@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetch from 'cross-fetch';
 import {
-  agentSign, base64JsonEncode, Challenge, IoOutput, selectBearer, State,
+  agentSign, base64JsonEncode, Challenge, IoOutput, Otp, otpKey, selectBearer, State, UID,
 } from '@amnis/core';
+import type { EntityState } from '@reduxjs/toolkit';
 import { apiSelectors } from '../api/index.js';
 
 /**
@@ -65,4 +66,31 @@ export const headersChallenge = async (
 
   const challengeEncoded = base64JsonEncode(challenge);
   headers.set('Challenge', challengeEncoded);
+};
+
+/**
+ * Adds the latest otp as a header if one exists.
+ */
+export const headersOtp = (
+  headers: Headers,
+  state: State,
+) => {
+  const slice = state[otpKey] as EntityState<Otp> & { latest: UID | null };
+  if (!slice) {
+    console.error('OTP reducer must be defined to attach OTP objects on requests.');
+    return;
+  }
+
+  if (!slice.latest) {
+    return;
+  }
+
+  const otp = slice.entities[slice.latest];
+
+  if (!otp) {
+    return;
+  }
+
+  const otpEncoded = base64JsonEncode(otp);
+  headers.set('Otp', otpEncoded);
 };

@@ -33,6 +33,7 @@ const apiDefaults: Api[] = [
     baseUrl: '/api/auth',
     signature: ['login', 'register', 'credential', 'create'],
     challenge: ['login', 'register', 'credential', 'create'],
+    otp: ['credential'],
   },
   {
     id: 'apiCrud',

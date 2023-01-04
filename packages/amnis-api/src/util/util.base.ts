@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetch, { Headers, Request } from 'cross-fetch';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/index.js';
-import { agentGet, rtkq, State } from '@amnis/core';
-import { headersAuthorizationToken, headersChallenge, headersSignature } from './util.headers.js';
+import {
+  agentCredential, agentGet, rtkq, State,
+} from '@amnis/core';
+import {
+  headersAuthorizationToken, headersChallenge, headersOtp, headersSignature,
+} from './util.headers.js';
 import { apiSelectors } from '../api/api.js';
 
 global.Headers = Headers;
@@ -28,10 +32,15 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
   if (
     reducerPath === 'apiAuth'
     && typeof args !== 'string'
-    && ['login', 'reset'].includes(args.url)
   ) {
-    const agent = await agentGet();
-    args.body.$credential = agent.credentialId;
+    if (['login', 'reset'].includes(args.url)) {
+      const agent = await agentGet();
+      args.body.$credential = agent.credentialId;
+    }
+    if (['register', 'credential'].includes(args.url)) {
+      const credential = await agentCredential();
+      args.body.credential = credential;
+    }
   }
 
   /**
@@ -72,6 +81,16 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
         && (apiMeta.challenge === true || apiMeta.challenge.includes(api.endpoint))
       ) {
         await headersChallenge(headers, state);
+      }
+
+      /**
+       * Provide challenge headers on the required requests
+       */
+      if (
+        apiMeta?.otp
+        && (apiMeta.otp === true || apiMeta.otp.includes(api.endpoint))
+      ) {
+        headersOtp(headers, state);
       }
 
       return headers;

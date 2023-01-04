@@ -28,4 +28,10 @@ export interface Api {
    * A value of `true` indicates all endpoints.
    */
   challenge?: boolean | string[];
+
+  /**
+   * Endpoint that require an OTP header.
+   * A value of `true` indicates all endpoints.
+   */
+  otp?: boolean | string[];
 }

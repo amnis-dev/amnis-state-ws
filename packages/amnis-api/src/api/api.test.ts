@@ -30,6 +30,7 @@ test('api should return the initial state', () => {
     baseUrl: '/api/auth',
     signature: ['login', 'register', 'credential', 'create'],
     challenge: ['login', 'register', 'credential', 'create'],
+    otp: ['credential'],
   });
 
   const apiCrudMeta = apiSelectors.selectById(store.getState(), 'apiCrud');

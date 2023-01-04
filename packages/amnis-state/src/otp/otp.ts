@@ -5,8 +5,9 @@ import {
   dateNumeric,
   UID,
   otpBase,
+  State,
 } from '@amnis/core';
-import type { Action, PayloadAction } from '@reduxjs/toolkit';
+import type { Action, EntityState, PayloadAction } from '@reduxjs/toolkit';
 import type { OtpMeta } from './otp.types.js';
 
 /**
@@ -49,18 +50,36 @@ export const otpSlice = rtk.createSlice({
   initialState: otpInitialState,
   reducers: {
     insert: (state, action: PayloadAction<Partial<Otp> & { $id: Otp['$id'] }>) => {
+      const otpNew = {
+        ...otpBase(),
+        ...action.payload,
+        $id: action.payload.$id,
+      };
       otpAdapter.addOne(
         state,
-        {
-          ...otpBase(),
-          ...action.payload,
-          $id: action.payload.$id,
-        },
+        otpNew,
       );
+      state.latest = otpNew.$id;
     },
+
     delete: (state, action: PayloadAction<UID>) => {
       otpAdapter.removeOne(state, action.payload);
     },
+
+    /**
+     * Sets the one-time password value on the latest OTP.
+     */
+    set: (state, action: PayloadAction<string>) => {
+      const { latest } = state;
+      if (!latest) {
+        return;
+      }
+      otpAdapter.updateOne(state, {
+        id: latest,
+        changes: { val: action.payload },
+      });
+    },
+
   },
   extraReducers: (builder) => {
     /**
@@ -100,6 +119,19 @@ export const otpSelectors = {
   ...otpAdapter.getSelectors<{
     [otpKey]: typeof otpInitialState;
   }>((state) => state[otpKey]),
+
+  /**
+   * Selects the latest Otp on the state.
+   */
+  selectLatest: (state: State) => {
+    const slice = state[otpKey] as OtpMeta & EntityState<Otp>;
+    const { latest } = slice;
+    if (!latest) {
+      return undefined;
+    }
+    const otpLatest = slice.entities[latest];
+    return otpLatest;
+  },
 };
 
 /**

@@ -6,6 +6,7 @@ import {
   ApiAuthLogin,
   ApiAuthLogout,
   ApiAuthPkce,
+  ApiAuthRegistration,
   ApiAuthVerify,
   IoOutputJson,
   StateDeleter,
@@ -62,9 +63,20 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
     }),
   }),
 
+  register: builder.mutation<
+  IoOutputJson<StateEntities>,
+  Omit<ApiAuthRegistration, 'credential'>
+  >({
+    query: (payload) => ({
+      url: 'register',
+      method: 'post',
+      body: payload,
+    }),
+  }),
+
   credential: builder.mutation<
   IoOutputJson<StateEntities>,
-  ApiAuthCredential
+  Omit<ApiAuthCredential, 'credential'>
   >({
     query: (payload) => ({
       url: 'credential',
