@@ -44,7 +44,7 @@ Io<ApiAuthLogin, StateEntities>
 );
 
 export const processAuthLogin = mwValidate('ApiAuthLogin')(
-  mwChallenge({})(
+  mwChallenge()(
     mwCredential()(
       mwSignature()(
         process,

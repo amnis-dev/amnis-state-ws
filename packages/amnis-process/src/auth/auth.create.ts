@@ -60,7 +60,7 @@ Io<ApiAuthCreate, StateEntities>
 
 export const processAuthCreate = mwValidate('ApiAuthCreate')(
   mwSession()(
-    mwChallenge({})(
+    mwChallenge()(
       mwCredential()(
         mwSignature()(
           process,

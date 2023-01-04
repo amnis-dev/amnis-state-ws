@@ -94,7 +94,7 @@ Io<ApiAuthRegistration, StateEntities>
 );
 
 export const processAuthRegister = mwValidate('ApiAuthRegistration')(
-  mwChallenge({})(
+  mwChallenge()(
     mwCredential(true)(
       mwSignature()(
         process,
