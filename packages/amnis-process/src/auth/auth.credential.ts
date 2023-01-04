@@ -6,68 +6,76 @@ import {
   ioOutputApply,
 } from '@amnis/core';
 import {
-  mwChallenge, mwCredential, mwSignature, mwValidate,
+  mwChallenge,
+  mwCredential,
+  mwSignature,
+  mwValidate,
+  mwOtp,
 } from '../mw/index.js';
-import { accountCredentialAdd } from '../utility/account.js';
-import { findUserById } from '../utility/find.js';
-import { validate } from '../validate.js';
+import { accountCredentialAdd, findUserById } from '../utility/index.js';
 
 const process: IoProcess<
 Io<ApiAuthCredential, StateEntities>
 > = (context) => (
   async (input, output) => {
-    const { validators } = context;
+    const { crypto } = context;
     const {
-      challenge,
+      body,
+      otp,
     } = input;
     const {
       credential,
-    } = input.body;
+      password,
+    } = body;
 
-    if (!challenge) {
+    if (!otp) {
       output.status = 500;
       output.json.logs.push({
         level: 'error',
-        title: 'Invalid Challenge',
-        description: 'Could not parse the provided challenge.',
+        title: 'Invalid One-Time Password',
+        description: 'A one-time password (OTP) is required to add a new agent credential.',
       });
       return output;
     }
 
     /**
-     * Ensure the challenge has a subject.
+     * Find the OTP subject.
      */
-    const { $sub } = challenge;
-    if (!$sub) {
-      output.status = 500;
-      output.json.logs.push({
-        level: 'error',
-        title: 'No Subject',
-        description: 'There is no subject to apply the new credential.',
-      });
-      return output;
-    }
-
-    /**
-     * Validate the structure of the credential.
-     */
-    const outputValidateCredential = validate(validators.Credential, credential);
-    if (outputValidateCredential) {
-      return outputValidateCredential;
-    }
-
-    /**
-     * Find the subject.
-     */
-    const user = await findUserById(context, $sub);
+    const user = await findUserById(context, otp.$sub);
     if (!user) {
-      output.status = 500;
+      output.status = 401;
       output.json.logs.push({
         level: 'error',
         title: 'Subject Not Found',
         description: 'The subject for the credential could not be found.',
       });
       return output;
+    }
+
+    /**
+     * Ensure the passwords are valid if a password is defined.
+     */
+    if (user.password) {
+      if (!password) {
+        output.status = 401;
+        output.json.logs.push({
+          level: 'error',
+          title: 'Missing Password',
+          description: 'The account password must be provided to add the new credential.',
+        });
+        return output;
+      }
+      const passwordMatch = await crypto.passCompare(password, user.password);
+
+      if (!passwordMatch) {
+        output.status = 401;
+        output.json.logs.push({
+          level: 'error',
+          title: 'Invaid Password',
+          description: 'The account password did not match.',
+        });
+        return output;
+      }
     }
 
     /**
@@ -80,13 +88,12 @@ Io<ApiAuthCredential, StateEntities>
 );
 
 export const processAuthCredential = mwValidate('ApiAuthCredential')(
-  mwChallenge({
-    $sub: true,
-    otp: true,
-  })(
-    mwCredential(true)(
-      mwSignature()(
-        process,
+  mwChallenge()(
+    mwOtp()(
+      mwCredential(true)(
+        mwSignature()(
+          process,
+        ),
       ),
     ),
   ),

@@ -36,6 +36,9 @@
         },
         "typeCrendential": {
           "$ref": "#/definitions/Credential"
+        },
+        "typeOtp": {
+          "$ref": "#/definitions/Otp"
         }
       },
       "additionalProperties": false
@@ -49,50 +52,10 @@
     },
     "ApiAuthChallenge": {
       "type": "object",
-      "properties": {
-        "subject": {
-          "type": "string",
-          "minLength": 8,
-          "maxLength": 32,
-          "description": "Subject that the challenge only works for. A subject challenge includes an OTP."
-        },
-        "purpose": {
-          "$ref": "#/definitions/ApiAuthChallengePurpose",
-          "description": "An optional purpose title for the challenge."
-        },
-        "email": {
-          "$ref": "#/definitions/Email",
-          "description": "Email address to send the one-time-passcode to."
-        },
-        "signature": {
-          "$ref": "#/definitions/SignatureEncoded",
-          "description": "Options signature from a privileged account to return the OTP."
-        }
+      "additionalProperties": {
+        "not": {}
       },
-      "additionalProperties": false,
       "description": "Challenge Generation Request."
-    },
-    "ApiAuthChallengePurpose": {
-      "type": "string",
-      "enum": [
-        "resetpass",
-        "adddevice",
-        "register",
-        "confirm"
-      ],
-      "description": "Challenge purposes"
-    },
-    "Email": {
-      "type": "string",
-      "description": "An email address",
-      "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-      "maxLength": 64
-    },
-    "SignatureEncoded": {
-      "type": "string",
-      "description": "An encoded cryptographic signature to verify that data can be trusted.",
-      "minLength": 16,
-      "maxLength": 512
     },
     "ApiAuthCredential": {
       "type": "object",
@@ -100,10 +63,15 @@
         "credential": {
           "$ref": "#/definitions/Credential",
           "description": "Credential entity to assign."
+        },
+        "password": {
+          "$ref": "#/definitions/Password",
+          "description": "Password of the user account."
         }
       },
       "required": [
-        "credential"
+        "credential",
+        "password"
       ],
       "additionalProperties": false,
       "description": "Adds a credential to an account."
@@ -151,6 +119,12 @@
       "type": "string",
       "description": "A string that represents a JSON Date.",
       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "Password": {
+      "type": "string",
+      "description": "A clear-text password.",
+      "minLength": 4,
+      "maxLength": 32
     },
     "ApiAuthRegistration": {
       "type": "object",
@@ -210,11 +184,11 @@
       "minLength": 1,
       "maxLength": 24
     },
-    "Password": {
+    "Email": {
       "type": "string",
-      "description": "A clear-text password.",
-      "minLength": 4,
-      "maxLength": 32
+      "description": "An email address",
+      "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "maxLength": 64
     },
     "ApiAuthLogin": {
       "type": "object",
@@ -321,24 +295,6 @@
         "exp": {
           "$ref": "#/definitions/DateNumeric",
           "description": "Expiration date-time of the challenge."
-        },
-        "ref": {
-          "type": "string",
-          "description": "A reference value that can indicate what endpoint this challenge is intended for.",
-          "maxLength": 64
-        },
-        "$sub": {
-          "$ref": "#/definitions/UID",
-          "description": "The subject being challenged."
-        },
-        "otp": {
-          "type": "string",
-          "description": "An optional one-time passcode value to be generate administratively.",
-          "maxLength": 32
-        },
-        "otpl": {
-          "type": "number",
-          "description": "Specifies the exact length the OTP must be."
         }
       },
       "required": [
@@ -347,7 +303,42 @@
         "exp"
       ],
       "additionalProperties": false,
-      "description": "Entity that contains data to verify credentials."
+      "description": "An object containing one-time data to prevent replay attacks."
+    },
+    "Otp": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "OTP identifier"
+        },
+        "$sub": {
+          "$ref": "#/definitions/UID",
+          "description": "Subject this OTP is intended for."
+        },
+        "val": {
+          "type": "string",
+          "description": "The string random value of the OTP.",
+          "minLength": 4,
+          "maxLength": 24
+        },
+        "len": {
+          "type": "number",
+          "description": "The length the OTP expects."
+        },
+        "exp": {
+          "$ref": "#/definitions/DateNumeric",
+          "description": "Expiration date-time of the Otp."
+        }
+      },
+      "required": [
+        "$id",
+        "$sub",
+        "len",
+        "exp"
+      ],
+      "additionalProperties": false,
+      "description": "A short-lived object that contains a one-time password."
     }
   }
 }

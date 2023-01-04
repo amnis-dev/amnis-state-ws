@@ -171,3 +171,15 @@ export const agentSign = async (data: string): Promise<string> => {
   const signatureEncoded = base64Encode(new Uint8Array(signature));
   return signatureEncoded;
 };
+
+/**
+ * Update attributes of the existing agent.
+ */
+export const agentUpdate = async (agentProps: Partial<Agent>) => {
+  const agentCurrent = await agentGet();
+
+  agent = {
+    ...agentCurrent,
+    ...agentProps,
+  };
+};

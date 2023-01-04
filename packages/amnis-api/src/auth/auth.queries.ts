@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions.js';
 import {
-  ApiAuthChallenge,
+  ApiAuthCreate,
   ApiAuthCredential,
   ApiAuthLogin,
   ApiAuthLogout,
   ApiAuthPkce,
   ApiAuthVerify,
-  Challenge,
-  Entity,
   IoOutputJson,
   StateDeleter,
   StateEntities,
@@ -16,31 +14,9 @@ import {
 
 export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
 
-  challenge: builder.mutation<
-  IoOutputJson<Entity<Challenge>>,
-  ApiAuthChallenge
-  >({
-    query: (payload) => ({
-      url: 'challenge',
-      method: 'post',
-      body: payload,
-    }),
-  }),
-
-  credential: builder.mutation<
-  IoOutputJson<StateEntities>,
-  ApiAuthCredential
-  >({
-    query: (payload) => ({
-      url: 'credential',
-      method: 'post',
-      body: payload,
-    }),
-  }),
-
   login: builder.mutation<
   IoOutputJson<StateEntities>,
-  ApiAuthLogin
+  Omit<ApiAuthLogin, '$credential'>
   >({
     query: (payload) => ({
       url: 'login',
@@ -62,6 +38,18 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
     }),
   }),
 
+  create: builder.mutation<
+  IoOutputJson<StateEntities>,
+  ApiAuthCreate
+  >({
+    query: (payload) => ({
+      url: 'create',
+      method: 'post',
+      credentials: 'include',
+      body: payload,
+    }),
+  }),
+
   pkce: builder.mutation<
   IoOutputJson<StateEntities>,
   ApiAuthPkce
@@ -70,6 +58,17 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
       url: 'pkce',
       method: 'post',
       credentials: 'include',
+      body: payload,
+    }),
+  }),
+
+  credential: builder.mutation<
+  IoOutputJson<StateEntities>,
+  ApiAuthCredential
+  >({
+    query: (payload) => ({
+      url: 'credential',
+      method: 'post',
       body: payload,
     }),
   }),

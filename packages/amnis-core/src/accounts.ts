@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { agentFingerprint, agentGet, agentName } from './agent.js';
+import {
+  agentCredential, agentFingerprint, agentGet, agentName,
+} from './agent.js';
 import { Credential, credentialCreator } from './entity/index.js';
 import { cryptoWeb } from './io/index.js';
 import { base64Encode } from './base64.js';
@@ -80,10 +82,7 @@ export const accountsGet = async () => {
 
     user = {
       handle: 'user',
-      credential: credentialCreator({
-        name: agent.name,
-        publicKey: agent.publicKey,
-      }),
+      credential: await agentCredential(),
       password: 'passwd12',
       privateKey: agent.privateKey,
     };

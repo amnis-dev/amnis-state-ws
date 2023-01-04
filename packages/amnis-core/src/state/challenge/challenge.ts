@@ -8,7 +8,6 @@ export const challengeKey = 'challenge';
 export const challengeBase = (): Omit<Challenge, '$id'> => ({
   val: rtk.nanoid(8),
   exp: dateNumeric('5m'),
-  ref: '',
 });
 
 export const challengeCreate = (
@@ -19,10 +18,6 @@ export const challengeCreate = (
     ...challenge,
     $id: uid(challengeKey),
   };
-
-  if (challangeNew.otp) {
-    challangeNew.otpl = challangeNew.otp.length;
-  }
 
   return challangeNew;
 };

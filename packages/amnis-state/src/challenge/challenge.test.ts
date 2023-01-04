@@ -31,6 +31,6 @@ test('should handle creating a new challenges', () => {
   expect(entities).toHaveLength(1);
 
   expect(entities[0]).toEqual(expect.objectContaining({
-    expires: expect.any(Number),
+    exp: expect.any(Number),
   }));
 });

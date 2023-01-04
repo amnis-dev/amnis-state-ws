@@ -31,9 +31,8 @@ const apiDefaults: Api[] = [
   {
     id: 'apiAuth',
     baseUrl: '/api/auth',
-    sign: ['login', 'register'],
-    challenge: ['login', 'register'],
-    challengeUrl: '/api/auth/challenge',
+    signature: ['login', 'register', 'credential', 'create'],
+    challenge: ['login', 'register', 'credential', 'create'],
   },
   {
     id: 'apiCrud',

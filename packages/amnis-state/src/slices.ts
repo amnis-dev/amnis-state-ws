@@ -9,6 +9,7 @@ import { historySlice } from './history/index.js';
 import { localeSlice } from './locale/index.js';
 import { logSlice } from './log/index.js';
 import { noteSlice } from './note/index.js';
+import { otpSlice } from './otp/otp.js';
 import { profileSlice } from './profile/index.js';
 import { roleSlice } from './role/index.js';
 import { serviceSlice } from './service/index.js';
@@ -29,6 +30,7 @@ export const slices = {
   [localeSlice.name]: localeSlice,
   [logSlice.name]: logSlice,
   [noteSlice.name]: noteSlice,
+  [otpSlice.name]: otpSlice,
   [profileSlice.name]: profileSlice,
   [roleSlice.name]: roleSlice,
   [serviceSlice.name]: serviceSlice,

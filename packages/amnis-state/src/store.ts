@@ -24,6 +24,7 @@ export function storeContextSetup() {
   const {
     system,
     challenge,
+    otp,
     key,
     role,
     user,
@@ -34,6 +35,7 @@ export function storeContextSetup() {
   const rootReducer = rtk.combineReducers({
     system,
     challenge,
+    otp,
     key,
     role,
     user,

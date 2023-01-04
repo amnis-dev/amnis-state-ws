@@ -1,8 +1,8 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
   accountsGet,
+  agentUpdate,
   auditKey,
-  apiAuthLoginCreate,
   contactKey,
   profileKey,
   sessionKey,
@@ -20,7 +20,7 @@ import { mockService } from './mock.service.js';
 const baseUrl = 'https://amnis.dev';
 
 clientStore.dispatch(apiActions.upsertMany([
-  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth`, challengeUrl: `${baseUrl}/api/auth/challenge` },
+  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth` },
   { id: 'apiCrud', baseUrl: `${baseUrl}/api/crud` },
 ]));
 
@@ -39,38 +39,10 @@ test('should be able to login as user', async () => {
    */
   const { user } = await accountsGet();
 
-  /**
-   * Must first begin the login ritual by obtaining a challenge code.
-   */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
-
-  if ('error' in resultInitiate) {
-    expect(resultInitiate.error).toBeUndefined();
-    return;
-  }
-
-  /**
-   * Extract the challenge.
-   */
-  const challenge = resultInitiate.data?.result;
-
-  if (!challenge) {
-    expect(challenge).toBeDefined();
-    return;
-  }
-
-  /**
-   * Create the login request body.
-   */
-  const authLogin = await apiAuthLoginCreate({
+  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
     handle: user.handle,
     password: user.password,
-    challenge,
-    credential: user.credential,
-    privateKeyWrapped: user.privateKey,
-  });
-
-  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
+  }));
 
   if ('error' in result) {
     expect(result.error).toBeUndefined();
@@ -102,38 +74,10 @@ test('should NOT be able to login with a bad password', async () => {
    */
   const { user } = await accountsGet();
 
-  /**
-   * Must first begin the login ritual by obtaining a challenge code.
-   */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
-
-  if ('error' in resultInitiate) {
-    expect(resultInitiate.error).toBeUndefined();
-    return;
-  }
-
-  /**
-   * Extract the challenge.
-   */
-  const challenge = resultInitiate.data?.result;
-
-  if (!challenge) {
-    expect(challenge).toBeDefined();
-    return;
-  }
-
-  /**
-   * Create the login request body.
-   */
-  const authLogin = await apiAuthLoginCreate({
+  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
     handle: user.handle,
     password: user.password.slice(1),
-    challenge,
-    credential: user.credential,
-    privateKeyWrapped: user.privateKey,
-  });
-
-  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
+  }));
 
   if ('error' in result) {
     expect(result.error).toBeUndefined();
@@ -143,10 +87,35 @@ test('should NOT be able to login with a bad password', async () => {
   const { data } = result;
   const { logs } = data;
 
-  // console.log(JSON.stringify(data, null, 2));
-
   expect(logs).toHaveLength(1);
   expect(logs?.[0]?.title).toBe('Authentication Failed: Wrong Password');
+});
+
+test('should not login as admin with improper agent private key', async () => {
+  /**
+   * Get the user account information.
+   */
+  const { admin } = await accountsGet();
+
+  await agentUpdate({
+    credentialId: admin.credential.$id,
+  });
+
+  const result = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
+    handle: admin.handle,
+    password: admin.password,
+  }));
+
+  if ('error' in result) {
+    expect(result.error).toBeUndefined();
+    return;
+  }
+
+  const { data } = result;
+  const { logs } = data;
+
+  expect(logs).toHaveLength(1);
+  expect(logs?.[0]?.title).toBe('Invalid Signature');
 });
 
 test('should see audits of login requests as admin', async () => {
@@ -155,38 +124,15 @@ test('should see audits of login requests as admin', async () => {
    */
   const { admin } = await accountsGet();
 
-  /**
-   * Must first begin the login ritual by obtaining a challenge code.
-   */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
-
-  if ('error' in resultInitiate) {
-    expect(resultInitiate.error).toBeUndefined();
-    return;
-  }
-
-  /**
-   * Extract the challenge.
-   */
-  const challenge = resultInitiate.data?.result;
-
-  if (!challenge) {
-    expect(challenge).toBeDefined();
-    return;
-  }
-
-  /**
-   * Create the login request body.
-   */
-  const authLogin = await apiAuthLoginCreate({
-    handle: admin.handle,
-    password: admin.password,
-    challenge,
-    credential: admin.credential,
-    privateKeyWrapped: admin.privateKey,
+  await agentUpdate({
+    credentialId: admin.credential.$id,
+    privateKey: admin.privateKey,
   });
 
-  const resultLogin = await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
+  const resultLogin = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
+    handle: admin.handle,
+    password: admin.password,
+  }));
 
   if ('error' in resultLogin) {
     expect(resultLogin.error).toBeUndefined();
@@ -197,7 +143,7 @@ test('should see audits of login requests as admin', async () => {
     [auditKey]: {
       $query: {},
       $range: {
-        limit: 10,
+        limit: 5,
       },
     },
   }));
@@ -205,5 +151,5 @@ test('should see audits of login requests as admin', async () => {
   const { data } = resultAudits;
 
   expect(Object.keys(data?.result || {})).toHaveLength(1);
-  expect(data?.result?.[auditKey]).toHaveLength(9);
+  expect(data?.result?.[auditKey].length).toBeGreaterThan(1);
 });

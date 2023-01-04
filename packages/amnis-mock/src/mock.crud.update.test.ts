@@ -1,7 +1,7 @@
 import { apiActions, apiAuth, apiCrud } from '@amnis/api';
 import {
   accountsGet,
-  apiAuthLoginCreate,
+  agentUpdate,
   Entity,
   History,
   historyKey,
@@ -18,7 +18,7 @@ import { mockService } from './mock.service.js';
 const baseUrl = 'https://amnis.dev';
 
 clientStore.dispatch(apiActions.upsertMany([
-  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth`, challengeUrl: `${baseUrl}/api/auth/challenge` },
+  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth` },
   { id: 'apiCrud', baseUrl: `${baseUrl}/api/crud` },
 ]));
 
@@ -35,40 +35,17 @@ test('should be able to update user profile', async () => {
   /**
    * Get the user account information.
    */
-  const { admin: adminAccount } = await accountsGet();
+  const { admin } = await accountsGet();
 
-  /**
-   * Must first begin the login ritual by obtaining a challenge code.
-   */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
-
-  if ('error' in resultInitiate) {
-    expect(resultInitiate.error).toBeUndefined();
-    return;
-  }
-
-  /** s
-   * Extract the challenge.
-   */
-  const challenge = resultInitiate.data?.result;
-
-  if (!challenge) {
-    expect(challenge).toBeDefined();
-    return;
-  }
-
-  /**
-   * Create the login request body.
-   */
-  const authLogin = await apiAuthLoginCreate({
-    handle: adminAccount.handle,
-    password: adminAccount.password,
-    challenge,
-    credential: adminAccount.credential,
-    privateKeyWrapped: adminAccount.privateKey,
+  await agentUpdate({
+    credentialId: admin.credential.$id,
+    privateKey: admin.privateKey,
   });
 
-  await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
+  await clientStore.dispatch(apiAuth.endpoints.login.initiate({
+    handle: admin.handle,
+    password: admin.password,
+  }));
 
   /**
    * Read profiles to put them in the state.

@@ -10,6 +10,7 @@ import type {
   ApiAuthCredential,
   Challenge,
   Credential,
+  Otp,
 } from '@amnis/core';
 
 export interface AuthSchema {
@@ -26,4 +27,5 @@ export interface AuthSchema {
    */
   typeChallenge?: Challenge;
   typeCrendential?: Credential;
+  typeOtp?: Otp;
 }

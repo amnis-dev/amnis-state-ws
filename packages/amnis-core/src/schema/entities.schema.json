@@ -727,13 +727,23 @@
         },
         "registrationOpen": {
           "type": "boolean",
-          "description": "Open registration to anonymous users. Otherwise, only executives and\nadmins can initialize a registration for a new client.",
+          "description": "Open registration to anonymous users. Otherwise, only executives and admins can initialize a registration for a new client.",
           "default": true
         },
-        "registrationExpiration": {
+        "challengeExpiration": {
           "type": "number",
-          "description": "Expiration of a registration event in minutes.",
+          "description": "Expiration of a challenge code in minutes.",
           "default": 30
+        },
+        "otpExpiration": {
+          "type": "number",
+          "description": "Expiration of a One-time password in minutes.",
+          "default": 5
+        },
+        "otpLength": {
+          "type": "number",
+          "description": "Character length of one-time passwords.",
+          "default": 12
         },
         "emailNews": {
           "$ref": "#/definitions/Email",
@@ -778,11 +788,13 @@
         "$initialRoles",
         "$website",
         "bearerExpires",
+        "challengeExpiration",
         "emailAuth",
         "emailNews",
         "emailNotify",
         "name",
-        "registrationExpiration",
+        "otpExpiration",
+        "otpLength",
         "registrationOpen",
         "sessionExpires"
       ],
@@ -1711,13 +1723,23 @@
         },
         "registrationOpen": {
           "type": "boolean",
-          "description": "Open registration to anonymous users. Otherwise, only executives and\nadmins can initialize a registration for a new client.",
+          "description": "Open registration to anonymous users. Otherwise, only executives and admins can initialize a registration for a new client.",
           "default": true
         },
-        "registrationExpiration": {
+        "challengeExpiration": {
           "type": "number",
-          "description": "Expiration of a registration event in minutes.",
+          "description": "Expiration of a challenge code in minutes.",
           "default": 30
+        },
+        "otpExpiration": {
+          "type": "number",
+          "description": "Expiration of a One-time password in minutes.",
+          "default": 5
+        },
+        "otpLength": {
+          "type": "number",
+          "description": "Character length of one-time passwords.",
+          "default": 12
         },
         "emailNews": {
           "$ref": "#/definitions/Email",

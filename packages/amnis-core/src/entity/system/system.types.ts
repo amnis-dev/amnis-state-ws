@@ -16,23 +16,39 @@ export interface System extends EntityCreator {
   sessionExpires: number;
 
   /**
-   * @description Number in minutes that a bearer token should live.
+   * Number in minutes that a bearer token should live.
    * @default 30
    */
   bearerExpires: number;
 
   /**
-   * @description Open registration to anonymous users. Otherwise, only executives and
+   * Open registration to anonymous users. Otherwise, only executives and
    * admins can initialize a registration for a new client.
+   *
    * @default true
    */
   registrationOpen: boolean;
 
   /**
-   * @description Expiration of a registration event in minutes.
+   * Expiration of a challenge code in minutes.
+   *
    * @default 30
    */
-  registrationExpiration: number;
+  challengeExpiration: number;
+
+  /**
+   * Expiration of a One-time password in minutes.
+   *
+   * @default 5
+   */
+  otpExpiration: number;
+
+  /**
+   * Character length of one-time passwords.
+   *
+   * @default 12
+   */
+  otpLength: number;
 
   /**
    * The sender email address for news.

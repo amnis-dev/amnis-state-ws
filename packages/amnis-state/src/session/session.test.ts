@@ -32,6 +32,6 @@ test('should handle creating a new session', () => {
   expect(entities[0]).toEqual(expect.objectContaining({
     $id: expect.any(String),
     $subject: expect.any(String),
-    pub: expect.any(String),
+    $credential: expect.any(String),
   }));
 });

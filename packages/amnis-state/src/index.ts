@@ -12,6 +12,7 @@ export * from './history/index.js';
 export * from './locale/index.js';
 export * from './log/index.js';
 export * from './note/index.js';
+export * from './otp/index.js';
 export * from './profile/index.js';
 export * from './role/index.js';
 export * from './service/index.js';

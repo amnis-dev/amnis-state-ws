@@ -18,20 +18,14 @@ export interface Api {
   bearerId?: string;
 
   /**
-   * Endpoints that require signing.
+   * Endpoints that require a signature header.
    * A value of `true` indicates all endpoints.
    */
-  sign?: string[] | boolean;
+  signature?: string[] | boolean;
 
   /**
-   * Endpoints that require a challenge value.
+   * Endpoints that require a challenge header.
    * A value of `true` indicates all endpoints.
    */
   challenge?: boolean | string[];
-
-  /**
-   * URL to fetch challenges from.
-   */
-  challengeUrl?: string;
-
 }

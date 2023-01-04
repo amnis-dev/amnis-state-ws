@@ -2,7 +2,7 @@
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import type { Store } from '@reduxjs/toolkit';
 
-import type { Bearer, Challenge } from '../state/index.js';
+import type { Bearer, Challenge, Otp } from '../state/index.js';
 import type { LogCreator, Session, Credential } from '../entity/index.js';
 
 import type { Database } from './database/database.types.js';
@@ -97,6 +97,16 @@ export interface IoInput<T = any, J = JWTAccess> {
    * Decoded challenge object.
    */
   challenge?: Challenge;
+
+  /**
+   * Encoded challenge data.
+   */
+  otpEncoded?: string;
+
+  /**
+   * Decoded challenge object.
+   */
+  otp?: Otp;
 
   /**
    * Encoded signature data.

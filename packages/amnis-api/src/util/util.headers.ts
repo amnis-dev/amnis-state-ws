@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import fetch from 'cross-fetch';
 import {
-  agentSign, base64JsonEncode, Challenge, challengeKey, selectBearer, State,
+  agentSign, base64JsonEncode, Challenge, IoOutput, selectBearer, State,
 } from '@amnis/core';
+import { apiSelectors } from '../api/index.js';
 
 /**
  * Adds an authroization token to the header.
@@ -24,7 +27,7 @@ export const headersSignature = async (
   headers: Headers,
   body: Record<string, unknown> | string,
 ) => {
-  const bodyEncoded = typeof body === 'string' ? body : base64JsonEncode(body);
+  const bodyEncoded = typeof body === 'string' ? body : JSON.stringify(body);
   const signature = await agentSign(bodyEncoded);
   headers.set('Signature', signature);
 };
@@ -35,17 +38,28 @@ export const headersSignature = async (
 export const headersChallenge = async (
   headers: Headers,
   state: State,
-  ref: string,
 ) => {
-  const challengeEntities = state[challengeKey]?.entities as Record<string, Challenge>;
-
-  if (!challengeEntities) {
+  const apiAuthMeta = apiSelectors.selectById(state as any, 'apiAuth');
+  if (!apiAuthMeta) {
+    console.error('Auth API must be defined to generate challenge object.');
     return;
   }
 
-  const challenge = Object.values(challengeEntities).find((c) => c.ref === ref);
+  const result = await fetch(`${apiAuthMeta.baseUrl}/challenge`, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  });
+
+  if (result?.status !== 200) {
+    console.error('Failed to endpoint to generate challenge object.');
+    return;
+  }
+
+  const json = await result.json() as IoOutput<Challenge>['json'];
+  const challenge = json.result;
 
   if (!challenge) {
+    console.error('Failed to receive challenge object.');
     return;
   }
 

@@ -14,7 +14,7 @@ import { mockService } from './mock.service.js';
 const baseUrl = 'https://amnis.dev';
 
 clientStore.dispatch(apiActions.upsertMany([
-  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth`, challengeUrl: `${baseUrl}/api/auth/challenge` },
+  { id: 'apiAuth', baseUrl: `${baseUrl}/api/auth` },
   { id: 'apiCrud', baseUrl: `${baseUrl}/api/crud` },
 ]));
 
@@ -33,38 +33,10 @@ test('should be able to login and logout', async () => {
    */
   const { user } = await accountsGet();
 
-  /**
-   * Must first begin the login ritual by obtaining a challenge code.
-   */
-  const resultInitiate = await clientStore.dispatch(apiAuth.endpoints.challenge.initiate({}));
-
-  if ('error' in resultInitiate) {
-    expect(resultInitiate.error).toBeUndefined();
-    return;
-  }
-
-  /** s
-   * Extract the challenge.
-   */
-  const challenge = resultInitiate.data?.result;
-
-  if (!challenge) {
-    expect(challenge).toBeDefined();
-    return;
-  }
-
-  /**
-   * Create the login request body.
-   */
-  const authLogin = await apiAuthLoginCreate({
+  await clientStore.dispatch(apiAuth.endpoints.login.initiate({
     handle: user.handle,
     password: user.password,
-    challenge,
-    credential: user.credential,
-    privateKeyWrapped: user.privateKey,
-  });
-
-  await clientStore.dispatch(apiAuth.endpoints.login.initiate(authLogin));
+  }));
 
   const sessionLoginActive = sessionSelectors.selectActive(clientStore.getState());
 

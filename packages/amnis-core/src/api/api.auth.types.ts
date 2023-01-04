@@ -6,42 +6,39 @@ import type {
   Bearer,
 } from '../state/index.js';
 import type {
-  SignatureEncoded,
   UID,
   Email,
   Password,
 } from '../types.js';
 
 /**
- * Challenge purposes
+ * OTP purposes
  */
-export type ApiAuthChallengePurpose = 'resetpass' | 'adddevice' | 'register' | 'confirm';
+export type ApiAuthOtpPurpose = 'credential';
 
 /**
  * Challenge Generation Request.
  */
-export interface ApiAuthChallenge {
+export type ApiAuthChallenge = Record<string, never>;
+
+/**
+ * One-time password request.
+ */
+export interface ApiAuthOtp {
   /**
-   * @minLength 8
-   * @maxLength 32
-   * @description Subject that the challenge only works for. A subject challenge includes an OTP.
+   * OTP Subject.
    */
-  subject?: string;
+  $subject: UID;
 
   /**
-   * An optional purpose title for the challenge.
-   */
-  purpose?: ApiAuthChallengePurpose;
-
-  /**
-   * Email address to send the one-time-passcode to.
+   * Email address to send the OTP to.
    */
   email?: Email;
 
   /**
-   * Options signature from a privileged account to return the OTP.
+   * Purpose of the OTP.
    */
-  signature?: SignatureEncoded;
+  purpose?: ApiAuthOtpPurpose;
 }
 
 /**
@@ -52,6 +49,11 @@ export interface ApiAuthCredential {
    * Credential entity to assign.
    */
   credential: Credential;
+
+  /**
+   * Password of the user account.
+   */
+  password?: Password;
 }
 
 /**
