@@ -25,7 +25,7 @@ export const mwSignature: IoMiddleware = () => (next) => (context) => async (inp
     output.json.logs.push({
       level: 'error',
       title: 'Unauthorized',
-      description: 'A valid credential is required to complete this request.',
+      description: 'A valid credential is required to sign this request.',
     });
     return output;
   }
@@ -64,7 +64,7 @@ export const mwSignature: IoMiddleware = () => (next) => (context) => async (inp
     output.json.logs.push({
       level: 'error',
       title: 'Invalid Signature',
-      description: 'Client signature could not be verified.',
+      description: 'Provided signature could not be verified.',
     });
     return output;
   }

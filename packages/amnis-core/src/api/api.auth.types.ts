@@ -1,7 +1,15 @@
-import { HandleName } from '../entity/index.js';
-import type { Bearer } from '../state/bearer/index.js';
 import type {
-  ChallengeEncoded, Email, Password, SignatureEncoded, UID,
+  HandleName,
+  Credential,
+} from '../entity/index.js';
+import type {
+  Bearer,
+} from '../state/index.js';
+import type {
+  SignatureEncoded,
+  UID,
+  Email,
+  Password,
 } from '../types.js';
 
 /**
@@ -41,22 +49,9 @@ export interface ApiAuthChallenge {
  */
 export interface ApiAuthCredential {
   /**
-   * Encoded signature challenge object to prevent reply attacks
-   * with a level of authenticity using an OTP.
+   * Credential entity to assign.
    */
-  challenge: ChallengeEncoded;
-
-  /**
-   * @minLength 16
-   * @maxLength 512
-   * @desciption Encoded credentials to add.
-   */
-  credential: string;
-
-  /**
-   * Encoded attestation signature of the encoded credential.
-   */
-  signature: SignatureEncoded;
+  credential: Credential;
 }
 
 /**
@@ -86,40 +81,30 @@ export interface ApiAuthRegistration {
   email?: Email;
 
   /**
+   * The display name to register under.
+   *
    * @minLength 2
    * @maxLength 24
-   * @description The display name to register under.
    */
   displayName: string;
 
   /**
-   * Encoded challenge object to prevent reply attacks.
-   */
-  challenge: ChallengeEncoded;
-
-  /**
+   * Origin of the requesting client.
+   *
    * @minLength 4
    * @maxLength 32
-   * @desciption Origin of the requesting client.
    */
   origin: string;
 
   /**
-   * @desciption Type of event.
+   * Type of event.
    */
   type: 'auth.create' | 'webauthn.create';
 
   /**
-   * @minLength 16
-   * @maxLength 512
-   * @desciption Encoded credentials to register.
+   * Credential to add during the registration.
    */
-  credential: string;
-
-  /**
-   * Encoded attestation signature of the challenge + credential encodings.
-   */
-  signature: SignatureEncoded;
+  credential: Credential;
 }
 
 /**
@@ -222,16 +207,6 @@ export interface ApiAuthCreate {
    * Display name for the account profile.
    */
   nameDisplay?: string;
-
-  /**
-   * Creation challenge.
-   */
-  challenge: ChallengeEncoded;
-
-  /**
-   * Signature verification.
-   */
-  signature: SignatureEncoded;
 }
 
 /**

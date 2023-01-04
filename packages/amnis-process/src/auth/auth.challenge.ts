@@ -12,7 +12,7 @@ import {
 import { systemSelectors } from '@amnis/state';
 import { mwValidate } from '../mw/index.js';
 import { challengeNew } from '../utility/challenge.js';
-import { findUserById } from '../utility/find.js';
+import { findCredentialById, findUserById } from '../utility/find.js';
 
 const process: IoProcess<
 Io<ApiAuthChallenge, Challenge>
@@ -50,6 +50,7 @@ Io<ApiAuthChallenge, Challenge>
     const user = await findUserById(context, subject as UID);
 
     if (!user) {
+      output.status = 401;
       output.json.logs.push({
         level: 'error',
         title: 'Cannot Find Subject',
@@ -88,6 +89,7 @@ Io<ApiAuthChallenge, Challenge>
 
     const { otp } = resultChallenge;
     if (!otp) {
+      output.status = 401;
       output.json.logs.push({
         level: 'error',
         title: 'Challenge Creation Failed',
@@ -110,11 +112,21 @@ Io<ApiAuthChallenge, Challenge>
      * If the session holder is a privileged account, also send back the challenge OTP.
      */
     if (session?.prv === true && signatureEncoded) {
+      const credential = await findCredentialById(context, session.$credential);
+      if (!credential) {
+        output.status = 401;
+        output.json.logs.push({
+          level: 'error',
+          title: 'Invalid Credential',
+          description: 'The provided credential is invalid.',
+        });
+        return output;
+      }
       /**
        * that the signature is valid.
        */
       const signature = base64Decode(signatureEncoded).buffer;
-      const publicKey = await crypto.keyImport(session.pub);
+      const publicKey = await crypto.keyImport(credential?.publicKey);
       const isValidSignature = await crypto.asymVerify(subject, signature, publicKey);
       /**
        * If the signature is valid, return to one-time-passcode.

@@ -3,7 +3,7 @@ import {
   IoOutput,
   StateEntities,
   credentialCreator,
-  ApiAuthRegistrationParsed,
+  ApiAuthRegistration,
 } from '@amnis/core';
 import { accountCreate } from './account.js';
 
@@ -12,24 +12,24 @@ import { accountCreate } from './account.js';
  */
 export const registerAccount = async (
   context: IoContext,
-  authRegistrationParsed: ApiAuthRegistrationParsed,
+  apiAuthRegistration: ApiAuthRegistration,
   ip?: string,
 ): Promise<IoOutput<StateEntities | undefined>> => {
   /**
    * Create the new credential to store in the database.
    */
   const credential = credentialCreator({
-    name: authRegistrationParsed.credential.name,
-    publicKey: authRegistrationParsed.credential.publicKey,
+    name: apiAuthRegistration.credential.name,
+    publicKey: apiAuthRegistration.credential.publicKey,
     ip,
   });
 
   const output = await accountCreate(
     context,
     {
-      handle: authRegistrationParsed.handle,
-      password: authRegistrationParsed.password,
-      email: authRegistrationParsed.email,
+      handle: apiAuthRegistration.handle,
+      password: apiAuthRegistration.password,
+      email: apiAuthRegistration.email,
       credential,
     },
   );

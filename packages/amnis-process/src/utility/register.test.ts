@@ -1,7 +1,4 @@
 import {
-  apiAuthRegistrationCreate,
-  apiAuthRegistrationParse,
-  challengeCreate,
   Contact,
   contactKey,
   credentialKey,
@@ -12,6 +9,8 @@ import {
   profileKey,
   User,
   userKey,
+  agentCredential,
+  ApiAuthRegistration,
 } from '@amnis/core';
 import { contextSetup, systemSelectors } from '@amnis/state';
 import { registerAccount } from './register.js';
@@ -23,27 +22,20 @@ beforeAll(async () => {
 });
 
 test('should register a new account', async () => {
-  const challenge = challengeCreate({
-    val: await context.crypto.randomString(16),
-  });
+  const credential = await agentCredential();
 
-  const [authRegistration] = await apiAuthRegistrationCreate({
+  const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
-    challenge,
-  });
-
-  const authRegistrationParsed = await apiAuthRegistrationParse(authRegistration);
-
-  if (!authRegistrationParsed) {
-    expect(authRegistrationParsed).toBeDefined();
-    return;
-  }
+    credential,
+    origin: 'localhost',
+    type: 'auth.create',
+  };
 
   const result = await registerAccount(
     context,
-    authRegistrationParsed,
+    apiAuthRegistration,
   );
 
   expect(result.status).toBe(200);
@@ -64,48 +56,51 @@ test('should register a new account', async () => {
 
   expect(users).toBeDefined();
   expect(users).toHaveLength(1);
+  expect(users[0].new).toBe(false);
+  expect(users[0].committed).toBe(true);
   expect(users[0].$roles).toEqual(systemActive?.$initialRoles);
   expect(users[0].$owner).toEqual(users[0].$id);
 
   expect(profiles).toBeDefined();
   expect(profiles).toHaveLength(1);
+  expect(users[0].new).toBe(false);
+  expect(users[0].committed).toBe(true);
   expect(profiles[0].$owner).toEqual(users[0].$id);
 
   expect(contacts).toBeDefined();
   expect(contacts).toHaveLength(1);
+  expect(users[0].new).toBe(false);
+  expect(users[0].committed).toBe(true);
   expect(contacts[0].$owner).toEqual(users[0].$id);
 
   expect(credentials).toBeDefined();
   expect(credentials).toHaveLength(1);
+  expect(users[0].new).toBe(false);
+  expect(users[0].committed).toBe(true);
   expect(credentials[0].$owner).toEqual(users[0].$id);
 
   expect(logs).toHaveLength(1);
+  expect(users[0].new).toBe(false);
+  expect(users[0].committed).toBe(true);
   expect(logs[0].level).toBe('success');
   expect(logs[0].title).toBe('Account Created');
 });
 
 test('should not register with an existing handle', async () => {
-  const challenge = challengeCreate({
-    val: await context.crypto.randomString(16),
-  });
+  const credential = await agentCredential();
 
-  const [authRegistration] = await apiAuthRegistrationCreate({
+  const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
-    challenge,
-  });
-
-  const authRegistrationParsed = await apiAuthRegistrationParse(authRegistration);
-
-  if (!authRegistrationParsed) {
-    expect(authRegistrationParsed).toBeDefined();
-    return;
-  }
+    credential,
+    origin: 'localhost',
+    type: 'auth.create',
+  };
 
   const result = await registerAccount(
     context,
-    authRegistrationParsed,
+    apiAuthRegistration,
   );
 
   expect(result.status).toBe(500);

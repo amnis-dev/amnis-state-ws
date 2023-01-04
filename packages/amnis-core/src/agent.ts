@@ -1,12 +1,8 @@
 import {
   credentialCreator,
   credentialKey,
+  Credential,
 } from './entity/index.js';
-import {
-  ApiAuthCreate,
-  ApiAuthLogin,
-  ApiAuthRegistration,
-} from './api/index.js';
 import {
   cryptoWeb,
 } from './io/index.js';
@@ -18,7 +14,6 @@ import {
   base64JsonDecode,
   base64JsonEncode,
 } from './base64.js';
-import { Challenge } from './state/index.js';
 
 export interface Agent {
   name: string;
@@ -147,7 +142,7 @@ export const agentGet = async (): Promise<Agent> => {
 /**
  * Gets the agent's encoded credential.
  */
-export const agentCredential = async (): Promise<string> => {
+export const agentCredential = async (): Promise<Credential> => {
   const agentCurrent = await agentGet();
   const credential = credentialCreator({
     name: agentCurrent.name,
@@ -155,9 +150,7 @@ export const agentCredential = async (): Promise<string> => {
   });
   credential.$id = agentCurrent.credentialId;
 
-  const credentialEncoded = base64JsonEncode(credential);
-
-  return credentialEncoded;
+  return credential;
 };
 
 /**
@@ -177,79 +170,4 @@ export const agentSign = async (data: string): Promise<string> => {
 
   const signatureEncoded = base64Encode(new Uint8Array(signature));
   return signatureEncoded;
-};
-
-/**
- * Create an ApiAuthRegistration with agent properties.
- */
-export const agentApiRegistration = async (
-  handle: string,
-  displayName: string,
-  password: string,
-  challenge: Challenge,
-): Promise<ApiAuthRegistration> => {
-  const challengeEncoded = base64JsonEncode(challenge);
-
-  let origin = 'http://localhost';
-
-  if (!origin && typeof window !== 'undefined') {
-    origin = window.location.origin;
-  }
-
-  const credential = await agentCredential();
-  const signature = await agentSign(credential);
-
-  const authRegistration: ApiAuthRegistration = {
-    handle,
-    password,
-    displayName,
-    challenge: challengeEncoded,
-    type: 'auth.create',
-    origin,
-    credential,
-    signature,
-  };
-
-  return authRegistration;
-};
-
-/**
- * Create an ApiAuthLogin for this agent.
- */
-export const agentApiLogin = async (
-  handle: string,
-  password:string,
-): Promise<ApiAuthLogin> => {
-  const agentCurrent = await agentGet();
-
-  const authLogin: ApiAuthLogin = {
-    handle,
-    password,
-    $credential: agentCurrent.credentialId,
-  };
-
-  return authLogin;
-};
-
-/**
- * Create an ApiAuthCreate for this agent.
- */
-export const agentApiCreate = async (
-  challenge: Challenge,
-  options: Omit<ApiAuthCreate, 'challenge' | 'signature'>,
-): Promise<ApiAuthCreate> => {
-  const challengeEncoded = base64JsonEncode(challenge);
-
-  const signatureData = Object.values(options).reduce<string>(
-    (acc, cur) => acc + cur,
-    '',
-  );
-  const signatureEncoded = await agentSign(signatureData);
-
-  const authCreate: ApiAuthCreate = {
-    challenge: challengeEncoded,
-    signature: signatureEncoded,
-    ...options,
-  };
-  return authCreate;
 };

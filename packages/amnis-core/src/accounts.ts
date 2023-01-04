@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { agentFingerprint, agentGet } from './agent.js';
+import { agentFingerprint, agentGet, agentName } from './agent.js';
 import { Credential, credentialCreator } from './entity/index.js';
-import { challengeCreate } from './state/index.js';
-import {
-  apiAuthRegistrationCreate,
-} from './api/api.auth.js';
 import { cryptoWeb } from './io/index.js';
-import { base64Encode, base64JsonEncode } from './base64.js';
+import { base64Encode } from './base64.js';
 
 export interface Account {
   handle: string;
@@ -15,18 +11,16 @@ export interface Account {
   privateKey: string;
 }
 
-const challenge = challengeCreate({ val: '' });
-
 let admin: Account;
 let exec: Account;
 let user: Account;
 
 export const accountsSign = async (
-  account: Account,
+  privateKeyWrapped: string,
   data: Record<string, any>,
 ): Promise<string> => {
   const privateKey = await cryptoWeb.keyUnwrap(
-    account.privateKey,
+    privateKeyWrapped,
     await cryptoWeb.hashData(agentFingerprint()),
   );
   if (!privateKey) {
@@ -37,23 +31,31 @@ export const accountsSign = async (
   return base64Encode(new Uint8Array(signature));
 };
 
+export const accountsGenerateCrypto = async () => {
+  const keys = await cryptoWeb.asymGenerate('signer');
+  const publicKey = await cryptoWeb.keyExport(keys.publicKey);
+  const privateKey = await cryptoWeb.keyWrap(
+    keys.privateKey,
+    await cryptoWeb.hashData(agentFingerprint()),
+  );
+  const credential = credentialCreator({
+    name: agentName(),
+    publicKey,
+  });
+  return { credential, privateKey };
+};
+
 export const accountsGet = async () => {
   /**
    * Administrator
    */
   if (!admin) {
-    const [adminRegistration, adminPrivateKey, adminCredential] = await apiAuthRegistrationCreate({
-      handle: 'admin',
-      displayName: 'Administrator',
-      password: 'passwd12',
-      challenge,
-    });
-
+    const { credential, privateKey } = await accountsGenerateCrypto();
     admin = {
-      handle: adminRegistration.handle,
-      credential: adminCredential,
+      handle: 'admin',
       password: 'passwd12',
-      privateKey: adminPrivateKey,
+      credential,
+      privateKey,
     };
   }
 
@@ -61,18 +63,12 @@ export const accountsGet = async () => {
    * Executive
    */
   if (!exec) {
-    const [execRegistration, execPrivateKey, execCredential] = await apiAuthRegistrationCreate({
-      handle: 'exec',
-      displayName: 'Executive',
-      password: 'passwd12',
-      challenge,
-    });
-
+    const { credential, privateKey } = await accountsGenerateCrypto();
     exec = {
-      handle: execRegistration.handle,
-      credential: execCredential,
+      handle: 'exec',
       password: 'passwd12',
-      privateKey: execPrivateKey,
+      credential,
+      privateKey,
     };
   }
 

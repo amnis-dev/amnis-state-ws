@@ -51,17 +51,6 @@ beforeAll(async () => {
  */
 test('should add a new credential to the user account', async () => {
   /**
-   * Encode the new credentials.
-   */
-  const credentialEncoded = await base64JsonEncode(credentialNew);
-
-  /**
-   * Use the private key to sign the new credential.
-   */
-  const signature = await context.crypto.asymSign(credentialEncoded, credentialNewPrivateKey);
-  const signatureEncoded = base64Encode(new Uint8Array(signature));
-
-  /**
    * Create a subject challenge.
    */
   const challengeOutout = await challengeNew(context, {
@@ -75,15 +64,26 @@ test('should add a new credential to the user account', async () => {
   }
   const challengeEncoded = base64JsonEncode(challenge);
 
+  const apiAuthCredential: ApiAuthCredential = {
+    credential: credentialNew,
+  };
+
+  /**
+   * Use the private key to sign the new credential.
+   */
+  const signature = await context.crypto.asymSign(
+    JSON.stringify(apiAuthCredential),
+    credentialNewPrivateKey,
+  );
+  const signatureEncoded = base64Encode(new Uint8Array(signature));
+
   /**
    * Process the new credential creation.
    */
   const input: IoInput<ApiAuthCredential> = {
-    body: {
-      challenge: challengeEncoded,
-      signature: signatureEncoded,
-      credential: credentialEncoded,
-    },
+    body: apiAuthCredential,
+    challengeEncoded,
+    signatureEncoded,
   };
   const output = await processAuthCredential(context)(input, ioOutput());
 

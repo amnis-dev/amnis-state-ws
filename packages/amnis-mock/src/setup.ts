@@ -36,6 +36,16 @@ export const setupInput = async (req: Request): Promise<IoInput> => {
   const authorization = req.headers.get('Authorization');
   input.accessEncoded = httpAuthorizationParse(authorization);
 
+  /**
+   * Extract signature header.
+   */
+  input.signatureEncoded = req.headers.get('Signature') || undefined;
+
+  /**
+   * Extract challenge header.
+   */
+  input.challengeEncoded = req.headers.get('Challenge') || undefined;
+
   return input;
 };
 

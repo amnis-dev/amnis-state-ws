@@ -1,8 +1,10 @@
 import {
+  credentialKey,
   databaseMemoryStorage,
   dateNumeric,
   Entity,
   IoContext,
+  uid,
   User,
   userKey,
 } from '@amnis/core';
@@ -29,13 +31,13 @@ test('should generate a session', async () => {
     return;
   }
 
-  const session = await generateSession(system, userExisting.$id, '');
+  const session = await generateSession(system, userExisting.$id, uid(credentialKey));
 
   expect(session).toMatchObject({
-    $subject: expect.any(String),
-    exp: expect.any(Number),
     $id: expect.any(String),
-    pub: expect.any(String),
+    $subject: expect.any(String),
+    $credential: expect.any(String),
+    exp: expect.any(Number),
   });
 });
 

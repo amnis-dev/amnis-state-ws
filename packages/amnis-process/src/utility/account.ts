@@ -158,7 +158,7 @@ export const accountCreate = async (
     [handleKey]: [handleCreate],
     [profileKey]: [profile],
     [contactKey]: [contact],
-  }, { $owner: user.$id });
+  }, { $owner: user.$id, new: false, committed: true });
 
   /**
    * Append credentials if set.

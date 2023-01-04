@@ -4,7 +4,6 @@ import {
   ioOutputErrored,
   ApiAuthRegistration,
   Challenge,
-  apiAuthRegistrationCreate,
   IoContext,
   userKey,
   profileKey,
@@ -16,6 +15,9 @@ import {
   sessionKey,
   Session,
   ioOutput,
+  accountsGenerateCrypto,
+  base64JsonEncode,
+  accountsSign,
 } from '@amnis/core';
 import { contextSetup, systemActions, systemSelectors } from '@amnis/state';
 import { validateSetup } from '../validate.js';
@@ -84,24 +86,31 @@ test('should start ritual and complete registration', async () => {
     inputStart,
     ioOutput(),
   );
-
-  const challenge = resultStart.json.result as Challenge | undefined;
-
+  const challenge = resultStart.json.result;
   if (!challenge) {
     expect(challenge).toBeDefined();
     return;
   }
+  const challengeEncoded = base64JsonEncode(challenge);
 
-  const [authRegistration] = await apiAuthRegistrationCreate({
+  const { credential, privateKey } = await accountsGenerateCrypto();
+
+  const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
     email: 'example@amnis.dev',
-    challenge,
-  });
+    credential,
+    origin: 'localhost',
+    type: 'auth.create',
+  };
+
+  const signatureEncoded = await accountsSign(privateKey, apiAuthRegistration);
 
   const inputRegister: IoInput<ApiAuthRegistration> = {
-    body: authRegistration,
+    body: apiAuthRegistration,
+    challengeEncoded,
+    signatureEncoded,
   };
 
   const resultRegister = await processAuthRegister(context)(inputRegister, ioOutput());
@@ -193,16 +202,26 @@ test('should not be able to register when turned off by the system', async () =>
     expect(challenge).toBeDefined();
     return;
   }
+  const challengeEncoded = base64JsonEncode(challenge);
 
-  const [authRegistration] = await apiAuthRegistrationCreate({
+  const { credential, privateKey } = await accountsGenerateCrypto();
+
+  const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
     displayName: 'New User',
     password: 'passwd12',
-    challenge,
-  });
+    email: 'example@amnis.dev',
+    credential,
+    origin: 'localhost',
+    type: 'auth.create',
+  };
+
+  const signatureEncoded = await accountsSign(privateKey, apiAuthRegistration);
 
   const inputRegister: IoInput<ApiAuthRegistration> = {
-    body: authRegistration,
+    body: apiAuthRegistration,
+    challengeEncoded,
+    signatureEncoded,
   };
 
   const resultRegister = await processAuthRegister(context)(inputRegister, ioOutput());

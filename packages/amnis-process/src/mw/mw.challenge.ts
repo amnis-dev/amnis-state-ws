@@ -5,10 +5,25 @@ import {
 import { challengeValidate } from '../utility/challenge.js';
 import { validate } from '../validate.js';
 
+export interface MwChallengeOptions {
+  /**
+   * Require a subject on the challenge.
+   */
+  $sub?: boolean;
+
+  /**
+   * Require an OTP value on the subject.
+   */
+  otp?: boolean;
+}
+
 /**
  * Ensures a challenge object.
  */
-export const mwChallenge: IoMiddleware = () => (next) => (context) => async (input, output) => {
+export const mwChallenge: IoMiddleware<MwChallengeOptions> = ({
+  $sub = false,
+  otp = false,
+}) => (next) => (context) => async (input, output) => {
   const { challengeEncoded } = input;
 
   if (!challengeEncoded) {
@@ -16,7 +31,7 @@ export const mwChallenge: IoMiddleware = () => (next) => (context) => async (inp
     output.json.logs.push({
       level: 'error',
       title: 'Missing Challenge',
-      description: 'Challenge data must be provided to complete this request.',
+      description: 'A challenge must be provided to complete this request.',
     });
     return output;
   }
@@ -28,11 +43,31 @@ export const mwChallenge: IoMiddleware = () => (next) => (context) => async (inp
   const { challenge } = input;
 
   if (!challenge) {
-    output.status = 500; // 401 Server Error
+    output.status = 500; // 500 Server Error
     output.json.logs.push({
       level: 'error',
       title: 'Invaid Challenge',
-      description: 'Failed to decode and parse the challenge data.',
+      description: 'Failed to decode and parse the challenge.',
+    });
+    return output;
+  }
+
+  if ($sub && !challenge.$sub) {
+    output.status = 401; // 401 Unauthorized
+    output.json.logs.push({
+      level: 'error',
+      title: 'Invalid Challenge',
+      description: 'This challenged request requires a subject.',
+    });
+    return output;
+  }
+
+  if (otp && (!challenge.otp || !challenge.otpl)) {
+    output.status = 401; // 401 Unauthorized
+    output.json.logs.push({
+      level: 'error',
+      title: 'Invalid Challenge',
+      description: 'This challenged request requires a one-time passcode.',
     });
     return output;
   }

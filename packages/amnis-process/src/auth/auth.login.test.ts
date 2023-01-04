@@ -79,7 +79,7 @@ test('should login as a admin', async () => {
     password: adminAccount.password,
   };
 
-  const signatureEncoded = await accountsSign(adminAccount, apiAuthLogin);
+  const signatureEncoded = await accountsSign(adminAccount.privateKey, apiAuthLogin);
 
   const input: IoInput<ApiAuthLogin> = {
     body: apiAuthLogin,
@@ -147,7 +147,7 @@ test('should NOT login as an admin signed with a different private key', async (
     password: adminAccount.password,
   };
 
-  const signatureEncoded = await accountsSign(userAccount, apiAuthLogin);
+  const signatureEncoded = await accountsSign(userAccount.privateKey, apiAuthLogin);
 
   const input: IoInput<ApiAuthLogin> = {
     body: apiAuthLogin,
@@ -205,7 +205,7 @@ test('should NOT login as an admin with different challenge', async () => {
     password: adminAccount.password,
   };
 
-  const signatureEncoded = await accountsSign(adminAccount, apiAuthLogin);
+  const signatureEncoded = await accountsSign(adminAccount.privateKey, apiAuthLogin);
 
   const input: IoInput<ApiAuthLogin> = {
     body: apiAuthLogin,

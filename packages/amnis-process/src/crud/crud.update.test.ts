@@ -19,7 +19,7 @@ import {
   ioOutput,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
-import { authenticateLogin } from '../utility/authenticate.js';
+import { authenticateFinalize } from '../utility/authenticate.js';
 import { validateSetup } from '../validate.js';
 import { processCrudUpdate } from './crud.update.js';
 
@@ -62,10 +62,11 @@ test('should not update without bearer', async () => {
 });
 
 test('should login as administrator and update user email', async () => {
-  const outputLogin = await authenticateLogin(
+  const admin = dataUsers.find((e) => e.handle === 'admin') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers[0] as Entity<User>,
-    '',
+    admin.$id,
+    admin.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -104,10 +105,11 @@ test('should login as administrator and update user email', async () => {
 });
 
 test('should login as administrator and update profile display name', async () => {
-  const outputLogin = await authenticateLogin(
+  const admin = dataUsers.find((e) => e.handle === 'admin') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers[0] as Entity<User>,
-    '',
+    admin.$id,
+    admin.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -146,10 +148,11 @@ test('should login as administrator and update profile display name', async () =
 });
 
 test('should login as executive and update user email', async () => {
-  const outputLogin = await authenticateLogin(
+  const exec = dataUsers.find((e) => e.handle === 'exec') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers[1] as Entity<User>,
-    '',
+    exec.$id,
+    exec.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -187,10 +190,11 @@ test('should login as executive and update user email', async () => {
 });
 
 test('should login as executive and NOT update user handle', async () => {
-  const outputLogin = await authenticateLogin(
+  const user = dataUsers.find((e) => e.handle === 'user') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers[1] as Entity<User>,
-    '',
+    user.$id,
+    user.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -219,10 +223,11 @@ test('should login as executive and NOT update user handle', async () => {
 test(
   'should login as user with updated credentials and update own profile display name',
   async () => {
-    const outputLogin = await authenticateLogin(
+    const user = dataUsers.find((e) => e.handle === 'user') as Entity<User>;
+    const outputLogin = await authenticateFinalize(
       context,
-      dataUsers[2] as Entity<User>,
-      '',
+      user.$id,
+      user.$credentials[0],
     );
 
     const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
@@ -264,10 +269,11 @@ test(
 );
 
 test('should login as user and be denied updating another profile', async () => {
-  const outputLogin = await authenticateLogin(
+  const user = dataUsers.find((e) => e.handle === 'user') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers[2] as Entity<User>,
-    '',
+    user.$id,
+    user.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 

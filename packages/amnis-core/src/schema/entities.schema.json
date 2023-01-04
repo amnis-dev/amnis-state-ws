@@ -928,9 +928,9 @@
           "$ref": "#/definitions/UID",
           "description": "Subject of the session. Typically a user id."
         },
-        "pub": {
-          "type": "string",
-          "description": "Serialized public key value of the agent's session. This is used to verify signatures on reconnections."
+        "$credential": {
+          "$ref": "#/definitions/UID",
+          "description": "The credential id in use."
         },
         "iat": {
           "$ref": "#/definitions/DateNumeric",
@@ -954,13 +954,13 @@
         }
       },
       "required": [
+        "$credential",
         "$id",
         "$subject",
         "adm",
         "exc",
         "exp",
-        "prv",
-        "pub"
+        "prv"
       ],
       "additionalProperties": false,
       "description": "A session object. Session data should be stored in *SECURE* HTTP cookies only."
@@ -1845,9 +1845,9 @@
           "$ref": "#/definitions/UID",
           "description": "Subject of the session. Typically a user id."
         },
-        "pub": {
-          "type": "string",
-          "description": "Serialized public key value of the agent's session. This is used to verify signatures on reconnections."
+        "$credential": {
+          "$ref": "#/definitions/UID",
+          "description": "The credential id in use."
         },
         "iat": {
           "$ref": "#/definitions/DateNumeric",

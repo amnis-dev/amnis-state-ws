@@ -17,7 +17,7 @@ import {
   ioOutput,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
-import { authenticateLogin } from '../utility/authenticate.js';
+import { authenticateFinalize } from '../utility/authenticate.js';
 import { validateSetup } from '../validate.js';
 import { processCrudCreate } from './crud.create.js';
 
@@ -57,10 +57,11 @@ test('should not create without bearer', async () => {
 });
 
 test('should login as administrator and create user', async () => {
-  const outputLogin = await authenticateLogin(
+  const admin = dataUsers.find((e) => e.handle === 'admin') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers.find((e) => e.handle === 'admin') as Entity<User>,
-    '',
+    admin.$id,
+    admin.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -90,10 +91,11 @@ test('should login as administrator and create user', async () => {
 });
 
 test('should login as executive and create user', async () => {
-  const outputLogin = await authenticateLogin(
+  const exec = dataUsers.find((e) => e.handle === 'exec') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers.find((e) => e.handle === 'exec') as Entity<User>,
-    '',
+    exec.$id,
+    exec.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 
@@ -121,10 +123,11 @@ test('should login as executive and create user', async () => {
 });
 
 test('should login as user and cannot create user', async () => {
-  const outputLogin = await authenticateLogin(
+  const user = dataUsers.find((e) => e.handle === 'user') as Entity<User>;
+  const outputLogin = await authenticateFinalize(
     context,
-    dataUsers.find((e) => e.handle === 'user') as Entity<User>,
-    '',
+    user.$id,
+    user.$credentials[0],
   );
   const bearerAccess = outputLogin.json.bearers?.[0] as Bearer;
 

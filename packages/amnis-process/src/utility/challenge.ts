@@ -75,6 +75,7 @@ export const challengeNew = async (
       );
     });
     challengeItem.otp = challangeValuePrivate.toLowerCase();
+    challengeItem.otpl = challengeItem.otp.length;
   }
 
   /**

@@ -3,14 +3,12 @@ import {
   IoProcess,
   ApiAuthCredential,
   StateEntities,
-  base64JsonDecode,
-  base64Decode,
   ioOutputApply,
-  Credential,
 } from '@amnis/core';
-import { mwValidate } from '../mw/index.js';
+import {
+  mwChallenge, mwCredential, mwSignature, mwValidate,
+} from '../mw/index.js';
 import { accountCredentialAdd } from '../utility/account.js';
-import { challengeValidate } from '../utility/challenge.js';
 import { findUserById } from '../utility/find.js';
 import { validate } from '../validate.js';
 
@@ -18,17 +16,14 @@ const process: IoProcess<
 Io<ApiAuthCredential, StateEntities>
 > = (context) => (
   async (input, output) => {
-    const { crypto, validators } = context;
+    const { validators } = context;
     const {
-      challenge: challengeEncoded,
-      signature: signatureEncoded,
-      credential: credentialEncoded,
+      challenge,
+    } = input;
+    const {
+      credential,
     } = input.body;
 
-    /**
-     * Decode and validate the challenge.
-     */
-    const challenge = base64JsonDecode(challengeEncoded);
     if (!challenge) {
       output.status = 500;
       output.json.logs.push({
@@ -38,11 +33,12 @@ Io<ApiAuthCredential, StateEntities>
       });
       return output;
     }
+
     /**
      * Ensure the challenge has a subject.
      */
-    const { $subject } = challenge;
-    if (!$subject) {
+    const { $sub } = challenge;
+    if (!$sub) {
       output.status = 500;
       output.json.logs.push({
         level: 'error',
@@ -51,36 +47,7 @@ Io<ApiAuthCredential, StateEntities>
       });
       return output;
     }
-    /**
-     * Validate the structure of the challenge.
-     */
-    const outputValidateChallenge = validate(validators.Challenge, challenge);
-    if (outputValidateChallenge) {
-      return outputValidateChallenge;
-    }
 
-    /**
-     * Validate that the challenge data matches the server issued challenge.
-     */
-    const outputChallengeValid = challengeValidate(context, challenge);
-
-    if (outputChallengeValid !== true) {
-      return outputChallengeValid;
-    }
-
-    /**
-     * Decode the credential.
-     */
-    const credential = base64JsonDecode<Credential>(credentialEncoded);
-    if (!credential) {
-      output.status = 500;
-      output.json.logs.push({
-        level: 'error',
-        title: 'Invalid Credential',
-        description: 'Could not parse the provided credential.',
-      });
-      return output;
-    }
     /**
      * Validate the structure of the credential.
      */
@@ -90,30 +57,9 @@ Io<ApiAuthCredential, StateEntities>
     }
 
     /**
-     * Decode and validate the sigature.
-     */
-    const signature = base64Decode(signatureEncoded).buffer;
-    const credentialPublicKey = await crypto.keyImport(credential.publicKey);
-    const validSignature = await crypto.asymVerify(
-      credentialEncoded,
-      signature,
-      credentialPublicKey,
-    );
-
-    if (validSignature !== true) {
-      output.status = 500;
-      output.json.logs.push({
-        level: 'error',
-        title: 'Invalid Signature',
-        description: 'The credential signature does not match.',
-      });
-      return output;
-    }
-
-    /**
      * Find the subject.
      */
-    const user = await findUserById(context, $subject);
+    const user = await findUserById(context, $sub);
     if (!user) {
       output.status = 500;
       output.json.logs.push({
@@ -134,7 +80,16 @@ Io<ApiAuthCredential, StateEntities>
 );
 
 export const processAuthCredential = mwValidate('ApiAuthCredential')(
-  process,
+  mwChallenge({
+    $sub: true,
+    otp: true,
+  })(
+    mwCredential(true)(
+      mwSignature()(
+        process,
+      ),
+    ),
+  ),
 ) as IoProcess<
 Io<ApiAuthCredential, StateEntities>
 >;

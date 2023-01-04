@@ -1,8 +1,9 @@
 import {
   accountsGet,
+  accountsSign,
   ApiAuthLogin,
-  apiAuthLoginCreate,
   ApiAuthLogout,
+  base64JsonEncode,
   Challenge,
   IoContext,
   IoInput,
@@ -43,16 +44,20 @@ test('should login and then logout as administrator', async () => {
     return;
   }
 
-  const authLogin = await apiAuthLoginCreate({
+  const challengeEncoded = base64JsonEncode(challenge);
+
+  const apiAuthLogin: ApiAuthLogin = {
     handle: adminAccount.handle,
+    $credential: adminAccount.credential.$id,
     password: adminAccount.password,
-    challenge,
-    credential: adminAccount.credential,
-    privateKeyWrapped: adminAccount.privateKey,
-  });
+  };
+
+  const signatureEncoded = await accountsSign(adminAccount.privateKey, apiAuthLogin);
 
   const inputLogin: IoInput<ApiAuthLogin> = {
-    body: authLogin,
+    body: apiAuthLogin,
+    challengeEncoded,
+    signatureEncoded,
   };
 
   const outputLogin = await processAuthLogin(context)(inputLogin, ioOutput());

@@ -62,7 +62,7 @@ export interface IoContext {
 /**
  * Input interface.
  */
-export interface IoInput<T = Record<string, unknown>, J = JWTAccess> {
+export interface IoInput<T = any, J = JWTAccess> {
   /**
    * The input body.
    */

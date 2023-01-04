@@ -8,10 +8,12 @@ import { findCredentialById } from '../utility/find.js';
 /**
  * Attempts to find and set the current client credential.
  */
-export const mwCredential: IoMiddleware = () => (next) => (context) => async (input, output) => {
-  const { session, body: { $credential } } = input;
+export const mwCredential: IoMiddleware<boolean | void> = (
+  dontSearch = false,
+) => (next) => (context) => async (input, output) => {
+  const { session, body: { $credential, credential } } = input;
 
-  if (!$credential && !session) {
+  if (!$credential && !credential && !session) {
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -21,11 +23,11 @@ export const mwCredential: IoMiddleware = () => (next) => (context) => async (in
     return output;
   }
 
-  const $id: UID<Credential> = $credential ?? session?.$credential;
+  const $id: UID<Credential> = $credential ?? credential?.$id ?? session?.$credential;
 
-  const credential = await findCredentialById(context, $id);
+  const credentialResult = dontSearch ? credential : await findCredentialById(context, $id);
 
-  if (!credential) {
+  if (!credentialResult) {
     output.status = 401; // 401 Unauthorized
     output.json.logs.push({
       level: 'error',
@@ -35,7 +37,7 @@ export const mwCredential: IoMiddleware = () => (next) => (context) => async (in
     return output;
   }
 
-  input.credential = credential;
+  input.credential = credentialResult;
 
   return next(context)(input, output);
 };

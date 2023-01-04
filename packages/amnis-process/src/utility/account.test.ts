@@ -66,6 +66,8 @@ test('should create a new account with minial options', async () => {
     email,
     $credentials: [],
     $owner: users[0].$id,
+    new: false,
+    committed: true,
   });
   const isPasswordSame = await cryptoWeb.passCompare(password, users[0].password ?? '');
   expect(isPasswordSame).toBe(true);
@@ -76,6 +78,8 @@ test('should create a new account with minial options', async () => {
   expect(handle[0]).toMatchObject({
     name: handleName,
     $subject: users[0].$id,
+    new: false,
+    committed: true,
   });
 
   const contacts = result[contactKey];
@@ -84,6 +88,8 @@ test('should create a new account with minial options', async () => {
   expect(contacts[0]).toMatchObject({
     name: handleName,
     $owner: users[0].$id,
+    new: false,
+    committed: true,
   });
 
   const profiles = result[profileKey];
@@ -94,6 +100,8 @@ test('should create a new account with minial options', async () => {
     $user: users[0].$id,
     $contact: contacts[0].$id,
     $owner: users[0].$id,
+    new: false,
+    committed: true,
   });
 
   expect(result[credentialKey]).toBeUndefined();
