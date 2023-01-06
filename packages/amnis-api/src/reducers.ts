@@ -18,6 +18,7 @@ import {
   entityCreate,
   contactKey,
   EntityCreator,
+  credentialKey,
 } from '@amnis/core';
 import { apiAuth } from './auth/index.js';
 import { apiCrud } from './crud/index.js';
@@ -87,6 +88,7 @@ export function apiExtraReducers<C extends EntityCreator>(
       if (
         [
           userKey,
+          credentialKey,
           sessionKey,
           profileKey,
           contactKey,
@@ -115,6 +117,7 @@ export function apiExtraReducers<C extends EntityCreator>(
       if (
         [
           userKey,
+          credentialKey,
           sessionKey,
           profileKey,
           contactKey,

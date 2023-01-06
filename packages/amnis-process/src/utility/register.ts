@@ -23,6 +23,8 @@ export const registerAccount = async (
     publicKey: apiAuthRegistration.credential.publicKey,
     ip,
   });
+  // Ensure we don't change the credential identifier.
+  credential.$id = apiAuthRegistration.credential.$id;
 
   const output = await accountCreate(
     context,

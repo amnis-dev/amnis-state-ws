@@ -172,10 +172,10 @@ export const accountCreate = async (
   /**
    * Commit the new data into the database.
    */
-  const resultDatabase = await database.create(stateEntitiesCreate(stateEntities));
+  database.create(stateEntitiesCreate(stateEntities));
 
   output.status = 200;
-  output.json.result = resultDatabase;
+  output.json.result = stateEntities;
   output.json.logs.push({
     level: 'success',
     title: 'Account Created',

@@ -1,9 +1,18 @@
 import { apiActions, apiAuth } from '@amnis/api';
 import {
-  contactKey, profileKey, sessionKey, userKey,
+  contactKey,
+  credentialKey,
+  profileKey,
+  sessionKey,
+  userKey,
 } from '@amnis/core';
 import {
-  bearerSelectors, contactSelectors, profileSelectors, sessionSelectors, userSelectors,
+  bearerSelectors,
+  contactSelectors,
+  credentialSelectors,
+  profileSelectors,
+  sessionSelectors,
+  userSelectors,
 } from '@amnis/state';
 import { clientStore } from './common/client.store.js';
 import { mockService } from './mock.service.js';
@@ -48,6 +57,7 @@ test('should register a new account', async () => {
   expect(logs.length).toBeGreaterThanOrEqual(1);
 
   const userActive = userSelectors.selectActive(clientStore.getState());
+  const credentialActive = credentialSelectors.selectActive(clientStore.getState());
   const profileActive = profileSelectors.selectActive(clientStore.getState());
   const contactActive = contactSelectors.selectActive(clientStore.getState());
   const sessionActive = sessionSelectors.selectActive(clientStore.getState());
@@ -56,12 +66,14 @@ test('should register a new account', async () => {
 
   if (
     !userActive
+    || !credentialActive
     || !profileActive
     || !contactActive
     || !sessionActive
     || !bearerActive
   ) {
     expect(userActive).toBeDefined();
+    expect(credentialActive).toBeDefined();
     expect(profileActive).toBeDefined();
     expect(contactActive).toBeDefined();
     expect(sessionActive).toBeDefined();
@@ -70,8 +82,34 @@ test('should register a new account', async () => {
   }
 
   expect(userActive).toEqual(result[userKey][0]);
+  expect(credentialActive).toEqual(result[credentialKey][0]);
   expect(profileActive).toEqual(result[profileKey][0]);
   expect(contactActive).toEqual(result[contactKey][0]);
   expect(sessionActive).toEqual(result[sessionKey][0]);
   expect(bearerActive).toEqual(bearers[0]);
+});
+
+test('should logout and login as the newly registered account', async () => {
+  /**
+   * Logout
+   */
+  await clientStore.dispatch(apiAuth.endpoints.logout.initiate({}));
+
+  /**
+   * Login
+   */
+  const response = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
+    handle: 'newbie',
+    password: 'newpass123',
+  }));
+
+  if ('error' in response) {
+    expect(response.error).toBeUndefined();
+    return;
+  }
+
+  const { data: { result, bearers } } = response;
+
+  expect(result).toBeDefined();
+  expect(bearers).toBeDefined();
 });
