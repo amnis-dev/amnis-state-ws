@@ -70,8 +70,7 @@
         }
       },
       "required": [
-        "credential",
-        "password"
+        "credential"
       ],
       "additionalProperties": false,
       "description": "Adds a credential to an account."
@@ -84,15 +83,15 @@
           "description": "All objects that can be composed into an entity must have an identifier."
         },
         "name": {
-          "type": "string",
+          "$ref": "#/definitions/Name",
           "description": "Name of the credential"
         },
         "publicKey": {
-          "type": "string",
+          "$ref": "#/definitions/Encoding",
           "description": "Credential's public key for verifying signatures."
         },
         "ip": {
-          "type": "string",
+          "$ref": "#/definitions/IP",
           "description": "The IP address when the credential was registered."
         },
         "used": {
@@ -114,6 +113,25 @@
       "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
       "minLength": 18,
       "maxLength": 56
+    },
+    "Name": {
+      "type": "string",
+      "description": "A human-friendly name.",
+      "minLength": 1,
+      "maxLength": 32
+    },
+    "Encoding": {
+      "type": "string",
+      "description": "A string encoded object.",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "IP": {
+      "type": "string",
+      "description": "An IP address.",
+      "pattern": "^[0-9a-fA-F.:]+$",
+      "minLength": 8,
+      "maxLength": 34
     },
     "DateJSON": {
       "type": "string",
@@ -141,25 +159,9 @@
           "$ref": "#/definitions/Email",
           "description": "Email address to add to the account to receive one-time-passcodes."
         },
-        "displayName": {
-          "type": "string",
-          "description": "The display name to register under.",
-          "minLength": 2,
-          "maxLength": 24
-        },
-        "origin": {
-          "type": "string",
-          "description": "Origin of the requesting client.",
-          "minLength": 4,
-          "maxLength": 32
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "auth.create",
-            "webauthn.create"
-          ],
-          "description": "Type of event."
+        "nameDisplay": {
+          "$ref": "#/definitions/Name",
+          "description": "The display name to register under."
         },
         "credential": {
           "$ref": "#/definitions/Credential",
@@ -169,9 +171,7 @@
       "required": [
         "handle",
         "password",
-        "displayName",
-        "origin",
-        "type",
+        "nameDisplay",
         "credential"
       ],
       "additionalProperties": false,

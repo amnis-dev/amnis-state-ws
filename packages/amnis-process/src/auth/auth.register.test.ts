@@ -97,12 +97,10 @@ test('should start ritual and complete registration', async () => {
 
   const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
-    displayName: 'New User',
+    nameDisplay: 'New User',
     password: 'passwd12',
     email: 'example@amnis.dev',
     credential,
-    origin: 'localhost',
-    type: 'auth.create',
   };
 
   const signatureEncoded = await accountsSign(privateKey, apiAuthRegistration);
@@ -208,12 +206,10 @@ test('should not be able to register when turned off by the system', async () =>
 
   const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
-    displayName: 'New User',
+    nameDisplay: 'New User',
     password: 'passwd12',
     email: 'example@amnis.dev',
     credential,
-    origin: 'localhost',
-    type: 'auth.create',
   };
 
   const signatureEncoded = await accountsSign(privateKey, apiAuthRegistration);

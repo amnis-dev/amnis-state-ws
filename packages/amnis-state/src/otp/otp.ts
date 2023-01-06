@@ -63,6 +63,9 @@ export const otpSlice = rtk.createSlice({
     },
 
     delete: (state, action: PayloadAction<UID>) => {
+      if (action.payload === state.latest) {
+        state.latest = null;
+      }
       otpAdapter.removeOne(state, action.payload);
     },
 

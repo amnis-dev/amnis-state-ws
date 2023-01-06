@@ -9,6 +9,7 @@ import type {
   UID,
   Email,
   Password,
+  Name,
 } from '../types.js';
 
 /**
@@ -84,24 +85,8 @@ export interface ApiAuthRegistration {
 
   /**
    * The display name to register under.
-   *
-   * @minLength 2
-   * @maxLength 24
    */
-  displayName: string;
-
-  /**
-   * Origin of the requesting client.
-   *
-   * @minLength 4
-   * @maxLength 32
-   */
-  origin: string;
-
-  /**
-   * Type of event.
-   */
-  type: 'auth.create' | 'webauthn.create';
+  nameDisplay: Name;
 
   /**
    * Credential to add during the registration.

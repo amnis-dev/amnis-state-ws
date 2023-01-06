@@ -17,6 +17,12 @@
             "$ref": "#/definitions/Contact"
           }
         },
+        "credential": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Credential"
+          }
+        },
         "handle": {
           "type": "array",
           "items": {
@@ -217,6 +223,62 @@
     "SURL": {
       "type": "string",
       "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+    },
+    "Credential": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID",
+          "description": "All objects that can be composed into an entity must have an identifier."
+        },
+        "name": {
+          "$ref": "#/definitions/Name",
+          "description": "Name of the credential"
+        },
+        "publicKey": {
+          "$ref": "#/definitions/Encoding",
+          "description": "Credential's public key for verifying signatures."
+        },
+        "ip": {
+          "$ref": "#/definitions/IP",
+          "description": "The IP address when the credential was registered."
+        },
+        "used": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date-time of when the credential was last used."
+        }
+      },
+      "required": [
+        "$id",
+        "name",
+        "publicKey"
+      ],
+      "additionalProperties": false,
+      "description": "Entity that contains data to verify credentials."
+    },
+    "Name": {
+      "type": "string",
+      "description": "A human-friendly name.",
+      "minLength": 1,
+      "maxLength": 32
+    },
+    "Encoding": {
+      "type": "string",
+      "description": "A string encoded object.",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "IP": {
+      "type": "string",
+      "description": "An IP address.",
+      "pattern": "^[0-9a-fA-F.:]+$",
+      "minLength": 8,
+      "maxLength": 34
+    },
+    "DateJSON": {
+      "type": "string",
+      "description": "A string that represents a JSON Date.",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
     },
     "Handle": {
       "type": "object",
@@ -613,11 +675,6 @@
       ],
       "additionalProperties": false,
       "description": "Profile entity"
-    },
-    "DateJSON": {
-      "type": "string",
-      "description": "A string that represents a JSON Date.",
-      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
     },
     "UID<Contact>": {
       "type": "string",
@@ -1188,6 +1245,12 @@
             "$ref": "#/definitions/EntityUpdater%3CContact%3E"
           }
         },
+        "credential": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityUpdater%3CCredential%3E"
+          }
+        },
         "history": {
           "type": "array",
           "items": {
@@ -1350,6 +1413,35 @@
             "$ref": "#/definitions/SURL"
           },
           "description": "Contact's social urls."
+        }
+      },
+      "required": [
+        "$id"
+      ],
+      "description": "Subset interface for updating a creator entity"
+    },
+    "EntityUpdater<Credential>": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$id": {
+          "$ref": "#/definitions/UID%3CCredential%3E"
+        },
+        "name": {
+          "$ref": "#/definitions/Name",
+          "description": "Name of the credential"
+        },
+        "publicKey": {
+          "$ref": "#/definitions/Encoding",
+          "description": "Credential's public key for verifying signatures."
+        },
+        "ip": {
+          "$ref": "#/definitions/IP",
+          "description": "The IP address when the credential was registered."
+        },
+        "used": {
+          "$ref": "#/definitions/DateJSON",
+          "description": "Date-time of when the credential was last used."
         }
       },
       "required": [

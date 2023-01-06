@@ -51,6 +51,18 @@ export const bearerSlice = rtk.createSlice({
     });
 
     /**
+     * Get bearers from a successful registration.
+     */
+    builder.addMatcher(apiAuth.endpoints.register.matchFulfilled, (state, action) => {
+      const { payload } = action;
+      const { bearers } = payload;
+
+      if (bearers?.length) {
+        bearerAdapter.upsertMany(state, bearers);
+      }
+    });
+
+    /**
      * Remove core bearer on logout. Wipes the token when the logout is triggered.
      */
     builder.addMatcher(apiAuth.endpoints.logout.matchPending, (state) => {

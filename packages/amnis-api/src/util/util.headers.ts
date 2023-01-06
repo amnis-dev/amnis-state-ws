@@ -52,7 +52,7 @@ export const headersChallenge = async (
   });
 
   if (result?.status !== 200) {
-    console.error('Failed to endpoint to generate challenge object.');
+    console.error('Failed to generate a challenge object.');
     return;
   }
 

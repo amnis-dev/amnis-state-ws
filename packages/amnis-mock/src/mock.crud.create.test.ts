@@ -64,6 +64,7 @@ test('should be able to create a new contact', async () => {
     return;
   }
   expect(contactLocal.committed).toBe(false);
+  expect(contactLocal.new).toBe(true);
 
   const contactStripped = entityStrip(contactLocal);
   const result = await clientStore.dispatch(apiCrud.endpoints.create.initiate({
@@ -89,5 +90,7 @@ test('should be able to create a new contact', async () => {
     emails: ['new@email.com'],
     $creator: user?.$id,
     $owner: user?.$id,
+    committed: true,
+    new: false,
   });
 });

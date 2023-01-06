@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-shadow */
+
+/**
+ * Pick specific properties to make optional.
+ */
+export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
 /**
  * Unique identifier symbols for core types.
  */
@@ -65,17 +71,26 @@ export type Email = string;
 export type Password = string;
 
 /**
- * An encoded challenge to prevent replay attacks.
+ * A human-friendly name.
  *
- * @minLength 16
- * @maxLength 512
+ * @minLength 1
+ * @maxLength 32
  */
-export type ChallengeEncoded = string;
+export type Name = string;
 
 /**
- * An encoded cryptographic signature to verify that data can be trusted.
+ * A string encoded object.
  *
- * @minLength 16
+ * @minLength 1
  * @maxLength 512
  */
-export type SignatureEncoded = string;
+export type Encoding = string;
+
+/**
+ * An IP address.
+ *
+ * @pattern ^[0-9a-fA-F.:]+$
+ * @minLength 8
+ * @maxLength 34
+ */
+export type IP = string;

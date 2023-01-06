@@ -26,8 +26,8 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
   const apiMeta = apiSelectors.selectById((store.getState() as any), reducerPath);
 
   /**
-   * Exception for apiAuth.
-   * Set the credential to the agent crdential id.
+   * Exception for apiAuth...
+   * Set the credential to further simplify auth requests.
    */
   if (
     reducerPath === 'apiAuth'
@@ -84,7 +84,7 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
       }
 
       /**
-       * Provide challenge headers on the required requests
+       * Provide one-time password (OTP) headers on the required requests
        */
       if (
         apiMeta?.otp

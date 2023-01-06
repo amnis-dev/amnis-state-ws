@@ -99,6 +99,34 @@ export function apiExtraReducers<C extends EntityCreator>(
 
   /**
    * ================================================================================
+   * Auth Register
+   * Matches when a register request is fulfilled.
+   * ------------------------------------------------------------
+   */
+  builder.addMatcher(apiAuth.endpoints.register.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
+      /**
+       * Set the active session/user.
+       */
+      if (
+        [
+          userKey,
+          sessionKey,
+          profileKey,
+          contactKey,
+        ].includes(key) && !!result[key].length
+      ) {
+        state.active = result[key][0].$id;
+      }
+    }
+  });
+
+  /**
+   * ================================================================================
    * Auth Logout
    * Matches when a logout request is fulfilled.
    * ------------------------------------------------------------
@@ -123,6 +151,20 @@ export function apiExtraReducers<C extends EntityCreator>(
       ].includes(key)
     ) {
       state.active = null;
+    }
+  });
+
+  /**
+   * ================================================================================
+   * Auth Create
+   * Matches when a auth create account request is fulfilled.
+   */
+  builder.addMatcher(apiAuth.endpoints.create.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
     }
   });
 

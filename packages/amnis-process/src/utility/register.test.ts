@@ -26,11 +26,9 @@ test('should register a new account', async () => {
 
   const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
-    displayName: 'New User',
+    nameDisplay: 'New User',
     password: 'passwd12',
     credential,
-    origin: 'localhost',
-    type: 'auth.create',
   };
 
   const result = await registerAccount(
@@ -63,25 +61,23 @@ test('should register a new account', async () => {
 
   expect(profiles).toBeDefined();
   expect(profiles).toHaveLength(1);
-  expect(users[0].new).toBe(false);
-  expect(users[0].committed).toBe(true);
+  expect(profiles[0].new).toBe(false);
+  expect(profiles[0].committed).toBe(true);
   expect(profiles[0].$owner).toEqual(users[0].$id);
 
   expect(contacts).toBeDefined();
   expect(contacts).toHaveLength(1);
-  expect(users[0].new).toBe(false);
-  expect(users[0].committed).toBe(true);
+  expect(contacts[0].new).toBe(false);
+  expect(contacts[0].committed).toBe(true);
   expect(contacts[0].$owner).toEqual(users[0].$id);
 
   expect(credentials).toBeDefined();
   expect(credentials).toHaveLength(1);
-  expect(users[0].new).toBe(false);
-  expect(users[0].committed).toBe(true);
+  expect(credentials[0].new).toBe(false);
+  expect(credentials[0].committed).toBe(true);
   expect(credentials[0].$owner).toEqual(users[0].$id);
 
   expect(logs).toHaveLength(1);
-  expect(users[0].new).toBe(false);
-  expect(users[0].committed).toBe(true);
   expect(logs[0].level).toBe('success');
   expect(logs[0].title).toBe('Account Created');
 });
@@ -91,11 +87,9 @@ test('should not register with an existing handle', async () => {
 
   const apiAuthRegistration: ApiAuthRegistration = {
     handle: 'new_user',
-    displayName: 'New User',
+    nameDisplay: 'New User',
     password: 'passwd12',
     credential,
-    origin: 'localhost',
-    type: 'auth.create',
   };
 
   const result = await registerAccount(

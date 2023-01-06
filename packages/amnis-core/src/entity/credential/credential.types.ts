@@ -1,4 +1,6 @@
-import type { DateJSON } from '../../types.js';
+import type {
+  DateJSON, Encoding, IP, Name,
+} from '../../types.js';
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 
 /**
@@ -8,17 +10,17 @@ export interface Credential extends EntityCreator {
   /**
    * Name of the credential
    */
-  name: string;
+  name: Name;
 
   /**
    * Credential's public key for verifying signatures.
    */
-  publicKey: string;
+  publicKey: Encoding;
 
   /**
    * The IP address when the credential was registered.
    */
-  ip?: string;
+  ip?: IP;
 
   /**
    * Date-time of when the credential was last used.

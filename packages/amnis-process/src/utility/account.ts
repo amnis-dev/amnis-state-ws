@@ -164,7 +164,9 @@ export const accountCreate = async (
    * Append credentials if set.
    */
   if (credential) {
-    stateEntities[credentialKey] = [entityCreate(credential, { $owner: user.$id })];
+    stateEntities[credentialKey] = [
+      entityCreate(credential, { $owner: user.$id, new: false, committed: true }),
+    ];
   }
 
   /**

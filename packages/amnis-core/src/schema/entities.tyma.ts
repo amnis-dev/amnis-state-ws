@@ -1,6 +1,7 @@
 import type {
   Audit,
   Contact,
+  Credential,
   Handle,
   History,
   Image,
@@ -21,6 +22,7 @@ import type {
 export interface StateCreator {
   audit?: Audit[];
   contact?: Contact[];
+  credential?: Credential[];
   handle?: Handle[];
   history?: History[];
   image?: Image[];
@@ -40,6 +42,7 @@ export interface StateCreator {
 export interface StateUpdater {
   audit?: EntityUpdater<Audit>[];
   contact?: EntityUpdater<Contact>[];
+  credential?: EntityUpdater<Credential>[];
   history?: EntityUpdater<History>[];
   image?: EntityUpdater<Image>[];
   locale?: EntityUpdater<Locale>[];
