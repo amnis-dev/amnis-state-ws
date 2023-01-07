@@ -12,7 +12,7 @@ import {
   mwValidate,
   mwOtp,
 } from '../mw/index.js';
-import { accountCredentialAdd, findUserById } from '../utility/index.js';
+import { accountCredentialAdd, findUser } from '../utility/index.js';
 
 const process: IoProcess<
 Io<ApiAuthCredential, StateEntities>
@@ -41,7 +41,7 @@ Io<ApiAuthCredential, StateEntities>
     /**
      * Find the OTP subject.
      */
-    const user = await findUserById(context, otp.$sub);
+    const user = await findUser(context, otp.$sub);
     if (!user) {
       output.status = 401;
       output.json.logs.push({

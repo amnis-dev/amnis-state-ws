@@ -1,9 +1,10 @@
 import type {
-  ApiAuthRegistration,
+  ApiAuthRegister,
   ApiAuthLogin,
   ApiAuthLogout,
   // ApiAuthPkce,
   ApiAuthCreate,
+  ApiAuthOtp,
   ApiAuthVerify,
   ApiAuthChallenge,
   ApiAuthAuthenticate,
@@ -17,7 +18,8 @@ export interface AuthSchema {
   authenticate?: ApiAuthAuthenticate;
   challenge?: ApiAuthChallenge;
   credential?: ApiAuthCredential;
-  register?: ApiAuthRegistration;
+  otp?: ApiAuthOtp;
+  register?: ApiAuthRegister;
   login?: ApiAuthLogin;
   logout?: ApiAuthLogout;
   verify?: ApiAuthVerify;

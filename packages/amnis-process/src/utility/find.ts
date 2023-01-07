@@ -11,7 +11,9 @@ import {
   Contact,
   contactKey,
   handleKey,
+  HandleName,
   Handle,
+  HandleNameId,
 } from '@amnis/core';
 import {
   credentialActions,
@@ -19,46 +21,6 @@ import {
   userActions,
   userSelectors,
 } from '@amnis/state';
-
-/**
- * Finds a user by handle.
- */
-export const findUserByHandle = async (
-  context: IoContext,
-  handle: string,
-): Promise<Entity<User> | undefined> => {
-  const resultsHandle = await context.database.read({
-    [handleKey]: {
-      $query: {
-        name: {
-          $eq: handle,
-        },
-      },
-    },
-  });
-
-  const handleEntity = resultsHandle[handleKey]?.[0] as Entity<Handle> | undefined;
-
-  if (!handleEntity) {
-    return undefined;
-  }
-
-  const results = await context.database.read({
-    [userKey]: {
-      $query: {
-        $id: {
-          $eq: handleEntity.$subject,
-        },
-      },
-    },
-  });
-
-  if (!results[userKey]?.length) {
-    return undefined;
-  }
-
-  return results[userKey][0] as Entity<User>;
-};
 
 /**
  * Finds a user by ID.
@@ -90,6 +52,47 @@ export const findUserById = async (
   }
 
   return user;
+};
+
+/**
+ * Finds a user by handle.
+ */
+export const findUserByHandle = async (
+  context: IoContext,
+  handle: HandleName,
+): Promise<Entity<User> | undefined> => {
+  const resultsHandle = await context.database.read({
+    [handleKey]: {
+      $query: {
+        name: {
+          $eq: handle,
+        },
+      },
+    },
+  });
+
+  const handleEntity = resultsHandle[handleKey]?.[0] as Entity<Handle> | undefined;
+
+  if (!handleEntity) {
+    return undefined;
+  }
+
+  return findUserById(context, handleEntity.$subject);
+};
+
+/**
+ * Finds a user by ID or handle.
+ */
+export const findUser = async (
+  context: IoContext,
+  ref: UID | HandleNameId,
+): Promise<Entity<User> | undefined> => {
+  const magic = ref.charAt(0);
+  if (magic === '@') {
+    return findUserByHandle(context, ref.slice(1) as HandleName);
+  }
+
+  return findUserById(context, ref as UID);
 };
 
 /**

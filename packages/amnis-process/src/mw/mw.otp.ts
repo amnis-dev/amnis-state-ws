@@ -15,7 +15,7 @@ export const mwOtp: IoMiddleware = () => (next) => (context) => async (input, ou
     output.json.logs.push({
       level: 'error',
       title: 'Missing One-Time Password',
-      description: 'A one-time password (OTP) is required to complete to request.',
+      description: 'A one-time password (OTP) is required to complete the request.',
     });
     return output;
   }

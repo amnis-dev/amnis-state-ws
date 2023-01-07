@@ -173,6 +173,20 @@ export function apiExtraReducers<C extends EntityCreator>(
 
   /**
    * ================================================================================
+   * Auth Credential
+   * Matches when a auth credential account request is fulfilled.
+   */
+  builder.addMatcher(apiAuth.endpoints.credential.matchFulfilled, (state, action) => {
+    const { payload } = action;
+    const { result } = payload;
+    if (result && result[key] && Array.isArray(result[key])) {
+      /** @ts-ignore */
+      adapter.upsertMany<MetaState<E>>(state, result[key]);
+    }
+  });
+
+  /**
+   * ================================================================================
    * Auth PKCE
    * Matches when a PKCE login request is fulfilled.
    * ------------------------------------------------------------

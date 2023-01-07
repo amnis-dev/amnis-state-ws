@@ -1,6 +1,7 @@
 import type {
   HandleName,
   Credential,
+  HandleNameId,
 } from '../entity/index.js';
 import type {
   Bearer,
@@ -29,7 +30,7 @@ export interface ApiAuthOtp {
   /**
    * OTP Subject.
    */
-  $subject: UID;
+  $subject: UID | HandleNameId;
 
   /**
    * Email address to send the OTP to.
@@ -67,7 +68,7 @@ export type ApiAuthAuthenticate = Record<string, never>;
  * Payload for an registration request.
  * A value of undefined starts a registration event.
  */
-export interface ApiAuthRegistration {
+export interface ApiAuthRegister {
   /**
    * The handle name to register under.
    */
@@ -86,7 +87,7 @@ export interface ApiAuthRegistration {
   /**
    * The display name to register under.
    */
-  nameDisplay: Name;
+  nameDisplay?: Name;
 
   /**
    * Credential to add during the registration.

@@ -46,6 +46,11 @@ export const setupInput = async (req: Request): Promise<IoInput> => {
    */
   input.challengeEncoded = req.headers.get('Challenge') || undefined;
 
+  /**
+   * Extract one-time password (OTP) header.
+   */
+  input.otpEncoded = req.headers.get('Otp') || undefined;
+
   return input;
 };
 

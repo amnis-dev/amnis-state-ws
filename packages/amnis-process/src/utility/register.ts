@@ -3,7 +3,7 @@ import {
   IoOutput,
   StateEntities,
   credentialCreator,
-  ApiAuthRegistration,
+  ApiAuthRegister,
 } from '@amnis/core';
 import { accountCreate } from './account.js';
 
@@ -12,7 +12,7 @@ import { accountCreate } from './account.js';
  */
 export const registerAccount = async (
   context: IoContext,
-  apiAuthRegistration: ApiAuthRegistration,
+  apiAuthRegistration: ApiAuthRegister,
   ip?: string,
 ): Promise<IoOutput<StateEntities | undefined>> => {
   /**

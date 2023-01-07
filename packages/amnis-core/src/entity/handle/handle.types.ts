@@ -11,6 +11,15 @@ import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../e
 export type HandleName = string;
 
 /**
+ * Human-freindly name to reference a particular subject within an ID string.
+ *
+ * @pattern ^@[A-Za-z0-9_-]+$
+ * @minLength 1
+ * @maxLength 24
+ */
+export type HandleNameId = string;
+
+/**
  * Handles contain unique names that reference a particular subject.
  * The subject is typically a user.
  */

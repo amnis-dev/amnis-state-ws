@@ -5,10 +5,12 @@ import {
   ApiAuthCredential,
   ApiAuthLogin,
   ApiAuthLogout,
+  ApiAuthOtp,
   ApiAuthPkce,
-  ApiAuthRegistration,
+  ApiAuthRegister,
   ApiAuthVerify,
   IoOutputJson,
+  Otp,
   StateDeleter,
   StateEntities,
 } from '@amnis/core';
@@ -65,7 +67,7 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
 
   register: builder.mutation<
   IoOutputJson<StateEntities>,
-  Omit<ApiAuthRegistration, 'credential'>
+  Omit<ApiAuthRegister, 'credential'>
   >({
     query: (payload) => ({
       url: 'register',
@@ -85,7 +87,18 @@ export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder
     }),
   }),
 
-  verify: builder.query<
+  otp: builder.mutation<
+  IoOutputJson<Otp>,
+  Omit<ApiAuthOtp, 'otp'>
+  >({
+    query: (payload) => ({
+      url: 'otp',
+      method: 'post',
+      body: payload,
+    }),
+  }),
+
+  verify: builder.mutation<
   IoOutputJson<boolean>,
   ApiAuthVerify
   >({

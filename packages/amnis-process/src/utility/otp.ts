@@ -13,7 +13,7 @@ import {
   otpSelectors,
 } from '@amnis/state';
 import { validate } from '../validate.js';
-import { findUserById } from './find.js';
+import { findUser } from './find.js';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
@@ -58,7 +58,7 @@ export const otpNew = async (
     return output;
   }
 
-  const user = await findUserById(context, $subject);
+  const user = await findUser(context, $subject);
 
   if (!user) {
     output.status = 401; // Unauthorized
@@ -73,7 +73,7 @@ export const otpNew = async (
   const optPassword = await otpPasswordCreate(context, system.otpLength);
 
   const otp = otpCreate({
-    $sub: $subject,
+    $sub: user.$id,
     val: optPassword,
     exp: dateNumeric(`${system.otpExpiration}m`),
   });
@@ -153,7 +153,7 @@ export const otpValidate = async (
     output.json.logs = [{
       level: 'error',
       title: 'Invalid One-Time Password',
-      description: 'The provided one-time password (OTP) is incorrect.',
+      description: 'The provided one-time password (OTP) was incorrect.',
     }];
     return output;
   }

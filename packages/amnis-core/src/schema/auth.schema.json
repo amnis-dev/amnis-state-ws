@@ -15,8 +15,11 @@
         "credential": {
           "$ref": "#/definitions/ApiAuthCredential"
         },
+        "otp": {
+          "$ref": "#/definitions/ApiAuthOtp"
+        },
         "register": {
-          "$ref": "#/definitions/ApiAuthRegistration"
+          "$ref": "#/definitions/ApiAuthRegister"
         },
         "login": {
           "$ref": "#/definitions/ApiAuthLogin"
@@ -144,7 +147,54 @@
       "minLength": 4,
       "maxLength": 32
     },
-    "ApiAuthRegistration": {
+    "ApiAuthOtp": {
+      "type": "object",
+      "properties": {
+        "$subject": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/UID"
+            },
+            {
+              "$ref": "#/definitions/HandleNameId"
+            }
+          ],
+          "description": "OTP Subject."
+        },
+        "email": {
+          "$ref": "#/definitions/Email",
+          "description": "Email address to send the OTP to."
+        },
+        "purpose": {
+          "$ref": "#/definitions/ApiAuthOtpPurpose",
+          "description": "Purpose of the OTP."
+        }
+      },
+      "required": [
+        "$subject"
+      ],
+      "additionalProperties": false,
+      "description": "One-time password request."
+    },
+    "HandleNameId": {
+      "type": "string",
+      "description": "Human-freindly name to reference a particular subject within an ID string.",
+      "pattern": "^@[A-Za-z0-9_-]+$",
+      "minLength": 1,
+      "maxLength": 24
+    },
+    "Email": {
+      "type": "string",
+      "description": "An email address",
+      "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "maxLength": 64
+    },
+    "ApiAuthOtpPurpose": {
+      "type": "string",
+      "const": "credential",
+      "description": "OTP purposes"
+    },
+    "ApiAuthRegister": {
       "type": "object",
       "properties": {
         "handle": {
@@ -171,7 +221,6 @@
       "required": [
         "handle",
         "password",
-        "nameDisplay",
         "credential"
       ],
       "additionalProperties": false,
@@ -183,12 +232,6 @@
       "pattern": "^[A-Za-z0-9_-]+$",
       "minLength": 1,
       "maxLength": 24
-    },
-    "Email": {
-      "type": "string",
-      "description": "An email address",
-      "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-      "maxLength": 64
     },
     "ApiAuthLogin": {
       "type": "object",

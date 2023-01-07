@@ -1,5 +1,5 @@
 import {
-  ApiAuthRegistration,
+  ApiAuthRegister,
   Io,
   IoProcess,
   StateEntities,
@@ -21,7 +21,7 @@ import { authenticateFinalize } from '../utility/authenticate.js';
 import { registerAccount } from '../utility/register.js';
 
 const process: IoProcess<
-Io<ApiAuthRegistration, StateEntities>
+Io<ApiAuthRegister, StateEntities>
 > = (context) => (
   async (input, output) => {
     const { store } = context;
@@ -93,7 +93,7 @@ Io<ApiAuthRegistration, StateEntities>
   }
 );
 
-export const processAuthRegister = mwValidate('ApiAuthRegistration')(
+export const processAuthRegister = mwValidate('ApiAuthRegister')(
   mwChallenge()(
     mwCredential(true)(
       mwSignature()(
@@ -102,7 +102,7 @@ export const processAuthRegister = mwValidate('ApiAuthRegistration')(
     ),
   ),
 ) as IoProcess<
-Io<ApiAuthRegistration, StateEntities>
+Io<ApiAuthRegister, StateEntities>
 >;
 
 export default { processAuthRegister };

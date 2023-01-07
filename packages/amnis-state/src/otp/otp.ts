@@ -1,3 +1,4 @@
+import { apiAuth } from '@amnis/api';
 import {
   rtk,
   Otp,
@@ -98,6 +99,21 @@ export const otpSlice = rtk.createSlice({
         .map((e) => e?.$id) as UID<Otp>[];
 
       otpAdapter.removeMany(state, expiredIds);
+    });
+
+    /**
+     * Match the otp api fullfilled response and add the returned OTP.
+     */
+    builder.addMatcher(apiAuth.endpoints.otp.matchFulfilled, (state, action) => {
+      const { payload: { result } } = action;
+
+      if (result) {
+        otpAdapter.addOne(
+          state,
+          result,
+        );
+        state.latest = result.$id;
+      }
     });
   },
 });

@@ -10,7 +10,7 @@ import {
   User,
   userKey,
   agentCredential,
-  ApiAuthRegistration,
+  ApiAuthRegister,
 } from '@amnis/core';
 import { contextSetup, systemSelectors } from '@amnis/state';
 import { registerAccount } from './register.js';
@@ -24,7 +24,7 @@ beforeAll(async () => {
 test('should register a new account', async () => {
   const credential = await agentCredential();
 
-  const apiAuthRegistration: ApiAuthRegistration = {
+  const apiAuthRegistration: ApiAuthRegister = {
     handle: 'new_user',
     nameDisplay: 'New User',
     password: 'passwd12',
@@ -85,7 +85,7 @@ test('should register a new account', async () => {
 test('should not register with an existing handle', async () => {
   const credential = await agentCredential();
 
-  const apiAuthRegistration: ApiAuthRegistration = {
+  const apiAuthRegistration: ApiAuthRegister = {
     handle: 'new_user',
     nameDisplay: 'New User',
     password: 'passwd12',

@@ -202,17 +202,7 @@ export const accountCredentialAdd = async (
     [credentialKey]: [credential],
   };
   const stateEntities = stateEntitiesCreate(stateCreator);
-  const resultCreate = await database.create(stateEntities);
-
-  if (!resultCreate[credentialKey] || !resultCreate[credentialKey].length) {
-    output.status = 500;
-    output.json.logs.push({
-      level: 'error',
-      title: 'Credential Not Created',
-      description: 'Could not create the provide credential.',
-    });
-    return output;
-  }
+  await database.create(stateEntities);
 
   const stateUpdater: StateUpdater = {
     [userKey]: [
@@ -225,9 +215,11 @@ export const accountCredentialAdd = async (
 
   const resultUpdate = await database.update(stateUpdater);
 
+  // const user = resultUpdate[userKey]?.[0];
+
   output.status = 200;
   output.json.result = {
-    ...resultCreate,
+    ...stateEntities,
     ...resultUpdate,
   };
   output.json.logs.push({

@@ -54,8 +54,7 @@ export const bearerSlice = rtk.createSlice({
      * Get bearers from a successful registration.
      */
     builder.addMatcher(apiAuth.endpoints.register.matchFulfilled, (state, action) => {
-      const { payload } = action;
-      const { bearers } = payload;
+      const { payload: { bearers } } = action;
 
       if (bearers?.length) {
         bearerAdapter.upsertMany(state, bearers);

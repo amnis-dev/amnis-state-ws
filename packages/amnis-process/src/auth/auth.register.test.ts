@@ -2,7 +2,7 @@ import {
   IoInput,
   schemaAuth,
   ioOutputErrored,
-  ApiAuthRegistration,
+  ApiAuthRegister,
   Challenge,
   IoContext,
   userKey,
@@ -95,7 +95,7 @@ test('should start ritual and complete registration', async () => {
 
   const { credential, privateKey } = await accountsGenerateCrypto();
 
-  const apiAuthRegistration: ApiAuthRegistration = {
+  const apiAuthRegistration: ApiAuthRegister = {
     handle: 'new_user',
     nameDisplay: 'New User',
     password: 'passwd12',
@@ -105,7 +105,7 @@ test('should start ritual and complete registration', async () => {
 
   const signatureEncoded = await accountsSign(privateKey, apiAuthRegistration);
 
-  const inputRegister: IoInput<ApiAuthRegistration> = {
+  const inputRegister: IoInput<ApiAuthRegister> = {
     body: apiAuthRegistration,
     challengeEncoded,
     signatureEncoded,
@@ -204,7 +204,7 @@ test('should not be able to register when turned off by the system', async () =>
 
   const { credential, privateKey } = await accountsGenerateCrypto();
 
-  const apiAuthRegistration: ApiAuthRegistration = {
+  const apiAuthRegistration: ApiAuthRegister = {
     handle: 'new_user',
     nameDisplay: 'New User',
     password: 'passwd12',
@@ -214,7 +214,7 @@ test('should not be able to register when turned off by the system', async () =>
 
   const signatureEncoded = await accountsSign(privateKey, apiAuthRegistration);
 
-  const inputRegister: IoInput<ApiAuthRegistration> = {
+  const inputRegister: IoInput<ApiAuthRegister> = {
     body: apiAuthRegistration,
     challengeEncoded,
     signatureEncoded,
