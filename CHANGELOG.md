@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/amnis-dev/amnis-state/compare/v0.10.4...v0.11.0) (2023-01-08)
+
+
+### Features
+
+* Added authentication process for existing sessions to re-login with ([75805a3](https://github.com/amnis-dev/amnis-state/commit/75805a3270189fe50de2b9f791b6fd9bd628dce8))
+* Added extra security to subject challenges ([c6bef90](https://github.com/amnis-dev/amnis-state/commit/c6bef90f865bd0f6999bb12a4075551f893f4b4a))
+* Added handle to the redux state ([070d906](https://github.com/amnis-dev/amnis-state/commit/070d906117bb800f9b99372293013cd2960667bc))
+* Added mocked tests for new auth processors ([58968ec](https://github.com/amnis-dev/amnis-state/commit/58968ec717cef22de88e273fbf22b3af1ece122c))
+* Added new create auth process for creating new accounts ([a8a9457](https://github.com/amnis-dev/amnis-state/commit/a8a945700e19306e7ffee3085789768f8bda6ae5))
+* Added new handle core type ([6d8b965](https://github.com/amnis-dev/amnis-state/commit/6d8b965b6e10e9968da1f2f7ad4155e9bc811024))
+* Added new headers for signatures and challenges ([5cfe31f](https://github.com/amnis-dev/amnis-state/commit/5cfe31f767b6816723330bc5436b282c85fbde0d))
+* Added new process for adding credentials to existing accounts ([3ec2881](https://github.com/amnis-dev/amnis-state/commit/3ec28817494fdf1394e8e2f0238602d97dd68fdd))
+* Added new property to entities to show if they have ever been stored ([e1256f9](https://github.com/amnis-dev/amnis-state/commit/e1256f99c016503af24311b2bd417391dbdf96e3))
+* Added processing for one-time-passcode challenged with tests ([7c55353](https://github.com/amnis-dev/amnis-state/commit/7c55353b4d64bb9b48996764f23f1e9d5a99207c))
+* Added reducer to reference the latest added OTP ([3204a13](https://github.com/amnis-dev/amnis-state/commit/3204a13ec5d8c6d235b7d32fb3ee1d7742446f36))
+* Challenges can generate and send one-time-passcodes ([103640f](https://github.com/amnis-dev/amnis-state/commit/103640fcb9768c7e41ed4f22e38ae764c30acd86))
+* emails can be added to users upon registration ([eb14ac4](https://github.com/amnis-dev/amnis-state/commit/eb14ac43a326995827cc17e06ae64b74b8c1327f))
+* refined adding auth credentials ([ae030db](https://github.com/amnis-dev/amnis-state/commit/ae030db896a09ac336aeea320605c23cfef6d68b))
+* Updated processors with new authentication use and testing ([8b0f818](https://github.com/amnis-dev/amnis-state/commit/8b0f818a1f8271d66e243e955e37827e0cd12bf4))
+* Upgraded schema generation tool to latest ([ece4f55](https://github.com/amnis-dev/amnis-state/commit/ece4f55e8fb3b4445f0d907160548e50a76bbe26))
+
+
+### Bug Fixes
+
+* Fixed issue with credential ID mutating during a registration event ([9482609](https://github.com/amnis-dev/amnis-state/commit/9482609c954a89db222a4cb0860afc21376b7546))
+* Fixed linting issues from refactored challenge middleware ([197631b](https://github.com/amnis-dev/amnis-state/commit/197631b91732cfb55d83d71e3f2fd667c8f869a0))
+
 ### [0.10.4](https://github.com/amnis-dev/amnis-state/compare/v0.10.3...v0.10.4) (2022-12-14)
 
 
