@@ -896,10 +896,8 @@
           "description": "Handle for the user."
         },
         "password": {
-          "type": "string",
-          "description": "A hashed value of the users password.",
-          "minLength": 16,
-          "maxLength": 512
+          "$ref": "#/definitions/Password",
+          "description": "A hashed value of the users password."
         },
         "locked": {
           "type": "boolean",
@@ -957,6 +955,12 @@
       ],
       "additionalProperties": false,
       "description": "Data associated to a User."
+    },
+    "Password": {
+      "type": "string",
+      "description": "A clear-text password.",
+      "minLength": 4,
+      "maxLength": 32
     },
     "UIDList<Credential>": {
       "type": "array",
@@ -1892,10 +1896,8 @@
           "description": "Handle for the user."
         },
         "password": {
-          "type": "string",
-          "description": "A hashed value of the users password.",
-          "minLength": 16,
-          "maxLength": 512
+          "$ref": "#/definitions/Password",
+          "description": "A hashed value of the users password."
         },
         "locked": {
           "type": "boolean",

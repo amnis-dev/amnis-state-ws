@@ -37,7 +37,7 @@ export function validate(
     ajvValidator.errors.forEach((verror) => {
       const details = [];
       if (verror.instancePath) {
-        details.push(`[${verror.instancePath}]`);
+        details.push(`${verror.instancePath.split('/').slice(-1)[0]}`);
       }
       if (verror.message) {
         details.push(`${verror.message}.`);

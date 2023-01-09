@@ -1,4 +1,6 @@
-import type { DateJSON, Email, UIDList } from '../../types.js';
+import type {
+  DateJSON, Email, Password, UIDList,
+} from '../../types.js';
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
 import type { Permit } from '../permit/index.js';
 import type { Credential } from '../credential/index.js';
@@ -16,10 +18,8 @@ export interface User extends EntityCreator {
 
   /**
    * A hashed value of the users password.
-   * @minLength 16
-   * @maxLength 512
    */
-  password?: string;
+  password?: Password;
 
   /**
    * If this account is locked from being authenticated.
