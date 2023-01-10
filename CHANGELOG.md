@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.1](https://github.com/amnis-dev/amnis-state/compare/v0.11.0...v0.11.1) (2023-01-10)
+
+
+### Bug Fixes
+
+* Fixed issue with administrators not being able to update user passwords ([85e4243](https://github.com/amnis-dev/amnis-state/commit/85e424330ee1518f4dd87d8708de15bf4206214f))
+
 ## [0.11.0](https://github.com/amnis-dev/amnis-state/compare/v0.10.4...v0.11.0) (2023-01-08)
 
 
