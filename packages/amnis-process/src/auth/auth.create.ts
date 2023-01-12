@@ -44,7 +44,7 @@ Io<ApiAuthCreate, StateEntities>
       output.json.logs.push({
         level: 'error',
         title: 'Unauthorized',
-        description: 'This account is not authorized to create other accounts.',
+        description: 'Not authorized to create accounts.',
       });
       return output;
     }

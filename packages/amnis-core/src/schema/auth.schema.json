@@ -161,10 +161,6 @@
           ],
           "description": "OTP Subject."
         },
-        "email": {
-          "$ref": "#/definitions/Email",
-          "description": "Email address to send the OTP to."
-        },
         "purpose": {
           "$ref": "#/definitions/ApiAuthOtpPurpose",
           "description": "Purpose of the OTP."
@@ -182,12 +178,6 @@
       "pattern": "^@[A-Za-z0-9_-]+$",
       "minLength": 1,
       "maxLength": 24
-    },
-    "Email": {
-      "type": "string",
-      "description": "An email address",
-      "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-      "maxLength": 64
     },
     "ApiAuthOtpPurpose": {
       "type": "string",
@@ -232,6 +222,12 @@
       "pattern": "^[A-Za-z0-9_-]+$",
       "minLength": 1,
       "maxLength": 24
+    },
+    "Email": {
+      "type": "string",
+      "description": "An email address",
+      "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "maxLength": 64
     },
     "ApiAuthLogin": {
       "type": "object",

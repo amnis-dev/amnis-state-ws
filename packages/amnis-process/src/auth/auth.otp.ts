@@ -13,13 +13,12 @@ const process: IoProcess<
 Io<ApiAuthOtp, Otp>
 > = (context) => (
   async (input, output) => {
-    const { body: { $subject, email, purpose } } = input;
+    const { body: { $subject, purpose } } = input;
 
     ioOutputApply(
       output,
       await otpNew(context, {
         $subject,
-        email,
         purpose,
       }),
     );

@@ -133,7 +133,6 @@ test('should create a new OTP and validate against it', async () => {
     context,
     {
       $subject: userUser.$id,
-      email: userUser.email,
     },
   );
 

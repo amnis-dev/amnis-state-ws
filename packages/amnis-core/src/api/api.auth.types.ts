@@ -33,11 +33,6 @@ export interface ApiAuthOtp {
   $subject: UID | HandleNameId;
 
   /**
-   * Email address to send the OTP to.
-   */
-  email?: Email;
-
-  /**
    * Purpose of the OTP.
    */
   purpose?: ApiAuthOtpPurpose;

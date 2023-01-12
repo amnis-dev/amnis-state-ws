@@ -69,7 +69,6 @@ test('should add the current agent credential to the admin account and login', a
    */
   const responseOtp = await clientStore.dispatch(apiAuth.endpoints.otp.initiate({
     $subject: `@${admin.handle}`,
-    email: adminUser.email,
   }));
 
   if ('error' in responseOtp) {

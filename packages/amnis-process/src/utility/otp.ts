@@ -44,7 +44,7 @@ export const otpNew = async (
 ): Promise<IoOutput<Otp>> => {
   const output = ioOutput();
   const { store, send } = context;
-  const { $subject, email } = body;
+  const { $subject } = body;
 
   const system = systemSelectors.selectActive(store.getState());
 
@@ -70,6 +70,15 @@ export const otpNew = async (
     return output;
   }
 
+  /**
+   * Remove any existing OTPs for this subject.
+   * Should only have one OTP per subject.
+   */
+  const otpsExisting = otpSelectors.selectBySubject(store.getState(), user.$id);
+  if (otpsExisting.length) {
+    store.dispatch(otpActions.deleteMany(otpsExisting.map((o) => o.$id)));
+  }
+
   const optPassword = await otpPasswordCreate(context, system.otpLength);
 
   const otp = otpCreate({
@@ -84,11 +93,11 @@ export const otpNew = async (
   store.dispatch(otpActions.insert(otp));
 
   /**
-   * Send the OTP to the subject's email if they match and it's verified.
+   * Send the OTP to the subject's email.
    */
-  if (email && user.email === email && user.emailVerified === true) {
+  if (user.email && user.emailVerified === true) {
     send.email({
-      to: email,
+      to: user.email,
       from: system.emailAuth,
       fromName: system.name,
       subject: 'One-Time Password',

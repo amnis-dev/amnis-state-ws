@@ -70,6 +70,13 @@ export const otpSlice = rtk.createSlice({
       otpAdapter.removeOne(state, action.payload);
     },
 
+    deleteMany: (state, action: PayloadAction<UID[]>) => {
+      if (state.latest && action.payload.includes(state.latest)) {
+        state.latest = null;
+      }
+      otpAdapter.removeMany(state, action.payload);
+    },
+
     /**
      * Sets the one-time password value on the latest OTP.
      */
@@ -150,6 +157,17 @@ export const otpSelectors = {
     }
     const otpLatest = slice.entities[latest];
     return otpLatest;
+  },
+
+  /**
+   * Selects the an OTP by the subject (first result).
+   */
+  selectBySubject: (state: State, $subject: UID) => {
+    const slice = state[otpKey] as OtpMeta & EntityState<Otp>;
+    const otpsFound = Object.values(slice.entities).filter((o) => (
+      o?.$sub === $subject
+    )) as Otp[];
+    return otpsFound;
   },
 };
 
