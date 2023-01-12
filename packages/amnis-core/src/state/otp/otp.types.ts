@@ -1,6 +1,16 @@
 import type { DateNumeric, UID } from '../../types.js';
 
 /**
+ * OTP send methods.
+ */
+// eslint-disable-next-line no-shadow
+export enum OtpMethod {
+  None,
+  Email,
+  Phone
+}
+
+/**
  * A short-lived object that contains a one-time password.
  */
 export interface Otp {
@@ -31,7 +41,12 @@ export interface Otp {
   len: number;
 
   /**
-   * Expiration date-time of the Otp.
+   * Expiration date-time of the OTP.
    */
   exp: DateNumeric;
+
+  /**
+   * The method of sending the OTP value.
+   */
+  mth: OtpMethod;
 }

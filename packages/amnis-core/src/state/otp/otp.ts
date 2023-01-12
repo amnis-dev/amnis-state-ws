@@ -1,6 +1,6 @@
 import { dateNumeric } from '../../core.js';
 import { uid } from '../../uid.js';
-import type { Otp } from './otp.types.js';
+import { Otp, OtpMethod } from './otp.types.js';
 
 export const otpKey = 'otp';
 
@@ -8,6 +8,7 @@ export const otpBase = (): Omit<Otp, '$id'> => ({
   $sub: uid('subject'),
   len: 12,
   exp: dateNumeric('5m'),
+  mth: OtpMethod.None,
 });
 
 export const otpCreate = (

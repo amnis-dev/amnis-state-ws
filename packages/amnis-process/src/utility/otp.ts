@@ -1,11 +1,14 @@
 import {
   ApiAuthOtp,
+  coreActions,
   dateNumeric,
   IoContext,
   IoOutput,
   ioOutput,
   Otp,
   otpCreate,
+  OtpMethod,
+  userKey,
 } from '@amnis/core';
 import {
   systemSelectors,
@@ -85,6 +88,7 @@ export const otpNew = async (
     $sub: user.$id,
     val: optPassword,
     exp: dateNumeric(`${system.otpExpiration}m`),
+    mth: OtpMethod.Email,
   });
 
   /**
@@ -113,6 +117,7 @@ export const otpNew = async (
     $sub: otp.$sub,
     exp: otp.exp,
     len: otp.len,
+    mth: otp.mth,
   };
   output.status = 200;
   output.json.result = otpResult;
@@ -205,6 +210,28 @@ export const otpValidate = async (
       description: 'The one-time password (OTP) expects a different number of characters',
     }];
     return output;
+  }
+
+  /**
+   * Find the user subject.
+   * Set the email as verified in the background.
+   */
+  if (otpServer.mth === OtpMethod.Email && otpServer.$sub.startsWith('user')) {
+    (async () => {
+      const user = await findUser(context, otpServer.$sub);
+      if (user && user.emailVerified !== true) {
+        const result = await context.database.update({
+          [userKey]: [{
+            $id: user.$id,
+            emailVerified: true,
+          }],
+        });
+        /**
+         * Ensure we update the cache after updating the user.
+         */
+        store.dispatch(coreActions.insert(result));
+      }
+    })();
   }
 
   /**

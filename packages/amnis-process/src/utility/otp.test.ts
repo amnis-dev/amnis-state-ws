@@ -6,6 +6,7 @@ import {
   IoContext,
   Otp,
   otpCreate,
+  OtpMethod,
   schemaAuth,
   sendMailboxStorage,
   System,
@@ -40,11 +41,13 @@ beforeAll(async () => {
     $sub: $subject,
     val: await otpPasswordCreate(context),
     exp: dateNumeric('5m'),
+    mth: OtpMethod.Email,
   });
   otpExpired = otpCreate({
     $sub: $subject,
     val: await otpPasswordCreate(context),
     exp: 0 as DateNumeric,
+    mth: OtpMethod.Email,
   });
 
   context.store.dispatch(otpActions.insert(otpValid));
@@ -143,12 +146,13 @@ test('should create a new OTP and validate against it', async () => {
     return;
   }
 
-  expect(Object.keys(otpNewObject)).toHaveLength(4);
+  expect(Object.keys(otpNewObject)).toHaveLength(5);
   expect(otpNewObject).toMatchObject({
     $id: expect.any(String),
     $sub: userUser.$id,
     len: system.otpLength,
     exp: expect.any(Number),
+    mth: OtpMethod.Email,
   });
   expect(otpNewObject.val).toBeUndefined();
 

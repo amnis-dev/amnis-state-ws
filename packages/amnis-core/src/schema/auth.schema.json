@@ -367,17 +367,31 @@
         },
         "exp": {
           "$ref": "#/definitions/DateNumeric",
-          "description": "Expiration date-time of the Otp."
+          "description": "Expiration date-time of the OTP."
+        },
+        "mth": {
+          "$ref": "#/definitions/OtpMethod",
+          "description": "The method of sending the OTP value."
         }
       },
       "required": [
         "$id",
         "$sub",
         "len",
-        "exp"
+        "exp",
+        "mth"
       ],
       "additionalProperties": false,
       "description": "A short-lived object that contains a one-time password."
+    },
+    "OtpMethod": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "description": "OTP send methods."
     }
   }
 }
