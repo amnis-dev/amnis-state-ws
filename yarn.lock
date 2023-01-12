@@ -5,11 +5,11 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@amnis/api@0.11.3, @amnis/api@workspace:packages/amnis-api":
+"@amnis/api@0.11.4, @amnis/api@workspace:packages/amnis-api":
   version: 0.0.0-use.local
   resolution: "@amnis/api@workspace:packages/amnis-api"
   dependencies:
-    "@amnis/core": 0.11.3
+    "@amnis/core": 0.11.4
     cross-fetch: ^3.1.0
     msw: ^0.40.1
   peerDependencies:
@@ -24,7 +24,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/core@0.11.3, @amnis/core@workspace:packages/amnis-core":
+"@amnis/core@0.11.4, @amnis/core@workspace:packages/amnis-core":
   version: 0.0.0-use.local
   resolution: "@amnis/core@workspace:packages/amnis-core"
   peerDependencies:
@@ -51,9 +51,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@amnis/mock@workspace:packages/amnis-mock"
   peerDependencies:
-    "@amnis/api": 0.11.3
-    "@amnis/process": 0.11.3
-    "@amnis/state": 0.11.3
+    "@amnis/api": 0.11.4
+    "@amnis/process": 0.11.4
+    "@amnis/state": 0.11.4
     "@reduxjs/toolkit": ^1.8.1
     msw: ^0.49.0
   languageName: unknown
@@ -63,8 +63,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@amnis/process@workspace:packages/amnis-process"
   dependencies:
-    "@amnis/core": 0.11.3
-    "@amnis/state": 0.11.3
+    "@amnis/core": 0.11.4
+    "@amnis/state": 0.11.4
     ajv: ^8.11.0
     cross-fetch: ^3.1.0
   peerDependencies:
@@ -131,12 +131,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/state@0.11.3, @amnis/state@workspace:packages/amnis-state":
+"@amnis/state@0.11.4, @amnis/state@workspace:packages/amnis-state":
   version: 0.0.0-use.local
   resolution: "@amnis/state@workspace:packages/amnis-state"
   dependencies:
-    "@amnis/api": 0.11.3
-    "@amnis/core": 0.11.3
+    "@amnis/api": 0.11.4
+    "@amnis/core": 0.11.4
   peerDependencies:
     "@reduxjs/toolkit": ^1.8.0
     react: ^18.0.0

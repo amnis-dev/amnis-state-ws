@@ -213,8 +213,8 @@ export const otpValidate = async (
   }
 
   /**
-   * Find the user subject.
-   * Set the email as verified in the background.
+   * If the OTP method was EMAIL, set that subject's email as verified.
+   * This is assuming the subject is a user.
    */
   if (otpServer.mth === OtpMethod.Email && otpServer.$sub.startsWith('user')) {
     (async () => {

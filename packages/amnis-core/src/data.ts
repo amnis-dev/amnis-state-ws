@@ -26,12 +26,12 @@ import {
   Entity,
   Credential,
   credentialKey,
+  Handle,
+  handleCreator,
+  handleKey,
 } from './entity/index.js';
-
+import { cryptoWeb } from './io/index.js';
 import { accountsGet } from './accounts.js';
-import {
-  cryptoWeb, Handle, handleCreator, handleKey,
-} from './index.js';
 
 export const dataInitial = async (): Promise<StateEntities> => {
   /**

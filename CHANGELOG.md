@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.4](https://github.com/amnis-dev/amnis-state/compare/v0.11.3...v0.11.4) (2023-01-12)
+
+
+### Features
+
+* OTP requests now send without a verified email. ([aa7bae3](https://github.com/amnis-dev/amnis-state/commit/aa7bae3166cc4fa40aebaee0a7e2b19f8ee70286))
+* Successful OTP challenges sent to emails will verify that email ([5b2ca10](https://github.com/amnis-dev/amnis-state/commit/5b2ca10697ddfa02c5d56ff6c9e2db2d785472fc))
+
 ### [0.11.3](https://github.com/amnis-dev/amnis-state/compare/v0.11.2...v0.11.3) (2023-01-12)
 
 
