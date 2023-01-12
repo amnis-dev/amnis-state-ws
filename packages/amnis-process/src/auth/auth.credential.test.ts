@@ -13,12 +13,14 @@ import {
   ApiAuthCredential,
   ioOutput,
   accountsGet,
+  ApiAuthLogin,
 } from '@amnis/core';
 import { contextSetup, otpSelectors } from '@amnis/state';
 import { challengeNew } from '../utility/challenge.js';
 import { otpNew, otpPasswordCreate } from '../utility/otp.js';
 import { validateSetup } from '../validate.js';
 import { processAuthCredential } from './auth.credential.js';
+import { processAuthLogin } from './auth.login.js';
 
 let context: IoContext;
 let credentialNew: Credential;
@@ -123,6 +125,39 @@ test('should add a new credential to the user account', async () => {
   expect(userEntity.$credentials.includes(credentialNew.$id)).toBe(true);
   expect(credentialEntity.$id).toBe(credentialNew.$id);
   expect(credentialEntity.publicKey).toBe(credentialNew.publicKey);
+
+  /**
+   * Should be able to login with the newly added credential.
+   */
+  const challengeLoginOutput = await challengeNew(context);
+  const challengeLogin = challengeLoginOutput.json.result;
+  if (!challengeLogin) {
+    expect(challengeLogin).toBeDefined();
+    return;
+  }
+  const challengeLoginEncoded = base64JsonEncode(challengeLogin);
+
+  const apiAuthLogin: ApiAuthLogin = {
+    handle: user.handle,
+    password: user.password,
+    $credential: credentialNew.$id,
+  };
+
+  const signatureLogin = await context.crypto.asymSign(
+    JSON.stringify(apiAuthLogin),
+    credentialNewPrivateKey,
+  );
+  const signatureLoginEncoded = base64Encode(new Uint8Array(signatureLogin));
+
+  const inputLogin: IoInput<ApiAuthLogin> = {
+    body: apiAuthLogin,
+    challengeEncoded: challengeLoginEncoded,
+    signatureEncoded: signatureLoginEncoded,
+  };
+
+  const outputLogin = await processAuthLogin(context)(inputLogin, ioOutput());
+
+  expect(outputLogin.status).toBe(200);
 });
 
 /**

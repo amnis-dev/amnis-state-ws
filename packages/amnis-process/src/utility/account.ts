@@ -1,6 +1,7 @@
 import {
   contactCreator,
   contactKey,
+  coreActions,
   Credential,
   credentialKey,
   entityCreate,
@@ -194,7 +195,7 @@ export const accountCredentialAdd = async (
   credential: Credential,
 ): Promise<IoOutput<StateEntities | undefined>> => {
   const output = ioOutput();
-  const { database } = context;
+  const { store, database } = context;
 
   const $credentials = [...user.$credentials, credential.$id];
 
@@ -214,8 +215,10 @@ export const accountCredentialAdd = async (
   };
 
   const resultUpdate = await database.update(stateUpdater);
-
-  // const user = resultUpdate[userKey]?.[0];
+  /**
+   * Dispatch the result to update memory cached entities.
+   */
+  store.dispatch(coreActions.insert(resultUpdate));
 
   output.status = 200;
   output.json.result = {
