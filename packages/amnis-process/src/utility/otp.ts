@@ -95,7 +95,7 @@ export const otpNew = async (
   /**
    * Send the OTP to the subject's email.
    */
-  if (user.email && user.emailVerified === true) {
+  if (user.email) {
     send.email({
       to: user.email,
       from: system.emailAuth,
