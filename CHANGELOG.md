@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.2](https://github.com/amnis-dev/amnis-state/compare/v0.11.1...v0.11.2) (2023-01-12)
+
+
+### Features
+
+* OTP email send to the subjects email without passing in the matching email ([898c5eb](https://github.com/amnis-dev/amnis-state/commit/898c5eb494a192e8cc4032995ccc4a6b4f049206))
+
 ### [0.11.1](https://github.com/amnis-dev/amnis-state/compare/v0.11.0...v0.11.1) (2023-01-10)
 
 
