@@ -143,4 +143,26 @@ test('should add the current agent credential to the admin account and login', a
   expect(credential).toMatchObject(credentialAgent);
   expect(user).toEqual(result[userKey][0]);
   expect(user.$credentials.includes(credential.$id)).toBe(true);
+
+  /**
+   * Should now be able to login
+   */
+  const responseLogin = await clientStore.dispatch(apiAuth.endpoints.login.initiate({
+    handle: admin.handle,
+    password: admin.password,
+  }));
+
+  if ('error' in responseLogin) {
+    expect(responseLogin.error).toBeUndefined();
+    return;
+  }
+
+  const resultLogin = responseLogin.data.result;
+
+  if (!resultLogin) {
+    expect(resultLogin).toBeDefined();
+    return;
+  }
+
+  expect(Object.keys(resultLogin).length).toBeGreaterThan(3);
 });
