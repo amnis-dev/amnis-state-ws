@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.3](https://github.com/amnis-dev/amnis-state/compare/v0.11.2...v0.11.3) (2023-01-12)
+
+
+### Features
+
+* Extended test to login after adding a credential ([07b2038](https://github.com/amnis-dev/amnis-state/commit/07b20388df7f808ac8da6debc22eb4fd3d6728b8))
+
+
+### Bug Fixes
+
+* Fixed issue with new credentials not being immediately cached ([6aa7a10](https://github.com/amnis-dev/amnis-state/commit/6aa7a10db5d582b027ff62669375d9819163768c))
+
 ### [0.11.2](https://github.com/amnis-dev/amnis-state/compare/v0.11.1...v0.11.2) (2023-01-12)
 
 
