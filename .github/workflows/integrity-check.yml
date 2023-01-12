@@ -17,6 +17,9 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Update Apt
+      run: sudo apt-get update
+
     - name: Install ffmpeg
       run: sudo apt install ffmpeg
 
