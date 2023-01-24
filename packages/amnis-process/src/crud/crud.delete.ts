@@ -8,7 +8,7 @@ import {
   selectRoleGrants,
   StateDeleter,
   stateScopeCreate,
-  Task,
+  GrantTask,
   UID,
 } from '@amnis/core';
 import { mwAccess, mwValidate } from '../mw/index.js';
@@ -31,7 +31,7 @@ Io<StateDeleter, StateDeleter>
     /**
      * Filter non-granted slices on the body (which is a State type).
      */
-    const stateAuthwalled = authorizeWall(body, grants, Task.Delete);
+    const stateAuthwalled = authorizeWall(body, grants, GrantTask.Delete);
 
     /**
      * finalized state to process
@@ -41,7 +41,7 @@ Io<StateDeleter, StateDeleter>
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = access?.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
+    const authScope = access?.adm === true ? undefined : stateScopeCreate(grants, GrantTask.Update);
 
     const result = await database.delete(
       stateFinal,

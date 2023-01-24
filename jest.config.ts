@@ -3,7 +3,7 @@ import type { Config } from 'jest';
 const jestConfig: Config = {
   verbose: true,
   testEnvironment: 'node',
-  // setupFiles: ['<rootDir>/jest.setup.ts'],
+  setupFiles: ['<rootDir>/jest.setup.ts'],
   testTimeout: 10000,
   // transform: {
   //   '^.+\\.[t|j]sx?$': 'jest-esm-transformer',

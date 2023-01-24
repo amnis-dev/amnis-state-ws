@@ -11,7 +11,7 @@ import {
   stateReferenceQuery,
   StateScope,
   stateScopeCreate,
-  Task,
+  GrantTask,
   UID,
 } from '@amnis/core';
 import { mwAccess, mwValidate } from '../mw/index.js';
@@ -49,7 +49,7 @@ async function readRecursive(
   /**
    * Need to ensure the user has the right permissions for the next depth query.
    */
-  const queryAuthwalled: StateQuery = authorizeWall(queryNext, grants, Task.Read);
+  const queryAuthwalled: StateQuery = authorizeWall(queryNext, grants, GrantTask.Read);
 
   /**
    * Process the next result
@@ -102,7 +102,7 @@ Io<StateQuery, StateEntities>
     /**
      * Filter non-granted slices on the body (which is a State type).
      */
-    const stateAuthwalled: StateQuery = authorizeWall(body, grants, Task.Read);
+    const stateAuthwalled: StateQuery = authorizeWall(body, grants, GrantTask.Read);
 
     /**
      * finalized state to process
@@ -112,7 +112,7 @@ Io<StateQuery, StateEntities>
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = access.adm === true ? undefined : stateScopeCreate(grants, Task.Read);
+    const authScope = access.adm === true ? undefined : stateScopeCreate(grants, GrantTask.Read);
 
     /**
      * Build the result based on the query depth.

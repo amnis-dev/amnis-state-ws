@@ -14,7 +14,7 @@ import {
   StateCreator,
   stateScopeCreate,
   StateUpdater,
-  Task,
+  GrantTask,
   userKey,
 } from '@amnis/core';
 import { mwAccess, mwValidate } from '../mw/index.js';
@@ -45,7 +45,7 @@ Io<StateUpdater, StateCreator>
     /**
      * Filter non-granted slices on the body (which is a State type).
      */
-    const stateAuthwalled = authorizeWall(body, grants, Task.Update);
+    const stateAuthwalled = authorizeWall(body, grants, GrantTask.Update);
 
     /**
      * Clean entity properties that should not be updated.
@@ -107,7 +107,7 @@ Io<StateUpdater, StateCreator>
     /**
      * Create an authentication scope object from the array of grant objects.
      */
-    const authScope = access.adm === true ? undefined : stateScopeCreate(grants, Task.Update);
+    const authScope = access.adm === true ? undefined : stateScopeCreate(grants, GrantTask.Update);
 
     const result = await database.update(
       stateUpdateObject,

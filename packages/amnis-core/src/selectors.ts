@@ -6,7 +6,6 @@ import {
   State,
   Bearer,
   bearerKey,
-  grantParse,
   Grant,
 } from './state/index.js';
 import {
@@ -145,6 +144,14 @@ export const selectSelection = <E extends Entity>(
   state: State, sliceKey: string,
 ) => genSelectSelection<E>(sliceKey)(state);
 
+export interface EntityDifference<C extends EntityCreator> {
+  original: Entity<C> | undefined;
+  current: Entity<C> | undefined;
+  changes: EntityCreatorBase<C>;
+  updater: EntityUpdater<C>;
+  keys: (keyof Entity<C>)[];
+}
+
 /**
  * Selects an object to differentiate local updates.
  */
@@ -157,41 +164,11 @@ const genSelectDifference = <C extends EntityCreator = EntityCreator>(
     genSelectOriginals<Entity<C>>(sliceKey),
     genSelectEntities<Entity<C>>(sliceKey),
   ],
-  (id, diffRecords, originalRecords, entities) => {
+  (id, diffRecords, originalRecords, entities): EntityDifference<C> => {
     const current = entities[id] as Entity<C> | undefined;
     const original = originalRecords[id] as Entity<C> | undefined;
     const diffRecord = diffRecords[id];
     const keys = diffRecord ? [...diffRecord as (keyof Entity<C>)[]] : [] as (keyof Entity<C>)[];
-
-    if (!current) {
-      return {
-        original: undefined,
-        current: undefined,
-        changes: {} as EntityCreatorBase<C>,
-        updater: { $id: id } as EntityUpdater<C>,
-        keys: [],
-      };
-    }
-
-    if (!original) {
-      return {
-        original,
-        current,
-        changes: {} as EntityCreatorBase<C>,
-        updater: { $id: id } as EntityUpdater<C>,
-        keys: [],
-      };
-    }
-
-    if (!keys) {
-      return {
-        original: undefined,
-        current: undefined,
-        changes: {} as EntityCreatorBase<C>,
-        updater: { $id: id } as EntityUpdater<C>,
-        keys: [],
-      };
-    }
 
     const changes = keys.reduce<EntityCreatorBase<C>>((acc, k) => {
       /** @ts-ignore */
@@ -201,8 +178,8 @@ const genSelectDifference = <C extends EntityCreator = EntityCreator>(
     const updater = { $id: id, ...changes };
 
     return {
-      original: { ...original },
-      current: { ...current },
+      original: original ? { ...original } : undefined,
+      current: current ? { ...current } : undefined,
       changes,
       updater,
       keys,
@@ -258,17 +235,13 @@ export function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
     return grants;
   }
 
-  roleRefs.every((roleRef) => {
+  roleRefs.forEach((roleRef) => {
     const role = roleSlice.entities[roleRef];
     if (!role) {
-      return true;
+      return;
     }
 
-    grants.push(...role.grants
-      .map((grantString) => grantParse(grantString))
-      .filter((grant) => grant !== undefined) as Grant[]);
-
-    return true;
+    grants.push(...role.grants);
   });
 
   return grants;

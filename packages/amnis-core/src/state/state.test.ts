@@ -13,6 +13,7 @@ const system = entityCreate(systemCreator({
   name: 'Query System',
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),
+  $anonymousRole: uid(roleKey),
   $initialRoles: [uid(roleKey), uid(roleKey)],
   $website: uid(websiteKey),
 }));
@@ -62,6 +63,7 @@ test('should generate a proper identifier query', () => {
         $id: {
           $in: [
             ...system.$initialRoles,
+            system.$anonymousRole,
             system.$execRole,
             system.$adminRole,
           ],

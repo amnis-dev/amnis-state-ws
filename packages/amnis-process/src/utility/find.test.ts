@@ -10,10 +10,12 @@ import {
   contactKey,
   Profile,
   profileKey,
+  Role,
+  roleKey,
 } from '@amnis/core';
 import { contextSetup } from '@amnis/state';
 import {
-  findContactById, findCredentialById, findProfileByUserId, findUserByHandle,
+  findContactById, findCredentialById, findProfileByUserId, findRolesByIds, findUserByHandle,
 } from './find.js';
 
 let context: IoContext;
@@ -21,6 +23,7 @@ let userExisting: Entity<User>;
 let profileExisting: Entity<Profile>;
 let credentialExisting: Entity<Credential>;
 let contactExisting: Entity<Contact>;
+let rolesExisting: Entity<Role>[];
 
 beforeAll(async () => {
   context = await contextSetup({
@@ -42,6 +45,10 @@ beforeAll(async () => {
   contactExisting = Object.values(
     databaseMemoryStorage()[contactKey],
   )[0] as Entity<Contact>;
+
+  rolesExisting = Object.values(
+    databaseMemoryStorage()[roleKey],
+  ) as Entity<Role>[];
 });
 
 test('should find user by handle', async () => {
@@ -82,4 +89,13 @@ test('should find contact by id', async () => {
     return;
   }
   expect(found.$id).toBe(contactExisting.$id);
+});
+
+test('should find roles by ids', async () => {
+  const roleIds = rolesExisting.map((role) => role.$id);
+  const found = await findRolesByIds(context, roleIds);
+
+  expect(roleIds.length).toBeGreaterThan(0);
+  expect(roleIds.length).toBe(found.length);
+  expect(found).toEqual(rolesExisting);
 });

@@ -1,7 +1,12 @@
 import { UID } from '../../types.js';
 import { uidList } from '../../uid.js';
 import { Entity } from '../../entity/index.js';
-import { State, StateDeleter, StateEntities } from '../../state/index.js';
+import {
+  GrantScope,
+  State,
+  StateDeleter,
+  StateEntities,
+} from '../../state/index.js';
 import { Database } from './database.types.js';
 
 /**
@@ -127,7 +132,7 @@ export const databaseMemory: Database = {
            */
           if (
             scope
-            && scope[queryStateKey] === 'owned'
+            && scope[queryStateKey] === GrantScope.Owned
             && subject
             && (entity.$owner !== subject
               && !entity.$readers.includes(subject))
@@ -195,7 +200,11 @@ export const databaseMemory: Database = {
          * Check to ensure this entity is within the scope.
          * If the scope is owner only, the entity must have the owner id match the subject.
          */
-        if (scope && scope[sliceKey] === 'owned' && storage[storageKey][entityId].$owner !== subject) {
+        if (
+          scope
+          && scope[sliceKey] === GrantScope.Owned
+          && storage[storageKey][entityId].$owner !== subject
+        ) {
           return false;
         }
         if (!result[sliceKey]) {
@@ -246,7 +255,11 @@ export const databaseMemory: Database = {
          * Check to ensure this entity is within the scope.
          * If the scope is owner only, the entity must have the owner id match the subject.
          */
-        if (scope && scope[sliceKey] === 'owned' && storage[storageKey][ref].$owner !== subject) {
+        if (
+          scope
+          && scope[sliceKey] === GrantScope.Owned
+          && storage[storageKey][ref].$owner !== subject
+        ) {
           return false;
         }
 

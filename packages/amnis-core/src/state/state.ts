@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { EntityState } from '@reduxjs/toolkit';
 import { Entity, entityCreate, EntityCreator } from '../entity/index.js';
-import type { Grant, Task } from './grant/index.js';
+import type { Grant, GrantTask } from './grant/index.js';
 import type {
   State, StateCreator, StateEntities, StateQuery, StateScope,
 } from './state.types.js';
@@ -115,10 +115,12 @@ export function stateToCreate(state: State): StateCreator {
 
 /**
  * Creates a auth scope object from an array of grants.
+ *
+ * @deprecated
  */
-export function stateScopeCreate(grants: Grant[], attempt: Task): StateScope {
+export function stateScopeCreate(grants: Grant[], attempt: GrantTask): StateScope {
   const authScope: StateScope = {};
-  grants.forEach(({ key, scope, task }) => {
+  grants.forEach(([key, scope, task]) => {
     // eslint-disable-next-line no-bitwise
     if ((task & attempt) === attempt) {
       authScope[key] = scope;

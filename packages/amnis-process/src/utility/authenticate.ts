@@ -106,7 +106,7 @@ export const authenticateFinalize = async (
 
   if (!system) {
     const output = ioOutput();
-    output.status = 500;
+    output.status = 503;
     output.json.logs.push({
       level: 'error',
       title: 'Inactive System',

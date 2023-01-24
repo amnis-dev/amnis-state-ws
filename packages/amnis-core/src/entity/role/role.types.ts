@@ -1,5 +1,6 @@
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
-import type { GrantString } from '../../state/index.js';
+import type { Grant } from '../../state/index.js';
+import type { UID } from '../../types.js';
 
 /**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
@@ -23,7 +24,7 @@ export interface Role extends EntityCreator {
   /**
    * Permissions this license grants.
    */
-  grants: GrantString[];
+  grants: Grant[];
 }
 
 /**
@@ -35,3 +36,8 @@ export type RoleBase = EntityCreatorBase<Role>;
    * Base properties.
    */
 export type RoleCreator = EntityCreatorParams<Role, 'name'>;
+
+/**
+ * A role combination.
+ */
+export type RoleCombo = [string, UID<Role>[], Grant[]];

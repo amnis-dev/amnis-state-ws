@@ -1,7 +1,7 @@
 import {
-  grantStringify,
-  task,
+  grantTask,
   StateEntities,
+  GrantScope,
 } from './state/index.js';
 import {
   Contact,
@@ -44,16 +44,16 @@ export const dataInitial = async (): Promise<StateEntities> => {
       description: 'Most permissive role for overall system configuration and maintenance.',
       color: '#cc0000',
       grants: [
-        grantStringify({ key: systemKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: websiteKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: auditKey, scope: 'global', task: task(0, 1, 1, 1) }),
-        grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 1, 1) }),
-        grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: handleKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: credentialKey, scope: 'global', task: task(0, 1, 0, 1) }),
-        grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        [systemKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [websiteKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [auditKey, GrantScope.Global, grantTask(0, 1, 1, 1)],
+        [historyKey, GrantScope.Global, grantTask(0, 1, 1, 1)],
+        [userKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [handleKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [credentialKey, GrantScope.Global, grantTask(0, 1, 0, 1)],
+        [roleKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [profileKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [contactKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
       ],
     }), { committed: true, new: false }),
     entityCreate(roleCreator({
@@ -61,15 +61,15 @@ export const dataInitial = async (): Promise<StateEntities> => {
       description: 'Authoritative role for application configuration and maintenance.',
       color: '#3e3ee6',
       grants: [
-        grantStringify({ key: websiteKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: auditKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: userKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: handleKey, scope: 'global', task: task(0, 0, 1, 1) }),
-        grantStringify({ key: credentialKey, scope: 'global', task: task(0, 1, 0, 1) }),
-        grantStringify({ key: roleKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: profileKey, scope: 'global', task: task(1, 1, 1, 1) }),
-        grantStringify({ key: contactKey, scope: 'global', task: task(1, 1, 1, 1) }),
+        [websiteKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [auditKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [historyKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [userKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [handleKey, GrantScope.Global, grantTask(0, 0, 1, 1)],
+        [credentialKey, GrantScope.Global, grantTask(0, 1, 0, 1)],
+        [roleKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [profileKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
+        [contactKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
       ],
     }), { committed: true, new: false }),
     entityCreate(roleCreator({
@@ -77,15 +77,15 @@ export const dataInitial = async (): Promise<StateEntities> => {
       description: 'Basis for standard authenticated use of the application.',
       color: '#000000',
       grants: [
-        grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: historyKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: userKey, scope: 'owned', task: task(0, 1, 1, 0) }),
-        grantStringify({ key: handleKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: credentialKey, scope: 'owned', task: task(0, 1, 0, 1) }),
-        grantStringify({ key: profileKey, scope: 'owned', task: task(0, 1, 1, 0) }),
-        grantStringify({ key: profileKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: contactKey, scope: 'owned', task: task(0, 1, 1, 0) }),
-        grantStringify({ key: contactKey, scope: 'global', task: task(0, 1, 0, 0) }),
+        [websiteKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [historyKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [userKey, GrantScope.Owned, grantTask(0, 1, 1, 0)],
+        [handleKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [credentialKey, GrantScope.Owned, grantTask(0, 1, 0, 1)],
+        [profileKey, GrantScope.Owned, grantTask(0, 1, 1, 0)],
+        [profileKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [contactKey, GrantScope.Owned, grantTask(0, 1, 1, 0)],
+        [contactKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
       ],
     }), { committed: true, new: false }),
     entityCreate(roleCreator({
@@ -93,8 +93,8 @@ export const dataInitial = async (): Promise<StateEntities> => {
       description: 'Permissions for accessing the application data without authentication.',
       color: '#000000',
       grants: [
-        grantStringify({ key: handleKey, scope: 'global', task: task(0, 1, 0, 0) }),
-        grantStringify({ key: websiteKey, scope: 'global', task: task(0, 1, 0, 0) }),
+        [handleKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [websiteKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
       ],
     }), { committed: true, new: false }),
   ];
@@ -222,11 +222,11 @@ export const dataInitial = async (): Promise<StateEntities> => {
    */
   const systems: Entity<System>[] = [
     entityCreate(systemCreator({
-      name: 'Main System',
+      name: 'Core System',
       $adminRole: roles[0].$id,
       $execRole: roles[1].$id,
+      $anonymousRole: roles[3].$id,
       $initialRoles: [roles[2].$id],
-      $anonymousRoles: [roles[3].$id],
     }), { committed: true, new: false }),
   ];
 

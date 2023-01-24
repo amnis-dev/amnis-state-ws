@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Entity, GrantScope } from '@amnis/core';
+import type { GrantScope } from './index.js';
 import type { UID, UIDList } from '../types.js';
-import type { EntityCreator } from '../entity/index.js';
+import type { Entity, EntityCreator } from '../entity/index.js';
 
 /**
  * An ambiguous state.

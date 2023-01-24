@@ -8,6 +8,7 @@ export const systemKey = 'system';
 
 export const systemBase = (): SystemBase => ({
   name: '',
+  handle: 'core',
   sessionExpires: 60,
   bearerExpires: 30,
   registrationOpen: true,
@@ -20,8 +21,8 @@ export const systemBase = (): SystemBase => ({
   $website: uid(websiteKey),
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),
+  $anonymousRole: uid(roleKey),
   $initialRoles: [],
-  $anonymousRoles: [],
 });
 
 /**

@@ -30,7 +30,7 @@ Io<ApiAuthRegister, StateEntities>
     const system = systemSelectors.selectActive(store.getState());
 
     if (!system) {
-      output.status = 500;
+      output.status = 503;
       output.json.logs.push({
         level: 'error',
         title: 'Inactive System',

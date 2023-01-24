@@ -1,5 +1,9 @@
+import { rtk } from '../../rtk.js';
+import { grantCombineFromRoles } from '../../state/index.js';
 import { uid } from '../../uid.js';
-import type { Role, RoleBase, RoleCreator } from './role.types.js';
+import type {
+  Role, RoleBase, RoleCombo, RoleCreator,
+} from './role.types.js';
 
 export const roleKey = 'role';
 
@@ -18,4 +22,14 @@ export function roleCreator(
     ...role,
     $id: uid(roleKey),
   };
+}
+
+export function roleComboCreate(
+  roles: Role[],
+): RoleCombo {
+  const id = rtk.nanoid();
+  const $roles = roles.map((r) => r.$id);
+  const grants = grantCombineFromRoles(roles);
+  const combo: RoleCombo = [id, $roles, grants];
+  return combo;
 }

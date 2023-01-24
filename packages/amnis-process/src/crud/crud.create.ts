@@ -10,7 +10,7 @@ import {
   State,
   StateCreator,
   StateEntities,
-  Task,
+  GrantTask,
   UID,
 } from '@amnis/core';
 import { mwAccess, mwValidate } from '../mw/index.js';
@@ -31,9 +31,9 @@ Io<StateCreator, StateEntities>
     const grants = selectRoleGrants(store.getState(), roleRefs);
 
     /**
-   * Filter non-granted slices on the body (which is a State type).
-   */
-    const stateAuthwalled = authorizeWall(body, grants, Task.Create);
+     * Filter non-granted slices on the body (which is a State type).
+     */
+    const stateAuthwalled = authorizeWall(body, grants, GrantTask.Create);
 
     /**
      * Clean entity properties that should not be updated.

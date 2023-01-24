@@ -102,6 +102,21 @@ export function coreReducers<C extends EntityCreator>(
     },
 
     /**
+     * Inserts many entities
+     */
+    insertMany: {
+      reducer: (
+        state: MetaState<C>,
+        action: PayloadAction<Entity<C>[]>,
+      ) => {
+        adapter.addMany(state, action.payload);
+      },
+      prepare: (entities: Entity<C>[]) => ({
+        payload: entities,
+      }),
+    },
+
+    /**
      * Updates an existing entity.
      */
     update: {

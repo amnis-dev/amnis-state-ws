@@ -91,7 +91,7 @@ export const accountCreate = async (
   const systemActive = systemSelectors.selectActive(store.getState());
 
   if (!systemActive) {
-    output.status = 500;
+    output.status = 503;
     output.json.logs.push({
       level: 'error',
       title: 'Inactive System',

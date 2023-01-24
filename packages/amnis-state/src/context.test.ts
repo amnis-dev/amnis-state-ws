@@ -14,7 +14,7 @@ test('should create initial node context', async () => {
   const [system] = systems;
 
   expect(system).toEqual(expect.objectContaining({
-    name: 'Main System',
+    name: 'Core System',
   }));
   expect(true).toBe(true);
 });

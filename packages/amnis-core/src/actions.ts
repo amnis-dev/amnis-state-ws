@@ -3,6 +3,7 @@ import {
   StateCreator,
   StateDeleter,
   StateEntities,
+  StateUpdater,
 } from './state/index.js';
 
 export const coreActions = {
@@ -19,7 +20,7 @@ export const coreActions = {
   /**
    * Batch updates entities.
    */
-  update: rtk.createAction<StateCreator>('@core/update'),
+  update: rtk.createAction<StateUpdater>('@core/update'),
 
   /**
    * Batch deletes entities.

@@ -14,10 +14,14 @@ import {
   HandleName,
   Handle,
   HandleNameId,
+  Role,
+  roleKey,
+  coreActions,
 } from '@amnis/core';
 import {
   credentialActions,
   credentialSelectors,
+  roleSelectors,
   userActions,
   userSelectors,
 } from '@amnis/state';
@@ -142,8 +146,6 @@ export const findProfileByUserId = async (
         },
       },
     },
-  }, {
-    scope: { [profileKey]: 'global' },
   });
 
   if (!results[profileKey]?.length) {
@@ -168,8 +170,6 @@ export const findContactById = async (
         },
       },
     },
-  }, {
-    scope: { [contactKey]: 'global' },
   });
 
   if (!results[contactKey]?.length) {
@@ -177,4 +177,52 @@ export const findContactById = async (
   }
 
   return results[contactKey][0] as Entity<Contact>;
+};
+
+/**
+ * Find roles by ids.
+ */
+export const findRolesByIds = async (
+  context: IoContext,
+  ids: UID<Role>[],
+): Promise<Entity<Role>[]> => {
+  const { store, database } = context;
+  /**
+   * Attempt to find the roles in the store cache first.
+   */
+  const state = store.getState();
+  const roles = ids
+    .map((id) => roleSelectors.selectById(state, id))
+    .filter((role) => role !== undefined) as Entity<Role>[];
+
+  /**
+   * If all roles were found, no database query is needed...
+   */
+  if (roles.length === ids.length) {
+    return roles;
+  }
+
+  /**
+   * Roles were missing from cache. Fetch from the database.
+   */
+  const results = await database.read({
+    [roleKey]: {
+      $query: {
+        $id: {
+          $in: ids,
+        },
+      },
+    },
+  });
+
+  if (!results[roleKey]?.length) {
+    return [];
+  }
+
+  /**
+   * Store the result into cache.
+   */
+  store.dispatch(coreActions.insert(results));
+
+  return results[roleKey] as Entity<Role>[];
 };

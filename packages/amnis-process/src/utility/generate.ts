@@ -12,7 +12,10 @@ import {
   uidList,
   UIDList,
   Credential,
+  roleComboCreate,
+  Entity,
 } from '@amnis/core';
+import { roleActions, roleSelectors } from '@amnis/state';
 
 /**
  * Generates a session.
@@ -53,12 +56,22 @@ export const generateBearer = async (
   context: IoContext,
   system: System,
   subjectId: UID,
-  roles: UIDList<Role>,
+  $roles: UIDList<Role>,
 ): Promise<Bearer> => {
+  const { store, crypto } = context;
   /**
    * Create the bearer token expiration.
    */
   const bearerExpires = dateNumeric(`${system.bearerExpires}m`);
+
+  /**
+   * Cache a combined grant list from the roles.
+   */
+  const roles = $roles.map(($role) => (
+    roleSelectors.selectById(store.getState(), $role)
+  )).filter((role) => !!role) as Entity<Role>[];
+  const combo = roleComboCreate(roles);
+  store.dispatch(roleActions.insertCombo(combo));
 
   /**
    * Create the JWT data.
@@ -68,7 +81,8 @@ export const generateBearer = async (
     sub: subjectId,
     exp: bearerExpires,
     typ: 'access',
-    roles,
+    roles: $roles,
+    pem: combo[0],
   };
 
   /**
@@ -78,7 +92,7 @@ export const generateBearer = async (
   const bearerAccess = bearerCreate({
     id: 'core',
     exp: bearerExpires,
-    access: await context.crypto.accessEncode(jwtAccess),
+    access: await crypto.accessEncode(jwtAccess),
   });
 
   return bearerAccess;

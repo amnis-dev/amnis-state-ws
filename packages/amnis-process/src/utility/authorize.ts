@@ -1,5 +1,5 @@
 import {
-  State, Grant, Task,
+  State, Grant, GrantTask,
 } from '@amnis/core';
 
 /**
@@ -9,11 +9,13 @@ import {
  * This does NOT consider grant scope. That must be handled by the database interface.
  *
  * It does return a scope state map for the database to use.
+ *
+ * @deprecated
  */
-export const authorizeWall = (state: State, grants: Grant[], attempt: Task): State => {
+export const authorizeWall = (state: State, grants: Grant[], attempt: GrantTask): State => {
   const sanitized: State = {};
 
-  grants.every(({ key, task }) => {
+  grants.every(([key, , task]) => {
     // eslint-disable-next-line no-bitwise
     if ((task & attempt) !== attempt) {
       return true;

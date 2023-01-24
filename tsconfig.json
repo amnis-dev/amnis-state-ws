@@ -11,5 +11,6 @@
       "@amnis/state": ["./packages/amnis-state/src/index.ts"],
     }
   },
-  "include": ["./packages/**/*.ts*"]
+  "include": ["./packages/**/*.ts*"],
+  "files": ["jest.d.ts"],
 }

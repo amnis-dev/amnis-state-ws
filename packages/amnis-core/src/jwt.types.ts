@@ -32,9 +32,19 @@ export interface JWTAccess {
   typ: 'access' | 'refresh';
 
   /**
-   * If this is considered an administrative bearer.
+   * Marks an administrative bearer.
    */
   adm?: boolean;
+
+  /**
+   * Marks an executive bearer.
+   */
+  exc?: boolean;
+
+  /**
+   * Permissions reference.
+   */
+  pem?: string;
 
   /**
    * Scope of permissions (role references).
