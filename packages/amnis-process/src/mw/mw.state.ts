@@ -13,6 +13,9 @@ import {
   Entity,
   User,
   roleKey,
+  UID,
+  historyMake,
+  historyKey,
 } from '@amnis/core';
 import { roleSelectors, systemSelectors } from '@amnis/state';
 import { findUserById } from '../utility/find.js';
@@ -47,7 +50,7 @@ export const mwState: IoMiddleware<GrantTask> = (
       output.json.logs.push({
         level: 'error',
         title: 'Unauthorized',
-        description: 'Access has not been provided.',
+        description: 'No access has not been provided.',
       });
       return output;
     }
@@ -126,16 +129,13 @@ export const mwState: IoMiddleware<GrantTask> = (
     }
 
     /**
-     * User and Role slices are protected. If it exists on the state, we need to
-     * go through some additional checks.
-     *
-     * Check User first.
+     * USER SLICE PROTECTIONS
      */
     if (stateKeys.includes(userKey)) {
       const isAdmin = user.$roles.includes(system.$adminRole);
-      const isExec = user.$roles.includes(system.$adminRole);
+      const isExec = user.$roles.includes(system.$execRole);
 
-      if (task & (GrantTask.Create | GrantTask.Update | GrantTask.Delete)) {
+      if (task & (GrantTask.Create | GrantTask.Update)) {
         /**
          * If the user does not belong to the subject...
          * And the user does not hold an administrative role...
@@ -143,13 +143,29 @@ export const mwState: IoMiddleware<GrantTask> = (
         const stateFilteredUsers = stateFiltered[userKey] as Entity<User>[];
         if (
           (stateFilteredUsers.length !== 1 || stateFilteredUsers[0].$id !== $subject)
-          && (!isAdmin || !isExec)
+          && (!isAdmin && !isExec)
         ) {
           output.status = 401; // Unauthorized
           output.json.logs.push({
             level: 'error',
             title: 'Unauthorized',
-            description: 'Missing permissions to perform the requested operation.',
+            description: `Missing permissions to perform this ${mwStateTaskName[task].toLowerCase()} operation.`,
+          });
+          return output;
+        }
+      }
+
+      if (task & GrantTask.Delete) {
+        const stateFilteredUsers = stateFiltered[userKey] as UID[];
+        if (
+          (stateFilteredUsers.length !== 1 || stateFilteredUsers[0] !== $subject)
+          && (!isAdmin && !isExec)
+        ) {
+          output.status = 401; // Unauthorized
+          output.json.logs.push({
+            level: 'error',
+            title: 'Unauthorized',
+            description: `Missing permissions to perform this ${mwStateTaskName[task].toLowerCase()} operation.`,
           });
           return output;
         }
@@ -195,33 +211,54 @@ export const mwState: IoMiddleware<GrantTask> = (
             return output;
           }
 
-          const userOnState = await findUserById(context, entity.$id);
-
-          if (!userOnState) {
-            output.status = 500; // Internal Server Error
-            output.json.logs.push({
-              level: 'error',
-              title: 'User Not Found',
-              description: 'Could not find user on the request.',
-            });
-            return output;
+          if (task === GrantTask.Create) {
+            const userEntity = entity as Entity<User>;
+            if (
+              !isAdmin
+              && (
+                userEntity.$roles.includes(system.$adminRole)
+                || userEntity.$roles.includes(system.$execRole)
+              )
+            ) {
+              output.status = 401; // Unauthorized
+              output.json.logs.push({
+                level: 'error',
+                title: 'Unauthorized',
+                description: 'Unable to perform operation with the roles set.',
+              });
+              return output;
+            }
           }
 
-          if (!isAdmin && userOnState.$roles.includes(system.$adminRole)) {
-            output.status = 401; // Unauthorized
-            output.json.logs.push({
-              level: 'error',
-              title: 'Unauthorized',
-              description: 'Unable to perform this operation on administrative accounts.',
-            });
-            return output;
+          if (task === GrantTask.Update) {
+            const userOnState = await findUserById(context, entity.$id);
+
+            if (!userOnState) {
+              output.status = 500; // Internal Server Error
+              output.json.logs.push({
+                level: 'error',
+                title: 'User Not Found',
+                description: 'Could not find user on the request.',
+              });
+              return output;
+            }
+
+            if (!isAdmin && userOnState.$roles.includes(system.$adminRole)) {
+              output.status = 401; // Unauthorized
+              output.json.logs.push({
+                level: 'error',
+                title: 'Unauthorized',
+                description: 'Unable to perform this operation on administrative accounts.',
+              });
+              return output;
+            }
           }
         }
       }
     }
 
     /**
-     * Check Role next.
+     * ROLE SLICE PROTECTION
      */
     if (stateKeys.includes(roleKey)) {
       const isAdmin = user.$roles.includes(system.$adminRole);
@@ -271,7 +308,7 @@ export const mwState: IoMiddleware<GrantTask> = (
       output.json.logs.push({
         level: 'error',
         title: `${mwStateTaskName[task]} Disallowed`,
-        description: `Missing permissions to perform the ${mwStateTaskName[task].toLocaleLowerCase()} operation the collection${deniedKeys.length > 1 ? 's' : ''}: ${deniedKeys.join(', ')}`,
+        description: `Missing permissions to perform the ${mwStateTaskName[task].toLowerCase()} operation the collection${deniedKeys.length > 1 ? 's' : ''}: ${deniedKeys.join(', ')}`,
       });
     }
 
@@ -280,17 +317,30 @@ export const mwState: IoMiddleware<GrantTask> = (
      */
     const outputNext = await next(context)(inputNew, output);
 
-    /**
-     * Capture state keys that made it into the output result.
-     */
-    if (typeof outputNext.json.result === 'object') {
-      const successfulKeys = Object.keys(outputNext.json.result);
-      if (successfulKeys.length) {
-        outputNext.json.logs.push({
-          level: 'success',
-          title: `${mwStateTaskName[task]} Successful`,
-          description: `${mwStateTaskName[task]} operation on records in collection${successfulKeys.length > 1 ? 's' : ''}: ${successfulKeys.join(', ')}.`,
-        });
+    if (outputNext.status === 200) {
+      /**
+       * Capture state keys that made it into the output result.
+       */
+      if (typeof outputNext.json.result === 'object') {
+        const successfulKeys = Object.keys(outputNext.json.result);
+        if (successfulKeys.length) {
+          outputNext.json.logs.push({
+            level: 'success',
+            title: `${mwStateTaskName[task]} Successful`,
+            description: `${mwStateTaskName[task]} operation on records in collection${successfulKeys.length > 1 ? 's' : ''}: ${successfulKeys.join(', ')}.`,
+          });
+        }
+      }
+
+      /**
+       * Create historic records
+       */
+      if (task & GrantTask.Update) {
+        const stateCreateHistory = historyMake(stateFiltered, access.sub, deniedKeys, true);
+        const resultHistory = await context.database.create(stateCreateHistory);
+        if (resultHistory[historyKey]?.length) {
+          outputNext.json.result[historyKey] = resultHistory[historyKey];
+        }
       }
     }
 

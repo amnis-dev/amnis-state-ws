@@ -1,117 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
-  coreActions,
+  GrantTask,
   Io,
   IoProcess,
-  Role,
-  selectRoleGrants,
   StateDeleter,
-  stateScopeCreate,
-  GrantTask,
-  UID,
 } from '@amnis/core';
-import { mwAccess, mwValidate } from '../mw/index.js';
-import { authorizeWall } from '../utility/authorize.js';
+import { mwAccess, mwValidate, mwState } from '../mw/index.js';
 
 export const process: IoProcess<
 Io<StateDeleter, StateDeleter>
 > = (context) => (
   async (input, output) => {
-    const { store, database } = context;
-    const { body, access } = input;
+    const { database } = context;
+    const { body, scope, access } = input;
 
-    const roleRefs: UID<Role>[] = access?.roles || [];
-
-    /**
-     * Get array of grants from roles in the service store.
-     */
-    const grants = selectRoleGrants(store.getState(), roleRefs);
-
-    /**
-     * Filter non-granted slices on the body (which is a State type).
-     */
-    const stateAuthwalled = authorizeWall(body, grants, GrantTask.Delete);
-
-    /**
-     * finalized state to process
-     */
-    const stateFinal = access?.adm === true ? body : stateAuthwalled as StateDeleter;
-
-    /**
-     * Create an authentication scope object from the array of grant objects.
-     */
-    const authScope = access?.adm === true ? undefined : stateScopeCreate(grants, GrantTask.Update);
-
-    const result = await database.delete(
-      stateFinal,
-      {
-        scope: authScope,
-        subject: access?.sub,
-      },
-    );
-
-    /**
-     * Add errors for denied keys.
-     */
-    const deniedKeys = Object.keys(body).map((sliceKey) => {
-      if (typeof result[sliceKey] !== 'object' || Object.keys(result[sliceKey]).length < 1) {
-        return sliceKey;
-      }
-      return null;
-    }).filter((value) => value !== null);
-
-    if (deniedKeys.length) {
+    if (!access) {
+      output.status = 401; // Unauthorized
       output.json.logs.push({
         level: 'error',
-        title: 'Deletes Disallowed',
-        description: `Missing permissions to delete from the collections: ${deniedKeys.join(', ')}`,
+        title: 'Unauthorized',
+        description: 'No access has not been provided.',
       });
+      return output;
     }
 
-    /**
-     * Create a possible success output.
-     */
-    const acceptedKeys = Object.keys(result).filter((key) => !deniedKeys.includes(key));
-    if (acceptedKeys.length > 0) {
+    if (!scope) {
+      output.status = 500; // Internal Server Error
       output.json.logs.push({
-        level: 'success',
-        title: 'Deletion Successful',
-        description: `Deleted records in collection${acceptedKeys.length > 1 ? 's' : ''}: ${acceptedKeys.join(', ')}.`,
+        level: 'error',
+        title: 'Missing Scope',
+        description: 'Cannot complete the process without a data scope.',
       });
+      return output;
     }
 
-    /**
-     * Create historic records of the delete.
-     * TODO: Determine if necessary.
-     */
-    // const stateUpdateHistory: StateUpdater = {
-    //   [historyKey]: [],
-    // };
-    // Object.keys(stateFinal).every((sliceKey) => {
-    //   if (sliceKey === historyKey) {
-    //     return true;
-    //   }
-    //   stateFinal[sliceKey].forEach((deleteId) => {
-    //     const deleteUpdateObj: StateUpdateEntity = {
-    //       $id: deleteId,
-    //       delete: true,
-    //     };
-    //     stateUpdateHistory[historyKey].push(deleteUpdateObj);
-    //   });
-
-    //   return true;
-    // });
-
-    // const stateCreateHistory = historyMake(stateUpdateHistory, access?.sub);
-    // await database.create(stateCreateHistory);
-
-    output.json.result = result;
-
-    /**
-     * StateDeleter possible entities from the server store.
-     */
-    store.dispatch(coreActions.delete(result));
+    output.json.result = await database.delete(body, { subject: access.sub, scope });
 
     return output;
   }
@@ -119,7 +43,9 @@ Io<StateDeleter, StateDeleter>
 
 export const processCrudDelete = mwAccess()(
   mwValidate('StateDeleter')(
-    process,
+    mwState(GrantTask.Delete)(
+      process,
+    ),
   ),
 );
 
