@@ -14,6 +14,8 @@ import {
   Credential,
   roleComboCreate,
   Entity,
+  entityCreate,
+  userCreator,
 } from '@amnis/core';
 import { roleActions, roleSelectors } from '@amnis/state';
 
@@ -96,4 +98,15 @@ export const generateBearer = async (
   });
 
   return bearerAccess;
+};
+
+/**
+ * Generate an anonymous user.
+ */
+export const generateUserAnonymous = (system: System) => {
+  const { $anonymousRole } = system;
+  return entityCreate(userCreator({
+    handle: 'anonymous',
+    $roles: $anonymousRole ? [$anonymousRole] : [],
+  }));
 };

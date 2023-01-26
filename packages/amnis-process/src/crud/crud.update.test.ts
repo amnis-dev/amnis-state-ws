@@ -58,7 +58,12 @@ test('should not update without bearer', async () => {
 
   const outputUpdate = await io.update(inputUpdate, ioOutput());
 
-  expect(outputUpdate.status).toBe(401);
+  expect(outputUpdate.status).toBe(200);
+  expect(ioOutputErrored(outputUpdate)).toBe(true);
+  expect(outputUpdate.json.logs).toHaveLength(1);
+  expect(outputUpdate.json.logs[0].level).toBe('error');
+  expect(outputUpdate.json.result).toEqual({});
+  expect(Object.keys(outputUpdate.json.result)).toHaveLength(0);
 });
 
 test('should login as administrator and update user email', async () => {

@@ -53,7 +53,12 @@ test('should not create without bearer', async () => {
 
   const outputCreator = await io.create(inputCreator, ioOutput());
 
-  expect(outputCreator.status).toBe(401);
+  expect(outputCreator.status).toBe(200);
+  expect(ioOutputErrored(outputCreator)).toBe(true);
+  expect(outputCreator.json.logs).toHaveLength(1);
+  expect(outputCreator.json.logs[0].level).toBe('error');
+  expect(outputCreator.json.result).toEqual({});
+  expect(Object.keys(outputCreator.json.result)).toHaveLength(0);
 });
 
 test('should login as administrator and create user', async () => {

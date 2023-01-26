@@ -8,20 +8,10 @@ import {
 import { systemSelectors } from '@amnis/state';
 
 /**
- * Ensures a JWT bearer is set.
+ * Ensures a JWT Access bearer is set.
  */
 export const mwAccess: IoMiddleware = () => (next) => (context) => async (input, output) => {
   const { accessEncoded } = input;
-
-  if (!accessEncoded) {
-    output.status = 401; // 401 Unauthorized
-    output.json.logs.push({
-      level: 'error',
-      title: 'Unauthorized',
-      description: 'Access bearer is required.',
-    });
-    return output;
-  }
 
   /**
    * Fetch the auth service public key from the store.
@@ -33,7 +23,11 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input,
 
   const publicKey = publicKeyExport ? await context.crypto.keyImport(publicKeyExport) : undefined;
 
-  let access = await context.crypto.accessVerify(accessEncoded, publicKey);
+  let access;
+
+  if (accessEncoded) {
+    access = await context.crypto.accessVerify(accessEncoded, publicKey);
+  }
 
   /**
    * If the token could not be verified, provide anonymous access allowed by the system.
@@ -53,9 +47,9 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input,
     const accessAnon: JWTAccess = {
       iss: '',
       sub: 'user:anonymous' as UID,
-      exp: dateNumeric(`${system?.bearerExpires}`),
+      exp: dateNumeric(`${system.bearerExpires}`),
       typ: 'access',
-      roles: system?.$anonymousRole ? [system?.$anonymousRole] : [],
+      roles: [system.$anonymousRole],
     };
     access = accessAnon;
   }
