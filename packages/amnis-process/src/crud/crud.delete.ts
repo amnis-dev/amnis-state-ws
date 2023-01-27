@@ -47,6 +47,8 @@ export const processCrudDelete = mwAccess()(
       process,
     ),
   ),
-);
+) as IoProcess<
+Io<StateDeleter, StateDeleter>
+>;
 
 export default { processCrudDelete };

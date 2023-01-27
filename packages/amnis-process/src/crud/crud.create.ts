@@ -61,6 +61,8 @@ export const processCrudCreate = mwAccess()(
       process,
     ),
   ),
-);
+) as IoProcess<
+Io<StateCreator, StateEntities>
+>;
 
 export default { processCrudCreate };

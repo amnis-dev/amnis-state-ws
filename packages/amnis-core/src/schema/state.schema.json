@@ -71,10 +71,7 @@
       "type": "object",
       "properties": {
         "$query": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/Filter"
-          },
+          "$ref": "#/definitions/QueryProps",
           "description": "Query of keys."
         },
         "$range": {
@@ -84,17 +81,29 @@
         "$depth": {
           "type": "number",
           "description": "Depth to query for other referenced entities.",
-          "default": 0,
           "minimum": 0,
+          "maximum": 3,
           "multipleOf": 1
         }
       },
       "additionalProperties": false
     },
+    "QueryProps": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Filter"
+      }
+    },
     "Filter": {
       "type": "object",
       "properties": {
         "$eq": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ],
           "description": "Matches values that are equal to a specified value."
         },
         "$gt": {
@@ -127,20 +136,26 @@
       "properties": {
         "start": {
           "type": "number",
-          "description": "Start query at record value."
+          "description": "Start query at record value.",
+          "minimum": 0,
+          "maximum": 4096,
+          "multipleOf": 1
         },
         "limit": {
           "type": "number",
-          "description": "Limit results of the query."
+          "description": "Limit results of the query.",
+          "minimum": 0,
+          "maximum": 64,
+          "multipleOf": 1
         }
       },
       "additionalProperties": false,
       "description": "StateQuery range"
     },
     "StateUpdater": {
-      "$ref": "#/definitions/State%3Cdef-alias-2094046105-1858-2051-2094046105-0-2440600678921%5B%5D%3E"
+      "$ref": "#/definitions/State%3Cdef-alias-2094046105-2043-2236-2094046105-0-2625600678921%5B%5D%3E"
     },
-    "State<def-alias-2094046105-1858-2051-2094046105-0-2440600678921[]>": {
+    "State<def-alias-2094046105-2043-2236-2094046105-0-2625600678921[]>": {
       "type": "object",
       "additionalProperties": {
         "type": "array",

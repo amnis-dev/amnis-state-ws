@@ -143,3 +143,18 @@ export function stateEntitiesCreate(
     return acc;
   }, {});
 }
+
+/**
+ * Merges two state entities.
+ */
+export function stateEntitiesMerge(state1: StateEntities, state2: StateEntities): StateEntities {
+  const result = { ...state1 };
+  Object.keys(state2).forEach((sliceKey) => {
+    if (Array.isArray(result[sliceKey])) {
+      result[sliceKey].push(...state2[sliceKey]);
+    } else {
+      result[sliceKey] = [...state2[sliceKey]];
+    }
+  });
+  return result;
+}

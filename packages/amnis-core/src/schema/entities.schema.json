@@ -705,7 +705,7 @@
         "grants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GrantString"
+            "$ref": "#/definitions/Grant"
           },
           "description": "Permissions this license grants."
         }
@@ -720,9 +720,39 @@
       "additionalProperties": false,
       "description": "A license is a defined object for granting multiple permissions to perform actions or selections."
     },
-    "GrantString": {
-      "type": "string",
-      "description": "Role grant string."
+    "Grant": {
+      "type": "array",
+      "minItems": 3,
+      "items": [
+        {
+          "type": "string",
+          "title": "key"
+        },
+        {
+          "$ref": "#/definitions/GrantScope",
+          "title": "scope"
+        },
+        {
+          "$ref": "#/definitions/GrantTasks",
+          "title": "task"
+        }
+      ],
+      "maxItems": 3,
+      "description": "Grant object."
+    },
+    "GrantScope": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "description": "Data scopes."
+    },
+    "GrantTasks": {
+      "type": "number",
+      "description": "A composition of granted tasks."
     },
     "Service": {
       "type": "object",
@@ -772,6 +802,10 @@
           "type": "string",
           "description": "Name of the system."
         },
+        "handle": {
+          "$ref": "#/definitions/HandleName",
+          "description": "System handle for identifying system created resources."
+        },
         "sessionExpires": {
           "type": "number",
           "description": "Number in minutes that an authentication session should live.",
@@ -820,26 +854,26 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator.\nAdministrators have complete control."
+          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
         },
         "$execRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an executive.\nExecutives have second-highest control over a system, just under administrators."
+          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
+        },
+        "$anonymousRole": {
+          "$ref": "#/definitions/UID%3CRole%3E",
+          "description": "Anonymous access permissions. These are roles used when no authorization is provided by the client.",
+          "default": []
         },
         "$initialRoles": {
           "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "The initial roles to assign to a user when a new account is created.",
           "default": []
-        },
-        "$anonymousRoles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Anonymous access permissions.\nThese are roles used when no authorization is provided by the client.",
-          "default": []
         }
       },
       "required": [
         "$adminRole",
-        "$anonymousRoles",
+        "$anonymousRole",
         "$execRole",
         "$id",
         "$initialRoles",
@@ -849,6 +883,7 @@
         "emailAuth",
         "emailNews",
         "emailNotify",
+        "handle",
         "name",
         "otpExpiration",
         "otpLength",
@@ -1746,7 +1781,7 @@
         "grants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GrantString"
+            "$ref": "#/definitions/Grant"
           },
           "description": "Permissions this license grants."
         }
@@ -1807,6 +1842,10 @@
           "type": "string",
           "description": "Name of the system."
         },
+        "handle": {
+          "$ref": "#/definitions/HandleName",
+          "description": "System handle for identifying system created resources."
+        },
         "sessionExpires": {
           "type": "number",
           "description": "Number in minutes that an authentication session should live.",
@@ -1855,20 +1894,20 @@
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an administrator.\nAdministrators have complete control."
+          "description": "Role identifier that considers the user an administrator. Administrators have complete control."
         },
         "$execRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
-          "description": "Role identifier that considers the user an executive.\nExecutives have second-highest control over a system, just under administrators."
+          "description": "Role identifier that considers the user an executive. Executives have second-highest control over a system, just under administrators."
+        },
+        "$anonymousRole": {
+          "$ref": "#/definitions/UID%3CRole%3E",
+          "description": "Anonymous access permissions. These are roles used when no authorization is provided by the client.",
+          "default": []
         },
         "$initialRoles": {
           "$ref": "#/definitions/UIDList%3CRole%3E",
           "description": "The initial roles to assign to a user when a new account is created.",
-          "default": []
-        },
-        "$anonymousRoles": {
-          "$ref": "#/definitions/UIDList%3CRole%3E",
-          "description": "Anonymous access permissions.\nThese are roles used when no authorization is provided by the client.",
           "default": []
         }
       },

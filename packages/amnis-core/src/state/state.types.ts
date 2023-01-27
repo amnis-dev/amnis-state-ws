@@ -13,33 +13,33 @@ export type State<ReducerState = any> = Record<string, ReducerState>;
  */
 export interface Filter {
   /**
-    * Matches values that are equal to a specified value.
-    */
-  $eq?: unknown;
+   * Matches values that are equal to a specified value.
+   */
+  $eq?: string | number | boolean | undefined | null;
 
   /**
-    * Matches values that are greater than a specified value.
-    */
+   * Matches values that are greater than a specified value.
+   */
   $gt?: number;
 
   /**
-    * Matches values that are greater than or equal to a specified value.
-    */
+   * Matches values that are greater than or equal to a specified value.
+   */
   $gte?: number;
 
   /**
-    * Matches values that are less than a specified value.
-    */
+   * Matches values that are less than a specified value.
+   */
   $lt?: number;
 
   /**
-    * Matches values that are less than or equal to a specified value.
-    */
+   * Matches values that are less than or equal to a specified value.
+   */
   $lte?: number;
 
   /**
-    * Matches any of the values specified in an array.
-    */
+   * Matches any of the values specified in an array.
+   */
   $in?: unknown[];
 }
 
@@ -49,20 +49,32 @@ export interface Filter {
 export type Range = {
   /**
    * Start query at record value.
+   *
+   * @minimum 0
+   * @maximum 4096
+   * @multipleOf 1
    */
   start?: number;
 
   /**
    * Limit results of the query.
+   *
+   * @minimum 0
+   * @maximum 64
+   * @multipleOf 1
    */
   limit?: number;
 }
+
+export type QueryProps = {
+  [key: string]: Filter
+};
 
 export type Query = {
   /**
     * Query of keys.
     */
-  $query?: { [key: string]: Filter };
+  $query?: QueryProps;
 
   /**
    * Range of query.
@@ -71,8 +83,9 @@ export type Query = {
 
   /**
    * Depth to query for other referenced entities.
-   * @default 0
+   *
    * @minimum 0
+   * @maximum 3
    * @multipleOf 1
    */
   $depth?: number;

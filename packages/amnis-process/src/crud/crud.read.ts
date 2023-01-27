@@ -1,159 +1,96 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
-  Database,
-  Grant,
+  GrantTask,
   Io,
+  IoInput,
+  IoOutput,
   IoProcess,
-  selectRoleGrants,
   StateEntities,
+  stateEntitiesMerge,
   StateQuery,
   stateReferenceQuery,
-  StateScope,
-  stateScopeCreate,
-  GrantTask,
-  UID,
 } from '@amnis/core';
-import { mwAccess, mwValidate } from '../mw/index.js';
-import { authorizeWall } from '../utility/authorize.js';
-
-/**
- * Performs a recursive read on the database based on the depth value of each query.
- */
-async function readRecursive(
-  database: Database,
-  grants: Grant[],
-  query: StateQuery,
-  authScope: StateScope | undefined,
-  subject: UID,
-  depth: number,
-): Promise<StateEntities> {
-  /**
-   * Query for the initial result.
-   */
-  const result = await database.read(query, { scope: authScope, subject });
-
-  /**
-   * A search depth less than 1 means we no longer need to go deeper.
-   * Return the final result.
-   */
-  if (depth < 1) {
-    return result;
-  }
-
-  /**
-   * Create the new query based on the references in the previous database result.
-   */
-  const queryNext = stateReferenceQuery(result);
-
-  /**
-   * Need to ensure the user has the right permissions for the next depth query.
-   */
-  const queryAuthwalled: StateQuery = authorizeWall(queryNext, grants, GrantTask.Read);
-
-  /**
-   * Process the next result
-   */
-  const nextResult = await readRecursive(
-    database,
-    grants,
-    queryAuthwalled,
-    authScope,
-    subject,
-    depth - 1,
-  );
-
-  /**
-   * Merge the new result with the previous.
-   */
-  Object.keys(nextResult).forEach((sliceKey) => {
-    if (Array.isArray(result[sliceKey])) {
-      result[sliceKey].push(...nextResult[sliceKey]);
-    } else {
-      result[sliceKey] = [...nextResult[sliceKey]];
-    }
-  });
-
-  return result;
-}
+import { mwAccess, mwValidate, mwState } from '../mw/index.js';
 
 export const process: IoProcess<
 Io<StateQuery, StateEntities>
 > = (context) => (
   async (input, output) => {
-    const { store, database } = context;
-    const { body, access } = input;
+    const { database } = context;
+    const { body: stateQuery, scope, access } = input;
 
     if (!access) {
-      output.status = 401; // 401 Unauthorized
+      output.status = 401; // Unauthorized
       output.json.logs.push({
         level: 'error',
         title: 'Unauthorized',
-        description: 'Access bearer is invalid.',
+        description: 'No access has not been provided.',
+      });
+      return output;
+    }
+
+    if (!scope) {
+      output.status = 500; // Internal Server Error
+      output.json.logs.push({
+        level: 'error',
+        title: 'Missing Scope',
+        description: 'Cannot complete the process without a data scope.',
       });
       return output;
     }
 
     /**
-     * Get array of grants from roles in the service store.
+     * Loop through each query slice.
+     * Each slice has it's own depth, so recursively search when necessary.
      */
-    const grants = selectRoleGrants(store.getState(), access.roles);
+    const results = await Promise.all<StateEntities>(Object.keys(stateQuery).map(async (key) => {
+      const depth = stateQuery[key].$depth ?? 0;
 
-    /**
-     * Filter non-granted slices on the body (which is a State type).
-     */
-    const stateAuthwalled: StateQuery = authorizeWall(body, grants, GrantTask.Read);
+      /**
+       * Query the single slice.
+       */
+      const stateQuerySingle = {
+        [key]: stateQuery[key],
+      };
+      const result = await database.read(stateQuerySingle, { subject: access.sub, scope });
 
-    /**
-     * finalized state to process
-     */
-    const stateFinal: StateQuery = access.adm === true ? body : stateAuthwalled;
-
-    /**
-     * Create an authentication scope object from the array of grant objects.
-     */
-    const authScope = access.adm === true ? undefined : stateScopeCreate(grants, GrantTask.Read);
-
-    /**
-     * Build the result based on the query depth.
-     */
-    const resultPromises = Object.values(stateFinal).map((slice) => (
-      readRecursive(database, grants, stateFinal, authScope, access.sub, slice.$depth || 0)
-    ));
-    const results = await Promise.all(resultPromises);
-    const result = results.reduce<StateEntities>((prev, next) => {
-      Object.keys(next).forEach((nextKey) => {
-        if (Array.isArray(prev[nextKey])) {
-          prev[nextKey].push(...next[nextKey]);
-        } else {
-          prev[nextKey] = next[nextKey];
-        }
-      });
-
-      return prev;
-    }, {});
-
-    // const result = await database.read(stateFinal, authScope, access.sub);
-
-    /**
-     * Add errors for denied keys.
-     */
-    const deniedKeys = Object.keys(body).map((sliceKey) => {
-      if (typeof result[sliceKey] !== 'object') {
-        return sliceKey;
+      /**
+       * Return without recurrsion if we've reached the bottom.
+       */
+      if (depth < 1) {
+        return result;
       }
-      return null;
-    }).filter((value) => value !== null);
 
-    if (deniedKeys.length) {
-      output.json.logs.push({
-        level: 'error',
-        title: 'Readings Disallowed',
-        description: `Missing permissions to read from the collections: ${deniedKeys.join(', ')}`,
-      });
-    }
+      /**
+       * Create a new query based on the references in the results.
+       */
+      const stateQueryNext = stateReferenceQuery(result);
+      Object.values(stateQueryNext).forEach((query) => { query.$depth = depth - 1; });
+      const inputNext: IoInput<StateQuery> = {
+        ...input,
+        body: stateQueryNext,
+      };
 
-    output.json.result = result;
+      /**
+       * Call this process again with the state middleware.
+       */
+      const outputNext = await mwState(GrantTask.Read)(
+        process,
+      )(context)(inputNext, output) as IoOutput<StateEntities>;
+
+      const resultsMerged = stateEntitiesMerge(result, outputNext.json.result ?? {});
+
+      return resultsMerged;
+    }));
+
+    /**
+     * Merge all the results.
+     */
+    output.json.result = results.reduce<StateEntities>(
+      (acc, cur) => stateEntitiesMerge(acc, cur),
+      {},
+    );
 
     return output;
   }
@@ -161,8 +98,12 @@ Io<StateQuery, StateEntities>
 
 export const processCrudRead = mwAccess()(
   mwValidate('StateQuery')(
-    process,
+    mwState(GrantTask.Read)(
+      process,
+    ),
   ),
-);
+) as IoProcess<
+Io<StateQuery, StateEntities>
+>;
 
 export default { processCrudRead };

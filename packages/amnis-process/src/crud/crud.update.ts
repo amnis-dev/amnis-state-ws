@@ -174,6 +174,8 @@ export const processCrudUpdate = mwAccess()(
   mwValidate('StateUpdater')(
     process,
   ),
-);
+) as IoProcess<
+Io<StateUpdater, StateCreator>
+>;
 
 export default processCrudUpdate;

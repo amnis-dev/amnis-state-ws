@@ -94,6 +94,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       color: '#000000',
       grants: [
         [handleKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
+        [profileKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [websiteKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
       ],
     }), { committed: true, new: false }),
