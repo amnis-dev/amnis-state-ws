@@ -15,7 +15,7 @@ export interface Filter {
   /**
    * Matches values that are equal to a specified value.
    */
-  $eq?: string | number | boolean | undefined | null;
+  $eq?: unknown;
 
   /**
    * Matches values that are greater than a specified value.

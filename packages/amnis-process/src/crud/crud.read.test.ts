@@ -103,8 +103,6 @@ test('should login as administrator read users', async () => {
 
   const output = await io.read(input, ioOutput());
 
-  log(output);
-
   expect(output.status).toBe(200);
   expect(ioOutputErrored(output)).toBe(false);
   expect(output.json.logs).toHaveLength(1);

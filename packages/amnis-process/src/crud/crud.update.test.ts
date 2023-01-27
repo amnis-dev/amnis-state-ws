@@ -219,10 +219,10 @@ test('should login as executive and NOT update user handle', async () => {
 
   const outputUpdate = await io.update(inputUpdate, ioOutput());
 
-  expect(outputUpdate.status).toBe(200);
+  expect(outputUpdate.status).toBe(401);
   expect(ioOutputErrored(outputUpdate)).toBe(true);
 
-  expect(Object.keys(outputUpdate.json.result)).toHaveLength(0);
+  expect(outputUpdate.json.result).toBeUndefined();
 });
 
 test(
@@ -254,7 +254,6 @@ test(
 
     const outputUpdate = await io.update(inputUpdate, ioOutput());
 
-    // console.log(JSON.stringify(outputUpdate, null, 2));
     expect(outputUpdate.status).toBe(200);
     expect(ioOutputErrored(outputUpdate)).toBe(false);
 
@@ -298,10 +297,9 @@ test('should login as user and be denied updating another profile', async () => 
 
   const outputUpdate = await io.update(inputUpdate, ioOutput());
 
-  // console.log(JSON.stringify(outputUpdate, null, 2));
   expect(outputUpdate.status).toBe(200);
   expect(ioOutputErrored(outputUpdate)).toBe(true);
 
   expect(outputUpdate.json.logs).toHaveLength(1);
-  expect(outputUpdate.json.logs[0].title).toBe('Updates Disallowed');
+  expect(outputUpdate.json.logs[0].title).toBe('Update Disallowed');
 });

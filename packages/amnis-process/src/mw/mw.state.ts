@@ -16,6 +16,7 @@ import {
   UID,
   historyMake,
   historyKey,
+  coreActions,
 } from '@amnis/core';
 import { roleSelectors, systemSelectors } from '@amnis/state';
 import { findUserById } from '../utility/find.js';
@@ -243,6 +244,16 @@ export const mwState: IoMiddleware<GrantTask> = (
               return output;
             }
 
+            if (entity.handle) {
+              output.status = 401; // Unauthorized
+              output.json.logs.push({
+                level: 'error',
+                title: 'Handle Update Denied',
+                description: 'Cannot update the handle of a user record.',
+              });
+              return output;
+            }
+
             if (!isAdmin && userOnState.$roles.includes(system.$adminRole)) {
               output.status = 401; // Unauthorized
               output.json.logs.push({
@@ -295,14 +306,24 @@ export const mwState: IoMiddleware<GrantTask> = (
     }
 
     /**
+     * Capture the ouput of the next function.
+     */
+    const outputNext = await next(context)(inputNew, output);
+
+    /**
      * Create a list of keys that were stripped from the filter.
      */
     const deniedKeys: string[] = [];
-    Object.keys(input.body).forEach((inputKey) => {
-      if (!stateFiltered[inputKey]) {
-        deniedKeys.push(inputKey);
-      }
-    });
+    if (typeof outputNext.json.result === 'object') {
+      const resultOutputNext = outputNext.json.result ?? {};
+      Object.keys(input.body).forEach((inputKey) => {
+        if (!resultOutputNext[inputKey]) {
+          deniedKeys.push(inputKey);
+        }
+      });
+    } else {
+      deniedKeys.push(...Object.keys(input.body));
+    }
 
     if (deniedKeys.length) {
       output.json.logs.push({
@@ -311,11 +332,6 @@ export const mwState: IoMiddleware<GrantTask> = (
         description: `Missing permissions to perform the ${mwStateTaskName[task].toLowerCase()} operation the collection${deniedKeys.length > 1 ? 's' : ''}: ${deniedKeys.join(', ')}`,
       });
     }
-
-    /**
-     * Capture the ouput of the next function.
-     */
-    const outputNext = await next(context)(inputNew, output);
 
     if (outputNext.status === 200) {
       /**
@@ -341,6 +357,11 @@ export const mwState: IoMiddleware<GrantTask> = (
         if (resultHistory[historyKey]?.length) {
           outputNext.json.result[historyKey] = resultHistory[historyKey];
         }
+
+        /**
+         * Update the server store with possible changes.
+         */
+        store.dispatch(coreActions.insert(stateFiltered));
       }
     }
 
