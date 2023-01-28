@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/amnis-dev/amnis-state/compare/v0.11.4...v0.12.0) (2023-01-28)
+
+
+### Features
+
+* **Data:** Initial data includes the initial create history of all the entities ([91b4fba](https://github.com/amnis-dev/amnis-state/commit/91b4fbae00719792851b08fec90fdf9fbb431192))
+* **Grants:** Grants have been simplified and functions for filtering have been optimized ([acc0ab1](https://github.com/amnis-dev/amnis-state/commit/acc0ab18b02a42d7b121104018e905052c1b5e34))
+* **History:** History entities can now capture create, update, and delete tasks ([0180136](https://github.com/amnis-dev/amnis-state/commit/01801362c486caed65cdf7d1940fd88407001988))
+* **Read:** Refactored read processor ([525da72](https://github.com/amnis-dev/amnis-state/commit/525da724fb1ab8050033ebeeb667f61594e351b1))
+* **State Middleware:** Added new middleware for filtering state on processers ([b4f363e](https://github.com/amnis-dev/amnis-state/commit/b4f363e2e73fa45909c1eb49645a48810856f0ac))
+* **Update:** Refactored update processer with state middleware ([18dd491](https://github.com/amnis-dev/amnis-state/commit/18dd491e6d394091d0f355c12cd4c89e0ba9fe5d))
+
 ### [0.11.4](https://github.com/amnis-dev/amnis-state/compare/v0.11.3...v0.11.4) (2023-01-12)
 
 
