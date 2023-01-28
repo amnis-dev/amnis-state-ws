@@ -2,6 +2,8 @@ import {
   grantTask,
   StateEntities,
   GrantScope,
+  stateEntitiesCreate,
+  GrantTask,
 } from './state/index.js';
 import {
   Contact,
@@ -29,6 +31,7 @@ import {
   Handle,
   handleCreator,
   handleKey,
+  historyMake,
 } from './entity/index.js';
 import { cryptoWeb } from './io/index.js';
 import { accountsGet } from './accounts.js';
@@ -231,7 +234,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
     }), { committed: true, new: false }),
   ];
 
-  return {
+  const stateEntitiesInital: StateEntities = {
     [roleKey]: roles,
     [userKey]: users,
     [handleKey]: handles,
@@ -240,6 +243,18 @@ export const dataInitial = async (): Promise<StateEntities> => {
     [profileKey]: profiles,
     [systemKey]: systems,
   };
+
+  /**
+   * Create this initial history.
+   */
+  const stateEntities: StateEntities = {
+    ...stateEntitiesInital,
+    ...stateEntitiesCreate({
+      [historyKey]: historyMake(stateEntitiesInital, GrantTask.Create),
+    }, { committed: true, new: false }),
+  };
+
+  return stateEntities;
 };
 
 export default dataInitial;
