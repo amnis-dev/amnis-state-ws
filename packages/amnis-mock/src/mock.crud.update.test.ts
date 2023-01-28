@@ -144,7 +144,7 @@ test('should be able to update user profile', async () => {
   }
 
   expect(profileUpdated.committed).toBe(true);
-  expect(profileHistory.changes).toMatchObject({
+  expect(profileHistory.mutation).toMatchObject({
     nameDisplay: 'UserUpdated',
   });
 

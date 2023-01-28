@@ -17,6 +17,7 @@ import {
   historyMake,
   historyKey,
   coreActions,
+  stateEntitiesCreate,
 } from '@amnis/core';
 import { roleSelectors, systemSelectors } from '@amnis/state';
 import { findUserById } from '../utility/find.js';
@@ -351,8 +352,20 @@ export const mwState: IoMiddleware<GrantTask> = (
       /**
        * Create historic records
        */
-      if (task & GrantTask.Update) {
-        const stateCreateHistory = historyMake(stateFiltered, access.sub, deniedKeys, true);
+      if (
+        task & (GrantTask.Update | GrantTask.Create | GrantTask.Delete)
+        && outputNext.json.result
+      ) {
+        const stateCreateHistory = stateEntitiesCreate({
+          [historyKey]: historyMake(
+            outputNext.json.result as State,
+            task,
+          ),
+        }, {
+          $creator: access.sub,
+          committed: true,
+          new: false,
+        });
         const resultHistory = await context.database.create(stateCreateHistory);
         if (resultHistory[historyKey]?.length) {
           outputNext.json.result[historyKey] = resultHistory[historyKey];
@@ -361,8 +374,21 @@ export const mwState: IoMiddleware<GrantTask> = (
         /**
          * Update the server store with possible changes.
          */
-        store.dispatch(coreActions.insert(stateFiltered));
+        // store.dispatch(coreActions.insert(stateFiltered));
       }
+    }
+
+    /**
+     * Update server caching.
+     */
+    if (task === GrantTask.Create) {
+      store.dispatch(coreActions.create(outputNext.json.result));
+    }
+    if (task === GrantTask.Update) {
+      store.dispatch(coreActions.update(outputNext.json.result));
+    }
+    if (task === GrantTask.Delete) {
+      store.dispatch(coreActions.delete(outputNext.json.result));
     }
 
     return outputNext;

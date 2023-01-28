@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { uid } from '../../uid.js';
-import { StateEntities, StateUpdater } from '../../state/index.js';
-import { UID } from '../../types.js';
-import type { History, HistoryBase, HistoryCreator } from './history.types.js';
-import { entityCreate } from '../entity.js';
+import { GrantTask } from '../../state/index.js';
+import type { UID } from '../../types.js';
+import type {
+  History, HistoryBase, HistoryCreator, HistoryStateMutator,
+} from './history.types.js';
 
 export const historyKey = 'history';
 
 export const historyBase = (): HistoryBase => ({
   $subject: uid(historyKey, 'null'),
-  changes: {},
+  task: GrantTask.None,
+  mutation: null,
 });
 
 export function historyCreator(
@@ -21,42 +24,24 @@ export function historyCreator(
   };
 }
 /**
- * Create historic records of the updates.
+ * Create historic records of state mutations.
  */
 export function historyMake(
-  stateUpdate: StateUpdater,
-  creator?: UID,
-  deniedKeys?: string[],
-  committed = false,
-): StateEntities {
-  const stateCreateHistory: StateEntities = {
-    [historyKey]: [],
-  };
-  Object.keys(stateUpdate).every((sliceKey) => {
-    if (sliceKey === historyKey) {
-      // Cannot create history of history.
-      return true;
-    }
+  state: HistoryStateMutator,
+  task: GrantTask,
+): History[] {
+  const histories: History[] = [];
 
-    if (deniedKeys?.includes(sliceKey)) {
-      return true;
-    }
-
-    const updateEntities = stateUpdate[sliceKey];
-    updateEntities.forEach((entity) => {
-      const { $id, ...entityChanged } = entity;
-      stateCreateHistory[historyKey].push(
-        entityCreate(
-          historyCreator({
-            $subject: $id, // The entity being updates is the subject.
-            changes: entityChanged, // The changes object.
-          }),
-          (creator ? { $creator: creator, committed } : { committed }),
-        ),
-      );
+  Object.values(state).forEach((mutators) => {
+    mutators.forEach((mutation: any) => {
+      const $subject: UID = typeof mutation === 'object' ? mutation?.$id : mutation;
+      histories.push(historyCreator({
+        $subject,
+        task,
+        mutation,
+      }));
     });
-    return true;
   });
 
-  return stateCreateHistory;
+  return histories;
 }

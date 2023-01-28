@@ -100,7 +100,8 @@ test('should login as administrator and update user email', async () => {
   });
   expect(outputUpdate.json.result?.[historyKey]).toHaveLength(1);
   expect(outputUpdate.json.result?.[historyKey][0]).toMatchObject({
-    changes: {
+    mutation: {
+      $id: dataUsers[2].$id,
       email: expect.any(String),
     },
   });
@@ -146,7 +147,8 @@ test('should login as administrator and update profile display name', async () =
 
   expect(outputUpdate.json.result?.[historyKey]).toHaveLength(1);
   expect(outputUpdate.json.result?.[historyKey][0]).toMatchObject({
-    changes: {
+    mutation: {
+      $id: dataProfiles[0].$id,
       nameDisplay: nameNew,
     },
   });
@@ -188,7 +190,8 @@ test('should login as executive and update user email', async () => {
   });
   expect(outputUpdate.json.result?.[historyKey]).toHaveLength(1);
   expect(outputUpdate.json.result?.[historyKey][0]).toMatchObject({
-    changes: {
+    mutation: {
+      $id: dataUsers[2].$id,
       email: emailNew,
     },
   });
@@ -244,7 +247,7 @@ test(
       body: {
         [profileKey]: [
           {
-          // User Profile
+            // User Profile
             $id: profile.$id,
             nameDisplay: nameNew,
           },
@@ -265,7 +268,8 @@ test(
 
     expect(outputUpdate.json.result?.[historyKey]).toHaveLength(1);
     expect(outputUpdate.json.result?.[historyKey][0]).toMatchObject({
-      changes: {
+      mutation: {
+        $id: profile.$id,
         nameDisplay: nameNew,
       },
     });
