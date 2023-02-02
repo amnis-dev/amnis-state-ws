@@ -19,6 +19,7 @@ export const systemBase = (): SystemBase => ({
   emailNews: 'news@system.test',
   emailNotify: 'notify@system.test',
   emailAuth: 'auth@system.test',
+  fileSizeMax: 4096,
   $website: uid(websiteKey),
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),
