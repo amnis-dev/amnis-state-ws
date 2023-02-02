@@ -83,7 +83,6 @@ export const generateBearer = async (
     sub: subjectId,
     exp: bearerExpires,
     typ: 'access',
-    roles: $roles,
     pem: combo[0],
   };
 

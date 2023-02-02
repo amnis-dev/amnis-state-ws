@@ -1,4 +1,3 @@
-import type { Role } from './entity/index.js';
 import type { DateNumeric, UID } from './types.js';
 
 /**
@@ -47,7 +46,12 @@ export interface JWTAccess {
   pem?: string;
 
   /**
-   * Scope of permissions (role references).
+   * Image upload file size limit.
    */
-  roles: UID<Role>[];
+  fsi?: number;
+
+  /**
+   * Video upload file size limit.
+   */
+  fsv?: number;
 }

@@ -49,7 +49,6 @@ export const mwAccess: IoMiddleware = () => (next) => (context) => async (input,
       sub: 'user:anonymous' as UID,
       exp: dateNumeric(`${system.bearerExpires}`),
       typ: 'access',
-      roles: [system.$anonymousRole],
     };
     access = accessAnon;
   }

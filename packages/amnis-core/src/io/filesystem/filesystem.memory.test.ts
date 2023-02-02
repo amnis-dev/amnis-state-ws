@@ -5,22 +5,24 @@ import { filesystemMemory } from './filesystem.memory.js';
 
 function imageLoad(path: string): Promise<Uint8Array> {
   return new Promise((resolve, reject) => {
-    const bufferStream = new stream.PassThrough();
+    const writeStream = new stream.PassThrough();
+
+    ffmpeg();
 
     try {
       ffmpeg(path)
         .addOutputOptions(['-quality 1', '-vf scale=64:-1'])
         .format('webp')
-        .writeToStream(bufferStream);
+        .writeToStream(writeStream);
     } catch (e) {
       reject(e);
     }
 
     const buffers: Uint8Array[] = [];
-    bufferStream.on('data', (b) => {
+    writeStream.on('data', (b) => {
       buffers.push(b);
     });
-    bufferStream.on('end', () => {
+    writeStream.on('end', () => {
       const bufferOut = Buffer.concat(buffers);
       resolve(new Uint8Array(bufferOut));
     });
@@ -35,7 +37,7 @@ let imageId: UID<Image> = uid('image');
 test('file system should save file.', async () => {
   const imageBuffer = await imageLoad('test/iga.png');
 
-  const image = await filesystemMemory.imageWrite(imageBuffer, { title: 'IGA Logo' });
+  const image = await filesystemMemory.imageWrite(imageBuffer.buffer, { title: 'IGA Logo' });
   if (image) {
     imageId = image?.$id;
   }
@@ -44,8 +46,8 @@ test('file system should save file.', async () => {
     title: 'IGA Logo',
     slug: 'iga-logo',
     mimetype: 'image/webp',
-    width: 0,
-    height: 0,
+    width: 64,
+    height: 64,
     size: expect.any(Number),
   });
 });

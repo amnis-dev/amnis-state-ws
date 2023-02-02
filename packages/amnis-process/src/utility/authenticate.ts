@@ -154,7 +154,7 @@ export const authenticateFinalize = async (
 
   const output = ioOutput();
   output.json.result = stateEntities;
-  output.cookies.authSession = sessionEncrypted;
+  output.cookies[system.sessionKey] = sessionEncrypted;
   output.json.bearers = [bearerAccess];
 
   output.json.logs.push({

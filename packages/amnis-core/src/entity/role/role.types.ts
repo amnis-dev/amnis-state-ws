@@ -3,6 +3,11 @@ import type { Grant } from '../../state/index.js';
 import type { UID } from '../../types.js';
 
 /**
+ * Role limits
+ */
+export type RoleFsLimits = [other: number, image: number, video: number];
+
+/**
  * A license is a defined object for granting multiple permissions to perform actions or selections.
  */
 export interface Role extends EntityCreator {
@@ -20,6 +25,11 @@ export interface Role extends EntityCreator {
    * Color that represents this role.
    */
   color: string;
+
+  /**
+   * file upload limits in kilobytes.
+   */
+  fsLimits: RoleFsLimits;
 
   /**
    * Permissions this license grants.

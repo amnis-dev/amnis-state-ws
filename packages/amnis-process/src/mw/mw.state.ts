@@ -108,12 +108,6 @@ export const mwState: IoMiddleware<GrantTask> = (
     }
 
     /**
-     * Get information about the user executing this process.
-     * If no user is found, an anonymous version is created.
-     */
-    const user = await findUserById(context, $subject) ?? generateUserAnonymous(system);
-
-    /**
      * Filter the state input.
      */
     const stateFiltered = grantStateFilter(grants, task, input.body);
@@ -134,6 +128,12 @@ export const mwState: IoMiddleware<GrantTask> = (
      * USER SLICE PROTECTIONS
      */
     if (stateKeys.includes(userKey)) {
+      /**
+       * Get information about the user executing this process.
+       * If no user is found, an anonymous version is created.
+       */
+      const user = await findUserById(context, $subject) ?? generateUserAnonymous(system);
+
       const isAdmin = user.$roles.includes(system.$adminRole);
       const isExec = user.$roles.includes(system.$execRole);
 
@@ -273,6 +273,12 @@ export const mwState: IoMiddleware<GrantTask> = (
      * ROLE SLICE PROTECTION
      */
     if (stateKeys.includes(roleKey)) {
+      /**
+       * Get information about the user executing this process.
+       * If no user is found, an anonymous version is created.
+       */
+      const user = await findUserById(context, $subject) ?? generateUserAnonymous(system);
+
       const isAdmin = user.$roles.includes(system.$adminRole);
 
       if (task & (GrantTask.Create | GrantTask.Update | GrantTask.Delete)) {
@@ -330,7 +336,7 @@ export const mwState: IoMiddleware<GrantTask> = (
       output.json.logs.push({
         level: 'error',
         title: `${mwStateTaskName[task]} Disallowed`,
-        description: `Missing permissions to perform the ${mwStateTaskName[task].toLowerCase()} operation the collection${deniedKeys.length > 1 ? 's' : ''}: ${deniedKeys.join(', ')}`,
+        description: `Denied ${mwStateTaskName[task].toLowerCase()} operation in collection${deniedKeys.length > 1 ? 's' : ''}: ${deniedKeys.join(', ')}`,
       });
     }
 
@@ -344,7 +350,7 @@ export const mwState: IoMiddleware<GrantTask> = (
           outputNext.json.logs.push({
             level: 'success',
             title: `${mwStateTaskName[task]} Successful`,
-            description: `${mwStateTaskName[task]} operation on records in collection${successfulKeys.length > 1 ? 's' : ''}: ${successfulKeys.join(', ')}.`,
+            description: `Completed ${mwStateTaskName[task].toLowerCase()} operation in collection${successfulKeys.length > 1 ? 's' : ''}: ${successfulKeys.join(', ')}.`,
           });
         }
       }
@@ -370,11 +376,6 @@ export const mwState: IoMiddleware<GrantTask> = (
         if (resultHistory[historyKey]?.length) {
           outputNext.json.result[historyKey] = resultHistory[historyKey];
         }
-
-        /**
-         * Update the server store with possible changes.
-         */
-        // store.dispatch(coreActions.insert(stateFiltered));
       }
     }
 

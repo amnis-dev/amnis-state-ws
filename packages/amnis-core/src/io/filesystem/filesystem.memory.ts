@@ -2,15 +2,32 @@ import {
   imageCreator,
   entityCreate,
 } from '../../entity/index.js';
-import { FileSystem } from './filesystem.types.js';
+import { Filesystem } from './filesystem.types.js';
+import { Webp } from './filesystem.webp.js';
 
-const storage: Record<string, Uint8Array> = {};
+const storage: Record<string, ArrayBuffer> = {};
 
-export const filesystemMemory: FileSystem = {
+export const filesystemMemory: Filesystem = {
   initialize: () => { /** noop */ },
 
-  imageWrite: async (buffer, imageProps = {}) => {
+  imageWrite: async (image, entity = {}) => {
     try {
+      /**
+       * Validate and calulate the image size.
+       */
+      const imageBuffer = Buffer.from(image);
+      const valid = Webp.validate(imageBuffer);
+
+      if (!valid) {
+        return undefined;
+      }
+
+      const { height, width } = Webp.calculate(imageBuffer);
+
+      if (!height || !width) {
+        return undefined;
+      }
+
       /**
        * Create an image entity.
        */
@@ -18,16 +35,16 @@ export const filesystemMemory: FileSystem = {
         extension: 'webp',
         mimetype: 'image/webp',
         title: 'Unknown Image',
-        height: 0,
-        width: 0,
-        size: buffer.byteLength,
-        ...imageProps,
+        height,
+        width,
+        size: image.byteLength,
+        ...entity,
       }));
 
       /**
        * Save the file to databaseMemory.
        */
-      storage[imageEntity.$id] = buffer;
+      storage[imageEntity.$id] = image;
 
       /**
        * Return the image entity object.

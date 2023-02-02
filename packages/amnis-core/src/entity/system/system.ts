@@ -9,6 +9,7 @@ export const systemKey = 'system';
 export const systemBase = (): SystemBase => ({
   name: '',
   handle: 'core',
+  sessionKey: 'coreSession',
   sessionExpires: 60,
   bearerExpires: 30,
   registrationOpen: true,
@@ -45,9 +46,15 @@ export function systemCheck(system: System): LogCreator[] {
 export function systemCreator(
   system: SystemCreator,
 ): System {
+  const base = systemBase();
+  const handle = system.handle ?? base.handle;
+  const sessionKey = system.sessionKey ?? `${handle}Session`;
+
   return {
-    ...systemBase(),
+    ...base,
     ...system,
     $id: uid(systemKey),
+    handle,
+    sessionKey,
   };
 }

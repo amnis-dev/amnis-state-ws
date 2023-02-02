@@ -10,19 +10,23 @@ import {
   ioOutput,
   schemaAuth,
   sessionKey,
+  System,
 } from '@amnis/core';
-import { contextSetup } from '@amnis/state';
+import { contextSetup, systemSelectors } from '@amnis/state';
 import { validateSetup } from '../validate.js';
 import { processAuthChallenge } from './auth.challenge.js';
 import { processAuthLogin } from './auth.login.js';
 import { processAuthLogout } from './auth.logout.js';
 
 let context: IoContext;
+let system: System;
 
 beforeAll(async () => {
   context = await contextSetup({
     validators: validateSetup([schemaAuth]),
   });
+
+  system = systemSelectors.selectActive(context.store.getState()) as System;
 });
 
 /**
@@ -63,10 +67,10 @@ test('should login and then logout as administrator', async () => {
   const outputLogin = await processAuthLogin(context)(inputLogin, ioOutput());
 
   expect(outputLogin.status).toBe(200);
-  expect(outputLogin.cookies.authSession).toBeDefined();
+  expect(outputLogin.cookies[system.sessionKey]).toBeDefined();
 
   const inputLogout: IoInput<ApiAuthLogout> = {
-    sessionEncrypted: outputLogin.cookies.authSession,
+    sessionEncrypted: outputLogin.cookies[system.sessionKey],
     body: {},
   };
 

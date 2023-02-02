@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResponseTransformer, rest } from 'msw';
 import { processCrud } from '@amnis/process';
-import { contextSetup } from '@amnis/state';
+import { contextSetup, systemSelectors } from '@amnis/state';
 import { ioOutput } from '@amnis/core';
 import { setupInput } from './setup.js';
 import { MockHandlers, MockOptions } from './mock.types.js';
@@ -27,7 +27,15 @@ export const crudSetupHandlers: MockHandlers = async (options) => {
         );
       }
 
-      const input = await setupInput(req);
+      const system = systemSelectors.selectActive(context.store.getState());
+
+      if (!system) {
+        return res(
+          ctx.status(400, 'No active system.'),
+        );
+      }
+
+      const input = await setupInput(req, system);
 
       const output = await processCrud[processKey](context)(input, ioOutput());
 

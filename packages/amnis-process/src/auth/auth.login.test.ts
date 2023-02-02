@@ -15,18 +15,22 @@ import {
   ioOutput,
   base64JsonEncode,
   accountsSign,
+  System,
 } from '@amnis/core';
-import { contextSetup } from '@amnis/state';
+import { contextSetup, systemSelectors } from '@amnis/state';
 import { validateSetup } from '../validate.js';
 import { processAuthChallenge } from './auth.challenge.js';
 import { processAuthLogin } from './auth.login.js';
 
 let context: IoContext;
+let system: System;
 
 beforeAll(async () => {
   context = await contextSetup({
     validators: validateSetup([schemaAuth]),
   });
+
+  system = systemSelectors.selectActive(context.store.getState()) as System;
 });
 
 /**
@@ -90,7 +94,7 @@ test('should login as a admin', async () => {
   const output = await processAuthLogin(context)(input, ioOutput());
 
   expect(output.status).toBe(200);
-  expect(output.cookies.authSession).toBeDefined();
+  expect(output.cookies[system.sessionKey]).toBeDefined();
   expect(output.json.bearers).toBeDefined();
   expect(output.json.bearers?.[0]).toMatchObject({
     id: expect.any(String),

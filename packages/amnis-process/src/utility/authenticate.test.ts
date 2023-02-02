@@ -1,14 +1,18 @@
 import {
   accountsGet,
   IoContext,
+  System,
 } from '@amnis/core';
-import { contextSetup } from '@amnis/state';
+import { contextSetup, systemSelectors } from '@amnis/state';
 import { authenticateLogin } from './authenticate.js';
 
 let context: IoContext;
+let system: System;
 
 beforeAll(async () => {
   context = await contextSetup();
+
+  system = systemSelectors.selectActive(context.store.getState()) as System;
 });
 
 test('should authenticate as normal user account', async () => {
@@ -24,8 +28,8 @@ test('should authenticate as normal user account', async () => {
   );
 
   expect(output.status).toBe(200);
-  expect(output.cookies.authSession).toBeDefined();
-  expect(output.cookies.authSession).toEqual(expect.any(String));
+  expect(output.cookies[system.sessionKey]).toBeDefined();
+  expect(output.cookies[system.sessionKey]).toEqual(expect.any(String));
   expect(output.json.bearers).toBeDefined();
   expect(output.json.bearers).toHaveLength(1);
   expect(output.json.bearers?.[0]).toMatchObject({

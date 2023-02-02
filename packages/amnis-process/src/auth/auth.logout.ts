@@ -1,6 +1,7 @@
 import {
   ApiAuthLogout, Io, IoProcess, StateDeleter, uidList, sessionKey,
 } from '@amnis/core';
+import { systemSelectors } from '@amnis/state';
 import { mwSession, mwValidate } from '../mw/index.js';
 
 /**
@@ -8,14 +9,29 @@ import { mwSession, mwValidate } from '../mw/index.js';
  */
 const process: IoProcess<
 Io<ApiAuthLogout, StateDeleter>
-> = () => (
+> = (context) => (
   async (input, output) => {
     const { session } = input;
 
     /**
+   * Get the active system.
+   */
+    const system = systemSelectors.selectActive(context.store.getState());
+
+    if (!system) {
+      output.status = 503;
+      output.json.logs.push({
+        level: 'error',
+        title: 'Inactive System',
+        description: 'There is no active system available to complete the logout.',
+      });
+      return output;
+    }
+
+    /**
      * Delete the session cookie.
      */
-    output.cookies.authSession = undefined;
+    output.cookies[system.sessionKey] = undefined;
 
     /**
      * Tell the client to delete with the session other entities with the session removal.

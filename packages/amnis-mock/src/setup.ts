@@ -1,5 +1,5 @@
 import {
-  auditCreator, auditKey, entityCreate, IoContext, IoInput, IoOutput, JWTAccess,
+  auditCreator, auditKey, entityCreate, IoContext, IoInput, IoOutput, JWTAccess, System,
 } from '@amnis/core';
 import { httpAuthorizationParse } from '@amnis/process';
 import type { DefaultBodyType, PathParams, RestRequest } from 'msw';
@@ -9,24 +9,24 @@ export type Request = RestRequest<DefaultBodyType, PathParams<string>>;
 /**
  * Sets up the input object for processors.
  */
-export const setupInput = async (req: Request): Promise<IoInput> => {
+export const setupInput = async (req: Request, system: System): Promise<IoInput> => {
   /**
    * Mock a local ip.
    */
   const ip = '127.0.0.1';
 
   /**
-   * Extract body and authSession data from the request.
+   * Extract body and session data from the request.
    */
   const body = await req.json();
-  const { authSession } = req.cookies;
+  const sessionEncrypted = req.cookies[system.sessionKey];
 
   /**
    * Build the input object.
    */
   const input: IoInput = {
     body: body ?? {},
-    sessionEncrypted: authSession,
+    sessionEncrypted,
     ip,
   };
 

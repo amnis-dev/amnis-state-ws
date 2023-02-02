@@ -8,7 +8,7 @@ import type {
 import type { LogCreator, Session, Credential } from '../entity/index.js';
 
 import type { Database } from './database/database.types.js';
-import type { FileSystem } from './filesystem/filesystem.types.js';
+import type { Filesystem } from './filesystem/filesystem.types.js';
 import { Crypto } from './crypto/crypto.types.js';
 import { JWTAccess } from '../jwt.types.js';
 import { Send } from './send/send.types.js';
@@ -43,7 +43,7 @@ export interface IoContext {
   /**
    * Interface for managing unstructured file data.
    */
-  filesystem: FileSystem;
+  filesystem: Filesystem;
 
   /**
    * Interface for cryptographic functions.

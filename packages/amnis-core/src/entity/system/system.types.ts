@@ -16,6 +16,11 @@ export interface System extends EntityCreator {
   handle: HandleName;
 
   /**
+   * Name of the session key.
+   */
+  sessionKey: string;
+
+  /**
    * Number in minutes that an authentication session should live.
    *
    * @default 60
@@ -72,6 +77,11 @@ export interface System extends EntityCreator {
    * The sender email address for authentication tasks.
    */
   emailAuth: Email;
+
+  /**
+   * Maximum file size that can be uploaded in kilobytes.
+   */
+  fileSizeMax: number;
 
   /**
    * System's website configurations.

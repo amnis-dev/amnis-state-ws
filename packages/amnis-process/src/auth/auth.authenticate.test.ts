@@ -108,7 +108,7 @@ test('should create an admin session and authenticate using the admin keys', asy
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
   expect(output.status).toBe(200);
-  expect(output.cookies.authSession).toBeDefined();
+  expect(output.cookies[system.sessionKey]).toBeDefined();
   expect(output.json.bearers).toBeDefined();
   expect(output.json.bearers?.[0]).toMatchObject({
     id: expect.any(String),
@@ -192,7 +192,7 @@ test('should create a user session and authenticate using the user keys', async 
   const output = await processAuthAuthenticate(context)(inputAuthenticate, ioOutput());
 
   expect(output.status).toBe(200);
-  expect(output.cookies.authSession).toBeDefined();
+  expect(output.cookies[system.sessionKey]).toBeDefined();
   expect(output.json.bearers).toBeDefined();
   expect(output.json.bearers?.[0]).toMatchObject({
     id: expect.any(String),

@@ -150,7 +150,6 @@ beforeAll(async () => {
     sub: 'user:anonymous' as UID,
     exp: dateNumeric('30m'),
     typ: 'access',
-    roles: [],
     /**
      * No pem value here. The middleware will set the Anonymous role grants.
      */
@@ -160,7 +159,6 @@ beforeAll(async () => {
     sub: 'user:full' as UID,
     exp: dateNumeric('30m'),
     typ: 'access',
-    roles: [],
     pem: comboFull[0],
   };
   accessFullAdmin = {
@@ -168,7 +166,6 @@ beforeAll(async () => {
     sub: adminUser.$id,
     exp: dateNumeric('30m'),
     typ: 'access',
-    roles: [],
     pem: comboFull[0],
   };
 

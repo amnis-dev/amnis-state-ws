@@ -46,6 +46,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       name: 'Administrator',
       description: 'Most permissive role for overall system configuration and maintenance.',
       color: '#cc0000',
+      fsLimits: [-1, -1, -1],
       grants: [
         [systemKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
         [websiteKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
@@ -63,6 +64,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       name: 'Executive',
       description: 'Authoritative role for application configuration and maintenance.',
       color: '#3e3ee6',
+      fsLimits: [-1, -1, -1],
       grants: [
         [websiteKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
         [auditKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
@@ -79,6 +81,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       name: 'Base',
       description: 'Basis for standard authenticated use of the application.',
       color: '#000000',
+      fsLimits: [32, 64, 1024],
       grants: [
         [websiteKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [historyKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
@@ -95,6 +98,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
       name: 'Anonymous',
       description: 'Permissions for accessing the application data without authentication.',
       color: '#000000',
+      fsLimits: [0, 0, 0],
       grants: [
         [handleKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [profileKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
@@ -227,6 +231,7 @@ export const dataInitial = async (): Promise<StateEntities> => {
   const systems: Entity<System>[] = [
     entityCreate(systemCreator({
       name: 'Core System',
+      handle: 'core',
       $adminRole: roles[0].$id,
       $execRole: roles[1].$id,
       $anonymousRole: roles[3].$id,

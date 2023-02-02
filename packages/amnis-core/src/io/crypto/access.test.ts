@@ -9,7 +9,6 @@ const jwtAccess: JWTAccess = {
   sub: uid(''),
   exp: dateNumeric('1h'),
   typ: 'access',
-  roles: [],
 };
 
 const jwtAccessExpired: JWTAccess = {
@@ -17,7 +16,6 @@ const jwtAccessExpired: JWTAccess = {
   sub: uid(''),
   exp: dateNumeric(),
   typ: 'access',
-  roles: [],
 };
 
 test('should encode and verify access token from singleton asymmetric key', async () => {
