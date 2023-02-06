@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.1](https://github.com/amnis-dev/amnis-state/compare/v0.12.0...v0.12.1) (2023-02-06)
+
+
+### Features
+
+* **Database:** Added additional query feature to database read operations ([ecc44e8](https://github.com/amnis-dev/amnis-state/commit/ecc44e88a36850d44d36628fc6e85d17c149b3dc))
+* **System:** Added more system configurations ([b84006d](https://github.com/amnis-dev/amnis-state/commit/b84006d9c309d02aa0ed8f9ca3fe40c7a30c0239))
+
+
+### Bug Fixes
+
+* **System:** Fixed missing default system property ([b6fce7f](https://github.com/amnis-dev/amnis-state/commit/b6fce7fff87ebdafd0da79c53a025d5c6841b334))
+
 ## [0.12.0](https://github.com/amnis-dev/amnis-state/compare/v0.11.4...v0.12.0) (2023-01-28)
 
 

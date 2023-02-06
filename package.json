@@ -1,6 +1,6 @@
 {
   "name": "@amnis/state-workspace",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "repository": "https://github.com/amnis-dev/amnis-state",
   "author": "Eric Crowell <admin@amnis.dev>",
   "license": "MIT",
