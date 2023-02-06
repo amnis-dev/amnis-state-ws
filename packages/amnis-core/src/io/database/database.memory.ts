@@ -118,12 +118,17 @@ export const databaseMemory: Database = {
       result[queryStateKey] = Object.values(storage[storageKey]);
 
       /**
+       * Define the start index and limit.
+       */
+      const start = queryState[queryStateKey].$range?.start ?? 0;
+      const limit = queryState[queryStateKey].$range?.limit ?? 20;
+
+      /**
        * Loop through the query properties.
        */
       Object.keys(query).forEach((queryKey) => {
         const entityKey = queryKey as keyof Entity;
         const filter = query[queryKey];
-        const limit = 20;
 
         result[queryStateKey] = result[queryStateKey].filter((entity) => {
           /**
@@ -144,16 +149,51 @@ export const databaseMemory: Database = {
             return true;
           }
 
+          const filterKeyLength = Object.keys(filter).length;
+          let matches = 0;
+
           if (filter.$eq !== undefined && filter.$eq === entity[entityKey]) {
-            return true;
+            matches += 1;
+          }
+
+          if (
+            filter.$lt !== undefined
+            && typeof entity[entityKey] === 'number'
+            && (entity[entityKey] as unknown as number) < filter.$lt
+          ) {
+            matches += 1;
+          }
+
+          if (
+            filter.$lte !== undefined
+            && typeof entity[entityKey] === 'number'
+            && (entity[entityKey] as unknown as number) <= filter.$lte
+          ) {
+            matches += 1;
+          }
+
+          if (
+            filter.$gt !== undefined
+            && typeof entity[entityKey] === 'number'
+            && (entity[entityKey] as unknown as number) > filter.$gt
+          ) {
+            matches += 1;
+          }
+
+          if (
+            filter.$gte !== undefined
+            && typeof entity[entityKey] === 'number'
+            && (entity[entityKey] as unknown as number) >= filter.$gte
+          ) {
+            matches += 1;
           }
 
           if (filter.$in !== undefined && filter.$in.includes(entity[entityKey])) {
-            return true;
+            matches += 1;
           }
 
-          return false;
-        }).slice(0, limit);
+          return matches === filterKeyLength;
+        }).slice(start, limit + start);
       });
 
       return true;

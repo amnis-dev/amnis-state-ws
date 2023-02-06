@@ -40,6 +40,12 @@ beforeAll(async () => {
   );
 });
 
+/**
+ * ================================================================================================
+ * ************************************************************************************************
+ * ================================================================================================
+ */
+
 test('should not create without bearer', async () => {
   const inputCreator: IoInput<StateCreator> = {
     body: {
@@ -60,6 +66,12 @@ test('should not create without bearer', async () => {
   expect(outputCreator.json.result).toEqual({});
   expect(Object.keys(outputCreator.json.result)).toHaveLength(0);
 });
+
+/**
+ * ================================================================================================
+ * ************************************************************************************************
+ * ================================================================================================
+ */
 
 test('should login as administrator and create user', async () => {
   const admin = dataUsers.find((e) => e.handle === 'admin') as Entity<User>;
@@ -95,6 +107,12 @@ test('should login as administrator and create user', async () => {
   expect((Object.values(storage.user)[3] as Entity<User>)?.handle).toBe('NewUserByAdmin');
 });
 
+/**
+ * ================================================================================================
+ * ************************************************************************************************
+ * ================================================================================================
+ */
+
 test('should login as executive and create user', async () => {
   const exec = dataUsers.find((e) => e.handle === 'exec') as Entity<User>;
   const outputLogin = await authenticateFinalize(
@@ -126,6 +144,12 @@ test('should login as executive and create user', async () => {
   expect(Object.values(storage.user)).toHaveLength(5);
   expect((Object.values(storage.user)[4] as Entity<User>)?.handle).toBe('NewUserByExec');
 });
+
+/**
+ * ================================================================================================
+ * ************************************************************************************************
+ * ================================================================================================
+ */
 
 test('should login as user and cannot create user', async () => {
   const user = dataUsers.find((e) => e.handle === 'user') as Entity<User>;
