@@ -29,6 +29,7 @@ const base = {
   external: [
     /@amnis\/.*/,
     '@reduxjs/toolkit',
+    'react',
   ],
 };
 

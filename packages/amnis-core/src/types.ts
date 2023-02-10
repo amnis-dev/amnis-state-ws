@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-shadow */
 
@@ -49,9 +50,12 @@ export type DateNumeric = DateNominal & number;
 /**
  * A string that represents a URL.
  * Named SURL (String URL) so it's not confused with the URL object type.
+ *
+ * @pattern ^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?$
+ * @minLength 0
+ * @maxLength 512
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type SURL = SURLNominal & string;
+export type SURL = string;
 
 /**
  * An email address

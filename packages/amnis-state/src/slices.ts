@@ -16,7 +16,6 @@ import { serviceSlice } from './service/index.js';
 import { sessionSlice } from './session/index.js';
 import { systemSlice } from './system/index.js';
 import { userSlice } from './user/index.js';
-import { websiteSlice } from './website/index.js';
 
 export const slices = {
   [auditSlice.name]: auditSlice,
@@ -37,7 +36,6 @@ export const slices = {
   [sessionSlice.name]: sessionSlice,
   [systemSlice.name]: systemSlice,
   [userSlice.name]: userSlice,
-  [websiteSlice.name]: websiteSlice,
 };
 
 export default slices;

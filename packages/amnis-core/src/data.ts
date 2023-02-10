@@ -21,7 +21,6 @@ import {
   User,
   userCreator,
   userKey,
-  websiteKey,
   auditKey,
   entityCreate,
   historyKey,
@@ -49,7 +48,6 @@ export const dataInitial = async (): Promise<StateEntities> => {
       fsLimits: [-1, -1, -1],
       grants: [
         [systemKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
-        [websiteKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
         [auditKey, GrantScope.Global, grantTask(0, 1, 1, 1)],
         [historyKey, GrantScope.Global, grantTask(0, 1, 1, 1)],
         [userKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
@@ -66,7 +64,6 @@ export const dataInitial = async (): Promise<StateEntities> => {
       color: '#3e3ee6',
       fsLimits: [-1, -1, -1],
       grants: [
-        [websiteKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
         [auditKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [historyKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [userKey, GrantScope.Global, grantTask(1, 1, 1, 1)],
@@ -83,7 +80,6 @@ export const dataInitial = async (): Promise<StateEntities> => {
       color: '#000000',
       fsLimits: [32, 64, 1024],
       grants: [
-        [websiteKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [historyKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [userKey, GrantScope.Owned, grantTask(0, 1, 1, 0)],
         [handleKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
@@ -102,7 +98,6 @@ export const dataInitial = async (): Promise<StateEntities> => {
       grants: [
         [handleKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
         [profileKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
-        [websiteKey, GrantScope.Global, grantTask(0, 1, 0, 0)],
       ],
     }), { committed: true, new: false }),
   ];

@@ -4,7 +4,6 @@ import {
   roleKey,
   systemCreator,
   systemKey,
-  websiteKey,
 } from '../entity/index.js';
 import { stateReferenceQuery, stateToCreate } from './state.js';
 import { StateCreator, StateQuery } from './state.types.js';
@@ -15,7 +14,6 @@ const system = entityCreate(systemCreator({
   $execRole: uid(roleKey),
   $anonymousRole: uid(roleKey),
   $initialRoles: [uid(roleKey), uid(roleKey)],
-  $website: uid(websiteKey),
 }));
 
 system.$creator = system.$id;
@@ -66,15 +64,6 @@ test('should generate a proper identifier query', () => {
             system.$anonymousRole,
             system.$execRole,
             system.$adminRole,
-          ],
-        },
-      },
-    },
-    [websiteKey]: {
-      $query: {
-        $id: {
-          $in: [
-            system.$website,
           ],
         },
       },

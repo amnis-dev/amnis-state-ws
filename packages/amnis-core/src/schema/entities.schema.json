@@ -100,12 +100,6 @@
           "items": {
             "$ref": "#/definitions/Video"
           }
-        },
-        "website": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Website"
-          }
         }
       },
       "additionalProperties": false
@@ -222,7 +216,10 @@
     },
     "SURL": {
       "type": "string",
-      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type."
+      "description": "A string that represents a URL. Named SURL (String URL) so it's not confused with the URL object type.",
+      "pattern": "^https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?$",
+      "minLength": 0,
+      "maxLength": 512
     },
     "Credential": {
       "type": "object",
@@ -322,19 +319,33 @@
           "$ref": "#/definitions/UID",
           "description": "The subject that was updated."
         },
-        "changes": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "The state update record that was performed."
+        "task": {
+          "$ref": "#/definitions/GrantTask",
+          "description": "The state task performed."
+        },
+        "mutation": {
+          "description": "The state mutation record that was performed."
         }
       },
       "required": [
         "$id",
         "$subject",
-        "changes"
+        "mutation",
+        "task"
       ],
       "additionalProperties": false,
       "description": "Historical updates to data."
+    },
+    "GrantTask": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2,
+        4,
+        8
+      ],
+      "description": "Data tasks."
     },
     "Image": {
       "type": "object",
@@ -702,6 +713,10 @@
           "type": "string",
           "description": "Color that represents this role."
         },
+        "fsLimits": {
+          "$ref": "#/definitions/RoleFsLimits",
+          "description": "file upload limits in kilobytes."
+        },
         "grants": {
           "type": "array",
           "items": {
@@ -714,11 +729,32 @@
         "$id",
         "color",
         "description",
+        "fsLimits",
         "grants",
         "name"
       ],
       "additionalProperties": false,
       "description": "A license is a defined object for granting multiple permissions to perform actions or selections."
+    },
+    "RoleFsLimits": {
+      "type": "array",
+      "minItems": 3,
+      "items": [
+        {
+          "type": "number",
+          "title": "other"
+        },
+        {
+          "type": "number",
+          "title": "image"
+        },
+        {
+          "type": "number",
+          "title": "video"
+        }
+      ],
+      "maxItems": 3,
+      "description": "Role limits"
     },
     "Grant": {
       "type": "array",
@@ -806,6 +842,10 @@
           "$ref": "#/definitions/HandleName",
           "description": "System handle for identifying system created resources."
         },
+        "sessionKey": {
+          "type": "string",
+          "description": "Name of the session key."
+        },
         "sessionExpires": {
           "type": "number",
           "description": "Number in minutes that an authentication session should live.",
@@ -848,9 +888,9 @@
           "$ref": "#/definitions/Email",
           "description": "The sender email address for authentication tasks."
         },
-        "$website": {
-          "$ref": "#/definitions/UID%3CWebsite%3E",
-          "description": "System's website configurations."
+        "fileSizeMax": {
+          "type": "number",
+          "description": "Maximum file size that can be uploaded in kilobytes."
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
@@ -877,18 +917,19 @@
         "$execRole",
         "$id",
         "$initialRoles",
-        "$website",
         "bearerExpires",
         "challengeExpiration",
         "emailAuth",
         "emailNews",
         "emailNotify",
+        "fileSizeMax",
         "handle",
         "name",
         "otpExpiration",
         "otpLength",
         "registrationOpen",
-        "sessionExpires"
+        "sessionExpires",
+        "sessionKey"
       ],
       "additionalProperties": false
     },
@@ -897,13 +938,6 @@
       "description": "An email address",
       "pattern": "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$",
       "maxLength": 64
-    },
-    "UID<Website>": {
-      "type": "string",
-      "description": "A id identifier to another document.",
-      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
-      "minLength": 18,
-      "maxLength": 56
     },
     "UID<Role>": {
       "type": "string",
@@ -1171,104 +1205,6 @@
       ],
       "additionalProperties": false
     },
-    "Website": {
-      "type": "object",
-      "properties": {
-        "$id": {
-          "$ref": "#/definitions/UID",
-          "description": "All objects that can be composed into an entity must have an identifier."
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the website."
-        },
-        "nameShort": {
-          "type": "string",
-          "description": "Sorter name of the website. Important for smaller displays."
-        },
-        "url": {
-          "type": "string",
-          "description": "Primary URL to the website."
-        },
-        "$navigation": {
-          "$ref": "#/definitions/UIDTree%3CRoute%3E",
-          "description": "Primary navigational routes."
-        },
-        "title": {
-          "type": "string",
-          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
-        },
-        "$logo": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "UID to the image used for the logo."
-        },
-        "$favicon": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "Link the website's favicon"
-        },
-        "$contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CContact%3E"
-          },
-          "description": "Contacts that should be listed on the website."
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SURL"
-          },
-          "description": "List of the social network links."
-        }
-      },
-      "required": [
-        "$contacts",
-        "$id",
-        "$navigation",
-        "name",
-        "socials",
-        "url"
-      ],
-      "additionalProperties": false
-    },
-    "UIDTree<Route>": {
-      "type": "array",
-      "items": {
-        "type": "array",
-        "minItems": 2,
-        "items": [
-          {
-            "$ref": "#/definitions/UID%3CRoute%3E"
-          },
-          {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/UID%3CRoute%3E"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        ],
-        "maxItems": 2
-      },
-      "description": "Identifiers linked in a directory tree fashion."
-    },
-    "UID<Route>": {
-      "type": "string",
-      "description": "A id identifier to another document.",
-      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
-      "minLength": 18,
-      "maxLength": 56
-    },
-    "UID<Image>": {
-      "type": "string",
-      "description": "A id identifier to another document.",
-      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
-      "minLength": 18,
-      "maxLength": 56
-    },
     "StateUpdater": {
       "type": "object",
       "properties": {
@@ -1360,12 +1296,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityUpdater%3CVideo%3E"
-          }
-        },
-        "website": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/EntityUpdater%3CWebsite%3E"
           }
         }
       },
@@ -1499,10 +1429,12 @@
           "$ref": "#/definitions/UID",
           "description": "The subject that was updated."
         },
-        "changes": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "The state update record that was performed."
+        "task": {
+          "$ref": "#/definitions/GrantTask",
+          "description": "The state task performed."
+        },
+        "mutation": {
+          "description": "The state mutation record that was performed."
         }
       },
       "required": [
@@ -1598,6 +1530,13 @@
         "$id"
       ],
       "description": "Subset interface for updating a creator entity"
+    },
+    "UID<Image>": {
+      "type": "string",
+      "description": "A id identifier to another document.",
+      "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
+      "minLength": 18,
+      "maxLength": 56
     },
     "EntityUpdater<Locale>": {
       "type": "object",
@@ -1778,6 +1717,10 @@
           "type": "string",
           "description": "Color that represents this role."
         },
+        "fsLimits": {
+          "$ref": "#/definitions/RoleFsLimits",
+          "description": "file upload limits in kilobytes."
+        },
         "grants": {
           "type": "array",
           "items": {
@@ -1846,6 +1789,10 @@
           "$ref": "#/definitions/HandleName",
           "description": "System handle for identifying system created resources."
         },
+        "sessionKey": {
+          "type": "string",
+          "description": "Name of the session key."
+        },
         "sessionExpires": {
           "type": "number",
           "description": "Number in minutes that an authentication session should live.",
@@ -1888,9 +1835,9 @@
           "$ref": "#/definitions/Email",
           "description": "The sender email address for authentication tasks."
         },
-        "$website": {
-          "$ref": "#/definitions/UID%3CWebsite%3E",
-          "description": "System's website configurations."
+        "fileSizeMax": {
+          "type": "number",
+          "description": "Maximum file size that can be uploaded in kilobytes."
         },
         "$adminRole": {
           "$ref": "#/definitions/UID%3CRole%3E",
@@ -2128,61 +2075,6 @@
       "pattern": "^[a-z]{1,24}:[A-Za-z0-9_-]{16,32}$",
       "minLength": 18,
       "maxLength": 56
-    },
-    "EntityUpdater<Website>": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "$id": {
-          "$ref": "#/definitions/UID%3CWebsite%3E"
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the website."
-        },
-        "nameShort": {
-          "type": "string",
-          "description": "Sorter name of the website. Important for smaller displays."
-        },
-        "url": {
-          "type": "string",
-          "description": "Primary URL to the website."
-        },
-        "$navigation": {
-          "$ref": "#/definitions/UIDTree%3CRoute%3E",
-          "description": "Primary navigational routes."
-        },
-        "title": {
-          "type": "string",
-          "description": "Default title for the website. This is for meta data and the text seen on the browser tab."
-        },
-        "$logo": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "UID to the image used for the logo."
-        },
-        "$favicon": {
-          "$ref": "#/definitions/UID%3CImage%3E",
-          "description": "Link the website's favicon"
-        },
-        "$contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UID%3CContact%3E"
-          },
-          "description": "Contacts that should be listed on the website."
-        },
-        "socials": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SURL"
-          },
-          "description": "List of the social network links."
-        }
-      },
-      "required": [
-        "$id"
-      ],
-      "description": "Subset interface for updating a creator entity"
     }
   }
 }

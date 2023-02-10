@@ -16,7 +16,7 @@ export interface Route extends EntityCreator {
   path: string;
 
   /**
-   * EntityCreator this route points to.
+   * Entity ID this route points to.
    */
   $entity?: UID;
 

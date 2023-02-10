@@ -31,6 +31,7 @@ const base = {
   external: [
     /@amnis\/.*/,
     'cross-fetch',
+    'react',
   ],
 };
 

@@ -33,7 +33,6 @@ test('should handle creating a new system', () => {
   expect(entities[0]).toEqual(expect.objectContaining({
     name: expect.any(String),
     sessionExpires: expect.any(Number),
-    $website: expect.any(String),
     $initialRoles: expect.any(Array),
   }));
 });

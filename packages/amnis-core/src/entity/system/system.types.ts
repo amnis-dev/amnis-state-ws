@@ -1,7 +1,6 @@
 import type { Role } from '../role/index.js';
 import type { Email, UID, UIDList } from '../../types.js';
 import type { EntityCreator, EntityCreatorBase, EntityCreatorParams } from '../entity.types.js';
-import type { Website } from '../website/index.js';
 import type { HandleName } from '../handle/index.js';
 
 export interface System extends EntityCreator {
@@ -82,11 +81,6 @@ export interface System extends EntityCreator {
    * Maximum file size that can be uploaded in kilobytes.
    */
   fileSizeMax: number;
-
-  /**
-   * System's website configurations.
-   */
-  $website: UID<Website>;
 
   /**
    * Role identifier that considers the user an administrator.

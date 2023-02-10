@@ -15,7 +15,6 @@ import type {
   Session,
   User,
   Video,
-  Website,
   EntityUpdater,
 } from '../entity/index.js';
 
@@ -36,7 +35,6 @@ export interface StateCreator {
   user?: User[];
   session?: Session[];
   video?: Video[];
-  website?: Website[];
 }
 
 export interface StateUpdater {
@@ -55,5 +53,4 @@ export interface StateUpdater {
   user?: EntityUpdater<User>[];
   session?: EntityUpdater<Session>[];
   video?: EntityUpdater<Video>[];
-  website?: EntityUpdater<Website>[];
 }

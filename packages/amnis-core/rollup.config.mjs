@@ -28,6 +28,7 @@ const base = {
   ],
   external: [
     /@amnis\/.*/,
+    'react',
   ],
 };
 

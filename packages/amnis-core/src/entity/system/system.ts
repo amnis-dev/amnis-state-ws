@@ -1,7 +1,6 @@
 import { uid } from '../../uid.js';
 import type { LogCreator } from '../log/index.js';
 import { roleKey } from '../role/index.js';
-import { websiteKey } from '../website/index.js';
 import type { System, SystemBase, SystemCreator } from './system.types.js';
 
 export const systemKey = 'system';
@@ -20,7 +19,6 @@ export const systemBase = (): SystemBase => ({
   emailNotify: 'notify@system.test',
   emailAuth: 'auth@system.test',
   fileSizeMax: 4096,
-  $website: uid(websiteKey),
   $adminRole: uid(roleKey),
   $execRole: uid(roleKey),
   $anonymousRole: uid(roleKey),
