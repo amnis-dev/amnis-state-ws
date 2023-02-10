@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.2](https://github.com/amnis-dev/amnis-state/compare/v0.12.1...v0.12.2) (2023-02-10)
+
+
+### Bug Fixes
+
+* **Auth:** Last login date-time re-applied to user accounts ([a0b3ef9](https://github.com/amnis-dev/amnis-state/commit/a0b3ef9e7abcdf2666712bf2861e46bf66def3d3))
+
 ### [0.12.1](https://github.com/amnis-dev/amnis-state/compare/v0.12.0...v0.12.1) (2023-02-06)
 
 

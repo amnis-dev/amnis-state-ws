@@ -1,6 +1,6 @@
 {
   "name": "@amnis/api",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -34,7 +34,7 @@
     "clean": "rimraf ./.rollup.cache ./dist ./lib ./types ./tsconfig.build.tsbuildinfo ./yarn-error.log"
   },
   "dependencies": {
-    "@amnis/core": "0.12.1",
+    "@amnis/core": "0.12.2",
     "cross-fetch": "^3.1.0"
   },
   "peerDependencies": {
