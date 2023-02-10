@@ -228,13 +228,18 @@ export const authenticateLogin = async (
   }
 
   /**
-   * Update the credential timestamps.
+   * Update the user and credential timestamps.
    */
+  const dateTime = dateJSON();
   const updater: StateUpdater = {
+    [userKey]: [{
+      $id: user.$id,
+      logged: dateTime,
+    }],
     [credentialKey]: [{
       $id: $credential,
-      updated: dateJSON(),
-      used: dateJSON(),
+      updated: dateTime,
+      used: dateTime,
     }],
   };
   context.database.update(updater);
