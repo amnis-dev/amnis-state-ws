@@ -18,12 +18,11 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16.x'
-        cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
         scope: '@amnis'
 
     - name: Install NodeJS Dependencies
-      run: yarn install --check-cache
+      run: yarn install
 
     - name: Build Project
       run: yarn build
