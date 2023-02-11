@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.13.0](https://github.com/amnis-dev/amnis-state/compare/v0.12.3...v0.13.0) (2023-02-11)
+
+
+### Features
+
+* **Vite:** Replace old compile and test tools with vite and vitest ([e5ea4ce](https://github.com/amnis-dev/amnis-state/commit/e5ea4ceaf4b4e3780aad69c3632510341dae0980))
+* **workflow:** Updated workflow with new project settings ([40460cd](https://github.com/amnis-dev/amnis-state/commit/40460cdb784fb31656ad4d54b44bd27b0ceca707))
+
+
+### Bug Fixes
+
+* **Build:** Build functions with new vite addition ([24bf1cf](https://github.com/amnis-dev/amnis-state/commit/24bf1cff9a648108f539a732f709ed54faf2067e))
+* **workflow:** Possible fix for node install ([bf3a48c](https://github.com/amnis-dev/amnis-state/commit/bf3a48cb7580a63deefde9cec4b6b8a4258d71e9))
+* **workflow:** Possible fix for node installs ([0fac174](https://github.com/amnis-dev/amnis-state/commit/0fac1742c674c902229e46b2355d660d41f23d4b))
+* **workflow:** Possible fix for yarn install checksum errors ([8072d98](https://github.com/amnis-dev/amnis-state/commit/8072d9831af0dbbfb0800e5acfce9f17f7ef4850))
+
 ### [0.12.3](https://github.com/amnis-dev/amnis-state/compare/v0.12.2...v0.12.3) (2023-02-10)
 
 ### [0.12.2](https://github.com/amnis-dev/amnis-state/compare/v0.12.1...v0.12.2) (2023-02-10)

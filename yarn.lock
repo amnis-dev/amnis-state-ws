@@ -5,11 +5,11 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@amnis/api@0.12.3, @amnis/api@workspace:packages/amnis-api":
+"@amnis/api@0.13.0, @amnis/api@workspace:packages/amnis-api":
   version: 0.0.0-use.local
   resolution: "@amnis/api@workspace:packages/amnis-api"
   dependencies:
-    "@amnis/core": 0.12.3
+    "@amnis/core": 0.13.0
     "@reduxjs/toolkit": alpha
     "@rollup/plugin-commonjs": ^24.0.1
     "@rollup/plugin-json": ^6.0.0
@@ -32,7 +32,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/core@0.12.3, @amnis/core@workspace:packages/amnis-core":
+"@amnis/core@0.13.0, @amnis/core@workspace:packages/amnis-core":
   version: 0.0.0-use.local
   resolution: "@amnis/core@workspace:packages/amnis-core"
   dependencies:
@@ -82,9 +82,9 @@ __metadata:
     tslib: ^2.5.0
     vitest: ^0.28.4
   peerDependencies:
-    "@amnis/api": 0.12.3
-    "@amnis/process": 0.12.3
-    "@amnis/state": 0.12.3
+    "@amnis/api": 0.13.0
+    "@amnis/process": 0.13.0
+    "@amnis/state": 0.13.0
     "@reduxjs/toolkit": ^1.8.1
     msw: ^1.0.1
   languageName: unknown
@@ -94,8 +94,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@amnis/process@workspace:packages/amnis-process"
   dependencies:
-    "@amnis/core": 0.12.3
-    "@amnis/state": 0.12.3
+    "@amnis/core": 0.13.0
+    "@amnis/state": 0.13.0
     "@reduxjs/toolkit": alpha
     "@rollup/plugin-commonjs": ^24.0.1
     "@rollup/plugin-json": ^6.0.0
@@ -160,12 +160,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@amnis/state@0.12.3, @amnis/state@workspace:packages/amnis-state":
+"@amnis/state@0.13.0, @amnis/state@workspace:packages/amnis-state":
   version: 0.0.0-use.local
   resolution: "@amnis/state@workspace:packages/amnis-state"
   dependencies:
-    "@amnis/api": 0.12.3
-    "@amnis/core": 0.12.3
+    "@amnis/api": 0.13.0
+    "@amnis/core": 0.13.0
     "@reduxjs/toolkit": alpha
     "@rollup/plugin-commonjs": ^24.0.1
     "@rollup/plugin-json": ^6.0.0

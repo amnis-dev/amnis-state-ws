@@ -1,6 +1,6 @@
 {
   "name": "@amnis/process",
-  "version": "0.12.3",
+  "version": "0.13.0",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -37,8 +37,8 @@
     "@reduxjs/toolkit": "^1.8.1"
   },
   "dependencies": {
-    "@amnis/core": "0.12.3",
-    "@amnis/state": "0.12.3",
+    "@amnis/core": "0.13.0",
+    "@amnis/state": "0.13.0",
     "ajv": "^8.11.0",
     "cross-fetch": "^3.1.0"
   },

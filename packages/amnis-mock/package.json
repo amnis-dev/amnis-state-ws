@@ -1,6 +1,6 @@
 {
   "name": "@amnis/mock",
-  "version": "0.12.3",
+  "version": "0.13.0",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -29,9 +29,9 @@
     "clean": "rimraf ./.rollup.cache ./dist ./lib ./types ./tsconfig.build.tsbuildinfo ./yarn-error.log"
   },
   "peerDependencies": {
-    "@amnis/api": "0.12.3",
-    "@amnis/process": "0.12.3",
-    "@amnis/state": "0.12.3",
+    "@amnis/api": "0.13.0",
+    "@amnis/process": "0.13.0",
+    "@amnis/state": "0.13.0",
     "@reduxjs/toolkit": "^1.8.1",
     "msw": "^1.0.1"
   },
