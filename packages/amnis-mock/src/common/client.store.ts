@@ -1,13 +1,13 @@
 import { stateSet } from '@amnis/state';
 import { apiSet } from '@amnis/api';
-import { rtk } from '@amnis/core';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-const reducers = rtk.combineReducers({
+const reducers = combineReducers({
   ...stateSet.reducers,
   ...apiSet.reducers,
 });
 
-export const clientStore = rtk.configureStore({
+export const clientStore = configureStore({
   reducer: reducers,
   middleware: (getDefaultMiddleware) => (
     getDefaultMiddleware().concat([...stateSet.middleware, ...apiSet.middleware])

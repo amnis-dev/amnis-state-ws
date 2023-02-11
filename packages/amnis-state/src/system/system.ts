@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   System,
@@ -17,7 +17,7 @@ import type {
  * RTK system adapter.
  * Manages the normalized entities.
  */
-export const systemAdapter = rtk.createEntityAdapter<Entity<System>>({
+export const systemAdapter = createEntityAdapter<Entity<System>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -39,7 +39,7 @@ export const systemInitialState = systemAdapter.getInitialState<SystemMeta>(
 /**
  * RTK System Slice
  */
-export const systemSlice = rtk.createSlice({
+export const systemSlice = createSlice({
   name: systemKey,
   initialState: systemInitialState,
   reducers: {

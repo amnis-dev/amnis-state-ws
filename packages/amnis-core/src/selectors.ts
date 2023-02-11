@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { Dictionary, EntityState } from '@reduxjs/toolkit';
-import { rtk } from './rtk.js';
+import { createSelector, Dictionary, EntityState } from '@reduxjs/toolkit';
 import type { UID } from './types.js';
 import {
   State,
@@ -78,7 +77,7 @@ const genSelectSelectionIds = <E extends Entity>(sliceKey: string) => (state: St
 /**
  * Selects the focused entity on a slice (if one is active).
  */
-const genSelectActive = <E extends Entity = Entity>(sliceKey: string) => rtk.createSelector(
+const genSelectActive = <E extends Entity = Entity>(sliceKey: string) => createSelector(
   genSelectActiveId<E>(sliceKey),
   genSelectEntities<E>(sliceKey),
   (activeId, entities): E | undefined => {
@@ -103,7 +102,7 @@ export const selectActive = <E extends Entity>(
 /**
  * Selects the focused entity on a slice (if one is active).
  */
-const genSelectFocused = <E extends Entity = Entity>(sliceKey: string) => rtk.createSelector(
+const genSelectFocused = <E extends Entity = Entity>(sliceKey: string) => createSelector(
   genSelectFocusedId<E>(sliceKey),
   genSelectEntities<E>(sliceKey),
   (focusedId, entities): E | undefined => {
@@ -130,7 +129,7 @@ export const selectFocused = <E extends Entity>(
  */
 const genSelectSelection = <E extends Entity = Entity>(
   sliceKey: string,
-) => rtk.createSelector(
+) => createSelector(
   genSelectSelectionIds<E>(sliceKey),
   genSelectEntities<E>(sliceKey),
   (selectionIds, entities) => {
@@ -157,7 +156,7 @@ export interface EntityDifference<C extends EntityCreator> {
  */
 const genSelectDifference = <C extends EntityCreator = EntityCreator>(
   sliceKey: string,
-) => rtk.createSelector(
+) => createSelector(
   [
     (state, id: UID<C>) => id,
     genSelectDifferences<Entity<C>>(sliceKey),

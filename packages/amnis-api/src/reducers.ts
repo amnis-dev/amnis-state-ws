@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type {
+import {
   ActionReducerMapBuilder,
   EntityAdapter,
+  isFulfilled,
+  isRejectedWithValue,
 } from '@reduxjs/toolkit';
 import {
-  rtk,
   Entity,
   IoOutput,
   LogCreator,
@@ -33,7 +34,7 @@ export function apiExtraReducers<C extends EntityCreator>(
    * Matches ANY fulfillment.
    * ------------------------------------------------------------
    */
-  builder.addMatcher(rtk.isFulfilled, (state, action) => {
+  builder.addMatcher(isFulfilled, (state, action) => {
     const payload = action.payload as IoOutput['json'];
     const logs = payload.logs as LogCreator[];
 
@@ -52,7 +53,7 @@ export function apiExtraReducers<C extends EntityCreator>(
    * Matches ANY rejection that has a payload.
    * ------------------------------------------------------------
    */
-  builder.addMatcher(rtk.isRejectedWithValue, (state, action) => {
+  builder.addMatcher(isRejectedWithValue, (state, action) => {
     const payload = action.payload as { data: IoOutput['json'] } | undefined;
 
     if (!payload) {

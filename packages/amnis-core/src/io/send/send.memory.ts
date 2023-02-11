@@ -1,5 +1,5 @@
+import { nanoid } from '@reduxjs/toolkit';
 import { dateJSON } from '../../core.js';
-import { rtk } from '../../rtk.js';
 import { DateJSON } from '../../types.js';
 import type { Send, SendEmailProps } from './send.types.js';
 
@@ -25,7 +25,7 @@ export const sendMailboxStorage = () => sendMailboxes;
 export const sendMailboxClear = () => { sendMailboxes = {}; };
 
 export const sendSubscribe = (callback: SendCallback): SendUnsubscribe => {
-  const uid = rtk.nanoid();
+  const uid = nanoid();
   sendSubcribers[uid] = callback;
   return () => {
     delete sendSubcribers[uid];

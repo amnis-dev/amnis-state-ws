@@ -1,6 +1,6 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { apiAuth } from '@amnis/api';
 import {
-  rtk,
   Otp,
   otpKey,
   dateNumeric,
@@ -24,7 +24,7 @@ function isOtpAction(
  * RTK otp adapter.
  * Manages the normalized entities.
  */
-export const otpAdapter = rtk.createEntityAdapter<Otp>({
+export const otpAdapter = createEntityAdapter<Otp>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -46,7 +46,7 @@ export const otpInitialState = otpAdapter.getInitialState<OtpMeta>({
 /**
  * RTK Otp Slice
  */
-export const otpSlice = rtk.createSlice({
+export const otpSlice = createSlice({
   name: otpKey,
   initialState: otpInitialState,
   reducers: {

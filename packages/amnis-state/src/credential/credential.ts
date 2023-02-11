@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Credential,
@@ -15,7 +15,7 @@ import type { CredentialMeta } from './credential.types.js';
  * RTK credential adapter.
  * Manages the normalized entities.
  */
-export const credentialAdapter = rtk.createEntityAdapter<Entity<Credential>>({
+export const credentialAdapter = createEntityAdapter<Entity<Credential>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const credentialInitialState = credentialAdapter.getInitialState<Credenti
 /**
  * RTK Credential Slice
  */
-export const credentialSlice = rtk.createSlice({
+export const credentialSlice = createSlice({
   name: credentialKey,
   initialState: credentialInitialState,
   reducers: {

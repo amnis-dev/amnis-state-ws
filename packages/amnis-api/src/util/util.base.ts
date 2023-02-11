@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetch, { Headers, Request } from 'cross-fetch';
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/index.js';
 import {
-  agentCredential, agentGet, rtkq, State,
+  BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
+} from '@reduxjs/toolkit/query';
+import {
+  agentCredential, agentGet, State,
 } from '@amnis/core';
 import {
   headersAuthorizationToken, headersChallenge, headersOtp, headersSignature,
@@ -46,7 +48,7 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
   /**
    * Dynamically prepare the request query.
    */
-  const rawBaseQuery = rtkq.fetchBaseQuery({
+  const rawBaseQuery = fetchBaseQuery({
     baseUrl: apiMeta ? apiMeta.baseUrl : '',
     fetchFn: fetch,
     prepareHeaders: async (headers, api) => {

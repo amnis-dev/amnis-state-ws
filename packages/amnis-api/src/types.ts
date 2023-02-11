@@ -1,7 +1,7 @@
 import type { IoOutputJson } from '@amnis/core';
 import type { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query';
-import type { BaseQueryApi } from '@reduxjs/toolkit/dist/query/baseQueryTypes.js';
-import type { MaybePromise } from '@reduxjs/toolkit/dist/query/tsHelpers.js';
+import type { BaseQueryApi } from '@reduxjs/toolkit/query';
+import type { MaybePromise } from '@reduxjs/toolkit/dist/query/tsHelpers';
 
 /**
  * RTK type.

@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Note,
@@ -15,7 +15,7 @@ import type { NoteMeta } from './note.types.js';
  * RTK note adapter.
  * Manages the normalized entities.
  */
-export const noteAdapter = rtk.createEntityAdapter<Entity<Note>>({
+export const noteAdapter = createEntityAdapter<Entity<Note>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const noteInitialState = noteAdapter.getInitialState<NoteMeta>(
 /**
  * RTK Note Slice
  */
-export const noteSlice = rtk.createSlice({
+export const noteSlice = createSlice({
   name: noteKey,
   initialState: noteInitialState,
   reducers: {

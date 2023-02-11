@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   User,
@@ -15,7 +15,7 @@ import type { UserMeta } from './user.types.js';
  * RTK user adapter.
  * Manages the normalized entities.
  */
-export const userAdapter = rtk.createEntityAdapter<Entity<User>>({
+export const userAdapter = createEntityAdapter<Entity<User>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const userInitialState = userAdapter.getInitialState<UserMeta>(
 /**
  * RTK User Slice
  */
-export const userSlice = rtk.createSlice({
+export const userSlice = createSlice({
   name: userKey,
   initialState: userInitialState,
   reducers: {

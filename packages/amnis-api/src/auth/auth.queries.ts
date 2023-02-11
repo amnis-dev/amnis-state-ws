@@ -1,5 +1,6 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions.js';
+import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 import {
   ApiAuthCreate,
   ApiAuthCredential,

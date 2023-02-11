@@ -1,4 +1,4 @@
-import { rtk } from '@amnis/core';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   apiSlice,
   apiInitialState,
@@ -6,10 +6,10 @@ import {
 } from './api.js';
 
 const storeSetup = () => {
-  const reducers = rtk.combineReducers({
+  const reducers = combineReducers({
     [apiSlice.name]: apiSlice.reducer,
   });
-  return rtk.configureStore({
+  return configureStore({
     reducer: reducers,
   });
 };

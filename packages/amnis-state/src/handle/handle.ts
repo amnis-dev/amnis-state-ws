@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Handle,
@@ -15,7 +15,7 @@ import type { HandleMeta } from './handle.types.js';
  * RTK handle adapter.
  * Manages the normalized entities.
  */
-export const handleAdapter = rtk.createEntityAdapter<Entity<Handle>>({
+export const handleAdapter = createEntityAdapter<Entity<Handle>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const handleInitialState = handleAdapter.getInitialState<HandleMeta>(
 /**
  * RTK Handle Slice
  */
-export const handleSlice = rtk.createSlice({
+export const handleSlice = createSlice({
   name: handleKey,
   initialState: handleInitialState,
   reducers: {

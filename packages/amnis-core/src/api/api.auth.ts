@@ -1,3 +1,6 @@
+export const apiAuth = {};
+
+export default apiAuth;
 /**
  * I don't know how reliable/consistent this is to use as a unique password yet.
  */

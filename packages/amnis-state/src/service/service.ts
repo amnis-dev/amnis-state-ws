@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Service,
@@ -15,7 +15,7 @@ import type { ServiceMeta } from './service.types.js';
  * RTK service adapter.
  * Manages the normalized entities.
  */
-export const serviceAdapter = rtk.createEntityAdapter<Entity<Service>>({
+export const serviceAdapter = createEntityAdapter<Entity<Service>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const serviceInitialState = serviceAdapter.getInitialState<ServiceMeta>(
 /**
  * RTK Service Slice
  */
-export const serviceSlice = rtk.createSlice({
+export const serviceSlice = createSlice({
   name: serviceKey,
   initialState: serviceInitialState,
   reducers: {

@@ -31,5 +31,12 @@
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.8.1"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "devDependencies": {
+    "@reduxjs/toolkit": "alpha",
+    "@types/fluent-ffmpeg": "^2.1.20",
+    "@types/node": "^18.13.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "vitest": "^0.28.4"
+  }
 }

@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   Challenge,
   challengeKey,
   challengeCreate,
@@ -23,7 +23,7 @@ function isChallengeAction(
  * RTK challenge adapter.
  * Manages the normalized entities.
  */
-export const challengeAdapter = rtk.createEntityAdapter<Challenge>({
+export const challengeAdapter = createEntityAdapter<Challenge>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -45,7 +45,7 @@ export const challengeInitialState = challengeAdapter.getInitialState<ChallengeM
 /**
  * RTK Challenge Slice
  */
-export const challengeSlice = rtk.createSlice({
+export const challengeSlice = createSlice({
   name: challengeKey,
   initialState: challengeInitialState,
   reducers: {

@@ -1,5 +1,6 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk, Bearer, bearerKey,
+  Bearer, bearerKey,
 } from '@amnis/core';
 import { apiAuth } from '@amnis/api';
 
@@ -9,7 +10,7 @@ import type { BearerMeta } from './bearer.types.js';
  * RTK bearer adapter.
  * Manages the normalized entities.
  */
-export const bearerAdapter = rtk.createEntityAdapter<Bearer>({
+export const bearerAdapter = createEntityAdapter<Bearer>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -29,7 +30,7 @@ export const bearerInitialState = bearerAdapter.getInitialState<BearerMeta>({});
 /**
  * RTK Bearer Slice
  */
-export const bearerSlice = rtk.createSlice({
+export const bearerSlice = createSlice({
   name: bearerKey,
   initialState: bearerInitialState,
   reducers: {

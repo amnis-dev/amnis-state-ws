@@ -1,4 +1,4 @@
-import { rtk } from '../../rtk.js';
+import { nanoid } from '@reduxjs/toolkit';
 import { grantCombineFromRoles } from '../../state/index.js';
 import { uid } from '../../uid.js';
 import type {
@@ -28,7 +28,7 @@ export function roleCreator(
 export function roleComboCreate(
   roles: Role[],
 ): RoleCombo {
-  const id = rtk.nanoid();
+  const id = nanoid();
   const $roles = roles.map((r) => r.$id);
   const grants = grantCombineFromRoles(roles);
   const combo: RoleCombo = [id, $roles, grants];

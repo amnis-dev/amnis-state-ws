@@ -30,6 +30,7 @@ const base = {
     /@amnis\/.*/,
     'msw',
     'msw/node',
+    '@reduxjs/toolkit',
   ],
 };
 

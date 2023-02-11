@@ -1,9 +1,13 @@
 {
   "extends": "@amnis/tsconfig-node",
   "compilerOptions": {
+    "types": ["node", "vitest/globals"],
     "baseUrl": "./",
-    "lib": ["DOM", "ES2021"],
+    "lib": ["DOM", "ES2022"],
     "esModuleInterop": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node",
     "paths": {
       "@amnis/core": ["./packages/amnis-core/src/index.ts"],
       "@amnis/process": ["./packages/amnis-process/src/index.ts"],
@@ -12,5 +16,4 @@
     }
   },
   "include": ["./packages/**/*.ts*"],
-  "files": ["jest.d.ts"],
 }

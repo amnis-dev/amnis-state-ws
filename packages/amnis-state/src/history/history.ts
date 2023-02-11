@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   History,
@@ -15,7 +15,7 @@ import type { HistoryMeta } from './history.types.js';
  * RTK history adapter.
  * Manages the normalized entities.
  */
-export const historyAdapter = rtk.createEntityAdapter<Entity<History>>({
+export const historyAdapter = createEntityAdapter<Entity<History>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const historyInitialState = historyAdapter.getInitialState<HistoryMeta>(
 /**
  * RTK History Slice
  */
-export const historySlice = rtk.createSlice({
+export const historySlice = createSlice({
   name: historyKey,
   initialState: historyInitialState,
   reducers: {

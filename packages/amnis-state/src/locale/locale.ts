@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Locale,
@@ -15,7 +15,7 @@ import type { LocaleMeta } from './locale.types.js';
  * RTK locale adapter.
  * Manages the normalized entities.
  */
-export const localeAdapter = rtk.createEntityAdapter<Entity<Locale>>({
+export const localeAdapter = createEntityAdapter<Entity<Locale>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const localeInitialState = localeAdapter.getInitialState<LocaleMeta>(
 /**
  * RTK Locale Slice
  */
-export const localeSlice = rtk.createSlice({
+export const localeSlice = createSlice({
   name: localeKey,
   initialState: localeInitialState,
   reducers: {

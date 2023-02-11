@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Role,
@@ -38,7 +38,7 @@ import type { RoleMeta } from './role.types.js';
  * RTK role adapter.
  * Manages the normalized entities.
  */
-export const roleAdapter = rtk.createEntityAdapter<Entity<Role>>({
+export const roleAdapter = createEntityAdapter<Entity<Role>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -61,7 +61,7 @@ export const roleInitialState = roleAdapter.getInitialState<RoleMeta>({
 /**
  * RTK Role Slice
  */
-export const roleSlice = rtk.createSlice({
+export const roleSlice = createSlice({
   name: roleKey,
   initialState: roleInitialState,
   reducers: {

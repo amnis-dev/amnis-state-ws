@@ -1,4 +1,4 @@
-import { rtk } from './rtk.js';
+import { createAction } from '@reduxjs/toolkit';
 import {
   StateCreator,
   StateDeleter,
@@ -10,27 +10,27 @@ export const coreActions = {
   /**
    * Directly inserts a state object of complete entities.
    */
-  insert: rtk.createAction<StateEntities>('@core/insert'),
+  insert: createAction<StateEntities>('@core/insert'),
 
   /**
    * Batch creates entities.
    */
-  create: rtk.createAction<StateCreator>('@core/create'),
+  create: createAction<StateCreator>('@core/create'),
 
   /**
    * Batch updates entities.
    */
-  update: rtk.createAction<StateUpdater>('@core/update'),
+  update: createAction<StateUpdater>('@core/update'),
 
   /**
    * Batch deletes entities.
    */
-  delete: rtk.createAction<StateDeleter>('@core/delete'),
+  delete: createAction<StateDeleter>('@core/delete'),
 
   /**
    * Wipes all entities from the state.
    */
-  wipe: rtk.createAction('@core/wipe'),
+  wipe: createAction('@core/wipe'),
 };
 
 export default { coreActions };

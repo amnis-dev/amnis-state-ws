@@ -18,7 +18,7 @@ import type { <%= Name %>Meta } from './<%= name %>.types.js';
  * RTK <%= name %> adapter.
  * Manages the normalized entities.
  */
-export const <%= name %>Adapter = rtk.createEntityAdapter<<%= Name %>>({
+export const <%= name %>Adapter = createEntityAdapter<<%= Name %>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -40,7 +40,7 @@ export const <%= name %>InitialState = <%= name %>Adapter.getInitialState<<%= Na
 /**
  * RTK <%= Name %> Slice
  */
-export const <%= name %>Slice = rtk.createSlice({
+export const <%= name %>Slice = createSlice({
   name: <%= name %>Key,
   initialState: <%= name %>InitialState,
   reducers: {

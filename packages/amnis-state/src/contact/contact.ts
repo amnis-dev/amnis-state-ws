@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Contact,
@@ -15,7 +15,7 @@ import type { ContactMeta } from './contact.types.js';
  * RTK contact adapter.
  * Manages the normalized entities.
  */
-export const contactAdapter = rtk.createEntityAdapter<Entity<Contact>>({
+export const contactAdapter = createEntityAdapter<Entity<Contact>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const contactInitialState = contactAdapter.getInitialState<ContactMeta>(
 /**
  * RTK Contact Slice
  */
-export const contactSlice = rtk.createSlice({
+export const contactSlice = createSlice({
   name: contactKey,
   initialState: contactInitialState,
   reducers: {

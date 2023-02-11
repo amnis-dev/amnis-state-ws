@@ -1,6 +1,5 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  rtk,
   Key,
   keyKey,
 } from '@amnis/core';
@@ -9,7 +8,7 @@ import {
  * RTK key adapter.
  * Manages the normalized entities.
  */
-export const keyAdapter = rtk.createEntityAdapter<Key>({
+export const keyAdapter = createEntityAdapter<Key>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -29,7 +28,7 @@ export const keyInitialState = keyAdapter.getInitialState();
 /**
  * RTK Key Slice
  */
-export const keySlice = rtk.createSlice({
+export const keySlice = createSlice({
   name: keyKey,
   initialState: keyInitialState,
   reducers: {

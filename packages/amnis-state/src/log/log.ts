@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Log,
@@ -15,7 +15,7 @@ import type { LogMeta } from './log.types.js';
  * RTK log adapter.
  * Manages the normalized entities.
  */
-export const logAdapter = rtk.createEntityAdapter<Entity<Log>>({
+export const logAdapter = createEntityAdapter<Entity<Log>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const logInitialState = logAdapter.getInitialState<LogMeta>(
 /**
  * RTK Log Slice
  */
-export const logSlice = rtk.createSlice({
+export const logSlice = createSlice({
   name: logKey,
   initialState: logInitialState,
   reducers: {

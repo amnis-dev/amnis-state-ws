@@ -6,16 +6,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+
   "javascript.updateImportsOnFileMove.enabled": "never",
-  "eslint.enable": true,
-  "eslint.run": "onSave",
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+
   "files.eol": "\n",
   "files.associations": {
     "*.ejs": "html",
@@ -55,12 +48,24 @@
     "**/*.lock": true,
     "**/package-lock.json": true,
     "**/*.tsbuildinfo": true,
-    "**/*.schema.json": true
+    "**/*.schema.json": true,
+    "**/.pnp.*": true
   },
   "html.format.unformatted": "wbr,%",
   "debug.internalConsoleOptions": "neverOpen",
   "npm.packageManager": "yarn",
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  }
+
+  "eslint.packageManager": "yarn",
+  "eslint.nodePath": ".yarn/sdks",
+  "eslint.enable": true,
+  "eslint.run": "onSave",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

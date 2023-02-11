@@ -1,13 +1,13 @@
-import { rtk } from '@amnis/core';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { stateSet } from './set.js';
 
 /**
  * Configures a default store.
  */
 export function storeSetup() {
-  const rootReducer = rtk.combineReducers(stateSet.reducers);
+  const rootReducer = combineReducers(stateSet.reducers);
 
-  const store = rtk.configureStore({
+  const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
       getDefaultMiddleware().concat(stateSet.middleware)
@@ -32,7 +32,7 @@ export function storeContextSetup() {
     profile,
     contact,
   } = stateSet.reducers;
-  const rootReducer = rtk.combineReducers({
+  const rootReducer = combineReducers({
     system,
     challenge,
     otp,
@@ -44,7 +44,7 @@ export function storeContextSetup() {
     contact,
   });
 
-  const store = rtk.configureStore({
+  const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => (
       getDefaultMiddleware().concat(stateSet.middleware)

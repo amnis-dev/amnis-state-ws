@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Session,
@@ -17,7 +17,7 @@ import type {
  * RTK session adapter.
  * Manages the normalized entities.
  */
-export const sessionAdapter = rtk.createEntityAdapter<Entity<Session>>({
+export const sessionAdapter = createEntityAdapter<Entity<Session>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -39,7 +39,7 @@ export const sessionInitialState = sessionAdapter.getInitialState<SessionMeta>(
 /**
  * RTK Session Slice
  */
-export const sessionSlice = rtk.createSlice({
+export const sessionSlice = createSlice({
   name: sessionKey,
   initialState: sessionInitialState,
   reducers: {
@@ -63,7 +63,7 @@ export const sessionSlice = rtk.createSlice({
      * Delete the active session on a logout response.
      * Fulfilment or rejection, the client data is still cleared.
      */
-    builder.addMatcher(rtk.isAnyOf(
+    builder.addMatcher(isAnyOf(
       apiAuth.endpoints.logout.matchFulfilled,
       apiAuth.endpoints.logout.matchRejected,
     ), (state) => {

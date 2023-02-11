@@ -1,5 +1,4 @@
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Audit,
@@ -9,13 +8,14 @@ import {
   Entity,
 } from '@amnis/core';
 import { apiExtraReducers } from '@amnis/api';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import type { AuditMeta } from './audit.types.js';
 
 /**
  * RTK audit adapter.
  * Manages the normalized entities.
  */
-export const auditAdapter = rtk.createEntityAdapter<Entity<Audit>>({
+export const auditAdapter = createEntityAdapter<Entity<Audit>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const auditInitialState = auditAdapter.getInitialState<AuditMeta>(
 /**
  * RTK Audit Slice
  */
-export const auditSlice = rtk.createSlice({
+export const auditSlice = createSlice({
   name: auditKey,
   initialState: auditInitialState,
   reducers: {

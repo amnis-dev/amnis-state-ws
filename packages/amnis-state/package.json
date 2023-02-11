@@ -45,5 +45,10 @@
       "optional": true
     }
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "devDependencies": {
+    "@reduxjs/toolkit": "alpha",
+    "@types/node": "^18.13.0",
+    "vitest": "^0.28.4"
+  }
 }

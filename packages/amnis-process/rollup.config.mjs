@@ -34,6 +34,7 @@ const base = {
     /@amnis\/.*/,
     'ajv',
     'cross-fetch',
+    '@reduxjs/toolkit',
   ],
 };
 

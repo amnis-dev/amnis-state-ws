@@ -1,5 +1,5 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { rtk, Api, apiKey } from '@amnis/core';
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Api, apiKey } from '@amnis/core';
 
 import type { ApiMeta } from './api.types.js';
 
@@ -7,7 +7,7 @@ import type { ApiMeta } from './api.types.js';
  * RTK api adapter.
  * Manages the normalized entities.
  */
-export const apiAdapter = rtk.createEntityAdapter<Api>({
+export const apiAdapter = createEntityAdapter<Api>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -47,7 +47,7 @@ export const apiInitialState = apiAdapter.upsertMany(apiBaseInitialState, apiDef
 /**
  * RTK Api Slice
  */
-export const apiSlice = rtk.createSlice({
+export const apiSlice = createSlice({
   name: apiKey,
   initialState: apiInitialState,
   reducers: {

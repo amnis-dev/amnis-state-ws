@@ -1,5 +1,5 @@
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
-  rtk,
   coreReducers,
   coreExtraReducers,
   Profile,
@@ -15,7 +15,7 @@ import type { ProfileMeta } from './profile.types.js';
  * RTK profile adapter.
  * Manages the normalized entities.
  */
-export const profileAdapter = rtk.createEntityAdapter<Entity<Profile>>({
+export const profileAdapter = createEntityAdapter<Entity<Profile>>({
   /**
    * Identifiers are stored in the `$id` property.
    */
@@ -37,7 +37,7 @@ export const profileInitialState = profileAdapter.getInitialState<ProfileMeta>(
 /**
  * RTK Profile Slice
  */
-export const profileSlice = rtk.createSlice({
+export const profileSlice = createSlice({
   name: profileKey,
   initialState: profileInitialState,
   reducers: {
