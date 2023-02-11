@@ -105,6 +105,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/api", "virtual:b70de5620807770fa695e01e4e000c5185339551a99114929ddc196feac3fa99e3d19729a5147dedb1c1370395dc9676100d3f6b7da86f7b26a1e2a7ebb2487c#workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/node", "npm:18.13.0"],\
             ["@types/react", null],\
             ["@types/react-redux", null],\
@@ -112,6 +116,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cross-fetch", "npm:3.1.5"],\
             ["react", null],\
             ["react-redux", null],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "packagePeers": [\
@@ -130,8 +136,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/api", "workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/node", "npm:18.13.0"],\
             ["cross-fetch", "npm:3.1.5"],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "linkType": "SOFT"\
@@ -143,10 +155,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/fluent-ffmpeg", "npm:2.1.20"],\
             ["@types/node", "npm:18.13.0"],\
             ["@types/reduxjs__toolkit", null],\
             ["fluent-ffmpeg", "npm:2.1.2"],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "packagePeers": [\
@@ -160,9 +178,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@amnis/core", "workspace:packages/amnis-core"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/fluent-ffmpeg", "npm:2.1.20"],\
             ["@types/node", "npm:18.13.0"],\
             ["fluent-ffmpeg", "npm:2.1.2"],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "linkType": "SOFT"\
@@ -201,8 +225,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@amnis/mock", "workspace:packages/amnis-mock"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/node", "npm:18.13.0"],\
             ["msw", "virtual:eeddf15a6be2b0894456813b9cbc53f41d9dc2480a2dce541c2eee14b24dd428f19d5d0803e6e6a3bdcf72970306421438a8fa8900dfcad65ac9010ec8b1d73a#npm:1.0.1"],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "linkType": "SOFT"\
@@ -216,9 +246,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
             ["@amnis/state", "virtual:bdd942005788d9cd84d851a0c0917620cf316640062e2c5979c0803c3fedd1b3dbde45389bcf440b4948404489585c868a3e39914e73ac0bed9338118086de5d#workspace:packages/amnis-state"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/node", "npm:18.13.0"],\
             ["ajv", "npm:8.12.0"],\
             ["cross-fetch", "npm:3.1.5"],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "linkType": "SOFT"\
@@ -232,12 +268,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/api", "virtual:b70de5620807770fa695e01e4e000c5185339551a99114929ddc196feac3fa99e3d19729a5147dedb1c1370395dc9676100d3f6b7da86f7b26a1e2a7ebb2487c#workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/node", "npm:18.13.0"],\
             ["@types/react", null],\
             ["@types/react-redux", null],\
             ["@types/reduxjs__toolkit", null],\
             ["react", null],\
             ["react-redux", null],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "packagePeers": [\
@@ -257,7 +299,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/api", "virtual:b70de5620807770fa695e01e4e000c5185339551a99114929ddc196feac3fa99e3d19729a5147dedb1c1370395dc9676100d3f6b7da86f7b26a1e2a7ebb2487c#workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
             ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
             ["@types/node", "npm:18.13.0"],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
             ["vitest", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:0.28.4"]\
           ],\
           "linkType": "SOFT"\
@@ -2182,6 +2230,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
+        ["npm:24.0.1", {\
+          "packageLocation": "./.yarn/cache/@rollup-plugin-commonjs-npm-24.0.1-c413f6302d-ff5b09f5c3.zip/node_modules/@rollup/plugin-commonjs/",\
+          "packageDependencies": [\
+            ["@rollup/plugin-commonjs", "npm:24.0.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1", {\
+          "packageLocation": "./.yarn/__virtual__/@rollup-plugin-commonjs-virtual-11dcb0096e/0/cache/@rollup-plugin-commonjs-npm-24.0.1-c413f6302d-ff5b09f5c3.zip/node_modules/@rollup/plugin-commonjs/",\
+          "packageDependencies": [\
+            ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
+            ["@rollup/pluginutils", "virtual:4f3059b7fec9c2065e6adf943fbe38ca01bfb62ad2a22db374f61311fc932c7dbe0351e494e717aae5f80ad1da0d87280b780d3100109ee57c8199f016c52149#npm:5.0.2"],\
+            ["@types/rollup", null],\
+            ["commondir", "npm:1.0.1"],\
+            ["estree-walker", "npm:2.0.2"],\
+            ["glob", "npm:8.1.0"],\
+            ["is-reference", "npm:1.2.1"],\
+            ["magic-string", "npm:0.27.0"],\
+            ["rollup", "npm:3.15.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/rollup",\
+            "rollup"\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:23.0.7", {\
           "packageLocation": "./.yarn/__virtual__/@rollup-plugin-commonjs-virtual-4f3059b7fe/0/cache/@rollup-plugin-commonjs-npm-23.0.7-eeaabf5e3b-01d90947bd.zip/node_modules/@rollup/plugin-commonjs/",\
           "packageDependencies": [\
@@ -2209,6 +2283,27 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@rollup/plugin-json", "npm:5.0.2"]\
           ],\
           "linkType": "SOFT"\
+        }],\
+        ["npm:6.0.0", {\
+          "packageLocation": "./.yarn/cache/@rollup-plugin-json-npm-6.0.0-9f4c594544-77cfc941ed.zip/node_modules/@rollup/plugin-json/",\
+          "packageDependencies": [\
+            ["@rollup/plugin-json", "npm:6.0.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/@rollup-plugin-json-virtual-87a9d37283/0/cache/@rollup-plugin-json-npm-6.0.0-9f4c594544-77cfc941ed.zip/node_modules/@rollup/plugin-json/",\
+          "packageDependencies": [\
+            ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
+            ["@rollup/pluginutils", "virtual:4f3059b7fec9c2065e6adf943fbe38ca01bfb62ad2a22db374f61311fc932c7dbe0351e494e717aae5f80ad1da0d87280b780d3100109ee57c8199f016c52149#npm:5.0.2"],\
+            ["@types/rollup", null],\
+            ["rollup", "npm:3.15.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/rollup",\
+            "rollup"\
+          ],\
+          "linkType": "HARD"\
         }],\
         ["virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:5.0.2", {\
           "packageLocation": "./.yarn/__virtual__/@rollup-plugin-json-virtual-2fb82ea4df/0/cache/@rollup-plugin-json-npm-5.0.2-6d76cbf5fe-9b5f90ea31.zip/node_modules/@rollup/plugin-json/",\
@@ -2254,12 +2349,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@rollup/plugin-typescript", [\
+        ["npm:11.0.0", {\
+          "packageLocation": "./.yarn/cache/@rollup-plugin-typescript-npm-11.0.0-867f35a277-b0d34ff0ad.zip/node_modules/@rollup/plugin-typescript/",\
+          "packageDependencies": [\
+            ["@rollup/plugin-typescript", "npm:11.0.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
         ["npm:9.0.2", {\
           "packageLocation": "./.yarn/cache/@rollup-plugin-typescript-npm-9.0.2-603a009030-0b3a15e740.zip/node_modules/@rollup/plugin-typescript/",\
           "packageDependencies": [\
             ["@rollup/plugin-typescript", "npm:9.0.2"]\
           ],\
           "linkType": "SOFT"\
+        }],\
+        ["virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/@rollup-plugin-typescript-virtual-18e126a513/0/cache/@rollup-plugin-typescript-npm-11.0.0-867f35a277-b0d34ff0ad.zip/node_modules/@rollup/plugin-typescript/",\
+          "packageDependencies": [\
+            ["@rollup/plugin-typescript", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:11.0.0"],\
+            ["@rollup/pluginutils", "virtual:4f3059b7fec9c2065e6adf943fbe38ca01bfb62ad2a22db374f61311fc932c7dbe0351e494e717aae5f80ad1da0d87280b780d3100109ee57c8199f016c52149#npm:5.0.2"],\
+            ["@types/rollup", null],\
+            ["@types/tslib", null],\
+            ["@types/typescript", null],\
+            ["resolve", "patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"],\
+            ["rollup", "npm:3.15.0"],\
+            ["tslib", "npm:2.5.0"],\
+            ["typescript", null]\
+          ],\
+          "packagePeers": [\
+            "@types/rollup",\
+            "@types/tslib",\
+            "@types/typescript",\
+            "rollup",\
+            "tslib",\
+            "typescript"\
+          ],\
+          "linkType": "HARD"\
         }],\
         ["virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:9.0.2", {\
           "packageLocation": "./.yarn/__virtual__/@rollup-plugin-typescript-virtual-a5239d995e/0/cache/@rollup-plugin-typescript-npm-9.0.2-603a009030-0b3a15e740.zip/node_modules/@rollup/plugin-typescript/",\
