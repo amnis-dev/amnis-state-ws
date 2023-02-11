@@ -30,7 +30,7 @@ jobs:
         cache: 'yarn'
     
     - name: Install NodeJS Dependencies
-      run: yarn install
+      run: yarn install --check-cache
 
     - name: Lint for Code-Style Errors
       run: yarn lint

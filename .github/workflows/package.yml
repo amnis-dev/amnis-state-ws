@@ -23,7 +23,7 @@ jobs:
         scope: '@amnis'
 
     - name: Install NodeJS Dependencies
-      run: yarn install
+      run: yarn install --check-cache
 
     - name: Build Project
       run: yarn build
