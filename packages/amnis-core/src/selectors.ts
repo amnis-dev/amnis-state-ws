@@ -246,10 +246,17 @@ export function selectRoleGrants(state: State, roleRefs: UID<Role>[]): Grant[] {
   return grants;
 }
 
+export interface CoreSelectors<C extends EntityCreator> {
+  selectActive: (state: State) => Entity<C> | undefined,
+  selectFocused: (state: State) => Entity<C> | undefined,
+  selectSelection: (state: State) => Entity<C>[],
+  selectDifference: (state: State, $id: UID) => EntityDifference<C>,
+}
+
 /**
  * Create the selector utility object.
  */
-export function coreSelectors<C extends EntityCreator>(sliceKey: string) {
+export function coreSelectors<C extends EntityCreator>(sliceKey: string): CoreSelectors<C> {
   return {
     selectActive: genSelectActive<Entity<C>>(sliceKey),
     selectFocused: genSelectFocused<Entity<C>>(sliceKey),

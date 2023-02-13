@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "lib": ["DOM", "ES2022"],
     "esModuleInterop": true,
-    "target": "ES2022",
+    "target": "es6",
     "module": "ES2022",
     "moduleResolution": "node",
     "paths": {
