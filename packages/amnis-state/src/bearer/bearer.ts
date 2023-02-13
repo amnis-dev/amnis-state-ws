@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   Bearer, bearerKey,
 } from '@amnis/core';
@@ -27,6 +27,8 @@ export const bearerAdapter = createEntityAdapter<Bearer>({
  */
 export const bearerInitialState = bearerAdapter.getInitialState<BearerMeta>({});
 
+type BearerUpdater = {id: string} & Partial<Omit<Bearer, 'id'>>;
+
 /**
  * RTK Bearer Slice
  */
@@ -37,8 +39,34 @@ export const bearerSlice = createSlice({
     wipe(state) {
       bearerAdapter.removeAll(state);
     },
+    update(state, action: PayloadAction<BearerUpdater>) {
+      const { id, ...changes } = action.payload;
+      bearerAdapter.updateOne(state, {
+        id,
+        changes,
+      });
+    },
+    updateMany(state, action: PayloadAction<BearerUpdater[]>) {
+      const updaters = action.payload.map((updater) => {
+        const { id, ...changes } = updater;
+        return { id, changes };
+      });
+      bearerAdapter.updateMany(state, updaters);
+    },
   },
   extraReducers: (builder) => {
+    /**
+     * Get bearers from a successful authentication (logging in with an existing session).
+     */
+    builder.addMatcher(apiAuth.endpoints.authenticate.matchFulfilled, (state, action) => {
+      const { payload } = action;
+      const { bearers } = payload;
+
+      if (bearers?.length) {
+        bearerAdapter.upsertMany(state, bearers);
+      }
+    });
+
     /**
      * Get bearers from a successful login.
      */

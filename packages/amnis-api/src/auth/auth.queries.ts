@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 import {
+  ApiAuthAuthenticate,
   ApiAuthCreate,
   ApiAuthCredential,
   ApiAuthLogin,
@@ -17,6 +18,18 @@ import {
 } from '@amnis/core';
 
 export const apiAuthQueries = <T extends EndpointBuilder<any, any, any>>(builder: T) => ({
+
+  authenticate: builder.mutation<
+  IoOutputJson<StateEntities>,
+  ApiAuthAuthenticate
+  >({
+    query: (payload) => ({
+      url: 'authenticate',
+      method: 'post',
+      credentials: 'include',
+      body: payload,
+    }),
+  }),
 
   login: builder.mutation<
   IoOutputJson<StateEntities>,

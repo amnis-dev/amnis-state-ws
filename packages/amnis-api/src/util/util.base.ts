@@ -58,7 +58,7 @@ export const dynamicBaseQuery: DynamicBaseQuerySetup = (
        * Apply a bearer if needed.
        */
       if (apiMeta?.bearerId) {
-        headersAuthorizationToken(headers, state, apiMeta.bearerId);
+        await headersAuthorizationToken(headers, store, state, apiMeta.bearerId);
       }
 
       /**
