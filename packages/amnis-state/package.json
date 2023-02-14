@@ -33,7 +33,7 @@
     "@amnis/core": "0.13.0"
   },
   "peerDependencies": {
-    "@reduxjs/toolkit": "^1.8.0",
+    "@reduxjs/toolkit": "alpha",
     "react": "^18.0.0",
     "react-redux": "^8.0.2"
   },
