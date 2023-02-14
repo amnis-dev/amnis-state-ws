@@ -32,7 +32,7 @@
     "@amnis/api": "0.13.0",
     "@amnis/process": "0.13.0",
     "@amnis/state": "0.13.0",
-    "@reduxjs/toolkit": "alpha",
+    "@reduxjs/toolkit": "*",
     "msw": "^1.0.1"
   },
   "sideEffects": false,

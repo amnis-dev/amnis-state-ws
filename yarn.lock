@@ -21,7 +21,7 @@ __metadata:
     tslib: ^2.5.0
     vitest: ^0.28.4
   peerDependencies:
-    "@reduxjs/toolkit": ^1.8.0
+    "@reduxjs/toolkit": "*"
     react: ^18.0.0
     react-redux: ^8.0.2
   peerDependenciesMeta:
@@ -48,7 +48,7 @@ __metadata:
     tslib: ^2.5.0
     vitest: ^0.28.4
   peerDependencies:
-    "@reduxjs/toolkit": ^1.8.1
+    "@reduxjs/toolkit": "*"
   languageName: unknown
   linkType: soft
 
@@ -85,7 +85,7 @@ __metadata:
     "@amnis/api": 0.13.0
     "@amnis/process": 0.13.0
     "@amnis/state": 0.13.0
-    "@reduxjs/toolkit": ^1.8.1
+    "@reduxjs/toolkit": "*"
     msw: ^1.0.1
   languageName: unknown
   linkType: soft
@@ -108,7 +108,7 @@ __metadata:
     tslib: ^2.5.0
     vitest: ^0.28.4
   peerDependencies:
-    "@reduxjs/toolkit": ^1.8.1
+    "@reduxjs/toolkit": "*"
   languageName: unknown
   linkType: soft
 
@@ -176,7 +176,7 @@ __metadata:
     tslib: ^2.5.0
     vitest: ^0.28.4
   peerDependencies:
-    "@reduxjs/toolkit": ^1.8.0
+    "@reduxjs/toolkit": "*"
     react: ^18.0.0
     react-redux: ^8.0.2
   peerDependenciesMeta:

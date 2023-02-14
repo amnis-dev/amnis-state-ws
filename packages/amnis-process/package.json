@@ -34,7 +34,7 @@
     "clean": "rimraf ./.rollup.cache ./dist ./lib ./types ./tsconfig.build.tsbuildinfo ./yarn-error.log"
   },
   "peerDependencies": {
-    "@reduxjs/toolkit": "alpha"
+    "@reduxjs/toolkit": "*"
   },
   "dependencies": {
     "@amnis/core": "0.13.0",
