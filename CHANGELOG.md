@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.1](https://github.com/amnis-dev/amnis-state/compare/v0.13.0...v0.13.1) (2023-02-14)
+
+
+### Features
+
+* **Bearer:** Bearer tokens will attempt to renew when expired ([360826a](https://github.com/amnis-dev/amnis-state/commit/360826ad8f60e734bbf2a3314dda84cb821224ea))
+
+
+### Bug Fixes
+
+* **Deps:** Deps could not add alpha as a range ([83a66bb](https://github.com/amnis-dev/amnis-state/commit/83a66bb2a33551457f4f2cdbd4ac188d3e999d42))
+* **Deps:** Packages now depend on redux toolkit alpha ([dc9a87c](https://github.com/amnis-dev/amnis-state/commit/dc9a87c55f52d1f58aaa4624dd549d82e9427ed3))
+* **Types:** Fixed selector return types not inferring properly ([2b0f856](https://github.com/amnis-dev/amnis-state/commit/2b0f856584f6800f5df73690bc35678e5fb8ac31))
+
 ## [0.13.0](https://github.com/amnis-dev/amnis-state/compare/v0.12.3...v0.13.0) (2023-02-11)
 
 
