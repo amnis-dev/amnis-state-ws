@@ -1778,7 +1778,7 @@ __metadata:
       optional: true
     react-redux:
       optional: true
-  checksum: 19bc6ede8d4c6e53bb45248b6d8c08b349db97b88aac89a3a4b3a537e047aeae238cabdea794d2d7d92358879773652231156c9b38a3545d7e397e7ba812b5c9
+  checksum: 3b5247132883c8199b4f6439057935885b5a211cd922d2977313f77b848512d12b93c9ea61692715ce863d374feed94b480daab74f217d02df6b65cbc78beffa
   languageName: node
   linkType: hard
 
