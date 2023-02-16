@@ -55,7 +55,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@amnis/eslint-config-node", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.1.1"],\
             ["@amnis/tsconfig-node", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.1.1"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:23.0.7"],\
             ["@rollup/plugin-json", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:5.0.2"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -104,7 +104,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@amnis/api", "virtual:b70de5620807770fa695e01e4e000c5185339551a99114929ddc196feac3fa99e3d19729a5147dedb1c1370395dc9676100d3f6b7da86f7b26a1e2a7ebb2487c#workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -135,7 +135,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@amnis/api", "workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -154,7 +154,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/@amnis-core-virtual-e12d228572/1/packages/amnis-core/",\
           "packageDependencies": [\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -177,7 +177,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/amnis-core/",\
           "packageDependencies": [\
             ["@amnis/core", "workspace:packages/amnis-core"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -224,7 +224,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/amnis-mock/",\
           "packageDependencies": [\
             ["@amnis/mock", "workspace:packages/amnis-mock"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -245,7 +245,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/process", "workspace:packages/amnis-process"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
             ["@amnis/state", "virtual:bdd942005788d9cd84d851a0c0917620cf316640062e2c5979c0803c3fedd1b3dbde45389bcf440b4948404489585c868a3e39914e73ac0bed9338118086de5d#workspace:packages/amnis-state"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -267,7 +267,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/state", "virtual:bdd942005788d9cd84d851a0c0917620cf316640062e2c5979c0803c3fedd1b3dbde45389bcf440b4948404489585c868a3e39914e73ac0bed9338118086de5d#workspace:packages/amnis-state"],\
             ["@amnis/api", "virtual:b70de5620807770fa695e01e4e000c5185339551a99114929ddc196feac3fa99e3d19729a5147dedb1c1370395dc9676100d3f6b7da86f7b26a1e2a7ebb2487c#workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -298,7 +298,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/state", "workspace:packages/amnis-state"],\
             ["@amnis/api", "virtual:b70de5620807770fa695e01e4e000c5185339551a99114929ddc196feac3fa99e3d19729a5147dedb1c1370395dc9676100d3f6b7da86f7b26a1e2a7ebb2487c#workspace:packages/amnis-api"],\
             ["@amnis/core", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#workspace:packages/amnis-core"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:24.0.1"],\
             ["@rollup/plugin-json", "virtual:2286f27855a0f162af5d939bc0e3aa645e929df8aadc9e92e9a7f20211afa7a0f62e9a22d68d87199e364277a96541d5251053b7009d52f3ba85ab04b954e535#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -318,7 +318,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@amnis/state-workspace", "workspace:."],\
             ["@amnis/eslint-config-node", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.1.1"],\
             ["@amnis/tsconfig-node", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.1.1"],\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@rollup/plugin-commonjs", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:23.0.7"],\
             ["@rollup/plugin-json", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:5.0.2"],\
             ["@rollup/plugin-node-resolve", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:15.0.1"],\
@@ -2193,24 +2193,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@reduxjs/toolkit", [\
-        ["npm:2.0.0-alpha.1", {\
-          "packageLocation": "./.yarn/cache/@reduxjs-toolkit-npm-2.0.0-alpha.1-4669cfc07f-3b52471328.zip/node_modules/@reduxjs/toolkit/",\
+        ["npm:2.0.0-alpha.2", {\
+          "packageLocation": "./.yarn/cache/@reduxjs-toolkit-npm-2.0.0-alpha.2-0c7edbca5d-655ba9e6a1.zip/node_modules/@reduxjs/toolkit/",\
           "packageDependencies": [\
-            ["@reduxjs/toolkit", "npm:2.0.0-alpha.1"]\
+            ["@reduxjs/toolkit", "npm:2.0.0-alpha.2"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1", {\
-          "packageLocation": "./.yarn/__virtual__/@reduxjs-toolkit-virtual-ea146d3353/0/cache/@reduxjs-toolkit-npm-2.0.0-alpha.1-4669cfc07f-3b52471328.zip/node_modules/@reduxjs/toolkit/",\
+        ["virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2", {\
+          "packageLocation": "./.yarn/__virtual__/@reduxjs-toolkit-virtual-05148593c4/0/cache/@reduxjs-toolkit-npm-2.0.0-alpha.2-0c7edbca5d-655ba9e6a1.zip/node_modules/@reduxjs/toolkit/",\
           "packageDependencies": [\
-            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.1"],\
+            ["@reduxjs/toolkit", "virtual:dde7196b5c27068d3d3640c396ecaffb5edc29cf411d5c663e74e07a742793bde8c8d7e871f966f988d347738724c860e34d150f8404890a2b7ecadebffe58e2#npm:2.0.0-alpha.2"],\
             ["@types/react", null],\
             ["@types/react-redux", null],\
             ["immer", "npm:9.0.19"],\
             ["react", null],\
             ["react-redux", null],\
-            ["redux", "npm:4.2.1"],\
-            ["redux-thunk", "virtual:ea146d3353ee01b182aeb7c36bd3daf5dd245f12451e90329a4ec739f83250bbd3f198af17b6ee3eb6730a4a2581bc3757dba214a666951a0bdc18f8d16225b4#npm:3.0.0-alpha.1"],\
+            ["redux", "npm:5.0.0-alpha.2"],\
+            ["redux-thunk", "virtual:05148593c45915baa105264977a1ee366a1b6b3a2b7c47852a9e1f22799a914bb709f0e32307f864daebf2455367a804e1e046bc9565e75da37c6ee78cc7c1ea#npm:3.0.0-alpha.1"],\
             ["reselect", "npm:4.1.7"]\
           ],\
           "packagePeers": [\
@@ -9899,6 +9899,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/runtime", "npm:7.20.13"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:5.0.0-alpha.2", {\
+          "packageLocation": "./.yarn/cache/redux-npm-5.0.0-alpha.2-c6be003ace-fbae31c55b.zip/node_modules/redux/",\
+          "packageDependencies": [\
+            ["redux", "npm:5.0.0-alpha.2"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["redux-thunk", [\
@@ -9909,12 +9916,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:ea146d3353ee01b182aeb7c36bd3daf5dd245f12451e90329a4ec739f83250bbd3f198af17b6ee3eb6730a4a2581bc3757dba214a666951a0bdc18f8d16225b4#npm:3.0.0-alpha.1", {\
-          "packageLocation": "./.yarn/__virtual__/redux-thunk-virtual-13972d5c9d/0/cache/redux-thunk-npm-3.0.0-alpha.1-68d8bf1f56-280e0d399c.zip/node_modules/redux-thunk/",\
+        ["virtual:05148593c45915baa105264977a1ee366a1b6b3a2b7c47852a9e1f22799a914bb709f0e32307f864daebf2455367a804e1e046bc9565e75da37c6ee78cc7c1ea#npm:3.0.0-alpha.1", {\
+          "packageLocation": "./.yarn/__virtual__/redux-thunk-virtual-a01b302342/0/cache/redux-thunk-npm-3.0.0-alpha.1-68d8bf1f56-280e0d399c.zip/node_modules/redux-thunk/",\
           "packageDependencies": [\
-            ["redux-thunk", "virtual:ea146d3353ee01b182aeb7c36bd3daf5dd245f12451e90329a4ec739f83250bbd3f198af17b6ee3eb6730a4a2581bc3757dba214a666951a0bdc18f8d16225b4#npm:3.0.0-alpha.1"],\
+            ["redux-thunk", "virtual:05148593c45915baa105264977a1ee366a1b6b3a2b7c47852a9e1f22799a914bb709f0e32307f864daebf2455367a804e1e046bc9565e75da37c6ee78cc7c1ea#npm:3.0.0-alpha.1"],\
             ["@types/redux", null],\
-            ["redux", "npm:4.2.1"]\
+            ["redux", "npm:5.0.0-alpha.2"]\
           ],\
           "packagePeers": [\
             "@types/redux",\
